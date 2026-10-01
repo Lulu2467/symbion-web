@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Symbion — 今日工位</title>
+  <meta name="description" content="人与 AI 共生的工作栖息地">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Noto+Sans+SC:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="styles.css?v=261">
+</head>
+<body class="citta-collapsed">
+  <button class="citta-scrim" type="button" id="citta-scrim" aria-label="收起 Citta"></button>
+  <div class="app">
+    <!-- Icon rail -->
+    <aside class="rail" aria-label="主导航">
+      <div class="rail-workspace">
+        <img class="brand" src="mark.svg" width="36" height="25" alt="Symbion">
+      </div>
+      <nav class="rail-nav" aria-label="去向">
+        <button class="rail-btn is-active" data-view="home" aria-label="首页">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 10.5L12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5z"/></svg>
+          <span>首页</span>
+        </button>
+        <button class="rail-btn" data-view="chat" aria-label="消息">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 6.5h14a1.5 1.5 0 0 1 1.5 1.5v7A1.5 1.5 0 0 1 19 16.5H9l-4 3v-3H5A1.5 1.5 0 0 1 3.5 15V8A1.5 1.5 0 0 1 5 6.5z"/></svg>
+          <span>消息</span>
+        </button>
+        <button class="rail-btn" data-view="people" aria-label="好友和群聊管理">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="2.6"/><circle cx="16" cy="9.2" r="2.1"/><path d="M3.8 18.2c.5-2.4 2.6-3.8 5.2-3.8s4.7 1.4 5.2 3.8"/><path d="M14.2 14.6c1.6.2 3 1.2 3.6 2.8"/></svg>
+          <span>好友和群聊管理</span>
+        </button>
+        <button class="rail-btn" data-view="desk" aria-label="工作台">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M9 4v16"/></svg>
+          <span>工作台</span>
+        </button>
+        <button class="rail-btn" data-view="cosmo" aria-label="Cosmo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><circle cx="16" cy="9" r="2.5"/><path d="M3 19c1-3.5 5-5 6-5s3 .5 4 2M14 19c.5-2 2.5-3.5 4.5-3.5S22 17 22 19"/></svg>
+          <span>Cosmo</span>
+        </button>
+        <button class="rail-btn" data-view="symbion" aria-label="Symbion">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l2.2 5.2L20 9l-4.2 3.2L17 18l-5-3.2L7 18l1.2-5.8L4 9l5.8-.8L12 3z"/></svg>
+          <span>Symbion</span>
+        </button>
+      </nav>
+      <div class="rail-spacer"></div>
+      <div class="rail-account">
+        <button type="button" class="rail-user" id="account-open" aria-expanded="false" aria-controls="account-menu">
+          <span class="rail-avatar" data-account-avatar>YX</span>
+          <span data-account-name>Xinyue</span>
+        </button>
+        <div class="account-menu" id="account-menu" hidden>
+          <div class="account-head">
+            <button type="button" class="account-photo" id="account-photo-btn" aria-label="更换头像">
+              <span class="rail-avatar" data-account-avatar>YX</span>
+            </button>
+            <div>
+              <strong data-account-name>Xinyue</strong>
+              <span>xinyue@symbion.test</span>
+            </div>
+          </div>
+          <button type="button" data-account="profile" aria-expanded="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9.1 2.8 13.2 6.9 6.4 13.7H2.3V9.6z"/><path d="m8.2 3.7 4.1 4.1"/></svg>编辑资料</button>
+          <div class="account-fold" data-account-fold="profile" hidden>
+            <form class="account-form" id="account-profile">
+              <label>姓名<input type="text" id="account-name" value="Xinyue" autocomplete="name"></label>
+              <p>邮箱 xinyue@symbion.test · 已连接</p>
+              <button type="submit">保存</button>
+            </form>
+          </div>
+          <button type="button" data-account="privacy" aria-expanded="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.8 13 3.7v4.1c0 2.9-1.9 4.7-5 6.1-3.1-1.4-5-3.2-5-6.1V3.7z"/></svg>安全与隐私</button>
+          <div class="account-fold" data-account-fold="privacy" hidden>
+            <p>发出和改时间仍等你同意。未确认的内容不进草稿。</p>
+            <p>This is an AI/synthetic digital twin, not the real person.</p>
+          </div>
+          <button type="button" data-account="apps" aria-expanded="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.6 9.4 9.4 6.6"/><path d="M7.1 4.4 8.3 3.2a2.3 2.3 0 0 1 3.3 3.3L10.4 7.7"/><path d="M8.9 11.6 7.7 12.8a2.3 2.3 0 0 1-3.3-3.3L5.6 8.3"/></svg>已连接的应用</button>
+          <div class="account-fold" data-account-fold="apps" hidden>
+            <p class="account-status"><span>邮箱</span><em>xinyue@symbion.test · 已连接</em></p>
+            <p class="account-status"><span>日历</span><em>Google Calendar · 已连接</em></p>
+            <p class="account-status"><span>网盘</span><em>Google Drive · 已连接</em></p>
+          </div>
+          <hr>
+          <button type="button" class="is-out" data-account="signout">退出</button>
+        </div>
+        <input id="account-photo" type="file" accept="image/*" hidden>
+      </div>
+    </aside>
+
+    <div class="shell">
+      <div class="chrome">
+        <div class="traffic" aria-hidden="true"><i class="r"></i><i class="y"></i><i class="g"></i></div>
+        <div class="chrome-nav">
+          <button type="button" id="hist-back" disabled aria-label="后退"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <button type="button" id="hist-fwd" disabled aria-label="前进"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+          <button type="button" id="hist-reload" aria-label="刷新"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 12a8 8 0 1 1-2.2-5.5"/><path d="M20 4v5h-5"/></svg></button>
+        </div>
+        <form class="omnibox" id="omnibox-form">
+          <button type="submit" class="omnibox-search" aria-label="搜索"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+          <input id="omnibox-input" type="text" placeholder="搜索网页或输入网址" autocomplete="off" spellcheck="false" aria-label="地址栏">
+          <button type="button" class="omnibox-tool" id="omnibox-mic" aria-label="语音搜索"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11.5a6 6 0 0 0 12 0M12 17.5V21M8 21h8"/></svg></button>
+          <button type="button" class="omnibox-tool" id="omnibox-lens" aria-label="用图片搜索"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7.2 9.2 5h5.6L16 7.2h3.2A1.6 1.6 0 0 1 20.8 8.8v8.4a1.6 1.6 0 0 1-1.6 1.6H4.8a1.6 1.6 0 0 1-1.6-1.6V8.8a1.6 1.6 0 0 1 1.6-1.6H8z"/><circle cx="12" cy="12.4" r="3"/></svg></button>
+          <input id="omnibox-file" type="file" accept="image/*" hidden>
+        </form>
+        <div class="chrome-tabs">
+          <div id="chrome-tablist" role="tablist" aria-label="标签"></div>
+          <button type="button" id="chrome-tab-add" aria-label="新标签">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3.2v9.6M3.2 8h9.6"/></svg>
+          </button>
+        </div>
+        <nav class="chrome-bookmarks" aria-label="书签">
+          <button type="button" data-bookmark="https://scholar.google.com/"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.6 6.4 8 3.2l6.4 3.2L8 9.6 1.6 6.4z"/><path d="M4.2 7.8v2.8c0 .3 1.5 1.8 3.8 1.8s3.8-1.5 3.8-1.8V7.8"/><path d="M14.4 6.4v3.4"/></svg>Scholar</button>
+          <button type="button" data-bookmark="https://arxiv.org/"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.2h5.1L12.8 6v7.8H4z"/><path d="M9 2.4V6h3.6"/><path d="M6 8.6h4M6 10.8h4"/></svg>arXiv</button>
+          <button type="button" data-bookmark="https://www.notion.so/"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.8 3.1h4.1c.6 0 1.2.3 1.6.7.4-.4 1-.7 1.6-.7h3.1v9.1H10c-.6 0-1.2.3-1.6.7-.4-.4-1-.7-1.6-.7H2.8z"/><path d="M8 3.8v9"/></svg>Notion</button>
+        </nav>
+      </div>
+      <div class="shell-body">
+    <div class="workspace">
+      <div class="body-row">
+        <div class="main-pane">
+          <section class="view" id="view-browser">
+            <article class="browser-doc">
+              <p class="sheet-label" id="browser-host"></p>
+              <h1 id="browser-title"></h1>
+              <div id="browser-body"></div>
+              <p class="browser-url" id="browser-url"></p>
+              <p class="summon-hint">在这段文字上右键，用当前 Avatar 看选中的句子，或带上这块画面。</p>
+            </article>
+          </section>
+
+          <!-- HOME -->
+          <section class="view is-active" id="view-home" data-url="symbion://home">
+            <header class="page-head today-head">
+              <h1>9月23日 · 下午好，Xinyue</h1>
+              <div class="connect-row" aria-label="连接状态">
+                <button class="is-live" type="button" data-view="desk" data-desk="email"><span>邮箱</span><em data-mail-unread>2 封未读</em></button>
+                <button class="is-live" type="button" data-view="desk" data-desk="calendar"><span>日历</span><em data-cal-next>今天 组会</em></button>
+                <button class="is-live" type="button" data-view="desk" data-desk="drive"><span>网盘</span><em>Google Drive</em></button>
+              </div>
+            </header>
+            <div class="today">
+              <article class="today-card today-week">
+                <div class="page-tabs home-seg" role="tablist" aria-label="首页">
+                  <button type="button" class="is-on" role="tab" aria-selected="true" data-home-mode="week">工作</button>
+                  <button type="button" role="tab" aria-selected="false" data-home-mode="edit">编辑</button>
+                </div>
+                <div data-home-panel="week">
+                  <div class="desk-widgets" aria-label="这周的工作">
+                    <article class="desk-widget widget-cal" data-open-desk="calendar">
+                      <header class="widget-head">
+                        <div>
+                          <h2>日历</h2>
+                          <p>Google Calendar</p>
+                        </div>
+                        <button type="button" class="widget-go" data-open-desk="calendar" aria-label="打开日历"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.8 11.2 11.2 4.8"/><path d="M6.6 4.8h4.6V9.4"/></svg></button>
+                      </header>
+                      <div class="widget-days" aria-hidden="true">
+                        <span><b>21</b><i>一</i></span>
+                        <span><b>22</b><i>二</i></span>
+                        <span class="is-today"><b>23</b><i>三</i></span>
+                        <span><b>24</b><i>四</i></span>
+                        <span><b>25</b><i>五</i></span>
+                        <span><b>26</b><i>六</i></span>
+                        <span><b>27</b><i>日</i></span>
+                      </div>
+                      <p class="widget-zone">日程</p>
+                      <div class="widget-events">
+                        <div class="widget-event" data-meeting data-source="team" data-open-desk="calendar">
+                          <i></i>
+                          <span><strong>组会</strong><em data-meeting-note>过纪要和页码</em></span>
+                          <time data-meeting-when>周三 · 15:00</time>
+                        </div>
+                        <div class="widget-event" data-source="mine" data-open-desk="calendar">
+                          <i></i>
+                          <span><strong>讲义</strong><em>改到可以发给学生</em></span>
+                          <time>周四 · 全天</time>
+                        </div>
+                        <div class="widget-event" data-source="research" data-open-desk="calendar">
+                          <i></i>
+                          <span><strong>页码</strong><em>对阅读清单第 3 篇</em></span>
+                          <time>周五 · 10:00</time>
+                        </div>
+                      </div>
+                    </article>
+                    <article class="desk-widget widget-mail" data-open-desk="email">
+                      <header class="widget-head">
+                        <div>
+                          <h2>邮件</h2>
+                          <p data-mail-unread>2 封未读</p>
+                        </div>
+                        <button type="button" class="widget-go" data-open-desk="email" aria-label="打开邮件"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.8 11.2 11.2 4.8"/><path d="M6.6 4.8h4.6V9.4"/></svg></button>
+                      </header>
+                      <div class="widget-mail-list">
+                        <button type="button" class="widget-row is-unread" data-open-desk="email" data-open-letter="readlist">
+                          <strong>阅读清单第 3 篇</strong>
+                          <em>Research_Test · 今天 10:18</em>
+                        </button>
+                        <button type="button" class="widget-row is-unread" data-open-desk="email" data-open-letter="minutes">
+                          <strong>组会纪要</strong>
+                          <em>Wuhan Branch Team · 昨天 16:40</em>
+                        </button>
+                        <button type="button" class="widget-row" data-open-desk="email" data-open-letter="receipt">
+                          <strong>讲义打印收据</strong>
+                          <em>打印店 · 周一 09:12</em>
+                        </button>
+                      </div>
+                    </article>
+                    <article class="desk-widget widget-ledger" data-open-desk="ledger">
+                      <header class="widget-head">
+                        <div>
+                          <h2>账本</h2>
+                          <p>已批准 2</p>
+                        </div>
+                        <button type="button" class="widget-go" data-open-desk="ledger" aria-label="打开账本"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.8 11.2 11.2 4.8"/><path d="M6.6 4.8h4.6V9.4"/></svg></button>
+                      </header>
+                      <p class="widget-figure">86</p>
+                      <div class="widget-ledger-list">
+                        <span><strong>讲义打印</strong><em>已批准</em></span>
+                        <span><strong>小组茶歇</strong><em>120</em></span>
+                      </div>
+                    </article>
+                    <article class="desk-widget widget-drive" data-open-desk="drive" data-open-folder="Google Drive">
+                      <header class="widget-head">
+                        <div>
+                          <h2>网盘</h2>
+                          <p>Google Drive</p>
+                        </div>
+                        <button type="button" class="widget-go" data-open-desk="drive" data-open-folder="Google Drive" aria-label="打开网盘"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.8 11.2 11.2 4.8"/><path d="M6.6 4.8h4.6V9.4"/></svg></button>
+                      </header>
+                      <div class="widget-files">
+                        <span><b>PPT</b>讲义改稿</span>
+                        <span><b>PDF</b>阅读清单</span>
+                        <span><b>DOC</b>组会纪要</span>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+                <div class="edit-stage" data-home-panel="edit" hidden>
+                  <div class="edit-grid" id="edit-grid">
+                    <button type="button" class="edit-card" data-edit-open="doc">
+                      <strong>文档</strong>
+                      <span class="edit-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+                      <span class="edit-by">Editor 支持 <b class="edit-badge ed">Ed</b></span>
+                    </button>
+                    <button type="button" class="edit-card" data-edit-open="num">
+                      <strong>表格</strong>
+                      <span class="edit-mark is-grid" aria-hidden="true"></span>
+                      <span class="edit-by">Analyst 支持 <b class="edit-badge an">An</b></span>
+                    </button>
+                    <button type="button" class="edit-card" data-edit-open="code">
+                      <strong>代码</strong>
+                      <span class="edit-mark is-code" aria-hidden="true"><i></i><i></i><i></i></span>
+                      <span class="edit-by">Coder 支持 <b class="edit-badge co">Co</b></span>
+                    </button>
+                    <button type="button" class="edit-card" data-edit-open="tex">
+                      <strong>SymTex</strong>
+                      <span class="edit-mark is-tex" aria-hidden="true">∑</span>
+                      <span class="edit-by">Coder 支持 <b class="edit-badge co">Co</b></span>
+                    </button>
+                    <button type="button" class="edit-card" data-edit-open="deck">
+                      <strong>演示</strong>
+                      <span class="edit-mark is-deck" aria-hidden="true"><i></i></span>
+                      <span class="edit-by">Designer 支持 <b class="edit-badge de">De</b></span>
+                    </button>
+                  </div>
+                  <div class="edit-sheet" id="edit-sheet" hidden data-edit-kind="doc" data-wps-tab="start">
+                    <div class="wps-bar">
+                      <button type="button" class="edit-back" id="edit-back">五个编辑</button>
+                      <strong id="edit-title">文档</strong>
+                      <em id="edit-byline"></em>
+                    </div>
+                    <div class="wps-tabs" role="tablist" aria-label="功能区">
+                      <button type="button" class="is-on" data-wps-tab="start">开始</button>
+                      <button type="button" data-wps-tab="insert">插入</button>
+                      <button type="button" data-wps-tab="page">页面</button>
+                    </div>
+                    <div class="wps-ribbon">
+                      <div class="wps-panel" data-wps-panel="start">
+                        <div class="wps-group" data-for="doc tex deck code num">
+                          <button type="button" class="wps-tool" tabindex="-1">撤销</button>
+                          <button type="button" class="wps-tool" tabindex="-1">重做</button>
+                        </div>
+                        <div class="wps-group" data-for="doc tex deck">
+                          <span class="wps-select">正文</span>
+                          <span class="wps-select is-num">15</span>
+                          <button type="button" class="wps-tool is-bold" tabindex="-1">B</button>
+                          <button type="button" class="wps-tool is-italic" tabindex="-1">I</button>
+                          <button type="button" class="wps-tool is-under" tabindex="-1">U</button>
+                        </div>
+                        <div class="wps-group" data-for="doc tex deck">
+                          <button type="button" class="wps-tool is-on" tabindex="-1" aria-label="左对齐"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 4h10M3 8h7M3 12h10"/></svg></button>
+                          <button type="button" class="wps-tool" tabindex="-1" aria-label="居中"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 4h10M4.5 8h7M3 12h10"/></svg></button>
+                          <button type="button" class="wps-tool" tabindex="-1" aria-label="右对齐"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 4h10M6 8h7M3 12h10"/></svg></button>
+                        </div>
+                        <div class="wps-group" data-for="num">
+                          <span class="wps-select">常规</span>
+                          <button type="button" class="wps-tool" tabindex="-1">求和</button>
+                          <button type="button" class="wps-tool" tabindex="-1">筛选</button>
+                          <button type="button" class="wps-tool" tabindex="-1">排序</button>
+                        </div>
+                        <div class="wps-group" data-for="code">
+                          <span class="wps-select">等宽</span>
+                          <button type="button" class="wps-tool" tabindex="-1">注释</button>
+                        </div>
+                      </div>
+                      <div class="wps-panel" data-wps-panel="insert" hidden>
+                        <div class="wps-group">
+                          <button type="button" class="wps-tool" tabindex="-1">表格</button>
+                          <button type="button" class="wps-tool" tabindex="-1">图片</button>
+                          <button type="button" class="wps-tool" tabindex="-1">分页</button>
+                        </div>
+                      </div>
+                      <div class="wps-panel" data-wps-panel="page" hidden>
+                        <div class="wps-group">
+                          <button type="button" class="wps-tool is-on" tabindex="-1">页面</button>
+                          <button type="button" class="wps-tool" tabindex="-1">页宽</button>
+                          <span class="wps-select is-num">100%</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="wps-ruler" aria-hidden="true"></div>
+                    <div class="wps-work">
+                      <label class="edit-canvas" data-edit-canvas="doc">
+                        <span class="wps-page">
+                          <textarea aria-label="文档">周四的讲义
+
+第一节 先把概念讲短。
+第二节 标出还没核对的句子。
+改到可以发给学生。</textarea>
+                        </span>
+                      </label>
+                      <div class="edit-canvas wps-gridwrap" data-edit-canvas="num" hidden>
+                        <div class="wps-formula">
+                          <b>A2</b>
+                          <span>讲义打印</span>
+                        </div>
+                        <div class="wps-grid">
+                          <table class="edit-table">
+                            <thead>
+                              <tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th>1</th>
+                                <td>项目</td>
+                                <td>金额</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                              </tr>
+                              <tr>
+                                <th>2</th>
+                                <td><input type="text" value="讲义打印" aria-label="项目"></td>
+                                <td><input type="text" value="86" aria-label="金额"></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                              </tr>
+                              <tr><th>3</th><td></td><td></td><td></td><td></td><td></td></tr>
+                              <tr><th>4</th><td></td><td></td><td></td><td></td><td></td></tr>
+                              <tr><th>5</th><td></td><td></td><td></td><td></td><td></td></tr>
+                              <tr><th>6</th><td></td><td></td><td></td><td></td><td></td></tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <label class="edit-canvas" data-edit-canvas="code">
+                        <span class="wps-page is-code">
+                          <textarea aria-label="代码" spellcheck="false">// 阅读清单第 3 篇
+// 页码还没对上。周五 10:00 之前标好。</textarea>
+                        </span>
+                      </label>
+                      <label class="edit-canvas" data-edit-canvas="tex">
+                        <span class="wps-page is-code">
+                          <textarea aria-label="SymTex" spellcheck="false">\section{阅读清单第 3 篇}
+页码还没对上。</textarea>
+                        </span>
+                      </label>
+                      <div class="edit-canvas edit-slides" data-edit-canvas="deck" hidden>
+                        <ol class="wps-film">
+                          <li class="is-on"><b>1</b></li>
+                          <li><b>2</b></li>
+                        </ol>
+                        <div class="wps-stage">
+                          <div class="wps-slide">
+                            <label>第 1 页<input type="text" value="讲义" aria-label="第 1 页"></label>
+                            <label>第 2 页<input type="text" value="先把概念讲短" aria-label="第 2 页"></label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <footer class="wps-status">
+                      <span>第 1 页</span>
+                      <span class="summon-hint">框选文字后右键，或对这块画面截图后右键。叫的是右下角当前的 Avatar。</span>
+                      <span>100%</span>
+                    </footer>
+                  </div>
+                </div>
+              </article>
+
+              <aside class="today-side">
+                <section class="today-card today-present" aria-label="当前智能体">
+                  <div class="citta-called">
+                    <p class="called-label">当前智能体</p>
+                    <div class="agent-slot">
+                      <span class="present-av citta" id="agent-mark">C</span>
+                      <span>
+                        <strong id="agent-name">Citta</strong>
+                        <em id="agent-role">Super agent</em>
+                      </span>
+                      <button class="link-quiet agent-switch" type="button" id="agent-switch" aria-expanded="false" aria-haspopup="dialog" aria-controls="avatar-pop">换成</button>
+                    </div>
+                    <p class="agent-twin" id="agent-twin" hidden>This is an AI/synthetic digital twin, not the real person.</p>
+                  </div>
+                </section>
+
+                <section class="today-card today-approve" aria-label="等你同意">
+                  <header class="task-notes-head">
+                    <p class="sheet-label">等你同意 <strong id="nod-count">3</strong></p>
+                  </header>
+                  <article class="nod" data-nod="mail">
+                    <div>
+                      <h2>本周进展</h2>
+                      <p data-draft-state>给 Research_Test · 草稿 · Xinyue (by Citta)</p>
+                    </div>
+                    <button class="btn-next" type="button" data-approve="mail">批准</button>
+                  </article>
+                  <article class="nod" data-nod="cal" id="nod-cal">
+                    <div>
+                      <h2>改组会时间</h2>
+                      <p data-cal-state>周三 15:00 → 周四 16:00</p>
+                    </div>
+                    <button class="btn-next" type="button" data-approve="cal">批准</button>
+                  </article>
+                  <article class="nod" data-nod="memory">
+                    <div>
+                      <h2>写进草稿的工作方式</h2>
+                      <p data-memory-state>建议 · 先出计划，再改看板</p>
+                    </div>
+                    <button class="btn-next" type="button" data-approve="memory">确认</button>
+                  </article>
+                </section>
+
+                <section class="today-card today-notes" aria-label="待办">
+                  <header class="task-notes-head">
+                    <p class="task-kicker">待办 <strong id="todo-count">2</strong></p>
+                    <button type="button" class="todo-add" id="todo-add" aria-label="添加待办" aria-expanded="false" aria-controls="home-capture"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3.2v9.6M3.2 8h9.6"/></svg></button>
+                  </header>
+                  <ul class="todo-list" id="home-captured">
+                    <li class="todo-draft" id="home-capture" hidden>
+                      <form class="todo-item">
+                        <input type="checkbox" tabindex="-1" disabled aria-hidden="true">
+                        <textarea id="home-capture-input" rows="1" placeholder="写一条待办" autocomplete="off" aria-label="新待办"></textarea>
+                      </form>
+                    </li>
+                    <li>
+                      <label class="todo-item">
+                        <input type="checkbox">
+                        <span>核对阅读清单第 3 篇页码</span>
+                      </label>
+                    </li>
+                    <li>
+                      <label class="todo-item">
+                        <input type="checkbox">
+                        <span>周报发出前再读一遍</span>
+                      </label>
+                    </li>
+                  </ul>
+                </section>
+              </aside>
+            </div>
+          </section>
+
+          <section class="view" id="view-desk" data-url="symbion://desk">
+            <div class="desk-shell">
+              <aside class="desk-side">
+                <p class="desk-side-label">工作台</p>
+                <nav class="desk-nav" aria-label="工作台">
+                  <button class="desk-tab is-active" type="button" data-desk-tab="kanban" aria-current="page">
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2" width="3.2" height="12" rx="0.8"/><rect x="6.4" y="2" width="3.2" height="8" rx="0.8"/><rect x="11.3" y="2" width="3.2" height="10" rx="0.8"/></svg>
+                    <span>看板</span>
+                  </button>
+                  <div class="desk-tools" id="desk-tools">
+                    <button class="desk-tab" type="button" data-desk-tab="calendar">
+                      <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M2 6.5h12M5.5 2v2.5M10.5 2v2.5"/></svg>
+                      <span>日历</span>
+                    </button>
+                    <button class="desk-tab" type="button" data-desk-tab="email">
+                      <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="3.5" width="13" height="9" rx="1.5"/><path d="M2 4.5 8 9l6-4.5"/></svg>
+                      <span>邮件</span>
+                    </button>
+                    <button class="desk-tab" type="button" data-desk-tab="ledger">
+                      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5h6.2L13 5.2V13.5H4z"/><path d="M10 2.5V5.5H13M6 8.5h5M6 11h4"/></svg>
+                      <span>账本</span>
+                    </button>
+                    <button class="desk-tab" type="button" data-desk-tab="drive">
+                      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 5.2 4.2 3h4.2l1.2 1.4H14V13H2z"/></svg>
+                      <span>网盘</span>
+                    </button>
+                  </div>
+                </nav>
+              </aside>
+              <div class="desk-main">
+            <h1 class="phone-screen-title">工作台</h1>
+            <nav class="desk-switch" aria-label="工作台功能">
+              <button class="desk-switch-btn is-active" type="button" data-desk-tab="calendar" aria-current="page">日历</button>
+              <button class="desk-switch-btn" type="button" data-desk-tab="email">邮件</button>
+              <button class="desk-switch-btn" type="button" data-desk-tab="ledger">账本</button>
+              <button class="desk-switch-btn" type="button" data-desk-tab="drive">网盘</button>
+            </nav>
+            <div class="bench" id="bench">
+              <section class="desk-board" data-desk-panel="kanban" aria-label="看板" hidden>
+                <div class="board-head">
+                  <div>
+                    <h2>这周</h2>
+                    <p class="subhead">9月21日 – 9月27日</p>
+                  </div>
+                  <button class="btn-next" type="button" id="kb-new">新建</button>
+                </div>
+                <form class="kb-new" id="kb-new-form" hidden>
+                  <input id="kb-new-title" type="text" placeholder="这件事" required autocomplete="off">
+                  <input id="kb-new-when" type="text" placeholder="哪一天" required autocomplete="off">
+                  <button class="btn-next" type="submit">加到你这里</button>
+                </form>
+                <div class="desk-widgets">
+                  <article class="desk-widget widget-cal" data-open-desk="calendar">
+                    <header class="widget-head">
+                      <div>
+                        <h2>日历</h2>
+                        <p>Google Calendar</p>
+                      </div>
+                      <button type="button" class="widget-go" data-open-desk="calendar" aria-label="打开日历"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.8 11.2 11.2 4.8"/><path d="M6.6 4.8h4.6V9.4"/></svg></button>
+                    </header>
+                    <div class="widget-days" aria-hidden="true">
+                      <span><b>21</b><i>一</i></span>
+                      <span><b>22</b><i>二</i></span>
+                      <span class="is-today"><b>23</b><i>三</i></span>
+                      <span><b>24</b><i>四</i></span>
+                      <span><b>25</b><i>五</i></span>
+                      <span><b>26</b><i>六</i></span>
+                      <span><b>27</b><i>日</i></span>
+                    </div>
+                    <p class="widget-zone">日程</p>
+                    <div class="widget-events">
+                      <div class="widget-event" data-meeting data-source="team" data-open-desk="calendar">
+                        <i></i>
+                        <span><strong>组会</strong><em data-meeting-note>过纪要和页码</em></span>
+                        <time data-meeting-when>周三 · 15:00</time>
+                        <small>15:00</small>
+                      </div>
+                      <div class="widget-event" data-source="mine" data-open-desk="calendar">
+                        <i></i>
+                        <span><strong>讲义</strong><em>改到可以发给学生</em></span>
+                        <time>周四 · 全天</time>
+                      </div>
+                      <div class="widget-event" data-source="research" data-open-desk="calendar">
+                        <i></i>
+                        <span><strong>页码</strong><em>对阅读清单第 3 篇</em></span>
+                        <time>周五 · 10:00</time>
+                      </div>
+                    </div>
+                    <div class="widget-added">
+                      <p>你加上的</p>
+                      <div id="kb-you"></div>
+                    </div>
+                  </article>
+                  <article class="desk-widget widget-mail" data-open-desk="email">
+                    <header class="widget-head">
+                      <div>
+                        <h2>邮件</h2>
+                        <p>2 封未读</p>
+                      </div>
+                      <button type="button" class="widget-go" data-open-desk="email" aria-label="打开邮件"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.8 11.2 11.2 4.8"/><path d="M6.6 4.8h4.6V9.4"/></svg></button>
+                    </header>
+                    <div class="widget-mail-list">
+                      <button type="button" class="widget-row is-unread" data-open-desk="email" data-open-letter="readlist">
+                        <strong>阅读清单第 3 篇</strong>
+                        <em>Research_Test · 今天 10:18</em>
+                      </button>
+                      <button type="button" class="widget-row is-unread" data-open-desk="email" data-open-letter="minutes">
+                        <strong>组会纪要</strong>
+                        <em>Wuhan Branch Team · 昨天 16:40</em>
+                      </button>
+                      <button type="button" class="widget-row" data-open-desk="email" data-open-letter="receipt">
+                        <strong>讲义打印收据</strong>
+                        <em>打印店 · 周一 09:12</em>
+                      </button>
+                    </div>
+                  </article>
+                  <article class="desk-widget widget-ledger" data-open-desk="ledger">
+                    <header class="widget-head">
+                      <div>
+                        <h2>账本</h2>
+                        <p>已批准 2</p>
+                      </div>
+                      <button type="button" class="widget-go" data-open-desk="ledger" aria-label="打开账本"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.8 11.2 11.2 4.8"/><path d="M6.6 4.8h4.6V9.4"/></svg></button>
+                    </header>
+                    <p class="widget-figure">86</p>
+                    <div class="widget-ledger-list">
+                      <span><strong>讲义打印</strong><em>已批准</em></span>
+                      <span><strong>小组茶歇</strong><em>120</em></span>
+                    </div>
+                  </article>
+                  <article class="desk-widget widget-drive" data-open-desk="drive" data-open-folder="Google Drive">
+                    <header class="widget-head">
+                      <div>
+                        <h2>网盘</h2>
+                        <p>Google Drive</p>
+                      </div>
+                      <button type="button" class="widget-go" data-open-desk="drive" data-open-folder="Google Drive" aria-label="打开网盘"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.8 11.2 11.2 4.8"/><path d="M6.6 4.8h4.6V9.4"/></svg></button>
+                    </header>
+                    <div class="widget-files">
+                      <span><b>PPT</b>讲义改稿</span>
+                      <span><b>PDF</b>阅读清单</span>
+                      <span><b>DOC</b>组会纪要</span>
+                    </div>
+                  </article>
+                </div>
+              </section>
+              <section class="desk-board is-on" data-desk-panel="calendar" aria-label="日历">
+                <div class="cal-apple" id="cal-apple" data-cal-view="week">
+                  <header class="cal-toolbar">
+                    <div class="cal-toolbar-left">
+                      <button type="button" id="cal-prev" aria-label="上一段"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3.5 5.5 8 10 12.5"/></svg></button>
+                      <button type="button" id="cal-next" aria-label="下一段"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button>
+                      <button type="button" id="cal-today">今天</button>
+                    </div>
+                    <h2 id="cal-title">2026年9月</h2>
+                    <div class="cal-seg" role="tablist" aria-label="日历视图">
+                      <button type="button" data-cal-mode="day">日</button>
+                      <button type="button" class="is-on" data-cal-mode="week">周</button>
+                      <button type="button" data-cal-mode="month">月</button>
+                      <button type="button" data-cal-mode="year">年</button>
+                    </div>
+                  </header>
+                  <div class="cal-body">
+                    <aside class="cal-side" aria-label="日历列表">
+                      <div class="cal-mini" id="cal-mini"></div>
+                      <p class="cal-side-label">我的日历</p>
+                      <label class="cal-source"><input type="checkbox" checked data-cal-filter="mine"><i data-c="mine"></i><span>Xinyue</span></label>
+                      <label class="cal-source"><input type="checkbox" checked data-cal-filter="team"><i data-c="team"></i><span>Wuhan Branch Team</span></label>
+                      <label class="cal-source"><input type="checkbox" checked data-cal-filter="research"><i data-c="research"></i><span>Research_Test</span></label>
+                      <p class="cal-side-note">Google Calendar · xinyue@symbion.test</p>
+                    </aside>
+                    <div class="cal-main">
+                      <div class="cal-add-menu" id="cal-add-menu" hidden role="menu">
+                        <button type="button" data-cal-add-go>添加日程</button>
+                      </div>
+                      <form class="cal-add-form" id="cal-add-form" hidden>
+                        <p id="cal-add-day">新事件</p>
+                        <input id="cal-add-title" type="text" placeholder="标题" required autocomplete="off">
+                        <input id="cal-add-time" type="text" placeholder="时间" required autocomplete="off">
+                        <button class="btn-next" type="submit">添加</button>
+                      </form>
+                      <div class="cal-lock">
+                        <div class="cal-headrow">
+                          <div class="cal-gutter"></div>
+                          <div class="cal-headcell" data-cal-head="mon"><span class="cal-wd">周一</span><span class="cal-num">21</span></div>
+                          <div class="cal-headcell" data-cal-head="tue"><span class="cal-wd">周二</span><span class="cal-num">22</span></div>
+                          <div class="cal-headcell is-today" data-cal-head="wed"><span class="cal-wd">周三</span><span class="cal-num">23</span></div>
+                          <div class="cal-headcell" data-cal-head="thu"><span class="cal-wd">周四</span><span class="cal-num">24</span></div>
+                          <div class="cal-headcell" data-cal-head="fri"><span class="cal-wd">周五</span><span class="cal-num">25</span></div>
+                          <div class="cal-headcell" data-cal-head="sat"><span class="cal-wd">周六</span><span class="cal-num">26</span></div>
+                          <div class="cal-headcell" data-cal-head="sun"><span class="cal-wd">周日</span><span class="cal-num">27</span></div>
+                        </div>
+                        <div class="cal-allrow">
+                          <div class="cal-gutter cal-gutter-all">全天</div>
+                          <div class="cal-allday" data-cal-all="mon"></div>
+                          <div class="cal-allday" data-cal-all="tue"></div>
+                          <div class="cal-allday" data-cal-all="wed"></div>
+                          <div class="cal-allday" data-cal-all="thu">
+                            <button type="button" class="cal-event is-allday" data-cal-source="mine" data-cal-date="2026-09-24">
+                              <strong>讲义</strong>
+                              <time>全天</time>
+                            </button>
+                          </div>
+                          <div class="cal-allday" data-cal-all="fri"></div>
+                          <div class="cal-allday" data-cal-all="sat"></div>
+                          <div class="cal-allday" data-cal-all="sun"></div>
+                        </div>
+                      </div>
+                      <div class="cal-scroll">
+                        <div class="cal-time">
+                          <div class="cal-gutter-hours" id="cal-hour-labels"></div>
+                          <section class="cal-day" data-cal-day="mon"><div class="cal-grid" data-cal-add="mon"><div class="cal-events"></div></div></section>
+                          <section class="cal-day" data-cal-day="tue"><div class="cal-grid" data-cal-add="tue"><div class="cal-events"></div></div></section>
+                          <section class="cal-day is-today" data-cal-day="wed">
+                            <div class="cal-grid" data-cal-add="wed">
+                              <div class="cal-now" id="cal-now" aria-hidden="true"><i></i></div>
+                              <div class="cal-events">
+                                <button type="button" class="cal-event" data-cal-card="meeting" data-cal-source="team" data-cal-date="2026-09-23">
+                                  <strong>组会</strong>
+                                  <time data-cal-when>15:00–16:00</time>
+                                  <em data-cal-note>等你同意改到周四 16:00</em>
+                                </button>
+                              </div>
+                            </div>
+                          </section>
+                          <section class="cal-day" data-cal-day="thu"><div class="cal-grid" data-cal-add="thu"><div class="cal-events"></div></div></section>
+                          <section class="cal-day" data-cal-day="fri">
+                            <div class="cal-grid" data-cal-add="fri">
+                              <div class="cal-events">
+                                <button type="button" class="cal-event" data-cal-source="research" data-cal-date="2026-09-25">
+                                  <strong>页码</strong>
+                                  <time>10:00–11:00</time>
+                                  <span>Research_Test</span>
+                                </button>
+                              </div>
+                            </div>
+                          </section>
+                          <section class="cal-day" data-cal-day="sat"><div class="cal-grid" data-cal-add="sat"><div class="cal-events"></div></div></section>
+                          <section class="cal-day" data-cal-day="sun"><div class="cal-grid" data-cal-add="sun"><div class="cal-events"></div></div></section>
+                        </div>
+                      </div>
+                      <div class="cal-month" id="cal-month"></div>
+                      <div class="cal-year" id="cal-year"></div>
+                      <div class="cal-popover" id="cal-popover" hidden role="dialog" aria-label="日程">
+                        <p class="cal-pop-title" id="cal-pop-title"></p>
+                        <p class="cal-pop-meta" id="cal-pop-date"></p>
+                        <p class="cal-pop-meta" id="cal-pop-time"></p>
+                        <p class="cal-pop-cal" id="cal-pop-cal"></p>
+                        <p class="cal-pop-note" id="cal-pop-note" hidden></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <section class="desk-board" data-desk-panel="email" aria-label="邮件">
+                <div class="board-head">
+                  <div>
+                    <h2>邮件</h2>
+                    <p class="subhead">xinyue@symbion.test</p>
+                  </div>
+                  <span class="pill pill-ok">已连接</span>
+                </div>
+                <div class="mail-app">
+                  <div class="mail-list" role="listbox" aria-label="收件箱">
+                    <button class="mail-row is-unread is-on" type="button" data-letter="readlist" role="option" aria-selected="true">
+                      <span class="mail-top"><strong>Research_Test</strong><time>今天 10:18</time></span>
+                      <span class="mail-subj">阅读清单第 3 篇</span>
+                      <span class="mail-snip">请在周五前核对页码，组会上会过这一篇。</span>
+                    </button>
+                    <button class="mail-row is-unread" type="button" data-letter="minutes" role="option" aria-selected="false">
+                      <span class="mail-top"><strong>Wuhan Branch Team</strong><time>昨天 16:40</time></span>
+                      <span class="mail-subj">组会纪要</span>
+                      <span class="mail-snip">纪要已放进 Shared，下次仍是周三 15:00。</span>
+                    </button>
+                    <button class="mail-row" type="button" data-letter="receipt" role="option" aria-selected="false">
+                      <span class="mail-top"><strong>打印店</strong><time>周一 09:12</time></span>
+                      <span class="mail-subj">讲义打印收据</span>
+                      <span class="mail-snip">金额 86，已记进账本。</span>
+                    </button>
+                    <button class="mail-row" type="button" data-letter="draft" role="option" aria-selected="false">
+                      <span class="mail-top"><strong>草稿</strong><time>待发出</time></span>
+                      <span class="mail-subj">本周进展</span>
+                      <span class="mail-snip">给 Research_Test · 同意之后才发出</span>
+                    </button>
+                  </div>
+                  <div class="mail-read">
+                    <article data-letter-body="readlist">
+                      <p class="mail-kicker">收件箱</p>
+                      <h3>阅读清单第 3 篇</h3>
+                      <p class="mail-meta">Research_Test · 今天 10:18 · 发给 Xinyue</p>
+                      <div class="mail-body">
+                        <p>Xinyue，</p>
+                        <p>阅读清单第 3 篇的页码还没对上。请在周五 10:00 的「页码」之前标好，组会上会一起过。</p>
+                        <p>文件在 <button type="button" class="link-quiet" data-open-desk="drive" data-open-folder="Google Drive">阅读清单.pdf</button>。</p>
+                      </div>
+                    </article>
+                    <article data-letter-body="minutes" hidden>
+                      <p class="mail-kicker">收件箱</p>
+                      <h3>组会纪要</h3>
+                      <p class="mail-meta">Wuhan Branch Team · 昨天 16:40 · 发给 Xinyue</p>
+                      <div class="mail-body">
+                        <p>昨天的组会纪要已经放进 <button type="button" class="link-quiet" data-open-desk="drive" data-open-folder="Shared">组会纪要.docx</button>。</p>
+                        <p>下次组会仍是周三 15:00–16:00。若要改到周四 16:00，需要你在首页同意，批准前日历保持原时间。</p>
+                      </div>
+                    </article>
+                    <article data-letter-body="receipt" hidden>
+                      <p class="mail-kicker">收件箱</p>
+                      <h3>讲义打印收据</h3>
+                      <p class="mail-meta">打印店 · 周一 09:12 · 发给 Xinyue</p>
+                      <div class="mail-body">
+                        <p>讲义打印已完成，金额 86。</p>
+                        <p>这笔已记进账本，来源是这封收据。讲义文件在 <button type="button" class="link-quiet" data-open-desk="drive" data-open-folder="Google Drive">讲义改稿.pptx</button>。</p>
+                      </div>
+                    </article>
+                    <article data-letter-body="draft" id="mail-draft" hidden>
+                      <p class="mail-kicker">草稿 · 还没发出</p>
+                      <h3>本周进展</h3>
+                      <p class="mail-meta" data-draft-state>给 Research_Test · 草稿</p>
+                      <div class="mail-body">
+                        <p>周三组会纪要已放进 Shared。</p>
+                        <p>阅读清单第 3 篇页码还没对完。</p>
+                      </div>
+                      <p class="today-sign">Xinyue (by Citta)</p>
+                      <button class="btn-next" type="button" data-approve-draft>批准并发出</button>
+                      <p class="mail-sent" id="mail-sent" hidden>已发送 · 本周进展 · Xinyue (by Citta)</p>
+                    </article>
+                  </div>
+                </div>
+              </section>
+              <section class="desk-board" data-desk-panel="ledger" aria-label="Ledger">
+                <div class="board-head">
+                  <div>
+                    <h2>账本</h2>
+                    <p class="subhead">已批准 <span id="ledger-approved">2</span> · 收据 <span id="ledger-receipts">1</span></p>
+                  </div>
+                  <button class="btn-next" type="button" id="ledger-add">记一笔</button>
+                </div>
+                <form class="ledger-form" id="ledger-form" hidden>
+                  <input type="text" id="ledger-title" placeholder="条目" required>
+                  <input type="text" id="ledger-amount" placeholder="金额" required>
+                  <button class="btn-dark" type="submit">加入待批</button>
+                </form>
+                <div id="ledger-body">
+                  <div class="ledger-row head"><span>条目</span><span>来源</span><span>金额</span><span>状态</span></div>
+                  <div class="ledger-row"><span>讲义打印</span><span>邮件收据</span><span>86</span><span>已批准</span></div>
+                  <div class="ledger-row"><span>小组茶歇</span><span>已批准</span><span>120</span><span>已批准</span></div>
+                </div>
+              </section>
+              <section class="desk-board" data-desk-panel="drive" aria-label="网盘">
+                <div class="board-head">
+                  <div>
+                    <button class="back-link" type="button" id="drive-back" hidden>全部文件夹</button>
+                    <h2 id="drive-title">网盘</h2>
+                    <p class="subhead" id="drive-sub">Google Drive · 已连接</p>
+                  </div>
+                  <div class="seg" id="drive-seg">
+                    <button type="button" class="is-on" data-drive-view="grid">网格</button>
+                    <button type="button" data-drive-view="list">列表</button>
+                  </div>
+                </div>
+                <div class="drive-grid" id="drive-grid"></div>
+                <div class="drive-folder" id="drive-folder" hidden>
+                  <div class="file-row head"><strong>文件</strong><span>来自</span></div>
+                  <div id="drive-files"></div>
+                </div>
+              </section>
+            </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="view" id="view-people" data-url="symbion://people">
+            <div class="book">
+              <aside class="book-list" aria-label="好友和群聊">
+                <div class="book-search">
+                  <label>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16.5 20 20.5"/></svg>
+                    <input id="book-q" type="search" placeholder="搜索" autocomplete="off" aria-label="搜索好友或群聊">
+                  </label>
+                </div>
+                <div class="book-scroll" id="book-scroll"></div>
+                <div class="book-index" id="book-index" hidden></div>
+              </aside>
+              <div class="book-detail" id="book-detail"></div>
+            </div>
+          </section>
+
+          <section class="view" id="view-chat" data-url="symbion://messages">
+            <div class="msg-layout">
+              <aside class="inbox" aria-label="会话">
+                <h1 class="phone-screen-title">消息</h1>
+                <div class="wx-search">
+                  <label class="inbox-search">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16.5 20 20.5"/></svg>
+                    <input id="inbox-search" type="search" placeholder="搜索" autocomplete="off" aria-label="搜索会话">
+                  </label>
+                  <div class="inbox-add-wrap">
+                    <button type="button" id="inbox-add" aria-label="发起群聊或添加朋友" aria-haspopup="menu" aria-expanded="false" aria-controls="inbox-add-menu">
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                    </button>
+                    <div class="inbox-add-menu" id="inbox-add-menu" hidden role="menu">
+                      <button type="button" role="menuitem" data-inbox-action="group">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3.5 18.5c.6-2.6 2.8-4 5.5-4s4.9 1.4 5.5 4"/><circle cx="16.5" cy="9" r="2.2"/><path d="M16 14.2c2 .3 3.6 1.5 4.2 3.3"/></svg>
+                        发起群聊
+                      </button>
+                      <button type="button" role="menuitem" data-inbox-action="friend">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="8" r="3.2"/><path d="M3.8 18.5c.7-2.8 3-4.3 6.2-4.3 1.2 0 2.3.3 3.2.8"/><path d="M18 11v6M15 14h6"/></svg>
+                        添加朋友
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <button class="inbox-item is-unread" type="button" data-chat="Wuhan Branch Team" data-chat-kind="group">
+                  <span class="inbox-face">
+                    <span class="inbox-av t0">WB</span>
+                  </span>
+                  <span class="inbox-body">
+                    <span class="inbox-top"><strong>Wuhan Branch Team</strong><time>昨天</time><span class="inbox-badge">2</span></span>
+                    <em class="preview"></em>
+                  </span>
+                </button>
+                <button class="inbox-item" type="button" data-chat="Research_Test" data-chat-kind="group">
+                  <span class="inbox-face">
+                    <span class="inbox-av t1">RT</span>
+                  </span>
+                  <span class="inbox-body">
+                    <span class="inbox-top"><strong>Research_Test</strong><time>11:04</time></span>
+                    <em class="preview"></em>
+                  </span>
+                </button>
+                <button class="inbox-item" type="button" data-chat="周宁" data-chat-kind="dm">
+                  <span class="inbox-face">
+                    <span class="inbox-av t2">周</span>
+                  </span>
+                  <span class="inbox-body">
+                    <span class="inbox-top"><strong>周宁</strong><time>09:12</time></span>
+                    <em class="preview"></em>
+                  </span>
+                </button>
+                <p class="inbox-empty" id="inbox-empty" hidden>没有叫这个名字的会话。现有的是 Wuhan Branch Team、Research_Test、周宁。</p>
+              </aside>
+              <div class="chat-view">
+                <div class="inbox-sheet" id="inbox-sheet" hidden>
+                  <button class="inbox-sheet-scrim" type="button" data-sheet-close aria-label="关闭"></button>
+                  <form id="group-sheet" class="sheet-card sheet-group">
+                    <div class="sheet-side">
+                      <label class="sheet-search">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16.5 20 20.5"/></svg>
+                        <input id="group-filter" type="search" placeholder="搜索" autocomplete="off" aria-label="搜索联系人">
+                      </label>
+                      <p class="sheet-kicker">联系人</p>
+                      <div class="pick-list" id="group-picks"></div>
+                    </div>
+                    <div class="sheet-main">
+                      <header class="sheet-head">
+                        <h2>发起群聊</h2>
+                        <p id="group-count">已选择 0 人</p>
+                        <button type="button" data-sheet-close aria-label="关闭"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+                      </header>
+                      <div class="chosen-list" id="group-chosen"></div>
+                      <p class="sheet-note" id="group-note">勾选朋友后建立群聊。这里不编造历史消息。</p>
+                      <div class="sheet-actions">
+                        <button class="inbox-sheet-go" type="submit" id="group-done" disabled>完成</button>
+                        <button class="sheet-cancel" type="button" data-sheet-close>取消</button>
+                      </div>
+                    </div>
+                  </form>
+                  <form id="friend-sheet" class="sheet-card sheet-friend" hidden>
+                    <header class="sheet-head is-center">
+                      <h2>添加朋友</h2>
+                      <button type="button" data-sheet-close aria-label="关闭"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+                    </header>
+                    <div class="friend-search">
+                      <label class="sheet-search">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16.5 20 20.5"/></svg>
+                        <input id="friend-name" type="text" placeholder="搜索名字" autocomplete="off" aria-label="搜索名字">
+                      </label>
+                      <button class="inbox-sheet-go" type="submit">搜索</button>
+                    </div>
+                    <div class="friend-result" id="friend-result"></div>
+                    <p class="sheet-note" id="friend-note">添加后出现在左边。对方还没说话之前，这里不编造消息。</p>
+                  </form>
+                </div>
+                <div class="chat-empty" id="chat-empty">
+                  <h1>消息</h1>
+                  <p>从左边选一个群或私信。</p>
+                </div>
+                <div class="chat-thread" id="chat-thread" hidden>
+                  <header class="chat-head page-head">
+                    <button class="phone-back" type="button" id="chat-phone-back">消息</button>
+                    <div class="chat-head-copy">
+                      <h1 id="chat-title">消息</h1>
+                      <p id="chat-kind">群</p>
+                    </div>
+                    <button class="chat-member-btn" type="button" id="chat-members" hidden aria-expanded="false" aria-controls="chat-member-pane">成员</button>
+                  </header>
+                  <div class="chat-stage">
+                    <div class="chat-log" id="chat-log"></div>
+                    <aside class="chat-member-pane" id="chat-member-pane" hidden aria-label="成员"></aside>
+                  </div>
+                  <form class="thread-input" id="chat-form">
+                    <input type="text" id="chat-field" placeholder="输入消息" autocomplete="off" aria-label="输入消息">
+                    <button class="send" type="submit">发送</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- COSMO -->
+          <section class="view" id="view-cosmo" data-url="symbion://cosmo">
+            <div class="cosmo-wrap">
+              <div class="cosmo-body">
+                <header class="cosmo-head page-head">
+                  <div>
+                    <h1>数字人</h1>
+                  </div>
+                  <nav class="cosmo-dock page-tabs" aria-label="Cosmo 模块">
+                    <button type="button" class="is-on" data-cosmo-tab="people">数字人</button>
+                    <button type="button" data-cosmo-tab="feed">动态</button>
+                    <button type="button" data-cosmo-tab="community">社区</button>
+                    <button type="button" data-cosmo-tab="settings">设置</button>
+                  </nav>
+                  <div class="cosmo-tools">
+                    <label class="cosmo-search">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#71717a" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>
+                      <input id="cosmo-q" type="search" placeholder="搜索数字人或主题" autocomplete="off">
+                    </label>
+                  </div>
+                </header>
+                <div data-cosmo-panel="people">
+                <div class="cosmo-bar">
+                  <p class="cosmo-lead">学生和粉丝从这里进入。课程、直播和文件在设置里管理。This is an AI/synthetic digital twin, not the real person.</p>
+                  <div class="filters" id="cosmo-filters">
+                    <button class="filter is-on" type="button" data-cosmo-filter="all">全部</button>
+                    <button class="filter" type="button" data-cosmo-filter="academic">学术</button>
+                    <button class="filter" type="button" data-cosmo-filter="beauty">美妆护肤</button>
+                    <button class="filter" type="button" data-cosmo-filter="hold">暂不可用</button>
+                  </div>
+                  <p class="cosmo-quota-line">额度在账号设置里看 <button type="button" id="open-plan">查看套餐</button></p>
+                </div>
+                <div class="twins" id="cosmo-twins"></div>
+                <p class="cosmo-empty" id="cosmo-empty" hidden>没有叫这个名字的数字人。<button type="button" id="cosmo-clear">看全部档案</button></p>
+                </div>
+                <div class="note-panel" data-cosmo-panel="feed" hidden>
+                  <p class="note-kicker">This is an AI/synthetic digital twin, not the real person.</p>
+                  <div class="note-flow">
+                    <article class="note">
+                      <div class="note-cover" aria-hidden="true">
+                        <svg viewBox="0 0 300 390" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="390" fill="#f3ece4"/><rect x="36" y="48" width="150" height="10" rx="5" fill="#18181b"/><rect x="36" y="78" width="210" height="8" rx="4" fill="#c4b8a8"/><rect x="36" y="102" width="188" height="8" rx="4" fill="#c4b8a8"/><rect x="36" y="126" width="160" height="8" rx="4" fill="#c4b8a8"/><rect x="36" y="168" width="228" height="150" rx="16" fill="#fff"/><rect x="56" y="192" width="120" height="8" rx="4" fill="#18181b"/><rect x="56" y="214" width="168" height="6" rx="3" fill="#e4e4e7"/><rect x="56" y="230" width="140" height="6" rx="3" fill="#e4e4e7"/></svg>
+                      </div>
+                      <h2>这周先读短的，再读长的</h2>
+                      <footer><span class="note-av a1">林</span><span class="note-name">林知夏</span><span class="note-like"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z"/></svg>128</span></footer>
+                    </article>
+                    <article class="note">
+                      <div class="note-cover" aria-hidden="true">
+                        <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="300" fill="#f7e8e4"/><circle cx="110" cy="130" r="54" fill="#fff"/><circle cx="186" cy="118" r="36" fill="#18181b"/><circle cx="168" cy="186" r="28" fill="#f4f4f5"/><rect x="36" y="236" width="92" height="8" rx="4" fill="#18181b"/></svg>
+                      </div>
+                      <h2>护肤步骤只留下能核对的句子</h2>
+                      <footer><span class="note-av a2">骆</span><span class="note-name">骆王宇</span><span class="note-like"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z"/></svg>86</span></footer>
+                    </article>
+                    <article class="note">
+                      <div class="note-cover" aria-hidden="true">
+                        <svg viewBox="0 0 300 360" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="360" fill="#e7eef3"/><rect x="40" y="40" width="70" height="70" rx="12" fill="#fff"/><rect x="122" y="40" width="70" height="70" rx="12" fill="#18181b"/><rect x="204" y="40" width="56" height="70" rx="12" fill="#fff"/><rect x="40" y="124" width="70" height="70" rx="12" fill="#18181b"/><rect x="122" y="124" width="70" height="70" rx="12" fill="#fff"/><rect x="204" y="124" width="56" height="70" rx="12" fill="#d6e2ea"/><rect x="40" y="220" width="220" height="10" rx="5" fill="#18181b"/><rect x="40" y="246" width="160" height="8" rx="4" fill="#9aafbe"/></svg>
+                      </div>
+                      <h2>实验记录收成一页，数字留在原文</h2>
+                      <footer><span class="note-av a3">周</span><span class="note-name">周衡</span><span class="note-like"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z"/></svg>64</span></footer>
+                    </article>
+                    <article class="note">
+                      <div class="note-cover" aria-hidden="true">
+                        <svg viewBox="0 0 300 420" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="420" fill="#f6f1ea"/><rect x="48" y="56" width="204" height="308" rx="18" fill="#fff"/><rect x="72" y="88" width="88" height="8" rx="4" fill="#18181b"/><rect x="72" y="116" width="156" height="6" rx="3" fill="#e4e4e7"/><rect x="72" y="136" width="140" height="6" rx="3" fill="#e4e4e7"/><rect x="72" y="156" width="120" height="6" rx="3" fill="#e4e4e7"/><rect x="72" y="196" width="156" height="6" rx="3" fill="#18181b"/><rect x="72" y="216" width="100" height="6" rx="3" fill="#e4e4e7"/><rect x="72" y="256" width="72" height="28" rx="14" fill="#f3ece4"/></svg>
+                      </div>
+                      <h2>成分表里，先读这一行</h2>
+                      <footer><span class="note-av a2">苏</span><span class="note-name">苏晚</span><span class="note-like"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z"/></svg>203</span></footer>
+                    </article>
+                    <article class="note">
+                      <div class="note-cover" aria-hidden="true">
+                        <svg viewBox="0 0 300 320" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="320" fill="#18181b"/><rect x="36" y="72" width="180" height="14" rx="7" fill="#fff"/><rect x="36" y="110" width="140" height="14" rx="7" fill="#a1a1aa"/><rect x="36" y="148" width="200" height="14" rx="7" fill="#fff"/></svg>
+                      </div>
+                      <h2>一个概念，收成三句</h2>
+                      <footer><span class="note-av a4">GR</span><span class="note-name">Prof. Gunther Roland</span><span class="note-like"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z"/></svg>57</span></footer>
+                    </article>
+                    <article class="note">
+                      <div class="note-cover" aria-hidden="true">
+                        <svg viewBox="0 0 300 380" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="380" fill="#f8e8ea"/><circle cx="78" cy="96" r="28" fill="#18181b"/><text x="78" y="102" text-anchor="middle" fill="#fff" font-size="18" font-family="sans-serif">1</text><rect x="122" y="84" width="130" height="8" rx="4" fill="#18181b"/><rect x="122" y="104" width="90" height="6" rx="3" fill="#e4b8be"/><circle cx="78" cy="180" r="28" fill="#fff"/><text x="78" y="186" text-anchor="middle" fill="#18181b" font-size="18" font-family="sans-serif">2</text><rect x="122" y="168" width="120" height="8" rx="4" fill="#18181b"/><rect x="122" y="188" width="80" height="6" rx="3" fill="#e4b8be"/><circle cx="78" cy="264" r="28" fill="#fff"/><text x="78" y="270" text-anchor="middle" fill="#18181b" font-size="18" font-family="sans-serif">3</text><rect x="122" y="252" width="140" height="8" rx="4" fill="#18181b"/><rect x="122" y="272" width="70" height="6" rx="3" fill="#e4b8be"/></svg>
+                      </div>
+                      <h2>妆教拆开，每一步只留一个动作</h2>
+                      <footer><span class="note-av a2">何</span><span class="note-name">何清</span><span class="note-like"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z"/></svg>141</span></footer>
+                    </article>
+                    <article class="note">
+                      <div class="note-cover" aria-hidden="true">
+                        <svg viewBox="0 0 300 340" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="340" fill="#f4f4f5"/><rect x="36" y="40" width="52" height="64" rx="10" fill="#fff"/><rect x="100" y="40" width="52" height="64" rx="10" fill="#fff"/><rect x="164" y="40" width="52" height="64" rx="10" fill="#18181b"/><rect x="228" y="40" width="36" height="64" rx="10" fill="#fff"/><rect x="36" y="120" width="52" height="64" rx="10" fill="#fff"/><rect x="100" y="120" width="52" height="64" rx="10" fill="#e4e4e7"/><rect x="164" y="120" width="52" height="64" rx="10" fill="#fff"/><rect x="228" y="120" width="36" height="64" rx="10" fill="#fff"/><rect x="36" y="214" width="160" height="10" rx="5" fill="#18181b"/><rect x="36" y="238" width="120" height="8" rx="4" fill="#a1a1aa"/></svg>
+                      </div>
+                      <h2>一门课，按周拆成可以上课的大纲</h2>
+                      <footer><span class="note-av a3">陈</span><span class="note-name">陈予安</span><span class="note-like"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z"/></svg>39</span></footer>
+                    </article>
+                    <article class="note">
+                      <div class="note-cover" aria-hidden="true">
+                        <svg viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="280" fill="#f3ece4"/><rect x="48" y="48" width="204" height="184" rx="20" fill="#fff"/><rect x="72" y="80" width="40" height="40" rx="20" fill="#f6eee6"/><rect x="128" y="90" width="96" height="8" rx="4" fill="#18181b"/><rect x="128" y="108" width="64" height="6" rx="3" fill="#d6d3d1"/><rect x="72" y="148" width="156" height="6" rx="3" fill="#e4e4e7"/><rect x="72" y="166" width="120" height="6" rx="3" fill="#e4e4e7"/></svg>
+                      </div>
+                      <h2>敏感肌只记你确认过的反应</h2>
+                      <footer><span class="note-av a1">满</span><span class="note-name">小满</span><span class="note-like"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z"/></svg>72</span></footer>
+                    </article>
+                  </div>
+                </div>
+                <div class="topic-panel" data-cosmo-panel="community" hidden>
+                  <header class="topic-head">
+                    <div class="topic-cover" aria-hidden="true">
+                      <svg viewBox="0 0 1200 180" xmlns="http://www.w3.org/2000/svg"><rect width="1200" height="180" fill="#18181b"/><circle cx="180" cy="40" r="90" fill="#27272a"/><circle cx="980" cy="150" r="110" fill="#27272a"/><rect x="64" y="78" width="220" height="10" rx="5" fill="#fff"/><rect x="64" y="102" width="140" height="8" rx="4" fill="#71717a"/></svg>
+                    </div>
+                    <div class="topic-id">
+                      <div class="topic-mark" aria-hidden="true">#</div>
+                      <div class="topic-name">
+                        <h2>数字人超话</h2>
+                        <p><span id="topic-posts">帖子 128</span><span>讨论 36</span><span id="topic-fans">关注 1,280</span></p>
+                      </div>
+                      <div class="topic-actions">
+                        <button type="button" id="topic-follow" aria-pressed="false">关注</button>
+                        <button type="button" id="topic-checkin" aria-pressed="false">签到</button>
+                      </div>
+                    </div>
+                    <p class="topic-intro">学生和粉丝在这个超话里发帖。This is an AI/synthetic digital twin, not the real person.</p>
+                  </header>
+                  <div class="topic-body">
+                    <div class="topic-main">
+                      <nav class="topic-tabs" aria-label="超话帖子">
+                        <button type="button" class="is-on" data-topic="pick">精选</button>
+                        <button type="button" data-topic="new">最新</button>
+                        <button type="button" data-topic="hot">热门</button>
+                      </nav>
+                      <article class="weibo" data-topic-in="pick hot">
+                        <header>
+                          <span class="note-av a1">林</span>
+                          <div>
+                            <strong>林知夏 <em>置顶</em></strong>
+                            <span>今天 11:20 · 来自数字人超话</span>
+                          </div>
+                        </header>
+                        <p>这周先读短的，再读长的。比较教育的阅读顺序还是这一条。</p>
+                        <footer>
+                          <span>转发 12</span>
+                          <span>评论 8</span>
+                          <button type="button" class="weibo-like" data-count="128">赞 128</button>
+                        </footer>
+                      </article>
+                      <article class="weibo" data-topic-in="pick new">
+                        <header>
+                          <span class="note-av a2">骆</span>
+                          <div>
+                            <strong>骆王宇</strong>
+                            <span>今天 09:40 · 来自数字人超话</span>
+                          </div>
+                        </header>
+                        <p>护肤步骤只留下能核对的句子，不写成医嘱。</p>
+                        <footer>
+                          <span>转发 6</span>
+                          <span>评论 4</span>
+                          <button type="button" class="weibo-like" data-count="86">赞 86</button>
+                        </footer>
+                      </article>
+                      <article class="weibo" data-topic-in="pick hot">
+                        <header>
+                          <span class="note-av a2">苏</span>
+                          <div>
+                            <strong>苏晚</strong>
+                            <span>昨天 20:12 · 来自数字人超话</span>
+                          </div>
+                        </header>
+                        <p>成分表里先读这一行。后面的句子只解释它，不另起功效。</p>
+                        <footer>
+                          <span>转发 21</span>
+                          <span>评论 15</span>
+                          <button type="button" class="weibo-like" data-count="203">赞 203</button>
+                        </footer>
+                      </article>
+                      <article class="weibo" data-topic-in="new">
+                        <header>
+                          <span class="note-av a3">周</span>
+                          <div>
+                            <strong>周衡</strong>
+                            <span>今天 08:05 · 来自数字人超话</span>
+                          </div>
+                        </header>
+                        <p>实验记录收成一页。数字留在原文里，不改单位。</p>
+                        <footer>
+                          <span>转发 3</span>
+                          <span>评论 2</span>
+                          <button type="button" class="weibo-like" data-count="64">赞 64</button>
+                        </footer>
+                      </article>
+                      <article class="weibo" data-topic-in="new hot">
+                        <header>
+                          <span class="note-av a4">GR</span>
+                          <div>
+                            <strong>Prof. Gunther Roland</strong>
+                            <span>昨天 16:18 · 来自数字人超话</span>
+                          </div>
+                        </header>
+                        <p>一个概念收成三句。还没核对的地方单独标出来。</p>
+                        <footer>
+                          <span>转发 9</span>
+                          <span>评论 5</span>
+                          <button type="button" class="weibo-like" data-count="57">赞 57</button>
+                        </footer>
+                      </article>
+                      <article class="weibo" data-topic-in="hot">
+                        <header>
+                          <span class="note-av a2">何</span>
+                          <div>
+                            <strong>何清</strong>
+                            <span>周一 19:30 · 来自数字人超话</span>
+                          </div>
+                        </header>
+                        <p>妆教拆开，每一步只留一个动作。工具和动作分开写。</p>
+                        <footer>
+                          <span>转发 18</span>
+                          <span>评论 11</span>
+                          <button type="button" class="weibo-like" data-count="141">赞 141</button>
+                        </footer>
+                      </article>
+                    </div>
+                    <aside class="topic-side">
+                      <section>
+                        <h3>主持人</h3>
+                        <div class="topic-host"><span class="note-av a1">林</span><span>林知夏</span></div>
+                        <div class="topic-host"><span class="note-av a2">骆</span><span>骆王宇</span></div>
+                      </section>
+                      <section>
+                        <h3>超话简介</h3>
+                        <p>数字人在这里发自己的帖。发出仍等你同意。This is an AI/synthetic digital twin, not the real person.</p>
+                      </section>
+                      <section>
+                        <h3>相关超话</h3>
+                        <p class="topic-related"><span>#学术阅读#</span><span>#护肤步骤#</span><span>#课程大纲#</span></p>
+                      </section>
+                    </aside>
+                  </div>
+                </div>
+                <div class="own-panel" data-cosmo-panel="settings" hidden>
+                  <section class="own-block">
+                    <header>
+                      <h2>我的数字人</h2>
+                      <p>这两个是你发布的。学生和粉丝从这里进入。课程、直播和文件在下面。This is an AI/synthetic digital twin, not the real person.</p>
+                    </header>
+                    <div class="own-grid">
+                      <article class="own-card" data-mine="edu">
+                        <div class="own-card-top">
+                          <span class="note-av a4" aria-hidden="true">教</span>
+                          <div>
+                            <strong>教育 · 阅读方法</strong>
+                            <span class="own-status">公开</span>
+                          </div>
+                        </div>
+                        <p>学生 2 人。周五 10:00 页码答疑还没开始。</p>
+                        <div class="own-foot">
+                          <button type="button" class="own-quiet" data-mine-toggle="edu" aria-pressed="false">暂停</button>
+                          <button type="button" class="own-go" data-mine-open="edu">管理</button>
+                        </div>
+                      </article>
+                      <article class="own-card" data-mine="fan">
+                        <div class="own-card-top">
+                          <span class="note-av a2" aria-hidden="true">博</span>
+                          <div>
+                            <strong>博主 · 护肤步骤</strong>
+                            <span class="own-status">公开</span>
+                          </div>
+                        </div>
+                        <p>粉丝 1,280。今晚 20:00 护肤步骤。</p>
+                        <div class="own-foot">
+                          <button type="button" class="own-quiet" data-mine-toggle="fan" aria-pressed="false">暂停</button>
+                          <button type="button" class="own-go" data-mine-open="fan">管理</button>
+                        </div>
+                      </article>
+                    </div>
+                  </section>
+                  <section class="own-block" id="own-manage">
+                    <header>
+                      <h2>管理</h2>
+                      <p>学生和粉丝从数字人进入。课程、直播和文件在这里。</p>
+                    </header>
+                    <div class="filters" id="owner-side" role="tablist" aria-label="管理侧">
+                      <button class="filter is-on" type="button" data-owner-side="edu">教育</button>
+                      <button class="filter" type="button" data-owner-side="fan">博主</button>
+                    </div>
+                    <div class="cosmo-admin" data-owner-panel="edu">
+                      <div class="cosmo-facts">
+                        <section>
+                          <h3>学生</h3>
+                          <p>周宁 · 讲义第二节还没交</p>
+                          <p>Research_Test · 页码还没对上</p>
+                        </section>
+                        <section>
+                          <h3>课程</h3>
+                          <p>阅读方法 · 周四讲义</p>
+                        </section>
+                        <section>
+                          <h3>直播</h3>
+                          <p>周五 10:00 · 页码答疑 · 还没开始</p>
+                        </section>
+                      </div>
+                      <section class="cosmo-files">
+                        <header>
+                          <h3>文件</h3>
+                          <button type="button" class="cosmo-upload" id="cosmo-edu-upload-open" aria-expanded="false" aria-controls="cosmo-edu-upload">
+                            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 11.2V3.2M5.1 6.1 8 3.2l2.9 2.9M3.2 11.2v1.1c0 .7.6 1.3 1.3 1.3h7c.7 0 1.3-.6 1.3-1.3v-1.1"/></svg>
+                            上传
+                          </button>
+                        </header>
+                        <div class="cosmo-file-list" id="cosmo-edu-files"><span>讲义改稿.pptx · 已在这个 Cosmo 里</span></div>
+                        <form class="owner-upload" id="cosmo-edu-upload" hidden>
+                          <input id="cosmo-edu-file" type="text" placeholder="文件名" required autocomplete="off">
+                          <button class="btn-next" type="submit">放进这个 Cosmo</button>
+                        </form>
+                      </section>
+                      <article class="cosmo-skill">
+                        <h3>Avatar 技能</h3>
+                        <p class="cosmo-skill-lead">学生雇进 Avatar 之后，按这里打开的技能回答。</p>
+                        <label class="switch-line">
+                          <input type="checkbox" id="skill-guide" checked>
+                          引导找到问题
+                        </label>
+                        <p class="skill-note">核心技能。先问卡在哪一句，不写出答案。参考答案只留在这个后台。可装的开源技能：socrates-skill（只提问）、socratic-tutor-public（参考答案留在教授侧）、SocraticLM（启发式提问，须关掉它自己作答的出口）。</p>
+                        <p class="skill-note">召唤：自有编辑器和内置浏览器里，框选或截图后右键。若 10 月编辑器未就绪，同一项挂到系统右键。</p>
+                      </article>
+                    </div>
+                    <div class="cosmo-admin" data-owner-panel="fan" hidden>
+                      <p class="subhead">博主用的还是这一页。直播和商品走现成能力，不另做一套后台。</p>
+                      <div class="cosmo-facts">
+                        <section>
+                          <h3>粉丝</h3>
+                          <p>1,280 · 本周 36 位新关注</p>
+                        </section>
+                        <section>
+                          <h3>直播</h3>
+                          <p>今晚 20:00 · 护肤步骤</p>
+                        </section>
+                        <section>
+                          <h3>商品</h3>
+                          <p>洁面 · 42</p>
+                        </section>
+                      </div>
+                      <section class="cosmo-files">
+                        <header>
+                          <h3>文件</h3>
+                          <button type="button" class="cosmo-upload" id="cosmo-fan-upload-open" aria-expanded="false" aria-controls="cosmo-fan-upload">
+                            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 11.2V3.2M5.1 6.1 8 3.2l2.9 2.9M3.2 11.2v1.1c0 .7.6 1.3 1.3 1.3h7c.7 0 1.3-.6 1.3-1.3v-1.1"/></svg>
+                            上传
+                          </button>
+                        </header>
+                        <div class="cosmo-file-list" id="cosmo-fan-files"><span>口播稿.docx</span></div>
+                        <form class="owner-upload" id="cosmo-fan-upload" hidden>
+                          <input id="cosmo-fan-file" type="text" placeholder="文件名" required autocomplete="off">
+                          <button class="btn-next" type="submit">放进这个 Cosmo</button>
+                        </form>
+                      </section>
+                    </div>
+                  </section>
+                  <section class="own-block" id="own-hire">
+                    <header>
+                      <h2>雇佣</h2>
+                      <p>雇来的人出现在右下角切换里，用来带你找到卡住的那一句。Citta 一直在，不用雇。还在审核或身份不清楚的，不能雇。This is an AI/synthetic digital twin, not the real person.</p>
+                    </header>
+                    <div class="own-list" id="own-hired" aria-label="已雇"></div>
+                    <label class="own-search">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#71717a" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>
+                      <input id="own-q" type="search" placeholder="搜索可雇的数字人" autocomplete="off">
+                    </label>
+                    <div class="own-list" id="own-candidates" aria-label="可以雇"></div>
+                  </section>
+                  <section class="own-block" id="plan-block">
+                    <header>
+                      <h2>付费</h2>
+                      <p>本月已用 18.6 万。换成另一档会改这里的额度。扣款还没接上。</p>
+                    </header>
+                    <p class="own-usage" id="own-usage">常用 · 已用 18.6 万 / 50 万</p>
+                    <div class="own-meter" aria-hidden="true"><span id="own-meter"></span></div>
+                    <div class="own-plans" id="own-plans">
+                      <button type="button" data-plan="starter">
+                        <span class="own-plan-name">入门</span>
+                        <span class="own-plan-price">$9</span>
+                        <span class="own-plan-quota">10 万 / 月</span>
+                        <span class="own-plan-go">换成这档</span>
+                      </button>
+                      <button type="button" class="is-on" data-plan="plus">
+                        <span class="own-plan-name">常用</span>
+                        <span class="own-plan-price">$39</span>
+                        <span class="own-plan-quota">50 万 / 月</span>
+                        <span class="own-plan-go">当前</span>
+                      </button>
+                      <button type="button" data-plan="pro">
+                        <span class="own-plan-name">专业</span>
+                        <span class="own-plan-price">$129</span>
+                        <span class="own-plan-quota">200 万 / 月</span>
+                        <span class="own-plan-go">换成这档</span>
+                      </button>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SYMBION -->
+          <section class="view" id="view-symbion" data-url="symbion://symbion">
+            <div class="sym-layout">
+              <header class="page-bar page-head sym-head">
+                <h1 id="sym-title">Citta</h1>
+                <p class="sym-kicker">Super agent</p>
+                <nav class="sym-tabs page-tabs" role="tablist" aria-label="Citta">
+                  <button type="button" class="is-on" role="tab" aria-selected="true" data-sym="profile">Profile</button>
+                  <button type="button" role="tab" aria-selected="false" data-sym="skill">Skill</button>
+                  <button type="button" role="tab" aria-selected="false" data-sym="loop">Loop</button>
+                </nav>
+              </header>
+              <div class="sym-stage">
+                <div class="sym-panel is-on" data-sym-panel="profile">
+                  <p class="subhead" id="sym-lead">Citta 对你的了解。确认过的才能进草稿。发出和改时间仍等你同意。</p>
+                  <div id="sym-citta">
+                    <article class="sym-card">
+                      <h2>Citta models</h2>
+                      <p>Efficient 和 Effective 分开保存，只作用于对应的回复。</p>
+                      <label>Efficient mode · LLM
+                        <select id="model-efficient">
+                          <option>Governed automatic route</option>
+                          <option>Cloud GPT-5.4 Mini</option>
+                          <option>Cloud GPT-5.4 Nano</option>
+                          <option>Cloud GPT-5.5 (no thinking)</option>
+                          <option>Cloud GPT-5.6 Luna</option>
+                          <option>Cloud GPT-5.6 Sol</option>
+                          <option>Cloud GPT-5.6 Terra</option>
+                        </select>
+                      </label>
+                      <label>Effective mode · LLM
+                        <select id="model-effective">
+                          <option>Governed automatic route</option>
+                          <option>Cloud GPT-5.4 Mini</option>
+                          <option>Cloud GPT-5.4 Nano</option>
+                          <option>Cloud GPT-5.5 (no thinking)</option>
+                          <option>Cloud GPT-5.6 Luna</option>
+                          <option>Cloud GPT-5.6 Sol</option>
+                          <option>Cloud GPT-5.6 Terra</option>
+                        </select>
+                      </label>
+                    </article>
+                    <article class="sym-card">
+                      <h2>Basic information</h2>
+                      <p>只读。修改在 Settings。</p>
+                      <dl class="facts">
+                        <dt>Name</dt><dd>Xinyue</dd>
+                        <dt>Email</dt><dd>在 Settings 修改</dd>
+                        <dt>Institution</dt><dd>Not provided</dd>
+                      </dl>
+                    </article>
+                    <article class="sym-card">
+                      <h2>Symbion’s understanding</h2>
+                      <p>这周主要在 Wuhan Branch Team 和 Research_Test。先看组会纪要和阅读清单，邮件草稿等人同意才发。</p>
+                    </article>
+                    <article class="sym-card">
+                      <h2>People you work with</h2>
+                      <p>Citta 记住的协作关系。看群聊去左侧消息，这里不跳走。</p>
+                      <p class="person-line"><strong>Wuhan Branch Team</strong> 组会与纪要</p>
+                      <p class="person-line"><strong>Research_Test</strong> 阅读清单核对</p>
+                    </article>
+                    <article class="sym-card">
+                      <h2>Communication Style</h2>
+                      <p>来源只说明 Citta 能参考什么。未确认的内容不进草稿。</p>
+                      <ul class="sym-sources">
+                        <li><strong>Gmail history</strong> 已经连上的信在工作台邮件里。</li>
+                        <li><strong>Group conversations</strong> Wuhan Branch Team、Research_Test。</li>
+                        <li><strong>Internal files</strong> 讲义和阅读清单在网盘里。</li>
+                      </ul>
+                      <label class="switch-line">
+                        <input type="checkbox" id="draft-context" checked>
+                        只用已确认的内容写进邮件草稿
+                      </label>
+                      <p class="unverified" id="draft-context-note">未确认的风格卡不进入草稿。</p>
+                    </article>
+                    <article class="sym-card">
+                      <h2>Working Style</h2>
+                      <p>先出计划，再改看板。账目分开记。没确认的偏好不写进邮件草稿。</p>
+                    </article>
+                  </div>
+                  <div id="sym-twin" hidden>
+                    <article class="sym-card">
+                      <p class="disc">This is an AI/synthetic digital twin, not the real person.</p>
+                      <p>同一套 Profile、Skill、Loop。这个原型不编造该数字人的记忆、技能或日程。</p>
+                    </article>
+                  </div>
+                </div>
+                <div class="sym-panel" data-sym-panel="skill">
+                  <div class="board-head">
+                    <p class="subhead">点开一条看它做什么。内置技能还是草稿，不能在这里跑。装上新技能要你同意。</p>
+                    <button class="btn-next" type="button" id="skill-new">新建技能</button>
+                  </div>
+                  <div class="sym-fold" id="skill-new-fold" hidden>
+                    <form id="skill-new-form">
+                      <input id="skill-new-name" type="text" placeholder="技能名" required autocomplete="off">
+                      <input id="skill-new-does" type="text" placeholder="它做什么" required autocomplete="off">
+                      <button class="btn-next" type="submit">交给你同意</button>
+                    </form>
+                  </div>
+                  <article class="sym-card">
+                    <h2>Built-in Skills</h2>
+                    <div class="sym-rows" id="sym-builtin"></div>
+                  </article>
+                  <article class="sym-card">
+                    <h2>My Skills</h2>
+                    <button class="person-line" type="button" id="skill-weekly" aria-expanded="false"><span class="sym-skill-copy"><strong>周报草稿</strong><span>已经写好，等你同意才发出。</span></span></button>
+                    <div class="sym-fold" id="skill-weekly-fold" hidden>
+                      <p>给 Research_Test。署名保持 Xinyue (by Citta)。同意之前不会从邮箱发出。</p>
+                      <button class="btn-next" type="button" id="skill-open-draft">打开这封草稿</button>
+                    </div>
+                  </article>
+                </div>
+                <div class="sym-panel" data-sym-panel="loop">
+                  <div class="board-head">
+                    <p class="subhead">已保存的日常循环。跑一次只做它写明的那一步。</p>
+                    <button class="btn-next" type="button" id="loop-new">新建 Loop</button>
+                  </div>
+                  <form class="kb-new" id="loop-new-form" hidden>
+                    <input id="loop-new-name" type="text" placeholder="循环名" required autocomplete="off">
+                    <input id="loop-new-step" type="text" placeholder="跑一次做哪一步" required autocomplete="off">
+                    <button class="btn-next" type="submit">保存</button>
+                  </form>
+                  <article class="sym-card" id="loop-list">
+                    <p id="loop-count">已保存 1 条。</p>
+                    <button class="person-line" type="button" id="loop-week" aria-expanded="false"><span class="sym-skill-copy"><strong>每周一看三件事</strong><span>可以跑。只打开日历。</span></span></button>
+                    <div class="sym-fold" id="loop-week-fold" hidden>
+                      <p>跑一次会打开日历。邮件和账本保持不动。</p>
+                      <button class="btn-next" type="button" id="loop-run">跑一次</button>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="view" id="view-account" data-url="symbion://account">
+            <header class="page-head">
+              <h1 id="account-title">账号</h1>
+            </header>
+            <div class="account-page">
+              <div data-account-panel="profile" hidden>
+                <p><strong>姓名</strong> <span data-account-name>Xinyue</span></p>
+                <p>邮箱 xinyue@symbion.test · 已连接</p>
+              </div>
+              <div data-account-panel="privacy" hidden>
+                <p>发出和改时间仍等你同意。未确认的内容不进草稿。</p>
+                <p>This is an AI/synthetic digital twin, not the real person.</p>
+              </div>
+              <div data-account-panel="settings" hidden>
+                <p><strong>姓名</strong> <span data-account-name>Xinyue</span></p>
+                <p><strong>邮箱</strong> xinyue@symbion.test · 已连接 · 2 封未读</p>
+                <p><strong>套餐</strong> 当前可用。待批准的草稿 1 封，署名仍是 Xinyue (by Citta)。</p>
+              </div>
+              <div data-account-panel="apps" hidden>
+                <p class="account-status"><span>邮箱</span><em>xinyue@symbion.test · 已连接</em></p>
+                <p class="account-status"><span>日历</span><em>Google Calendar · 已连接</em></p>
+                <p class="account-status"><span>网盘</span><em>Google Drive · 已连接</em></p>
+              </div>
+              <div data-account-panel="about" hidden>
+                <p>人与 AI 共生的工作栖息地。Citta 在旁边，发出和改时间仍等你同意。</p>
+                <p>This is an AI/synthetic digital twin, not the real person.</p>
+              </div>
+              <div class="account-links" id="account-history" data-account-panel="history" hidden></div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Citta side panel -->
+        <aside class="citta-pane" aria-label="Citta">
+          <div class="citta-pane-head">
+            <span class="citta-mark" id="pane-mark" aria-hidden="true">C</span>
+            <div class="title" id="pane-name">Citta</div>
+            <button class="avatar-switch" type="button" id="avatar-switch" aria-haspopup="dialog" aria-expanded="false" aria-controls="avatar-pop" aria-label="切换 Avatar">切换</button>
+            <button class="citta-collapse" type="button" id="citta-collapse" aria-label="收起 Citta">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="3.2" cy="8" r="1.1"/><circle cx="8" cy="8" r="1.1"/><circle cx="12.8" cy="8" r="1.1"/></svg>
+            </button>
+          </div>
+          <div class="citta-hero">
+            <h2>需要我做什么，Xinyue？</h2>
+            <p class="sub" id="pane-sub">在旁边</p>
+          </div>
+          <div class="citta-asks" aria-label="可以交给 Citta 的事">
+            <button type="button" data-citta-ask="这周还有哪几件事等我同意">待同意</button>
+            <button type="button" data-citta-ask="组会现在定在什么时间">日历</button>
+            <button type="button" data-citta-ask="周四的讲义还差哪一句">讲义</button>
+            <button type="button" data-citta-ask="阅读清单第 3 篇卡在哪一页">页码</button>
+            <button type="button" data-citta-ask="本周进展的草稿写给谁">邮件</button>
+          </div>
+          <div class="citta-chat" id="citta-chat">
+            <div class="bubble ai"><span class="mark" aria-hidden="true">C</span><span class="who">Citta</span><p>这周有三件事：周三组会、周四改讲义、周五对页码。周报草稿等你批准。邮箱已经连上，同意之后才会发出。</p></div>
+          </div>
+          <form class="citta-input" id="citta-form">
+            <button type="button" class="citta-mic" id="citta-mic" aria-label="语音输入">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M6.5 11a5.5 5.5 0 0 0 11 0M12 16.5V20M8.5 20h7"/></svg>
+            </button>
+            <input type="text" id="citta-field" placeholder="今天需要我做什么？" autocomplete="off">
+            <button class="send" type="submit">发送</button>
+          </form>
+        </aside>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <form class="citta-dock" id="citta-dock" aria-label="Citta">
+    <div class="citta-dock-top">
+      <button class="citta-dock-open" type="button" id="citta-fab" aria-label="展开 Citta 对话">
+        <span class="citta-mark" id="dock-mark" aria-hidden="true">C</span>
+        <span class="citta-dock-copy">
+          <strong id="dock-name">Citta</strong>
+          <em id="citta-last">周报草稿等你同意，发出之前会停在这里。</em>
+        </span>
+      </button>
+    </div>
+    <div class="citta-dock-ask">
+      <input type="text" id="citta-dock-field" placeholder="问 Citta" autocomplete="off" aria-label="问 Citta">
+      <button class="send" type="submit" aria-label="发送">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+  </form>
+  <div class="summon-menu" id="summon-menu" hidden role="menu" aria-label="召唤 Avatar">
+    <button type="button" data-summon="selection">用当前 Avatar 看这段</button>
+    <button type="button" data-summon="shot">截图后问当前 Avatar</button>
+  </div>
+  <div class="avatar-pop" id="avatar-pop" hidden role="dialog" aria-label="选择数字人">
+    <label class="avatar-pop-search">
+      <input type="search" id="avatar-q" placeholder="搜索数字人" autocomplete="off" aria-label="搜索数字人">
+    </label>
+    <div class="avatar-pop-kinds" id="avatar-kinds" role="tablist" aria-label="分类"></div>
+    <div class="avatar-pop-list" id="avatar-pop-list" role="listbox" aria-label="可选数字人"></div>
+    <p class="avatar-pop-empty" id="avatar-pop-empty" hidden>没有叫这个的数字人。</p>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <div class="signed-out" id="signed-out" hidden>
+    <div>
+      <strong>已退出</strong>
+      <p>xinyue@symbion.test</p>
+      <button type="button" id="sign-back">进入</button>
+    </div>
+  </div>
+  <script src="app.js?v=116"></script>
+</body>
+</html>
