@@ -4454,14 +4454,16 @@
     body.dataset.slideField = "body";
     body.setAttribute("aria-label", "幻灯片正文");
     card.append(title, body);
+    stage.appendChild(card);
     const foot = node("div", "docs-deck-foot");
     foot.append(node("span", "", `${doc.slide + 1} / ${doc.slides.length}`));
     const del = node("button", "", "删除这页");
     del.type = "button";
     del.dataset.docsAct = "del-slide";
     foot.appendChild(del);
-    stage.append(card, foot);
-    deck.append(film, stage);
+    const main = node("div", "docs-deck-main");
+    main.append(stage, foot);
+    deck.append(film, main);
     return deck;
   }
 

@@ -15255,9 +15255,9 @@ button:active,
   .docs-page h1 { font-size: 24px; }
   .docs-new-menu { right: 0; left: auto; width: min(280px, 86vw); }
   .docs-sheet-bar { flex-wrap: wrap; height: auto; }
-  .docs-deck { grid-template-columns: 1fr; }
-  .docs-film { flex-direction: row; overflow-x: auto; }
-  .docs-thumb { width: 120px; }
+  .docs-deck { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); }
+  .docs-film { flex-direction: row; overflow-x: auto; max-height: 112px; }
+  .docs-thumb { width: 120px; flex: none; }
 }
 
 .docs-new-wrap { position: relative; }
@@ -15298,7 +15298,18 @@ button:active,
 .docs-new-menu strong { font-size: 14px; font-weight: 500; }
 .docs-new-menu em { font-style: normal; font-size: 12px; color: #8f959e; }
 .docs-scroll.is-bleed { padding: 0; background: #fff; }
-.docs-scroll.is-deck { padding: 0; background: #f2f3f5; }
+.docs-scroll.is-deck {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  background: #f2f3f5;
+}
+.docs-scroll.is-deck #docs-stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
 .docs-tools { flex-wrap: wrap; align-items: center; }
 .docs-tools select,
 .docs-tools input[type="color"] {
@@ -15360,8 +15371,30 @@ button:active,
 .docs-grid td.is-on { outline: 2px solid #09090b; outline-offset: -2px; }
 .docs-grid input { width: 100%; height: 28px; border: 0; padding: 0 8px; background: transparent; font: inherit; color: inherit; }
 .docs-grid input.is-bold { font-weight: 700; }
-.docs-deck { display: grid; grid-template-columns: 168px 1fr; min-height: 100%; }
-.docs-film { display: flex; flex-direction: column; gap: 8px; padding: 16px 12px; background: #fff; border-right: 1px solid #ececee; }
+.docs-deck {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  height: 100%;
+}
+.docs-film {
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 12px;
+  background: #fff;
+  border-right: 1px solid #ececee;
+}
+.docs-deck-main {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: #f2f3f5;
+}
 .docs-thumb,
 .docs-thumb-add {
   display: flex;
@@ -15380,20 +15413,57 @@ button:active,
 .docs-thumb strong { font-size: 13px; font-weight: 500; }
 .docs-thumb.is-on { border-color: #09090b; }
 .docs-thumb-add { min-height: 36px; color: #1f2329; }
-.docs-deck-stage { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 28px 20px; }
+.docs-deck-stage {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  padding: 16px 20px;
+  container-type: size;
+}
 .docs-slide {
-  width: min(720px, 100%);
+  width: min(100cqw, calc(100cqh * 16 / 9));
   aspect-ratio: 16 / 9;
+  max-height: 100%;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 48px 56px;
+  padding: clamp(28px, 5cqw, 64px) clamp(32px, 6cqw, 72px);
   background: #fff;
-  box-shadow: 0 8px 24px rgba(31, 35, 41, .08);
+  box-shadow: 0 8px 28px rgba(31, 35, 41, .08);
+  container-type: inline-size;
 }
-.docs-slide-title { border: 0; font-size: 32px; font-weight: 600; letter-spacing: -.03em; }
-.docs-slide-body { flex: 1; border: 0; resize: none; font-size: 18px; line-height: 1.6; }
-.docs-deck-foot { display: flex; align-items: center; gap: 12px; color: #646a73; font-size: 13px; }
+.docs-slide-title {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  font-size: clamp(24px, 4.4cqw, 48px);
+  font-weight: 600;
+  letter-spacing: -.03em;
+}
+.docs-slide-body {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  border: 0;
+  resize: none;
+  background: transparent;
+  font-size: clamp(16px, 2.2cqw, 24px);
+  line-height: 1.6;
+}
+.docs-deck-foot {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 40px;
+  padding: 0 16px;
+  border-top: 1px solid #ececee;
+  background: #fff;
+  color: #646a73;
+  font-size: 13px;
+}
 .docs-deck-foot button { height: 28px; padding: 0 10px; border: 1px solid #e4e5e7; border-radius: 6px; background: #fff; }
 .docs-mind, .docs-flow, .docs-form, .docs-folder, .docs-base { display: flex; flex-direction: column; gap: 12px; }
 .docs-mind-center, .docs-mind-branches input, .docs-flow input, .docs-question input, .docs-base input {
