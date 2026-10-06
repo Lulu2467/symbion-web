@@ -4130,11 +4130,65 @@
     if (grid) grid.hidden = false;
   });
 
+  const docTypes = [
+    { type: "doc", group: "办公", label: "文字文档", hint: "Word", mark: "W", tone: "doc", kind: "文", base: "未命名文档" },
+    { type: "sheet", group: "办公", label: "表格", hint: "Excel", mark: "X", tone: "sheet", kind: "表", base: "未命名表格" },
+    { type: "deck", group: "办公", label: "演示文稿", hint: "PPT", mark: "P", tone: "deck", kind: "演", base: "未命名演示" },
+    { type: "pdf", group: "办公", label: "PDF", hint: "页面", mark: "PDF", tone: "pdf", kind: "PDF", base: "未命名 PDF" },
+    { type: "smart-doc", group: "智能", label: "智能文档", hint: "提纲", mark: "智", tone: "doc", kind: "文", base: "未命名智能文档" },
+    { type: "smart-sheet", group: "智能", label: "智能表格", hint: "汇总", mark: "智", tone: "sheet", kind: "表", base: "未命名智能表格" },
+    { type: "mind", group: "图形", label: "思维导图", hint: "分支", mark: "图", tone: "mind", kind: "图", base: "未命名导图" },
+    { type: "flow", group: "图形", label: "流程图", hint: "步骤", mark: "流", tone: "flow", kind: "流", base: "未命名流程图" },
+    { type: "board", group: "图形", label: "白板", hint: "便签", mark: "板", tone: "board", kind: "板", base: "未命名白板" },
+    { type: "form", group: "收集", label: "表单", hint: "题目", mark: "单", tone: "form", kind: "单", base: "未命名表单" },
+    { type: "collect", group: "收集", label: "收集表", hint: "填写", mark: "收", tone: "form", kind: "收", base: "未命名收集表" },
+    { type: "base", group: "收集", label: "多维表格", hint: "记录", mark: "多", tone: "base", kind: "多", base: "未命名多维表格" },
+    { type: "folder", group: "整理", label: "文件夹", hint: "收纳", mark: "夹", tone: "folder", kind: "夹", base: "未命名文件夹" },
+  ];
+
+  function typeSpec(type) {
+    return docTypes.find((item) => item.type === type) || docTypes[0];
+  }
+
+  function blankCells(rows, cols, header) {
+    const cells = [];
+    for (let r = 0; r < rows; r += 1) {
+      const row = [];
+      for (let c = 0; c < cols; c += 1) row.push(r === 0 && header ? header[c] || "" : "");
+      cells.push(row);
+    }
+    return cells;
+  }
+
+  function padCells(doc, rows, cols) {
+    const width = Math.max(cols, ...(doc.cells || []).map((row) => row.length), 1);
+    const height = Math.max(rows, (doc.cells || []).length, 1);
+    const cells = [];
+    for (let r = 0; r < height; r += 1) {
+      const row = [];
+      for (let c = 0; c < width; c += 1) row.push((doc.cells && doc.cells[r] && doc.cells[r][c]) || "");
+      cells.push(row);
+    }
+    doc.cells = cells;
+    doc.bold = doc.bold || {};
+  }
+
+  function colName(index) {
+    let n = index + 1;
+    let name = "";
+    while (n > 0) {
+      const m = (n - 1) % 26;
+      name = String.fromCharCode(65 + m) + name;
+      n = Math.floor((n - 1) / 26);
+    }
+    return name;
+  }
+
   const cloudDocs = [
     {
       id: "lecture",
       name: "讲义改稿",
-      kind: "文",
+      type: "doc",
       crumb: "我的空间 / 讲义",
       meta: "Xinyue · 更新于今天 14:20",
       html: "<p>周四的讲义。发给学生之前仍等你同意。</p><h2>第一节</h2><p>先把概念讲短。</p><h2>第二节</h2><p>标出还没核对的句子。</p><p>改到可以发给学生。</p>",
@@ -4142,7 +4196,7 @@
     {
       id: "readlist",
       name: "阅读清单第 3 篇",
-      kind: "文",
+      type: "doc",
       crumb: "我的空间 / 阅读",
       meta: "Research_Test · 更新于今天 10:18",
       html: "<p>页码还没对上。周五 10:00 的「页码」之前标好，组会上会一起过。</p><p>文件也在网盘的阅读清单.pdf。</p>",
@@ -4150,7 +4204,7 @@
     {
       id: "minutes",
       name: "组会纪要",
-      kind: "文",
+      type: "doc",
       crumb: "我的空间 / Wuhan Branch Team",
       meta: "周宁 · 更新于昨天 16:40",
       html: "<p>昨天的组会纪要已经放进 Shared。</p><p>下次组会仍是周三 15:00–16:00。若要改到周四 16:00，需要你在首页同意。</p>",
@@ -4158,33 +4212,50 @@
     {
       id: "receipt",
       name: "讲义打印",
-      kind: "表",
+      type: "sheet",
       crumb: "我的空间 / 账本",
       meta: "Xinyue · 更新于周一 09:12",
-      html: "<table><thead><tr><th>项目</th><th>金额</th><th>状态</th></tr></thead><tbody><tr><td>讲义打印</td><td>86</td><td>已批准</td></tr><tr><td>小组茶歇</td><td>120</td><td>待记</td></tr></tbody></table>",
+      cells: [
+        ["项目", "金额", "状态"],
+        ["讲义打印", "86", "已批准"],
+        ["小组茶歇", "120", "待记"],
+      ],
+      bold: { "0,0": true, "0,1": true, "0,2": true },
     },
   ];
+  cloudDocs.forEach((item) => {
+    const spec = typeSpec(item.type);
+    item.kind = spec.kind;
+    item.mark = spec.mark;
+    item.tone = spec.tone;
+  });
 
-  function openCloudDoc(id) {
-    const doc = cloudDocs.find((item) => item.id === id) || cloudDocs[0];
+  let openDocId = "";
+  let activeCell = { r: 0, c: 0 };
+
+  function currentDoc() {
+    return cloudDocs.find((item) => item.id === openDocId) || null;
+  }
+
+  function freshName(base) {
+    const names = new Set(cloudDocs.map((item) => item.name));
+    if (!names.has(base)) return base;
+    let n = 2;
+    while (names.has(`${base} ${n}`)) n += 1;
+    return `${base} ${n}`;
+  }
+
+  function paintDocsList(activeId) {
     const list = document.getElementById("docs-list");
-    const title = document.getElementById("docs-title");
-    const meta = document.getElementById("docs-meta");
-    const body = document.getElementById("docs-body");
-    const crumb = document.getElementById("docs-crumb");
-    if (title) title.textContent = doc.name;
-    if (meta) meta.textContent = doc.meta;
-    if (crumb) crumb.textContent = doc.crumb;
-    if (body) body.innerHTML = doc.html;
     if (!list) return;
     list.replaceChildren();
     cloudDocs.forEach((item) => {
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.className = "docs-item" + (item.id === doc.id ? " is-on" : "");
-      btn.dataset.doc = item.id;
+      btn.className = "docs-item" + (item.id === activeId ? " is-on" : "");
       const mark = document.createElement("i");
-      mark.textContent = item.kind;
+      mark.dataset.tone = item.tone;
+      mark.textContent = item.mark;
       const label = document.createElement("span");
       const name = document.createElement("strong");
       name.textContent = item.name;
@@ -4197,19 +4268,622 @@
     });
   }
 
+  function node(tag, className, text) {
+    const el = document.createElement(tag);
+    if (className) el.className = className;
+    if (text != null) el.textContent = text;
+    return el;
+  }
+
+  function toolButton(label, cmd, arg, html) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.dataset.docCmd = cmd;
+    if (arg) btn.dataset.docArg = arg;
+    if (html) btn.innerHTML = html;
+    else btn.textContent = label;
+    return btn;
+  }
+
+  function wordTools() {
+    const bar = node("div", "docs-tools");
+    bar.setAttribute("aria-label", "开始");
+    bar.append(
+      toolButton("撤销", "undo"),
+      toolButton("恢复", "redo"),
+      toolButton("", "bold", "", "<b>B</b>"),
+      toolButton("", "italic", "", "<span class=\"docs-i\">I</span>"),
+      toolButton("", "underline", "", "<u>U</u>"),
+      toolButton("", "strikeThrough", "", "<s>S</s>"),
+      toolButton("左", "justifyLeft"),
+      toolButton("中", "justifyCenter"),
+      toolButton("右", "justifyRight"),
+      toolButton("项目", "insertUnorderedList"),
+      toolButton("编号", "insertOrderedList"),
+      toolButton("标题", "formatBlock", "h2"),
+      toolButton("正文", "formatBlock", "p"),
+      toolButton("表格", "insertHTML", "<table><tbody><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr></tbody></table>")
+    );
+    const font = document.createElement("select");
+    font.dataset.docSelect = "fontName";
+    font.setAttribute("aria-label", "字体");
+    ["等线", "宋体", "黑体", "楷体", "Georgia"].forEach((name) => {
+      const opt = document.createElement("option");
+      opt.value = name;
+      opt.textContent = name;
+      font.appendChild(opt);
+    });
+    const size = document.createElement("select");
+    size.dataset.docSelect = "fontSize";
+    size.setAttribute("aria-label", "字号");
+    [["3", "小"], ["4", "正文"], ["5", "大"], ["6", "标题"]].forEach(([value, label]) => {
+      const opt = document.createElement("option");
+      opt.value = value;
+      opt.textContent = label;
+      if (value === "4") opt.selected = true;
+      size.appendChild(opt);
+    });
+    const color = document.createElement("input");
+    color.type = "color";
+    color.value = "#1f2329";
+    color.dataset.docSelect = "foreColor";
+    color.setAttribute("aria-label", "字色");
+    const mark = document.createElement("input");
+    mark.type = "color";
+    mark.value = "#fff3a3";
+    mark.dataset.docSelect = "hiliteColor";
+    mark.setAttribute("aria-label", "高亮");
+    bar.prepend(size);
+    bar.prepend(font);
+    bar.append(color, mark);
+    return bar;
+  }
+
+  function paper(doc, extra) {
+    const page = node("article", "docs-page");
+    const title = node("h1", "docs-name", doc.name);
+    title.contentEditable = "true";
+    title.spellcheck = false;
+    const meta = node("p", "docs-meta", doc.meta);
+    const body = node("div", "docs-body");
+    body.id = "docs-body";
+    body.contentEditable = "true";
+    body.spellcheck = false;
+    body.innerHTML = doc.html || "<p><br></p>";
+    page.append(title, meta, wordTools(), body);
+    if (extra) page.append(extra);
+    return page;
+  }
+
+  function renderSheet(doc) {
+    padCells(doc, 16, 8);
+    const wrap = node("div", "docs-sheet");
+    const bar = node("div", "docs-sheet-bar");
+    bar.append(node("strong", "", doc.name));
+    const nameBox = node("span", "docs-cell-name", colName(activeCell.c) + (activeCell.r + 1));
+    nameBox.id = "docs-cell-name";
+    const formula = document.createElement("input");
+    formula.id = "docs-formula";
+    formula.setAttribute("aria-label", "编辑栏");
+    formula.value = doc.cells[activeCell.r][activeCell.c] || "";
+    bar.append(nameBox, formula, node("button", "", "加粗"), node("button", "", "加一行"), node("button", "", "加一列"));
+    bar.querySelectorAll("button")[0].dataset.docsAct = "bold-cell";
+    bar.querySelectorAll("button")[1].dataset.docsAct = "add-row";
+    bar.querySelectorAll("button")[2].dataset.docsAct = "add-col";
+    const scroller = node("div", "docs-grid-wrap");
+    const table = document.createElement("table");
+    table.className = "docs-grid";
+    const head = document.createElement("tr");
+    head.appendChild(node("th", "", ""));
+    doc.cells[0].forEach((_, c) => head.appendChild(node("th", "", colName(c))));
+    table.appendChild(head);
+    doc.cells.forEach((row, r) => {
+      const tr = document.createElement("tr");
+      tr.appendChild(node("th", "", String(r + 1)));
+      row.forEach((value, c) => {
+        const td = document.createElement("td");
+        if (r === activeCell.r && c === activeCell.c) td.className = "is-on";
+        const input = document.createElement("input");
+        input.dataset.cell = "1";
+        input.dataset.r = String(r);
+        input.dataset.c = String(c);
+        input.value = value;
+        if (doc.bold[`${r},${c}`]) input.className = "is-bold";
+        td.appendChild(input);
+        tr.appendChild(td);
+      });
+      table.appendChild(tr);
+    });
+    scroller.appendChild(table);
+    const status = node("div", "docs-sheet-status");
+    status.id = "docs-sheet-status";
+    wrap.append(bar, scroller, status);
+    return wrap;
+  }
+
+  function columnSum(doc, col) {
+    let sum = 0;
+    let any = false;
+    for (let r = 1; r < doc.cells.length; r += 1) {
+      const raw = String(doc.cells[r][col] || "").replace(/,/g, "");
+      if (!raw) continue;
+      const n = Number(raw);
+      if (!Number.isNaN(n)) {
+        sum += n;
+        any = true;
+      }
+    }
+    return any ? sum : "";
+  }
+
+  function paintSum(doc) {
+    const status = document.getElementById("docs-sheet-status");
+    if (!status) return;
+    const sum = columnSum(doc, activeCell.c);
+    status.textContent = sum === "" ? `就绪 · ${colName(activeCell.c)}` : `求和 ${sum}`;
+  }
+
+  function renderDeck(doc) {
+    doc.slides = doc.slides && doc.slides.length ? doc.slides : [{ title: "标题", body: "" }];
+    doc.slide = Math.min(doc.slide || 0, doc.slides.length - 1);
+    const deck = node("div", "docs-deck");
+    const film = node("div", "docs-film");
+    doc.slides.forEach((slide, index) => {
+      const btn = node("button", "docs-thumb" + (index === doc.slide ? " is-on" : ""));
+      btn.type = "button";
+      btn.dataset.docsAct = "pick-slide";
+      btn.dataset.slide = String(index);
+      btn.append(node("b", "", String(index + 1)), node("strong", "", slide.title || "未命名"));
+      film.appendChild(btn);
+    });
+    const add = node("button", "docs-thumb-add", "新建幻灯片");
+    add.type = "button";
+    add.dataset.docsAct = "add-slide";
+    film.appendChild(add);
+    const stage = node("div", "docs-deck-stage");
+    const slide = doc.slides[doc.slide];
+    const card = node("article", "docs-slide");
+    const title = document.createElement("input");
+    title.className = "docs-slide-title";
+    title.value = slide.title;
+    title.dataset.slideField = "title";
+    title.setAttribute("aria-label", "幻灯片标题");
+    const body = document.createElement("textarea");
+    body.className = "docs-slide-body";
+    body.value = slide.body;
+    body.dataset.slideField = "body";
+    body.setAttribute("aria-label", "幻灯片正文");
+    card.append(title, body);
+    const foot = node("div", "docs-deck-foot");
+    foot.append(node("span", "", `${doc.slide + 1} / ${doc.slides.length}`));
+    const del = node("button", "", "删除这页");
+    del.type = "button";
+    del.dataset.docsAct = "del-slide";
+    foot.appendChild(del);
+    stage.append(card, foot);
+    deck.append(film, stage);
+    return deck;
+  }
+
+  function renderMind(doc) {
+    doc.center = doc.center || "中心主题";
+    doc.branches = doc.branches || ["分支 1"];
+    const map = node("div", "docs-mind");
+    const center = document.createElement("input");
+    center.className = "docs-mind-center";
+    center.value = doc.center;
+    center.dataset.mind = "center";
+    const branches = node("div", "docs-mind-branches");
+    doc.branches.forEach((text, index) => {
+      const input = document.createElement("input");
+      input.value = text;
+      input.dataset.mind = "branch";
+      input.dataset.index = String(index);
+      branches.appendChild(input);
+    });
+    const add = node("button", "", "添加分支");
+    add.type = "button";
+    add.dataset.docsAct = "add-branch";
+    map.append(center, branches, add);
+    return map;
+  }
+
+  function renderFlow(doc) {
+    doc.steps = doc.steps && doc.steps.length ? doc.steps : [{ kind: "step", text: "开始" }];
+    const flow = node("div", "docs-flow");
+    doc.steps.forEach((step, index) => {
+      const row = node("div", "docs-flow-step is-" + step.kind);
+      const input = document.createElement("input");
+      input.value = step.text;
+      input.dataset.flow = String(index);
+      row.append(node("i", "", step.kind === "choice" ? "判断" : "步骤"), input);
+      flow.appendChild(row);
+    });
+    const actions = node("div", "docs-inline-actions");
+    const step = node("button", "", "添加步骤");
+    step.type = "button";
+    step.dataset.docsAct = "add-step";
+    const choice = node("button", "", "添加判断");
+    choice.type = "button";
+    choice.dataset.docsAct = "add-choice";
+    actions.append(step, choice);
+    flow.appendChild(actions);
+    return flow;
+  }
+
+  function renderForm(doc, collect) {
+    doc.questions = doc.questions && doc.questions.length ? doc.questions : [{ prompt: "未命名题目", kind: "text" }];
+    const form = node("div", "docs-form");
+    if (collect) form.append(node("p", "docs-form-lead", "把链接发出去之后，回答会收在这里。发出仍等你同意。"));
+    doc.questions.forEach((q, index) => {
+      const row = node("label", "docs-question");
+      const input = document.createElement("input");
+      input.value = q.prompt;
+      input.dataset.question = String(index);
+      const select = document.createElement("select");
+      select.dataset.questionKind = String(index);
+      [["text", "填空"], ["choice", "单选"]].forEach(([value, label]) => {
+        const opt = document.createElement("option");
+        opt.value = value;
+        opt.textContent = label;
+        if (q.kind === value) opt.selected = true;
+        select.appendChild(opt);
+      });
+      row.append(node("span", "", String(index + 1)), input, select);
+      form.appendChild(row);
+    });
+    const actions = node("div", "docs-inline-actions");
+    const add = node("button", "", "添加题目");
+    add.type = "button";
+    add.dataset.docsAct = "add-question";
+    actions.appendChild(add);
+    if (collect) {
+      const send = node("button", "", "提交");
+      send.type = "button";
+      send.dataset.docsAct = "submit-form";
+      actions.appendChild(send);
+    }
+    form.appendChild(actions);
+    return form;
+  }
+
+  function renderBoard(doc) {
+    doc.notes = doc.notes && doc.notes.length ? doc.notes : [{ text: "便签", x: 48, y: 48 }];
+    const board = node("div", "docs-board");
+    doc.notes.forEach((note, index) => {
+      const card = document.createElement("textarea");
+      card.className = "docs-note";
+      card.value = note.text;
+      card.dataset.note = String(index);
+      card.style.left = note.x + "px";
+      card.style.top = note.y + "px";
+      board.appendChild(card);
+    });
+    const add = node("button", "docs-board-add", "添加便签");
+    add.type = "button";
+    add.dataset.docsAct = "add-note";
+    board.appendChild(add);
+    return board;
+  }
+
+  function renderBase(doc) {
+    doc.fields = doc.fields && doc.fields.length ? doc.fields : ["名称", "状态"];
+    doc.rows = doc.rows && doc.rows.length ? doc.rows : [doc.fields.map(() => "")];
+    const base = node("div", "docs-base");
+    const table = document.createElement("table");
+    table.className = "docs-grid";
+    const head = document.createElement("tr");
+    doc.fields.forEach((field, c) => {
+      const th = document.createElement("th");
+      const input = document.createElement("input");
+      input.value = field;
+      input.dataset.field = String(c);
+      th.appendChild(input);
+      head.appendChild(th);
+    });
+    table.appendChild(head);
+    doc.rows.forEach((row, r) => {
+      const tr = document.createElement("tr");
+      doc.fields.forEach((_, c) => {
+        const td = document.createElement("td");
+        const input = document.createElement("input");
+        input.value = row[c] || "";
+        input.dataset.record = String(r);
+        input.dataset.c = String(c);
+        td.appendChild(input);
+        tr.appendChild(td);
+      });
+      table.appendChild(tr);
+    });
+    const add = node("button", "", "添加记录");
+    add.type = "button";
+    add.dataset.docsAct = "add-record";
+    base.append(table, add);
+    return base;
+  }
+
+  function renderFolder(doc) {
+    const box = node("div", "docs-folder");
+    box.append(node("h1", "", doc.name), node("p", "", "这个文件夹还是空的。在这里新建，文件会放进来。"));
+    const kids = cloudDocs.filter((item) => item.folder === doc.id);
+    kids.forEach((item) => {
+      const btn = node("button", "docs-folder-file", item.name);
+      btn.type = "button";
+      btn.dataset.docsAct = "open-child";
+      btn.dataset.child = item.id;
+      box.appendChild(btn);
+    });
+    if (kids.length) box.querySelector("p").textContent = `${kids.length} 个文件`;
+    return box;
+  }
+
+  function renderStage(doc) {
+    const stage = document.getElementById("docs-stage");
+    const scroll = document.getElementById("docs-scroll");
+    const crumb = document.getElementById("docs-crumb");
+    if (!stage || !scroll) return;
+    const bleed = doc.type === "sheet" || doc.type === "smart-sheet" || doc.type === "base";
+    const deck = doc.type === "deck" || doc.type === "board";
+    scroll.classList.toggle("is-bleed", bleed);
+    scroll.classList.toggle("is-deck", deck);
+    if (crumb) crumb.textContent = doc.crumb || "我的空间";
+    stage.replaceChildren();
+    if (doc.type === "doc" || doc.type === "smart-doc") stage.appendChild(paper(doc));
+    else if (doc.type === "pdf") {
+      const foot = node("p", "docs-pdf-foot", "第 1 页");
+      stage.appendChild(paper(doc, foot));
+    } else if (doc.type === "sheet" || doc.type === "smart-sheet") {
+      const view = renderSheet(doc);
+      stage.appendChild(view);
+      paintSum(doc);
+    } else if (doc.type === "deck") stage.appendChild(renderDeck(doc));
+    else if (doc.type === "mind") stage.appendChild(renderMind(doc));
+    else if (doc.type === "flow") stage.appendChild(renderFlow(doc));
+    else if (doc.type === "form") stage.appendChild(paperShell(doc, renderForm(doc, false)));
+    else if (doc.type === "collect") stage.appendChild(paperShell(doc, renderForm(doc, true)));
+    else if (doc.type === "board") stage.appendChild(renderBoard(doc));
+    else if (doc.type === "base") stage.appendChild(renderBase(doc));
+    else stage.appendChild(renderFolder(doc));
+  }
+
+  function paperShell(doc, inner) {
+    const page = node("article", "docs-page");
+    const title = node("h1", "docs-name", doc.name);
+    title.contentEditable = "true";
+    page.append(title, node("p", "docs-meta", doc.meta), inner);
+    return page;
+  }
+
+  function openCloudDoc(id) {
+    const doc = cloudDocs.find((item) => item.id === id) || cloudDocs[0];
+    openDocId = doc.id;
+    if (doc.type !== "sheet" && doc.type !== "smart-sheet") activeCell = { r: 0, c: 0 };
+    paintDocsList(doc.id);
+    renderStage(doc);
+  }
+
+  function createCloudDoc(type) {
+    const spec = typeSpec(type);
+    const folder = currentDoc();
+    const parent = folder && folder.type === "folder" ? folder : null;
+    const item = {
+      id: `${type}-${Date.now()}`,
+      name: freshName(spec.base),
+      type,
+      kind: spec.kind,
+      mark: spec.mark,
+      tone: spec.tone,
+      crumb: parent ? `我的空间 / ${parent.name}` : "我的空间",
+      meta: "Xinyue · 刚刚",
+      folder: parent ? parent.id : "",
+    };
+    if (type === "doc" || type === "pdf") item.html = "<p><br></p>";
+    if (type === "smart-doc") item.html = "<h2>提纲</h2><p>先写要讲的一句。</p><h2>还没核对</h2><p><br></p>";
+    if (type === "sheet") item.cells = blankCells(16, 8);
+    if (type === "smart-sheet") {
+      item.cells = blankCells(16, 6, ["项目", "数量", "金额", "状态", "备注", ""]);
+      item.cells[1] = ["讲义打印", "1", "86", "已批准", "", ""];
+      item.bold = { "0,0": true, "0,1": true, "0,2": true, "0,3": true, "0,4": true };
+    }
+    if (type === "deck") item.slides = [{ title: "标题", body: "在这里写这一页要说的话。" }];
+    if (type === "mind") {
+      item.center = "中心主题";
+      item.branches = ["分支 1", "分支 2"];
+    }
+    if (type === "flow") item.steps = [{ kind: "step", text: "开始" }, { kind: "choice", text: "是否继续" }, { kind: "step", text: "结束" }];
+    if (type === "form" || type === "collect") item.questions = [{ prompt: "未命名题目", kind: "text" }];
+    if (type === "board") item.notes = [{ text: "便签", x: 48, y: 48 }, { text: "再记一条", x: 220, y: 120 }];
+    if (type === "base") {
+      item.fields = ["名称", "状态", "备注"];
+      item.rows = [["", "待记", ""]];
+    }
+    cloudDocs.unshift(item);
+    openCloudDoc(item.id);
+  }
+
+  function closeNewMenu() {
+    const menu = document.getElementById("docs-new-menu");
+    const btn = document.getElementById("docs-new");
+    if (menu) menu.hidden = true;
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+
+  const newMenu = document.getElementById("docs-new-menu");
+  if (newMenu) {
+    let group = "";
+    docTypes.forEach((spec) => {
+      if (spec.group !== group) {
+        group = spec.group;
+        newMenu.appendChild(node("p", "", group));
+      }
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.dataset.newType = spec.type;
+      const mark = node("i", "", spec.mark);
+      mark.dataset.tone = spec.tone;
+      const label = node("span", "");
+      label.append(node("strong", "", spec.label), node("em", "", spec.hint));
+      btn.append(mark, label);
+      newMenu.appendChild(btn);
+    });
+  }
+
   document.getElementById("docs-new")?.addEventListener("click", () => {
-    showToast("新建还停在云文档里。发出仍等你同意。");
+    const menu = document.getElementById("docs-new-menu");
+    const btn = document.getElementById("docs-new");
+    if (!menu || !btn) return;
+    const open = menu.hidden;
+    menu.hidden = !open;
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  document.addEventListener("click", (e) => {
+    if (e.target.closest(".docs-new-wrap")) return;
+    closeNewMenu();
+  });
+  newMenu?.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-new-type]");
+    if (!btn) return;
+    createCloudDoc(btn.dataset.newType);
+    closeNewMenu();
   });
   document.getElementById("docs-share")?.addEventListener("click", () => {
     showToast("分享还等你同意。");
   });
-  document.querySelectorAll("[data-doc-cmd]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const body = document.getElementById("docs-body");
-      body?.focus();
-      document.execCommand(btn.dataset.docCmd, false, null);
-    });
+
+  const docsView = document.getElementById("view-docs");
+  docsView?.addEventListener("mousedown", (e) => {
+    if (e.target.closest(".docs-tools button")) e.preventDefault();
   });
+  docsView?.addEventListener("click", (e) => {
+    const cmd = e.target.closest("[data-doc-cmd]");
+    if (cmd) {
+      document.getElementById("docs-body")?.focus();
+      document.execCommand(cmd.dataset.docCmd, false, cmd.dataset.docArg || null);
+      const doc = currentDoc();
+      const body = document.getElementById("docs-body");
+      if (doc && body) doc.html = body.innerHTML;
+      return;
+    }
+    const act = e.target.closest("[data-docs-act]");
+    if (!act) return;
+    const doc = currentDoc();
+    if (!doc) return;
+    const action = act.dataset.docsAct;
+    if (action === "bold-cell") {
+      const key = `${activeCell.r},${activeCell.c}`;
+      doc.bold[key] = !doc.bold[key];
+      renderStage(doc);
+    } else if (action === "add-row") {
+      doc.cells.push(doc.cells[0].map(() => ""));
+      renderStage(doc);
+    } else if (action === "add-col") {
+      doc.cells.forEach((row) => row.push(""));
+      renderStage(doc);
+    } else if (action === "add-slide") {
+      doc.slides.push({ title: "标题", body: "" });
+      doc.slide = doc.slides.length - 1;
+      renderStage(doc);
+    } else if (action === "del-slide" && doc.slides.length > 1) {
+      doc.slides.splice(doc.slide, 1);
+      doc.slide = Math.max(0, doc.slide - 1);
+      renderStage(doc);
+    } else if (action === "pick-slide") {
+      doc.slide = Number(act.dataset.slide);
+      renderStage(doc);
+    } else if (action === "add-branch") {
+      doc.branches.push("新分支");
+      renderStage(doc);
+    } else if (action === "add-step") {
+      doc.steps.push({ kind: "step", text: "新步骤" });
+      renderStage(doc);
+    } else if (action === "add-choice") {
+      doc.steps.push({ kind: "choice", text: "是否继续" });
+      renderStage(doc);
+    } else if (action === "add-question") {
+      doc.questions.push({ prompt: "未命名题目", kind: "text" });
+      renderStage(doc);
+    } else if (action === "submit-form") {
+      showToast("提交还等你同意。");
+    } else if (action === "add-note") {
+      doc.notes.push({ text: "便签", x: 48 + (doc.notes.length % 4) * 160, y: 48 + doc.notes.length * 28 });
+      renderStage(doc);
+    } else if (action === "add-record") {
+      doc.rows.push(doc.fields.map(() => ""));
+      renderStage(doc);
+    } else if (action === "open-child") {
+      openCloudDoc(act.dataset.child);
+    }
+  });
+  docsView?.addEventListener("change", (e) => {
+    const sel = e.target.closest("[data-doc-select]");
+    if (sel) {
+      document.getElementById("docs-body")?.focus();
+      document.execCommand(sel.dataset.docSelect, false, sel.value);
+      const doc = currentDoc();
+      const body = document.getElementById("docs-body");
+      if (doc && body) doc.html = body.innerHTML;
+      return;
+    }
+    const kind = e.target.closest("[data-question-kind]");
+    const doc = currentDoc();
+    if (kind && doc) doc.questions[Number(kind.dataset.questionKind)].kind = kind.value;
+  });
+  docsView?.addEventListener("input", (e) => {
+    const doc = currentDoc();
+    if (!doc) return;
+    const body = e.target.closest("#docs-body");
+    if (body) doc.html = body.innerHTML;
+    const cell = e.target.closest("[data-cell]");
+    if (cell) {
+      const r = Number(cell.dataset.r);
+      const c = Number(cell.dataset.c);
+      doc.cells[r][c] = cell.value;
+      activeCell = { r, c };
+      const formula = document.getElementById("docs-formula");
+      const name = document.getElementById("docs-cell-name");
+      if (formula && document.activeElement === cell) formula.value = cell.value;
+      if (name) name.textContent = colName(c) + (r + 1);
+      paintSum(doc);
+    }
+    if (e.target.id === "docs-formula") {
+      doc.cells[activeCell.r][activeCell.c] = e.target.value;
+      const input = docsView.querySelector(`[data-cell][data-r="${activeCell.r}"][data-c="${activeCell.c}"]`);
+      if (input) input.value = e.target.value;
+      paintSum(doc);
+    }
+    const slideField = e.target.closest("[data-slide-field]");
+    if (slideField) doc.slides[doc.slide][slideField.dataset.slideField] = e.target.value;
+    if (e.target.dataset.mind === "center") doc.center = e.target.value;
+    if (e.target.dataset.mind === "branch") doc.branches[Number(e.target.dataset.index)] = e.target.value;
+    if (e.target.dataset.flow != null) doc.steps[Number(e.target.dataset.flow)].text = e.target.value;
+    if (e.target.dataset.question != null) doc.questions[Number(e.target.dataset.question)].prompt = e.target.value;
+    if (e.target.dataset.note != null) doc.notes[Number(e.target.dataset.note)].text = e.target.value;
+    if (e.target.dataset.field != null) doc.fields[Number(e.target.dataset.field)] = e.target.value;
+    if (e.target.dataset.record != null) doc.rows[Number(e.target.dataset.record)][Number(e.target.dataset.c)] = e.target.value;
+  });
+  docsView?.addEventListener("focusin", (e) => {
+    const cell = e.target.closest("[data-cell]");
+    const doc = currentDoc();
+    if (!cell || !doc) return;
+    activeCell = { r: Number(cell.dataset.r), c: Number(cell.dataset.c) };
+    docsView.querySelectorAll(".docs-grid td.is-on").forEach((td) => td.classList.remove("is-on"));
+    cell.parentElement?.classList.add("is-on");
+    const formula = document.getElementById("docs-formula");
+    const name = document.getElementById("docs-cell-name");
+    if (formula) formula.value = cell.value;
+    if (name) name.textContent = colName(activeCell.c) + (activeCell.r + 1);
+    paintSum(doc);
+  });
+  docsView?.addEventListener("blur", (e) => {
+    const title = e.target.closest(".docs-name");
+    const doc = currentDoc();
+    if (!title || !doc) return;
+    const next = title.textContent.trim();
+    if (!next || next === doc.name) return;
+    doc.name = next;
+    paintDocsList(doc.id);
+  }, true);
+
   openCloudDoc("lecture");
 
   setDates();

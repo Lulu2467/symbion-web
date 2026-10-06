@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Noto+Sans+SC:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
-  <link rel="stylesheet" href="styles.css?v=263">
+  <link rel="stylesheet" href="styles.css?v=264">
 </head>
 <body class="citta-collapsed">
   <button class="citta-scrim" type="button" id="citta-scrim" aria-label="收起 Citta"></button>
@@ -136,7 +136,10 @@
               <aside class="docs-side" aria-label="云文档">
                 <div class="docs-side-head">
                   <strong>云文档</strong>
-                  <button type="button" class="docs-new" id="docs-new">新建</button>
+                  <div class="docs-new-wrap">
+                    <button type="button" class="docs-new" id="docs-new" aria-expanded="false" aria-haspopup="true" aria-controls="docs-new-menu">新建</button>
+                    <div class="docs-new-menu" id="docs-new-menu" hidden></div>
+                  </div>
                 </div>
                 <p class="docs-label">最近</p>
                 <div class="docs-list" id="docs-list"></div>
@@ -146,18 +149,8 @@
                   <p class="docs-crumb" id="docs-crumb">我的空间</p>
                   <button type="button" class="docs-share" id="docs-share">分享</button>
                 </header>
-                <div class="docs-scroll">
-                  <article class="docs-page" id="docs-page">
-                    <h1 id="docs-title"></h1>
-                    <p class="docs-meta" id="docs-meta"></p>
-                    <div class="docs-tools" aria-label="格式">
-                      <button type="button" data-doc-cmd="bold"><b>B</b></button>
-                      <button type="button" data-doc-cmd="italic"><span class="docs-i">I</span></button>
-                      <button type="button" data-doc-cmd="underline"><u>U</u></button>
-                      <button type="button" data-doc-cmd="insertUnorderedList">列表</button>
-                    </div>
-                    <div class="docs-body" id="docs-body" contenteditable="true" spellcheck="false"></div>
-                  </article>
+                <div class="docs-scroll" id="docs-scroll">
+                  <div id="docs-stage"></div>
                 </div>
               </div>
             </div>
@@ -1483,6 +1476,6 @@
       <button type="button" id="sign-back">进入</button>
     </div>
   </div>
-  <script src="app.js?v=117"></script>
+  <script src="app.js?v=118"></script>
 </body>
 </html>
