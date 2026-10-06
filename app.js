@@ -4619,6 +4619,24 @@
     return box;
   }
 
+  function renderPdf(doc) {
+    const wrap = node("div", "docs-pdf");
+    const frame = node("div", "docs-pdf-stage");
+    const page = node("article", "docs-pdf-page");
+    const title = node("h1", "docs-name", doc.name);
+    title.contentEditable = "true";
+    title.spellcheck = false;
+    const body = node("div", "docs-body");
+    body.id = "docs-body";
+    body.contentEditable = "true";
+    body.spellcheck = false;
+    body.innerHTML = doc.html || "<p><br></p>";
+    page.append(title, body);
+    frame.appendChild(page);
+    wrap.append(frame, node("div", "docs-pdf-bar", "第 1 页"));
+    return wrap;
+  }
+
   function renderStage(doc) {
     const stage = document.getElementById("docs-stage");
     const scroll = document.getElementById("docs-scroll");
@@ -4628,13 +4646,12 @@
     const deck = doc.type === "deck" || doc.type === "board";
     scroll.classList.toggle("is-bleed", bleed);
     scroll.classList.toggle("is-deck", deck);
+    scroll.classList.toggle("is-pdf", doc.type === "pdf");
     if (crumb) crumb.textContent = doc.crumb || "我的空间";
     stage.replaceChildren();
     if (doc.type === "doc" || doc.type === "smart-doc") stage.appendChild(paper(doc));
-    else if (doc.type === "pdf") {
-      const foot = node("p", "docs-pdf-foot", "第 1 页");
-      stage.appendChild(paper(doc, foot));
-    } else if (doc.type === "sheet" || doc.type === "smart-sheet") {
+    else if (doc.type === "pdf") stage.appendChild(renderPdf(doc));
+    else if (doc.type === "sheet" || doc.type === "smart-sheet") {
       const view = renderSheet(doc);
       stage.appendChild(view);
       paintSum(doc);
