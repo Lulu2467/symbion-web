@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Noto+Sans+SC:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
-  <link rel="stylesheet" href="styles.css?v=261">
+  <link rel="stylesheet" href="styles.css?v=263">
 </head>
 <body class="citta-collapsed">
   <button class="citta-scrim" type="button" id="citta-scrim" aria-label="收起 Citta"></button>
@@ -22,6 +22,10 @@
         <button class="rail-btn is-active" data-view="home" aria-label="首页">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 10.5L12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5z"/></svg>
           <span>首页</span>
+        </button>
+        <button class="rail-btn" data-view="docs" aria-label="编辑">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3.5h7.2L19 8.2V20a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1z"/><path d="M14 3.8V8h4.2M8.5 12.5h7M8.5 16h5"/></svg>
+          <span>编辑</span>
         </button>
         <button class="rail-btn" data-view="chat" aria-label="消息">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 6.5h14a1.5 1.5 0 0 1 1.5 1.5v7A1.5 1.5 0 0 1 19 16.5H9l-4 3v-3H5A1.5 1.5 0 0 1 3.5 15V8A1.5 1.5 0 0 1 5 6.5z"/></svg>
@@ -127,6 +131,38 @@
             </article>
           </section>
 
+          <section class="view" id="view-docs" data-url="symbion://docs">
+            <div class="docs-app">
+              <aside class="docs-side" aria-label="云文档">
+                <div class="docs-side-head">
+                  <strong>云文档</strong>
+                  <button type="button" class="docs-new" id="docs-new">新建</button>
+                </div>
+                <p class="docs-label">最近</p>
+                <div class="docs-list" id="docs-list"></div>
+              </aside>
+              <div class="docs-main">
+                <header class="docs-top">
+                  <p class="docs-crumb" id="docs-crumb">我的空间</p>
+                  <button type="button" class="docs-share" id="docs-share">分享</button>
+                </header>
+                <div class="docs-scroll">
+                  <article class="docs-page" id="docs-page">
+                    <h1 id="docs-title"></h1>
+                    <p class="docs-meta" id="docs-meta"></p>
+                    <div class="docs-tools" aria-label="格式">
+                      <button type="button" data-doc-cmd="bold"><b>B</b></button>
+                      <button type="button" data-doc-cmd="italic"><span class="docs-i">I</span></button>
+                      <button type="button" data-doc-cmd="underline"><u>U</u></button>
+                      <button type="button" data-doc-cmd="insertUnorderedList">列表</button>
+                    </div>
+                    <div class="docs-body" id="docs-body" contenteditable="true" spellcheck="false"></div>
+                  </article>
+                </div>
+              </div>
+            </div>
+          </section>
+
           <!-- HOME -->
           <section class="view is-active" id="view-home" data-url="symbion://home">
             <header class="page-head today-head">
@@ -139,11 +175,6 @@
             </header>
             <div class="today">
               <article class="today-card today-week">
-                <div class="page-tabs home-seg" role="tablist" aria-label="首页">
-                  <button type="button" class="is-on" role="tab" aria-selected="true" data-home-mode="week">工作</button>
-                  <button type="button" role="tab" aria-selected="false" data-home-mode="edit">编辑</button>
-                </div>
-                <div data-home-panel="week">
                   <div class="desk-widgets" aria-label="这周的工作">
                     <article class="desk-widget widget-cal" data-open-desk="calendar">
                       <header class="widget-head">
@@ -233,168 +264,6 @@
                       </div>
                     </article>
                   </div>
-                </div>
-                <div class="edit-stage" data-home-panel="edit" hidden>
-                  <div class="edit-grid" id="edit-grid">
-                    <button type="button" class="edit-card" data-edit-open="doc">
-                      <strong>文档</strong>
-                      <span class="edit-mark" aria-hidden="true"><i></i><i></i><i></i></span>
-                      <span class="edit-by">Editor 支持 <b class="edit-badge ed">Ed</b></span>
-                    </button>
-                    <button type="button" class="edit-card" data-edit-open="num">
-                      <strong>表格</strong>
-                      <span class="edit-mark is-grid" aria-hidden="true"></span>
-                      <span class="edit-by">Analyst 支持 <b class="edit-badge an">An</b></span>
-                    </button>
-                    <button type="button" class="edit-card" data-edit-open="code">
-                      <strong>代码</strong>
-                      <span class="edit-mark is-code" aria-hidden="true"><i></i><i></i><i></i></span>
-                      <span class="edit-by">Coder 支持 <b class="edit-badge co">Co</b></span>
-                    </button>
-                    <button type="button" class="edit-card" data-edit-open="tex">
-                      <strong>SymTex</strong>
-                      <span class="edit-mark is-tex" aria-hidden="true">∑</span>
-                      <span class="edit-by">Coder 支持 <b class="edit-badge co">Co</b></span>
-                    </button>
-                    <button type="button" class="edit-card" data-edit-open="deck">
-                      <strong>演示</strong>
-                      <span class="edit-mark is-deck" aria-hidden="true"><i></i></span>
-                      <span class="edit-by">Designer 支持 <b class="edit-badge de">De</b></span>
-                    </button>
-                  </div>
-                  <div class="edit-sheet" id="edit-sheet" hidden data-edit-kind="doc" data-wps-tab="start">
-                    <div class="wps-bar">
-                      <button type="button" class="edit-back" id="edit-back">五个编辑</button>
-                      <strong id="edit-title">文档</strong>
-                      <em id="edit-byline"></em>
-                    </div>
-                    <div class="wps-tabs" role="tablist" aria-label="功能区">
-                      <button type="button" class="is-on" data-wps-tab="start">开始</button>
-                      <button type="button" data-wps-tab="insert">插入</button>
-                      <button type="button" data-wps-tab="page">页面</button>
-                    </div>
-                    <div class="wps-ribbon">
-                      <div class="wps-panel" data-wps-panel="start">
-                        <div class="wps-group" data-for="doc tex deck code num">
-                          <button type="button" class="wps-tool" tabindex="-1">撤销</button>
-                          <button type="button" class="wps-tool" tabindex="-1">重做</button>
-                        </div>
-                        <div class="wps-group" data-for="doc tex deck">
-                          <span class="wps-select">正文</span>
-                          <span class="wps-select is-num">15</span>
-                          <button type="button" class="wps-tool is-bold" tabindex="-1">B</button>
-                          <button type="button" class="wps-tool is-italic" tabindex="-1">I</button>
-                          <button type="button" class="wps-tool is-under" tabindex="-1">U</button>
-                        </div>
-                        <div class="wps-group" data-for="doc tex deck">
-                          <button type="button" class="wps-tool is-on" tabindex="-1" aria-label="左对齐"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 4h10M3 8h7M3 12h10"/></svg></button>
-                          <button type="button" class="wps-tool" tabindex="-1" aria-label="居中"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 4h10M4.5 8h7M3 12h10"/></svg></button>
-                          <button type="button" class="wps-tool" tabindex="-1" aria-label="右对齐"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 4h10M6 8h7M3 12h10"/></svg></button>
-                        </div>
-                        <div class="wps-group" data-for="num">
-                          <span class="wps-select">常规</span>
-                          <button type="button" class="wps-tool" tabindex="-1">求和</button>
-                          <button type="button" class="wps-tool" tabindex="-1">筛选</button>
-                          <button type="button" class="wps-tool" tabindex="-1">排序</button>
-                        </div>
-                        <div class="wps-group" data-for="code">
-                          <span class="wps-select">等宽</span>
-                          <button type="button" class="wps-tool" tabindex="-1">注释</button>
-                        </div>
-                      </div>
-                      <div class="wps-panel" data-wps-panel="insert" hidden>
-                        <div class="wps-group">
-                          <button type="button" class="wps-tool" tabindex="-1">表格</button>
-                          <button type="button" class="wps-tool" tabindex="-1">图片</button>
-                          <button type="button" class="wps-tool" tabindex="-1">分页</button>
-                        </div>
-                      </div>
-                      <div class="wps-panel" data-wps-panel="page" hidden>
-                        <div class="wps-group">
-                          <button type="button" class="wps-tool is-on" tabindex="-1">页面</button>
-                          <button type="button" class="wps-tool" tabindex="-1">页宽</button>
-                          <span class="wps-select is-num">100%</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="wps-ruler" aria-hidden="true"></div>
-                    <div class="wps-work">
-                      <label class="edit-canvas" data-edit-canvas="doc">
-                        <span class="wps-page">
-                          <textarea aria-label="文档">周四的讲义
-
-第一节 先把概念讲短。
-第二节 标出还没核对的句子。
-改到可以发给学生。</textarea>
-                        </span>
-                      </label>
-                      <div class="edit-canvas wps-gridwrap" data-edit-canvas="num" hidden>
-                        <div class="wps-formula">
-                          <b>A2</b>
-                          <span>讲义打印</span>
-                        </div>
-                        <div class="wps-grid">
-                          <table class="edit-table">
-                            <thead>
-                              <tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <th>1</th>
-                                <td>项目</td>
-                                <td>金额</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                              </tr>
-                              <tr>
-                                <th>2</th>
-                                <td><input type="text" value="讲义打印" aria-label="项目"></td>
-                                <td><input type="text" value="86" aria-label="金额"></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                              </tr>
-                              <tr><th>3</th><td></td><td></td><td></td><td></td><td></td></tr>
-                              <tr><th>4</th><td></td><td></td><td></td><td></td><td></td></tr>
-                              <tr><th>5</th><td></td><td></td><td></td><td></td><td></td></tr>
-                              <tr><th>6</th><td></td><td></td><td></td><td></td><td></td></tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                      <label class="edit-canvas" data-edit-canvas="code">
-                        <span class="wps-page is-code">
-                          <textarea aria-label="代码" spellcheck="false">// 阅读清单第 3 篇
-// 页码还没对上。周五 10:00 之前标好。</textarea>
-                        </span>
-                      </label>
-                      <label class="edit-canvas" data-edit-canvas="tex">
-                        <span class="wps-page is-code">
-                          <textarea aria-label="SymTex" spellcheck="false">\section{阅读清单第 3 篇}
-页码还没对上。</textarea>
-                        </span>
-                      </label>
-                      <div class="edit-canvas edit-slides" data-edit-canvas="deck" hidden>
-                        <ol class="wps-film">
-                          <li class="is-on"><b>1</b></li>
-                          <li><b>2</b></li>
-                        </ol>
-                        <div class="wps-stage">
-                          <div class="wps-slide">
-                            <label>第 1 页<input type="text" value="讲义" aria-label="第 1 页"></label>
-                            <label>第 2 页<input type="text" value="先把概念讲短" aria-label="第 2 页"></label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <footer class="wps-status">
-                      <span>第 1 页</span>
-                      <span class="summon-hint">框选文字后右键，或对这块画面截图后右键。叫的是右下角当前的 Avatar。</span>
-                      <span>100%</span>
-                    </footer>
-                  </div>
-                </div>
               </article>
 
               <aside class="today-side">
@@ -1614,6 +1483,6 @@
       <button type="button" id="sign-back">进入</button>
     </div>
   </div>
-  <script src="app.js?v=116"></script>
+  <script src="app.js?v=117"></script>
 </body>
 </html>

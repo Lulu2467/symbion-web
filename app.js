@@ -3,6 +3,7 @@
 (function () {
   const views = {
     home: document.getElementById("view-home"),
+    docs: document.getElementById("view-docs"),
     desk: document.getElementById("view-desk"),
     chat: document.getElementById("view-chat"),
     cosmo: document.getElementById("view-cosmo"),
@@ -50,6 +51,7 @@
   function placeUrl(item) {
     if (item.name === "browser") return item.url || "";
     if (item.name === "home") return "symbion://home";
+    if (item.name === "docs") return "symbion://docs";
     if (item.name === "desk") return deskUrls[item.desk] || "symbion://desk";
     if (item.name === "chat") return item.chat ? `symbion://messages/${encodeURIComponent(item.chat)}` : "symbion://messages";
     if (item.name === "cosmo") return "symbion://cosmo";
@@ -70,6 +72,7 @@
   function tabTitle(item) {
     if (!item || (item.name === "browser" && !item.url)) return "新标签";
     if (item.name === "home") return "首页";
+    if (item.name === "docs") return "云文档";
     if (item.name === "desk") {
       return { kanban: "看板", calendar: "日历", email: "邮件", ledger: "账本", drive: "网盘", mycosmo: "My Cosmo" }[item.desk] || "工作台";
     }
@@ -411,6 +414,10 @@
     }
     if (path.startsWith("cosmo")) {
       go("cosmo");
+      return;
+    }
+    if (path.startsWith("docs")) {
+      go("docs");
       return;
     }
     if (path.startsWith("message")) {
@@ -4123,6 +4130,88 @@
     if (grid) grid.hidden = false;
   });
 
+  const cloudDocs = [
+    {
+      id: "lecture",
+      name: "讲义改稿",
+      kind: "文",
+      crumb: "我的空间 / 讲义",
+      meta: "Xinyue · 更新于今天 14:20",
+      html: "<p>周四的讲义。发给学生之前仍等你同意。</p><h2>第一节</h2><p>先把概念讲短。</p><h2>第二节</h2><p>标出还没核对的句子。</p><p>改到可以发给学生。</p>",
+    },
+    {
+      id: "readlist",
+      name: "阅读清单第 3 篇",
+      kind: "文",
+      crumb: "我的空间 / 阅读",
+      meta: "Research_Test · 更新于今天 10:18",
+      html: "<p>页码还没对上。周五 10:00 的「页码」之前标好，组会上会一起过。</p><p>文件也在网盘的阅读清单.pdf。</p>",
+    },
+    {
+      id: "minutes",
+      name: "组会纪要",
+      kind: "文",
+      crumb: "我的空间 / Wuhan Branch Team",
+      meta: "周宁 · 更新于昨天 16:40",
+      html: "<p>昨天的组会纪要已经放进 Shared。</p><p>下次组会仍是周三 15:00–16:00。若要改到周四 16:00，需要你在首页同意。</p>",
+    },
+    {
+      id: "receipt",
+      name: "讲义打印",
+      kind: "表",
+      crumb: "我的空间 / 账本",
+      meta: "Xinyue · 更新于周一 09:12",
+      html: "<table><thead><tr><th>项目</th><th>金额</th><th>状态</th></tr></thead><tbody><tr><td>讲义打印</td><td>86</td><td>已批准</td></tr><tr><td>小组茶歇</td><td>120</td><td>待记</td></tr></tbody></table>",
+    },
+  ];
+
+  function openCloudDoc(id) {
+    const doc = cloudDocs.find((item) => item.id === id) || cloudDocs[0];
+    const list = document.getElementById("docs-list");
+    const title = document.getElementById("docs-title");
+    const meta = document.getElementById("docs-meta");
+    const body = document.getElementById("docs-body");
+    const crumb = document.getElementById("docs-crumb");
+    if (title) title.textContent = doc.name;
+    if (meta) meta.textContent = doc.meta;
+    if (crumb) crumb.textContent = doc.crumb;
+    if (body) body.innerHTML = doc.html;
+    if (!list) return;
+    list.replaceChildren();
+    cloudDocs.forEach((item) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "docs-item" + (item.id === doc.id ? " is-on" : "");
+      btn.dataset.doc = item.id;
+      const mark = document.createElement("i");
+      mark.textContent = item.kind;
+      const label = document.createElement("span");
+      const name = document.createElement("strong");
+      name.textContent = item.name;
+      const when = document.createElement("em");
+      when.textContent = item.meta.split("·").pop().trim();
+      label.append(name, when);
+      btn.append(mark, label);
+      btn.addEventListener("click", () => openCloudDoc(item.id));
+      list.appendChild(btn);
+    });
+  }
+
+  document.getElementById("docs-new")?.addEventListener("click", () => {
+    showToast("新建还停在云文档里。发出仍等你同意。");
+  });
+  document.getElementById("docs-share")?.addEventListener("click", () => {
+    showToast("分享还等你同意。");
+  });
+  document.querySelectorAll("[data-doc-cmd]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const body = document.getElementById("docs-body");
+      body?.focus();
+      document.execCommand(btn.dataset.docCmd, false, null);
+    });
+  });
+  openCloudDoc("lecture");
+
   setDates();
   renderAvatarMenu();
 
@@ -4167,7 +4256,7 @@
   }
 
   document.addEventListener("contextmenu", (e) => {
-    const host = e.target.closest(".edit-sheet textarea, .edit-sheet input, .browser-doc");
+    const host = e.target.closest(".edit-sheet textarea, .edit-sheet input, .browser-doc, .docs-body");
     if (!host || !summonMenu) return;
     e.preventDefault();
     const field = e.target.closest("textarea, input");
