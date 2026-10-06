@@ -1112,7 +1112,7 @@
 
   function gateLeft() {
     const count = document.getElementById("nod-count");
-    if (count) count.textContent = String(document.querySelectorAll(".nod:not(.is-done)").length);
+    if (count) count.textContent = String(document.querySelectorAll(".today-approve .nod:not(.is-done):not([hidden])").length);
   }
 
   function finishGate(name, label) {
@@ -1206,7 +1206,9 @@
         btn.textContent = "已确认";
         finishGate("memory");
         showToast("已确认。这条只允许出现在草稿里，不会自己发出去。");
+        return;
       }
+      if (kind === "lesson") writeLesson();
     });
   });
 
@@ -3058,6 +3060,11 @@
 
   function cittaReply(text) {
     if (/^框选|^截图/.test(text)) return "这段已交给我。若要教授带你找到问题，先在右下角切换到已雇佣的 Avatar。";
+    if (/研课/.test(text)) {
+      if (!lessonTaken) return "研课还没接手。材料是周四讲义、周宁标的三处，和第 12、18 页。接手之后先出草稿，同意之前不写入讲义。";
+      if (!lessonWritten) return "研课已接手。草稿等你同意：第一节只讲短概念，第二节只标周宁的三处，页码停在第 12 页和第 18 页。";
+      return "研课已写入讲义改稿。还没发给学生。";
+    }
     if (/周报|草稿|邮件|发出/.test(text)) return "周报草稿在邮件里。署名是 Xinyue (by Citta)。你同意之前不会发出。";
     if (/组会|日历|时间|周四/.test(text)) return "改组会时间还在等你同意。批准前，日历仍是周三 15:00。";
     if (/看板|三件|讲义|页码/.test(text)) return "看板上是周三组会、周四讲义、周五页码。对话里不会改它们。";
@@ -3468,6 +3475,7 @@
     appendCittaBubble("me", text);
     setCittaLast(text);
     setTimeout(() => {
+      if (currentAvatar === "citta" && /接手/.test(text) && /研课/.test(text)) takeLesson();
       const reply = currentAvatar === "citta" ? cittaReply(text) : guideReply(text);
       appendCittaBubble("ai", reply);
       setCittaLast(reply);
@@ -3484,7 +3492,10 @@
     if (field) field.value = "";
   });
   document.querySelectorAll("[data-citta-ask]").forEach((btn) => {
-    btn.addEventListener("click", () => pushCitta(btn.dataset.cittaAsk));
+    btn.addEventListener("click", () => {
+      if (/研课/.test(btn.dataset.cittaAsk || "")) openLesson();
+      pushCitta(btn.dataset.cittaAsk);
+    });
   });
   document.getElementById("citta-mic")?.addEventListener("click", () => {
     const mic = document.getElementById("citta-mic");
@@ -4245,6 +4256,77 @@
     showToast(e.target.checked
       ? "引导找到问题已打开。学生来问时，先找到卡住的那一句。"
       : "引导找到问题已关上。学生侧不再按这个技能回答。");
+  });
+
+  let lessonTaken = false;
+  let lessonWritten = false;
+
+  function openLesson() {
+    go("cosmo");
+    showCosmoTab("settings");
+    document.querySelector('#owner-side [data-owner-side="edu"]')?.click();
+    const study = document.getElementById("lesson-study");
+    if (!study) return;
+    requestAnimationFrame(() => study.scrollIntoView({ block: "nearest" }));
+  }
+
+  function takeLesson() {
+    if (lessonTaken) return false;
+    lessonTaken = true;
+    const draft = document.getElementById("lesson-draft");
+    const state = document.getElementById("lesson-state");
+    const take = document.getElementById("lesson-take");
+    const nod = document.getElementById("nod-lesson");
+    const card = document.getElementById("edu-card-note");
+    if (draft) draft.hidden = false;
+    if (state) state.textContent = "已接手。草稿等你同意，讲义还没改，也还没发给学生。";
+    if (take) {
+      take.disabled = true;
+      take.textContent = "已接手";
+    }
+    if (nod) nod.hidden = false;
+    if (card) card.textContent = "学生 2 人。周五 10:00 页码答疑还没开始。研课已接手，草稿等你同意。";
+    gateLeft();
+    requestAnimationFrame(() => document.getElementById("lesson-study")?.scrollIntoView({ block: "nearest" }));
+    showToast("已接手研课。草稿停在首页，同意之前不写入讲义。");
+    return true;
+  }
+
+  function writeLesson() {
+    if (!lessonTaken || lessonWritten) return;
+    lessonWritten = true;
+    const doc = cloudDocs.find((item) => item.id === "lecture");
+    const block = "<h2 data-lesson-written>研课</h2><p>第一节只把概念讲短，不补讲义里没有的例子。</p><p>第二节只标周宁点过的三处，不替学生写出答案。</p><p>页码停在第 12 页和第 18 页。周五答疑之前不改文件。</p><p>已写入讲义。发给学生之前仍等你同意。</p>";
+    if (doc && !doc.html.includes("data-lesson-written")) doc.html += block;
+    const title = document.getElementById("docs-title");
+    const body = document.getElementById("docs-body");
+    if (body && title && title.textContent === "讲义改稿" && !body.querySelector("[data-lesson-written]")) {
+      body.insertAdjacentHTML("beforeend", block);
+    }
+    document.querySelectorAll("[data-lesson-state]").forEach((el) => {
+      el.textContent = "已写入讲义 · 还没发给学生";
+    });
+    const state = document.getElementById("lesson-state");
+    const card = document.getElementById("edu-card-note");
+    const btn = document.querySelector("[data-approve='lesson']");
+    if (state) state.textContent = "已写入讲义改稿。还没发给学生。";
+    if (card) card.textContent = "学生 2 人。周五 10:00 页码答疑还没开始。研课已写入讲义，还没发给学生。";
+    if (btn) btn.textContent = "已写入";
+    finishGate("lesson");
+    showToast("已写入讲义改稿。学生还收不到。");
+  }
+
+  document.getElementById("lesson-jump")?.addEventListener("click", openLesson);
+  document.getElementById("lesson-take")?.addEventListener("click", () => {
+    takeLesson();
+  });
+  document.getElementById("lesson-home")?.addEventListener("click", () => {
+    go("home");
+    requestAnimationFrame(() => document.getElementById("nod-lesson")?.scrollIntoView({ block: "nearest" }));
+  });
+  document.getElementById("lesson-doc")?.addEventListener("click", () => {
+    openCloudDoc("lecture");
+    go("docs");
   });
 
   const summonMenu = document.getElementById("summon-menu");

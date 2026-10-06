@@ -8941,6 +8941,96 @@ body.citta-collapsed .citta-dock.is-moved {
 @media (max-width: 860px) {
   #view-cosmo .cosmo-facts { grid-template-columns: 1fr; }
 }
+#view-cosmo .lesson-jump {
+  display: inline-flex;
+  margin-top: 8px;
+  padding: 0;
+  height: auto;
+  background: none;
+  color: #09090b;
+  font-size: 14px;
+  font-weight: 600;
+}
+#view-cosmo .lesson-study {
+  padding: 16px 18px 18px;
+  border-radius: 16px;
+  background: #f4f4f5;
+}
+#view-cosmo .lesson-study header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+#view-cosmo .lesson-study h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #09090b;
+}
+#view-cosmo .lesson-state {
+  margin: 6px 0 0;
+  max-width: 62ch;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #52525b;
+}
+#view-cosmo .lesson-study .btn-next {
+  flex-shrink: 0;
+}
+#view-cosmo .lesson-study .btn-next:disabled {
+  background: #e4e4e7;
+  color: #71717a;
+}
+#view-cosmo .lesson-gaps,
+#view-cosmo .lesson-draft ol {
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+#view-cosmo .lesson-gaps li,
+#view-cosmo .lesson-draft li {
+  position: relative;
+  margin-top: 8px;
+  padding-left: 14px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #18181b;
+}
+#view-cosmo .lesson-gaps li::before,
+#view-cosmo .lesson-draft li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #09090b;
+}
+#view-cosmo .lesson-draft {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid #e4e4e7;
+}
+#view-cosmo .lesson-draft[hidden] { display: none; }
+#view-cosmo .lesson-draft > p {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #71717a;
+}
+#view-cosmo .lesson-draft-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 12px;
+}
+#view-cosmo .lesson-draft-actions .lesson-jump { margin-top: 0; }
+.nod[hidden] { display: none !important; }
+@media (max-width: 640px) {
+  #view-cosmo .lesson-study header { flex-direction: column; }
+}
 
 #view-desk .desk-tab {
   background: #f4f4f5;
@@ -10519,6 +10609,7 @@ body:not(.citta-collapsed):not(.citta-free) .citta-pane {
 .citta-asks button:nth-child(3) { background: #eef6f1; }
 .citta-asks button:nth-child(4) { background: #eef4f8; }
 .citta-asks button:nth-child(5) { background: #f4f4f5; }
+.citta-asks button:nth-child(6) { background: #f6f1ea; }
 .citta-chat {
   margin: 8px 12px 0;
   padding: 8px;

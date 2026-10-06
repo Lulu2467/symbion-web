@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Noto+Sans+SC:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
-  <link rel="stylesheet" href="styles.css?v=263">
+  <link rel="stylesheet" href="styles.css?v=264">
 </head>
 <body class="citta-collapsed">
   <button class="citta-scrim" type="button" id="citta-scrim" aria-label="收起 Citta"></button>
@@ -306,6 +306,13 @@
                       <p data-memory-state>建议 · 先出计划，再改看板</p>
                     </div>
                     <button class="btn-next" type="button" data-approve="memory">确认</button>
+                  </article>
+                  <article class="nod" data-nod="lesson" id="nod-lesson" hidden>
+                    <div>
+                      <h2>研课草稿</h2>
+                      <p data-lesson-state>阅读方法 · 周四讲义 · 还没写入</p>
+                    </div>
+                    <button class="btn-next" type="button" data-approve="lesson">写入讲义</button>
                   </article>
                 </section>
 
@@ -1092,7 +1099,7 @@
                             <span class="own-status">公开</span>
                           </div>
                         </div>
-                        <p>学生 2 人。周五 10:00 页码答疑还没开始。</p>
+                        <p id="edu-card-note">学生 2 人。周五 10:00 页码答疑还没开始。研课还没接手。</p>
                         <div class="own-foot">
                           <button type="button" class="own-quiet" data-mine-toggle="edu" aria-pressed="false">暂停</button>
                           <button type="button" class="own-go" data-mine-open="edu">管理</button>
@@ -1133,12 +1140,39 @@
                         <section>
                           <h3>课程</h3>
                           <p>阅读方法 · 周四讲义</p>
+                          <button type="button" class="lesson-jump" id="lesson-jump">打开研课</button>
                         </section>
                         <section>
                           <h3>直播</h3>
                           <p>周五 10:00 · 页码答疑 · 还没开始</p>
                         </section>
                       </div>
+                      <section class="lesson-study" id="lesson-study" aria-label="研课">
+                        <header>
+                          <div>
+                            <h3>研课</h3>
+                            <p class="lesson-state" id="lesson-state">还没接手。材料只来自周四讲义、周宁标的三处，和第 12、18 页。</p>
+                          </div>
+                          <button type="button" class="btn-next" id="lesson-take">接手研课</button>
+                        </header>
+                        <ul class="lesson-gaps">
+                          <li>第一节 · 先把概念讲短。</li>
+                          <li>第二节 · 标出还没核对的句子。周宁标了三处，这一节还没交。</li>
+                          <li>阅读清单第 3 篇 · 第 12 页和第 18 页对不上。周五 10:00 页码答疑还没开始。</li>
+                        </ul>
+                        <div class="lesson-draft" id="lesson-draft" hidden>
+                          <p>草稿 · 同意之后才写入讲义</p>
+                          <ol>
+                            <li>第一节只把概念讲短，不补讲义里没有的例子。</li>
+                            <li>第二节只标周宁点过的三处，不替学生写出答案。</li>
+                            <li>页码停在第 12 页和第 18 页。周五答疑之前不改文件。</li>
+                          </ol>
+                          <div class="lesson-draft-actions">
+                            <button type="button" class="lesson-jump" id="lesson-home">到首页同意</button>
+                            <button type="button" class="lesson-jump" id="lesson-doc">打开讲义改稿</button>
+                          </div>
+                        </div>
+                      </section>
                       <section class="cosmo-files">
                         <header>
                           <h3>文件</h3>
@@ -1426,6 +1460,7 @@
             <button type="button" data-citta-ask="这周还有哪几件事等我同意">待同意</button>
             <button type="button" data-citta-ask="组会现在定在什么时间">日历</button>
             <button type="button" data-citta-ask="周四的讲义还差哪一句">讲义</button>
+            <button type="button" data-citta-ask="接手周四讲义的研课">研课</button>
             <button type="button" data-citta-ask="阅读清单第 3 篇卡在哪一页">页码</button>
             <button type="button" data-citta-ask="本周进展的草稿写给谁">邮件</button>
           </div>
@@ -1483,6 +1518,6 @@
       <button type="button" id="sign-back">进入</button>
     </div>
   </div>
-  <script src="app.js?v=117"></script>
+  <script src="app.js?v=118"></script>
 </body>
 </html>
