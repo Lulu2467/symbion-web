@@ -802,7 +802,7 @@ article > .btn.sm { margin-top: 12px; }
 .vanity-card .vanity-detail { display: none; }
 .vanity-card.open .vanity-detail { display: block; }
 
-.phone.chat-on { background: #fff; }
+.phone.chat-on { background: #fff linear-gradient(180deg, #e5eef5 0, rgba(255, 255, 255, 0) 160px) no-repeat; }
 .chat-tag {
   margin: -4px 0 4px;
   text-align: center;
@@ -868,11 +868,11 @@ article > .btn.sm { margin-top: 12px; }
 .wave i:nth-child(2) { height: 12px; }
 .wave i:nth-child(3) { height: 16px; }
 .wave i:nth-child(4) { height: 9px; }
+.msg-body { min-width: 0; }
 .replay {
   display: flex;
   align-items: center;
-  gap: 4px;
-  margin-top: 6px;
+  margin: 6px 0 0 4px;
   padding: 0;
   border: 0;
   background: none;
