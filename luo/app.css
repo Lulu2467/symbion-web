@@ -430,6 +430,7 @@ p { margin: 0 0 8px; }
   font-size: 14px;
 }
 .btn.sm svg { flex: none; display: block; }
+.btn.sm:has(> svg) { padding: 0 15px 0 13px; }
 .ghost { height: 44px; color: var(--muted); margin-top: 8px; font-size: 14px; }
 label.field {
   display: block;
@@ -796,7 +797,7 @@ article > .btn.sm { margin-top: 12px; }
 .vanity-card { cursor: pointer; }
 .vanity-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .vanity-head b { min-width: 0; }
-.vanity-head .btn.sm { flex: none; height: 28px; margin: 0; padding: 0 10px; gap: 4px; font-size: 13px; font-weight: 500; }
+.vanity-head .btn.sm { flex: none; height: 28px; margin: 0; padding: 0 11px 0 9px; gap: 4px; font-size: 13px; font-weight: 500; }
 .vanity-head .btn.sm svg { width: 14px; height: 14px; }
 .vanity-card .kit-note { grid-template-columns: 36px minmax(0, 1fr); }
 .vanity-card .vanity-detail { display: none; }
