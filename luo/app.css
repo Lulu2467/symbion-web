@@ -867,7 +867,9 @@ article > .btn.sm { margin-top: 12px; }
 @keyframes voiceArc { 0% { opacity: 0; } 34% { opacity: 1; } }
 .voice-text { margin: 6px 0 0; text-align: right; color: var(--dim); font-size: 13px; line-height: 20px; }
 .bubble.sys {
+  width: auto;
   max-width: none;
+  margin: 16px auto 0;
   background: transparent;
   border: 0;
   box-shadow: none;
