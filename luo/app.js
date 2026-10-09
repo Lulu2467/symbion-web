@@ -608,6 +608,12 @@
   function chat() {
     var list = state.chat.map(function (m) {
       if (m.role === "sys") return '<div class="bubble sys">' + esc(m.text) + "</div>";
+      if (m.role === "me" && m.sec) {
+        return '<div class="msg mine"><div class="msg-body"><button type="button" class="bubble mine voice-msg" style="width:' + Math.min(72 + m.sec * 6, 220) + 'px" aria-label="语音 ' + m.sec + ' 秒">' +
+          "<span>" + m.sec + "″</span>" +
+          '<svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path class="vw1" d="M6.5 8.2a2.5 2.5 0 0 1 0 3.6" /><path class="vw2" d="M9.6 5.6a6.2 6.2 0 0 1 0 8.8" /><path class="vw3" d="M12.7 3a9.9 9.9 0 0 1 0 14" /></svg>' +
+          '</button><p class="voice-text">' + esc(m.text) + "</p></div></div>";
+      }
       if (m.role === "me") return '<div class="msg mine"><div class="bubble mine">' + esc(m.text) + "</div></div>";
       var play = m.voice ? '<button type="button" class="replay" data-play="1" aria-label="播放语音"><svg viewBox="0 0 1024 1024" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M257.493333 322.4l215.573334-133.056c24.981333-15.413333 57.877333-7.914667 73.493333 16.746667 5.301333 8.373333 8.106667 18.048 8.106667 27.914666v555.989334C554.666667 819.093333 530.784 842.666667 501.333333 842.666667c-9.994667 0-19.786667-2.773333-28.266666-8L257.493333 701.6H160c-41.237333 0-74.666667-33.013333-74.666667-73.738667V396.138667c0-40.725333 33.429333-73.738667 74.666667-73.738667h97.493333z m26.133334 58.4a32.298667 32.298667 0 0 1-16.96 4.8H160c-5.888 0-10.666667 4.714667-10.666667 10.538667v231.733333c0 5.813333 4.778667 10.538667 10.666667 10.538667h106.666667c5.994667 0 11.872 1.664 16.96 4.8L490.666667 770.986667V253.013333L283.626667 380.8zM800.906667 829.653333a32.288 32.288 0 0 1-45.248-0.757333 31.317333 31.317333 0 0 1 0.768-44.693333c157.653333-150.464 157.653333-393.962667 0-544.426667a31.317333 31.317333 0 0 1-0.768-44.682667 32.288 32.288 0 0 1 45.248-0.757333c183.68 175.306667 183.68 460.010667 0 635.317333z m-106.901334-126.186666a32.288 32.288 0 0 1-45.248-1.216 31.328 31.328 0 0 1 1.237334-44.672c86.229333-80.608 86.229333-210.56 0-291.178667a31.328 31.328 0 0 1-1.237334-44.672 32.288 32.288 0 0 1 45.248-1.216c112.885333 105.546667 112.885333 277.418667 0 382.965333z"/></svg></button>' : "";
       return '<div class="msg luo"><img class="face" src="' + FACE + '" alt="" /><div class="msg-body"><div class="bubble">' + esc(m.text) + "</div>" + play + "</div></div>";
@@ -914,6 +920,14 @@
       else state.chat.push({ role: "sys", text: "现在不是上班时间。已经留下记录，到点再接。" });
       render();
     };
+    document.querySelectorAll(".voice-msg").forEach(function (b) {
+      b.onclick = function () {
+        var sec = parseInt(b.textContent, 10) || 1;
+        b.classList.add("playing");
+        clearTimeout(b._stop);
+        b._stop = setTimeout(function () { b.classList.remove("playing"); }, sec * 1000);
+      };
+    });
     document.querySelectorAll("[data-play]").forEach(function (b) {
       b.onclick = function () {
         audio.currentTime = 0;
@@ -994,7 +1008,7 @@
         var sec = Math.max(1, Math.round((Date.now() - t.at) / 1000));
         mode("send");
         close(function () {
-          state.chat.push({ role: "me", text: "（语音 " + sec + "″）这件晚上怎么用" });
+          state.chat.push({ role: "me", text: "这件晚上怎么用", sec: sec });
           state.chat.push({ role: "luo", text: replyTo("晚上怎么用"), voice: true });
           render();
           var log = document.getElementById("log");
