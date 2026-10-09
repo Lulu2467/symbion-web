@@ -632,13 +632,7 @@
         '<input type="file" id="pickImg" accept="image/*" hidden>' +
       "</div></div>" +
       '<div class="talk-ov" id="talkOv" hidden>' +
-        '<div class="talk-card"><div class="talk-stage" aria-hidden="true">' +
-          '<div class="talk-wave">' + new Array(15).join("<i></i>") + "</div>" +
-          '<svg class="talk-x" viewBox="0 0 24 24" width="28" height="28"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg>' +
-          '<b class="talk-count" id="talkCount">10</b>' +
-          '<b class="talk-warn">!</b>' +
-        "</div>" +
-        '<p class="talk-time" id="talkTime">0:00</p></div>' +
+        '<div class="talk-wave" aria-hidden="true">' + new Array(22).join("<i></i>") + "</div>" +
         '<p class="talk-hint" id="talkHint">上滑取消</p>' +
       "</div>";
   }
@@ -940,8 +934,6 @@
       var talk = null;
       var talkOv = document.getElementById("talkOv");
       var talkHint = document.getElementById("talkHint");
-      var talkTime = document.getElementById("talkTime");
-      var talkCount = document.getElementById("talkCount");
       var bars = talkOv.querySelectorAll(".talk-wave i");
       var still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       var mode = function (name) {
@@ -951,21 +943,23 @@
         talk.cancel = cancel;
         mode(cancel ? "cancel" : talk.count ? "count" : "");
         hold.textContent = cancel ? "松开 取消" : "松开 发送";
-        talkHint.textContent = cancel ? "松开手指，取消发送" : talk.count ? "即将自动发送" : "上滑取消";
+        talkHint.textContent = cancel ? "松开手指，取消发送" : talk.count ? "还可以说 " + talk.left + " 秒" : "上滑取消";
       };
       var wave = function () {
         if (!talk || still) return;
         var mid = (bars.length - 1) / 2;
         bars.forEach(function (bar, i) {
           var edge = 1 - Math.abs(i - mid) / (mid + 1);
-          bar.style.height = Math.round(6 + Math.random() * 26 * edge) + "px";
+          bar.style.height = Math.round(6 + Math.random() * (talk.cancel ? 6 : 42) * edge) + "px";
         });
       };
       var tick = function () {
         var s = Math.floor((Date.now() - talk.at) / 1000);
-        talkTime.textContent = "0:" + (s < 10 ? "0" : "") + s;
-        if (s >= 50 && !talk.count) { talk.count = true; setTalk(talk.cancel); }
-        if (talk.count) talkCount.textContent = Math.max(0, 60 - s);
+        if (s >= 50) {
+          talk.count = true;
+          talk.left = Math.max(1, 60 - s);
+          setTalk(talk.cancel);
+        }
         if (s >= 59) finish(false);
       };
       var closing = null;
@@ -1011,10 +1005,9 @@
         e.preventDefault();
         if (hold.setPointerCapture) hold.setPointerCapture(e.pointerId);
         if (closing) { clearTimeout(closing); closing = null; mode(""); }
-        talk = { at: Date.now(), y: e.clientY, cancel: false, count: false };
+        talk = { at: Date.now(), y: e.clientY, cancel: false, count: false, left: 10 };
         hold.classList.add("down");
         talkOv.hidden = false;
-        talkTime.textContent = "0:00";
         setTalk(false);
         talk.timer = setInterval(tick, 250);
         talk.waver = setInterval(wave, 120);
