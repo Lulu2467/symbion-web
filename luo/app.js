@@ -632,7 +632,12 @@
         '<input type="file" id="pickImg" accept="image/*" hidden>' +
       "</div></div>" +
       '<div class="talk-ov" id="talkOv" hidden>' +
-        '<div class="talk-card"><div class="talk-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>' +
+        '<div class="talk-card"><div class="talk-stage" aria-hidden="true">' +
+          '<div class="talk-wave">' + new Array(15).join("<i></i>") + "</div>" +
+          '<svg class="talk-x" viewBox="0 0 24 24" width="28" height="28"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg>' +
+          '<b class="talk-count" id="talkCount">10</b>' +
+          '<b class="talk-warn">!</b>' +
+        "</div>" +
         '<p class="talk-time" id="talkTime">0:00</p></div>' +
         '<p class="talk-hint" id="talkHint">上滑取消</p>' +
       "</div>";
@@ -936,44 +941,84 @@
       var talkOv = document.getElementById("talkOv");
       var talkHint = document.getElementById("talkHint");
       var talkTime = document.getElementById("talkTime");
+      var talkCount = document.getElementById("talkCount");
+      var bars = talkOv.querySelectorAll(".talk-wave i");
+      var still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var mode = function (name) {
+        talkOv.className = "talk-ov" + (name ? " " + name : "");
+      };
       var setTalk = function (cancel) {
         talk.cancel = cancel;
-        talkOv.classList.toggle("cancel", cancel);
+        mode(cancel ? "cancel" : talk.count ? "count" : "");
         hold.textContent = cancel ? "松开 取消" : "松开 发送";
-        talkHint.textContent = cancel ? "松开手指，取消发送" : "上滑取消";
+        talkHint.textContent = cancel ? "松开手指，取消发送" : talk.count ? "即将自动发送" : "上滑取消";
+      };
+      var wave = function () {
+        if (!talk || still) return;
+        var mid = (bars.length - 1) / 2;
+        bars.forEach(function (bar, i) {
+          var edge = 1 - Math.abs(i - mid) / (mid + 1);
+          bar.style.height = Math.round(6 + Math.random() * 26 * edge) + "px";
+        });
       };
       var tick = function () {
         var s = Math.floor((Date.now() - talk.at) / 1000);
         talkTime.textContent = "0:" + (s < 10 ? "0" : "") + s;
+        if (s >= 50 && !talk.count) { talk.count = true; setTalk(talk.cancel); }
+        if (talk.count) talkCount.textContent = Math.max(0, 60 - s);
         if (s >= 59) finish(false);
+      };
+      var closing = null;
+      var close = function (after, delay) {
+        closing = setTimeout(function () {
+          closing = null;
+          talkOv.hidden = true;
+          mode("");
+          if (after) after();
+        }, delay);
       };
       var finish = function (aborted) {
         if (!talk) return;
         var t = talk;
         talk = null;
         clearInterval(t.timer);
-        talkOv.hidden = true;
-        talkOv.classList.remove("cancel");
+        clearInterval(t.waver);
         hold.classList.remove("down");
         hold.textContent = "按住说话";
-        if (aborted || t.cancel) return;
-        if (Date.now() - t.at < 1000) { toast("说话时间太短"); return; }
+        bars.forEach(function (bar) { bar.style.height = ""; });
+        if (aborted || t.cancel) {
+          mode("cancel gone");
+          close(null, 180);
+          return;
+        }
+        if (Date.now() - t.at < 1000) {
+          mode("short");
+          talkHint.textContent = "说话时间太短";
+          close(null, 900);
+          return;
+        }
         var sec = Math.max(1, Math.round((Date.now() - t.at) / 1000));
-        state.chat.push({ role: "me", text: "（语音 " + sec + "″）这件晚上怎么用" });
-        state.chat.push({ role: "luo", text: replyTo("晚上怎么用"), voice: true });
-        render();
-        var log = document.getElementById("log");
-        if (log) log.scrollTop = log.scrollHeight;
+        mode("send");
+        close(function () {
+          state.chat.push({ role: "me", text: "（语音 " + sec + "″）这件晚上怎么用" });
+          state.chat.push({ role: "luo", text: replyTo("晚上怎么用"), voice: true });
+          render();
+          var log = document.getElementById("log");
+          if (log) log.scrollTop = log.scrollHeight;
+        }, 240);
       };
       hold.addEventListener("pointerdown", function (e) {
         e.preventDefault();
         if (hold.setPointerCapture) hold.setPointerCapture(e.pointerId);
-        talk = { at: Date.now(), y: e.clientY, cancel: false };
+        if (closing) { clearTimeout(closing); closing = null; mode(""); }
+        talk = { at: Date.now(), y: e.clientY, cancel: false, count: false };
         hold.classList.add("down");
         talkOv.hidden = false;
         talkTime.textContent = "0:00";
         setTalk(false);
         talk.timer = setInterval(tick, 250);
+        talk.waver = setInterval(wave, 120);
+        wave();
         if (navigator.vibrate) navigator.vibrate(15);
       });
       hold.addEventListener("pointermove", function (e) {
