@@ -791,11 +791,11 @@ article { padding: 20px; margin: 0 0 12px; }
   background: var(--ink);
   transform: translateX(-50%);
 }
-.order { padding: 14px 16px; margin-top: 10px; }
+.order { padding: 16px; margin-top: 12px; }
 .order-main {
   display: grid;
   grid-template-columns: 64px 1fr;
-  gap: 12px;
+  gap: 14px;
   align-items: center;
 }
 .order-name {
@@ -808,13 +808,14 @@ article { padding: 20px; margin: 0 0 12px; }
 .order-st { flex: none; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; line-height: 22px; font-weight: 600; color: #24508a; }
 .order-st.done { color: var(--dim); font-weight: 500; }
 .order-st i, .van-st i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-.order .fine { margin: 2px 0 0; }
+.order .fine { margin: 6px 0 0; }
 .van-time { display: inline-flex; align-items: center; gap: 6px; }
 .van-time .plan-i, .order .van-time .plan-i { width: 14px; height: 14px; color: var(--dim); }
 .van-time .plan-i svg, .order .van-time .plan-i svg { width: 14px; height: 14px; }
 .thumb {
   width: 64px;
   height: 64px;
+  border: 1px solid rgba(26, 39, 68, 0.12);
   border-radius: 12px;
   overflow: hidden;
   background: #f4f7fb;
