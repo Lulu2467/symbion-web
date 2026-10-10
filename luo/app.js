@@ -700,13 +700,22 @@
       return '<article class="mine-card"><div class="vanity-head"><span class="mine-id">' + shot + "<b>" + esc(p.name) + "</b></span>" + (v.tone === "wait" ? '<button type="button" class="btn sm" data-mine="' + esc(p.name) + '">' + ASK_ICON + "问小骆</button>" : '<span class="match ' + v.tone + '">' + v.tag + "</span>") + "</div>" +
         '<p class="fine">自己添加</p><p class="match-why">' + esc(v.why) + "</p></article>";
     }).join("");
-    var adder = '<form class="vanity-add" id="addForm">' +
-      '<p class="vanity-add-t">添加手上已有的商品</p>' +
-      '<p class="fine">添加后，会判断它和你的护肤方案是否匹配。</p>' +
-      '<div class="vanity-add-row"><button type="button" class="add-cam" id="addCam" aria-label="拍照"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M8 7.2 9.2 5h5.6L16 7.2h3.2A1.6 1.6 0 0 1 20.8 8.8v8.4a1.6 1.6 0 0 1-1.6 1.6H4.8a1.6 1.6 0 0 1-1.6-1.6V8.8A1.6 1.6 0 0 1 4.8 7.2H8z"/><circle cx="12" cy="12.4" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>' +
+    var adder = '<button type="button" class="vanity-add" id="addOpen" aria-haspopup="dialog">' +
+      '<span class="add-plus" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>' +
+      '<span class="add-txt"><b>添加手上已有的商品</b></span>' +
+      '<svg class="add-go" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="m9 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+      "</button>" +
+      '<div class="add-sheet" id="addSheet" hidden>' +
+      '<button type="button" class="sheet-scrim" id="addScrim" aria-label="关闭"></button>' +
+      '<form class="sheet" id="addForm" role="dialog" aria-modal="true" aria-labelledby="addTitle">' +
+      '<span class="sheet-grab" aria-hidden="true"></span>' +
+      '<div class="sheet-head"><h2 id="addTitle">添加手上已有的商品</h2><button type="button" class="sheet-x" id="addClose" aria-label="关闭"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>' +
+      '<p class="sheet-sub">添加后，会判断它和你的护肤方案是否匹配。</p>' +
+      '<div class="sheet-field"><button type="button" class="add-cam" id="addCam" aria-label="拍照"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M8 7.2 9.2 5h5.6L16 7.2h3.2A1.6 1.6 0 0 1 20.8 8.8v8.4a1.6 1.6 0 0 1-1.6 1.6H4.8a1.6 1.6 0 0 1-1.6-1.6V8.8A1.6 1.6 0 0 1 4.8 7.2H8z"/><circle cx="12" cy="12.4" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>' +
       '<input type="file" id="addPhoto" accept="image/*" capture="environment" hidden>' +
       '<input id="addName" maxlength="40" autocomplete="off" placeholder="输入商品名，比如 理肤泉 B5 面霜" />' +
-      '<button type="submit" class="btn sm">添加</button></div></form>';
+      "</div>" +
+      '<button type="submit" class="btn">添加</button></form></div>';
     if (!orders.length) return overview + mine + adder;
     return overview +
       orders.map(function (o) {
@@ -993,6 +1002,16 @@
     });
     var addForm = document.getElementById("addForm");
     if (addForm) {
+      var sheet = document.getElementById("addSheet");
+      var openSheet = function () {
+        sheet.hidden = false;
+        setTimeout(function () { document.getElementById("addName").focus(); }, 240);
+      };
+      var closeSheet = function () { sheet.hidden = true; };
+      document.getElementById("addOpen").onclick = openSheet;
+      document.getElementById("addScrim").onclick = closeSheet;
+      document.getElementById("addClose").onclick = closeSheet;
+      sheet.onkeydown = function (e) { if (e.key === "Escape") closeSheet(); };
       var shot = "";
       var cam = document.getElementById("addCam");
       var photo = document.getElementById("addPhoto");
