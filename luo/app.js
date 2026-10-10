@@ -305,17 +305,31 @@
     { id: "openRoland", img: "assets/cosmo-roland.jpg", name: "Gunther Roland", kind: "学术", desc: "学术课程与科研方法" }
   ];
 
+  var SYM_TABS = [
+    { id: "tabHome", label: "首页", on: true, icon: '<path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1v-8.5Z"/>' },
+    { id: "tabMsg", label: "消息", icon: '<path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.3-1.1A8.5 8.5 0 1 0 12 3.5Z"/><circle cx="8" cy="12" r=".9" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r=".9" fill="currentColor" stroke="none"/><circle cx="16" cy="12" r=".9" fill="currentColor" stroke="none"/>' },
+    { id: "tabMe", label: "我的", icon: '<circle cx="12" cy="8" r="4"/><path d="M4.5 20c.8-3.6 3.8-6 7.5-6s6.7 2.4 7.5 6"/>' }
+  ];
+
   function symbion() {
+    var now = new Date();
+    var h = now.getHours();
+    var hello = h < 5 ? "晚上好" : h < 11 ? "早上好" : h < 13 ? "中午好" : h < 18 ? "下午好" : "晚上好";
+    var date = (now.getMonth() + 1) + "月" + now.getDate() + "日  星期" + "日一二三四五六".charAt(now.getDay());
     app.innerHTML =
-      '<header class="bar">' + mark() + "</header>" +
-      '<div class="sym-head"><h1>Cosmo</h1><span>' + String(COSMOS.length).padStart(2, "0") + "</span></div>" +
+      '<div class="sym-head"><p class="sym-date">' + date + '</p><h1>' + hello + "，用户1234</h1></div>" +
+      '<h2 class="sym-sec">cosmo</h2>' +
       COSMOS.map(function (c) {
-        return '<button type="button" class="cosmo-card" id="' + c.id + '">' +
-          '<span class="cosmo-cover' + (c.cut ? " cut" : "") + '"><img src="' + c.img + '" alt=""></span>' +
-          '<span class="cosmo-body"><span class="cosmo-text"><span class="cosmo-kind">' + c.kind + '</span><span class="cosmo-name">' + esc(c.name) + '</span><span class="cosmo-desc">' + c.desc + "</span></span>" +
-          '<span class="cosmo-go" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span></span>' +
+        return '<button type="button" class="cosmo-card' + (c.cut ? " cut" : "") + '" id="' + c.id + '">' +
+          '<span class="cosmo-text"><span class="cosmo-kind">' + c.kind + '</span><span class="cosmo-name">' + esc(c.name) + '</span><span class="cosmo-desc">' + c.desc + "</span></span>" +
+          '<img class="cosmo-img" src="' + c.img + '" alt="">' +
         "</button>";
-      }).join("");
+      }).join("") +
+      '<nav class="sym-tabs">' + SYM_TABS.map(function (t) {
+        return '<button type="button" class="sym-tab' + (t.on ? " on" : "") + '" id="' + t.id + '"' + (t.on ? ' aria-current="page"' : "") + '>' +
+          '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + t.icon + "</svg>" +
+          "<span>" + t.label + "</span></button>";
+      }).join("") + "</nav>";
   }
 
   function splash() {
@@ -804,6 +818,10 @@
     if (toSymbion) toSymbion.onclick = function () { go("symbion"); };
     var openRoland = document.getElementById("openRoland");
     if (openRoland) openRoland.onclick = function () { toast("Roland 的 Cosmo 还没接入这个原型"); };
+    ["tabMsg", "tabMe"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.onclick = function () { toast("这个页面还没接入原型"); };
+    });
     var backSplash = document.getElementById("backSplash");
     if (backSplash) backSplash.onclick = function () { go("splash"); };
     var agree = document.getElementById("agree");
