@@ -858,7 +858,7 @@ article > .btn.sm { margin-top: 12px; }
 }
 .add-cam.has svg { display: none; }
 .mine-id { display: flex; align-items: center; gap: 10px; min-width: 0; }
-.mine-photo { width: 44px; height: 44px; border-radius: 10px; object-fit: cover; flex: none; display: block; }
+.mine-photo { width: 44px; height: 44px; border-radius: 10px; object-fit: cover; flex: none; display: block; background: #f3f5f8; }
 .skin-file h2 { margin: 0 0 8px; font-size: 22px; line-height: 30px; font-weight: 600; letter-spacing: 0.04em; }
 .skin-kicker { margin: 0 0 10px; font-size: 12px; line-height: 18px; letter-spacing: 0.18em; color: var(--dim); }
 .skin-state { margin: 0; color: var(--muted); font-size: 14px; line-height: 22px; }
