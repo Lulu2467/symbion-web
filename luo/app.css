@@ -975,7 +975,8 @@ article > .btn.sm { margin-top: 12px; }
 }
 .vanity-head .btn.sm svg { width: 14px; height: 14px; }
 .me .btn.sm { box-shadow: 0 6px 16px rgba(26, 39, 68, 0.16); }
-.vanity-card .kit-note { grid-template-columns: 36px minmax(0, 1fr); }
+.vanity-card .kit-note { grid-template-columns: 36px minmax(0, 1fr); align-items: start; }
+.vanity-card .kit-note p { padding-top: 2px; font-size: 14px; line-height: 22px; }
 .vanity-card .vanity-detail { display: none; }
 .vanity-card.open .vanity-detail { display: block; }
 
