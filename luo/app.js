@@ -268,11 +268,16 @@
 
   function splash() {
     app.innerHTML =
-      '<header class="bar">' + mark() + "</header>" +
-      '<div class="hero">' +
-        '<figure class="portrait-frame"><img class="portrait" src="assets/luo-hero.png" alt="骆王宇"></figure>' +
-        '<p class="kicker">Symbion · 私屿</p><h1>骆王宇</h1>' +
-        '<p class="sub hero-tags"><span>科学</span><span>极简</span><span>高效</span></p>' +
+      '<header class="bar">' + mark() + '<span class="cover-issue">Vol.01 · 2026 秋</span></header>' +
+      '<div class="hero cover">' +
+        '<figure class="portrait-frame"><p class="cover-mast" aria-hidden="true">COSMO</p><img class="portrait" src="assets/luo-hero.png" alt="骆王宇"></figure>' +
+        '<ul class="cover-lines">' +
+          "<li><b>3 分钟</b>测出你的肤质</li>" +
+          "<li><b>早晚三步</b>只留必要的</li>" +
+          "<li><b>一对一</b>小骆陪你护肤</li>" +
+        "</ul>" +
+        '<div class="cover-foot"><p class="kicker">Symbion · 私屿</p><h1>骆王宇</h1>' +
+        '<p class="sub hero-tags"><span>科学</span><span>极简</span><span>高效</span></p></div>' +
       "</div>" +
       '<button type="button" class="btn" id="enter">进入</button>';
   }
