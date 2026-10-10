@@ -809,6 +809,10 @@ article { padding: 20px; margin: 0 0 12px; }
 .kit-note .btn.sm { margin: 0; white-space: nowrap; }
 article > .btn.sm { margin-top: 12px; }
 .vanity-plan { margin: 0 0 8px; }
+.vanity-tip { margin: 0 0 12px; }
+.archive-plan { margin: 16px 0 0; padding: 16px 0 0; border-top: 1px solid var(--line); }
+.archive-plan .plan-when { border: 0; box-shadow: none; background: #f6f8fb; padding: 12px; }
+.archive-plan .plan-when:last-child { margin-bottom: 0; }
 .vanity-plan .fine { margin: 4px 0 0; }
 .vanity-card { cursor: pointer; }
 .vanity-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }

@@ -573,7 +573,9 @@
       : "尚未完成自测。";
     var chips = sc && state.saved ? sc.chips.map(function (c) { return "<i>" + esc(c) + "</i>"; }).join("") : "";
     return '<article><p class="kicker">Skin file</p><h2>' + (sc && state.saved ? esc(sc.name) : "尚未完成自测") + "</h2>" +
-      "<p>" + body + '</p><p class="chips">' + chips + "</p></article>" +
+      "<p>" + body + '</p><p class="chips">' + chips + "</p>" +
+      (sc && state.saved ? '<div class="result archive-plan"><p class="plan-label">早晚怎么用</p>' + planWhen(sc) + "</div>" : "") +
+      "</article>" +
       "<article><p class=\"kicker\">已购清单</p><h2>近 3 个月订单</h2>" +
       '<p class="fine">' + (orders.length ? "近 3 个月 " + orders.length + " 件，来自骆王宇橱窗。" : "只显示本人、骆王宇橱窗、近 3 个月的订单。") + "</p>" +
       orderHtml + "</article>";
@@ -582,9 +584,7 @@
   function vanity() {
     var orders = demoOrders();
     var sc = scheme();
-    var overview = sc && state.saved
-      ? '<div class="result vanity-plan"><p class="plan-label">' + esc(sc.name) + " · 早晚怎么用</p>" + planWhen(sc) + '<p class="fine">点一件商品，看具体用法。</p></div>'
-      : '<p class="fine">完成肤质测试后，这里显示早晚方案。点一件商品，看具体用法。</p>';
+    var overview = '<p class="fine vanity-tip">点一件商品，看具体用法。早晚步骤在「档案」里。</p>';
     if (!orders.length) {
       return overview + "<p>可以自己添加手上已有的商品。添加后，会判断这些产品和当前护肤方案是否匹配。</p>";
     }
