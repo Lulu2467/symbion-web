@@ -923,13 +923,14 @@ article > .btn.sm { margin-top: 12px; }
 .add-cam.has svg { display: none; }
 .mine-id { display: flex; align-items: center; gap: 10px; min-width: 0; }
 .mine-photo { width: 44px; height: 44px; border-radius: 10px; object-fit: cover; flex: none; display: block; background: #f3f5f8; }
-.skin-file h2 { margin: 0 0 8px; font-size: 22px; line-height: 30px; font-weight: 600; letter-spacing: 0.04em; }
-.skin-kicker { margin: 0 0 10px; font-size: 12px; line-height: 18px; letter-spacing: 0.18em; color: var(--dim); }
-.skin-state { margin: 0; color: var(--muted); font-size: 14px; line-height: 22px; }
-.skin-goal-row { display: grid; grid-template-columns: 20px minmax(0, 1fr); column-gap: 12px; align-items: center; margin-top: 14px; }
-.skin-goal { margin: 0; color: var(--ink); font-size: 16px; line-height: 24px; font-weight: 600; }
+.skin-head { margin: 4px 4px 14px; }
+.skin-head h2 { margin: 0; font-size: 22px; line-height: 30px; font-weight: 600; letter-spacing: 0.02em; }
+.skin-kicker { margin: 0 0 4px; font-size: 12px; line-height: 18px; letter-spacing: 0.18em; color: var(--dim); }
+.skin-head .skin-state { margin: 6px 0 0; color: var(--muted); font-size: 13px; line-height: 20px; }
+.skin-goal { margin: 0; padding-left: 12px; border-left: 2px solid #24508a; color: var(--ink); font-size: 14px; line-height: 22px; font-weight: 500; }
 .skin-block { margin: 16px 0 0; padding-top: 14px; border-top: 1px solid var(--line); }
-.skin-file .plan-when-t { margin: 0; font-size: 15px; line-height: 20px; font-weight: 600; color: var(--ink); }
+.skin-file .plan-when-t { margin: 0; font-size: 14px; line-height: 20px; font-weight: 600; color: var(--ink); }
+.skin-file .plan-steps p { font-size: 14px; font-weight: 400; }
 .skin-file .plan-steps { margin-top: 12px; }
 .skin-when { margin: 0 0 12px; font-size: 13px; line-height: 18px; letter-spacing: 0.14em; color: var(--muted); font-weight: 600; }
 .skin-steps { list-style: none; margin: 0; padding: 0; }
