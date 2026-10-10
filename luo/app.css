@@ -798,6 +798,7 @@ article > .btn.sm { margin-top: 12px; }
 .match.ok { background: #e6f2ec; color: #2f6b4f; }
 .match.warn { background: #fbefe2; color: #9a5a1c; }
 .match.wait { background: var(--ice); color: var(--muted); }
+.mine-card .vanity-head .btn.sm { flex: none; }
 .match-why { margin: 10px 0 0; padding-top: 10px; border-top: 1px solid var(--line); color: var(--ink); font-size: 14px; line-height: 22px; }
 .vanity-add { margin: 0 0 12px; padding: 16px 12px; border: 1px dashed rgba(26, 39, 68, 0.22); border-radius: 16px; }
 .vanity-add-t { margin: 0; color: var(--ink); font-weight: 600; }
@@ -1001,6 +1002,7 @@ article > .btn.sm { margin-top: 12px; }
   background: transparent;
 }
 .composer .plus {
+  order: -1;
   flex: none;
   width: 26px;
   height: 26px;
