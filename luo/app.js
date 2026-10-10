@@ -585,9 +585,17 @@
     var orders = demoOrders();
     var sc = scheme();
     var overview = '<p class="fine vanity-tip">点一件商品，看具体用法。早晚步骤在「档案」里。</p>';
-    if (!orders.length) {
-      return overview + "<p>可以自己添加手上已有的商品。添加后，会判断这些产品和当前护肤方案是否匹配。</p>";
-    }
+    var mine = (state.mine || []).map(function (p) {
+      var v = judge(p.name);
+      return '<article class="mine-card"><div class="vanity-head"><b>' + esc(p.name) + '</b><span class="match ' + v.tone + '">' + v.tag + "</span></div>" +
+        '<p class="fine">自己添加</p><p class="match-why">' + esc(v.why) + "</p></article>";
+    }).join("");
+    var adder = '<form class="vanity-add" id="addForm">' +
+      '<p class="vanity-add-t">添加手上已有的商品</p>' +
+      '<p class="fine">添加后，会判断它和你的护肤方案是否匹配。</p>' +
+      '<div class="vanity-add-row"><input id="addName" maxlength="40" autocomplete="off" placeholder="输入商品名，比如 理肤泉 B5 面霜" />' +
+      '<button type="submit" class="btn sm">添加</button></div></form>';
+    if (!orders.length) return overview + mine + adder;
     return overview +
       orders.map(function (o) {
         var kit = KITS[o.kit];
@@ -601,7 +609,16 @@
           ? '<button type="button" class="btn sm" data-listen="' + esc(o.kit) + '"><svg viewBox="0 0 1024 1024" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M918.298667 821.276667l-148.112667-148.112667c14.604-20.906667 26.984667-43.298667 37.013333-67.008667 19.136-45.242 28.838667-93.276667 28.838667-142.769333 0-49.492-9.702667-97.526667-28.838667-142.768667-18.474-43.677333-44.912-82.894667-78.58-116.562666s-72.885333-60.106-116.563333-78.58c-45.242-19.136-93.276-28.838667-142.768-28.838667s-97.526667 9.702667-142.768667 28.838667c-43.677333 18.474-82.894667 44.912-116.562666 78.58s-60.106 72.885333-78.58 116.562666c-19.135333 45.242-28.838 93.276667-28.838 142.768667 0 49.492667 9.702667 97.527333 28.838 142.769333 18.474 43.677333 44.912 82.894667 78.58 116.562 33.668 33.668 72.885333 60.106 116.562666 78.579334 45.242 19.136 93.276667 28.838667 142.768667 28.838666s97.526-9.702667 142.768-28.838666c37.262-15.76 71.273333-37.32 101.366667-64.216667l144.536666 144.536667c8.331333 8.331333 19.250667 12.496667 30.17 12.496666s21.838667-4.165333 30.17-12.496666c16.661333-16.662 16.661333-43.678-0.000666-60.34z m-449.010667-76.474667c-155.173333 0-281.416667-126.242-281.416667-281.416s126.242667-281.416667 281.416667-281.416667 281.416667 126.242667 281.416667 281.416667-126.243333 281.416-281.416667 281.416z"/></svg>听用法</button>'
           : '<button type="button" class="btn sm" data-listen="' + esc(o.kit) + '"><svg viewBox="0 0 1024 1024" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M312.459636 881.524364l10.821819 5.329454A423.726545 423.726545 0 0 0 512 930.909091c230.981818 0 418.909091-182.714182 418.909091-407.272727C930.909091 299.077818 742.981818 116.363636 512 116.363636S93.090909 299.077818 93.090909 523.636364c0 86.551273 27.997091 169.518545 80.989091 239.918545l11.310545 15.010909-50.059636 140.241455 177.128727-37.282909zM512 1000.727273c-72.564364 0-142.661818-15.453091-208.546909-45.986909L129.349818 991.418182a58.181818 58.181818 0 0 1-66.746182-76.544l44.544-124.788364C52.200727 710.912 23.272727 619.194182 23.272727 523.636364 23.272727 260.561455 242.525091 46.545455 512 46.545455s488.727273 214.016 488.727273 477.090909S781.474909 1000.727273 512 1000.727273z m-186.181818-477.090909A46.545455 46.545455 0 1 1 232.727273 523.636364 46.545455 46.545455 0 0 1 325.818182 523.636364m232.727273 0A46.545455 46.545455 0 1 1 465.454545 523.636364 46.545455 46.545455 0 0 1 558.545455 523.636364m232.727272 0A46.545455 46.545455 0 1 1 698.181818 523.636364 46.545455 46.545455 0 0 1 791.272727 523.636364"/></svg>问小骆</button>';
         return '<article class="vanity-card" id="kit-' + esc(o.kit) + '"><div class="vanity-head"><b>' + esc(o.name) + '</b>' + act + '</div><p class="fine">' + esc(o.id) + " · " + esc(o.time) + " · " + esc(o.status) + '</p><div class="vanity-detail">' + how + "</div>" + note + "</article>";
-      }).join("");
+      }).join("") + mine + adder;
+  }
+
+  function judge(name) {
+    if (/酸|A醇|视黄|维A|果酸|水杨/i.test(name)) return { tone: "warn", tag: "要注意", why: "方案里晚上已经有酸类。再叠一件容易刺激，建议和晚间酸类隔天用。" };
+    if (/防晒|SPF|PA\+/i.test(name)) return { tone: "ok", tag: "匹配", why: "放在早上最后一步。方案里已有一支防晒，两支选一支用就够。" };
+    if (/洁面|洗面|洁颜/.test(name)) return { tone: "ok", tag: "匹配", why: "可以替换方案里的洁面，早晚二选一，不要叠着洗。" };
+    if (/VC|维C|烟酰胺|精华/i.test(name)) return { tone: "ok", tag: "匹配", why: "放在早上洁面后、防晒前。和理貌 C10 功效重合，选一支用。" };
+    if (/面霜|乳|保湿|B5|修护/i.test(name)) return { tone: "ok", tag: "匹配", why: "放在晚上最后一步锁水，刷酸那天也可以用。" };
+    return { tone: "wait", tag: "待确认", why: "已经记下。这件暂时判断不了，导师会帮你看它放在哪一步。" };
   }
 
   function chat() {
@@ -861,6 +878,18 @@
         }
       };
     });
+    var addForm = document.getElementById("addForm");
+    if (addForm) addForm.onsubmit = function (e) {
+      e.preventDefault();
+      var input = document.getElementById("addName");
+      var name = input.value.trim();
+      if (!name) { input.focus(); return; }
+      state.mine = (state.mine || []).concat([{ name: name }]);
+      save();
+      render();
+      var cards = document.querySelectorAll(".mine-card");
+      if (cards.length) cards[cards.length - 1].scrollIntoView({ block: "center" });
+    };
     document.querySelectorAll(".vanity-card").forEach(function (card) {
       card.onclick = function (e) {
         if (e.target.closest("button")) return;

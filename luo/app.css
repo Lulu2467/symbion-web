@@ -810,6 +810,19 @@ article { padding: 20px; margin: 0 0 12px; }
 article > .btn.sm { margin-top: 12px; }
 .vanity-plan { margin: 0 0 8px; }
 .vanity-tip { margin: 0 0 12px; }
+.mine-card .fine { margin: 4px 0 0; }
+.match { flex: none; padding: 2px 8px; border-radius: 999px; font-size: 12px; line-height: 18px; font-weight: 500; }
+.match.ok { background: #e6f2ec; color: #2f6b4f; }
+.match.warn { background: #fbefe2; color: #9a5a1c; }
+.match.wait { background: var(--ice); color: var(--muted); }
+.match-why { margin: 10px 0 0; padding-top: 10px; border-top: 1px solid var(--line); color: var(--ink); font-size: 14px; line-height: 22px; }
+.vanity-add { margin: 0 0 12px; padding: 16px; border: 1px dashed rgba(26, 39, 68, 0.22); border-radius: 16px; }
+.vanity-add-t { margin: 0; color: var(--ink); font-weight: 600; }
+.vanity-add .fine { margin: 2px 0 12px; }
+.vanity-add-row { display: flex; gap: 8px; align-items: center; }
+.vanity-add-row input { flex: 1; min-width: 0; height: 36px; padding: 0 12px; border: 0; border-radius: 10px; background: #eef1f4; color: var(--ink); font-size: 14px; }
+.vanity-add-row input::placeholder { color: var(--dim); }
+.vanity-add-row .btn.sm { flex: none; margin: 0; }
 .archive-plan { margin: 16px 0 0; padding: 16px 0 0; border-top: 1px solid var(--line); }
 .archive-plan .plan-when { border: 0; box-shadow: none; background: #f6f8fb; padding: 12px; }
 .archive-plan .plan-when:last-child { margin-bottom: 0; }
