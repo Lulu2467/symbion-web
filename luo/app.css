@@ -580,7 +580,7 @@ textarea.box { min-height: 74px; resize: vertical; }
   border-radius: 4px;
   background: #fff;
 }
-.opt.on { background: #ebf5fa; border-color: #6c9bae; }
+.opt.on { background: #edf1f8; border-color: #8e9cb8; }
 .opt.on .box {
   border-color: var(--ink);
   background: var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.2l2.6 2.6L12.5 4.8' fill='none' stroke='%23fff' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px 12px no-repeat;
