@@ -167,23 +167,34 @@ p { margin: 0 0 8px; }
 .splash-on .wordmark { color: #fff; }
 
 .hero-stack { position: relative; width: 216px; margin: 0 56px 32px 0; }
-.hero-disc {
+.hero-bottle {
   position: absolute;
-  top: 50%;
-  left: 92px;
-  width: 232px;
-  height: 232px;
-  margin-top: -116px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle, rgba(26, 39, 68, 0.35) 0 9px, rgba(255, 255, 255, 0.9) 10px 13px, transparent 14px 36px, rgba(255, 255, 255, 0.35) 37px 38px, transparent 39px),
-    repeating-radial-gradient(circle, rgba(255, 255, 255, 0) 0 3px, rgba(255, 255, 255, 0.08) 4px 5px),
-    conic-gradient(from 210deg, #eef2f7, #c3cfde, #f4e6ef, #d7ecf1, #e9eef5, #bccadb, #f6eadf, #d5e4f2, #eef2f7);
-  box-shadow: 0 18px 40px rgba(10, 18, 36, 0.35);
-  transform: rotate(-8deg);
-  animation: discSpin 24s linear infinite;
+  top: 6px;
+  left: 168px;
+  width: 112px;
+  height: 224px;
+  transform: rotate(10deg);
+  filter: drop-shadow(0 16px 28px rgba(10, 18, 36, 0.35));
 }
-@keyframes discSpin { to { transform: rotate(352deg); } }
+.hero-drop {
+  position: absolute;
+  z-index: 2;
+  border-radius: 0 50% 50% 50%;
+  background: radial-gradient(circle at 35% 35%, #fff 0 18%, rgba(255, 255, 255, 0.55) 30%, rgba(214, 228, 242, 0.25) 70%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 6px 14px rgba(10, 18, 36, 0.18);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  transform: rotate(45deg);
+  animation: dropFloat 5s ease-in-out infinite;
+}
+.hero-drop.d1 { width: 26px; height: 26px; top: 236px; left: 218px; }
+.hero-drop.d2 { width: 16px; height: 16px; top: 18px; left: -14px; animation-delay: -1.6s; }
+.hero-drop.d3 { width: 11px; height: 11px; top: 266px; left: 252px; animation-delay: -3.2s; }
+@keyframes dropFloat {
+  0%, 100% { transform: translateY(0) rotate(45deg); }
+  50% { transform: translateY(-8px) rotate(45deg); }
+}
 .hero .portrait-frame {
   position: relative;
   z-index: 1;
@@ -220,7 +231,7 @@ p { margin: 0 0 8px; }
   letter-spacing: 0.12em;
 }
 .splash-on > .btn { background: #fff; color: var(--ink); }
-@media (prefers-reduced-motion: reduce) { .hero-disc { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .hero-drop { animation: none; } }
 .portrait {
   width: 100%;
   height: auto;

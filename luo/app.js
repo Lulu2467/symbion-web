@@ -272,7 +272,19 @@
       '<div class="splash-bg" aria-hidden="true"><img src="assets/luo-hero.png" alt=""></div>' +
       '<header class="bar">' + mark() + "</header>" +
       '<div class="hero">' +
-        '<div class="hero-stack"><span class="hero-disc" aria-hidden="true"></span>' +
+        '<div class="hero-stack">' +
+        '<svg class="hero-bottle" viewBox="0 0 120 240" aria-hidden="true">' +
+          '<defs><linearGradient id="hbGlass" x1="0" x2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".75"/><stop offset=".45" stop-color="#dfe9f4" stop-opacity=".45"/><stop offset="1" stop-color="#ffffff" stop-opacity=".7"/></linearGradient>' +
+          '<linearGradient id="hbSerum" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3e6dc"/><stop offset="1" stop-color="#e2c9b6"/></linearGradient>' +
+          '<linearGradient id="hbCap" x1="0" x2="1"><stop offset="0" stop-color="#2c4068"/><stop offset=".5" stop-color="#1a2744"/><stop offset="1" stop-color="#0f1a30"/></linearGradient>' +
+          '<linearGradient id="hbRing" x1="0" x2="1"><stop offset="0" stop-color="#cfd8e3"/><stop offset=".5" stop-color="#ffffff"/><stop offset="1" stop-color="#b9c4d2"/></linearGradient></defs>' +
+          '<rect x="44" y="4" width="32" height="46" rx="16" fill="url(#hbCap)"/>' +
+          '<rect x="36" y="48" width="48" height="22" rx="4" fill="url(#hbRing)"/>' +
+          '<rect x="14" y="72" width="92" height="160" rx="22" fill="url(#hbGlass)" stroke="#fff" stroke-opacity=".8" stroke-width="2"/>' +
+          '<path d="M16 130h88v80a20 20 0 0 1-20 20H36a20 20 0 0 1-20-20z" fill="url(#hbSerum)" opacity=".9"/>' +
+          '<rect x="24" y="84" width="8" height="132" rx="4" fill="#fff" opacity=".7"/>' +
+        "</svg>" +
+        '<i class="hero-drop d1" aria-hidden="true"></i><i class="hero-drop d2" aria-hidden="true"></i><i class="hero-drop d3" aria-hidden="true"></i>' +
         '<figure class="portrait-frame"><img class="portrait" src="assets/luo-hero.png" alt="骆王宇"></figure></div>' +
         '<p class="kicker">Symbion · 私屿</p><h1>骆王宇</h1>' +
         '<p class="sub hero-tags"><span>科学</span><span>极简</span><span>高效</span></p>' +
