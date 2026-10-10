@@ -677,6 +677,9 @@ article { padding: 20px; margin: 0 0 12px; }
   line-height: 18px;
 }
 .plan-sum { margin: 4px 0 16px; padding: 0 4px; }
+.plan-hero { display: flex; align-items: center; gap: 8px; }
+.plan-face { flex: none; display: flex; width: 28px; height: 28px; color: var(--ink); }
+.plan-face svg { display: block; width: 28px; height: 28px; }
 .plan-sub { margin: 0; font-size: 16px; line-height: 24px; font-weight: 600; color: var(--ink); }
 .result .plan-who { margin: 4px 0 0; font-size: 13px; line-height: 21px; color: var(--muted); }
 .plan-k {
