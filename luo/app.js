@@ -252,6 +252,7 @@
   function render() {
     app.classList.toggle("dy-on", state.screen === "douyin");
     app.classList.toggle("chat-on", state.screen === "chat");
+    app.classList.toggle("splash-on", state.screen === "splash");
     var s = state.screen;
     if (s === "splash") splash();
     else if (s === "login") login();
@@ -268,9 +269,11 @@
 
   function splash() {
     app.innerHTML =
+      '<div class="splash-bg" aria-hidden="true"><img src="assets/luo-hero.png" alt=""></div>' +
       '<header class="bar">' + mark() + "</header>" +
       '<div class="hero">' +
-        '<figure class="portrait-frame"><img class="portrait" src="assets/luo-hero.png" alt="骆王宇"></figure>' +
+        '<div class="hero-stack"><span class="hero-disc" aria-hidden="true"></span>' +
+        '<figure class="portrait-frame"><img class="portrait" src="assets/luo-hero.png" alt="骆王宇"></figure></div>' +
         '<p class="kicker">Symbion · 私屿</p><h1>骆王宇</h1>' +
         '<p class="sub hero-tags"><span>科学</span><span>极简</span><span>高效</span></p>' +
       "</div>" +
