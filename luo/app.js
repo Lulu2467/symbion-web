@@ -667,7 +667,7 @@
       : '<header class="skin-head"><p class="skin-kicker">肤质方案</p><h2>尚未完成自测</h2></header>';
     return skin +
       "<article><p class=\"kicker\">已购清单</p><h2>近 3 个月订单</h2>" +
-      '<p class="fine">' + (orders.length ? "近 3 个月 " + orders.length + " 件，来自骆王宇橱窗。" : "只显示本人、骆王宇橱窗、近 3 个月的订单。") + "</p>" +
+      '<p class="fine">' + (orders.length ? orders.length + " 件，来自骆王宇橱窗。" : "只显示本人在骆王宇橱窗的订单。") + "</p>" +
       orderHtml + "</article>";
   }
 
