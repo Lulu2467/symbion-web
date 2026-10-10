@@ -626,6 +626,22 @@ article { padding: 20px; margin: 0 0 12px; }
 .result .plan-who { margin: 0 0 12px; font-weight: 500; }
 .result .plan-when-t { margin: 0 0 8px; font-weight: 600; line-height: 22px; }
 .plan-sum .kicker svg { flex: none; display: block; width: 28px; height: 28px; color: var(--ink); }
+.plan-hero { display: flex; align-items: center; gap: 14px; margin: 28px 0 16px; }
+.plan-face {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 6px 20px rgba(26, 39, 68, 0.08);
+}
+.plan-face svg { display: block; }
+.result .plan-kick { margin: 0 0 2px; font-size: 13px; line-height: 20px; letter-spacing: 0.5px; color: var(--muted); }
+.result .plan-name { margin: 0; font-size: 26px; line-height: 34px; font-weight: 600; letter-spacing: 0.04em; color: var(--ink); }
 .result .plan-sum .kicker,
 .result .plan-label {
   display: flex;
