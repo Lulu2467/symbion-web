@@ -679,9 +679,8 @@ var PLAN_FACE = '<span class="plan-face"><svg viewBox="0 0 1024 1024" width="36"
         '<p class="fine">自己添加</p><p class="match-why">' + esc(v.why) + "</p></article>";
     }).join("");
     var adder = '<button type="button" class="vanity-add" id="addOpen" aria-haspopup="dialog">' +
-      '<span class="add-plus" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>' +
+      '<span class="add-plus" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>' +
       '<span class="add-txt"><b>添加手上已有的商品</b></span>' +
-      '<svg class="add-go" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="m9 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
       "</button>" +
       '<div class="add-sheet" id="addSheet" hidden>' +
       '<button type="button" class="sheet-scrim" id="addScrim" aria-label="关闭"></button>' +
