@@ -688,10 +688,12 @@ var PLAN_FACE = '<span class="plan-face"><svg viewBox="0 0 1024 1024" width="36"
       '<span class="sheet-grab" aria-hidden="true"></span>' +
       '<div class="sheet-head"><h2 id="addTitle">添加手上已有的商品</h2><button type="button" class="sheet-x" id="addClose" aria-label="关闭"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>' +
       '<p class="sheet-sub">添加后，会判断它和你的护肤方案是否匹配。</p>' +
-      '<div class="sheet-field"><button type="button" class="add-cam" id="addCam" aria-label="拍照"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M8 7.2 9.2 5h5.6L16 7.2h3.2A1.6 1.6 0 0 1 20.8 8.8v8.4a1.6 1.6 0 0 1-1.6 1.6H4.8a1.6 1.6 0 0 1-1.6-1.6V8.8A1.6 1.6 0 0 1 4.8 7.2H8z"/><circle cx="12" cy="12.4" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>' +
+      '<button type="button" class="add-shot" id="addCam">' +
+      '<span class="add-shot-empty"><svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M8 7.2 9.2 5h5.6L16 7.2h3.2A1.6 1.6 0 0 1 20.8 8.8v8.4a1.6 1.6 0 0 1-1.6 1.6H4.8a1.6 1.6 0 0 1-1.6-1.6V8.8A1.6 1.6 0 0 1 4.8 7.2H8z"/><circle cx="12" cy="12.4" r="3.2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><b>拍一下包装</b><span>拍完也可以再写名字</span></span>' +
+      '<img alt="" hidden><span class="add-shot-redo">重拍</span></button>' +
       '<input type="file" id="addPhoto" accept="image/*" capture="environment" hidden>' +
-      '<input id="addName" maxlength="40" autocomplete="off" placeholder="输入商品名，比如 理肤泉 B5 面霜" />' +
-      "</div>" +
+      '<p class="sheet-or">或者</p>' +
+      '<input id="addName" class="sheet-name" maxlength="40" autocomplete="off" enterkeyhint="done" placeholder="输入商品名，比如 理肤泉 B5 面霜" />' +
       '<button type="submit" class="btn">添加</button></form></div>';
     if (!orders.length) return overview + mine + adder;
     return overview +
@@ -976,11 +978,13 @@ var PLAN_FACE = '<span class="plan-face"><svg viewBox="0 0 1024 1024" width="36"
     var addForm = document.getElementById("addForm");
     if (addForm) {
       var sheet = document.getElementById("addSheet");
-      var openSheet = function () {
-        sheet.hidden = false;
-        setTimeout(function () { document.getElementById("addName").focus(); }, 240);
+      var openSheet = function () { sheet.hidden = false; };
+      var closeSheet = function () {
+        sheet.hidden = true;
+        addForm.style.transform = "";
+        addForm.style.maxHeight = "";
+        addForm.style.minHeight = "";
       };
-      var closeSheet = function () { sheet.hidden = true; };
       document.getElementById("addOpen").onclick = openSheet;
       document.getElementById("addScrim").onclick = closeSheet;
       document.getElementById("addClose").onclick = closeSheet;
@@ -1003,8 +1007,10 @@ var PLAN_FACE = '<span class="plan-face"><svg viewBox="0 0 1024 1024" width="36"
             canvas.height = Math.max(1, Math.round(img.height * scale));
             canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
             shot = canvas.toDataURL("image/jpeg", 0.72);
+            var preview = cam.querySelector("img");
+            preview.src = shot;
+            preview.hidden = false;
             cam.classList.add("has");
-            cam.style.backgroundImage = "url(" + shot + ")";
           };
           img.src = reader.result;
         };
@@ -1232,6 +1238,20 @@ var PLAN_FACE = '<span class="plan-face"><svg viewBox="0 0 1024 1024" width="36"
       app.style.minHeight = "";
       app.style.height = "";
       app.style.transform = "";
+    }
+    var addForm = document.getElementById("addForm");
+    var addSheet = document.getElementById("addSheet");
+    if (addForm && addSheet && !addSheet.hidden) {
+      var lift = Math.max(0, Math.round(covered));
+      if (lift) {
+        addForm.style.transform = "translateY(-" + lift + "px)";
+        addForm.style.maxHeight = Math.max(280, Math.round(vv.height - 12)) + "px";
+        addForm.style.minHeight = "0px";
+      } else if (addForm.style.maxHeight) {
+        addForm.style.transform = "";
+        addForm.style.maxHeight = "";
+        addForm.style.minHeight = "";
+      }
     }
   }
   if (window.visualViewport) {
