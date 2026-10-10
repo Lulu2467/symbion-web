@@ -98,6 +98,12 @@ a { color: inherit; }
   font-weight: 600;
   line-height: 26px;
 }
+.bar > .wordmark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
 .wordmark {
   display: inline-flex;
   align-items: center;
