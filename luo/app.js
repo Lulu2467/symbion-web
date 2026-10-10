@@ -578,10 +578,6 @@
     var tips = sc.caution.split("；").map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
     return '<section class="plan-notes">' +
       '<div class="note-idea"><p class="plan-k">核心解题思路</p><p class="note-idea-v">' + esc(sc.idea) + "</p></div>" +
-      '<div class="note-fit">' +
-        '<div class="fit-col"><p class="plan-k">适配人群</p><p class="fit-v">' + esc(sc.fit) + "</p></div>" +
-        '<div class="fit-col is-no"><p class="plan-k">不适配人群</p><p class="fit-v">' + esc(sc.unfit) + "</p></div>" +
-      "</div>" +
       '<div class="note-tips"><p class="plan-k">关键注意提示</p><ul>' + tips + "</ul></div>" +
     "</section>";
   }
