@@ -155,6 +155,9 @@ p { margin: 0 0 8px; }
   align-items: flex-start;
   overflow: hidden;
   pointer-events: none;
+  background: radial-gradient(ellipse 62% 40% at 56% 40%, rgba(196, 214, 234, 0.75), rgba(229, 238, 245, 0) 72%);
+  -webkit-mask-image: linear-gradient(180deg, #000 58%, rgba(0, 0, 0, 0.6) 70%, transparent 88%);
+  mask-image: linear-gradient(180deg, #000 58%, rgba(0, 0, 0, 0.6) 70%, transparent 88%);
 }
 .hero .portrait {
   width: auto;
@@ -162,8 +165,6 @@ p { margin: 0 0 8px; }
   height: 108%;
   transform: translateX(2%);
   background: transparent;
-  -webkit-mask-image: linear-gradient(180deg, #000 72%, transparent 98%);
-  mask-image: linear-gradient(180deg, #000 72%, transparent 98%);
 }
 .hero .hero-tags { display: flex; gap: 0; align-items: center; margin: 0; font-size: 14px; letter-spacing: 0.18em; color: var(--muted); }
 .hero .hero-tags span { padding: 0 14px; }
