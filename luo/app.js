@@ -272,7 +272,7 @@
       '<div class="hero">' +
         '<figure class="portrait-frame"><img class="portrait" src="assets/luo-hero.png" alt="骆王宇"></figure>' +
         '<p class="kicker">Symbion · 私屿</p><h1>骆王宇</h1>' +
-        '<p class="sub">护肤理念与审美洞察。<br>加入私屿，测肤质，<br>化妆台只讲你已经买过的怎么用。</p>' +
+        '<p class="sub hero-tags"><span>科学</span><span>极简</span><span>高效</span></p>' +
       "</div>" +
       '<button type="button" class="btn" id="enter">进入</button>';
   }
