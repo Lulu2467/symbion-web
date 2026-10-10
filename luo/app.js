@@ -592,6 +592,19 @@
     return RECENT;
   }
 
+  function skinBlock(label, steps) {
+    return '<section class="skin-block"><p class="skin-when">' + label + "</p><ol class=\"skin-steps\">" +
+      steps.map(function (step, i) {
+        var cut = step.indexOf("：");
+        var role = cut > 0 ? step.slice(0, cut) : "";
+        var prod = cut > 0 ? step.slice(cut + 1) : step;
+        return "<li><span>" + (i + 1) + "</span><div>" +
+          (role ? "<em>" + esc(role) + "</em>" : "") +
+          "<p>" + esc(prod) + "</p></div></li>";
+      }).join("") +
+      "</ol></section>";
+  }
+
   function archive(sc) {
     var orders = demoOrders();
     var orderHtml = orders.length
@@ -603,13 +616,14 @@
             '<p class="fine">' + esc(o.id) + "</p></div></div></div>";
         }).join("")
       : '<p>近 3 个月还没有在骆王宇橱窗下单。</p>';
-    var body = sc && state.saved
-      ? esc(sc.state)
-      : "尚未完成自测。";
-    return '<article><p class="kicker">Skin file</p><h2>' + (sc && state.saved ? esc(sc.title) : "尚未完成自测") + "</h2>" +
-      "<p>" + body + "</p>" +
-      (sc && state.saved ? '<p class="plan-goal">' + esc(sc.goal) + "</p>" + planWhen(sc) : "") +
-      "</article>" +
+    var skin = sc && state.saved
+      ? '<article class="skin-file"><p class="skin-kicker">肤质方案</p><h2>' + esc(sc.name) + "</h2>" +
+        '<p class="skin-state">' + esc(sc.state) + "</p>" +
+        '<p class="skin-goal">' + esc(sc.goal) + "</p>" +
+        skinBlock("早间", sc.am) + skinBlock("晚间", sc.pm) +
+        "</article>"
+      : '<article class="skin-file"><p class="skin-kicker">肤质方案</p><h2>尚未完成自测</h2></article>';
+    return skin +
       "<article><p class=\"kicker\">已购清单</p><h2>近 3 个月订单</h2>" +
       '<p class="fine">' + (orders.length ? "近 3 个月 " + orders.length + " 件，来自骆王宇橱窗。" : "只显示本人、骆王宇橱窗、近 3 个月的订单。") + "</p>" +
       orderHtml + "</article>";
