@@ -834,13 +834,31 @@ article > .btn.sm { margin-top: 12px; }
 .match.warn { background: #fbefe2; color: #9a5a1c; }
 .match.wait { background: var(--ice); color: var(--muted); }
 .match-why { margin: 10px 0 0; padding-top: 10px; border-top: 1px solid var(--line); color: var(--ink); font-size: 14px; line-height: 22px; }
-.vanity-add { margin: 0 0 12px; padding: 16px; border: 1px dashed rgba(26, 39, 68, 0.22); border-radius: 16px; }
+.vanity-add { margin: 0 0 12px; padding: 16px 12px; border: 1px dashed rgba(26, 39, 68, 0.22); border-radius: 16px; }
 .vanity-add-t { margin: 0; color: var(--ink); font-weight: 600; }
 .vanity-add .fine { margin: 2px 0 12px; }
-.vanity-add-row { display: flex; gap: 8px; align-items: center; }
-.vanity-add-row input { flex: 1; min-width: 0; height: 36px; padding: 0 12px; border: 0; border-radius: 10px; background: #eef1f4; color: var(--ink); font-size: 14px; }
+.vanity-add-row { display: flex; gap: 6px; align-items: center; }
+.vanity-add-row input { flex: 1; min-width: 0; height: 36px; padding: 0 8px; border: 0; border-radius: 10px; background: #eef1f4; color: var(--ink); font-size: 14px; }
 .vanity-add-row input::placeholder { color: var(--dim); }
 .vanity-add-row .btn.sm { flex: none; margin: 0; }
+.add-cam {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background-color: #eef1f4;
+  background-position: center;
+  background-size: cover;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.add-cam.has svg { display: none; }
+.mine-id { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.mine-photo { width: 44px; height: 44px; border-radius: 10px; object-fit: cover; flex: none; display: block; }
 .skin-file h2 { margin: 0 0 8px; font-size: 22px; line-height: 30px; font-weight: 600; letter-spacing: 0.04em; }
 .skin-kicker { margin: 0 0 10px; font-size: 12px; line-height: 18px; letter-spacing: 0.18em; color: var(--dim); }
 .skin-state { margin: 0; color: var(--muted); font-size: 14px; line-height: 22px; }

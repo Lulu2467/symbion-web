@@ -635,13 +635,16 @@
     var overview = '<p class="fine vanity-tip">点一件商品，看具体用法。早晚步骤在「档案」里。</p>';
     var mine = (state.mine || []).map(function (p) {
       var v = judge(p.name);
-      return '<article class="mine-card"><div class="vanity-head"><b>' + esc(p.name) + '</b><span class="match ' + v.tone + '">' + v.tag + "</span></div>" +
+      var shot = p.photo && p.photo.indexOf("data:image/") === 0 ? '<img class="mine-photo" src="' + p.photo + '" alt="">' : "";
+      return '<article class="mine-card"><div class="vanity-head"><span class="mine-id">' + shot + "<b>" + esc(p.name) + '</b></span><span class="match ' + v.tone + '">' + v.tag + "</span></div>" +
         '<p class="fine">自己添加</p><p class="match-why">' + esc(v.why) + "</p></article>";
     }).join("");
     var adder = '<form class="vanity-add" id="addForm">' +
       '<p class="vanity-add-t">添加手上已有的商品</p>' +
       '<p class="fine">添加后，会判断它和你的护肤方案是否匹配。</p>' +
-      '<div class="vanity-add-row"><input id="addName" maxlength="40" autocomplete="off" placeholder="输入商品名，比如 理肤泉 B5 面霜" />' +
+      '<div class="vanity-add-row"><button type="button" class="add-cam" id="addCam" aria-label="拍照"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M8 7.2 9.2 5h5.6L16 7.2h3.2A1.6 1.6 0 0 1 20.8 8.8v8.4a1.6 1.6 0 0 1-1.6 1.6H4.8a1.6 1.6 0 0 1-1.6-1.6V8.8A1.6 1.6 0 0 1 4.8 7.2H8z"/><circle cx="12" cy="12.4" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>' +
+      '<input type="file" id="addPhoto" accept="image/*" capture="environment" hidden>' +
+      '<input id="addName" maxlength="40" autocomplete="off" placeholder="输入商品名，比如 理肤泉 B5 面霜" />' +
       '<button type="submit" class="btn sm">添加</button></div></form>';
     if (!orders.length) return overview + mine + adder;
     return overview +
@@ -927,17 +930,45 @@
       };
     });
     var addForm = document.getElementById("addForm");
-    if (addForm) addForm.onsubmit = function (e) {
+    if (addForm) {
+      var shot = "";
+      var cam = document.getElementById("addCam");
+      var photo = document.getElementById("addPhoto");
+      cam.onclick = function () { photo.click(); };
+      photo.onchange = function () {
+        var file = photo.files && photo.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function () {
+          var img = new Image();
+          img.onload = function () {
+            var edge = 480;
+            var scale = Math.min(1, edge / Math.max(img.width, img.height));
+            var canvas = document.createElement("canvas");
+            canvas.width = Math.max(1, Math.round(img.width * scale));
+            canvas.height = Math.max(1, Math.round(img.height * scale));
+            canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+            shot = canvas.toDataURL("image/jpeg", 0.72);
+            cam.classList.add("has");
+            cam.style.backgroundImage = "url(" + shot + ")";
+          };
+          img.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+      };
+      addForm.onsubmit = function (e) {
       e.preventDefault();
       var input = document.getElementById("addName");
       var name = input.value.trim();
-      if (!name) { input.focus(); return; }
-      state.mine = (state.mine || []).concat([{ name: name }]);
+      if (!name && !shot) { input.focus(); return; }
+      if (!name) name = "已拍商品";
+      state.mine = (state.mine || []).concat([{ name: name, photo: shot }]);
       save();
       render();
       var cards = document.querySelectorAll(".mine-card");
       if (cards.length) cards[cards.length - 1].scrollIntoView({ block: "center" });
-    };
+      };
+    }
     document.querySelectorAll(".vanity-card").forEach(function (card) {
       card.onclick = function (e) {
         if (e.target.closest("button")) return;
