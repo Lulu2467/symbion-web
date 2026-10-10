@@ -1027,7 +1027,9 @@ article > .btn.sm { margin-top: 12px; }
   touch-action: none;
 }
 .composer.talking textarea { display: none; }
-.composer.talking .hold-label { display: block; }
+.composer.talking { position: relative; justify-content: space-between; min-height: 50px; }
+.composer.talking .hold-label { display: flex; align-items: center; justify-content: center; position: absolute; inset: 0; border-radius: inherit; }
+.composer.talking .voice, .composer.talking .plus { position: relative; z-index: 1; }
 .hold-label {
   -webkit-user-select: none;
   user-select: none;
