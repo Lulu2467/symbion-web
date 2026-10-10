@@ -645,7 +645,7 @@ article { padding: 20px; margin: 0 0 12px; }
 .result .plan-who { margin: 0 0 12px; font-weight: 500; }
 .result .plan-when-t { margin: 0 0 8px; font-weight: 600; line-height: 22px; }
 .plan-sum .kicker svg { flex: none; display: block; width: 28px; height: 28px; color: var(--ink); }
-.plan-hero { display: flex; align-items: center; gap: 14px; margin: 28px 0 16px; }
+.plan-hero { display: flex; align-items: flex-start; gap: 14px; margin: 28px 0 16px; }
 .plan-face {
   flex: none;
   display: flex;
@@ -657,7 +657,9 @@ article { padding: 20px; margin: 0 0 12px; }
 }
 .plan-face svg { display: block; width: 36px; height: 36px; }
 .result .plan-kick { margin: 0 0 2px; font-size: 13px; line-height: 20px; letter-spacing: 0.5px; color: var(--muted); }
-.result .plan-name { margin: 0; font-size: 26px; line-height: 34px; font-weight: 600; letter-spacing: 0.04em; color: var(--ink); }
+.result .plan-name { margin: 0; font-size: 22px; line-height: 30px; font-weight: 600; letter-spacing: 0; color: var(--ink); }
+.plan-goal { margin: 0 0 16px; color: var(--ink); font-size: 16px; line-height: 26px; font-weight: 600; }
+.plan-line { margin: 0 0 14px; color: var(--ink); font-size: 16px; line-height: 26px; }
 .result .plan-sum .kicker,
 .result .plan-label {
   display: flex;
