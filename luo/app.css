@@ -144,28 +144,36 @@ p { margin: 0 0 8px; }
 .phone > .btn { margin-top: auto; }
 .portrait-frame { margin: 0 0 16px; }
 .hero .portrait-frame {
-  align-self: stretch;
-  margin: calc(-8px - 8dvh) -16px -120px;
+  position: absolute;
+  top: calc(-8px - 6dvh);
+  right: -16px;
+  bottom: -8px;
+  left: -16px;
+  margin: 0;
   display: flex;
   justify-content: center;
+  align-items: flex-start;
   overflow: hidden;
+  pointer-events: none;
 }
 .hero .portrait {
   width: auto;
   max-width: none;
-  height: 74vh;
-  height: 74dvh;
-  transform: translateX(14%);
+  height: 108%;
+  transform: translateX(2%);
   background: transparent;
-  -webkit-mask-image: linear-gradient(180deg, #000 62%, transparent 96%);
-  mask-image: linear-gradient(180deg, #000 62%, transparent 96%);
+  -webkit-mask-image: linear-gradient(180deg, #000 72%, transparent 98%);
+  mask-image: linear-gradient(180deg, #000 72%, transparent 98%);
 }
 .hero .hero-tags { display: flex; gap: 0; align-items: center; margin: 0; font-size: 14px; letter-spacing: 0.18em; color: var(--muted); }
 .hero .hero-tags span { padding: 0 14px; }
 .hero .hero-tags span:first-child { padding-left: 0; }
 .hero .hero-tags span + span { border-left: 1px solid rgba(26, 39, 68, 0.22); }
 .phone:has(.hero) > .btn { box-shadow: 0 10px 24px rgba(26, 39, 68, 0.16); }
-.phone > .hero { flex: 1; justify-content: flex-start; }
+.phone > .hero { position: relative; flex: 1; justify-content: flex-end; min-height: 0; }
+.hero .kicker,
+.hero h1,
+.hero .hero-tags { position: relative; z-index: 1; }
 .phone > .hero ~ .btn { margin-top: 24px; }
 .portrait {
   width: 100%;
