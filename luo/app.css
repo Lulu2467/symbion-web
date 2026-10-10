@@ -748,9 +748,13 @@ article { padding: 20px; margin: 0 0 12px; }
   gap: 12px;
 }
 .order-name b { font-size: 15px; line-height: 22px; }
-.order-st { flex: none; font-size: 13px; line-height: 22px; font-weight: 600; color: var(--ink); }
+.order-st { flex: none; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; line-height: 22px; font-weight: 600; color: #24508a; }
 .order-st.done { color: var(--dim); font-weight: 500; }
+.order-st i, .van-st i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
 .order .fine { margin: 2px 0 0; }
+.van-time { display: inline-flex; align-items: center; gap: 6px; }
+.van-time .plan-i, .order .van-time .plan-i { width: 14px; height: 14px; color: var(--dim); }
+.van-time .plan-i svg, .order .van-time .plan-i svg { width: 14px; height: 14px; }
 .thumb {
   width: 64px;
   height: 64px;
@@ -784,7 +788,7 @@ article { padding: 20px; margin: 0 0 12px; }
   font-size: 13px;
 }
 .kit-note img { width: 36px; height: 36px; object-fit: cover; border-radius: 50%; }
-.kit-note p { margin: 0; }
+.kit-note p { margin: 0; color: var(--muted); font-size: 13px; line-height: 20px; }
 .kit-note .btn.sm { margin: 0; white-space: nowrap; }
 article > .btn.sm { margin-top: 12px; }
 .vanity-plan { margin: 0 0 8px; }
@@ -823,8 +827,11 @@ article > .btn.sm { margin-top: 12px; }
 .skin-file h2 { margin: 0 0 8px; font-size: 22px; line-height: 30px; font-weight: 600; letter-spacing: 0.04em; }
 .skin-kicker { margin: 0 0 10px; font-size: 12px; line-height: 18px; letter-spacing: 0.18em; color: var(--dim); }
 .skin-state { margin: 0; color: var(--muted); font-size: 14px; line-height: 22px; }
-.skin-goal { margin: 8px 0 0; color: var(--ink); font-size: 14px; line-height: 22px; }
-.skin-block { margin: 18px 0 0; padding-top: 16px; border-top: 1px solid var(--line); }
+.skin-goal-row { display: grid; grid-template-columns: 20px minmax(0, 1fr); column-gap: 12px; align-items: center; margin-top: 14px; }
+.skin-goal { margin: 0; color: var(--ink); font-size: 16px; line-height: 24px; font-weight: 600; }
+.skin-block { margin: 16px 0 0; padding-top: 14px; border-top: 1px solid var(--line); }
+.skin-file .plan-when-t { margin: 0; font-size: 15px; line-height: 20px; font-weight: 600; color: var(--ink); }
+.skin-file .plan-steps { margin-top: 12px; }
 .skin-when { margin: 0 0 12px; font-size: 13px; line-height: 18px; letter-spacing: 0.14em; color: var(--muted); font-weight: 600; }
 .skin-steps { list-style: none; margin: 0; padding: 0; }
 .skin-steps li { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 10px; margin: 0 0 12px; }
@@ -836,7 +843,14 @@ article > .btn.sm { margin-top: 12px; }
 .archive-plan .plan-when { border: 0; box-shadow: none; background: #f6f8fb; padding: 12px; }
 .archive-plan .plan-when:last-child { margin-bottom: 0; }
 .vanity-plan .fine { margin: 4px 0 0; }
-.vanity-card { cursor: pointer; }
+.vanity-card { cursor: default; }
+.van-meta { display: flex; align-items: center; gap: 14px; margin: 8px 0 0; font-size: 13px; line-height: 18px; }
+.van-st { display: inline-flex; align-items: center; gap: 6px; color: #24508a; font-weight: 600; }
+.van-st.done { color: var(--dim); font-weight: 500; }
+.van-id { margin: 2px 0 0; }
+.use-row { display: grid; grid-template-columns: 20px minmax(0, 1fr); column-gap: 12px; align-items: start; margin-top: 12px; }
+.use-row .plan-k { margin: 0; line-height: 20px; }
+.use-row p { margin: 2px 0 0; font-size: 14px; line-height: 22px; color: var(--ink); }
 .vanity-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .vanity-head b { min-width: 0; }
 .vanity-head .btn.sm {

@@ -614,17 +614,17 @@
     return RECENT;
   }
 
-  function skinBlock(label, steps) {
-    return '<section class="skin-block"><p class="skin-when">' + label + "</p><ol class=\"skin-steps\">" +
-      steps.map(function (step, i) {
-        var cut = step.indexOf("：");
-        var role = cut > 0 ? step.slice(0, cut) : "";
-        var prod = cut > 0 ? step.slice(cut + 1) : step;
-        return "<li><span>" + (i + 1) + "</span><div>" +
-          (role ? "<em>" + esc(role) + "</em>" : "") +
-          "<p>" + esc(prod) + "</p></div></li>";
-      }).join("") +
-      "</ol></section>";
+  function miniIcon(kind) {
+    var sun = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 3.2v2.2M12 18.6v2.2M3.2 12h2.2M18.6 12h2.2M5.8 5.8l1.5 1.5M16.7 16.7l1.5 1.5M18.2 5.8l-1.5 1.5M7.3 16.7l-1.5 1.5"/></svg>';
+    var moon = '<svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M19.8 14.7A8 8 0 0 1 9.3 4.2a8.2 8.2 0 1 0 10.5 10.5z"/></svg>';
+    var clock = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><path d="M12 7.5V12l3 2" stroke-linecap="round"/></svg>';
+    var box = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3.5 8 12 4l8.5 4v8.2L12 20.2 3.5 16.2z"/><path d="M12 12.2 20.5 8M12 12.2V20M12 12.2 3.5 8"/></svg>';
+    var mark = kind === "pm" ? moon : kind === "clock" ? clock : kind === "box" ? box : sun;
+    return '<span class="plan-i" aria-hidden="true">' + mark + "</span>";
+  }
+
+  function skinBlock(kind, label, steps) {
+    return '<section class="skin-block"><div class="plan-when-h">' + miniIcon(kind) + '<p class="plan-when-t">' + label + '</p></div><ol class="plan-steps">' + planSteps(steps) + "</ol></section>";
   }
 
   function archive(sc) {
@@ -633,16 +633,16 @@
       ? orders.map(function (o) {
           var done = o.status === "已完成" ? " done" : "";
           return '<div class="order"><div class="order-main"><div class="thumb"><img src="' + esc(o.img) + '" alt=""></div><div>' +
-            '<div class="order-name"><b>' + esc(o.name) + '</b><span class="order-st' + done + '">' + esc(o.status) + "</span></div>" +
-            '<p class="fine">' + esc(o.time) + "</p>" +
-            '<p class="fine">' + esc(o.id) + "</p></div></div></div>";
+            '<div class="order-name"><b>' + esc(o.name) + '</b><span class="order-st' + done + '"><i></i>' + esc(o.status) + "</span></div>" +
+            '<p class="fine van-time">' + miniIcon("clock") + esc(o.time) + "</p>" +
+            '<p class="fine van-time">' + miniIcon("box") + esc(o.id) + "</p></div></div></div>";
         }).join("")
       : '<p>近 3 个月还没有在骆王宇橱窗下单。</p>';
     var skin = sc && state.saved
       ? '<article class="skin-file"><p class="skin-kicker">肤质方案</p><h2>' + esc(sc.name) + "</h2>" +
         '<p class="skin-state">' + esc(sc.state) + "</p>" +
-        '<p class="skin-goal">' + esc(sc.goal) + "</p>" +
-        skinBlock("早间", sc.am) + skinBlock("晚间", sc.pm) +
+        '<div class="skin-goal-row">' + planIcon("goal") + '<p class="skin-goal">' + esc(sc.goal) + "</p></div>" +
+        skinBlock("am", "早间", sc.am) + skinBlock("pm", "晚间", sc.pm) +
         "</article>"
       : '<article class="skin-file"><p class="skin-kicker">肤质方案</p><h2>尚未完成自测</h2></article>';
     return skin +
@@ -654,7 +654,7 @@
   function vanity() {
     var orders = demoOrders();
     var sc = scheme();
-    var overview = '<p class="fine vanity-tip">点一件商品，看具体用法。早晚步骤在「档案」里。</p>';
+    var overview = '<p class="fine vanity-tip">早晚怎么用写在每件商品上，完整步骤在「档案」里。</p>';
     var mine = (state.mine || []).map(function (p) {
       var v = judge(p.name);
       var shot = p.photo && p.photo.indexOf("data:image/") === 0 ? '<img class="mine-photo" src="' + p.photo + '" alt="">' : "";
@@ -673,15 +673,16 @@
       orders.map(function (o) {
         var kit = KITS[o.kit];
         var how = kit
-          ? "<p>早：" + esc(kit.am) + "</p><p>晚：" + esc(kit.pm) + "</p>"
-          : "<p>暂无这件的用法，可以问小骆。</p>";
+          ? '<div class="use-rows"><div class="use-row">' + miniIcon("am") + '<div><p class="plan-k">早上</p><p>' + esc(kit.am) + "</p></div></div>" +
+            '<div class="use-row">' + miniIcon("pm") + '<div><p class="plan-k">晚上</p><p>' + esc(kit.pm) + "</p></div></div></div>"
+          : '<p class="fine">暂无这件的用法，可以问小骆。</p>';
         var note = kit
           ? '<div class="kit-note"><img src="' + FACE + '" alt="" /><div><b>骆王宇</b><p>' + esc(kit.voice) + '</p></div></div>'
           : "";
         var act = kit
           ? '<button type="button" class="btn sm" data-listen="' + esc(o.kit) + '"><svg viewBox="0 0 1024 1024" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M918.298667 821.276667l-148.112667-148.112667c14.604-20.906667 26.984667-43.298667 37.013333-67.008667 19.136-45.242 28.838667-93.276667 28.838667-142.769333 0-49.492-9.702667-97.526667-28.838667-142.768667-18.474-43.677333-44.912-82.894667-78.58-116.562666s-72.885333-60.106-116.563333-78.58c-45.242-19.136-93.276-28.838667-142.768-28.838667s-97.526667 9.702667-142.768667 28.838667c-43.677333 18.474-82.894667 44.912-116.562666 78.58s-60.106 72.885333-78.58 116.562666c-19.135333 45.242-28.838 93.276667-28.838 142.768667 0 49.492667 9.702667 97.527333 28.838 142.769333 18.474 43.677333 44.912 82.894667 78.58 116.562 33.668 33.668 72.885333 60.106 116.562666 78.579334 45.242 19.136 93.276667 28.838667 142.768667 28.838666s97.526-9.702667 142.768-28.838666c37.262-15.76 71.273333-37.32 101.366667-64.216667l144.536666 144.536667c8.331333 8.331333 19.250667 12.496667 30.17 12.496666s21.838667-4.165333 30.17-12.496666c16.661333-16.662 16.661333-43.678-0.000666-60.34z m-449.010667-76.474667c-155.173333 0-281.416667-126.242-281.416667-281.416s126.242667-281.416667 281.416667-281.416667 281.416667 126.242667 281.416667 281.416667-126.243333 281.416-281.416667 281.416z"/></svg>听用法</button>'
           : '<button type="button" class="btn sm" data-listen="' + esc(o.kit) + '"><svg viewBox="0 0 1024 1024" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M312.459636 881.524364l10.821819 5.329454A423.726545 423.726545 0 0 0 512 930.909091c230.981818 0 418.909091-182.714182 418.909091-407.272727C930.909091 299.077818 742.981818 116.363636 512 116.363636S93.090909 299.077818 93.090909 523.636364c0 86.551273 27.997091 169.518545 80.989091 239.918545l11.310545 15.010909-50.059636 140.241455 177.128727-37.282909zM512 1000.727273c-72.564364 0-142.661818-15.453091-208.546909-45.986909L129.349818 991.418182a58.181818 58.181818 0 0 1-66.746182-76.544l44.544-124.788364C52.200727 710.912 23.272727 619.194182 23.272727 523.636364 23.272727 260.561455 242.525091 46.545455 512 46.545455s488.727273 214.016 488.727273 477.090909S781.474909 1000.727273 512 1000.727273z m-186.181818-477.090909A46.545455 46.545455 0 1 1 232.727273 523.636364 46.545455 46.545455 0 0 1 325.818182 523.636364m232.727273 0A46.545455 46.545455 0 1 1 465.454545 523.636364 46.545455 46.545455 0 0 1 558.545455 523.636364m232.727272 0A46.545455 46.545455 0 1 1 698.181818 523.636364 46.545455 46.545455 0 0 1 791.272727 523.636364"/></svg>问小骆</button>';
-        return '<article class="vanity-card" id="kit-' + esc(o.kit) + '"><div class="vanity-head"><span class="mine-id">' + (o.img ? '<img class="mine-photo" src="' + esc(o.img) + '" alt="" />' : "") + "<b>" + esc(o.name) + "</b></span>" + act + '</div><p class="fine">' + esc(o.id) + " · " + esc(o.time) + " · " + esc(o.status) + '</p><div class="vanity-detail">' + how + "</div>" + note + "</article>";
+        return '<article class="vanity-card" id="kit-' + esc(o.kit) + '"><div class="vanity-head"><span class="mine-id">' + (o.img ? '<img class="mine-photo" src="' + esc(o.img) + '" alt="" />' : "") + "<b>" + esc(o.name) + "</b></span>" + act + '</div><p class="van-meta"><span class="van-time">' + miniIcon("clock") + esc(o.time) + '</span><span class="van-st' + (o.status === "已完成" ? " done" : "") + '"><i></i>' + esc(o.status) + '</span></p><p class="fine van-id">' + esc(o.id) + "</p>" + how + note + "</article>";
       }).join("") + mine + adder;
   }
 
