@@ -301,8 +301,8 @@
   }
 
   var COSMOS = [
-    { id: "openLuo", img: "assets/luo-portrait.png", focus: "50% 30%", name: "骆王宇", kind: "护肤", desc: "护肤理念与审美洞察" },
-    { id: "openRoland", img: "assets/cosmo-roland.jpg", focus: "68% 30%", name: "Gunther Roland", kind: "学术", desc: "学术课程与科研方法" }
+    { id: "openLuo", img: "assets/luo-portrait.png", focus: "50% 28%", name: "骆王宇", kind: "护肤", desc: "护肤理念与审美洞察" },
+    { id: "openRoland", img: "assets/cosmo-roland.jpg", focus: "50% 32%", name: "Gunther Roland", kind: "学术", desc: "学术课程与科研方法" }
   ];
 
   function symbion() {
