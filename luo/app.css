@@ -839,8 +839,20 @@ article > .btn.sm { margin-top: 12px; }
 .vanity-card { cursor: pointer; }
 .vanity-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .vanity-head b { min-width: 0; }
-.vanity-head .btn.sm { flex: none; height: 28px; margin: 0; padding: 0 11px 0 9px; gap: 4px; font-size: 13px; font-weight: 500; }
+.vanity-head .btn.sm {
+  flex: none;
+  height: 28px;
+  margin: 0;
+  padding: 0 11px 0 9px;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  background: #e7eef6;
+  color: #24508a;
+  box-shadow: none;
+}
 .vanity-head .btn.sm svg { width: 14px; height: 14px; }
+.me .btn.sm { box-shadow: 0 6px 16px rgba(26, 39, 68, 0.16); }
 .vanity-card .kit-note { grid-template-columns: 36px minmax(0, 1fr); }
 .vanity-card .vanity-detail { display: none; }
 .vanity-card.open .vanity-detail { display: block; }
