@@ -305,12 +305,6 @@
     { id: "openRoland", img: "assets/cosmo-roland.jpg", name: "Gunther Roland", kind: "学术", desc: "学术课程与科研方法" }
   ];
 
-  var SYM_TABS = [
-    { id: "tabHome", label: "首页", on: true, icon: '<path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1v-8.5Z"/>' },
-    { id: "tabMsg", label: "消息", icon: '<path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.3-1.1A8.5 8.5 0 1 0 12 3.5Z"/><circle cx="8" cy="12" r=".9" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r=".9" fill="currentColor" stroke="none"/><circle cx="16" cy="12" r=".9" fill="currentColor" stroke="none"/>' },
-    { id: "tabMe", label: "我的", icon: '<circle cx="12" cy="8" r="4"/><path d="M4.5 20c.8-3.6 3.8-6 7.5-6s6.7 2.4 7.5 6"/>' }
-  ];
-
   function symbion() {
     var now = new Date();
     var h = now.getHours();
@@ -324,12 +318,7 @@
           '<span class="cosmo-text"><span class="cosmo-kind">' + c.kind + '</span><span class="cosmo-name">' + esc(c.name) + '</span><span class="cosmo-desc">' + c.desc + "</span></span>" +
           '<img class="cosmo-img" src="' + c.img + '" alt="">' +
         "</button>";
-      }).join("") +
-      '<nav class="sym-tabs">' + SYM_TABS.map(function (t) {
-        return '<button type="button" class="sym-tab' + (t.on ? " on" : "") + '" id="' + t.id + '"' + (t.on ? ' aria-current="page"' : "") + '>' +
-          '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + t.icon + "</svg>" +
-          "<span>" + t.label + "</span></button>";
-      }).join("") + "</nav>";
+      }).join("");
   }
 
   function splash() {
@@ -827,10 +816,6 @@
     if (toSymbion) toSymbion.onclick = function () { go("symbion"); };
     var openRoland = document.getElementById("openRoland");
     if (openRoland) openRoland.onclick = function () { toast("Roland 的 Cosmo 还没接入这个原型"); };
-    ["tabMsg", "tabMe"].forEach(function (id) {
-      var el = document.getElementById(id);
-      if (el) el.onclick = function () { toast("这个页面还没接入原型"); };
-    });
     var backSplash = document.getElementById("backSplash");
     if (backSplash) backSplash.onclick = function () { go("splash"); };
     var agree = document.getElementById("agree");
