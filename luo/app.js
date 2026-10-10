@@ -167,7 +167,7 @@
 
   function blank() {
     return {
-      screen: "sym",
+      screen: "symbion",
       tab: "a",
       via: "",
       person: "",
@@ -192,7 +192,7 @@
       if (!raw) return null;
       var data = JSON.parse(raw);
       if (!data || !data.saved || !data.schemeId) return null;
-      data.screen = "sym";
+      data.screen = "symbion";
       data.tab = "a";
       data.chat = [];
       return data;
@@ -282,11 +282,11 @@
 
   function render() {
     var theme = document.querySelector('meta[name="theme-color"]');
-    if (theme) theme.setAttribute("content", "#e5eef5");
+    if (theme) theme.setAttribute("content", state.screen === "symbion" ? "#fafafa" : "#e5eef5");
     app.classList.toggle("dy-on", state.screen === "douyin");
     app.classList.toggle("chat-on", state.screen === "chat");
     var s = state.screen;
-    if (s === "sym") symHome();
+    if (s === "symbion") symbion();
     else if (s === "splash") splash();
     else if (s === "login") login();
     else if (s === "douyin") douyin();
@@ -300,32 +300,27 @@
     bind();
   }
 
-  var SYM_FEATS = [
-    { t: "肤质自测", d: "答几道题，得出你的肤质方案。", i: '<path d="M9 4.5h6M8 4.5H6.5A1.5 1.5 0 0 0 5 6v13.5A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H16M9 3h6v3H9zM8.5 13l2.3 2.3 4.7-4.8" stroke-linecap="round" stroke-linejoin="round"/>' },
-    { t: "早晚步骤", d: "按方案排好早上和晚上用什么。", i: '<circle cx="12" cy="12" r="3.2"/><path d="M12 3.2v2.2M12 18.6v2.2M3.2 12h2.2M18.6 12h2.2M5.8 5.8l1.5 1.5M16.7 16.7l1.5 1.5M18.2 5.8l-1.5 1.5M7.3 16.7l-1.5 1.5" stroke-linecap="round"/>' },
-    { t: "直接问他", d: "买过的东西怎么用，在私屿里问。", i: '<path d="M4.5 18.6 5.6 15A7.5 7.5 0 1 1 9 18.4z" stroke-linejoin="round"/><path d="M9 11.5h.01M12 11.5h.01M15 11.5h.01" stroke-width="2.2" stroke-linecap="round"/>' }
+  var COSMOS = [
+    { id: "openLuo", img: "assets/luo-hero.png", cut: true, name: "骆王宇", kind: "护肤", desc: "护肤理念与审美洞察" },
+    { id: "openRoland", img: "assets/cosmo-roland.jpg", name: "Gunther Roland", kind: "学术", desc: "学术课程与科研方法" }
   ];
 
-  function symHome() {
-    var sc = state.saved ? scheme() : null;
+  function symbion() {
     app.innerHTML =
       '<header class="bar">' + mark() + "</header>" +
-      '<section class="sym-head"><h1 class="sym-title">Cosmo</h1><p class="sym-lead">把一个人的方法，做成随时能问的私屿。</p></section>' +
-      '<button type="button" class="cosmo-card" id="openLuo">' +
-        '<span class="cosmo-photo"><span class="cosmo-tag">护肤</span><img src="assets/luo-hero.png" alt=""></span>' +
-        '<span class="cosmo-body"><span><b class="cosmo-name">骆王宇</b><span class="cosmo-tags">' + (sc ? "你的方案：" + esc(sc.name) : "科学 · 极简 · 高效") + "</span></span>" +
-        '<span class="cosmo-go">' + (sc ? "继续" : "进入") + "</span></span>" +
-      "</button>" +
-      '<h2 class="sym-sec">在私屿里可以</h2>' +
-      '<ul class="sym-feats">' + SYM_FEATS.map(function (f) {
-        return '<li><span class="sym-i" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6">' + f.i + "</svg></span><div><b>" + f.t + "</b><p>" + f.d + "</p></div></li>";
-      }).join("") + "</ul>" +
-      '<p class="sym-more">更多 Cosmo 陆续开放</p>';
+      '<div class="sym-head"><h1>Cosmo</h1><span>' + String(COSMOS.length).padStart(2, "0") + "</span></div>" +
+      COSMOS.map(function (c) {
+        return '<button type="button" class="cosmo-card" id="' + c.id + '">' +
+          '<span class="cosmo-cover' + (c.cut ? " cut" : "") + '"><img src="' + c.img + '" alt=""></span>' +
+          '<span class="cosmo-body"><span class="cosmo-text"><span class="cosmo-kind">' + c.kind + '</span><span class="cosmo-name">' + esc(c.name) + '</span><span class="cosmo-desc">' + c.desc + "</span></span>" +
+          '<span class="cosmo-go" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span></span>' +
+        "</button>";
+      }).join("");
   }
 
   function splash() {
     app.innerHTML =
-      '<header class="bar">' + backBtn("toSym") + mark() + "</header>" +
+      '<header class="bar">' + backBtn("toSymbion") + mark() + "</header>" +
       '<div class="hero">' +
         '<figure class="portrait-frame"><img class="portrait" src="assets/luo-hero.png" alt="骆王宇"></figure>' +
         '<p class="kicker">Symbion · 私屿</p><h1>骆王宇</h1>' +
@@ -793,6 +788,12 @@
   function bind() {
     var enter = document.getElementById("enter");
     if (enter) enter.onclick = function () { go("login"); };
+    var openLuo = document.getElementById("openLuo");
+    if (openLuo) openLuo.onclick = function () { go(state.saved ? "home" : "splash"); };
+    var toSymbion = document.getElementById("toSymbion");
+    if (toSymbion) toSymbion.onclick = function () { go("symbion"); };
+    var openRoland = document.getElementById("openRoland");
+    if (openRoland) openRoland.onclick = function () { toast("Roland 的 Cosmo 还没接入这个原型"); };
     var backSplash = document.getElementById("backSplash");
     if (backSplash) backSplash.onclick = function () { go("splash"); };
     var agree = document.getElementById("agree");
@@ -931,11 +932,7 @@
     var backToLogin = document.getElementById("backToLogin");
     if (backToLogin) backToLogin.onclick = function () { go("login"); };
     var toStart = document.getElementById("toStart");
-    if (toStart) toStart.onclick = function () { go("sym"); };
-    var openLuo = document.getElementById("openLuo");
-    if (openLuo) openLuo.onclick = function () { go(state.saved ? "home" : "splash"); };
-    var toSym = document.getElementById("toSym");
-    if (toSym) toSym.onclick = function () { go("sym"); };
+    if (toStart) toStart.onclick = function () { go("symbion"); };
     var finish = document.getElementById("finish");
     if (finish) finish.onclick = function () {
       state.saved = true;

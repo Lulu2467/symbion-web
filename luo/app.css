@@ -185,64 +185,34 @@ html:has(.hero) { background: #fff; }
 }
 .phone:has(.hero) > .bar { gap: 8px; }
 
-.sym-head { margin: 4px 0 20px; }
-.sym-title { margin: 0; font-size: 28px; line-height: 36px; font-weight: 700; color: var(--ink); }
-.sym-lead { margin: 4px 0 0; font-size: 14px; line-height: 22px; color: var(--muted); }
+html:has(.sym-head) { background: #fafafa; }
+.phone:has(.sym-head) { background: #fafafa; }
+.sym-head { display: flex; align-items: baseline; justify-content: space-between; margin: 12px 4px 16px; }
+.sym-head h1 { margin: 0; font-family: Jura, sans-serif; font-size: 32px; line-height: 40px; font-weight: 600; letter-spacing: 0.04em; color: #0a0a0a; }
+.sym-head span { font-family: Jura, sans-serif; font-size: 13px; letter-spacing: 0.16em; color: #8a8a8a; }
 .cosmo-card {
   display: block;
   width: 100%;
+  margin: 0 0 12px;
   padding: 0;
-  border: 1px solid rgba(26, 39, 68, 0.06);
+  overflow: hidden;
+  border: 1px solid #ebebeb;
   border-radius: 20px;
   background: #fff;
-  box-shadow: 0 8px 28px rgba(26, 39, 68, 0.08);
-  overflow: hidden;
   text-align: left;
+  color: #0a0a0a;
 }
 .cosmo-card:active { transform: scale(0.99); }
-.cosmo-photo {
-  position: relative;
-  display: block;
-  height: 232px;
-  overflow: hidden;
-  background: radial-gradient(ellipse 60% 70% at 50% 60%, rgba(196, 214, 234, 0.8), rgba(229, 238, 245, 0) 70%), linear-gradient(180deg, #e5eef5, #f4f8fb);
-}
-.cosmo-photo img { display: block; width: 62%; margin: -10px auto 0; }
-.cosmo-tag {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  z-index: 1;
-  padding: 2px 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.85);
-  color: var(--ink);
-  font-size: 12px;
-  line-height: 20px;
-}
-.cosmo-body { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px 16px; }
-.cosmo-name { display: block; font-size: 20px; line-height: 28px; font-weight: 600; color: var(--ink); letter-spacing: 0.06em; }
-.cosmo-tags { display: block; font-size: 13px; line-height: 20px; color: var(--muted); }
-.cosmo-go {
-  flex: none;
-  display: inline-flex;
-  align-items: center;
-  height: 36px;
-  padding: 0 18px;
-  border-radius: 18px;
-  background: var(--enter);
-  color: #fff;
-  font-size: 14px;
-  font-weight: 600;
-}
-.sym-sec { margin: 28px 0 4px; font-size: 13px; line-height: 20px; font-weight: 500; color: var(--dim); }
-.sym-feats { list-style: none; margin: 0; padding: 0; }
-.sym-feats li { display: grid; grid-template-columns: 36px minmax(0, 1fr); column-gap: 12px; align-items: center; min-height: 44px; padding: 12px 0; }
-.sym-feats li + li { border-top: 1px solid var(--line); }
-.sym-i { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 10px; background: var(--ice); color: var(--ink); }
-.sym-feats b { display: block; font-size: 15px; line-height: 22px; font-weight: 600; color: var(--ink); }
-.sym-feats p { margin: 0; font-size: 13px; line-height: 20px; color: var(--muted); }
-.sym-more { margin: 16px 0 0; text-align: center; font-size: 12px; line-height: 20px; color: var(--dim); }
+.cosmo-cover { display: block; height: 188px; overflow: hidden; background: #f0f0f0; }
+.cosmo-cover img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 4%; filter: grayscale(1) contrast(1.05); }
+.cosmo-cover.cut { background: radial-gradient(ellipse 60% 90% at 50% 70%, #d4d4d4, #b4b4b4); }
+.cosmo-cover.cut img { width: auto; height: 420px; margin: 4px auto 0; object-fit: fill; }
+.cosmo-body { display: flex; align-items: center; gap: 12px; padding: 14px 16px 16px; }
+.cosmo-text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.cosmo-kind { align-self: flex-start; margin-bottom: 6px; padding: 1px 8px; border: 1px solid #0a0a0a; border-radius: 999px; font-size: 11px; line-height: 18px; letter-spacing: 0.08em; }
+.cosmo-name { font-size: 19px; line-height: 26px; font-weight: 600; }
+.cosmo-desc { margin-top: 2px; font-size: 13px; line-height: 20px; color: #6b6b6b; }
+.cosmo-go { flex: none; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #0a0a0a; color: #fff; }
 .phone > .hero { align-items: center; text-align: center; }
 .phone > .hero h1 { margin: 0 0 9px; font-size: 36px; line-height: 56px; }
 .phone > .hero .hero-tags { justify-content: center; }
