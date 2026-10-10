@@ -811,7 +811,7 @@
     var enter = document.getElementById("enter");
     if (enter) enter.onclick = function () { go("login"); };
     var openLuo = document.getElementById("openLuo");
-    if (openLuo) openLuo.onclick = function () { go(state.saved ? "home" : "splash"); };
+    if (openLuo) openLuo.onclick = function () { go("splash"); };
     var toSymbion = document.getElementById("toSymbion");
     if (toSymbion) toSymbion.onclick = function () { go("symbion"); };
     var openRoland = document.getElementById("openRoland");
@@ -954,7 +954,7 @@
     var backToLogin = document.getElementById("backToLogin");
     if (backToLogin) backToLogin.onclick = function () { go("login"); };
     var toStart = document.getElementById("toStart");
-    if (toStart) toStart.onclick = function () { go("symbion"); };
+    if (toStart) toStart.onclick = function () { go("splash"); };
     var finish = document.getElementById("finish");
     if (finish) finish.onclick = function () {
       state.saved = true;
