@@ -100,9 +100,9 @@ a { color: inherit; }
 }
 .bar > .wordmark {
   position: absolute;
-  left: 50%;
+  right: 0;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateY(-50%);
 }
 .wordmark {
   display: inline-flex;
