@@ -656,7 +656,7 @@ var PLAN_FACE = '<span class="plan-face"><svg viewBox="0 0 1024 1024" width="36"
         }).join("")
       : '<p>近 3 个月还没有在骆王宇橱窗下单。</p>';
     var skin = sc && state.saved
-      ? '<header class="skin-head"><p class="skin-kicker">肤质方案</p><h2>' + esc(sc.name) + "</h2>" +
+      ? '<header class="skin-head"><p class="skin-kicker">肤质方案</p><div class="skin-title">' + PLAN_FACE + "<h2>" + esc(sc.name) + "</h2></div>" +
         '<p class="skin-state">' + esc(sc.state) + "</p></header>" +
         '<article class="skin-file"><p class="skin-goal">' + esc(sc.goal) + "</p>" +
         skinBlock("am", "早间", sc.am) + skinBlock("pm", "晚间", sc.pm) +
