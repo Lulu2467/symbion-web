@@ -301,8 +301,8 @@
   }
 
   var COSMOS = [
-    { id: "openLuo", img: "assets/luo-hero.png", cut: true, name: "骆王宇", kind: "护肤", desc: "护肤理念与审美洞察" },
-    { id: "openRoland", img: "assets/cosmo-roland.jpg", name: "Gunther Roland", kind: "学术", desc: "学术课程与科研方法" }
+    { id: "openLuo", img: "assets/luo-portrait.png", focus: "50% 30%", name: "骆王宇", kind: "护肤", desc: "护肤理念与审美洞察" },
+    { id: "openRoland", img: "assets/cosmo-roland.jpg", focus: "68% 30%", name: "Gunther Roland", kind: "学术", desc: "学术课程与科研方法" }
   ];
 
   function symbion() {
@@ -313,12 +313,12 @@
     app.innerHTML =
       '<div class="sym-head"><p class="sym-date">' + date + '</p><h1>' + hello + "，用户1234</h1></div>" +
       '<h2 class="sym-sec">cosmo</h2>' +
-      COSMOS.map(function (c) {
-        return '<button type="button" class="cosmo-card' + (c.cut ? " cut" : "") + '" id="' + c.id + '">' +
+      '<div class="cosmo-grid">' + COSMOS.map(function (c) {
+        return '<button type="button" class="cosmo-card" id="' + c.id + '">' +
+          '<img class="cosmo-img" src="' + c.img + '" alt="" style="object-position:' + c.focus + '">' +
           '<span class="cosmo-text"><span class="cosmo-kind">' + c.kind + '</span><span class="cosmo-name">' + esc(c.name) + '</span><span class="cosmo-desc">' + c.desc + "</span></span>" +
-          '<img class="cosmo-img" src="' + c.img + '" alt="">' +
         "</button>";
-      }).join("");
+      }).join("") + "</div>";
   }
 
   function splash() {
