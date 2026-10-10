@@ -250,6 +250,8 @@
   }
 
   function render() {
+    var theme = document.querySelector('meta[name="theme-color"]');
+    if (theme) theme.setAttribute("content", state.screen === "splash" ? "#efe8df" : "#e5eef5");
     app.classList.toggle("dy-on", state.screen === "douyin");
     app.classList.toggle("chat-on", state.screen === "chat");
     var s = state.screen;

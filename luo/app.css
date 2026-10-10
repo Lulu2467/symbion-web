@@ -31,6 +31,7 @@ html {
   background: #fff;
   min-height: 100%;
 }
+html:has(.hero) { background: #efe8df; }
 body {
   font: 14px/21px -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans SC", sans-serif;
   color: var(--muted);
@@ -156,7 +157,7 @@ body:has(.hero) {
 .portrait-frame { margin: 0 0 16px; }
 .hero .portrait-frame {
   align-self: stretch;
-  margin: -8px -16px -120px;
+  margin: calc(-8px - 8dvh) -16px -120px;
   display: flex;
   justify-content: center;
   overflow: hidden;
@@ -176,7 +177,7 @@ body:has(.hero) {
 .hero .hero-tags span:first-child { padding-left: 0; }
 .hero .hero-tags span + span { border-left: 1px solid rgba(42, 36, 30, 0.22); }
 .phone:has(.hero) > .btn { box-shadow: 0 10px 24px rgba(26, 39, 68, 0.16); }
-.phone > .hero { flex: 1; justify-content: center; }
+.phone > .hero { flex: 1; justify-content: flex-start; }
 .phone > .hero ~ .btn { margin-top: 24px; }
 .portrait {
   width: 100%;
