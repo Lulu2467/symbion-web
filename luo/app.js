@@ -656,7 +656,7 @@
   function vanity() {
     var orders = demoOrders();
     var sc = scheme();
-    var overview = '<p class="fine vanity-tip">早晚怎么用写在每件商品上，完整步骤在「档案」里。</p>';
+    var overview = '<p class="fine vanity-tip">完整的早晚步骤在「档案」里。</p>';
     var mine = (state.mine || []).map(function (p) {
       var v = judge(p.name);
       var shot = p.photo && p.photo.indexOf("data:image/") === 0 ? '<img class="mine-photo" src="' + p.photo + '" alt="">' : "";
@@ -674,17 +674,13 @@
     return overview +
       orders.map(function (o) {
         var kit = KITS[o.kit];
-        var how = kit
-          ? '<div class="use-rows"><div class="use-row">' + miniIcon("am") + '<div><p class="plan-k">早上</p><p>' + esc(kit.am) + "</p></div></div>" +
-            '<div class="use-row">' + miniIcon("pm") + '<div><p class="plan-k">晚上</p><p>' + esc(kit.pm) + "</p></div></div></div>"
-          : '<p class="fine">暂无这件的用法，可以问小骆。</p>';
         var note = kit
           ? '<div class="kit-note"><img src="' + FACE + '" alt="" /><div><b>骆王宇</b><p>' + esc(kit.voice) + '</p></div></div>'
           : "";
         var act = kit
           ? '<button type="button" class="btn sm" data-listen="' + esc(o.kit) + '"><svg viewBox="0 0 1024 1024" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M918.298667 821.276667l-148.112667-148.112667c14.604-20.906667 26.984667-43.298667 37.013333-67.008667 19.136-45.242 28.838667-93.276667 28.838667-142.769333 0-49.492-9.702667-97.526667-28.838667-142.768667-18.474-43.677333-44.912-82.894667-78.58-116.562666s-72.885333-60.106-116.563333-78.58c-45.242-19.136-93.276-28.838667-142.768-28.838667s-97.526667 9.702667-142.768667 28.838667c-43.677333 18.474-82.894667 44.912-116.562666 78.58s-60.106 72.885333-78.58 116.562666c-19.135333 45.242-28.838 93.276667-28.838 142.768667 0 49.492667 9.702667 97.527333 28.838 142.769333 18.474 43.677333 44.912 82.894667 78.58 116.562 33.668 33.668 72.885333 60.106 116.562666 78.579334 45.242 19.136 93.276667 28.838667 142.768667 28.838666s97.526-9.702667 142.768-28.838666c37.262-15.76 71.273333-37.32 101.366667-64.216667l144.536666 144.536667c8.331333 8.331333 19.250667 12.496667 30.17 12.496666s21.838667-4.165333 30.17-12.496666c16.661333-16.662 16.661333-43.678-0.000666-60.34z m-449.010667-76.474667c-155.173333 0-281.416667-126.242-281.416667-281.416s126.242667-281.416667 281.416667-281.416667 281.416667 126.242667 281.416667 281.416667-126.243333 281.416-281.416667 281.416z"/></svg>听用法</button>'
           : '<button type="button" class="btn sm" data-listen="' + esc(o.kit) + '">' + ASK_ICON + '问小骆</button>';
-        return '<article class="vanity-card" id="kit-' + esc(o.kit) + '"><div class="vanity-head"><span class="mine-id">' + (o.img ? '<img class="mine-photo" src="' + esc(o.img) + '" alt="" />' : "") + "<b>" + esc(o.name) + "</b></span>" + act + '</div><p class="van-meta"><span class="van-time">' + miniIcon("clock") + esc(o.time) + '</span><span class="van-st' + (o.status === "已完成" ? " done" : "") + '"><i></i>' + esc(o.status) + '</span></p><p class="fine van-id">' + esc(o.id) + "</p>" + how + note + "</article>";
+        return '<article class="vanity-card" id="kit-' + esc(o.kit) + '"><div class="vanity-head"><span class="mine-id">' + (o.img ? '<img class="mine-photo" src="' + esc(o.img) + '" alt="" />' : "") + "<b>" + esc(o.name) + "</b></span>" + act + "</div>" + note + "</article>";
       }).join("") + mine + adder;
   }
 
