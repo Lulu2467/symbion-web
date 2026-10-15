@@ -188,21 +188,26 @@ button:focus-visible, input:focus-visible {
 }
 .cosmo-name { font-size: 13px; font-weight: 500; }
 .cosmo-sub { font-size: 11px; color: var(--faint); }
+.cosmo-sub.is-live { color: var(--purple); }
 .side-spacer { flex: 1; min-height: 12px; }
 .plan {
-  background: var(--amber);
-  color: var(--amber-ink);
   border-radius: 12px;
   padding: 10px 12px;
+  background: #f4f3ef;
+  color: var(--muted);
 }
-.plan strong { display: block; font-size: 12px; font-weight: 500; }
+.plan.is-guest {
+  background: var(--amber);
+  color: var(--amber-ink);
+}
+.plan strong { display: block; font-size: 12px; font-weight: 500; color: inherit; }
 .plan button, .plan span {
   display: block;
   margin-top: 2px;
   border: 0;
   background: none;
   padding: 0;
-  color: var(--amber-ink);
+  color: inherit;
   font-size: 11px;
   text-align: left;
 }
@@ -415,29 +420,34 @@ button:focus-visible, input:focus-visible {
 
 .week {
   border-radius: 16px;
-  padding: 16px;
+  padding: 17px;
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 .week-head { display: flex; align-items: center; gap: 8px; }
-.week-head h2 { flex: 1; margin: 0; font-size: 16px; }
-.week-count { color: var(--purple); font-size: 13px; font-weight: 500; }
+.week-head h2 { flex: 1; margin: 0; font-size: 16px; font-weight: 700; }
+.week-count { color: var(--muted); font-size: 13px; font-weight: 500; }
 .x {
   border: 0;
   background: none;
   color: var(--faint);
   font-size: 14px;
   padding: 0;
+  line-height: 1;
 }
-.steps { display: flex; align-items: flex-start; gap: 12px; }
+.steps {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  align-items: start;
+}
 .step {
-  flex: 1;
   min-width: 0;
   background: #fff;
   border: 1px solid var(--line);
   border-radius: 12px;
-  padding: 12px;
+  padding: 13px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -445,12 +455,18 @@ button:focus-visible, input:focus-visible {
   text-align: left;
   font-size: 13px;
   font-weight: 500;
+  min-height: 85px;
 }
+.step-label { line-height: 1.35; }
+.step .go { margin-top: auto; }
 .step.is-done {
   background: var(--done);
   border-color: var(--done);
   color: var(--done-ink);
+  min-height: 62px;
 }
+.made-row { gap: 16px; }
+.made-row .made { flex: 1 1 0; }
 .continue { border-radius: 16px; padding: 17px; display: flex; flex-direction: column; gap: 12px; }
 .cont {
   width: 100%;

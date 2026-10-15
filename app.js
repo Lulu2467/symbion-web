@@ -141,21 +141,23 @@ function sideHTML() {
   const q = state.jump.trim().toLowerCase();
   const show = (text) => !q || text.toLowerCase().includes(q);
   const topics = s.topics.filter((t) => show(t[0])).map(([label, count]) =>
-    `<button type="button" class="topic${on("topic-" + label)}" data-press="topic-${esc(label)}" data-fill="${esc(label)}">${esc(label)}${count ? `<b>${esc(count)}</b>` : ""}</button>`
+    `<button type="button" class="topic${on("topic-" + label)}" data-press="topic-${esc(label)}" data-fill="${esc(label)}"${state.stage === "h1" ? ' data-week-do="peek"' : ""}>${esc(label)}${count ? `<b>${esc(count)}</b>` : ""}</button>`
   ).join("");
   const cosmos = s.cosmos.filter((c) => show(PEOPLE[c[0]].name + " " + c[1])).map(([id, sub]) => {
     const p = PEOPLE[id];
     const fill = p.at || p.name;
+    const live = /live/i.test(sub || "") ? " is-live" : "";
     return `<button type="button" class="cosmo${on("cosmo-" + id)}" data-press="cosmo-${id}" data-fill="${esc(fill)}">
       ${A(p.initials, "sm")}
-      <span><span class="cosmo-name">${esc(p.name)}</span>${sub ? `<span class="cosmo-sub" style="display:block">${esc(sub)}</span>` : ""}</span>
+      <span><span class="cosmo-name">${esc(p.name)}</span>${sub ? `<span class="cosmo-sub${live}" style="display:block">${esc(sub)}</span>` : ""}</span>
     </button>`;
   }).join("");
   const planBtn = s.plan[2]
     ? pressBtn("save", "", esc(s.plan[1]))
     : `<span>${esc(s.plan[1])}</span>`;
+  const planClass = s.plan[2] ? "plan is-guest" : "plan";
   return `
-    <input class="jump" id="jump" type="text" placeholder="Jump to…  # @ /" value="${esc(state.jump)}" aria-label="Jump to…  # @ /">
+    <input class="jump" id="jump" type="text" placeholder="Jump to… # @ /" value="${esc(state.jump)}" aria-label="Jump to… # @ /">
     <button type="button" class="nav is-on" data-press="nav-home">Home</button>
     <button type="button" class="nav${on("nav-explore")}" data-press="nav-explore">Explore</button>
     <button type="button" class="nav${on("nav-library")}" data-press="nav-library">Library</button>
@@ -165,7 +167,7 @@ function sideHTML() {
     <p class="kicker">YOUR COSMOS</p>
     ${cosmos}
     <div class="side-spacer"></div>
-    <div class="plan"><strong>${esc(s.plan[0])}</strong>${planBtn}</div>`;
+    <div class="${planClass}"><strong>${esc(s.plan[0])}</strong>${planBtn}</div>`;
 }
 
 function askBar(placeholder, chips) {
@@ -188,11 +190,11 @@ function weekCard() {
     const isDone = state.week[w.id];
     const mark = isDone ? "✓" : "○";
     return `<button type="button" class="step${isDone ? " is-done" : ""}" data-week="${w.id}">
-      <span>${mark} ${esc(w.label)}</span>
+      <span class="step-label">${mark} ${esc(w.label)}</span>
       ${!isDone && w.action ? `<span class="go">${esc(w.action)}</span>` : ""}
     </button>`;
   }).join("");
-  return `<section class="week">
+  return `<section class="week" aria-label="Your first week">
     <div class="week-head">
       <h2>Your first week</h2>
       <span class="week-count">${done} of 5</span>
@@ -202,12 +204,13 @@ function weekCard() {
   </section>`;
 }
 
-function madeCard(badge, title, action) {
+function madeCard(badge, title, action, weekDo) {
+  const week = weekDo ? ` data-week-do="${weekDo}"` : "";
   return `<article class="made">
     <div class="thumb" aria-hidden="true"></div>
     <span class="pill">${esc(badge)}</span>
     <h3>${esc(title)}</h3>
-    ${pressBtn("made-" + badge, "go", esc(action), `data-fill="${esc(title)}"`)}
+    ${pressBtn("made-" + badge, "go", esc(action), `data-fill="${esc(title)}"${week}`)}
   </article>`;
 }
 
@@ -264,11 +267,11 @@ function h1() {
       ${section("CONTINUE")}
       <div class="continue">${continueRow("c-bang", "EP", "The first second after the Big Bang", "Enrico Pajer · yesterday")}</div>
       ${section("MADE WITH SYMBION", "See all", "see-made")}
-      <div class="row">
-        ${madeCard("Deck", "Lecture 4 → 8-slide study deck", "Make one from my chat →")}
-        ${madeCard("Symtex", "Black-Scholes, derived step by step", "Open template →")}
-        ${madeCard("Doc", "Startup idea → 1-page memo", "Try with my idea →")}
-        ${madeCard("Citta + Doc", "Reading report outlined in 15 min", "Start with Citta →")}
+      <div class="row made-row">
+        ${madeCard("Deck", "Lecture 4 → 8-slide study deck", "Make one from my chat →", "tool")}
+        ${madeCard("Symtex", "Black-Scholes, derived step by step", "Open template →", "tool")}
+        ${madeCard("Doc", "Startup idea → 1-page memo", "Try with my idea →", "tool")}
+        ${madeCard("Citta + Doc", "Reading report outlined in 15 min", "Start with Citta →", "tool")}
       </div>
       ${section("TRY A DIFFERENT MIND")}
       <div class="row">
@@ -279,7 +282,7 @@ function h1() {
       <section class="today lavender${on("brief")}">
         <span class="pill">✦ Prof. Pajer’s twin</span>
         <h3>Your 3-minute brief is ready</h3>
-        ${pressBtn("brief", "go", "Read brief →", `data-fill="Your 3-minute brief is ready"`)}
+        ${pressBtn("brief", "go", "Read brief →", `data-fill="Your 3-minute brief is ready" data-week-do="brief"`)}
       </section>
       <section class="panel">
         <h2>Explore more Cosmos</h2>
@@ -464,8 +467,14 @@ document.addEventListener("click", (e) => {
   if (weekBtn) {
     const id = weekBtn.dataset.week;
     if (id !== "ask") state.week[id] = true;
+    if (id === "visit") state.ask = "Open field map";
+    if (id === "tool") state.ask = "Make something with a tool";
+    if (id === "peek") state.ask = "#cosmology";
+    if (id === "brief") state.ask = "Your 3-minute brief is ready";
     render();
     bindJump();
+    const input = document.getElementById("ask");
+    if (input && id !== "ask") input.focus();
     return;
   }
   const fill = e.target.closest("[data-fill]");
