@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Symbion Home</title>
+  <title>Symbion Home · tools first</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,23 +12,47 @@
 <body>
   <div class="review" role="toolbar" aria-label="Review">
     <span>Review</span>
-    <button type="button" data-stage="h0">H0 · Day zero</button>
-    <button type="button" data-stage="h1">H1 · Getting started</button>
-    <button type="button" data-stage="h2">H2 · Established</button>
+    <button type="button" data-stage="h0" class="is-on">H0 · First visit</button>
+    <button type="button" data-stage="h1">H1 · First week</button>
+    <button type="button" data-stage="h2">H2 · Established (B)</button>
     <button type="button" data-stage="h3">H3 · Welcome back</button>
+    <span class="review-sep">Citta</span>
+    <button type="button" data-dock="collapsed">Collapsed</button>
+    <button type="button" data-dock="peek">Peek</button>
+    <button type="button" data-dock="expanded">Expanded</button>
+    <button type="button" data-dock="docked">Docked</button>
   </div>
-  <div class="stage" id="stage">
-    <aside class="rail" aria-label="Rail">
-      <div class="mark" aria-hidden="true"></div>
-      <button type="button" class="rail-ico" data-press="rail-home">✧</button>
-      <button type="button" class="rail-ico" data-press="rail-deck">▧</button>
-      <button type="button" class="rail-ico" data-press="rail-club">♧</button>
-      <button type="button" class="rail-ico" data-press="rail-set">⚙</button>
-    </aside>
-    <aside class="side" id="side" aria-label="Sidebar"></aside>
-    <div class="body" id="body"></div>
-    <div class="fold" aria-hidden="true"></div>
+
+  <div class="viewport" id="viewport">
+    <div class="frame" id="frame" data-stage="h0" data-dock="collapsed">
+      <div class="os-bar">
+        <span>Cosmo</span>
+        <span class="os-muted">|||\\</span>
+        <span>⊜ Scholar</span>
+        <span>▤ arXiv</span>
+        <span>▣ Notion</span>
+        <span class="os-spacer"></span>
+        <span>⌂ Desk</span>
+        <span class="os-brand"><span class="avatar xs">S</span> Symbion</span>
+      </div>
+
+      <div class="shell">
+        <aside class="rail" id="rail" aria-label="Left rail"></aside>
+        <main class="main">
+          <div class="logo-row">
+            <div class="logo">≋ S Y M B I O N</div>
+            <div class="search">Search files, Cosmos, people… ⌘K</div>
+          </div>
+          <div class="content" id="content"></div>
+        </main>
+        <aside class="citta-side" id="citta-side" hidden aria-label="Citta docked"></aside>
+      </div>
+
+      <div class="fold" aria-hidden="true"></div>
+      <div class="citta-dock" id="citta-dock" aria-live="polite"></div>
+    </div>
   </div>
+
   <script src="app.js"></script>
 </body>
 </html>

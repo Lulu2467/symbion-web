@@ -1,10 +1,17 @@
-# Symbion Homepage
+# Symbion Home · tools first
 
-Interactive HTML prototype of Desktop Home stages (H0–H3), restored from Figma `Homepage — Symbion` / `Desktop · Home stages`.
+Interactive 1:1 HTML of **Home v2 — tools first** (not Desktop Home stages).
+
+## Source
+
+- Canonical: https://www.figma.com/design/rV59JRaO6ZjuRaNqTNYMku/Homepage---Symbion?node-id=1-4750  
+- Same family board: `1:2180` Home v2 — tools first (H0 / H1 / H2 / H3 / Variant B / Citta dock)  
+- **Do not use** `1:11405` Desktop · Home stages (sidebar + Ask bar + “Your first week”)
 
 ## Open
 
 ```bash
+cd homepage
 python -m http.server 8766
 ```
 
@@ -12,29 +19,30 @@ Then open http://127.0.0.1:8766/
 
 Or open `index.html` directly.
 
-## Review controls
+## Review controls (outside the 1440 frame)
 
-The sticky **Review** bar above the 1440 frame switches stages:
+| Control | What it does |
+|---|---|
+| H0 · First visit | Arrival banner + Start with + Try each tool with Citta |
+| H1 · First week | Continue with + Your tools this week (dismissible) |
+| H2 · Established (B) | Variant B: quiet greeting, hero composer, tinted Continue with |
+| H3 · Welcome back | Pick up where you left off + collapsed Cosmos |
+| Citta Collapsed / Peek / Expanded / Docked | Dock states from the board |
 
-| Stage | Name | Tutorial |
-|---|---|---|
-| H0 | Day zero | No checklist; Ask starters + Find my minds |
-| H1 | Getting started | **Your first week** — 5 steps, dismissible |
-| H2 | Established | No tutorial |
-| H3 | Welcome back | Recap instead of tutorial |
+## Tutorial (H0) — verbatim
 
-## Tutorial (H1)
+**Try each tool with Citta** · `1 minute each · uses Prof. Roland’s course material`
 
-Exact copy from the design:
+| Tool | Lead | Hint | CTA |
+|---|---|---|---|
+| Doc | Lecture 1 → one-page summary | A Doc with headings + key formulas | ≋ Try it |
+| Deck | Lecture 1 → 6 study slides | A Deck you can present or revise | ≋ Try it |
+| Numbers | Plot the sPHENIX sample data | A sheet + chart, explained | ≋ Try it |
+| SymTex | Typeset the Bjorken energy formula | Clean LaTeX you can reuse | ≋ Try it |
+| Code | Run a tiny particle simulation | A Python notebook, commented | ≋ Try it |
 
-1. ✓ Ask your first question  
-2. ○ Visit 3 Cosmos ◐○○ → Open map →  
-3. ○ Make something with a tool → Try →  
-4. ○ Peek into a #topic thread → Peek →  
-5. ○ Set your daily brief → Set →  
+## Files
 
-Click a step or the matching page action (field map, Made with Symbion, Read brief) to mark it done. ✕ hides the row only.
-
-## Source
-
-Figma: https://www.figma.com/design/rV59JRaO6ZjuRaNqTNYMku/Homepage---Symbion?node-id=1-11405
+- `index.html` — shell + review bar  
+- `styles.css` — 1440 layout (OS bar, left rail, composer, sections)  
+- `app.js` — stages, tool select, Try it, dismiss week, reminders, Citta dock  
