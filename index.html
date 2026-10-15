@@ -7,15 +7,21 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=h0-greeting">
 </head>
 <body>
   <div class="review" role="toolbar" aria-label="Review">
     <span>Review</span>
     <button type="button" data-stage="h0" class="is-on">H0 · First visit</button>
-    <button type="button" data-stage="h1">H1 · First week</button>
-    <button type="button" data-stage="h2">H2 · Established (B)</button>
+    <button type="button" data-stage="tutorial">Tutorial · 1:8541</button>
+    <button type="button" data-stage="h1">H1 · Learning the tools</button>
+    <button type="button" data-stage="h2">H2 · Every day</button>
     <button type="button" data-stage="h3">H3 · Welcome back</button>
+    <span class="review-sep">Spec</span>
+    <button type="button" data-stage="components">组件 · 108:391</button>
+    <span class="review-sep">Switch AI</span>
+    <button type="button" data-ai-preview="open">Menu open</button>
+    <button type="button" data-ai-preview="roland">On Roland’s twin</button>
     <span class="review-sep">Citta</span>
     <button type="button" data-dock="collapsed">Collapsed</button>
     <button type="button" data-dock="peek">Peek</button>
@@ -40,15 +46,25 @@
         <aside class="rail" id="rail" aria-label="Left rail"></aside>
         <main class="main">
           <div class="logo-row">
-            <div class="logo">≋ S Y M B I O N</div>
-            <div class="search">Search files, Cosmos, people… ⌘K</div>
+            <div class="logo">
+              <svg class="logo-waves" width="28" height="20" viewBox="0 0 28 20" aria-hidden="true" focusable="false">
+                <path d="M2 4c3 0 3 4 6 4s3-4 6-4 3 4 6 4 3-4 6-4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                <path d="M2 10c3 0 3 4 6 4s3-4 6-4 3 4 6 4 3-4 6-4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                <path d="M2 16c3 0 3 4 6 4s3-4 6-4 3 4 6 4 3-4 6-4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+              </svg>
+              <span class="logo-text">S Y M B I O N</span>
+            </div>
+            <div class="logo-row-right">
+              <div class="search" role="search"><span class="search-query">Search files, Cosmos, people…</span><span class="search-kbd">⌘K</span></div>
+              <span class="desk-link">⌂ Desk</span>
+              <span class="header-brand"><span class="avatar xs">S</span> Symbion</span>
+            </div>
           </div>
           <div class="content" id="content"></div>
         </main>
         <aside class="citta-side" id="citta-side" hidden aria-label="Citta docked"></aside>
       </div>
 
-      <div class="fold" aria-hidden="true"></div>
       <div class="citta-dock" id="citta-dock" aria-live="polite"></div>
     </div>
   </div>

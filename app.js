@@ -107,22 +107,32 @@ function railHTML(avatars) {
 
 function dayStrip(cfg) {
   if (!cfg) return "";
+  const nowPct = cfg.now ?? 14;
+  const elapsed = cfg.elapsed ?? nowPct;
+  const nowLabel = cfg.nowLabel || "now · 9:40";
   const events = (cfg.events || [])
     .map(
       (e) =>
-        `<span class="day-event" style="left:${e.x}%"></span>` +
-        `<span class="day-label" style="left:${e.x}%">${esc(e.time)} ${esc(e.label)}</span>`
+        `<div class="day-event-wrap" style="left:${e.x}%">
+          <span class="day-label"><span class="day-label-time">${esc(e.time)}</span> <span class="day-label-title">${esc(e.label)}</span></span>
+          <span class="day-event" aria-hidden="true"></span>
+        </div>`
     )
     .join("");
   return `<div class="your-day">
-    <div class="your-day-top"><span>YOUR DAY</span><span>${esc(cfg.status)}</span></div>
-    <div class="day-track">
-      <div class="day-elapsed" style="width:${cfg.elapsed}%"></div>
-      <span class="day-now" style="left:${cfg.now}%"></span>
-      ${events}
+    <div class="your-day-top">
+      <span class="your-day-heading">YOUR DAY</span>
+      <span class="your-day-meta">${esc(cfg.status)}</span>
     </div>
-    <div class="day-scale"><span>8 am</span><span>8 pm</span></div>
-    <div class="now-label" style="position:relative;margin-top:2px;font-size:11px;color:var(--faint);padding-left:${Math.max(cfg.now - 4, 0)}%">now · 9:40</div>
+    <div class="day-rail">
+      <div class="day-track">
+        <div class="day-elapsed" style="width:${elapsed}%"></div>
+        <div class="day-now-wrap" style="left:${nowPct}%"><span class="day-now" aria-hidden="true"></span></div>
+        ${events}
+      </div>
+      <div class="day-scale"><span>8 am</span><span>8 pm</span></div>
+      <div class="day-now-label" style="left:${nowPct}%">${esc(nowLabel)}</div>
+    </div>
   </div>`;
 }
 
@@ -704,13 +714,10 @@ const STAGES = {
       title: "Good morning, Jess",
       sub: "Lecture 5 is at 2:30, your reading report is 55% there, and a reply to Prof. Roland is ready.",
       day: {
-        status: "Evening free",
+        status: "1 thing today",
         elapsed: 14,
         now: 14,
-        events: [
-          { x: 24, time: "11:00", label: "Reply Roland" },
-          { x: 54, time: "2:30", label: "Lecture 5" }
-        ]
+        events: [{ x: 54, time: "2:30", label: "Lecture 5" }]
       }
     },
     composer: {
@@ -999,23 +1006,26 @@ function contentHTML() {
   }
 
   const g = s.greeting;
-  const titleHTML = esc(g.title).replace(
+  let titleHTML = esc(g.title).replace(
     /\b(Jess)\b/g,
     '<span class="name-accent">$1</span>'
   );
+  if (state.stage === "h0") {
+    titleHTML = 'Welcome, <span class="name-accent">Jess</span>';
+  }
   let subHTML = esc(g.sub).replace(
     /(due tomorrow)/gi,
     '<strong class="due-accent">$1</strong>'
   );
   if (state.stage === "h0") {
     subHTML =
-      'You came in from <strong class="text-accent">Heavy-ion Physics. Pick a tool below</strong> and Citta will show you around.';
+      'You came in from <span class="text-accent">Heavy-ion Physics. Pick a tool below</span> and Citta will show you around.';
   }
   const showSunOrb = !g.quiet && state.stage !== "h0";
   const showEyebrowDot = state.stage !== "h0";
   const eyebrowPrefix =
     state.stage === "h0"
-      ? '<span class="eyebrow-sun" aria-hidden="true">☀</span>'
+      ? '<span class="eyebrow-sun" aria-hidden="true">☀️</span>'
       : showEyebrowDot
         ? '<span class="dot-time"></span>'
         : "";
