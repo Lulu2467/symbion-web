@@ -1,4 +1,4 @@
-/* Home v2 — tools first (Figma 1:4750 / board 1:2180). Not Desktop Home 1:11405. */
+/* Home v2 — tools first (Figma H0 1:4755 / tutorial 1:8541 / board 1:2180). Not Desktop Home 1:11405. */
 
 const TOOLS = [
   { id: "doc", icon: "≡", label: "Doc" },
@@ -16,27 +16,55 @@ const TEMPLATES = [
   { tool: "code", title: "Explain or fix my script", hint: "Paste code → explain → fix → test" }
 ];
 
+/* Tutorial cards — Figma 1:8541 (Try each tool with Citta) */
 const TRY_CARDS = [
-  { id: "doc", title: "Lecture 1 → one-page summary", hint: "A Doc with headings + key formulas" },
-  { id: "deck", title: "Lecture 1 → 6 study slides", hint: "A Deck you can present or revise" },
+  { id: "doc", title: "Lecture 1 — one-page summary", hint: "A Doc with headings + key formulas" },
+  { id: "deck", title: "Lecture 1 — 6 study slides", hint: "A Deck you can present or revise" },
   { id: "numbers", title: "Plot the sPHENIX sample data", hint: "A sheet + chart, explained" },
   { id: "symtex", title: "Typeset the Bjorken energy formula", hint: "Clean LaTeX you can reuse" },
   { id: "code", title: "Run a tiny particle simulation", hint: "A Python notebook, commented" }
 ];
 
+/** Switch AI menu (`1:7596`) — IN CONTEXT + DISCOVER */
+const AI_IN_CONTEXT = [
+  { id: "citta", label: "Citta", mark: "≋", meta: "Default · aware of every task", cls: "" },
+  { id: "roland", label: "Prof. Roland’s twin", mark: "GR", meta: "Heavy-ion Physics · knows the slides", cls: "gr" },
+  { id: "pajer", label: "Prof. Pajer’s twin", mark: "EP", meta: "Cosmology", cls: "ep" },
+  { id: "xu", label: "Prof. Xu’s twin", mark: "HX", meta: "AI & decisions · stats, pricing", cls: "hx" }
+];
+
+const AI_DISCOVER = [
+  { id: "lab", label: "Lab Report Coach", mark: "LR", meta: "AI agents · drafts lab reports in Doc", cls: "" }
+];
+
+const AI_OPTIONS = [...AI_IN_CONTEXT, ...AI_DISCOVER];
+
+const AI_SWITCH_TOAST = {
+  roland: "Now working with Prof. Roland’s twin — trained on Heavy-ion Physics lectures 1–5."
+};
+
+const AI_ASK_PLACEHOLDER = {
+  roland: "Ask Prof. Roland’s twin — e.g. ‘Which lecture 5 topics are on the exam?’"
+};
+
 const state = {
   stage: "h0",
+  reviewHighlight: "h0",
   dock: "collapsed",
   tool: null,
   ask: "",
+  ai: "citta",
+  aiOpen: false,
+  aiPrev: null,
   tried: { doc: false, deck: false, numbers: false, symtex: false, code: false },
   weekHidden: false,
-  interest: null,
+  interest: "Heavy-ion physics",
   pressed: {},
   joined: false,
   emailConnected: false,
   emailDismissed: false,
   reminderAdded: false,
+  tipDismissed: false,
   peekTimer: null
 };
 
@@ -141,14 +169,117 @@ function continueChips(items) {
     `<button type="button" class="link-quiet${on("all-files")}" data-press="all-files">All files →</button>`;
 }
 
+function aiById(id) {
+  return AI_OPTIONS.find((a) => a.id === id) || AI_IN_CONTEXT[0];
+}
+
+function composerPlaceholder(cfg) {
+  if (AI_ASK_PLACEHOLDER[state.ai]) return AI_ASK_PLACEHOLDER[state.ai];
+  if (state.ai !== "citta") {
+    return `Ask ${aiById(state.ai).label}…`;
+  }
+  return cfg.placeholder;
+}
+
+function aiMenuSection(label, items) {
+  return `<div class="ai-menu-section">
+    <div class="ai-section-label">${esc(label)}</div>
+    ${items
+      .map((a) => {
+        const selected = a.id === state.ai;
+        return `<button type="button" class="ai-option${selected ? " is-on" : ""}" data-ai="${a.id}" role="option" aria-selected="${selected}">
+          ${avatar(a.mark, "sm", a.cls)}
+          <span class="ai-option-copy"><strong>${esc(a.label)}</strong><em>${esc(a.meta)}</em></span>
+          ${selected ? '<span class="ai-check" aria-hidden="true">✓</span>' : ""}
+        </button>`;
+      })
+      .join("")}
+  </div>`;
+}
+
+function aiMenuHTML() {
+  return `<div class="ai-menu" role="listbox" aria-label="Switch AI">
+    <div class="ai-menu-head">
+      <span class="ai-menu-kicker">WORKING WITH</span>
+      <span class="ai-menu-rule">·</span>
+      <span class="ai-menu-sub">switch anytime</span>
+    </div>
+    ${aiMenuSection("IN CONTEXT", AI_IN_CONTEXT)}
+    <div class="ai-menu-divider"></div>
+    ${aiMenuSection("DISCOVER", AI_DISCOVER)}
+  </div>`;
+}
+
+function learnTipHTML() {
+  if (state.stage !== "h1" || state.tipDismissed) return "";
+  return `<div class="learn-tip" role="dialog" aria-label="Learning the tools">
+    <span class="learn-tip-badge">NEW</span>
+    <p class="learn-tip-title">You’re not limited to Citta</p>
+    <p class="learn-tip-body">Tap ⇄ to hand this task to Prof. Roland’s twin for course-specific help, then switch back to Citta whenever you like.</p>
+    <div class="learn-tip-actions">
+      <button type="button" class="tip-btn ghost" data-tip-show>Show me</button>
+      <button type="button" class="tip-btn solid" data-tip-dismiss>Got it</button>
+    </div>
+  </div>`;
+}
+
+function aiPickerHTML() {
+  const current = aiById(state.ai);
+  const onTwin = state.ai !== "citta";
+  const menu = state.aiOpen ? aiMenuHTML() : "";
+  const switchAvatars = (
+    state.stage === "h0"
+      ? [
+          { mark: "GR", cls: "gr" },
+          { mark: "EP", cls: "ep" },
+          { mark: "LR", cls: "" }
+        ]
+      : [
+          { mark: "EP", cls: "ep" },
+          { mark: "JG", cls: "" },
+          { mark: "LR", cls: "" }
+        ]
+  )
+    .map((a) => `<span class="avatar xs switch-av${a.cls ? " " + a.cls : ""}">${esc(a.mark)}</span>`)
+    .join("");
+  const twinBadge = onTwin ? '<span class="twin-badge">+ Twin</span>' : "";
+  const backCitta = onTwin
+    ? `<button type="button" class="back-citta" data-back-citta>← Back to Citta</button>`
+    : "";
+  return `<div class="working-bar">
+    <div class="working-left">
+      <span class="working-kicker">WORKING WITH</span>
+      <div class="ai-picker-wrap">
+        <button type="button" class="ai-current${state.aiOpen ? " is-open" : ""}" data-toggle-ai aria-expanded="${state.aiOpen}">
+          <span class="avatar sm${current.cls ? " " + current.cls : ""}">${esc(current.mark)}</span>
+          <span class="ai-current-label">${esc(current.label)}</span>
+          ${twinBadge}
+          <span class="caret">▾</span>
+        </button>
+        <button type="button" class="ai-switch-btn" data-toggle-ai aria-label="Switch AI">⇄</button>
+        ${menu}
+      </div>
+      ${backCitta}
+    </div>
+    <div class="working-right">
+      <button type="button" class="working-status" data-toggle-ai>
+        <span class="switch-label">or switch to</span>
+        <span class="switch-stack">${switchAvatars}</span>
+        <span>your twins &amp; AI agents — anytime</span>
+      </button>
+      ${learnTipHTML()}
+    </div>
+  </div>`;
+}
+
 function composerHTML(cfg) {
   const hero = !!cfg.hero;
-  const placeholder = cfg.placeholder;
-  const tools = toolChips(hero);
+  const placeholder = composerPlaceholder(cfg);
+  const tools = toolChips(true);
   let foot = "";
   if (cfg.startWith) {
     foot = `<div class="suggest-row">
-      <span class="suggest-label">Start with:</span>
+      <span class="suggest-label">START WITH</span>
       ${cfg.startWith
         .map(
           (s, i) =>
@@ -158,17 +289,14 @@ function composerHTML(cfg) {
     </div>`;
   } else if (cfg.continueWith && !hero) {
     foot = `<div class="continue-row">
-      <span class="continue-label">Continue with:</span>
+      <span class="continue-label">CONTINUE WITH</span>
       ${continueChips(cfg.continueWith)}
     </div>`;
   }
 
   const top = `<div class="${hero ? "composer-top" : ""}">
+    ${aiPickerHTML()}
     <div class="composer-row">
-      <div class="ai-switch">
-        ${avatar("≋", "lg")}
-        <button type="button" class="switch-ai${on("switch-ai")}" data-press="switch-ai" title="Switch AI">⇄</button>
-      </div>
       <input class="composer-input" id="ask" type="text" placeholder="${esc(placeholder)}" value="${esc(state.ask)}">
       <button type="button" class="send${on("send")}" data-press="send" aria-label="Send">↗</button>
     </div>
@@ -179,15 +307,25 @@ function composerHTML(cfg) {
     ${hero ? "" : foot}
   </div>`;
 
-  const heroFoot =
-    hero && cfg.continueWith
-      ? `<div class="composer-foot">
+  let heroFoot = "";
+  if (hero && cfg.continueWith) {
+    heroFoot = `<div class="composer-foot">
           <span class="continue-label">CONTINUE WITH</span>
           ${continueChips(cfg.continueWith)}
-        </div>`
-      : "";
+        </div>`;
+  } else if (hero && cfg.startWith) {
+    heroFoot = `<div class="composer-foot">
+          <span class="continue-label">START WITH</span>
+          ${cfg.startWith
+            .map(
+              (s, i) =>
+                `<button type="button" class="chip${on("start-" + i)}" data-press="start-${i}" data-fill="${esc(s)}">${esc(s)}</button>`
+            )
+            .join("")}
+        </div>`;
+  }
 
-  return `<section class="composer${hero ? " hero" : ""}">${top}${heroFoot}</section>`;
+  return `<section class="composer${hero ? " hero" : " proposed"}">${top}${heroFoot}</section>`;
 }
 
 function discoverHTML(cfg) {
@@ -199,16 +337,19 @@ function discoverHTML(cfg) {
     .join("");
   const cards = cfg.cards
     .map((c) => {
-      const badge = c.twin
-        ? `<span class="badge-mini">✦ Twin</span>`
-        : `<span class="badge-mini agent">AI agent</span>`;
+      let badge = "";
+      if (c.twin) badge = `<span class="badge-mini twin">+ Twin</span>`;
+      else if (c.agent) badge = `<span class="badge-mini agent">AI agent</span>`;
+      const addSi = c.twin
+        ? `<button type="button" class="add-si${on("add-" + c.initials)}" data-press="add-${esc(c.initials)}">+ Add SI</button>`
+        : "";
       return `<div class="disc-card">
         ${avatar(c.initials, "sm", c.cls || "")}
-        <div>
-          <div class="name" title="${esc(c.name)}">${esc(c.short || c.name)}${badge}</div>
+        <div class="disc-card-copy">
+          <div class="name" title="${esc(c.name)}"><span class="name-text">${esc(c.short || c.name)}</span>${badge}</div>
           <div class="meta">${esc(c.meta)}</div>
         </div>
-        <button type="button" class="add-si${on("add-" + c.initials)}" data-press="add-${esc(c.initials)}">+ Add SI</button>
+        ${addSi}
       </div>`;
     })
     .join("");
@@ -236,13 +377,14 @@ function trySectionHTML() {
       </button>
     </article>`;
   }).join("");
-  return `
+  return `<section class="tutorial-strip" id="tutorial-8541" aria-labelledby="tutorial-8541-title">
     <div class="section-head">
-      <h2>Try each tool with Citta</h2>
+      <h2 id="tutorial-8541-title">Try each tool with Citta</h2>
       <span class="sub">1 minute each · uses Prof. Roland’s course material</span>
       <span class="spacer"></span>
     </div>
-    <div class="try-row">${cards}</div>`;
+    <div class="try-row">${cards}</div>
+  </section>`;
 }
 
 function goalsHTML() {
@@ -312,7 +454,7 @@ function remindersEmptyHTML() {
         <p class="title">Join Heavy-ion Physics</p>
         <p class="desc">Get lecture and deadline reminders from the course</p>
       </div>
-      <button type="button" class="btn-secondary${state.joined ? " is-on" : ""}" data-join-course>
+      <button type="button" class="btn-primary${state.joined ? " is-on" : ""}" data-join-course>
         ${state.joined ? "Joined" : "Join course"}
       </button>
     </div>
@@ -379,6 +521,13 @@ function activityHTML(cfg) {
       <button type="button" class="btn-secondary${on("see-new")}" data-press="see-new">${esc(cfg.cta)}</button>
     </aside>`;
   }
+  const ready = cfg.ready
+    ? `<div class="activity-ready">
+        <span class="ready-dot"></span>
+        <span>${esc(cfg.ready.text)}</span>
+        <button type="button" class="act${on("ready")}" data-press="ready">${esc(cfg.ready.act)}</button>
+      </div>`
+    : "";
   const items = cfg.items
     .map((a) => {
       const cls = a.initials === "GR" ? "gr" : a.initials === "EP" ? "ep" : a.initials === "HX" ? "hx" : a.initials === "王" ? "wang" : "";
@@ -398,6 +547,7 @@ function activityHTML(cfg) {
       <span class="spacer"></span>
       ${cfg.count ? `<span class="count">${esc(cfg.count)}</span>` : ""}
     </div>
+    ${ready}
     ${items}
   </aside>`;
 }
@@ -460,7 +610,8 @@ const STAGES = {
       sub: "You came in from Heavy-ion Physics. Pick a tool below and Citta will show you around."
     },
     composer: {
-      placeholder: "What do you want to work on? Try one of the suggestions below.",
+      hero: true,
+      placeholder: "What do you want to work on? Try a suggestion below.",
       startWith: [
         "Summarise Prof. Roland’s lecture 1 in one page",
         "Explain quark-gluon plasma for my notes",
@@ -473,8 +624,8 @@ const STAGES = {
       cards: [
         { initials: "EP", name: "Enrico Pajer", short: "Enrico Pajer", meta: "Cosmology · Cambridge", twin: true, cls: "ep" },
         { initials: "JG", name: "Julia R. Greer", short: "Julia R. Greer", meta: "Materials · Caltech", twin: true },
-        { initials: "PC", name: "Physics Problem Coach", short: "Physics Problem Coach", meta: "Step-by-step in SymTex", twin: false },
-        { initials: "GW", name: "Gauge Theory 101", short: "Gauge Theory 101", meta: "Course · MIT OCW", twin: false }
+        { initials: "PC", name: "Physics Problem Coach", short: "Physics Problem Coach", meta: "Step-by-step in SymTex", agent: true, cls: "pc" },
+        { initials: "GW", name: "Gauge Theory 101", short: "Gauge Theory 101", meta: "Course · MIT OCW" }
       ]
     },
     try: true,
@@ -503,7 +654,7 @@ const STAGES = {
       }
     },
     composer: {
-      placeholder: "What do you want to work on? Citta can start it for you.",
+      placeholder: "What do you want to work on?",
       continueWith: [
         { id: "l1s", tool: "doc", title: "Lecture 1 summary", pct: null },
         { id: "l1d", tool: "deck", title: "Lecture 1 slides", pct: 80 }
@@ -520,6 +671,7 @@ const STAGES = {
       ]
     },
     toolsWeek: true,
+    learnTip: true,
     reminders: {
       title: "Reminders",
       sub: "Course · Yours",
@@ -532,9 +684,13 @@ const STAGES = {
     activity: {
       title: "From your Cosmos",
       count: "3 new",
+      ready: {
+        text: "Deck “Lecture 4 summary” is ready",
+        act: "Review →"
+      },
       items: [
-        { id: "b1", initials: "GR", title: "Prof. Roland’s twin posted lecture 3 slides", meta: "Heavy-ion Physics · today", act: "Turn into study notes →" },
-        { id: "b2", initials: "EP", title: "Prof. Pajer’s twin answered a popular question", meta: "#cosmology · 1.2k found helpful", act: "Read →" }
+        { id: "b1", initials: "GR", title: "Prof. Roland’s twin posted lecture 3 slides", meta: "Heavy-ion Physics · 2d ago", act: "Turn into study notes →" },
+        { id: "b2", initials: "EP", title: "Prof. Pajer’s twin answered a popular question", meta: "Cosmology · 1.2k found helpful", act: "Read →" }
       ]
     },
     goals: true
@@ -559,7 +715,7 @@ const STAGES = {
     },
     composer: {
       hero: true,
-      placeholder: "What do you want to work on? Citta can start it for you.",
+      placeholder: "What do you want to work on?",
       continueWith: [
         { id: "l4", tool: "deck", title: "Lecture 4 summary", pct: 60 },
         { id: "qgp", tool: "doc", title: "Reading report — QGP", pct: 55 },
@@ -593,7 +749,7 @@ const STAGES = {
         { id: "c1", initials: "GR", title: "Prof. Roland’s twin posted lecture 5 slides", meta: "Heavy-ion Physics · 1h ago", act: "Turn into study notes →" },
         { id: "c2", initials: "王", title: "骆王宇 is going live soon (the real person)", meta: "Live at 3:10 · twin has a recap ready", act: "Set reminder →" },
         { id: "c3", initials: "EP", title: "2 replies to your #cosmology thread", meta: "Prof. Pajer’s twin + @maya_k", act: "Open thread →" },
-        { id: "c4", initials: "HX", title: "Prof. Xu’s twin: new insight on pricing data", meta: "AI & decisions · today" }
+        { id: "c4", initials: "HX", title: "Prof. Xu’s twin: new insight on pricing data", meta: "AI & decisions · today", act: "View insight →" }
       ]
     },
     goals: true
@@ -613,7 +769,7 @@ const STAGES = {
       }
     },
     composer: {
-      placeholder: "What do you want to work on? Citta can start it for you.",
+      placeholder: "What do you want to work on?",
       continueWith: [
         { id: "qgp", tool: "doc", title: "Reading report — QGP", pct: 55 },
         { id: "l4", tool: "deck", title: "Lecture 4 summary", pct: 60 },
@@ -648,7 +804,189 @@ const STAGES = {
   }
 };
 
+function withSpecState(patch, fn) {
+  const saved = {};
+  Object.keys(patch).forEach((k) => {
+    saved[k] = state[k];
+    state[k] = patch[k];
+  });
+  const html = fn();
+  Object.keys(patch).forEach((k) => {
+    state[k] = saved[k];
+  });
+  return html;
+}
+
+function compSection(title, body) {
+  return `<section class="comp-section">
+    <h2 class="comp-section-title">${esc(title)}</h2>
+    <div class="comp-section-body">${body}</div>
+  </section>`;
+}
+
+function componentsHTML() {
+  const h0Composer = withSpecState(
+    { tool: "doc", ask: "", ai: "citta", aiOpen: false, stage: "h0", tipDismissed: true },
+    () => composerHTML(STAGES.h0.composer)
+  );
+  const h2Composer = withSpecState(
+    { tool: "deck", ask: "", ai: "citta", aiOpen: false, stage: "h2", tipDismissed: true },
+    () => composerHTML(STAGES.h2.composer)
+  );
+  const toolTiles = withSpecState({ tool: "numbers" }, () => toolChips(true));
+  const toolChipsPlain = withSpecState({ tool: null }, () => toolChips(false));
+  const startChips = withSpecState({ stage: "h0" }, () => {
+    const cfg = STAGES.h0.composer;
+    return cfg.startWith
+      .map(
+        (s, i) =>
+          `<button type="button" class="chip" tabindex="-1">${esc(s)}</button>`
+      )
+      .join("");
+  });
+  const continueSample = withSpecState({ stage: "h2" }, () =>
+    continueChips(STAGES.h2.composer.continueWith.slice(0, 2))
+  );
+  const discoverSample = withSpecState({ interest: "Physics & Space" }, () => discoverHTML(STAGES.h0.discover));
+  const tryCard = (() => {
+    const c = TRY_CARDS[0];
+    return `<article class="try-card comp-card">
+      <div class="top">${toolIcon(c.id)}<h3>${toolMeta(c.id).label}</h3></div>
+      <p class="lead">${esc(c.title)}</p>
+      <p class="hint">${esc(c.hint)}</p>
+      <button type="button" class="btn-try" tabindex="-1">≋ Try it</button>
+    </article>
+    <article class="try-card comp-card tried">
+      <div class="top">${toolIcon(c.id)}<h3>${toolMeta(c.id).label}</h3></div>
+      <p class="lead">${esc(c.title)}</p>
+      <p class="hint">${esc(c.hint)}</p>
+      <button type="button" class="btn-try tried is-on" tabindex="-1">✓ Tried</button>
+    </article>`;
+  })();
+  const goalCard = (() => {
+    const t = TEMPLATES[1];
+    return `<article class="goal-card comp-card">
+      <div class="top">${toolIcon(t.tool)}<h3>${toolMeta(t.tool).label}</h3></div>
+      <p class="lead">${esc(t.title)}</p>
+      <p class="hint">${esc(t.hint)}</p>
+      <button type="button" class="btn-use" tabindex="-1">Use with Citta</button>
+    </article>`;
+  })();
+  const reminderSample = (() => {
+    const r = STAGES.h2.reminders.rows[0];
+    return `<div class="reminder-row comp-row-spec">
+      <div class="time-col">${esc(r.when)}</div>
+      <div class="col">
+        <p class="title">${esc(r.title)}</p>
+        <div class="meta-row">
+          <span class="tag">${esc(r.tag)}</span>
+          ${r.extra ? `<span>${esc(r.extra)}</span>` : ""}
+        </div>
+      </div>
+      <button type="button" class="btn-citta" tabindex="-1">≋ ${esc(r.action)}</button>
+    </div>`;
+  })();
+  const learnTip = withSpecState({ stage: "h1", tipDismissed: false }, () => learnTipHTML());
+  const aiPickerOpen = withSpecState(
+    { aiOpen: true, ai: "citta", stage: "h2", tipDismissed: true },
+    () => aiPickerHTML()
+  );
+  const dockExpandedSpec = `<div class="dock-panel comp-inert">
+      <div class="dock-panel-top">
+        ${avatar("≋", "md")}
+        <strong>Citta</strong>
+        <span class="dock-icon-btn" aria-hidden="true">⇥</span>
+        <span class="dock-icon-btn" aria-hidden="true">—</span>
+      </div>
+      <div class="dock-body">
+        <div class="dock-msg">I can start any tool from here — Doc, Deck, Numbers, SymTex, or Code — using your Cosmo material.</div>
+        <div class="dock-msg">Try: “Prep a 10-min deck for lecture 5.”</div>
+      </div>
+      <div class="dock-input-row">
+        <input type="text" placeholder="Message Citta…" tabindex="-1" readonly>
+        <span class="send" aria-hidden="true">↗</span>
+      </div>
+    </div>`;
+  const dockStrip = `<div class="comp-dock-stage">
+    <p class="comp-dock-kicker">Citta — anchored to the bottom-right of the window</p>
+    <div class="comp-dock-row">
+      <div class="comp-dock-item">
+        <span class="comp-dock-label">Collapsed (default)</span>
+        <div class="comp-dock-spec"><span class="dock-bubble">≋<span class="dock-badge">1</span></span></div>
+      </div>
+      <div class="comp-dock-item">
+        <span class="comp-dock-label">Peek</span>
+        <div class="comp-dock-spec"><span class="dock-peek"><span class="bubble">≋</span><span class="line">Lecture 1 summary is ready in Doc</span></span></div>
+      </div>
+      <div class="comp-dock-item comp-dock-item--panel">
+        <span class="comp-dock-label">Expanded</span>
+        <div class="comp-dock-spec">${dockExpandedSpec}</div>
+      </div>
+      <div class="comp-dock-item comp-dock-item--side">
+        <span class="comp-dock-label">Docked</span>
+        <div class="comp-dock-spec comp-dock-side comp-inert">${sideDockHTML()}</div>
+      </div>
+    </div>
+  </div>`;
+
+  return `<div class="components-sheet" id="components-108-391">
+    <header class="components-head">
+      <h1>组件 · Components</h1>
+      <p class="components-meta">Figma <code>108:391</code> · shared primitives for H0–H3 (copy from stage frames, not invented here)</p>
+    </header>
+    ${compSection(
+      "Composer · WORKING WITH",
+      `<div class="comp-stack">
+        <p class="comp-caption">Proposed (H0 · <code>1:4755</code>)</p>
+        <div class="comp-inert">${h0Composer}</div>
+        <p class="comp-caption">Hero + CONTINUE WITH footer (H2 · <code>1:6089</code>)</p>
+        <div class="comp-inert">${h2Composer}</div>
+      </div>`
+    )}
+    ${compSection(
+      "AI picker · menu open",
+      `<div class="comp-inert comp-ai-menu-spec">${aiPickerOpen}</div>`
+    )}
+    ${compSection(
+      "Tool row",
+      `<div class="tool-row comp-inert">${toolTiles}${attachLinks()}</div>
+       <p class="comp-caption">Plain chips (non-composer contexts)</p>
+       <div class="comp-inert">${toolChipsPlain}</div>`
+    )}
+    ${compSection(
+      "Suggestion & continue chips",
+      `<div class="suggest-row comp-inert"><span class="suggest-label">START WITH</span>${startChips}</div>
+       <div class="continue-row comp-inert"><span class="continue-label">CONTINUE WITH</span>${continueSample}</div>`
+    )}
+    ${compSection(
+      "Buttons",
+      `<div class="comp-btn-row comp-inert">
+        <button type="button" class="btn-try" tabindex="-1">≋ Try it</button>
+        <button type="button" class="btn-use" tabindex="-1">Use with Citta</button>
+        <button type="button" class="btn-primary" tabindex="-1">Join course</button>
+        <button type="button" class="btn-secondary" tabindex="-1">Connect</button>
+        <button type="button" class="btn-ghost" tabindex="-1">Back to the Cosmo ↗</button>
+        <button type="button" class="btn-citta" tabindex="-1">≋ Prep a 10-min deck</button>
+        <button type="button" class="send" tabindex="-1" aria-hidden="true">↗</button>
+      </div>`
+    )}
+    ${compSection("Try it & goal cards", `<div class="comp-card-row comp-inert">${tryCard}${goalCard}</div>`)}
+    ${compSection("Discover strip", `<div class="comp-inert">${discoverSample}</div>`)}
+    ${compSection("Reminder row & tags", `<div class="comp-inert">${reminderSample}
+      <div class="comp-tag-row">
+        <span class="tag">Course · Prof. Roland</span>
+        <span class="tag email">Email</span>
+        <span class="tag yours">Yours</span>
+        <span class="badge-mini">✦ Twin</span>
+        <span class="badge-mini agent">AI agent</span>
+      </div></div>`)}
+    ${learnTip ? compSection("Learning tip (H1)", `<div class="comp-inert comp-tip-spec">${learnTip}</div>`) : ""}
+    ${compSection("Citta dock", dockStrip)}
+  </div>`;
+}
+
 function contentHTML() {
+  if (state.stage === "components") return componentsHTML();
   const s = STAGES[state.stage];
   let html = "";
 
@@ -661,12 +999,32 @@ function contentHTML() {
   }
 
   const g = s.greeting;
-  html += `<section class="greeting${g.quiet ? " quiet" : ""}">
-    ${g.quiet ? "" : '<div class="sun" aria-hidden="true"></div>'}
+  const titleHTML = esc(g.title).replace(
+    /\b(Jess)\b/g,
+    '<span class="name-accent">$1</span>'
+  );
+  let subHTML = esc(g.sub).replace(
+    /(due tomorrow)/gi,
+    '<strong class="due-accent">$1</strong>'
+  );
+  if (state.stage === "h0") {
+    subHTML =
+      'You came in from <strong class="text-accent">Heavy-ion Physics. Pick a tool below</strong> and Citta will show you around.';
+  }
+  const showSunOrb = !g.quiet && state.stage !== "h0";
+  const showEyebrowDot = state.stage !== "h0";
+  const eyebrowPrefix =
+    state.stage === "h0"
+      ? '<span class="eyebrow-sun" aria-hidden="true">☀</span>'
+      : showEyebrowDot
+        ? '<span class="dot-time"></span>'
+        : "";
+  html += `<section class="greeting${g.quiet ? " quiet" : ""}${state.stage === "h0" ? " first-day" : ""}">
+    ${showSunOrb ? '<div class="sun" aria-hidden="true"></div>' : ""}
     <div class="hello">
-      <div class="eyebrow"><span class="dot-time"></span>${esc(g.eyebrow)}</div>
-      <h1>${esc(g.title)}</h1>
-      <p>${esc(g.sub)}</p>
+      <div class="eyebrow">${eyebrowPrefix}${esc(g.eyebrow)}</div>
+      <h1>${titleHTML}</h1>
+      <p>${subHTML}</p>
     </div>
     ${dayStrip(g.day)}
   </section>`;
@@ -722,21 +1080,54 @@ function sideDockHTML() {
   return `<div class="citta-side-inner">
     <div class="dock-panel-top">
       ${avatar("≋", "md")}
-      <strong>Citta</strong>
+      <div class="dock-title">
+        <strong>Citta</strong>
+        <span class="dock-sub">3 tasks</span>
+      </div>
       <button type="button" class="dock-icon-btn" data-set-dock="expanded" title="Undock">⇲</button>
       <button type="button" class="dock-icon-btn" data-set-dock="collapsed" title="Collapse">—</button>
     </div>
-    <div class="dock-body">
-      <div class="dock-msg">Docked beside the page — nothing behind is covered. Ask me to finish Reading report — QGP or prep lecture 5.</div>
+    <div class="dock-body dock-tasks">
+      <article class="task-card done">
+        <div class="task-kicker">Done</div>
+        <h3>Prep me for lecture 5</h3>
+        <p>I drafted a 10-slide deck from Prof. Roland’s lecture 5 slides and speaker notes.</p>
+        <button type="button" class="task-link${on("open-deck5")}" data-press="open-deck5">Open in Deck →</button>
+      </article>
+
+      <div class="task-section-label">Running &amp; ready</div>
+
+      <article class="task-card running">
+        <div class="task-meta"><span class="tool-pill deck">Deck</span><span>Lecture 4 summary</span></div>
+        <p>Drafting slide 7 of 10…</p>
+        <div class="task-bar"><i style="width:70%"></i></div>
+      </article>
+
+      <article class="task-card ready">
+        <div class="task-meta"><span class="tool-pill numbers">Numbers</span><span>Lab 3 trends</span></div>
+        <p>Analysis ready.</p>
+        <button type="button" class="task-link${on("review-lab3")}" data-press="review-lab3">Review →</button>
+      </article>
+
+      <article class="task-card fail">
+        <div class="task-meta"><span class="tool-pill deck">Deck</span><span>Create a deck called “Lab 3”</span></div>
+        <p>Result not delivered.</p>
+        <button type="button" class="task-link danger${on("retry-lab3")}" data-press="retry-lab3">Retry →</button>
+      </article>
+    </div>
+    <div class="dock-suggest">
+      <button type="button" class="chip quiet${on("sug-deck")}" data-press="sug-deck" data-fill="Elaborate in the deck editor">Elaborate in the deck editor</button>
+      <button type="button" class="chip quiet${on("sug-slides")}" data-press="sug-slides" data-fill="Turn Lab 3 trends into slides">Turn Lab 3 trends into slides</button>
     </div>
     <div class="dock-input-row">
-      <input type="text" placeholder="Message Citta…" id="dock-ask-side">
-      <button type="button" class="send" data-press="dock-send">↗</button>
+      <input type="text" placeholder="Ask Citta, or / for a tool…" id="dock-ask-side">
+      <button type="button" class="send" data-press="dock-send" aria-label="Send">↗</button>
     </div>
   </div>`;
 }
 
-function toast(msg) {
+function toast(msg, opts) {
+  const options = opts || {};
   let el = document.getElementById("toast");
   if (!el) {
     el = document.createElement("div");
@@ -744,25 +1135,63 @@ function toast(msg) {
     el.className = "toast";
     document.body.appendChild(el);
   }
-  el.textContent = msg;
-  el.classList.add("show");
   clearTimeout(el._t);
-  el._t = setTimeout(() => el.classList.remove("show"), 1600);
+  el.classList.remove("has-undo");
+  el.style.pointerEvents = options.undo ? "auto" : "none";
+  if (options.undo) {
+    el.innerHTML = `<span>${esc(msg)}</span> <button type="button" class="toast-undo" data-toast-undo>Undo</button>`;
+    el.classList.add("has-undo");
+  } else {
+    el.textContent = msg;
+  }
+  el.classList.add("show");
+  el._t = setTimeout(() => {
+    el.classList.remove("show", "has-undo");
+    el.style.pointerEvents = "none";
+  }, options.undo ? 5200 : 1600);
+}
+
+function switchAi(id) {
+  if (id === state.ai) {
+    state.aiOpen = false;
+    render();
+    return;
+  }
+  state.aiPrev = state.ai;
+  state.ai = id;
+  state.aiOpen = false;
+  const label = aiById(id).label;
+  if (id === "citta") {
+    toast(`Working with ${label}`);
+  } else if (AI_SWITCH_TOAST[id]) {
+    toast(AI_SWITCH_TOAST[id], { undo: true });
+  } else {
+    toast(`Now working with ${label}`, { undo: true });
+  }
+  render();
 }
 
 function render() {
-  const s = STAGES[state.stage];
+  const isComponents = state.stage === "components";
+  const s = STAGES[isComponents ? "h0" : state.stage];
   const frame = document.getElementById("frame");
   frame.dataset.stage = state.stage;
   frame.dataset.dock = state.dock;
-  frame.classList.toggle("is-docked", state.dock === "docked");
+  frame.classList.toggle("is-docked", !isComponents && state.dock === "docked");
+  frame.classList.toggle("is-components", isComponents);
 
-  document.getElementById("rail").innerHTML = railHTML(s.rail);
+  document.getElementById("rail").innerHTML = isComponents
+    ? railHTML(["GR"])
+    : railHTML(s.rail);
   document.getElementById("content").innerHTML = contentHTML();
 
   const side = document.getElementById("citta-side");
   const dock = document.getElementById("citta-dock");
-  if (state.dock === "docked") {
+  if (isComponents) {
+    side.hidden = true;
+    side.innerHTML = "";
+    dock.innerHTML = "";
+  } else if (state.dock === "docked") {
     side.hidden = false;
     side.innerHTML = sideDockHTML();
     dock.innerHTML = "";
@@ -773,10 +1202,20 @@ function render() {
   }
 
   document.querySelectorAll(".review [data-stage]").forEach((b) => {
-    b.classList.toggle("is-on", b.dataset.stage === state.stage);
+    b.classList.toggle("is-on", b.dataset.stage === state.reviewHighlight);
   });
   document.querySelectorAll(".review [data-dock]").forEach((b) => {
     b.classList.toggle("is-on", b.dataset.dock === state.dock);
+  });
+  document.querySelectorAll(".review [data-ai-preview]").forEach((b) => {
+    const mode = b.dataset.aiPreview;
+    const on =
+      mode === "open"
+        ? state.stage === "h2" && state.aiOpen && state.ai === "citta"
+        : mode === "roland"
+          ? state.stage === "h2" && state.ai === "roland" && !state.aiOpen
+          : false;
+    b.classList.toggle("is-on", on);
   });
 
   const ask = document.getElementById("ask");
@@ -787,24 +1226,47 @@ function render() {
   }
 }
 
-function setStage(stage) {
-  state.stage = stage;
+function scrollToTutorial() {
+  requestAnimationFrame(() => {
+    const el = document.getElementById("tutorial-8541");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+}
+
+function setStage(stage, opts = {}) {
+  if (stage === "components") {
+    state.stage = "components";
+    state.reviewHighlight = "components";
+    state.pressed = {};
+    state.aiOpen = false;
+    render();
+    return;
+  }
+  const focusTutorial = stage === "tutorial";
+  const resolved = focusTutorial ? "h0" : stage;
+  state.reviewHighlight = focusTutorial ? "tutorial" : resolved;
+  state.stage = resolved;
   state.pressed = {};
   state.ask = "";
-  state.tool = stage === "h2" ? "deck" : null;
+  state.aiOpen = false;
+  state.ai = "citta";
+  state.aiPrev = null;
+  state.tool = resolved === "h2" ? "deck" : resolved === "h3" ? "doc" : null;
   state.weekHidden = false;
   state.interest = null;
-  if (stage === "h0") {
+  if (resolved === "h0") {
     state.tried = { doc: false, deck: false, numbers: false, symtex: false, code: false };
     state.joined = false;
     state.emailConnected = false;
     state.emailDismissed = false;
     state.reminderAdded = false;
   }
-  if (stage === "h1") {
+  if (resolved === "h1") {
     state.tried = { doc: true, deck: true, numbers: false, symtex: false, code: false };
+    state.tipDismissed = false;
   }
   render();
+  if (focusTutorial || opts.scrollTutorial) scrollToTutorial();
 }
 
 function setDock(mode) {
@@ -837,6 +1299,25 @@ document.querySelector(".review").addEventListener("click", (e) => {
     setStage(stageBtn.dataset.stage);
     return;
   }
+  const aiPreview = e.target.closest("[data-ai-preview]");
+  if (aiPreview) {
+    state.stage = "h2";
+    state.pressed = {};
+    state.ask = "";
+    state.tool = "deck";
+    state.weekHidden = false;
+    if (aiPreview.dataset.aiPreview === "open") {
+      state.ai = "citta";
+      state.aiOpen = true;
+      state.aiPrev = null;
+    } else if (aiPreview.dataset.aiPreview === "roland") {
+      state.ai = "roland";
+      state.aiOpen = false;
+      state.aiPrev = "citta";
+    }
+    render();
+    return;
+  }
   const dockBtn = e.target.closest("[data-dock]");
   if (dockBtn) setDock(dockBtn.dataset.dock);
 });
@@ -845,6 +1326,42 @@ document.getElementById("frame").addEventListener("click", (e) => {
   const tryBtn = e.target.closest("[data-try]");
   if (tryBtn) {
     markTried(tryBtn.dataset.try);
+    return;
+  }
+
+  if (e.target.closest("[data-tip-dismiss]")) {
+    state.tipDismissed = true;
+    render();
+    return;
+  }
+  if (e.target.closest("[data-tip-show]")) {
+    state.tipDismissed = true;
+    state.aiOpen = true;
+    toast("Pick Prof. Roland’s twin — or any agent");
+    render();
+    return;
+  }
+
+  if (e.target.closest("[data-toggle-ai]")) {
+    state.aiOpen = !state.aiOpen;
+    render();
+    return;
+  }
+  if (e.target.closest("[data-back-citta]")) {
+    state.ai = "citta";
+    state.aiOpen = false;
+    state.aiPrev = null;
+    render();
+    return;
+  }
+  const aiOpt = e.target.closest("[data-ai]");
+  if (aiOpt) {
+    switchAi(aiOpt.dataset.ai);
+    return;
+  }
+  if (state.aiOpen && !e.target.closest(".working-left")) {
+    state.aiOpen = false;
+    render();
     return;
   }
 
@@ -913,7 +1430,26 @@ document.getElementById("frame").addEventListener("click", (e) => {
   }
 });
 
+document.addEventListener("click", (e) => {
+  if (e.target.closest("[data-toast-undo]")) {
+    const prev = state.aiPrev;
+    if (prev) {
+      state.ai = prev;
+      state.aiPrev = null;
+      toast(`Back to ${aiById(state.ai).label}`);
+      render();
+    }
+    const el = document.getElementById("toast");
+    if (el) el.classList.remove("show", "has-undo");
+  }
+});
+
 document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && state.aiOpen) {
+    state.aiOpen = false;
+    render();
+    return;
+  }
   if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "j") {
     e.preventDefault();
     if (e.shiftKey) {
