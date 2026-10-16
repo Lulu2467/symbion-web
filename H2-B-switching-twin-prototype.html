@@ -332,7 +332,7 @@
   .btn-citta { display: inline-flex; gap: 6px; align-items: center; align-self: flex-start; margin-top: auto; background: var(--green); color: #fff; font-size: 12px; font-weight: 600; line-height: 1.2; padding: 7px 12px; border-radius: 999px; white-space: nowrap; transition: background .15s; }
   .btn-citta:hover { background: var(--green-dark); }
   .btn-citta .citta-mark { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; flex: none; line-height: 0; opacity: .98; color: #fff; }
-  .btn-citta .citta-mark svg { display: block; width: 0.85em; height: 0.85em; max-width: 11px; max-height: 11px; }
+  .btn-citta .citta-mark svg { display: block; width: 1em; height: 1em; max-width: 14px; max-height: 14px; }
 
   .try-cards { display: flex; gap: 16px; min-height: 196px; }
   .try-card { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; background: #fff; text-align: left; transition: border-color .15s, box-shadow .15s; }
@@ -1092,7 +1092,7 @@
   const composer = $('composer'), picker = $('picker'), menu = $('menu'), toast = $('toast');
   let current = 'citta', previous = 'citta', toastTimer;
 
-  const SPARK_SOLID = '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg>';
+  const SPARK_SOLID = '<svg width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg>';
   const SPARK_HOLLOW = '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M510.464 950.784c-14.336 0-40.96-6.656-55.808-50.688l-69.12-200.192c-8.704-25.088-39.424-55.808-64.512-64.512l-197.12-68.608c-44.032-15.36-50.688-41.984-50.688-56.32 0-14.336 6.656-40.96 50.688-55.808L322.56 387.072c25.6-8.704 55.808-38.912 64.512-64l67.584-200.192c14.848-44.032 41.472-50.688 55.808-50.688 14.336 0 40.96 6.656 55.808 50.688l69.632 201.728c8.704 25.088 39.424 55.296 64 64l198.656 67.072c44.032 14.848 50.688 41.472 51.2 55.808 0 14.336-6.656 40.96-50.688 55.808l-201.728 69.12c-25.088 8.704-55.296 38.912-64 64l-67.072 199.168c-14.848 44.544-41.472 51.2-55.808 51.2zM181.76 510.976l163.328 56.832c46.08 15.872 92.672 62.976 108.544 109.056l56.832 164.864 55.296-164.352c15.36-46.08 62.464-93.184 108.544-109.056l166.4-56.832-163.328-55.296c-46.08-15.872-93.184-62.464-109.056-108.544l-57.344-166.912-56.32 165.376c-15.872 46.08-62.464 93.184-108.544 108.544l-164.352 56.32z" fill="currentColor"/></svg>';
 
   function resizeTextarea(el) {
