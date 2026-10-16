@@ -195,10 +195,10 @@
   .link.course-back, .link[data-action="browse-discover"] { display: inline-flex; align-items: center; }
   .chip .ar.ico-ne { width: 13px; height: 13px; margin-left: 6px; vertical-align: middle; }
   .tools { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; min-height: 40px; }
-  .tool { display: inline-flex; gap: 9px; align-items: center; padding: 6px 14px 6px 6px; border-radius: 12px; border: 1.5px solid var(--line); background: #fff; font-size: 14px; font-weight: 500; color: var(--ink); cursor: pointer; transition: background .12s, color .12s, box-shadow .12s; box-sizing: border-box; box-shadow: inset 0 0 0 0 transparent; min-height: 40px; }
-  .tool:hover { box-shadow: inset 0 0 0 1.5px #cfd4cf; }
-  .tool.sel { background: var(--green-wash); color: var(--green-dark); box-shadow: inset 0 0 0 1.5px var(--green); }
-  .tool.sel:hover { box-shadow: inset 0 0 0 1.5px var(--green); }
+  .tool { display: inline-flex; gap: 9px; align-items: center; padding: 6px 14px 6px 6px; border-radius: 12px; border: 1.5px solid var(--line); background: #fff; font-size: 14px; font-weight: 500; color: var(--ink); cursor: pointer; transition: background .12s, color .12s, border-color .12s; box-sizing: border-box; min-height: 40px; }
+  .tool:hover { border-color: #cfd4cf; }
+  .tool.sel { background: var(--green-tint); color: var(--green-dark); border-color: var(--green); }
+  .tool.sel:hover { background: var(--green-tint); border-color: var(--green); }
   .tools .sp { flex: 1; }
   .tools .attach { font-size: 13px; color: var(--muted); white-space: pre; }
   .composer .foot { background: #fff; border-top: 0; padding: 14px 28px 18px; display: flex; gap: 10px; align-items: flex-start; border-radius: 0 0 22px 22px; }
