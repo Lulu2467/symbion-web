@@ -111,10 +111,13 @@
   .link { color: var(--green); font-weight: 500; }
   .ask-row { display: flex; gap: 14px; align-items: center; }
   .ask-row .ph { flex: 1; font-size: 21px; font-weight: 300; line-height: 1.4; color: var(--placeholder); }
-  .send { width: 44px; height: 44px; border-radius: 14px; background: var(--green); color: #fff; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .send { width: 44px; height: 44px; border-radius: 14px; background: var(--green); color: #fff; flex: none; display: flex; align-items: center; justify-content: center; padding: 0; }
+  .send svg { display: block; width: 22px; height: 22px; }
   .tools { display: flex; gap: 10px; align-items: center; }
-  .tool { display: inline-flex; gap: 9px; align-items: center; padding: 6px 14px 6px 6px; border-radius: 12px; border: 1px solid var(--line); background: #fff; font-size: 14px; font-weight: 500; }
+  .tool { display: inline-flex; gap: 9px; align-items: center; padding: 6px 14px 6px 6px; border-radius: 12px; border: 1px solid var(--line); background: #fff; font-size: 14px; font-weight: 500; color: var(--ink); cursor: pointer; transition: border-color .12s, background .12s, color .12s; }
+  .tool:hover { border-color: #cfd4cf; }
   .tool.sel { background: var(--green-wash); border: 1.5px solid var(--green); color: var(--green-dark); font-weight: 600; }
+  .tool.sel:hover { border-color: var(--green); }
   .tool i { font-style: normal; width: 28px; height: 28px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
   .tools .sp { flex: 1; }
   .tools .attach { font-size: 13px; color: var(--muted); white-space: pre; }
@@ -128,6 +131,7 @@
   .pct { display: inline-flex; gap: 5px; align-items: center; background: var(--green-tint); border-radius: 999px; padding: 2px 7px 2px 6px; font-size: 11px; font-weight: 600; color: var(--green-dark); }
   .pct .bar { width: 22px; height: 4px; border-radius: 2px; background: #fff; overflow: hidden; }
   .pct .bar span { display: block; height: 4px; background: var(--green); border-radius: 2px; }
+  .pct.done { background: var(--green-tint); color: var(--green-dark); }
 
   /* Switcher menu */
   .menu { position: absolute; left: 134px; top: 66px; width: 300px; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 8px; display: flex; flex-direction: column; gap: 2px; box-shadow: 0 12px 16px rgba(0,0,0,.14); z-index: 10; opacity: 0; transform: translateY(-4px); pointer-events: none; transition: opacity .14s, transform .14s; }
@@ -232,7 +236,11 @@
   .tool-sec .hdr .sp { flex: 1; }
   .tool-sec .hdr .sub { font-size: 13px; color: var(--faint); }
 
-  .try-cards { display: flex; gap: 16px; height: 186px; }
+  .btn-citta { display: inline-flex; gap: 6px; align-items: center; align-self: flex-start; margin-top: auto; background: var(--green); color: #fff; font-size: 12px; font-weight: 600; line-height: 1.2; padding: 7px 12px; border-radius: 999px; white-space: nowrap; transition: background .15s; }
+  .btn-citta:hover { background: var(--green-dark); }
+  .btn-citta .citta-mark { font-size: 13px; font-weight: 500; line-height: 1; opacity: .95; }
+
+  .try-cards { display: flex; gap: 16px; min-height: 196px; }
   .try-card { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; background: #fff; text-align: left; transition: border-color .15s, box-shadow .15s; }
   .try-card:hover { border-color: rgba(44,122,95,.35); box-shadow: 0 4px 14px rgba(28,31,29,.06); }
   .try-card .prev { flex: 1; min-height: 0; background: linear-gradient(180deg, var(--surface) 0%, #fff 100%); padding: 12px; display: flex; flex-direction: column; gap: 6px; }
@@ -242,16 +250,20 @@
   .try-card .bot i { font-style: normal; width: 24px; height: 24px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex: none; }
   .try-card .bot b { font-size: 14px; font-weight: 600; }
   .try-card .bot small { font-size: 12px; color: var(--faint); }
-  .try-card .bot .go { font-size: 12px; font-weight: 600; color: var(--green); margin-top: 2px; }
+  .try-card .bot .btn-citta { margin-top: 8px; }
 
   .week-cards { display: flex; gap: 16px; min-height: 185px; }
   .week-card { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 8px; background: #fff; position: relative; text-align: left; }
-  .week-card .done { position: absolute; top: 12px; right: 12px; width: 22px; height: 22px; border-radius: 11px; background: var(--green); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .week-card .done,
+  .week-card .todo { position: absolute; top: 12px; right: 12px; width: 22px; height: 22px; border-radius: 11px; flex: none; box-sizing: border-box; }
+  .week-card .done { background: var(--green); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .week-card .todo { border: 1.5px solid #d5dad6; background: #fff; }
   .week-card .row { display: flex; gap: 8px; align-items: center; }
   .week-card i { font-style: normal; width: 28px; height: 28px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; flex: none; }
   .week-card b { font-size: 14px; font-weight: 600; }
   .week-card small { font-size: 12px; color: var(--faint); flex: 1; }
-  .week-card .go { font-size: 12px; font-weight: 600; color: var(--green); margin-top: auto; }
+  .week-card .go-link { font-size: 12px; font-weight: 600; color: var(--green); margin-top: auto; align-self: flex-start; }
+  .week-card .btn-citta { margin-top: auto; }
 
   .pickup { display: flex; flex-direction: column; gap: 10px; }
   .pickup .hdr h3 { margin: 0; font-size: 20px; font-weight: 500; }
@@ -269,27 +281,61 @@
   .day.compact .now { top: 32px; left: 78px; }
   .day.compact .items { position: absolute; top: 0; right: 0; font-size: 11px; font-weight: 600; color: var(--green-dark); }
 
-  .new-tip { position: absolute; left: 28px; top: 58px; max-width: 320px; background: var(--green-dark); color: #fff; border-radius: 14px; padding: 14px 16px; font-size: 13px; line-height: 1.45; box-shadow: 0 12px 28px rgba(0,0,0,.18); z-index: 12; display: none; }
+  .new-tip { position: absolute; left: 0; top: 0; width: min(320px, calc(100% - 56px)); background: var(--green-dark); color: #fff; border-radius: 14px; padding: 14px 16px; font-size: 13px; line-height: 1.45; box-shadow: 0 12px 28px rgba(0,0,0,.18); z-index: 20; display: none; pointer-events: auto; }
   .new-tip.show { display: block; }
+  .new-tip::before { content: ""; position: absolute; top: -6px; left: var(--tip-arrow-x, 40px); width: 12px; height: 12px; background: var(--green-dark); transform: rotate(45deg); border-radius: 2px; }
   .new-tip .k { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .06em; background: rgba(255,255,255,.15); padding: 2px 6px; border-radius: 4px; margin-bottom: 8px; }
+  .new-tip h4 { margin: 0 0 6px; font-size: 15px; font-weight: 600; line-height: 1.35; }
+  .new-tip .body { margin: 0; opacity: .95; }
+  .frame.post-tip-on .composer .top { position: relative; z-index: 14; }
+  .frame.post-tip-on.dim-handoff::after { content: ""; position: absolute; inset: 41px 0 0; background: rgba(28,31,29,.22); pointer-events: none; z-index: 13; }
+  .frame.post-tip-on .picker { position: relative; z-index: 16; box-shadow: 0 0 0 3px rgba(44,122,95,.45); }
   .new-tip .acts { display: flex; gap: 8px; margin-top: 12px; }
   .new-tip .acts button { font-size: 12px; font-weight: 600; padding: 8px 12px; border-radius: 8px; }
   .new-tip .acts .pri { background: #fff; color: var(--green-dark); }
   .new-tip .acts .sec { background: transparent; border: 1px solid rgba(255,255,255,.35); color: #fff; }
 
-  .citta-panel { position: absolute; top: 41px; right: 0; bottom: 0; width: 368px; background: #fff; border-left: 1px solid var(--line); flex-direction: column; transform: translateX(100%); transition: transform .2s ease; z-index: 8; display: flex; }
+  .citta-panel { position: absolute; top: 41px; right: 0; bottom: 0; width: 368px; background: #fff; border-left: 1px solid var(--line); flex-direction: column; transform: translateX(100%); transition: transform .2s ease; z-index: 8; display: flex; min-height: 0; }
   .citta-panel[hidden] { display: none !important; }
   .frame.citta-open .citta-panel { transform: none; }
   .frame.citta-open .body .main { margin-right: 368px; }
-  .citta-panel .ph { padding: 16px 18px; border-bottom: 1px solid var(--line); display: flex; gap: 10px; align-items: center; }
-  .citta-panel .ph b { flex: 1; font-size: 16px; font-weight: 600; }
-  .citta-panel .ctx { padding: 12px 18px; font-size: 12px; color: var(--muted); border-bottom: 1px solid var(--line); }
-  .citta-panel .stack-tasks { flex: 1; overflow: auto; padding: 12px 18px; display: flex; flex-direction: column; gap: 10px; }
-  .citta-task { border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
-  .citta-task b { font-size: 14px; font-weight: 600; }
-  .citta-task small { font-size: 12px; color: var(--faint); }
-  .citta-task .run { align-self: flex-start; background: var(--green); color: #fff; font-size: 12px; font-weight: 600; padding: 8px 12px; border-radius: 8px; }
-  .citta-panel .ask-mini { margin: 12px 18px 18px; border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font-size: 13px; color: var(--placeholder); }
+  .citta-panel .ph { padding: 14px 16px 12px; border-bottom: 1px solid var(--line); display: flex; gap: 8px; align-items: center; flex: none; }
+  .citta-panel .ph .citta-av { width: 28px; height: 28px; border-radius: 14px; background: var(--green-tint); color: var(--green-dark); font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex: none; }
+  .citta-panel .ph b { font-size: 16px; font-weight: 600; flex: none; }
+  .citta-panel .ph .sw-sm { color: var(--green); display: flex; align-items: center; flex: none; }
+  .citta-panel .ph .task-pill { font-size: 11px; font-weight: 600; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px 8px; flex: none; white-space: nowrap; }
+  .citta-panel .ph .sp { flex: 1; min-width: 4px; }
+  .citta-panel .ph .win { width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--line); background: #fff; color: var(--muted); font-size: 14px; display: flex; align-items: center; justify-content: center; flex: none; }
+  .citta-panel .ph .win:hover { background: var(--surface); }
+  .citta-panel .ctx { padding: 10px 16px 12px; font-size: 12px; color: var(--muted); border-bottom: 1px solid var(--line); flex: none; }
+  .citta-panel .ctx .where { display: inline-block; font-weight: 600; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 2px 8px; margin-left: 4px; }
+  .citta-panel .citta-scroll { flex: 1; min-height: 0; overflow: auto; padding: 14px 16px 12px; display: flex; flex-direction: column; gap: 12px; }
+  .citta-panel .user-bubble { align-self: flex-end; max-width: 92%; background: var(--green-dark); color: #fff; font-size: 13px; line-height: 1.45; padding: 10px 14px; border-radius: 14px 14px 4px 14px; }
+  .citta-panel .asst-card { background: var(--green-wash); border: 1px solid rgba(44,122,95,.12); border-radius: 14px; padding: 12px 14px; font-size: 13px; line-height: 1.45; color: var(--ink); }
+  .citta-panel .asst-card a { display: inline-block; margin-top: 8px; font-size: 12px; font-weight: 600; color: var(--green); text-decoration: none; }
+  .citta-panel .run-hd { font-size: 10px; font-weight: 700; letter-spacing: .08em; color: var(--faint); margin: 4px 0 2px; }
+  .citta-panel .run-list { display: flex; flex-direction: column; gap: 8px; }
+  .citta-run { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; background: #fff; }
+  .citta-run.err { background: #fdf5f5; border-color: #e8c4c4; }
+  .citta-run .top { display: flex; gap: 8px; align-items: flex-start; justify-content: space-between; }
+  .citta-run .tool-tag { font-size: 9px; font-weight: 700; letter-spacing: .04em; padding: 3px 6px; border-radius: 6px; background: var(--green-tint); color: var(--green-dark); flex: none; }
+  .citta-run.err .tool-tag { background: #fce8e8; color: #b42318; }
+  .citta-run .title { font-size: 13px; font-weight: 600; line-height: 1.35; text-align: right; flex: 1; }
+  .citta-run .status { font-size: 12px; color: var(--faint); }
+  .citta-run.err .status { color: #b42318; }
+  .citta-run .prog { height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; }
+  .citta-run .prog span { display: block; height: 4px; background: var(--green); border-radius: 2px; width: 70%; }
+  .citta-run .act { align-self: flex-end; font-size: 12px; font-weight: 600; color: var(--green); background: none; padding: 0; }
+  .citta-run.err .act { color: #b42318; }
+  .citta-panel .foot { flex: none; border-top: 1px solid var(--line); padding: 10px 16px 14px; display: flex; flex-direction: column; gap: 8px; background: #fff; }
+  .citta-panel .suggest { display: flex; flex-wrap: wrap; gap: 6px; }
+  .citta-panel .suggest button { font-size: 11px; font-weight: 500; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; line-height: 1.3; text-align: left; }
+  .citta-panel .suggest button:hover { border-color: rgba(44,122,95,.35); background: var(--green-wash); }
+  .citta-panel .ask-row { display: flex; gap: 8px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 8px 8px 8px 10px; }
+  .citta-panel .ask-row .plus { width: 28px; height: 28px; border-radius: 8px; color: var(--muted); font-size: 18px; line-height: 1; flex: none; display: flex; align-items: center; justify-content: center; }
+  .citta-panel .ask-row .ph { flex: 1; font-size: 13px; color: var(--placeholder); min-width: 0; }
+  .citta-panel .ask-row .send { width: 32px; height: 32px; border-radius: 10px; }
+  .citta-panel .ask-row .send svg { width: 16px; height: 16px; }
 
   .coach { position: absolute; left: 48px; bottom: 120px; width: 340px; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; box-shadow: 0 16px 40px rgba(28,31,29,.12); z-index: 15; display: none; line-height: 1.45; }
   .coach.on { display: block; }
@@ -326,6 +372,7 @@
     <button type="button" data-screen="home" aria-pressed="true">Default home</button>
     <button type="button" data-screen="welcome" aria-pressed="false">Welcome back</button>
     <button type="button" data-screen="tutorial" aria-pressed="false">Interactive tutorial</button>
+    <button type="button" data-screen="handoff" aria-pressed="false">Post-tutorial · 8554</button>
   </div>
   <div class="seg" role="group" aria-label="Twin state">
     <button type="button" data-goto="citta" aria-pressed="true">Citta</button>
@@ -336,7 +383,7 @@
     <button type="button" data-panel="dock" aria-pressed="false">Dock</button>
     <button type="button" data-panel="expanded" aria-pressed="false">Citta expanded</button>
   </div>
-  <span class="hint">Deep links: <code>#screen=welcome</code> · <code>#screen=tutorial&amp;tutorial=2</code> · <code>#citta=expanded</code></span>
+  <span class="hint">Deep links: <code>#screen=handoff&amp;tip=1</code> (Figma 8554) · <code>#screen=tutorial&amp;tutorial=4</code> · <code>#citta=expanded</code></span>
 </div>
 
 <div class="stage">
@@ -427,6 +474,27 @@
               <p class="hint" style="margin:0;font-size:12px;color:var(--faint)">First real task in ~3 minutes · no tour — Citta uses your course materials</p>
             </div>
 
+            <!-- Figma 1:8554 · post-tutorial main home + Citta switch coachmark -->
+            <div class="screen" id="screen-handoff" data-screen="handoff">
+              <div class="course-banner">
+                <span class="av">GR</span>
+                <span class="sp">Working in <b>Prof. Roland’s course</b> · Heavy-Ion Physics</span>
+                <a href="#">Back to the course ↗</a>
+              </div>
+              <section class="greeting quiet">
+                <div class="hello">
+                  <div class="eyebrow">MONDAY 12 OCTOBER  ·  TUTORIAL COMPLETE</div>
+                  <h2>Good morning, <span>Jess</span></h2>
+                  <p>Your <b>Lecture 1 summary</b> is in Doc. Pick up your deck or start something new with Citta.</p>
+                </div>
+                <div class="day compact" aria-label="This day">
+                  <span class="lbl">THIS DAY</span>
+                  <span class="items">1 / 3 items done</span>
+                  <span class="track"></span><span class="elapsed"></span><span class="now"></span>
+                </div>
+              </section>
+            </div>
+
             <!-- Composer: the only filled, lifted surface (hero, white) -->
             <section class="composer" id="composer">
               <div class="top">
@@ -451,15 +519,19 @@
 
                 <div class="ask-row">
                   <div class="ph" id="placeholder">What do you want to work on?</div>
-                  <div class="send">↗</div>
+                  <button type="button" class="send" aria-label="Send">
+                    <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <path d="M24.5199 23.6679V12.1441L11.2055 25.4566L10.5417 24.7929L23.8561 11.4785H12.3324V10.541H25.4574V23.666H24.5199V23.6679Z" fill="currentColor"/>
+                    </svg>
+                  </button>
                 </div>
 
-                <div class="tools">
-                  <span class="tool"><i style="background:var(--blue-tint);color:var(--blue)">≡</i>Doc</span>
-                  <span class="tool sel"><i style="background:var(--amber-tint);color:var(--amber)">▧</i>Deck</span>
-                  <span class="tool"><i style="background:var(--green-tint);color:var(--green)">▦</i>Numbers</span>
-                  <span class="tool"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i>SymTex</span>
-                  <span class="tool"><i style="background:var(--slate-tint);color:var(--slate);font-size:10px">&lt;/&gt;</i>Code</span>
+                <div class="tools" id="composerTools">
+                  <button type="button" class="tool" data-tool="doc"><i style="background:var(--blue-tint);color:var(--blue)">≡</i>Doc</button>
+                  <button type="button" class="tool" data-tool="deck"><i style="background:var(--amber-tint);color:var(--amber)">▧</i>Deck</button>
+                  <button type="button" class="tool" data-tool="numbers"><i style="background:var(--green-tint);color:var(--green)">▦</i>Numbers</button>
+                  <button type="button" class="tool" data-tool="symtex"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i>SymTex</button>
+                  <button type="button" class="tool" data-tool="code"><i style="background:var(--slate-tint);color:var(--slate);font-size:10px">&lt;/&gt;</i>Code</button>
                   <span class="sp"></span>
                   <span class="attach">+ Attach file   ·   From a Cosmo   ·   From Library</span>
                 </div>
@@ -473,6 +545,11 @@
                   <span class="chip"><span class="ic">▦</span><b>Lab 3</b><span class="pct"><span class="bar"><span style="width:7px"></span></span>30%</span><span class="ar">→</span></span>
                   <span class="link" style="font-size:13px">All files →</span>
                 </div>
+                <div class="wrap" id="composerContinueHandoff" hidden>
+                  <span class="chip"><span class="ic">≡</span><b>Lecture 1 summary</b><span class="pct done">Done</span><span class="ar">→</span></span>
+                  <span class="chip"><span class="ic">▧</span><b>Lecture 1 slides</b><span class="pct"><span class="bar"><span style="width:18px"></span></span>80%</span><span class="ar">→</span></span>
+                  <span class="link" style="font-size:13px">All files →</span>
+                </div>
                 <div class="wrap suggest-chips" id="composerSuggest" hidden>
                   <button type="button" class="chip">Summarize Prof. Roland’s lecture 1 in one page</button>
                   <button type="button" class="chip">Explain quark-gluon plasma for my notes</button>
@@ -480,9 +557,10 @@
                 </div>
               </div>
 
-              <div class="new-tip" id="newTip" role="dialog" aria-label="Switch to a twin">
+              <div class="new-tip" id="newTip" role="dialog" aria-label="Switch to a twin" hidden>
                 <span class="k">NEW</span>
-                You’re not limited to Citta. Tap ⇄ to hand this task to Prof. Roland’s twin for course-specific help, then switch back whenever you like.
+                <h4>You’re not limited to Citta</h4>
+                <p class="body">Tap ⇄ to hand this task to Prof. Roland’s twin for course-specific help, then switch back to Citta whenever you like.</p>
                 <div class="acts">
                   <button type="button" class="pri" id="newTipShow">Show me</button>
                   <button type="button" class="sec" id="newTipDismiss">Got it</button>
@@ -519,11 +597,11 @@
                 <span class="sub">One quick win in every workspace</span>
               </div>
               <div class="try-cards">
-                <button type="button" class="try-card" data-tool="doc"><span class="prev"><span class="mock">Reading summary · 3 sections · citations ready</span></span><span class="bot"><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Summarize a reading in one page</small><span class="go">Try with Citta →</span></span></button>
-                <button type="button" class="try-card" data-tool="deck"><span class="prev"><span class="mock">Slide 1–6 · speaker notes · course theme</span></span><span class="bot"><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></span><small>Turn lecture notes into slides</small><span class="go">Try with Citta →</span></span></button>
-                <button type="button" class="try-card" data-tool="numbers"><span class="prev"><span class="mock">Lab table · trend line · export chart</span></span><span class="bot"><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Plot my physics sample data</small><span class="go">Try with Citta →</span></span></button>
-                <button type="button" class="try-card" data-tool="symtex"><span class="prev"><span class="mock">ρ = n · m · ⟨v²⟩ · fraction</span></span><span class="bot"><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset the baryon density formula</small><span class="go">Try with Citta →</span></span></button>
-                <button type="button" class="try-card" data-tool="code"><span class="prev"><span class="mock">for p in particles: scatter()</span></span><span class="bot"><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a tiny particle simulation</small><span class="go">Try with Citta →</span></span></button>
+                <div class="try-card" data-tool="doc"><span class="prev"><span class="mock">Reading summary · 3 sections · citations ready</span></span><span class="bot"><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Summarize a reading in one page</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></span></div>
+                <div class="try-card" data-tool="deck"><span class="prev"><span class="mock">Slide 1–6 · speaker notes · course theme</span></span><span class="bot"><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></span><small>Turn lecture notes into slides</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></span></div>
+                <div class="try-card" data-tool="numbers"><span class="prev"><span class="mock">Lab table · trend line · export chart</span></span><span class="bot"><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Plot my physics sample data</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></span></div>
+                <div class="try-card" data-tool="symtex"><span class="prev"><span class="mock">ρ = n · m · ⟨v²⟩ · fraction</span></span><span class="bot"><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset the baryon density formula</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></span></div>
+                <div class="try-card" data-tool="code"><span class="prev"><span class="mock">for p in particles: scatter()</span></span><span class="bot"><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a tiny particle simulation</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></span></div>
               </div>
             </section>
 
@@ -534,11 +612,11 @@
                 <span class="badge">2 of 5 tried</span>
               </div>
               <div class="week-cards">
-                <div class="week-card"><span class="done">✓</span><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Lecture 1 summary</small><span class="go">Open →</span></div>
-                <div class="week-card"><span class="done">✓</span><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></span><small>8 study slides</small><span class="go">Open →</span></div>
-                <div class="week-card"><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Chart your lab data</small><span class="go">Try with Citta →</span></div>
-                <div class="week-card"><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset a formula</small><span class="go">Try with Citta →</span></div>
-                <div class="week-card"><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a simulation</small><span class="go">Try with Citta →</span></div>
+                <div class="week-card"><span class="done">✓</span><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Lecture 1 summary</small><span class="go-link">Open →</span></div>
+                <div class="week-card"><span class="done">✓</span><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></span><small>8 study slides</small><span class="go-link">Open →</span></div>
+                <div class="week-card"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Chart your lab data</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></div>
+                <div class="week-card"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset a formula</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></div>
+                <div class="week-card"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a simulation</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></div>
               </div>
             </section>
 
@@ -630,15 +708,32 @@
               </section>
             </div>
 
+            <div class="screen" id="tail-handoff" data-tail="handoff">
+              <section class="tool-sec" id="sec-tools-handoff">
+                <div class="hdr">
+                  <h3>Your tools this week</h3>
+                  <span class="sp"></span>
+                  <span class="badge">2 of 5 tried</span>
+                </div>
+                <div class="week-cards">
+                  <div class="week-card"><span class="done">✓</span><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Lecture 1 summary</small><span class="go-link">Open →</span></div>
+                  <div class="week-card"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></span><small>Lecture 1 slides · 80%</small><span class="go-link">Continue →</span></div>
+                  <div class="week-card"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Chart your lab data</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></div>
+                  <div class="week-card"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset a formula</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></div>
+                  <div class="week-card"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a simulation</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></div>
+                </div>
+              </section>
+            </div>
+
             <div class="screen" id="tail-tutorial" data-tail="tutorial">
               <section class="tool-sec" aria-label="Try each tool (tutorial)">
                 <div class="hdr"><h3>Try each tool with Citta</h3><span class="sub">Tap a card — Citta opens the right workspace</span></div>
                 <div class="try-cards">
-                  <button type="button" class="try-card"><span class="prev"><span class="mock">One-page summary · Lecture 1</span></span><span class="bot"><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Start with your first summary</small><span class="go">Try with Citta →</span></span></button>
-                  <button type="button" class="try-card"><span class="prev"><span class="mock">6 slides · recap deck</span></span><span class="bot"><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></span><small>Slides from lecture notes</small><span class="go">Try with Citta →</span></span></button>
-                  <button type="button" class="try-card"><span class="prev"><span class="mock">Sample lab CSV</span></span><span class="bot"><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Plot my physics sample data</small><span class="go">Try with Citta →</span></span></button>
-                  <button type="button" class="try-card"><span class="prev"><span class="mock">Baryon density formula</span></span><span class="bot"><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset the baryon density formula</small><span class="go">Try with Citta →</span></span></button>
-                  <button type="button" class="try-card"><span class="prev"><span class="mock">Particle loop demo</span></span><span class="bot"><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a tiny particle simulation</small><span class="go">Try with Citta →</span></span></button>
+                  <div class="try-card"><span class="prev"><span class="mock">One-page summary · Lecture 1</span></span><span class="bot"><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Start with your first summary</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></span></div>
+                  <div class="try-card"><span class="prev"><span class="mock">6 slides · recap deck</span></span><span class="bot"><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></span><small>Slides from lecture notes</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></span></div>
+                  <div class="try-card"><span class="prev"><span class="mock">Sample lab CSV</span></span><span class="bot"><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Plot my physics sample data</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></span></div>
+                  <div class="try-card"><span class="prev"><span class="mock">Baryon density formula</span></span><span class="bot"><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset the baryon density formula</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></span></div>
+                  <div class="try-card"><span class="prev"><span class="mock">Particle loop demo</span></span><span class="bot"><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a tiny particle simulation</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></span></div>
                 </div>
               </section>
             </div>
@@ -647,14 +742,56 @@
       </div>
 
       <aside class="citta-panel" id="cittaPanel" aria-label="Citta panel" hidden>
-        <div class="ph"><span>≋</span><b>Citta</b><button type="button" id="cittaPanelClose" aria-label="Collapse">×</button></div>
-        <div class="ctx">Working with: <b>Home</b> · Heavy-ion Physics</div>
-        <div class="stack-tasks">
-          <div class="citta-task"><b>Prep me for lecture 5</b><small>10-min deck · course slides 1–4</small><button type="button" class="run">Run · Deck</button></div>
-          <div class="citta-task"><b>Make a quick recap deck</b><small>6 slides · speaker notes included</small><button type="button" class="run">Open · Deck</button></div>
-          <div class="citta-task"><b>Draft a reply to Prof. Roland</b><small>Lab report thread · polite tone</small><button type="button" class="run">Run · Doc</button></div>
+        <div class="ph">
+          <span class="citta-av" aria-hidden="true">≋</span>
+          <b>Citta</b>
+          <span class="sw-sm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h8M8 2l2 2-2 2M10 8H2M4 6 2 8l2 2"/></svg></span>
+          <span class="task-pill">3 tasks</span>
+          <span class="sp"></span>
+          <button type="button" class="win" aria-label="Pop out">↙</button>
+          <button type="button" class="win" id="cittaPanelClose" aria-label="Minimize">−</button>
         </div>
-        <div class="ask-mini">Draft a reply to Prof. Roland about the lab report…</div>
+        <div class="ctx">Working with: <span class="where">Home</span></div>
+        <div class="citta-scroll">
+          <div class="user-bubble">Prep me for lecture 5</div>
+          <div class="asst-card">
+            I drafted a 10-slide deck from Prof. Roland’s lecture 5 slides, with 3 quiz questions at the end.
+            <a href="#">Open in Deck →</a>
+          </div>
+          <div class="run-hd">RUNNING &amp; READY</div>
+          <div class="run-list">
+            <div class="citta-run">
+              <div class="top"><span class="tool-tag">DECK</span><span class="title">Lecture 4 summary</span></div>
+              <span class="status">Drafting slide 7 of 10…</span>
+              <div class="prog" aria-hidden="true"><span></span></div>
+            </div>
+            <div class="citta-run">
+              <div class="top"><span class="tool-tag">NUMBERS</span><span class="title">Lab 3 trends</span></div>
+              <span class="status">Analysis ready</span>
+              <button type="button" class="act">Review →</button>
+            </div>
+            <div class="citta-run err">
+              <div class="top"><span class="tool-tag">DECK</span><span class="title">Create a deck called “Lab 3”</span></div>
+              <span class="status">Result not delivered</span>
+              <button type="button" class="act">Retry →</button>
+            </div>
+          </div>
+        </div>
+        <div class="foot">
+          <div class="suggest">
+            <button type="button">Elaborate in the deck editor</button>
+            <button type="button">Turn Lab 3 trends into slides</button>
+          </div>
+          <div class="ask-row">
+            <button type="button" class="plus" aria-label="Attach">+</button>
+            <span class="ph">Ask Citta, or / for a tool…</span>
+            <button type="button" class="send" aria-label="Send">
+              <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M24.5199 23.6679V12.1441L11.2055 25.4566L10.5417 24.7929L23.8561 11.4785H12.3324V10.541H25.4574V23.666H24.5199V23.6679Z" fill="currentColor"/>
+              </svg>
+            </button>
+          </div>
+        </div>
       </aside>
 
       <div class="coach" id="coach" role="dialog" aria-live="polite">
@@ -665,7 +802,7 @@
       </div>
 
       <button type="button" class="dock" id="dock" aria-label="Citta dock" aria-expanded="false">≋
-        <span class="count">2</span>
+        <span class="count">3</span>
         <span class="sw"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="#6b716d" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h8M8 2l2 2-2 2M10 8H2M4 6 2 8l2 2"/></svg></span>
       </button>
 
@@ -734,7 +871,16 @@
     }
   }
 
+  function positionSwitcherMenu() {
+    const topPad = 26;
+    const leftPad = 28;
+    const working = picker.closest('.working');
+    menu.style.left = `${leftPad + picker.offsetLeft}px`;
+    menu.style.top = `${topPad + working.offsetTop + picker.offsetTop + picker.offsetHeight + 6}px`;
+  }
+
   function setMenu(open) {
+    if (open) positionSwitcherMenu();
     menu.classList.toggle('open', open);
     picker.setAttribute('aria-expanded', String(open));
   }
@@ -775,9 +921,10 @@
     syncPresenter(s);
   }));
 
-  let screen = 'home', tutorialStep = 1, cittaExpanded = false, newTipSeen = false;
+  let screen = 'home', tutorialStep = 1, cittaExpanded = false, newTipSeen = false, postTutorialTipPending = false;
   const frame = $('frame');
   const coach = $('coach'), coachActs = $('coachActs');
+  const newTip = $('newTip');
   const TUTORIAL_STEPS = [
     { title: 'Citta offers one starter task', body: 'I’ll turn Prof. Roland’s Lecture 1 (28 slides) into a one-page summary in Doc. You edit it, then add anything you like.', spot: 'composer', primary: 'Make my summary →', secondary: 'I’ll explore myself' },
     { title: 'Try each tool with Citta', body: 'Each card opens the right workspace with Citta already there — Doc, Deck, Numbers, SymTex, and Code.', spot: 'try', primary: 'Next', secondary: 'Back' },
@@ -790,18 +937,87 @@
     if (screen !== 'home') q.set('screen', screen);
     if (screen === 'tutorial' && tutorialStep > 1) q.set('tutorial', String(tutorialStep));
     if (cittaExpanded) q.set('citta', 'expanded');
+    if (postTutorialTipPending && screen === 'handoff' && !newTipSeen) q.set('tip', '1');
     const h = q.toString();
     history.replaceState(null, '', h ? `#${h}` : location.pathname + location.search);
   }
 
+  function positionNewTip() {
+    if (!newTip.classList.contains('show')) return;
+    const topPad = 26;
+    const leftPad = 28;
+    const working = picker.closest('.working');
+    newTip.style.top = `${topPad + working.offsetTop + picker.offsetTop + picker.offsetHeight + 12}px`;
+    newTip.style.left = `${leftPad + picker.offsetLeft}px`;
+    const switchIcon = picker.querySelector('svg');
+    const iconLeft = switchIcon ? switchIcon.offsetLeft + switchIcon.offsetWidth / 2 : picker.offsetWidth - 14;
+    newTip.style.setProperty('--tip-arrow-x', `${Math.max(16, iconLeft - 6)}px`);
+  }
+
+  function hidePostTutorialTip({ dismissed = true } = {}) {
+    if (dismissed) newTipSeen = true;
+    postTutorialTipPending = false;
+    newTip.classList.remove('show');
+    newTip.hidden = true;
+    frame.classList.remove('post-tip-on', 'dim-handoff');
+    syncHash();
+  }
+
+  function showPostTutorialTip() {
+    if (newTipSeen || screen !== 'handoff' || current !== 'citta') return;
+    postTutorialTipPending = true;
+    newTip.hidden = false;
+    newTip.classList.add('show');
+    frame.classList.add('post-tip-on', 'dim-handoff');
+    positionNewTip();
+    positionSwitcherMenu();
+    syncHash();
+  }
+
+  function finishTutorialToHome() {
+    setMenu(false);
+    setAI('citta', { announce: false });
+    syncPresenter('citta');
+    tutorialStep = 1;
+    postTutorialTipPending = true;
+    setScreen('handoff', { afterTutorial: true });
+  }
+
+  let selectedComposerTool = null;
+
+  function setComposerToolSelection(selected) {
+    selectedComposerTool = selected || null;
+    document.querySelectorAll('#composerTools .tool').forEach((tool) => {
+      const on = !!selected && tool.dataset.tool === selected;
+      tool.classList.toggle('sel', on);
+      tool.setAttribute('aria-pressed', String(on));
+    });
+  }
+
+  function initComposerTools() {
+    document.querySelectorAll('#composerTools .tool').forEach((tool) => {
+      tool.addEventListener('click', () => {
+        const key = tool.dataset.tool;
+        setComposerToolSelection(selectedComposerTool === key ? null : key);
+      });
+    });
+  }
+
   function setComposerMode(mode) {
     const isTutorial = mode === 'tutorial';
-    $('composerContinue').hidden = isTutorial;
+    const isHandoff = mode === 'handoff';
+    $('composerContinue').hidden = isTutorial || isHandoff;
+    $('composerContinueHandoff').hidden = !isHandoff;
     $('composerSuggest').hidden = !isTutorial;
     $('composerFoot').querySelector('.k').textContent = isTutorial ? 'TRY A STARTER' : 'CONTINUE WITH';
-    $('placeholder').textContent = isTutorial
-      ? 'What do you want to work on? Try a suggestion below.'
-      : AIS[current].placeholder;
+    setComposerToolSelection(null);
+    if (isHandoff) {
+      $('placeholder').textContent = 'What do you want to work on?';
+    } else if (isTutorial) {
+      $('placeholder').textContent = 'What do you want to work on? Try a suggestion below.';
+    } else {
+      $('placeholder').textContent = AIS[current].placeholder;
+    }
   }
 
   function renderCoach() {
@@ -832,25 +1048,33 @@
     if (step === 1) { setScreen('tutorial', { step: 2 }); return; }
     if (step === 2) { setScreen('tutorial', { step: 3 }); return; }
     if (step === 3) { setAI('citta', { announce: false }); setMenu(true); setScreen('tutorial', { step: 4 }); return; }
-    if (step === 4) { setScreen('home'); return; }
+    if (step === 4) { finishTutorialToHome(); return; }
   }
 
   function onCoachSecondary(step) {
-    if (step === 1) { setScreen('home'); return; }
+    if (step === 1) { postTutorialTipPending = false; setScreen('home'); return; }
     if (step === 2) { setScreen('tutorial', { step: 1 }); return; }
     if (step === 3) { setMenu(false); setScreen('tutorial', { step: 4 }); return; }
-    if (step === 4) { setScreen('home'); return; }
+    if (step === 4) { finishTutorialToHome(); return; }
   }
 
-  function setScreen(next, { step } = {}) {
+  function setScreen(next, { step, afterTutorial = false, showTip = false } = {}) {
     screen = next;
-    if (next === 'tutorial') tutorialStep = step || 1;
+    if (next === 'tutorial') {
+      tutorialStep = step || 1;
+      hidePostTutorialTip({ dismissed: false });
+    }
     document.querySelectorAll('.hub > .screen[data-screen]').forEach((el) => el.classList.toggle('on', el.dataset.screen === next));
     document.querySelectorAll('.hub > .screen[data-tail]').forEach((el) => el.classList.toggle('on', el.dataset.tail === next));
     document.querySelectorAll('.presenter [data-screen]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.screen === next)));
-    setComposerMode(next === 'tutorial' ? 'tutorial' : 'default');
-    if (next === 'home' && current === 'citta' && !newTipSeen) $('newTip').classList.add('show');
-    else $('newTip').classList.remove('show');
+    const composerMode = next === 'tutorial' ? 'tutorial' : (next === 'handoff' ? 'handoff' : 'default');
+    setComposerMode(composerMode);
+    const wantTip = next === 'handoff' && (afterTutorial || showTip || postTutorialTipPending) && current === 'citta' && !newTipSeen;
+    if (wantTip) {
+      showPostTutorialTip();
+    } else if (next !== 'handoff' || newTipSeen) {
+      hidePostTutorialTip({ dismissed: false });
+    }
     if (next === 'tutorial') renderCoach();
     else { coach.classList.remove('on'); frame.classList.remove('tutorial-on', 'dim'); document.querySelectorAll('.spot').forEach((el) => el.classList.remove('spot')); }
     syncHash();
@@ -871,21 +1095,43 @@
   }
 
   const dock = $('dock');
-  document.querySelectorAll('.presenter [data-screen]').forEach((b) => b.addEventListener('click', () => setScreen(b.dataset.screen)));
+  document.querySelectorAll('.presenter [data-screen]').forEach((b) => b.addEventListener('click', () => {
+    const target = b.dataset.screen;
+    if (target === 'handoff') {
+      postTutorialTipPending = true;
+      setScreen('handoff', { showTip: true });
+      return;
+    }
+    postTutorialTipPending = false;
+    setScreen(target);
+  }));
   document.querySelectorAll('[data-panel]').forEach((b) => b.addEventListener('click', () => {
     if (b.dataset.panel === 'expanded') setCittaExpanded(true);
     if (b.dataset.panel === 'dock') setCittaExpanded(false);
   }));
   dock.addEventListener('click', () => setCittaExpanded(!cittaExpanded));
   $('cittaPanelClose').addEventListener('click', () => setCittaExpanded(false));
-  $('newTipDismiss').addEventListener('click', () => { newTipSeen = true; $('newTip').classList.remove('show'); });
-  $('newTipShow').addEventListener('click', () => { setMenu(true); $('newTip').classList.remove('show'); newTipSeen = true; });
+  newTip.addEventListener('click', (e) => e.stopPropagation());
+  $('newTipDismiss').addEventListener('click', (e) => {
+    e.stopPropagation();
+    hidePostTutorialTip({ dismissed: true });
+  });
+  $('newTipShow').addEventListener('click', (e) => {
+    e.stopPropagation();
+    newTip.classList.remove('show');
+    newTip.hidden = true;
+    frame.classList.remove('dim-handoff');
+    setMenu(true);
+    syncPresenter('open');
+  });
 
   function readHash() {
     const q = new URLSearchParams((location.hash || '').replace(/^#/, ''));
     const s = q.get('screen') || 'home';
     const t = parseInt(q.get('tutorial') || '1', 10);
-    setScreen(s, { step: Number.isFinite(t) ? t : 1 });
+    const showTip = q.get('tip') === '1';
+    if (showTip) postTutorialTipPending = true;
+    setScreen(s, { step: Number.isFinite(t) ? t : 1, afterTutorial: s === 'handoff' && showTip, showTip });
     if (q.get('citta') === 'expanded') setCittaExpanded(true);
   }
   window.addEventListener('hashchange', readHash);
@@ -897,8 +1143,11 @@
     const s = Math.min(1, avail / 1440);
     scaler.style.transform = `scale(${s})`;
     scaler.parentElement.style.height = (frame.offsetHeight * s + 72) + 'px';
+    positionNewTip();
+    if (menu.classList.contains('open')) positionSwitcherMenu();
   }
   window.addEventListener('resize', fit);
+  initComposerTools();
   setAI('citta', { announce: false });
   if (location.hash) readHash();
   else setScreen('home');
