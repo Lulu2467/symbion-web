@@ -205,7 +205,12 @@
   .composer .foot { background: #fff; border-top: 0; padding: 14px 28px 18px; display: flex; gap: 12px; align-items: center; border-radius: 0 0 22px 22px; }
   .foot .k { padding-top: 0; font-size: 11px; font-weight: 600; letter-spacing: .88px; color: var(--muted); white-space: nowrap; flex: none; }
   .foot .wrap { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; flex: 1; min-width: 0; }
-  .foot #composerContinue { flex-wrap: nowrap; }
+  .foot #composerContinue,
+  .foot #composerContinueHandoff { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
+  .foot #composerContinue::-webkit-scrollbar,
+  .foot #composerContinueHandoff::-webkit-scrollbar { display: none; }
+  .foot #composerContinue .chip,
+  .foot #composerContinueHandoff .chip { flex: none; white-space: nowrap; }
   .foot .wrap .link-btn { margin-left: auto; flex: none; white-space: nowrap; }
   .chip { display: inline-flex; gap: 6px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px 8px 12px; font-size: 13px; line-height: 1.4; cursor: pointer; transition: border-color .12s, background .12s, transform .08s; }
   .chip > .ic { margin-right: 2px; }
