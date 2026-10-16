@@ -640,10 +640,25 @@
     background: var(--green-wash);
   }
   .fs-toggle svg { width: 17px; height: 17px; display: block; }
+  .fs-toggle .fs-ico-enter { display: block; }
   .fs-toggle .fs-ico-exit { display: none; }
   .fs-toggle.is-fullscreen .fs-ico-enter { display: none; }
   .fs-toggle.is-fullscreen .fs-ico-exit { display: block; }
   .fs-toggle:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+
+  /* Edge-to-edge review mode: no canvas gutter, no presenter chrome, frame flush. */
+  html:fullscreen,
+  html:-webkit-full-screen { background: #fff; height: 100%; }
+  html:fullscreen body,
+  html:-webkit-full-screen body { background: #fff; overflow: hidden; height: 100%; }
+  html:fullscreen .presenter,
+  html:-webkit-full-screen .presenter { display: none !important; }
+  html:fullscreen .stage,
+  html:-webkit-full-screen .stage { padding: 0; margin: 0; min-height: 100vh; height: auto; overflow-x: hidden; overflow-y: auto; background: #fff; }
+  html:fullscreen .scaler,
+  html:-webkit-full-screen .scaler { margin: 0; }
+  html:fullscreen .frame,
+  html:-webkit-full-screen .frame { border: 0; border-radius: 0; }
 </style>
 </head>
 <body>
@@ -2425,11 +2440,19 @@
 
   // Scale the 1440px Figma frame to fit the window.
   const scaler = $('scaler');
+  function isDocFullscreen() {
+    return !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
+  }
   function fit() {
-    const avail = document.querySelector('.stage').clientWidth - 32;
-    const s = Math.min(1, avail / 1440);
+    const stageEl = document.querySelector('.stage');
+    const fs = isDocFullscreen();
+    // Fullscreen = edge-to-edge product (no gray canvas gutter).
+    const avail = fs ? window.innerWidth : Math.max(0, stageEl.clientWidth - 32);
+    const s = fs ? avail / 1440 : Math.min(1, avail / 1440);
     scaler.style.transform = `scale(${s})`;
-    scaler.parentElement.style.height = (frame.offsetHeight * s + 72) + 'px';
+    stageEl.style.height = fs
+      ? `${Math.max(window.innerHeight, frame.offsetHeight * s)}px`
+      : `${frame.offsetHeight * s + 72}px`;
     positionNewTip();
     if (menu.classList.contains('open')) positionSwitcherMenu();
     if (coach.classList.contains('on')) positionCoach();
@@ -2496,16 +2519,15 @@
     const btn = $('fsToggle');
     if (!btn) return;
     const root = document.documentElement;
-    function isFullscreen() {
-      return !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
-    }
+    function isFullscreen() { return isDocFullscreen(); }
     function syncFsUi() {
       const on = isFullscreen();
+      document.documentElement.classList.toggle('is-fs', on);
       btn.classList.toggle('is-fullscreen', on);
       btn.setAttribute('aria-pressed', String(on));
       btn.setAttribute('aria-label', on ? 'Exit fullscreen' : 'Enter fullscreen');
       btn.title = on ? 'Exit fullscreen' : 'Fullscreen';
-      fit();
+      requestAnimationFrame(fit);
     }
     function enterFs() {
       const req = root.requestFullscreen || root.webkitRequestFullscreen || root.msRequestFullscreen;
