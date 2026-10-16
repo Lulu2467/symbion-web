@@ -2,6 +2,29 @@
 
 Interactive 1:1 HTML of **Home v2 — tools first** (not Desktop Home stages).
 
+## Engineering handoff · H2 Variant B (1:1)
+
+**Use this file as the fidelity source for eng对接** — do not treat `index.html` / `app.js` as the reference for Home v2 · B · H2 switching twin.
+
+| File | Role |
+|---|---|
+| [`H2-B-switching-twin-prototype.html`](./H2-B-switching-twin-prototype.html) | Self-contained prototype (inline CSS/JS). Figma **Home v2 · B · H2** — Default Citta, switcher open, switched to a twin. |
+
+**Open locally**
+
+```bash
+cd homepage
+python -m http.server 8766
+```
+
+- Handoff: http://127.0.0.1:8766/H2-B-switching-twin-prototype.html  
+- **GitHub Pages (eng):** https://lulu2467.github.io/symbion-web/H2-B-switching-twin-prototype.html  
+- Multi-stage review shell (separate artifact): http://127.0.0.1:8766/
+
+Or open `H2-B-switching-twin-prototype.html` directly in the browser (`file://`).
+
+Top bar on the handoff page switches **Default · Citta** / **1 · Switcher open** / **2 · Switched to a twin**; you can also use the **Citta ⇄** picker in the composer.
+
 ## Source
 
 - **Canonical H0 / first visit:** https://www.figma.com/design/rV59JRaO6ZjuRaNqTNYMku/Homepage---Symbion?node-id=1-4755 (`1:4755`)  

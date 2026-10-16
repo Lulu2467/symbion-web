@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>H2 Switching Twin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Tokens from Figma · Home v2 · B · H2 */
+  :root {
+    --ink: #1c1f1d;
+    --muted: #6b716d;
+    --faint: #9aa09b;
+    --placeholder: #7e857f;
+    --line: #e3e7e2;
+    --surface: #f0f1ee;
+    --surface-2: #eef0ec;
+    --green: #2c7a5f;
+    --green-dark: #1f5c47;
+    --green-tint: #e6f2eb;
+    --green-wash: #f6faf6;
+    --amber-tint: #fbf1de;
+    --amber: #9a5b07;
+    --blue-tint: #e8eef9;
+    --blue: #3559a8;
+    --purple-tint: #f1eaf7;
+    --purple: #6b3fa0;
+    --slate-tint: #eceff1;
+    --slate: #37474f;
+    --toast: #1c1f1d;
+    --toast-link: #9fd3bc;
+    --canvas: #f7f8f6;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: var(--canvas); font-family: Inter, system-ui, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+
+  /* Presenter bar */
+  .presenter { position: sticky; top: 0; z-index: 50; background: rgba(247,248,246,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); padding: 12px 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .presenter h1 { font-size: 15px; font-weight: 600; margin: 0 12px 0 0; }
+  .seg { display: inline-flex; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 3px; gap: 2px; }
+  .seg button { font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 999px; color: var(--muted); }
+  .seg button[aria-pressed="true"] { background: var(--green); color: #fff; }
+  .presenter .hint { font-size: 12px; color: var(--faint); }
+
+  /* Stage that scales the 1440px frame to fit */
+  .stage { padding: 24px 16px 48px; }
+  .scaler { width: 1440px; transform-origin: top left; }
+  .frame { position: relative; width: 1440px; background: #fff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+
+  .osbar { display: flex; gap: 18px; align-items: center; padding: 8px 20px; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .osbar .b { font-weight: 600; color: var(--ink); }
+  .osbar .sp { flex: 1; }
+  .osbar .ink { color: var(--ink); }
+  .av-s { width: 20px; height: 20px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); display: inline-flex; align-items: center; justify-content: center; font-size: 7px; font-weight: 600; margin-right: 6px; }
+
+  .body { display: flex; }
+  .rail { width: 52px; border-right: 1px solid var(--line); padding: 18px 8px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .rail .r { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--muted); }
+  .rail .r.o { border: 1px solid var(--line); }
+  .rail .r.on { background: var(--green-tint); color: var(--green); }
+  .rail .div { width: 24px; height: 1px; background: var(--line); }
+  .rail .p { width: 30px; height: 30px; border-radius: 15px; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--muted); }
+
+  .main { flex: 1; min-width: 0; }
+  .logo-row { display: flex; align-items: flex-start; padding: 26px 72px 26px 48px; }
+  .logo { font-size: 20px; font-weight: 500; letter-spacing: 1.6px; white-space: pre; }
+  .search { margin-left: auto; background: var(--surface); border-radius: 999px; padding: 8px 16px; font-size: 13px; color: var(--faint); white-space: pre; }
+  .content { padding: 0 72px 72px 48px; display: flex; flex-direction: column; gap: 24px; }
+
+  /* Greeting */
+  .greeting { display: flex; gap: 48px; align-items: center; padding: 4px 0; }
+  .hello { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .eyebrow { display: flex; gap: 7px; align-items: center; font-size: 11px; font-weight: 600; letter-spacing: .99px; color: var(--muted); white-space: pre; }
+  .hello h2 { margin: 0; font-size: 40px; font-weight: 300; letter-spacing: -.6px; }
+  .hello h2 span { color: var(--green); font-weight: 400; }
+  .hello p { margin: 0; font-size: 15px; line-height: 23px; color: var(--muted); }
+  .hello p b { font-weight: 500; color: var(--green-dark); }
+  .day { position: relative; width: 420px; height: 78px; font-size: 10px; }
+  .day .lbl { position: absolute; top: 0; left: 0; font-weight: 600; letter-spacing: .8px; color: var(--muted); }
+  .day .ev-free { position: absolute; top: 0; right: 0; font-size: 11px; color: var(--faint); }
+  .day .track { position: absolute; top: 46px; left: 0; width: 420px; height: 4px; border-radius: 2px; background: var(--line); }
+  .day .elapsed { position: absolute; top: 46px; left: 0; width: 58px; height: 4px; border-radius: 2px; background: linear-gradient(90deg, rgba(44,122,95,.15), var(--green)); }
+  .day .evt { position: absolute; top: 19px; font-size: 10.5px; color: var(--muted); white-space: nowrap; }
+  .day .evt b { color: var(--green-dark); font-weight: 600; margin-right: 5px; }
+  .day .dot { position: absolute; top: 43px; width: 10px; height: 10px; border-radius: 5px; }
+  .day .dot.hollow { background: #fff; border: 2px solid var(--green); }
+  .day .dot.fill { background: var(--green); }
+  .day .now { position: absolute; top: 42px; left: 52px; width: 12px; height: 12px; border-radius: 6px; background: #fff; border: 2.5px solid var(--green); box-shadow: 0 0 0 4px rgba(44,122,95,.15); }
+  .day .tick { position: absolute; top: 58px; color: var(--faint); }
+  .day .tick.now-l { left: 34px; color: var(--green); font-weight: 500; }
+
+  /* Composer (the hero) */
+  .composer { position: relative; background: #fff; border: 1.5px solid rgba(44,122,95,.28); border-radius: 24px; box-shadow: 0 2px 6px rgba(28,31,29,.05), 0 16px 40px -8px rgba(44,122,95,.14); }
+  .composer .top { padding: 26px 28px 22px; display: flex; flex-direction: column; gap: 16px; }
+  .working { display: flex; gap: 10px; align-items: center; font-size: 12px; }
+  .working .k { font-size: 11px; font-weight: 600; letter-spacing: .88px; color: var(--muted); }
+  .picker { display: inline-flex; gap: 8px; align-items: center; padding: 4px 12px 4px 4px; border-radius: 999px; background: var(--green-wash); border: 1.5px solid var(--green); transition: border-color .15s; }
+  .picker:hover { background: var(--green-tint); }
+  .picker .pav { width: 26px; height: 26px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; background: var(--green-tint); color: var(--green-dark); }
+  .picker .pname { font-size: 14px; font-weight: 600; }
+  .picker .twin-badge { background: var(--green-tint); color: var(--green-dark); font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 999px; }
+  .is-twin .picker { border: 1px solid rgba(44,122,95,.4); }
+  .is-twin .picker .pav { background: var(--surface-2); color: var(--muted); font-size: 10px; }
+  .faint { color: var(--faint); }
+  .stack { display: inline-flex; }
+  .stack span { width: 24px; height: 24px; border-radius: 12px; border: 2px solid #fff; background: var(--surface-2); color: var(--muted); font-size: 8.64px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; margin-right: -6px; }
+  .stack span.agent { background: var(--amber-tint); color: var(--amber); border-radius: 7px; margin-right: 0; }
+  .link { color: var(--green); font-weight: 500; }
+  .ask-row { display: flex; gap: 14px; align-items: center; }
+  .ask-row .ph { flex: 1; font-size: 21px; font-weight: 300; line-height: 1.4; color: var(--placeholder); }
+  .send { width: 44px; height: 44px; border-radius: 14px; background: var(--green); color: #fff; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .tools { display: flex; gap: 10px; align-items: center; }
+  .tool { display: inline-flex; gap: 9px; align-items: center; padding: 6px 14px 6px 6px; border-radius: 12px; border: 1px solid var(--line); background: #fff; font-size: 14px; font-weight: 500; }
+  .tool.sel { background: var(--green-wash); border: 1.5px solid var(--green); color: var(--green-dark); font-weight: 600; }
+  .tool i { font-style: normal; width: 28px; height: 28px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
+  .tools .sp { flex: 1; }
+  .tools .attach { font-size: 13px; color: var(--muted); white-space: pre; }
+  .composer .foot { background: var(--green-wash); border-top: 1px solid var(--line); padding: 14px 28px; display: flex; gap: 10px; align-items: flex-start; border-radius: 0 0 22px 22px; }
+  .foot .k { padding-top: 11px; font-size: 11px; font-weight: 600; letter-spacing: .88px; color: var(--muted); white-space: nowrap; }
+  .foot .wrap { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .chip { display: inline-flex; gap: 6px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px 8px 12px; font-size: 13px; line-height: 1.4; }
+  .chip .ic, .chip .ar { color: var(--green); font-weight: 500; }
+  .chip .ar { font-weight: 600; }
+  .chip b { font-weight: 600; }
+  .pct { display: inline-flex; gap: 5px; align-items: center; background: var(--green-tint); border-radius: 999px; padding: 2px 7px 2px 6px; font-size: 11px; font-weight: 600; color: var(--green-dark); }
+  .pct .bar { width: 22px; height: 4px; border-radius: 2px; background: #fff; overflow: hidden; }
+  .pct .bar span { display: block; height: 4px; background: var(--green); border-radius: 2px; }
+
+  /* Switcher menu */
+  .menu { position: absolute; left: 134px; top: 66px; width: 300px; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 8px; display: flex; flex-direction: column; gap: 2px; box-shadow: 0 12px 16px rgba(0,0,0,.14); z-index: 10; opacity: 0; transform: translateY(-4px); pointer-events: none; transition: opacity .14s, transform .14s; }
+  .menu.open { opacity: 1; transform: none; pointer-events: auto; }
+  .menu .hd { padding: 4px 8px 6px; font-size: 10px; font-weight: 600; color: var(--faint); }
+  .menu .item { display: flex; gap: 10px; align-items: center; padding: 8px; border-radius: 10px; text-align: left; width: 100%; line-height: 1.4; }
+  .menu .item:hover { background: var(--green-wash); }
+  .menu .item[aria-checked="true"] { background: var(--green-tint); }
+  .menu .item .mav { width: 32px; height: 32px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: var(--muted); flex: none; }
+  .menu .item .mav.citta { background: var(--green-tint); border-color: transparent; color: var(--green); }
+  .menu .item .mav.agent { background: var(--amber-tint); color: var(--amber); border-radius: 8px; }
+  .menu .item .tx { flex: 1; display: flex; flex-direction: column; }
+  .menu .item .tx b { font-size: 13px; font-weight: 600; }
+  .menu .item .tx small { font-size: 11px; color: var(--faint); }
+  .menu .item .ck { color: var(--green); font-weight: 700; font-size: 13px; visibility: hidden; }
+  .menu .item[aria-checked="true"] .ck { visibility: visible; }
+  .menu .rule { height: 1px; background: var(--line); margin: 0 0; }
+  .menu .browse { padding: 8px; font-size: 13px; font-weight: 500; color: var(--green); text-align: left; }
+
+  /* Discover */
+  .discover { display: flex; gap: 12px; align-items: center; padding: 10px 12px 10px 16px; border: 1px solid var(--line); border-radius: 14px; font-size: 12px; line-height: 1.35; }
+  .discover .k { font-size: 13px; font-weight: 500; color: var(--muted); }
+  .interest { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); }
+  .interest.on { background: var(--green-tint); border-color: var(--green); color: var(--green-dark); font-weight: 600; }
+  .vr { width: 1px; height: 28px; background: var(--line); }
+  .hscroll { flex: 1; min-width: 0; display: flex; gap: 8px; overflow: hidden; }
+  .dcard { display: flex; gap: 10px; align-items: center; padding: 6px 8px; border: 1px solid var(--line); border-radius: 12px; flex: none; }
+  .dcard .dav { width: 28px; height: 28px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; color: var(--muted); }
+  .dcard .dav.agent { background: var(--amber-tint); color: var(--amber); border-radius: 8px; }
+  .dcard .nm { font-weight: 600; text-decoration: underline; text-decoration-color: rgba(44,122,95,.45); }
+  .tag { font-size: 9px; font-weight: 600; padding: 1px 6px; border-radius: 999px; background: var(--green-tint); color: var(--green-dark); margin-left: 6px; }
+  .tag.agent { background: var(--amber-tint); color: var(--amber); }
+  .dcard small { display: block; font-size: 11px; color: var(--faint); }
+  .addsi { background: var(--green-tint); color: var(--green-dark); font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: 8px; }
+  .round { width: 28px; height: 28px; border-radius: 14px; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 14px; flex: none; }
+
+  /* Reminders + activity */
+  .two { display: flex; gap: 32px; align-items: flex-start; }
+  .reminders { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+  .sec { display: flex; gap: 10px; align-items: center; line-height: 1.4; }
+  .sec h3 { margin: 0; font-size: 20px; font-weight: 500; }
+  .sec .sub { font-size: 13px; color: var(--faint); }
+  .sec .sp { flex: 1; }
+  .sec .act { font-size: 13px; font-weight: 500; color: var(--green); }
+  .rem { display: flex; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--line); line-height: 1.4; }
+  .rem .when { width: 80px; font-size: 13px; font-weight: 500; color: var(--muted); flex: none; }
+  .rem .when.hot { color: var(--green); }
+  .rem .col { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+  .rem .t { font-size: 15px; }
+  .rem .meta { display: flex; gap: 6px; align-items: center; font-size: 12px; color: var(--faint); }
+  .badge { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 999px; background: var(--green-tint); color: var(--green-dark); }
+  .badge.email { background: var(--amber-tint); color: var(--amber); }
+  .badge.yours { background: var(--surface); color: var(--muted); }
+  .btn-soft { background: var(--green-tint); color: var(--green-dark); font-size: 13px; font-weight: 500; padding: 8px 14px; border-radius: 10px; white-space: pre; transition: background .2s; }
+  .activity { width: 440px; flex: none; border: 1px solid var(--line); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+  .activity .row { display: flex; align-items: center; }
+  .activity .row h3 { margin: 0; font-size: 20px; font-weight: 500; flex: 1; }
+  .activity .row span { font-size: 13px; color: var(--green); }
+  .act-item { display: flex; gap: 12px; line-height: 1.4; }
+  .act-item .aav { width: 32px; height: 32px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: var(--muted); flex: none; }
+  .act-item .t { font-size: 14px; }
+  .act-item small { display: block; font-size: 12px; color: var(--faint); }
+  .act-item a { display: block; font-size: 12px; font-weight: 600; color: var(--green); text-decoration: none; }
+
+  /* Templates */
+  .goals { display: flex; gap: 16px; align-items: flex-start; }
+  .tpl { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; line-height: 1.4; }
+  .tpl .h { display: flex; gap: 8px; align-items: center; font-size: 12px; font-weight: 600; color: var(--muted); }
+  .tpl .h i { font-style: normal; width: 28px; height: 28px; border-radius: 10px; background: var(--green-wash); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; color: var(--green); }
+  .tpl b { font-size: 14px; font-weight: 600; }
+  .tpl small { font-size: 12px; color: var(--faint); }
+  .tpl .use { border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 12px; font-weight: 500; }
+
+  /* Dock + toast */
+  .dock { position: absolute; left: 1383px; top: 843px; width: 44px; height: 44px; border-radius: 22px; background: #fff; border: 1.5px solid var(--green); color: var(--green); font-size: 17px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+  .dock .count { position: absolute; left: 28.5px; top: -5.5px; width: 18px; height: 18px; border-radius: 9px; background: var(--green); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .dock .sw { position: absolute; left: 12.5px; top: 34.5px; width: 16px; height: 16px; border-radius: 8px; background: #fff; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; }
+  .toast { position: absolute; left: 50%; top: 1240px; transform: translate(-50%, 8px); background: var(--toast); color: #fff; font-size: 13px; padding: 10px 16px 10px 14px; border-radius: 12px; display: flex; gap: 10px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+  .toast button { color: var(--toast-link); font-weight: 600; }
+
+  .flash { animation: flash .6s ease; }
+  @keyframes flash { from { background: #cfe8da; } to { background: var(--green-tint); } }
+</style>
+</head>
+<body>
+
+<div class="presenter">
+  <h1>Home v2 · B · H2 — switching to a digital twin</h1>
+  <div class="seg" role="group" aria-label="State">
+    <button type="button" data-goto="citta" aria-pressed="true">Default · Citta</button>
+    <button type="button" data-goto="open" aria-pressed="false">1 · Switcher open</button>
+    <button type="button" data-goto="twin" aria-pressed="false">2 · Switched to a twin</button>
+  </div>
+  <span class="hint">Or click the “Citta ⇄” picker in the composer.</span>
+</div>
+
+<div class="stage">
+  <div class="scaler" id="scaler">
+    <div class="frame" id="frame">
+
+      <div class="osbar">
+        <span class="b">Cosmo</span><span>|||\</span><span>⊜ Scholar</span><span>▤ arXiv</span><span>▣ Notion</span>
+        <span class="sp"></span>
+        <span class="ink">⌂ Desk</span>
+        <span class="b"><span class="av-s">S</span>Symbion</span>
+      </div>
+
+      <div class="body">
+        <nav class="rail" aria-label="Rail">
+          <div class="r o">›</div>
+          <div class="r on">◉</div>
+          <div class="r">▤</div>
+          <div class="r">✣</div>
+          <div class="r">⚙</div>
+          <div class="div"></div>
+          <div class="p">GR</div><div class="p">王</div><div class="p">EP</div><div class="p">HX</div>
+        </nav>
+
+        <div class="main">
+          <div class="logo-row">
+            <div class="logo">≋  S Y M B I O N</div>
+            <div class="search">Search files, Cosmos, people…   ⌘K</div>
+          </div>
+
+          <div class="content">
+            <section class="greeting">
+              <div class="hello">
+                <div class="eyebrow">
+                  <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="3" fill="#e8a33d"/><g stroke="#e8a33d" stroke-width="1.2" stroke-linecap="round"><path d="M7 .8v1.4M7 11.8v1.4M.8 7h1.4M11.8 7h1.4M2.6 2.6l1 1M10.4 10.4l1 1M2.6 11.4l1-1M10.4 3.6l1-1"/></g></svg>
+                  MONDAY 12 OCTOBER  ·  WEEK 6 OF FALL TERM
+                </div>
+                <h2>Good morning, <span>Jess</span></h2>
+                <p><b>Lecture 5 is at 2:30</b>, your reading report is <b>55% there</b>, and <b>a reply to Prof. Roland</b> is ready.</p>
+              </div>
+              <div class="day" aria-label="Your day">
+                <span class="lbl">YOUR DAY</span><span class="ev-free">Evening free</span>
+                <span class="evt" style="left:56px"><b>11:00</b>Reply Roland</span>
+                <span class="evt" style="left:189px"><b>2:30</b>Lecture 5</span>
+                <span class="track"></span><span class="elapsed"></span>
+                <span class="dot hollow" style="left:100px"></span>
+                <span class="dot fill" style="left:222px"></span>
+                <span class="now"></span>
+                <span class="tick" style="left:0">8 am</span>
+                <span class="tick now-l">now · 9:40</span>
+                <span class="tick" style="right:0">8 pm</span>
+              </div>
+            </section>
+
+            <!-- Composer: the only filled, lifted surface -->
+            <section class="composer" id="composer">
+              <div class="top">
+                <div class="working">
+                  <span class="k">WORKING WITH</span>
+                  <button type="button" class="picker" id="picker" aria-haspopup="menu" aria-expanded="false">
+                    <span class="pav" id="pickerAv">≋</span>
+                    <span class="pname" id="pickerName">Citta</span>
+                    <span class="twin-badge" id="pickerBadge" hidden>✦ Twin</span>
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#2c7a5f" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h8M8 2l2 2-2 2M10 8H2M4 6 2 8l2 2"/></svg>
+                  </button>
+                  <span id="whenCitta" style="display:contents">
+                    <span class="faint">or switch to</span>
+                    <span class="stack"><span>GR</span><span>EP</span><span class="agent">LR</span></span>
+                    <span class="link">your twins &amp; AI agents — anytime</span>
+                  </span>
+                  <span id="whenTwin" style="display:none">
+                    <span class="faint">·</span>
+                    <button type="button" class="link" id="backToCitta">≋ Back to Citta</button>
+                  </span>
+                </div>
+
+                <div class="ask-row">
+                  <div class="ph" id="placeholder">What do you want to work on?</div>
+                  <div class="send">↗</div>
+                </div>
+
+                <div class="tools">
+                  <span class="tool"><i style="background:var(--blue-tint);color:var(--blue)">≡</i>Doc</span>
+                  <span class="tool sel"><i style="background:var(--amber-tint);color:var(--amber)">▧</i>Deck</span>
+                  <span class="tool"><i style="background:var(--green-tint);color:var(--green)">▦</i>Numbers</span>
+                  <span class="tool"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i>SymTex</span>
+                  <span class="tool"><i style="background:var(--slate-tint);color:var(--slate);font-size:10px">&lt;/&gt;</i>Code</span>
+                  <span class="sp"></span>
+                  <span class="attach">+ Attach file   ·   From a Cosmo   ·   From Library</span>
+                </div>
+              </div>
+
+              <div class="foot">
+                <span class="k">CONTINUE WITH</span>
+                <div class="wrap">
+                  <span class="chip"><span class="ic">▧</span><b>Lecture 4 summary</b><span class="pct"><span class="bar"><span style="width:13px"></span></span>60%</span><span class="ar">→</span></span>
+                  <span class="chip"><span class="ic">≡</span><b>Reading report — QGP</b><span class="pct"><span class="bar"><span style="width:12px"></span></span>55%</span><span class="ar">→</span></span>
+                  <span class="chip"><span class="ic">▦</span><b>Lab 3</b><span class="pct"><span class="bar"><span style="width:7px"></span></span>30%</span><span class="ar">→</span></span>
+                  <span class="link" style="font-size:13px">All files →</span>
+                </div>
+              </div>
+
+              <div class="menu" id="menu" role="menu" aria-label="Work with">
+                <div class="hd">WORK WITH · switch anytime</div>
+                <button type="button" class="item" role="menuitemradio" data-ai="citta" aria-checked="true">
+                  <span class="mav citta">≋</span><span class="tx"><b>Citta</b><small>Default · works in every tool</small></span><span class="ck">✓</span>
+                </button>
+                <button type="button" class="item" role="menuitemradio" data-ai="roland" aria-checked="false">
+                  <span class="mav">GR</span><span class="tx"><b>Prof. Roland’s twin</b><small>✦ Heavy-ion physics · your course</small></span><span class="ck">✓</span>
+                </button>
+                <button type="button" class="item" role="menuitemradio" data-ai="pajer" aria-checked="false">
+                  <span class="mav">EP</span><span class="tx"><b>Prof. Pajer’s twin</b><small>✦ Cosmology</small></span><span class="ck">✓</span>
+                </button>
+                <button type="button" class="item" role="menuitemradio" data-ai="xu" aria-checked="false">
+                  <span class="mav">HX</span><span class="tx"><b>Prof. Xu’s twin</b><small>✦ AI &amp; decisions · data, pricing</small></span><span class="ck">✓</span>
+                </button>
+                <div class="hd">AI AGENTS</div>
+                <button type="button" class="item" role="menuitemradio" data-ai="lr" aria-checked="false">
+                  <span class="mav agent">LR</span><span class="tx"><b>Lab Report Coach</b><small>AI agent · drafts lab reports in Doc</small></span><span class="ck">✓</span>
+                </button>
+                <div class="rule"></div>
+                <button type="button" class="browse">+ Browse digital twins</button>
+              </div>
+            </section>
+
+            <section class="discover">
+              <span class="k">Discover in</span>
+              <span class="interest on">Physics &amp; Space</span>
+              <span class="interest">AI &amp; Data</span>
+              <span class="interest">Cosmology</span>
+              <span class="interest">+</span>
+              <span class="vr"></span>
+              <div class="hscroll">
+                <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag">✦ Twin</span><small>Materials · Caltech</small></div><span class="addsi">+ Add SI</span></div>
+                <div class="dcard"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag">✦ Twin</span><small>Climate maths · Columbia</small></div><span class="addsi">+ Add SI</span></div>
+                <div class="dcard"><span class="dav agent">LR</span><div><span class="nm">Lab Report Coach</span><span class="tag agent">AI agent</span><small>Drafts in Doc</small></div><span class="addsi">+ Add SI</span></div>
+                <div class="dcard"><span class="dav">KS</span><div><span class="nm">Katherine F. Smith</span><span class="tag">✦ Twin</span><small>Planetary health · Brown</small></div><span class="addsi">+ Add SI</span></div>
+              </div>
+              <span class="round">›</span>
+              <span class="link">Browse all ↗</span>
+            </section>
+
+            <section class="two">
+              <div class="reminders">
+                <div class="sec"><h3>Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><span class="act">+ Add</span></div>
+                <div class="rem">
+                  <span class="when hot">2:30</span>
+                  <div class="col"><span class="t">Heavy-ion Physics — lecture 5</span><span class="meta"><span class="badge">Course · Prof. Roland</span>Room 6-120</span></div>
+                  <span class="btn-soft" data-verb="Prep a 10-min deck"></span>
+                </div>
+                <div class="rem">
+                  <span class="when">Today</span>
+                  <div class="col"><span class="t">Reply to Prof. Roland about the lab report</span><span class="meta"><span class="badge email">Email</span>Received 9:12</span></div>
+                  <span class="btn-soft" data-verb="Draft reply"></span>
+                </div>
+                <div class="rem">
+                  <span class="when">Tomorrow</span>
+                  <div class="col"><span class="t">Submit reading report</span><span class="meta"><span class="badge">Course · Prof. Roland</span>820 / 1,500 words</span></div>
+                  <span class="btn-soft" data-verb="Finish with Citta" data-twin-verb="Finish the report"></span>
+                </div>
+                <div class="rem">
+                  <span class="when">Fri</span>
+                  <div class="col"><span class="t">Lab 3 analysis due</span><span class="meta"><span class="badge yours">Yours</span></span></div>
+                  <span class="btn-soft" data-verb="Open in Numbers"></span>
+                </div>
+              </div>
+
+              <aside class="activity">
+                <div class="row"><h3>From your Cosmos</h3><span>5 new</span></div>
+                <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland’s twin posted lecture 5 slides</div><small>Heavy-ion Physics · 1h ago</small><a href="#">Turn into study notes →</a></div></div>
+                <div class="act-item"><span class="aav">王</span><div><div class="t">骆王宇 is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><a href="#">Set reminder →</a></div></div>
+                <div class="act-item"><span class="aav">EP</span><div><div class="t">2 replies to your #cosmology thread</div><small>Prof. Pajer’s twin + @maya_k</small><a href="#">Open thread →</a></div></div>
+                <div class="act-item"><span class="aav">HX</span><div><div class="t">Prof. Xu’s twin: new insight on pricing data</div><small>AI &amp; decisions · today</small></div></div>
+              </aside>
+            </section>
+
+            <section>
+              <div class="sec" style="margin-bottom:16px"><h3>Start from a goal</h3><span class="sub">Templates with Citta built in</span><span class="sp"></span><span class="act">See all</span></div>
+              <div class="goals">
+                <div class="tpl"><span class="h"><i>≡</i>Doc</span><b>Essay, start to finish</b><small>Topic → outline → draft → citations</small><span class="use">Use with Citta</span></div>
+                <div class="tpl"><span class="h"><i>▧</i>Deck</span><b>Class presentation</b><small>Notes or lecture → slides → speaker notes</small><span class="use">Use with Citta</span></div>
+                <div class="tpl"><span class="h"><i>▦</i>Numbers</span><b>Data analysis</b><small>Upload CSV → trends → chart for your Deck</small><span class="use">Use with Citta</span></div>
+                <div class="tpl"><span class="h"><i>Σ</i>SymTex</span><b>Proof or problem set</b><small>Handwritten steps → typeset LaTeX</small><span class="use">Use with Citta</span></div>
+                <div class="tpl"><span class="h"><i style="font-size:10px">&lt;/&gt;</i>Code</span><b>Explain or fix my script</b><small>Paste code → explain → fix → test</small><span class="use">Use with Citta</span></div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <div class="dock" aria-label="Citta dock">≋
+        <span class="count">2</span>
+        <span class="sw"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="#6b716d" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h8M8 2l2 2-2 2M10 8H2M4 6 2 8l2 2"/></svg></span>
+      </div>
+
+      <div class="toast" id="toast" role="status">
+        <span id="toastText">Now working with Prof. Roland’s twin · trained on Heavy-ion Physics lectures 1–5</span>
+        <button type="button" id="undo">Undo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Everyone the picker can hand the composer to. Roland's copy is from the Figma frame;
+  // the others follow the same pattern.
+  const AIS = {
+    citta:  { name: 'Citta', initials: '≋', twin: false, prefix: '≋',
+              placeholder: 'What do you want to work on?' },
+    roland: { name: 'Prof. Roland’s twin', initials: 'GR', twin: true, prefix: 'GR',
+              placeholder: 'Ask Prof. Roland’s twin — e.g. “Which lecture 5 topics are on the exam?”',
+              toast: 'Now working with Prof. Roland’s twin · trained on Heavy-ion Physics lectures 1–5' },
+    pajer:  { name: 'Prof. Pajer’s twin', initials: 'EP', twin: true, prefix: 'EP',
+              placeholder: 'Ask Prof. Pajer’s twin — e.g. “Why is the CMB so uniform?”',
+              toast: 'Now working with Prof. Pajer’s twin · trained on Cosmology lectures' },
+    xu:     { name: 'Prof. Xu’s twin', initials: 'HX', twin: true, prefix: 'HX',
+              placeholder: 'Ask Prof. Xu’s twin — e.g. “How should I price this dataset?”',
+              toast: 'Now working with Prof. Xu’s twin · trained on AI & decisions lectures' },
+    lr:     { name: 'Lab Report Coach', initials: 'LR', twin: false, agent: true, prefix: 'LR',
+              placeholder: 'Ask Lab Report Coach — e.g. “Draft the method section for Lab 3”',
+              toast: 'Now working with Lab Report Coach · drafts lab reports in Doc' },
+  };
+
+  const $ = (id) => document.getElementById(id);
+  const composer = $('composer'), picker = $('picker'), menu = $('menu'), toast = $('toast');
+  let current = 'citta', previous = 'citta', toastTimer;
+
+  function setAI(key, { announce = true } = {}) {
+    if (key !== current) previous = current;
+    current = key;
+    const ai = AIS[key];
+    const isCitta = key === 'citta';
+
+    composer.classList.toggle('is-twin', !isCitta);
+    $('pickerAv').textContent = ai.initials;
+    $('pickerName').textContent = ai.name;
+    $('pickerBadge').hidden = !ai.twin;
+    $('whenCitta').style.display = isCitta ? 'contents' : 'none';
+    $('whenTwin').style.display = isCitta ? 'none' : 'contents';
+    $('placeholder').textContent = ai.placeholder;
+
+    // Reminder actions run with whoever is in the picker.
+    document.querySelectorAll('.btn-soft').forEach((b) => {
+      const verb = (!isCitta && b.dataset.twinVerb) || b.dataset.verb;
+      b.textContent = `${ai.prefix}  ${verb}`;
+      if (announce) { b.classList.remove('flash'); void b.offsetWidth; b.classList.add('flash'); }
+    });
+
+    menu.querySelectorAll('.item').forEach((i) => i.setAttribute('aria-checked', String(i.dataset.ai === key)));
+
+    clearTimeout(toastTimer);
+    if (!isCitta && announce) {
+      $('toastText').textContent = ai.toast;
+      toast.classList.add('show');
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 6000);
+    } else if (isCitta) {
+      toast.classList.remove('show');
+    }
+  }
+
+  function setMenu(open) {
+    menu.classList.toggle('open', open);
+    picker.setAttribute('aria-expanded', String(open));
+  }
+
+  function syncPresenter(state) {
+    document.querySelectorAll('[data-goto]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.goto === state)));
+  }
+
+  picker.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = !menu.classList.contains('open');
+    setMenu(open);
+    syncPresenter(open ? 'open' : (current === 'citta' ? 'citta' : 'twin'));
+  });
+  menu.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const item = e.target.closest('.item');
+    if (!item) return;
+    setAI(item.dataset.ai);
+    setMenu(false);
+    syncPresenter(item.dataset.ai === 'citta' ? 'citta' : 'twin');
+  });
+  document.addEventListener('click', () => {
+    if (!menu.classList.contains('open')) return;
+    setMenu(false);
+    syncPresenter(current === 'citta' ? 'citta' : 'twin');
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { setMenu(false); syncPresenter(current === 'citta' ? 'citta' : 'twin'); } });
+  $('backToCitta').addEventListener('click', () => { setAI('citta'); syncPresenter('citta'); });
+  $('undo').addEventListener('click', () => { const back = previous; setAI(back); syncPresenter(back === 'citta' ? 'citta' : 'twin'); });
+
+  document.querySelectorAll('[data-goto]').forEach((b) => b.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const s = b.dataset.goto;
+    if (s === 'citta') { setAI('citta', { announce: false }); setMenu(false); }
+    if (s === 'open')  { setAI('citta', { announce: false }); setMenu(true); }
+    if (s === 'twin')  { setMenu(false); setAI('roland'); }
+    syncPresenter(s);
+  }));
+
+  // Scale the 1440px Figma frame to fit the window.
+  const scaler = $('scaler'), frame = $('frame');
+  function fit() {
+    const avail = document.querySelector('.stage').clientWidth - 32;
+    const s = Math.min(1, avail / 1440);
+    scaler.style.transform = `scale(${s})`;
+    scaler.parentElement.style.height = (frame.offsetHeight * s + 72) + 'px';
+  }
+  window.addEventListener('resize', fit);
+  setAI('citta', { announce: false });
+  fit();
+  document.fonts && document.fonts.ready.then(fit);
+</script>
+</body>
+</html>
