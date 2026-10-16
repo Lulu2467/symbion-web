@@ -31,6 +31,7 @@
     --toast: #1c1f1d;
     --toast-link: #9fd3bc;
     --canvas: #f7f8f6;
+    --page-gutter: 56px;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; }
@@ -50,7 +51,7 @@
   .scaler { width: 1440px; transform-origin: top left; }
   .frame { position: relative; width: 1440px; background: #fff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
 
-  .osbar { display: flex; gap: 18px; align-items: center; padding: 8px 20px; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .osbar { display: flex; gap: 18px; align-items: center; padding: 8px var(--page-gutter) 8px 20px; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--muted); line-height: 1.4; }
   .osbar .b { font-weight: 600; color: var(--ink); }
   .osbar .sp { flex: 1; }
   .osbar .ink { color: var(--ink); }
@@ -65,10 +66,10 @@
   .rail .p { width: 30px; height: 30px; border-radius: 15px; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--muted); }
 
   .main { flex: 1; min-width: 0; }
-  .logo-row { display: flex; align-items: flex-start; padding: 26px 72px 26px 48px; }
+  .logo-row { display: flex; align-items: flex-start; padding: 26px var(--page-gutter); }
   .logo { font-size: 20px; font-weight: 500; letter-spacing: 1.6px; white-space: pre; }
-  .search { margin-left: auto; background: var(--surface); border-radius: 999px; padding: 8px 16px; font-size: 13px; color: var(--faint); white-space: pre; }
-  .content { padding: 0 72px 72px 48px; display: flex; flex-direction: column; gap: 24px; }
+  .search { margin-left: auto; background: var(--surface); border-radius: 999px; padding: 8px 16px; font-size: 13px; color: var(--faint); white-space: pre; border: 0; text-align: left; }
+  .content { padding: 0 var(--page-gutter) 72px; display: flex; flex-direction: column; gap: 24px; }
 
   /* Greeting */
   .greeting { display: flex; gap: 48px; align-items: center; padding: 4px 0; }
@@ -78,6 +79,7 @@
   .hello h2 span { color: var(--green); font-weight: 400; }
   .hello p { margin: 0; font-size: 15px; line-height: 23px; color: var(--muted); }
   .hello p b { font-weight: 500; color: var(--green-dark); }
+  .hello p .lead { font-weight: 500; color: var(--green-dark); }
   .day { position: relative; width: 420px; height: 78px; font-size: 10px; }
   .day .lbl { position: absolute; top: 0; left: 0; font-weight: 600; letter-spacing: .8px; color: var(--muted); }
   .day .ev-free { position: absolute; top: 0; right: 0; font-size: 11px; color: var(--faint); }
@@ -97,26 +99,60 @@
   .composer .top { padding: 26px 28px 22px; display: flex; flex-direction: column; gap: 16px; }
   .working { display: flex; gap: 10px; align-items: center; font-size: 12px; }
   .working .k { font-size: 11px; font-weight: 600; letter-spacing: .88px; color: var(--muted); }
-  .picker { display: inline-flex; gap: 8px; align-items: center; padding: 4px 12px 4px 4px; border-radius: 999px; background: var(--green-wash); border: 1.5px solid var(--green); transition: border-color .15s; }
-  .picker:hover { background: var(--green-tint); }
-  .picker .pav { width: 26px; height: 26px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; background: var(--green-tint); color: var(--green-dark); }
-  .picker .pname { font-size: 14px; font-weight: 600; }
-  .picker .twin-badge { background: var(--green-tint); color: var(--green-dark); font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 999px; }
-  .is-twin .picker { border: 1px solid rgba(44,122,95,.4); }
+  .picker { display: inline-flex; gap: 8px; align-items: center; padding: 4px 12px 4px 4px; border-radius: 999px; background: var(--green-tint); border: 1.5px solid #b8dbc9; transition: background .15s, border-color .15s, box-shadow .15s; }
+  .picker:hover { background: #dceee4; border-color: rgba(44,122,95,.42); }
+  .picker[aria-expanded="true"] { background: #d4e8dc; border-color: var(--green); box-shadow: 0 0 0 3px rgba(44,122,95,.12); }
+  .picker .pav { width: 26px; height: 26px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; background: rgba(44,122,95,.12); color: var(--green-dark); }
+  .picker .pname { font-size: 14px; font-weight: 600; color: var(--ink); }
+  .picker .twin-badge { background: rgba(255,255,255,.55); color: var(--green-dark); font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 999px; }
+  .is-twin .picker { background: #fff; border-color: rgba(44,122,95,.4); box-shadow: none; }
+  .is-twin .picker:hover { background: var(--green-wash); }
+  .is-twin .picker[aria-expanded="true"] { background: var(--green-wash); border-color: var(--green); box-shadow: 0 0 0 3px rgba(44,122,95,.1); }
   .is-twin .picker .pav { background: var(--surface-2); color: var(--muted); font-size: 10px; }
   .faint { color: var(--faint); }
   .stack { display: inline-flex; }
   .stack span { width: 24px; height: 24px; border-radius: 12px; border: 2px solid #fff; background: var(--surface-2); color: var(--muted); font-size: 8.64px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; margin-right: -6px; }
   .stack span.agent { background: var(--amber-tint); color: var(--amber); border-radius: 7px; margin-right: 0; }
-  .link { color: var(--green); font-weight: 500; }
+  .link { color: var(--green); font-weight: 500; cursor: pointer; }
+  .link:hover { text-decoration: underline; text-underline-offset: 2px; }
+  .sec .act { cursor: pointer; }
+  .sec .act:hover { text-decoration: underline; }
+  .dcard { cursor: pointer; transition: border-color .12s, box-shadow .12s; }
+  .dcard:hover { border-color: rgba(44,122,95,.35); box-shadow: 0 2px 8px rgba(28,31,29,.05); }
+  .addsi { cursor: pointer; }
+  .addsi:hover { filter: brightness(.96); }
+  .round { cursor: pointer; }
+  .round:hover { background: var(--surface); }
+  .tpl { cursor: pointer; transition: border-color .12s, box-shadow .12s; }
+  .tpl:hover { border-color: rgba(44,122,95,.35); }
+  .tpl .use { cursor: pointer; }
+  .tpl .use:hover { border-color: var(--green); background: var(--green-wash); }
+  .act-item a, .activity .act-link { cursor: pointer; display: block; font-size: 12px; font-weight: 600; color: var(--green); text-decoration: none; background: none; border: 0; padding: 0; text-align: left; }
+  .act-item a:hover, .activity .act-link:hover { text-decoration: underline; }
+  .course-banner a { cursor: pointer; }
+  .course-banner a:hover { text-decoration: underline; }
+  .pick-card .btn { cursor: pointer; transition: border-color .12s, background .12s; }
+  .pick-card .btn:hover { filter: brightness(.97); background: #dceee4; }
+  .tools .attach-hit { cursor: pointer; padding: 4px 0; }
+  .tools .attach-hit:hover { color: var(--green-dark); }
+  .rail .r, .rail .p { cursor: pointer; transition: background .12s; }
+  .rail .r:hover:not(.on) { background: var(--surface); }
+  .search-hit { cursor: pointer; }
+  .search-hit:hover { background: #e8ebe6; }
+  .citta-panel .asst-card a { cursor: pointer; }
+  .citta-panel .asst-card a:hover { text-decoration: underline; }
+  .tap-active:active { transform: scale(.98); }
   .ask-row { display: flex; gap: 14px; align-items: center; }
   .ask-row .ph { flex: 1; font-size: 21px; font-weight: 300; line-height: 1.4; color: var(--placeholder); }
-  .send { width: 44px; height: 44px; border-radius: 14px; background: var(--green); color: #fff; flex: none; display: flex; align-items: center; justify-content: center; padding: 0; }
+  .send { width: 44px; height: 44px; border-radius: 14px; background: var(--green); color: #fff; flex: none; display: flex; align-items: center; justify-content: center; padding: 0; transition: background .12s, transform .08s; }
+  .send:hover { background: var(--green-dark); }
+  .send:active { transform: scale(.96); }
+  .composer .ask-row .send svg { display: block; width: 30px; height: 30px; transform: scale(1.08); transform-origin: center; }
   .send svg { display: block; width: 22px; height: 22px; }
   .tools { display: flex; gap: 10px; align-items: center; }
-  .tool { display: inline-flex; gap: 9px; align-items: center; padding: 6px 14px 6px 6px; border-radius: 12px; border: 1px solid var(--line); background: #fff; font-size: 14px; font-weight: 500; color: var(--ink); cursor: pointer; transition: border-color .12s, background .12s, color .12s; }
+  .tool { display: inline-flex; gap: 9px; align-items: center; padding: 6px 14px 6px 6px; border-radius: 12px; border: 1.5px solid var(--line); background: #fff; font-size: 14px; font-weight: 500; color: var(--ink); cursor: pointer; transition: border-color .12s, background .12s, color .12s, box-shadow .12s; box-sizing: border-box; }
   .tool:hover { border-color: #cfd4cf; }
-  .tool.sel { background: var(--green-wash); border: 1.5px solid var(--green); color: var(--green-dark); font-weight: 600; }
+  .tool.sel { background: var(--green-wash); border-color: var(--green); color: var(--green-dark); font-weight: 600; box-shadow: inset 0 0 0 0.5px var(--green); }
   .tool.sel:hover { border-color: var(--green); }
   .tool i { font-style: normal; width: 28px; height: 28px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
   .tools .sp { flex: 1; }
@@ -124,7 +160,11 @@
   .composer .foot { background: #fff; border-top: 1px solid var(--line); padding: 14px 28px; display: flex; gap: 10px; align-items: flex-start; border-radius: 0 0 22px 22px; }
   .foot .k { padding-top: 11px; font-size: 11px; font-weight: 600; letter-spacing: .88px; color: var(--muted); white-space: nowrap; }
   .foot .wrap { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-  .chip { display: inline-flex; gap: 6px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px 8px 12px; font-size: 13px; line-height: 1.4; }
+  .chip { display: inline-flex; gap: 6px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px 8px 12px; font-size: 13px; line-height: 1.4; cursor: pointer; transition: border-color .12s, background .12s, transform .08s; }
+  .chip:hover { border-color: rgba(44,122,95,.35); background: var(--green-wash); }
+  .chip:active { transform: scale(.98); }
+  .foot .link-btn { font-size: 13px; font-weight: 500; color: var(--green); padding: 8px 0; cursor: pointer; }
+  .foot .link-btn:hover { text-decoration: underline; text-underline-offset: 2px; }
   .chip .ic, .chip .ar { color: var(--green); font-weight: 500; }
   .chip .ar { font-weight: 600; }
   .chip b { font-weight: 600; }
@@ -154,11 +194,16 @@
   /* Discover */
   .discover { display: flex; gap: 12px; align-items: center; padding: 10px 12px 10px 16px; border: 1px solid var(--line); border-radius: 14px; font-size: 12px; line-height: 1.35; }
   .discover .k { font-size: 13px; font-weight: 500; color: var(--muted); }
-  .interest { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); }
+  .interest { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); cursor: pointer; transition: background .12s, border-color .12s; }
+  .interest:not(.on):hover { border-color: #cfd4cf; background: var(--surface); }
   .interest.on { background: var(--green-tint); border-color: var(--green); color: var(--green-dark); font-weight: 600; }
   .vr { width: 1px; height: 28px; background: var(--line); }
-  .hscroll { flex: 1; min-width: 0; display: flex; gap: 8px; overflow: hidden; }
-  .dcard { display: flex; gap: 10px; align-items: center; padding: 6px 8px; border: 1px solid var(--line); border-radius: 12px; flex: none; }
+  .hscroll { flex: 1; min-width: 0; display: flex; gap: 8px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: rgba(44,122,95,.35) transparent; padding-bottom: 4px; cursor: grab; }
+  .hscroll.is-dragging { cursor: grabbing; user-select: none; }
+  .hscroll::-webkit-scrollbar { height: 6px; }
+  .hscroll::-webkit-scrollbar-thumb { background: rgba(44,122,95,.28); border-radius: 999px; }
+  .hscroll:focus-visible { outline: 2px solid rgba(44,122,95,.35); outline-offset: 2px; border-radius: 8px; }
+  .dcard { display: flex; gap: 10px; align-items: center; padding: 6px 8px; border: 1px solid var(--line); border-radius: 12px; flex: none; scroll-snap-align: start; }
   .dcard .dav { width: 28px; height: 28px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; color: var(--muted); }
   .dcard .dav.agent { background: var(--amber-tint); color: var(--amber); border-radius: 8px; }
   .dcard .nm { font-weight: 600; text-decoration: underline; text-decoration-color: rgba(44,122,95,.45); }
@@ -169,7 +214,14 @@
   .round { width: 28px; height: 28px; border-radius: 14px; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 14px; flex: none; }
 
   /* Reminders + activity */
-  .two { display: flex; gap: 32px; align-items: flex-start; }
+  .two { display: block; }
+  .two-grid { display: grid; grid-template-columns: 1fr 440px; column-gap: 32px; row-gap: 8px; align-items: start; }
+  .two-title-l,
+  .two-title-r { min-height: 32px; display: flex; align-items: center; gap: 10px; line-height: 1.4; }
+  .two-title-r { justify-content: space-between; }
+  .two-title-r h3 { margin: 0; font-size: 20px; font-weight: 500; flex: 1; }
+  .two-title-r .new-badge { font-size: 13px; color: var(--green); font-weight: 600; }
+  .two-main-l { min-width: 0; display: flex; flex-direction: column; gap: 0; }
   .reminders { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
   .sec { display: flex; gap: 10px; align-items: center; line-height: 1.4; }
   .sec h3 { margin: 0; font-size: 20px; font-weight: 500; }
@@ -184,9 +236,12 @@
   .rem .meta { display: flex; gap: 6px; align-items: center; font-size: 12px; color: var(--faint); }
   .badge { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 999px; background: var(--green-tint); color: var(--green-dark); }
   .badge.email { background: var(--amber-tint); color: var(--amber); }
+  .badge.course { background: var(--amber-tint); color: var(--amber); }
   .badge.yours { background: var(--surface); color: var(--muted); }
-  .btn-soft { background: var(--green-tint); color: var(--green-dark); font-size: 13px; font-weight: 500; padding: 8px 14px; border-radius: 10px; white-space: pre; transition: background .2s; }
-  .activity { width: 440px; flex: none; border: 1px solid var(--line); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+  .btn-soft { background: var(--green-tint); color: var(--green-dark); font-size: 13px; font-weight: 500; padding: 8px 14px; border-radius: 10px; white-space: pre; transition: background .2s, transform .08s; flex: none; }
+  .btn-soft:hover { background: #dceee4; }
+  .btn-soft:active { transform: scale(.98); }
+  .activity { width: 100%; flex: none; border: 1px solid var(--line); border-radius: 16px; padding: 16px 20px 20px; display: flex; flex-direction: column; gap: 16px; align-self: stretch; }
   .activity .row { display: flex; align-items: center; }
   .activity .row h3 { margin: 0; font-size: 20px; font-weight: 500; flex: 1; }
   .activity .row span { font-size: 13px; color: var(--green); }
@@ -198,7 +253,7 @@
 
   /* Templates */
   .goals { display: flex; gap: 16px; align-items: flex-start; }
-  .tpl { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; line-height: 1.4; }
+  .tpl { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; line-height: 1.4; text-align: left; width: 100%; }
   .tpl .h { display: flex; gap: 8px; align-items: center; font-size: 12px; font-weight: 600; color: var(--muted); }
   .tpl .h i { font-style: normal; width: 28px; height: 28px; border-radius: 10px; background: var(--green-wash); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; color: var(--green); }
   .tpl b { font-size: 14px; font-weight: 600; }
@@ -206,7 +261,7 @@
   .tpl .use { border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 12px; font-weight: 500; }
 
   /* Dock + toast */
-  .dock { position: absolute; left: 1383px; top: 843px; width: 44px; height: 44px; border-radius: 22px; background: #fff; border: 1.5px solid var(--green); color: var(--green); font-size: 17px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+  .dock { position: absolute; right: var(--page-gutter); top: 843px; width: 44px; height: 44px; border-radius: 22px; background: #fff; border: 1.5px solid var(--green); color: var(--green); font-size: 17px; font-weight: 600; display: flex; align-items: center; justify-content: center; left: auto; }
   .dock .count { position: absolute; left: 28.5px; top: -5.5px; width: 18px; height: 18px; border-radius: 9px; background: var(--green); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
   .dock .sw { position: absolute; left: 12.5px; top: 34.5px; width: 16px; height: 16px; border-radius: 8px; background: #fff; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; }
   .toast { position: absolute; left: 50%; top: 1240px; transform: translate(-50%, 8px); background: var(--toast); color: #fff; font-size: 13px; padding: 10px 16px 10px 14px; border-radius: 12px; display: flex; gap: 10px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
@@ -216,7 +271,7 @@
   .flash { animation: flash .6s ease; }
   @keyframes flash { from { background: #cfe8da; } to { background: var(--green-tint); } }
 
-  .hub { width: 100%; max-width: 1266px; }
+  .hub { width: 100%; max-width: none; }
   .screen { display: none; flex-direction: column; gap: 24px; }
   .screen.on { display: flex; }
   .screen[data-tail] { margin-top: 0; }
@@ -238,7 +293,8 @@
 
   .btn-citta { display: inline-flex; gap: 6px; align-items: center; align-self: flex-start; margin-top: auto; background: var(--green); color: #fff; font-size: 12px; font-weight: 600; line-height: 1.2; padding: 7px 12px; border-radius: 999px; white-space: nowrap; transition: background .15s; }
   .btn-citta:hover { background: var(--green-dark); }
-  .btn-citta .citta-mark { font-size: 13px; font-weight: 500; line-height: 1; opacity: .95; }
+  .btn-citta .citta-mark { display: inline-flex; align-items: center; justify-content: center; width: 15px; height: 15px; flex: none; line-height: 0; opacity: .98; color: #fff; }
+  .btn-citta .citta-mark svg { display: block; width: 15px; height: 15px; }
 
   .try-cards { display: flex; gap: 16px; min-height: 196px; }
   .try-card { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; background: #fff; text-align: left; transition: border-color .15s, box-shadow .15s; }
@@ -252,28 +308,45 @@
   .try-card .bot small { font-size: 12px; color: var(--faint); }
   .try-card .bot .btn-citta { margin-top: 8px; }
 
+  .week-tools-panel { background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 16px; }
+  .week-tools-panel.is-dismissed { display: none; }
+  .week-tools-hd { display: flex; align-items: center; gap: 10px; min-height: 28px; line-height: 1.4; }
+  .week-tools-hd h3 { margin: 0; font-size: 20px; font-weight: 500; }
+  .week-tools-hd .badge { font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--green-tint); color: var(--green-dark); flex: none; }
+  .week-tools-hd .sp { flex: 1; min-width: 8px; }
+  .week-tools-close { width: 28px; height: 28px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); font-size: 20px; line-height: 1; flex: none; cursor: pointer; }
+  .week-tools-close:hover { background: var(--surface); color: var(--ink); }
   .week-cards { display: flex; gap: 16px; min-height: 185px; }
   .week-card { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 8px; background: #fff; position: relative; text-align: left; }
+  .week-card.tried { background: #f6faf6; border-color: rgba(44,122,95,.16); }
   .week-card .done,
   .week-card .todo { position: absolute; top: 12px; right: 12px; width: 22px; height: 22px; border-radius: 11px; flex: none; box-sizing: border-box; }
-  .week-card .done { background: var(--green); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-  .week-card .todo { border: 1.5px solid #d5dad6; background: #fff; }
+  .week-card .done { background: transparent; color: var(--green); font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center; border: none; }
+  .week-card .todo { border: 1.5px solid #c8cec9; background: #fff; }
   .week-card .row { display: flex; gap: 8px; align-items: center; }
   .week-card i { font-style: normal; width: 28px; height: 28px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; flex: none; }
   .week-card b { font-size: 14px; font-weight: 600; }
   .week-card small { font-size: 12px; color: var(--faint); flex: 1; }
-  .week-card .go-link { font-size: 12px; font-weight: 600; color: var(--green); margin-top: auto; align-self: flex-start; }
-  .week-card .btn-citta { margin-top: auto; }
+  .week-card .go-link { font-size: 12px; font-weight: 600; color: var(--green); margin-top: auto; align-self: flex-start; padding: 0; text-align: left; transition: color .12s; }
+  .week-card .go-link:hover { color: var(--green-dark); text-decoration: underline; text-underline-offset: 2px; }
+  .week-card .go-link:active { opacity: .85; }
+  .week-card .btn-citta:active { transform: scale(.98); }
+  .week-card.is-opening { border-color: rgba(44,122,95,.45); box-shadow: 0 0 0 2px rgba(44,122,95,.12); }
 
-  .pickup { display: flex; flex-direction: column; gap: 10px; }
-  .pickup .hdr h3 { margin: 0; font-size: 20px; font-weight: 500; }
-  .pickup .hdr p { margin: 4px 0 0; font-size: 13px; color: var(--faint); }
-  .pick-card { display: flex; gap: 16px; align-items: center; padding: 16px 18px; border-radius: 14px; background: #f9ebe0; border: 1px solid #ecd5c4; line-height: 1.4; }
-  .pick-card .tag { font-size: 11px; font-weight: 700; letter-spacing: .04em; color: #9a4b2e; flex: none; width: 72px; }
-  .pick-card .col { flex: 1; display: flex; flex-direction: column; gap: 4px; }
-  .pick-card .t { font-size: 15px; font-weight: 500; }
-  .pick-card .meta { font-size: 12px; color: var(--muted); }
-  .pick-card .btn { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; white-space: nowrap; flex: none; }
+  .pickup { display: flex; flex-direction: column; gap: 4px; padding: 20px; border-radius: 16px; background: #fbf1de; border: 1px solid #fbf1de; }
+  .pickup .hdr h3 { margin: 0; font-size: 18px; font-weight: 500; color: #9a5b07; }
+  .pick-card { display: flex; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--line); line-height: 1.4; background: transparent; border-radius: 0; }
+  .pick-card:last-child { border-bottom: none; padding-bottom: 0; }
+  .pick-card .tag { font-size: 13px; font-weight: 500; color: #9a5b07; flex: none; width: 80px; }
+  .pick-card .tag.today { color: var(--muted); }
+  .pick-card .col { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .pick-card .t { font-size: 15px; font-weight: 400; color: var(--ink); }
+  .pick-card .meta { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; font-size: 12px; color: var(--faint); }
+  .pick-card .btn { background: var(--green-tint); border: none; border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--green-dark); white-space: pre; flex: none; }
+  .activity.cosmos-compact { border: 1px solid var(--line); border-radius: 16px; padding: 20px; gap: 12px; background: #fff; }
+  .activity.cosmos-compact > p { margin: 0; font-size: 13px; line-height: 1.4; color: var(--muted); }
+  .activity.cosmos-compact .cosmos-see { align-self: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--ink); cursor: pointer; }
+  .activity.cosmos-compact .cosmos-see:hover { border-color: var(--green); background: var(--green-wash); }
 
   .day.compact { width: 280px; height: 56px; }
   .day.compact .track { top: 36px; width: 280px; }
@@ -334,14 +407,22 @@
   .citta-panel .ask-row { display: flex; gap: 8px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 8px 8px 8px 10px; }
   .citta-panel .ask-row .plus { width: 28px; height: 28px; border-radius: 8px; color: var(--muted); font-size: 18px; line-height: 1; flex: none; display: flex; align-items: center; justify-content: center; }
   .citta-panel .ask-row .ph { flex: 1; font-size: 13px; color: var(--placeholder); min-width: 0; }
-  .citta-panel .ask-row .send { width: 32px; height: 32px; border-radius: 10px; }
-  .citta-panel .ask-row .send svg { width: 16px; height: 16px; }
+  .citta-panel .ask-row .send { width: 36px; height: 36px; border-radius: 10px; }
+  .citta-panel .ask-row .send svg { width: 20px; height: 20px; }
 
-  .coach { position: absolute; left: 48px; bottom: 120px; width: 340px; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; box-shadow: 0 16px 40px rgba(28,31,29,.12); z-index: 15; display: none; line-height: 1.45; }
+  .coach { position: absolute; left: 48px; bottom: 120px; width: 340px; max-width: calc(100% - 96px); background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; box-shadow: 0 16px 40px rgba(28,31,29,.12); z-index: 25; display: none; line-height: 1.45; pointer-events: auto; }
+  .coach.wide { width: 400px; max-width: calc(100% - 80px); padding: 20px 22px; }
   .coach.on { display: block; }
+  .coach .coach-who { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; font-size: 12px; font-weight: 500; color: var(--muted); }
+  .coach .coach-who .av { width: 28px; height: 28px; border-radius: 14px; background: var(--green-tint); color: var(--green-dark); font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex: none; }
   .coach .step-pill { display: inline-block; font-size: 11px; font-weight: 700; color: var(--green-dark); background: var(--green-tint); padding: 3px 8px; border-radius: 999px; margin-bottom: 8px; }
+  .coach .step-pill[hidden] { display: none; }
   .coach h4 { margin: 0 0 6px; font-size: 16px; font-weight: 600; }
+  .coach.wide h4 { font-size: 17px; }
   .coach p { margin: 0; font-size: 13px; color: var(--muted); }
+  .coach .coach-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .coach .coach-meta span { font-size: 11px; font-weight: 600; color: var(--green-dark); background: var(--green-wash); border: 1px solid rgba(44,122,95,.12); padding: 4px 10px; border-radius: 999px; }
+  .coach .coach-meta[hidden] { display: none; }
   .coach .acts { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
   .coach .acts button { font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 10px; }
   .coach .acts .pri { background: var(--green); color: #fff; }
@@ -355,7 +436,32 @@
 
   .presenter .seg.screen { margin-left: 8px; }
   .presenter .seg.panel { margin-left: 4px; }
+  .presenter .seg.screen button[data-screen="tutorial"] { box-shadow: inset 0 0 0 1px rgba(44,122,95,.35); }
+  .presenter .seg.screen button[data-screen="tutorial"][aria-pressed="true"] { background: var(--green); color: #fff; box-shadow: none; }
 
+  .tutorial-entry { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; padding: 12px 16px; border-radius: 14px; border: 1.5px solid rgba(44,122,95,.35); background: var(--green-wash); line-height: 1.4; }
+  .tutorial-entry .k { font-size: 10px; font-weight: 700; letter-spacing: .06em; color: var(--green-dark); background: var(--green-tint); padding: 3px 8px; border-radius: 999px; flex: none; }
+  .tutorial-entry p { margin: 0; flex: 1; min-width: 200px; font-size: 14px; color: var(--muted); }
+  .tutorial-entry p b { color: var(--ink); font-weight: 600; }
+  .tutorial-entry .start { background: var(--green); color: #fff; font-size: 13px; font-weight: 600; padding: 9px 16px; border-radius: 999px; flex: none; white-space: nowrap; transition: background .12s; }
+  .tutorial-entry .start:hover { background: var(--green-dark); }
+  .tutorial-entry .link { font-size: 13px; font-weight: 600; color: var(--green); flex: none; }
+  .tutorial-entry .link:hover { text-decoration: underline; }
+
+  .tutorial-try-cards { display: flex; gap: 16px; min-height: 186px; }
+  .tutorial-try-card { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 16px; padding: 17px; background: #fff; display: flex; flex-direction: column; gap: 6px; text-align: left; }
+  .tutorial-try-card .trow { display: flex; gap: 8px; align-items: center; }
+  .tutorial-try-card .trow i { font-style: normal; width: 32px; height: 32px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; flex: none; }
+  .tutorial-try-card .lead { font-size: 15px; font-weight: 500; line-height: 1.35; margin: 4px 0 0; min-height: 40px; }
+  .tutorial-try-card .sub { font-size: 12px; color: var(--faint); margin: 0; }
+  .tutorial-try-card .try-it { align-self: flex-start; margin-top: auto; background: var(--green); color: #fff; font-size: 12px; font-weight: 600; padding: 7px 14px; border-radius: 999px; white-space: nowrap; }
+  .tutorial-try-card .try-it:hover { background: var(--green-dark); }
+  .onboard-row { display: flex; gap: 16px; align-items: center; padding: 15px 17px; border: 1px solid var(--line); border-radius: 14px; background: #fff; line-height: 1.4; }
+  .onboard-row .col { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .onboard-row .col b { font-size: 15px; font-weight: 500; }
+  .onboard-row .col small { font-size: 12px; color: var(--faint); }
+  .onboard-row .ob-btn { flex: none; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; white-space: nowrap; cursor: pointer; }
+  .onboard-row .ob-btn:hover { border-color: var(--green); background: var(--green-wash); }
   .suggest-chips .wrap { display: flex; flex-wrap: wrap; gap: 8px; }
   .suggest-chips .chip { cursor: pointer; }
   .suggest-chips .chip:hover { border-color: var(--green); background: var(--green-wash); }
@@ -371,7 +477,9 @@
   <div class="seg screen" role="group" aria-label="Screen">
     <button type="button" data-screen="home" aria-pressed="true">Default home</button>
     <button type="button" data-screen="welcome" aria-pressed="false">Welcome back</button>
+    <span class="hint" style="font-size:12px;color:var(--faint);margin-left:8px">· #screen=welcome</span>
     <button type="button" data-screen="tutorial" aria-pressed="false">Interactive tutorial</button>
+    <span class="hint" style="font-size:12px;color:var(--faint);margin-left:4px">· #screen=tutorial</span>
     <button type="button" data-screen="handoff" aria-pressed="false">Post-tutorial · 8554</button>
   </div>
   <div class="seg" role="group" aria-label="Twin state">
@@ -383,7 +491,7 @@
     <button type="button" data-panel="dock" aria-pressed="false">Dock</button>
     <button type="button" data-panel="expanded" aria-pressed="false">Citta expanded</button>
   </div>
-  <span class="hint">Deep links: <code>#screen=handoff&amp;tip=1</code> (Figma 8554) · <code>#screen=tutorial&amp;tutorial=4</code> · <code>#citta=expanded</code></span>
+  <span class="hint">Deep links: <code>#screen=tutorial</code> (Figma 8541) · <code>#screen=handoff&amp;tip=1</code> (8554) · <code>#citta=expanded</code></span>
 </div>
 
 <div class="stage">
@@ -411,7 +519,7 @@
         <div class="main">
           <div class="logo-row">
             <div class="logo">≋  S Y M B I O N</div>
-            <div class="search">Search files, Cosmos, people…   ⌘K</div>
+            <button type="button" class="search search-hit" aria-label="Search">Search files, Cosmos, people…   ⌘K</button>
           </div>
 
           <div class="content hub">
@@ -438,6 +546,12 @@
                 <span class="tick" style="right:0">8 pm</span>
               </div>
             </section>
+            <div class="tutorial-entry" id="tutorialEntry" aria-label="Start interactive tutorial">
+              <span class="k">FIGMA 8541</span>
+              <p><b>Interactive tutorial</b> — 4 steps with Citta (starter task, try each tool, switch twins, finish).</p>
+              <button type="button" class="start" data-start-tutorial>Start tutorial →</button>
+              <button type="button" class="link" data-start-tutorial data-step="1">Or jump in with #screen=tutorial</button>
+            </div>
             </div>
 
             <div class="screen" id="screen-welcome" data-screen="welcome">
@@ -445,15 +559,20 @@
                 <div class="hello">
                   <div class="eyebrow">
                     <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="3" fill="#e8a33d"/><g stroke="#e8a33d" stroke-width="1.2" stroke-linecap="round"><path d="M7 .8v1.4M7 11.8v1.4M.8 7h1.4M11.8 7h1.4M2.6 2.6l1 1M10.4 10.4l1 1M2.6 11.4l1-1M10.4 3.6l1-1"/></g></svg>
-                    MONDAY 12 OCTOBER  ·  3 DAYS SINCE YOUR LAST VISIT
+                    MONDAY 12 OCTOBER  ·  9 DAYS SINCE YOUR LAST VISIT
                   </div>
                   <h2>Welcome back, <span>Jess</span></h2>
-                  <p>Everything is where you left it. Your <b>reading report is due tomorrow</b>.</p>
+                  <p><span class="lead">Everything is where you left it.</span> Your reading report is <b>due tomorrow</b>.</p>
                 </div>
-                <div class="day compact" aria-label="This day">
-                  <span class="lbl">THIS DAY</span>
-                  <span class="items">3 / 3 items</span>
-                  <span class="track"></span><span class="elapsed"></span><span class="now"></span>
+                <div class="day" aria-label="Your day">
+                  <span class="lbl">YOUR DAY</span><span class="ev-free">Report due tmrw</span>
+                  <span class="evt" style="left:189px"><b>2:30</b>Lecture 5</span>
+                  <span class="track"></span><span class="elapsed"></span>
+                  <span class="dot fill" style="left:222px"></span>
+                  <span class="now"></span>
+                  <span class="tick" style="left:0">8 am</span>
+                  <span class="tick now-l">now · 9:40</span>
+                  <span class="tick" style="right:0">8 pm</span>
                 </div>
               </section>
             </div>
@@ -461,17 +580,19 @@
             <div class="screen" id="screen-tutorial" data-screen="tutorial">
               <div class="course-banner">
                 <span class="av">GR</span>
-                <span class="sp">You came from <b>Prof. Roland’s course</b> · Heavy-Ion Physics</span>
-                <a href="#">Back to the course ↗</a>
+                <span class="sp">You came from <b>Prof. Roland’s Cosmo</b> · Heavy-ion Physics</span>
+                <button type="button" class="link course-back">Back to the Cosmo ↗</button>
               </div>
               <section class="greeting quiet">
                 <div class="hello">
-                  <div class="eyebrow">MONDAY 12 OCTOBER  ·  FIRST VISIT</div>
+                  <div class="eyebrow">
+                    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="3" fill="#e8a33d"/><g stroke="#e8a33d" stroke-width="1.2" stroke-linecap="round"><path d="M7 .8v1.4M7 11.8v1.4M.8 7h1.4M11.8 7h1.4M2.6 2.6l1 1M10.4 10.4l1 1M2.6 11.4l1-1M10.4 3.6l1-1"/></g></svg>
+                    MONDAY 12 OCTOBER  ·  YOUR FIRST DAY
+                  </div>
                   <h2>Welcome, <span>Jess</span></h2>
-                  <p>You came from Heavy-Ion Physics. Pick a tool below and Citta will show you around.</p>
+                  <p>You came in from Heavy-ion Physics. Pick a tool below and Citta will show you around.</p>
                 </div>
               </section>
-              <p class="hint" style="margin:0;font-size:12px;color:var(--faint)">First real task in ~3 minutes · no tour — Citta uses your course materials</p>
             </div>
 
             <!-- Figma 1:8554 · post-tutorial main home + Citta switch coachmark -->
@@ -479,7 +600,7 @@
               <div class="course-banner">
                 <span class="av">GR</span>
                 <span class="sp">Working in <b>Prof. Roland’s course</b> · Heavy-Ion Physics</span>
-                <a href="#">Back to the course ↗</a>
+                <button type="button" class="link course-back">Back to the course ↗</button>
               </div>
               <section class="greeting quiet">
                 <div class="hello">
@@ -509,7 +630,7 @@
                   <span id="whenCitta" style="display:contents">
                     <span class="faint">or switch to</span>
                     <span class="stack"><span>GR</span><span>EP</span><span class="agent">LR</span></span>
-                    <span class="link">your twins &amp; AI agents — anytime</span>
+                    <button type="button" class="link" id="openTwinBrowse">your twins &amp; AI agents — anytime</button>
                   </span>
                   <span id="whenTwin" style="display:none">
                     <span class="faint">·</span>
@@ -533,25 +654,25 @@
                   <button type="button" class="tool" data-tool="symtex"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i>SymTex</button>
                   <button type="button" class="tool" data-tool="code"><i style="background:var(--slate-tint);color:var(--slate);font-size:10px">&lt;/&gt;</i>Code</button>
                   <span class="sp"></span>
-                  <span class="attach">+ Attach file   ·   From a Cosmo   ·   From Library</span>
+                  <span class="attach"><button type="button" class="attach-hit">+ Attach file</button>   ·   <button type="button" class="attach-hit">From a Cosmo</button>   ·   <button type="button" class="attach-hit">From Library</button></span>
                 </div>
               </div>
 
               <div class="foot" id="composerFoot">
                 <span class="k">CONTINUE WITH</span>
                 <div class="wrap" id="composerContinue">
-                  <span class="chip"><span class="ic">▧</span><b>Lecture 4 summary</b><span class="pct"><span class="bar"><span style="width:13px"></span></span>60%</span><span class="ar">→</span></span>
-                  <span class="chip"><span class="ic">≡</span><b>Reading report — QGP</b><span class="pct"><span class="bar"><span style="width:12px"></span></span>55%</span><span class="ar">→</span></span>
-                  <span class="chip"><span class="ic">▦</span><b>Lab 3</b><span class="pct"><span class="bar"><span style="width:7px"></span></span>30%</span><span class="ar">→</span></span>
-                  <span class="link" style="font-size:13px">All files →</span>
+                  <button type="button" class="chip" data-continue-tool="doc"><span class="ic">≡</span><b>Reading report — QGP</b><span class="pct"><span class="bar"><span style="width:12px"></span></span>55%</span><span class="ar">→</span></button>
+                  <button type="button" class="chip" data-continue-tool="deck"><span class="ic">▧</span><b>Lecture 4 summary</b><span class="pct"><span class="bar"><span style="width:13px"></span></span>60%</span><span class="ar">→</span></button>
+                  <button type="button" class="chip" data-continue-tool="numbers"><span class="ic">▦</span><b>Lab 3</b><span class="pct"><span class="bar"><span style="width:7px"></span></span>30%</span><span class="ar">→</span></button>
+                  <button type="button" class="link-btn">All files →</button>
                 </div>
                 <div class="wrap" id="composerContinueHandoff" hidden>
-                  <span class="chip"><span class="ic">≡</span><b>Lecture 1 summary</b><span class="pct done">Done</span><span class="ar">→</span></span>
-                  <span class="chip"><span class="ic">▧</span><b>Lecture 1 slides</b><span class="pct"><span class="bar"><span style="width:18px"></span></span>80%</span><span class="ar">→</span></span>
-                  <span class="link" style="font-size:13px">All files →</span>
+                  <button type="button" class="chip" data-continue-tool="doc"><span class="ic">≡</span><b>Lecture 1 summary</b><span class="pct done">Done</span><span class="ar">→</span></button>
+                  <button type="button" class="chip" data-continue-tool="deck"><span class="ic">▧</span><b>Lecture 1 slides</b><span class="pct"><span class="bar"><span style="width:18px"></span></span>80%</span><span class="ar">→</span></button>
+                  <button type="button" class="link-btn">All files →</button>
                 </div>
                 <div class="wrap suggest-chips" id="composerSuggest" hidden>
-                  <button type="button" class="chip">Summarize Prof. Roland’s lecture 1 in one page</button>
+                  <button type="button" class="chip">Summarise Prof. Roland’s lecture 1 in one page</button>
                   <button type="button" class="chip">Explain quark-gluon plasma for my notes</button>
                   <button type="button" class="chip">Start my reading report outline</button>
                 </div>
@@ -597,143 +718,208 @@
                 <span class="sub">One quick win in every workspace</span>
               </div>
               <div class="try-cards">
-                <div class="try-card" data-tool="doc"><span class="prev"><span class="mock">Reading summary · 3 sections · citations ready</span></span><span class="bot"><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Summarize a reading in one page</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></span></div>
-                <div class="try-card" data-tool="deck"><span class="prev"><span class="mock">Slide 1–6 · speaker notes · course theme</span></span><span class="bot"><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></span><small>Turn lecture notes into slides</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></span></div>
-                <div class="try-card" data-tool="numbers"><span class="prev"><span class="mock">Lab table · trend line · export chart</span></span><span class="bot"><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Plot my physics sample data</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></span></div>
-                <div class="try-card" data-tool="symtex"><span class="prev"><span class="mock">ρ = n · m · ⟨v²⟩ · fraction</span></span><span class="bot"><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset the baryon density formula</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></span></div>
-                <div class="try-card" data-tool="code"><span class="prev"><span class="mock">for p in particles: scatter()</span></span><span class="bot"><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a tiny particle simulation</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></span></div>
+                <div class="try-card" data-tool="doc"><span class="prev"><span class="mock">Reading summary · 3 sections · citations ready</span></span><span class="bot"><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Summarize a reading in one page</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
+                <div class="try-card" data-tool="deck"><span class="prev"><span class="mock">Slide 1–6 · speaker notes · course theme</span></span><span class="bot"><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></span><small>Turn lecture notes into slides</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
+                <div class="try-card" data-tool="numbers"><span class="prev"><span class="mock">Lab table · trend line · export chart</span></span><span class="bot"><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Plot my physics sample data</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
+                <div class="try-card" data-tool="symtex"><span class="prev"><span class="mock">ρ = n · m · ⟨v²⟩ · fraction</span></span><span class="bot"><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset the baryon density formula</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
+                <div class="try-card" data-tool="code"><span class="prev"><span class="mock">for p in particles: scatter()</span></span><span class="bot"><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a tiny particle simulation</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
               </div>
             </section>
 
-            <section class="tool-sec" id="sec-tools-week">
-              <div class="hdr">
+            <section class="week-tools-panel" id="sec-tools-week">
+              <div class="week-tools-hd">
                 <h3>Your tools this week</h3>
-                <span class="sp"></span>
                 <span class="badge">2 of 5 tried</span>
+                <span class="sp"></span>
+                <button type="button" class="week-tools-close" data-dismiss-week-tools aria-label="Dismiss">×</button>
               </div>
               <div class="week-cards">
-                <div class="week-card"><span class="done">✓</span><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Lecture 1 summary</small><span class="go-link">Open →</span></div>
-                <div class="week-card"><span class="done">✓</span><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></span><small>8 study slides</small><span class="go-link">Open →</span></div>
-                <div class="week-card"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Chart your lab data</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></div>
-                <div class="week-card"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset a formula</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></div>
-                <div class="week-card"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a simulation</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></div>
+                <div class="week-card tried" data-tool="doc"><span class="done" aria-label="Tried">✓</span><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Lecture 1 summary</small><button type="button" class="go-link" data-action="open">Open →</button></div>
+                <div class="week-card tried" data-tool="deck"><span class="done" aria-label="Tried">✓</span><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></span><small>6 study slides</small><button type="button" class="go-link" data-action="open">Open →</button></div>
+                <div class="week-card" data-tool="numbers"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Chart your lab data</small><button type="button" class="go-link" data-action="try-citta">Try with Citta →</button></div>
+                <div class="week-card" data-tool="symtex"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset a formula</small><button type="button" class="go-link" data-action="try-citta">Try with Citta →</button></div>
+                <div class="week-card" data-tool="code"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a simulation</small><button type="button" class="go-link" data-action="try-citta">Try with Citta →</button></div>
               </div>
             </section>
 
             <section class="discover">
               <span class="k">Discover in</span>
-              <span class="interest on">Physics &amp; Space</span>
-              <span class="interest">AI &amp; Data</span>
-              <span class="interest">Cosmology</span>
-              <span class="interest">+</span>
+              <button type="button" class="interest on" aria-pressed="true">Physics &amp; Space</button>
+              <button type="button" class="interest" aria-pressed="false">AI &amp; Data</button>
+              <button type="button" class="interest" aria-pressed="false">Cosmology</button>
+              <button type="button" class="interest" aria-label="Add interest">+</button>
               <span class="vr"></span>
-              <div class="hscroll">
-                <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag">✦ Twin</span><small>Materials · Caltech</small></div><span class="addsi">+ Add SI</span></div>
-                <div class="dcard"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag">✦ Twin</span><small>Climate maths · Columbia</small></div><span class="addsi">+ Add SI</span></div>
-                <div class="dcard"><span class="dav agent">LR</span><div><span class="nm">Lab Report Coach</span><span class="tag agent">AI agent</span><small>Drafts in Doc</small></div><span class="addsi">+ Add SI</span></div>
-                <div class="dcard"><span class="dav">KS</span><div><span class="nm">Katherine F. Smith</span><span class="tag">✦ Twin</span><small>Planetary health · Brown</small></div><span class="addsi">+ Add SI</span></div>
+              <div class="hscroll" id="discoverScroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
+                <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag">✦ Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                <div class="dcard"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag">✦ Twin</span><small>Climate maths · Columbia</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                <div class="dcard"><span class="dav agent">LR</span><div><span class="nm">Lab Report Coach</span><span class="tag agent">AI agent</span><small>Drafts in Doc</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                <div class="dcard"><span class="dav">KS</span><div><span class="nm">Katherine F. Smith</span><span class="tag">✦ Twin</span><small>Planetary health · Brown</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                <div class="dcard"><span class="dav">EP</span><div><span class="nm">Prof. Pajer</span><span class="tag">✦ Twin</span><small>Cosmology · Cornell</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                <div class="dcard"><span class="dav">HX</span><div><span class="nm">Prof. Xu</span><span class="tag">✦ Twin</span><small>AI &amp; decisions</small></div><button type="button" class="addsi">+ Add SI</button></div>
               </div>
-              <span class="round">›</span>
-              <span class="link">Browse all ↗</span>
+              <button type="button" class="round discover-next" id="discoverScrollNext" aria-label="Scroll discover cards">›</button>
+              <button type="button" class="link" data-action="browse-discover">Browse all ↗</button>
             </section>
 
             <section class="two">
-              <div class="reminders">
-                <div class="sec"><h3>Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><span class="act">+ Add</span></div>
-                <div class="rem">
-                  <span class="when hot">2:30</span>
-                  <div class="col"><span class="t">Heavy-ion Physics — lecture 5</span><span class="meta"><span class="badge">Course · Prof. Roland</span>Room 6-120</span></div>
-                  <span class="btn-soft" data-verb="Prep a 10-min deck"></span>
+              <div class="two-grid">
+                <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act" data-action="add-reminder">+ Add</button></div>
+                <div class="two-title-r"><h3>From your Cosmos</h3><span class="new-badge">5 new</span></div>
+                <div class="two-main-l">
+                  <div class="rem">
+                    <span class="when hot">2:30</span>
+                    <div class="col"><span class="t">Heavy-ion Physics — lecture 5</span><span class="meta"><span class="badge">Course · Prof. Roland</span>Room 6-120</span></div>
+                    <button type="button" class="btn-soft" data-verb="Prep a 10-min deck" data-tool="deck"></button>
+                  </div>
+                  <div class="rem">
+                    <span class="when">Today</span>
+                    <div class="col"><span class="t">Reply to Prof. Roland about the lab report</span><span class="meta"><span class="badge email">Email</span>Received 9:12</span></div>
+                    <button type="button" class="btn-soft" data-verb="Draft reply"></button>
+                  </div>
+                  <div class="rem">
+                    <span class="when">Tomorrow</span>
+                    <div class="col"><span class="t">Submit reading report</span><span class="meta"><span class="badge">Course · Prof. Roland</span>820 / 1,500 words</span></div>
+                    <button type="button" class="btn-soft" data-verb="Finish with Citta" data-twin-verb="Finish the report" data-tool="doc"></button>
+                  </div>
+                  <div class="rem">
+                    <span class="when">Fri</span>
+                    <div class="col"><span class="t">Lab 3 analysis due</span><span class="meta"><span class="badge yours">Yours</span></span></div>
+                    <button type="button" class="btn-soft" data-verb="Open in Numbers" data-tool="numbers"></button>
+                  </div>
                 </div>
-                <div class="rem">
-                  <span class="when">Today</span>
-                  <div class="col"><span class="t">Reply to Prof. Roland about the lab report</span><span class="meta"><span class="badge email">Email</span>Received 9:12</span></div>
-                  <span class="btn-soft" data-verb="Draft reply"></span>
-                </div>
-                <div class="rem">
-                  <span class="when">Tomorrow</span>
-                  <div class="col"><span class="t">Submit reading report</span><span class="meta"><span class="badge">Course · Prof. Roland</span>820 / 1,500 words</span></div>
-                  <span class="btn-soft" data-verb="Finish with Citta" data-twin-verb="Finish the report"></span>
-                </div>
-                <div class="rem">
-                  <span class="when">Fri</span>
-                  <div class="col"><span class="t">Lab 3 analysis due</span><span class="meta"><span class="badge yours">Yours</span></span></div>
-                  <span class="btn-soft" data-verb="Open in Numbers"></span>
-                </div>
+                <aside class="activity two-main-r">
+                  <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland’s twin posted lecture 5 slides</div><small>Heavy-ion Physics · 1h ago</small><button type="button" class="act-link">Turn into study notes →</button></div></div>
+                  <div class="act-item"><span class="aav">王</span><div><div class="t">骆王宇 is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder →</button></div></div>
+                  <div class="act-item"><span class="aav">EP</span><div><div class="t">2 replies to your #cosmology thread</div><small>Prof. Pajer’s twin + @maya_k</small><button type="button" class="act-link">Open thread →</button></div></div>
+                  <div class="act-item"><span class="aav">HX</span><div><div class="t">Prof. Xu’s twin: new insight on pricing data</div><small>AI &amp; decisions · today</small><button type="button" class="act-link">View insight →</button></div></div>
+                </aside>
               </div>
-
-              <aside class="activity">
-                <div class="row"><h3>From your Cosmos</h3><span>5 new</span></div>
-                <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland’s twin posted lecture 5 slides</div><small>Heavy-ion Physics · 1h ago</small><a href="#">Turn into study notes →</a></div></div>
-                <div class="act-item"><span class="aav">王</span><div><div class="t">骆王宇 is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><a href="#">Set reminder →</a></div></div>
-                <div class="act-item"><span class="aav">EP</span><div><div class="t">2 replies to your #cosmology thread</div><small>Prof. Pajer’s twin + @maya_k</small><a href="#">Open thread →</a></div></div>
-                <div class="act-item"><span class="aav">HX</span><div><div class="t">Prof. Xu’s twin: new insight on pricing data</div><small>AI &amp; decisions · today</small></div></div>
-              </aside>
             </section>
 
             <section>
-              <div class="sec" style="margin-bottom:16px"><h3>Start from a goal</h3><span class="sub">Templates with Citta built in</span><span class="sp"></span><span class="act">See all</span></div>
+              <div class="sec" style="margin-bottom:16px"><h3>Start from a goal</h3><span class="sub">Templates with Citta built in</span><span class="sp"></span><button type="button" class="act" data-action="see-goals">See all</button></div>
               <div class="goals">
-                <div class="tpl"><span class="h"><i>≡</i>Doc</span><b>Essay, start to finish</b><small>Topic → outline → draft → citations</small><span class="use">Use with Citta</span></div>
-                <div class="tpl"><span class="h"><i>▧</i>Deck</span><b>Class presentation</b><small>Notes or lecture → slides → speaker notes</small><span class="use">Use with Citta</span></div>
-                <div class="tpl"><span class="h"><i>▦</i>Numbers</span><b>Data analysis</b><small>Upload CSV → trends → chart for your Deck</small><span class="use">Use with Citta</span></div>
-                <div class="tpl"><span class="h"><i>Σ</i>SymTex</span><b>Proof or problem set</b><small>Handwritten steps → typeset LaTeX</small><span class="use">Use with Citta</span></div>
-                <div class="tpl"><span class="h"><i style="font-size:10px">&lt;/&gt;</i>Code</span><b>Explain or fix my script</b><small>Paste code → explain → fix → test</small><span class="use">Use with Citta</span></div>
+                <button type="button" class="tpl" data-goal-tool="doc"><span class="h"><i>≡</i>Doc</span><b>Essay, start to finish</b><small>Topic → outline → draft → citations</small><span class="use">Use with Citta</span></button>
+                <button type="button" class="tpl" data-goal-tool="deck"><span class="h"><i>▧</i>Deck</span><b>Class presentation</b><small>Notes or lecture → slides → speaker notes</small><span class="use">Use with Citta</span></button>
+                <button type="button" class="tpl" data-goal-tool="numbers"><span class="h"><i>▦</i>Numbers</span><b>Data analysis</b><small>Upload CSV → trends → chart for your Deck</small><span class="use">Use with Citta</span></button>
+                <button type="button" class="tpl" data-goal-tool="symtex"><span class="h"><i>Σ</i>SymTex</span><b>Proof or problem set</b><small>Handwritten steps → typeset LaTeX</small><span class="use">Use with Citta</span></button>
+                <button type="button" class="tpl" data-goal-tool="code"><span class="h"><i style="font-size:10px">&lt;/&gt;</i>Code</span><b>Explain or fix my script</b><small>Paste code → explain → fix → test</small><span class="use">Use with Citta</span></button>
               </div>
             </section>
             </div>
 
             <div class="screen" id="tail-welcome" data-tail="welcome">
+              <section class="discover">
+                <span class="k">Discover in</span>
+                <button type="button" class="interest on" aria-pressed="true">Physics &amp; Space</button>
+                <button type="button" class="interest" aria-pressed="false">AI &amp; Data</button>
+                <button type="button" class="interest" aria-pressed="false">Cosmology</button>
+                <button type="button" class="interest" aria-label="Add interest">+</button>
+                <span class="vr"></span>
+                <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
+                  <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag">✦ Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                  <div class="dcard"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag">✦ Twin</span><small>Climate maths · Columbia</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                  <div class="dcard"><span class="dav agent">LR</span><div><span class="nm">Lab Report Coach</span><span class="tag agent">AI agent</span><small>Drafts in Doc</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                  <div class="dcard"><span class="dav">KS</span><div><span class="nm">Katherine F. Smith</span><span class="tag">✦ Twin</span><small>Planetary health · Brown</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                </div>
+                <button type="button" class="round discover-next" aria-label="Scroll discover cards">›</button>
+                <button type="button" class="link" data-action="browse-discover">Browse all ↗</button>
+              </section>
+
               <section class="pickup">
                 <div class="hdr">
                   <h3>Pick up where you left off</h3>
-                  <p>Missed items first, then what’s due today.</p>
                 </div>
-                <div class="pick-card"><span class="tag">Missed</span><div class="col"><span class="t">Reading report was due Tuesday</span><span class="meta">Course · Prof. Roland · 300 / 1,200 words — extension request</span></div><button type="button" class="btn">≋  Finish with Citta</button></div>
-                <div class="pick-card"><span class="tag">Missed</span><div class="col"><span class="t">Lectures 6 &amp; 7</span><span class="meta">Course · Prof. Roland · 2 lectures · 1.8 hrs</span></div><button type="button" class="btn">≋  Make catch-up notes</button></div>
-                <div class="pick-card"><span class="tag">Today</span><div class="col"><span class="t">Reply to Prof. Roland</span><span class="meta">Email · sent 6 days ago</span></div><button type="button" class="btn">≋  Draft reply</button></div>
+                <div class="pick-card"><span class="tag">Missed</span><div class="col"><span class="t">Reading report was due Tuesday</span><span class="meta"><span class="badge course">Course · Prof. Roland</span>820 / 1,500 words · extension request?</span></div><button type="button" class="btn">≋  Finish it with Citta</button></div>
+                <div class="pick-card"><span class="tag">Missed</span><div class="col"><span class="t">Lectures 6 and 7</span><span class="meta"><span class="badge course">Course · Prof. Roland</span>2 lectures · 1h 40m</span></div><button type="button" class="btn">≋  Make catch-up notes</button></div>
+                <div class="pick-card"><span class="tag today">Today</span><div class="col"><span class="t">Reply to Prof. Roland (sent 8 days ago)</span><span class="meta"><span class="badge email">Email</span></span></div><button type="button" class="btn">≋  Draft reply</button></div>
               </section>
 
               <section class="two">
-                <div class="reminders">
-                  <div class="sec"><h3>Coming up</h3><span class="sub">Next 7 days</span></div>
-                  <div class="rem"><span class="when hot">Wed</span><div class="col"><span class="t">Heavy-ion Physics — lecture 8</span><span class="meta"><span class="badge">Course · Prof. Roland</span></span></div><span class="btn-soft">≋  Prep a 10-min deck</span></div>
-                  <div class="rem"><span class="when">Fri</span><div class="col"><span class="t">Lab 3 analysis due</span><span class="meta"><span class="badge yours">Yours</span></span></div><span class="btn-soft">≋  Open in Numbers</span></div>
+                <div class="two-grid">
+                  <div class="sec two-title-l"><h3>Coming up</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act" data-action="add-reminder">+ Add</button></div>
+                  <div class="two-title-r"><h3>From your Cosmos</h3></div>
+                  <div class="two-main-l">
+                    <div class="rem"><span class="when hot">Thu</span><div class="col"><span class="t">Heavy-ion Physics — lecture 8</span><span class="meta"><span class="badge">Course · Prof. Roland</span></span></div><button type="button" class="btn-soft" data-verb="Prep a 10-min deck" data-tool="deck">≋  Prep a 10-min deck</button></div>
+                    <div class="rem"><span class="when">Fri</span><div class="col"><span class="t">Lab 3 analysis due</span><span class="meta"><span class="badge yours">Yours</span></span></div><button type="button" class="btn-soft" data-verb="Open in Numbers" data-tool="numbers">≋  Open in Numbers</button></div>
+                  </div>
+                  <aside class="activity two-main-r cosmos-compact">
+                    <p>14 updates while you were away · 3 replies to your threads · 2 new lectures</p>
+                    <button type="button" class="cosmos-see act-link">See what’s new</button>
+                  </aside>
                 </div>
-                <aside class="activity">
-                  <div class="row"><h3>From your Cosmos</h3></div>
-                  <p style="margin:0;font-size:14px;line-height:1.5">14 updates while you were away · 3 replies to your threads · 2 new lectures</p>
-                  <span class="act" style="font-size:13px;font-weight:600;color:var(--green)">See what’s new →</span>
-                </aside>
               </section>
             </div>
 
             <div class="screen" id="tail-handoff" data-tail="handoff">
-              <section class="tool-sec" id="sec-tools-handoff">
-                <div class="hdr">
+              <section class="week-tools-panel" id="sec-tools-handoff">
+                <div class="week-tools-hd">
                   <h3>Your tools this week</h3>
-                  <span class="sp"></span>
                   <span class="badge">2 of 5 tried</span>
+                  <span class="sp"></span>
+                  <button type="button" class="week-tools-close" data-dismiss-week-tools aria-label="Dismiss">×</button>
                 </div>
                 <div class="week-cards">
-                  <div class="week-card"><span class="done">✓</span><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Lecture 1 summary</small><span class="go-link">Open →</span></div>
-                  <div class="week-card"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></span><small>Lecture 1 slides · 80%</small><span class="go-link">Continue →</span></div>
-                  <div class="week-card"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Chart your lab data</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></div>
-                  <div class="week-card"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset a formula</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></div>
-                  <div class="week-card"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a simulation</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></div>
+                  <div class="week-card tried" data-tool="doc"><span class="done" aria-label="Tried">✓</span><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Lecture 1 summary</small><button type="button" class="go-link" data-action="open">Open →</button></div>
+                  <div class="week-card tried" data-tool="deck"><span class="done" aria-label="Tried">✓</span><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></span><small>6 study slides</small><button type="button" class="go-link" data-action="continue">Continue →</button></div>
+                  <div class="week-card" data-tool="numbers"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Chart your lab data</small><button type="button" class="go-link" data-action="try-citta">Try with Citta →</button></div>
+                  <div class="week-card" data-tool="symtex"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset a formula</small><button type="button" class="go-link" data-action="try-citta">Try with Citta →</button></div>
+                  <div class="week-card" data-tool="code"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a simulation</small><button type="button" class="go-link" data-action="try-citta">Try with Citta →</button></div>
                 </div>
               </section>
             </div>
 
             <div class="screen" id="tail-tutorial" data-tail="tutorial">
-              <section class="tool-sec" aria-label="Try each tool (tutorial)">
-                <div class="hdr"><h3>Try each tool with Citta</h3><span class="sub">Tap a card — Citta opens the right workspace</span></div>
-                <div class="try-cards">
-                  <div class="try-card"><span class="prev"><span class="mock">One-page summary · Lecture 1</span></span><span class="bot"><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Start with your first summary</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></span></div>
-                  <div class="try-card"><span class="prev"><span class="mock">6 slides · recap deck</span></span><span class="bot"><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></span><small>Slides from lecture notes</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></span></div>
-                  <div class="try-card"><span class="prev"><span class="mock">Sample lab CSV</span></span><span class="bot"><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Plot my physics sample data</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></span></div>
-                  <div class="try-card"><span class="prev"><span class="mock">Baryon density formula</span></span><span class="bot"><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset the baryon density formula</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></span></div>
-                  <div class="try-card"><span class="prev"><span class="mock">Particle loop demo</span></span><span class="bot"><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a tiny particle simulation</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true">≋</span>Try with Citta</button></span></div>
+              <section class="discover">
+                <span class="k">More in</span>
+                <button type="button" class="interest on" aria-pressed="true">Heavy-ion physics</button>
+                <button type="button" class="interest" aria-pressed="false">Physics &amp; Space</button>
+                <span class="vr"></span>
+                <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="More in Cosmos — scroll horizontally">
+                  <div class="dcard"><span class="dav">EP</span><div><span class="nm">Enrico Pajer</span><span class="tag">✦ Twin</span><small>Cosmology · Cambridge</small></div><button type="button" class="addsi">+ Follow</button></div>
+                  <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag">✦ Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi">+ Follow</button></div>
+                  <div class="dcard"><span class="dav agent">PC</span><div><span class="nm">Physics Problem Coach</span><span class="tag agent">AI agent</span><small>Step-by-step in SymTex</small></div><button type="button" class="addsi">+ Follow</button></div>
+                  <div class="dcard"><span class="dav agent">GW</span><div><span class="nm">Gauge Theory 101</span><span class="tag agent">AI agent</span><small>Course · MIT OCW</small></div><button type="button" class="addsi">+ Follow</button></div>
+                </div>
+                <button type="button" class="round discover-next" aria-label="Scroll discover cards">›</button>
+                <button type="button" class="link" data-action="browse-discover">Browse all ↗</button>
+              </section>
+
+              <section class="tool-sec" id="sec-try-tutorial" aria-label="Try each tool (tutorial)">
+                <div class="hdr"><h3>Try each tool with Citta</h3><span class="sub">1 minute each · uses Prof. Roland’s course material</span></div>
+                <div class="tutorial-try-cards">
+                  <div class="tutorial-try-card" data-tool="doc"><div class="trow"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></div><p class="lead">Lecture 1 → one-page summary</p><p class="sub">A Doc with headings + key formulas</p><button type="button" class="try-it">≋ Try it</button></div>
+                  <div class="tutorial-try-card" data-tool="deck"><div class="trow"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></div><p class="lead">Lecture 1 → 6 study slides</p><p class="sub">A Deck you can present or revise</p><button type="button" class="try-it">≋ Try it</button></div>
+                  <div class="tutorial-try-card" data-tool="numbers"><div class="trow"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></div><p class="lead">Plot the sPHENIX sample data</p><p class="sub">A sheet + chart, explained</p><button type="button" class="try-it">≋ Try it</button></div>
+                  <div class="tutorial-try-card" data-tool="symtex"><div class="trow"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></div><p class="lead">Typeset the Bjorken energy formula</p><p class="sub">Clean LaTeX you can reuse</p><button type="button" class="try-it">≋ Try it</button></div>
+                  <div class="tutorial-try-card" data-tool="code"><div class="trow"><i style="background:var(--slate-tint);color:var(--slate);font-size:10px">&lt;/&gt;</i><b>Code</b></div><p class="lead">Run a tiny particle simulation</p><p class="sub">A Python notebook, commented</p><button type="button" class="try-it">≋ Try it</button></div>
+                </div>
+              </section>
+
+              <section class="two">
+                <div class="two-grid">
+                  <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Nothing yet</span></div>
+                  <div class="two-title-r"><h3>From Prof. Roland’s Cosmo</h3></div>
+                  <div class="two-main-l" style="display:flex;flex-direction:column;gap:12px">
+                    <div class="onboard-row"><div class="col"><b>Join Heavy-ion Physics</b><small>Get lecture and deadline reminders from the course</small></div><button type="button" class="ob-btn">Join course</button></div>
+                    <div class="onboard-row"><div class="col"><b>Connect your email</b><small>Citta flags emails that need a reply and drafts it in Doc</small></div><button type="button" class="ob-btn">Connect</button></div>
+                    <div class="onboard-row"><div class="col"><b>Add your own</b><small>Or tell Citta: “remind me to finish my lab on Friday”</small></div><button type="button" class="ob-btn" data-action="add-reminder">+ Add reminder</button></div>
+                  </div>
+                  <aside class="activity two-main-r">
+                    <div class="act-item"><span class="aav">GR</span><div><div class="t">Lecture 5 slides posted</div><small>Heavy-ion Physics · 1h ago</small><button type="button" class="act-link">Turn into study notes →</button></div></div>
+                    <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland goes live Thu 7pm (the real person)</div><small>His twin has a recap of the last Q&amp;A</small><button type="button" class="act-link">Set reminder →</button></div></div>
+                  </aside>
+                </div>
+              </section>
+
+              <section>
+                <div class="sec" style="margin-bottom:16px"><h3>Start from a goal</h3><span class="sub">Templates with Citta built in</span><span class="sp"></span><button type="button" class="act" data-action="see-goals">See all</button></div>
+                <div class="goals">
+                  <button type="button" class="tpl" data-goal-tool="doc"><span class="h"><i>≡</i>Doc</span><b>Essay, start to finish</b><small>Topic → outline → draft → citations</small><span class="use">Use with Citta</span></button>
+                  <button type="button" class="tpl" data-goal-tool="deck"><span class="h"><i>▧</i>Deck</span><b>Class presentation</b><small>Notes or lecture → slides → speaker notes</small><span class="use">Use with Citta</span></button>
+                  <button type="button" class="tpl" data-goal-tool="numbers"><span class="h"><i>▦</i>Numbers</span><b>Data analysis</b><small>Upload CSV → trends → chart for your Deck</small><span class="use">Use with Citta</span></button>
+                  <button type="button" class="tpl" data-goal-tool="symtex"><span class="h"><i>Σ</i>SymTex</span><b>Proof or problem set</b><small>Handwritten steps → typeset LaTeX</small><span class="use">Use with Citta</span></button>
+                  <button type="button" class="tpl" data-goal-tool="code"><span class="h"><i style="font-size:10px">&lt;/&gt;</i>Code</span><b>Explain or fix my script</b><small>Paste code → explain → fix → test</small><span class="use">Use with Citta</span></button>
                 </div>
               </section>
             </div>
@@ -756,7 +942,7 @@
           <div class="user-bubble">Prep me for lecture 5</div>
           <div class="asst-card">
             I drafted a 10-slide deck from Prof. Roland’s lecture 5 slides, with 3 quiz questions at the end.
-            <a href="#">Open in Deck →</a>
+            <button type="button" class="act-link">Open in Deck →</button>
           </div>
           <div class="run-hd">RUNNING &amp; READY</div>
           <div class="run-list">
@@ -768,7 +954,7 @@
             <div class="citta-run">
               <div class="top"><span class="tool-tag">NUMBERS</span><span class="title">Lab 3 trends</span></div>
               <span class="status">Analysis ready</span>
-              <button type="button" class="act">Review →</button>
+              <button type="button" class="act tap-active">Review →</button>
             </div>
             <div class="citta-run err">
               <div class="top"><span class="tool-tag">DECK</span><span class="title">Create a deck called “Lab 3”</span></div>
@@ -795,9 +981,11 @@
       </aside>
 
       <div class="coach" id="coach" role="dialog" aria-live="polite">
+        <div class="coach-who" id="coachWho" hidden><span class="av" aria-hidden="true">≋</span><span id="coachWhoText">Citta · your assistant in Symbion</span></div>
         <span class="step-pill" id="coachStep">Step 1 of 4</span>
-        <h4 id="coachTitle">Citta offers one starter task</h4>
-        <p id="coachBody">I’ll turn Prof. Roland’s Lecture 1 (28 slides) into a one-page summary in Doc. You edit it, then add anything you like.</p>
+        <h4 id="coachTitle">Let’s make your first thing together.</h4>
+        <p id="coachBody">I’ll turn Prof. Roland’s Lecture 1 (24 slides) into a one-page summary in Doc. You watch, then edit anything you like.</p>
+        <div class="coach-meta" id="coachMeta" hidden></div>
         <div class="acts" id="coachActs"></div>
       </div>
 
@@ -871,9 +1059,14 @@
     }
   }
 
+  function pageGutterPx() {
+    const v = getComputedStyle(document.documentElement).getPropertyValue('--page-gutter').trim();
+    return parseInt(v, 10) || 56;
+  }
+
   function positionSwitcherMenu() {
     const topPad = 26;
-    const leftPad = 28;
+    const leftPad = pageGutterPx();
     const working = picker.closest('.working');
     menu.style.left = `${leftPad + picker.offsetLeft}px`;
     menu.style.top = `${topPad + working.offsetTop + picker.offsetTop + picker.offsetHeight + 6}px`;
@@ -926,10 +1119,38 @@
   const coach = $('coach'), coachActs = $('coachActs');
   const newTip = $('newTip');
   const TUTORIAL_STEPS = [
-    { title: 'Citta offers one starter task', body: 'I’ll turn Prof. Roland’s Lecture 1 (28 slides) into a one-page summary in Doc. You edit it, then add anything you like.', spot: 'composer', primary: 'Make my summary →', secondary: 'I’ll explore myself' },
-    { title: 'Try each tool with Citta', body: 'Each card opens the right workspace with Citta already there — Doc, Deck, Numbers, SymTex, and Code.', spot: 'try', primary: 'Next', secondary: 'Back' },
-    { title: 'Switch to a course twin anytime', body: 'Tap ⇄ on the picker to hand work to Prof. Roland’s twin, then switch back to Citta when you’re done.', spot: 'picker', primary: 'Show switcher', secondary: 'Next' },
-    { title: 'You’re set', body: 'Your first summary lands in Doc and appears under Continue with on your next visit.', spot: '', primary: 'Finish tutorial', secondary: 'Back to home' },
+    {
+      who: 'Citta · your assistant in Symbion',
+      title: 'Let’s make your first thing together.',
+      body: 'I’ll turn Prof. Roland’s Lecture 1 (24 slides) into a one-page summary in Doc. You watch, then edit anything you like.',
+      meta: ['≈ 1 min', 'Uses: Lecture 1 slides', 'You can undo'],
+      hideStepPill: true,
+      wide: true,
+      spot: 'composer',
+      primary: 'Make my summary',
+      secondary: 'I’ll explore myself',
+    },
+    {
+      title: 'Try each tool with Citta',
+      body: '1 minute each — each card uses Prof. Roland’s course material and opens the right workspace.',
+      spot: 'try',
+      primary: 'Next',
+      secondary: 'Back',
+    },
+    {
+      title: 'You’re not limited to Citta',
+      body: 'Swap in Prof. Roland’s twin, any SI you’ve added (twins and AI agents) like Lab Report Coach — anytime, even halfway through a task. Your file stays the same.',
+      spot: 'picker',
+      primary: 'Show switcher',
+      secondary: 'Next',
+    },
+    {
+      title: 'You’re set',
+      body: 'Your first summary lands in Doc and appears under Continue with on your next visit.',
+      spot: '',
+      primary: 'Finish tutorial',
+      secondary: 'Back to home',
+    },
   ];
 
   function syncHash() {
@@ -945,7 +1166,7 @@
   function positionNewTip() {
     if (!newTip.classList.contains('show')) return;
     const topPad = 26;
-    const leftPad = 28;
+    const leftPad = pageGutterPx();
     const working = picker.closest('.working');
     newTip.style.top = `${topPad + working.offsetTop + picker.offsetTop + picker.offsetHeight + 12}px`;
     newTip.style.left = `${leftPad + picker.offsetLeft}px`;
@@ -998,7 +1219,12 @@
     document.querySelectorAll('#composerTools .tool').forEach((tool) => {
       tool.addEventListener('click', () => {
         const key = tool.dataset.tool;
-        setComposerToolSelection(selectedComposerTool === key ? null : key);
+        const next = selectedComposerTool === key ? null : key;
+        setComposerToolSelection(next);
+        if (next) {
+          const label = tool.textContent.trim();
+          showToastMsg(`Tool selected · ${label}`);
+        }
       });
     });
   }
@@ -1009,7 +1235,7 @@
     $('composerContinue').hidden = isTutorial || isHandoff;
     $('composerContinueHandoff').hidden = !isHandoff;
     $('composerSuggest').hidden = !isTutorial;
-    $('composerFoot').querySelector('.k').textContent = isTutorial ? 'TRY A STARTER' : 'CONTINUE WITH';
+    $('composerFoot').querySelector('.k').textContent = isTutorial ? 'START WITH' : 'CONTINUE WITH';
     setComposerToolSelection(null);
     if (isHandoff) {
       $('placeholder').textContent = 'What do you want to work on?';
@@ -1022,9 +1248,30 @@
 
   function renderCoach() {
     const step = TUTORIAL_STEPS[tutorialStep - 1];
-    $('coachStep').textContent = `Step ${tutorialStep} of ${TUTORIAL_STEPS.length}`;
+    const coachWho = $('coachWho');
+    const coachMeta = $('coachMeta');
+    coach.classList.toggle('wide', !!step.wide);
+    if (step.who) {
+      coachWho.hidden = false;
+      $('coachWhoText').textContent = step.who;
+    } else {
+      coachWho.hidden = true;
+    }
+    $('coachStep').hidden = !!step.hideStepPill;
+    if (!step.hideStepPill) $('coachStep').textContent = `Step ${tutorialStep} of ${TUTORIAL_STEPS.length}`;
     $('coachTitle').textContent = step.title;
     $('coachBody').textContent = step.body;
+    if (step.meta?.length) {
+      coachMeta.hidden = false;
+      coachMeta.replaceChildren(...step.meta.map((m) => {
+        const s = document.createElement('span');
+        s.textContent = m;
+        return s;
+      }));
+    } else {
+      coachMeta.hidden = true;
+      coachMeta.replaceChildren();
+    }
     coachActs.replaceChildren();
     const pri = document.createElement('button');
     pri.type = 'button'; pri.className = 'pri'; pri.textContent = step.primary;
@@ -1038,10 +1285,375 @@
     frame.classList.toggle('tutorial-on', screen === 'tutorial');
     frame.classList.toggle('dim', screen === 'tutorial' && !!step.spot);
     if (step.spot === 'composer') composer.classList.add('spot');
-    if (step.spot === 'try') (document.getElementById('tail-tutorial') || $('sec-try-each'))?.classList.add('spot');
+    if (step.spot === 'try') (document.getElementById('sec-try-tutorial') || document.getElementById('tail-tutorial') || $('sec-try-each'))?.classList.add('spot');
     if (step.spot === 'picker') picker.classList.add('spot');
     coach.classList.toggle('on', screen === 'tutorial');
+    positionCoach();
     fit();
+  }
+
+  function positionCoach() {
+    if (screen !== 'tutorial' || !coach.classList.contains('on')) return;
+    const step = TUTORIAL_STEPS[tutorialStep - 1];
+    coach.style.bottom = 'auto';
+    coach.style.top = '';
+    coach.style.left = '48px';
+    if (step.spot === 'composer') {
+      coach.style.top = `${composer.offsetTop + composer.offsetHeight + 20}px`;
+      coach.style.left = `${Math.max(48, composer.offsetLeft)}px`;
+    } else if (step.spot === 'try') {
+      const el = document.getElementById('sec-try-tutorial') || document.getElementById('tail-tutorial') || $('sec-try-each');
+      if (el) {
+        coach.style.top = `${el.offsetTop + el.offsetHeight + 16}px`;
+        coach.style.left = `${Math.max(48, el.offsetLeft)}px`;
+      }
+    } else if (step.spot === 'picker') {
+      coach.style.top = `${composer.offsetTop + 80}px`;
+      coach.style.left = `${Math.max(48, composer.offsetLeft + picker.offsetLeft)}px`;
+    } else {
+      coach.style.top = 'auto';
+      coach.style.bottom = '120px';
+    }
+  }
+
+  function showToastMsg(text, ms = 4500) {
+    clearTimeout(toastTimer);
+    $('toastText').textContent = text;
+    toast.classList.add('show');
+    toastTimer = setTimeout(() => toast.classList.remove('show'), ms);
+  }
+
+  function openWeekTool(card, action) {
+    const tool = card.dataset.tool;
+    const label = card.querySelector('b')?.textContent || tool;
+    const sub = card.querySelector('small')?.textContent || '';
+    card.classList.add('is-opening');
+    setTimeout(() => card.classList.remove('is-opening'), 600);
+    setComposerToolSelection(tool);
+    const verb = action === 'continue' ? 'Continuing in' : 'Opening';
+    showToastMsg(`${verb} ${label} · ${sub}`);
+  }
+
+  function tryToolWithCitta(sourceEl) {
+    const card = sourceEl.closest('[data-tool]') || sourceEl.closest('.try-card');
+    const tool = card?.dataset.tool;
+    if (!tool) return;
+    setAI('citta', { announce: false });
+    setComposerToolSelection(tool);
+    setCittaExpanded(true);
+    const labels = { doc: 'Doc', deck: 'Deck', numbers: 'Numbers', symtex: 'SymTex', code: 'Code' };
+    const label = labels[tool] || tool;
+    showToastMsg(`Citta is opening ${label} — ready when you are`);
+    $('placeholder').textContent = `Try ${label} with Citta — what should we make first?`;
+  }
+
+  function startTutorial({ step = 1 } = {}) {
+    postTutorialTipPending = false;
+    setAI('citta', { announce: false });
+    setMenu(false);
+    syncPresenter('citta');
+    setScreen('tutorial', { step });
+    requestAnimationFrame(() => {
+      positionCoach();
+      coach.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  }
+
+  function flashEl(el) {
+    if (!el) return;
+    el.classList.remove('flash');
+    void el.offsetWidth;
+    el.classList.add('flash');
+  }
+
+  function runReminderAction(btn) {
+    const verb = (!composer.classList.contains('is-twin') ? btn.dataset.verb : (btn.dataset.twinVerb || btn.dataset.verb));
+    flashEl(btn);
+    setCittaExpanded(true);
+    if (btn.dataset.tool) setComposerToolSelection(btn.dataset.tool);
+    showToastMsg(`${AIS[current].prefix}  ${verb} — Citta is on it`);
+  }
+
+  function continueWithChip(chip) {
+    const label = chip.querySelector('b')?.textContent || chip.textContent.trim();
+    const tool = chip.dataset.continueTool;
+    if (tool) setComposerToolSelection(tool);
+    flashEl(chip);
+    $('placeholder').textContent = `Continue: ${label}`;
+    showToastMsg(`Opening · ${label}`);
+    setCittaExpanded(true);
+  }
+
+  function initFrameInteractions() {
+    $('openTwinBrowse')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setMenu(true);
+      syncPresenter('open');
+      showToastMsg('Browse twins & AI agents');
+    });
+
+    frame.addEventListener('click', (e) => {
+      const send = e.target.closest('.composer .send, .citta-panel .send');
+      if (send) {
+        setCittaExpanded(true);
+        flashEl(send);
+        showToastMsg('Sent to Citta (prototype)');
+        return;
+      }
+
+      const attach = e.target.closest('.attach-hit');
+      if (attach) {
+        showToastMsg(attach.textContent.trim());
+        return;
+      }
+
+      const cont = e.target.closest('.chip[data-continue-tool]');
+      if (cont) {
+        continueWithChip(cont);
+        return;
+      }
+
+      const footLink = e.target.closest('.foot .link-btn');
+      if (footLink) {
+        showToastMsg('Opening all recent files');
+        return;
+      }
+
+      const suggest = e.target.closest('#composerSuggest .chip');
+      if (suggest) {
+        $('placeholder').textContent = suggest.textContent.trim();
+        flashEl(suggest);
+        showToastMsg('Starter prompt applied');
+        return;
+      }
+
+      const pickBtn = e.target.closest('.pick-card .btn');
+      if (pickBtn) {
+        flashEl(pickBtn);
+        setCittaExpanded(true);
+        showToastMsg(`${AIS[current].prefix}  ${pickBtn.textContent.trim()} — Citta is on it`);
+        return;
+      }
+
+      const soft = e.target.closest('.btn-soft');
+      if (soft) {
+        runReminderAction(soft);
+        return;
+      }
+
+      const cosmos = e.target.closest('.act-link');
+      if (cosmos) {
+        flashEl(cosmos);
+        showToastMsg(cosmos.textContent.trim());
+        setCittaExpanded(true);
+        return;
+      }
+
+      const addRem = e.target.closest('[data-action="add-reminder"]');
+      if (addRem) {
+        showToastMsg('Add reminder (prototype)');
+        return;
+      }
+
+      const seeGoals = e.target.closest('[data-action="see-goals"]');
+      if (seeGoals) {
+        showToastMsg('All goal templates');
+        return;
+      }
+
+      const browseDiscover = e.target.closest('[data-action="browse-discover"]');
+      if (browseDiscover) {
+        showToastMsg('Browse Discover');
+        return;
+      }
+
+      const dismissWeek = e.target.closest('[data-dismiss-week-tools]');
+      if (dismissWeek) {
+        const panel = dismissWeek.closest('.week-tools-panel');
+        if (panel) {
+          panel.classList.add('is-dismissed');
+          showToastMsg('Your tools this week hidden (prototype)');
+          fit();
+        }
+        return;
+      }
+
+      const courseBack = e.target.closest('.course-back');
+      if (courseBack) {
+        const backLabel = screen === 'tutorial' ? 'Back to Prof. Roland’s Cosmo' : 'Back to Prof. Roland’s course';
+        showToastMsg(backLabel);
+        return;
+      }
+
+      const goal = e.target.closest('.tpl[data-goal-tool]');
+      if (goal) {
+        tryToolWithCitta(goal);
+        return;
+      }
+
+      const dcard = e.target.closest('.dcard');
+      if (dcard && !e.target.closest('.addsi')) {
+        const name = dcard.querySelector('.nm')?.textContent || 'Profile';
+        showToastMsg(`Open ${name}`);
+        return;
+      }
+
+      const addsi = e.target.closest('.addsi');
+      if (addsi) {
+        e.stopPropagation();
+        flashEl(addsi);
+        showToastMsg('Added to your SIs');
+        return;
+      }
+
+      const search = e.target.closest('.search-hit');
+      if (search) {
+        showToastMsg('Search (⌘K prototype)');
+        return;
+      }
+
+      const panelSuggest = e.target.closest('.citta-panel .suggest button');
+      if (panelSuggest) {
+        flashEl(panelSuggest);
+        showToastMsg(panelSuggest.textContent.trim());
+        return;
+      }
+
+      const panelPlus = e.target.closest('.citta-panel .plus');
+      if (panelPlus) {
+        showToastMsg('Attach to Citta chat');
+        return;
+      }
+
+      const runAct = e.target.closest('.citta-run .act');
+      if (runAct) {
+        flashEl(runAct);
+        showToastMsg(runAct.textContent.trim());
+        return;
+      }
+
+      const panelDeck = e.target.closest('.citta-panel .asst-card .act-link');
+      if (panelDeck) {
+        showToastMsg('Opening in Deck');
+        return;
+      }
+
+      const browseMenu = e.target.closest('.menu .browse');
+      if (browseMenu) {
+        setMenu(false);
+        showToastMsg('Browse digital twins');
+        return;
+      }
+    });
+
+    frame.querySelectorAll('.discover .interest').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (btn.textContent.trim() === '+') {
+          showToastMsg('Add interest topic');
+          return;
+        }
+        frame.querySelectorAll('.discover .interest').forEach((b) => {
+          const on = b === btn;
+          b.classList.toggle('on', on);
+          b.setAttribute('aria-pressed', String(on));
+        });
+        showToastMsg(`Discover · ${btn.textContent.trim()}`);
+      });
+    });
+
+    frame.querySelectorAll('.rail .r, .rail .p').forEach((el) => {
+      el.addEventListener('click', () => {
+        flashEl(el);
+        showToastMsg(`Rail · ${el.textContent.trim() || 'profile'}`);
+      });
+    });
+
+    frame.querySelectorAll('.citta-panel .ph .win').forEach((btn) => {
+      if (btn.id === 'cittaPanelClose') return;
+      btn.addEventListener('click', () => showToastMsg('Pop out Citta (prototype)'));
+    });
+
+    frame.querySelector('.citta-panel .ph .sw-sm')?.addEventListener('click', () => {
+      setMenu(true);
+      syncPresenter('open');
+    });
+
+    initDiscoverScroll();
+  }
+
+  function bindDiscoverScroll(track, next) {
+    if (!track || track.dataset.scrollBound) return;
+    track.dataset.scrollBound = '1';
+
+    const scrollStep = () => Math.max(220, Math.round(track.clientWidth * 0.72));
+
+    next?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      track.scrollBy({ left: scrollStep(), behavior: 'smooth' });
+    });
+
+    track.addEventListener('wheel', (e) => {
+      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+      track.scrollLeft += e.deltaY;
+      e.preventDefault();
+    }, { passive: false });
+
+    let drag = null;
+    track.addEventListener('pointerdown', (e) => {
+      if (e.target.closest('.addsi')) return;
+      drag = { x: e.clientX, left: track.scrollLeft, id: e.pointerId };
+      track.classList.add('is-dragging');
+      track.setPointerCapture(e.pointerId);
+    });
+    track.addEventListener('pointermove', (e) => {
+      if (!drag || drag.id !== e.pointerId) return;
+      track.scrollLeft = drag.left - (e.clientX - drag.x);
+    });
+    const endDrag = (e) => {
+      if (!drag || (e.pointerId !== undefined && drag.id !== e.pointerId)) return;
+      drag = null;
+      track.classList.remove('is-dragging');
+      try { track.releasePointerCapture(e.pointerId); } catch (_) {}
+    };
+    track.addEventListener('pointerup', endDrag);
+    track.addEventListener('pointercancel', endDrag);
+  }
+
+  function initDiscoverScroll() {
+    frame.querySelectorAll('.discover').forEach((sec) => {
+      bindDiscoverScroll(sec.querySelector('.hscroll'), sec.querySelector('.discover-next'));
+    });
+  }
+
+  function initToolInteractions() {
+    document.querySelectorAll('.week-cards').forEach((row) => {
+      row.addEventListener('click', (e) => {
+        const openBtn = e.target.closest('.go-link[data-action]');
+        if (openBtn) {
+          e.preventDefault();
+          const card = openBtn.closest('.week-card');
+          if (!card) return;
+          if (openBtn.dataset.action === 'try-citta') {
+            tryToolWithCitta(openBtn);
+            return;
+          }
+          openWeekTool(card, openBtn.dataset.action);
+          return;
+        }
+      });
+    });
+    document.querySelectorAll('.try-cards, .tutorial-try-cards').forEach((row) => {
+      row.addEventListener('click', (e) => {
+        const tryBtn = e.target.closest('.btn-citta, .try-it');
+        if (tryBtn) tryToolWithCitta(tryBtn);
+      });
+    });
+    document.querySelectorAll('[data-start-tutorial]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const step = parseInt(btn.dataset.step || '1', 10);
+        startTutorial({ step: Number.isFinite(step) ? step : 1 });
+      });
+    });
   }
 
   function onCoachPrimary(step) {
@@ -1069,14 +1681,19 @@
     document.querySelectorAll('.presenter [data-screen]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.screen === next)));
     const composerMode = next === 'tutorial' ? 'tutorial' : (next === 'handoff' ? 'handoff' : 'default');
     setComposerMode(composerMode);
+    if (next === 'welcome' || next === 'tutorial') setComposerToolSelection('doc');
+    const dockCount = dock.querySelector('.count');
+    if (dockCount) dockCount.textContent = next === 'welcome' ? '2' : '3';
     const wantTip = next === 'handoff' && (afterTutorial || showTip || postTutorialTipPending) && current === 'citta' && !newTipSeen;
     if (wantTip) {
       showPostTutorialTip();
     } else if (next !== 'handoff' || newTipSeen) {
       hidePostTutorialTip({ dismissed: false });
     }
-    if (next === 'tutorial') renderCoach();
-    else { coach.classList.remove('on'); frame.classList.remove('tutorial-on', 'dim'); document.querySelectorAll('.spot').forEach((el) => el.classList.remove('spot')); }
+    if (next === 'tutorial') {
+      renderCoach();
+      requestAnimationFrame(() => coach.scrollIntoView({ behavior: 'smooth', block: 'nearest' }));
+    } else { coach.classList.remove('on'); frame.classList.remove('tutorial-on', 'dim'); document.querySelectorAll('.spot').forEach((el) => el.classList.remove('spot')); }
     syncHash();
     fit();
   }
@@ -1100,6 +1717,10 @@
     if (target === 'handoff') {
       postTutorialTipPending = true;
       setScreen('handoff', { showTip: true });
+      return;
+    }
+    if (target === 'tutorial') {
+      startTutorial({ step: 1 });
       return;
     }
     postTutorialTipPending = false;
@@ -1145,9 +1766,12 @@
     scaler.parentElement.style.height = (frame.offsetHeight * s + 72) + 'px';
     positionNewTip();
     if (menu.classList.contains('open')) positionSwitcherMenu();
+    if (coach.classList.contains('on')) positionCoach();
   }
   window.addEventListener('resize', fit);
   initComposerTools();
+  initToolInteractions();
+  initFrameInteractions();
   setAI('citta', { announce: false });
   if (location.hash) readHash();
   else setScreen('home');
