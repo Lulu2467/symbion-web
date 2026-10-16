@@ -554,8 +554,9 @@
   .tutorial-doc-citta { width: 380px; flex: none; border-left: 1px solid var(--line); display: flex; flex-direction: column; background: #fff; position: relative; }
   .tutorial-doc-citta .ph { display: flex; align-items: center; gap: 10px; padding: 20px 21px 12px; flex: none; }
   .tutorial-doc-citta .ph b { font-size: 16px; font-weight: 600; }
-  .tutorial-doc-citta .doc-switch { margin-left: 4px; color: var(--green); display: inline-flex; align-items: center; padding: 4px; border-radius: 8px; border: 0; background: transparent; cursor: pointer; }
-  .tutorial-doc-citta .doc-switch.spot { box-shadow: 0 0 0 2px rgba(44,122,95,.35); border-radius: 10px; }
+  .tutorial-doc-citta .doc-switch { margin-left: 4px; color: var(--green); display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; padding: 0; border-radius: 8px; border: 0; background: transparent; cursor: pointer; }
+  /* Same solid-green highlight language as dialog primary buttons. */
+  .tutorial-doc-citta .doc-switch.spot { background: var(--green); color: #fff; box-shadow: 0 0 0 3px rgba(44,122,95,.18); border-radius: 10px; }
   .tutorial-doc-citta .msg { margin: 0 21px; padding: 15px 17px; background: var(--green-wash); border: 1px solid rgba(44,122,95,.12); border-radius: 14px; font-size: 13px; line-height: 1.45; color: var(--ink); }
   .tutorial-doc-citta .doc-prog { margin: 14px 21px 0; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
   .tutorial-doc-citta .doc-prog span { display: block; height: 6px; width: 60%; background: var(--green); border-radius: 3px; }
@@ -574,7 +575,7 @@
   .tutorial-doc-switcher .badge { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 999px; background: var(--green-tint); color: var(--green-dark); }
   .tutorial-doc-switcher .foot { font-size: 11px; color: var(--muted); padding: 8px 8px 4px; line-height: 1.4; border-top: 1px solid var(--line); margin-top: 6px; }
   .proto-rule { flex: none; margin: 0 170px 24px; padding: 8px 14px; border-radius: 8px; background: var(--amber-tint); border: 1px solid rgba(154,91,7,.15); font-size: 12px; color: var(--amber); }
-  .coach.switch-coach { width: min(360px, calc(100vw - 48px)); padding: 18px 20px; }
+  .coach.switch-coach { width: min(360px, calc(100% - 80px)); max-width: calc(100% - 80px); padding: 18px 20px; box-sizing: border-box; }
   .coach .step-pill.new-pill { background: var(--green-tint); color: var(--green-dark); letter-spacing: .04em; }
   #tutorialTrySpot { display: flex; flex-direction: column; gap: 10px; }
   .tutorial-spot-target { position: relative; z-index: 14; }
@@ -1777,6 +1778,9 @@
       clearTutorialSpotlight();
     });
     sec.addEventListener('click', () => finishTutorialDocToTryTools());
+    // Highlight the swap control while the NEW coach is up (same solid green as dialog primary).
+    const sw = $('tutorialDocSwitch');
+    sw?.classList.add('spot');
     coach.classList.toggle('on', screen === 'tutorial');
     positionCoach();
     fit();
@@ -1881,8 +1885,14 @@
       const sw = $('tutorialDocSwitch');
       if (sw) {
         const t = frameRectOffset(sw);
+        const coachW = Math.min(360, frame.offsetWidth - pad * 2);
+        // Anchor under the switch, but keep the full card inside the frame (no right clip).
+        let left = t.right - coachW;
+        if (left < pad) left = pad;
+        const maxLeft = frame.offsetWidth - coachW - pad;
         coach.style.top = `${t.bottom + 12}px`;
-        coach.style.left = `${Math.max(pad, t.left - 40)}px`;
+        coach.style.left = `${Math.min(left, maxLeft)}px`;
+        coach.style.width = `${coachW}px`;
       }
     } else if (step.spot === 'composer') {
       const c = frameRectOffset(composer);
@@ -1905,7 +1915,7 @@
       coach.style.bottom = '120px';
     }
 
-    // Keep the card inside the frame when it would overflow the bottom.
+    // Keep the card inside the frame (bottom + right).
     const fr = frame.getBoundingClientRect();
     const ch = coach.getBoundingClientRect();
     const s = fr.width / frame.offsetWidth || 1;
@@ -1913,6 +1923,11 @@
       const overflow = (ch.bottom - fr.bottom + 24) / s;
       const curTop = parseFloat(coach.style.top);
       if (Number.isFinite(curTop)) coach.style.top = `${Math.max(48, curTop - overflow)}px`;
+    }
+    if (ch.right > fr.right - 8) {
+      const overflowX = (ch.right - fr.right + 16) / s;
+      const curLeft = parseFloat(coach.style.left);
+      if (Number.isFinite(curLeft)) coach.style.left = `${Math.max(pad, curLeft - overflowX)}px`;
     }
   }
 
