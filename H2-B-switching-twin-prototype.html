@@ -421,15 +421,16 @@
   .activity.cosmos-compact .cosmos-see { align-self: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--ink); cursor: pointer; }
   .activity.cosmos-compact .cosmos-see:hover { border-color: var(--green); background: var(--green-wash); }
 
-  .tip-scrim { position: fixed; inset: 0; background: rgba(28,31,29,.55); z-index: 1000; display: none; pointer-events: auto; }
+  /* Overlay stack: scrim under dialog. Keep both outside .scaler (transform traps fixed). */
+  .tip-scrim { position: fixed; inset: 0; background: rgba(28,31,29,.48); z-index: 10000; display: none; pointer-events: auto; }
   .tip-scrim.on { display: block; }
-  .new-tip { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(360px, calc(100vw - 48px)); background: var(--green-dark); color: #fff; border-radius: 16px; padding: 20px 22px; font-size: 13px; line-height: 1.45; box-shadow: 0 24px 56px rgba(0,0,0,.35); z-index: 1001; display: none; pointer-events: auto; }
+  .new-tip { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(360px, calc(100vw - 48px)); background: #247a5c; color: #fff; border-radius: 16px; padding: 20px 22px; font-size: 13px; line-height: 1.45; box-shadow: 0 0 0 1px rgba(255,255,255,.14), 0 28px 64px rgba(0,0,0,.45); z-index: 10010; display: none; pointer-events: auto; isolation: isolate; }
   .new-tip.show { display: block; }
-  .new-tip .k { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .06em; background: rgba(255,255,255,.15); padding: 2px 6px; border-radius: 4px; margin-bottom: 8px; }
+  .new-tip .k { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .06em; background: rgba(255,255,255,.22); padding: 2px 6px; border-radius: 4px; margin-bottom: 8px; }
   .new-tip h4 { margin: 0 0 6px; font-size: 16px; font-weight: 600; line-height: 1.35; }
-  .new-tip .body { margin: 0; opacity: .95; }
+  .new-tip .body { margin: 0; opacity: 1; }
   .frame.post-tip-on .picker { position: relative; z-index: 37; box-shadow: 0 0 0 3px rgba(44,122,95,.45); }
-  .frame.post-tip-on .menu.open { z-index: 1002; }
+  .frame.post-tip-on .menu.open { z-index: 10020; }
   .new-tip .acts { display: flex; gap: 8px; margin-top: 12px; }
   .new-tip .acts button { font-size: 12px; font-weight: 600; padding: 8px 12px; border-radius: 8px; }
   .new-tip .acts .pri { background: #fff; color: var(--green-dark); }
@@ -484,10 +485,10 @@
   .citta-input:focus { outline: none; }
   .citta-panel .ask-row .send { width: 36px; height: 36px; border-radius: 10px; }
 
-  .coach-scrim { position: fixed; inset: 0; background: rgba(28,31,29,.55); z-index: 1000; display: none; pointer-events: auto; }
+  .coach-scrim { position: fixed; inset: 0; background: rgba(28,31,29,.48); z-index: 10000; display: none; pointer-events: auto; }
   .coach-scrim.on { display: block; }
   .frame:has(.coach-scrim.on) .tutorial-spotlight { display: none !important; }
-  .coach { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(400px, calc(100vw - 48px)); max-width: calc(100vw - 48px); max-height: calc(100vh - 64px); overflow: auto; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; box-shadow: 0 24px 56px rgba(28,31,29,.35); z-index: 1001; display: none; line-height: 1.45; pointer-events: auto; }
+  .coach { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(400px, calc(100vw - 48px)); max-width: calc(100vw - 48px); max-height: calc(100vh - 64px); overflow: auto; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; box-shadow: 0 0 0 1px rgba(255,255,255,.6), 0 28px 64px rgba(28,31,29,.4); z-index: 10010; display: none; line-height: 1.45; pointer-events: auto; isolation: isolate; }
   .coach.wide { width: min(440px, calc(100vw - 48px)); padding: 22px 24px; }
   .coach.on { display: block; }
   .coach .coach-who { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; font-size: 12px; font-weight: 500; color: var(--muted); }
@@ -1504,6 +1505,10 @@
   function showPostTutorialTip() {
     if (newTipSeen || screen !== 'handoff' || current !== 'citta') return;
     postTutorialTipPending = true;
+    // Scrim first, tip last — tip must paint above the gray overlay.
+    const scrim = $('tipScrim');
+    if (scrim) document.body.appendChild(scrim);
+    document.body.appendChild(newTip);
     newTip.hidden = false;
     newTip.classList.add('show');
     setTipScrim(true);
@@ -1737,6 +1742,10 @@
   function setCoachScrim(on) {
     const scrim = $('coachScrim');
     if (!scrim) return;
+    if (on) {
+      document.body.appendChild(scrim);
+      document.body.appendChild(coach);
+    }
     scrim.classList.toggle('on', on);
     scrim.setAttribute('aria-hidden', String(!on));
   }
