@@ -421,14 +421,13 @@
   .activity.cosmos-compact .cosmos-see { align-self: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--ink); cursor: pointer; }
   .activity.cosmos-compact .cosmos-see:hover { border-color: var(--green); background: var(--green-wash); }
 
-  .new-tip { position: absolute; left: 0; top: 0; width: min(320px, calc(100% - 56px)); background: var(--green-dark); color: #fff; border-radius: 14px; padding: 14px 16px; font-size: 13px; line-height: 1.45; box-shadow: 0 12px 28px rgba(0,0,0,.18); z-index: 35; display: none; pointer-events: auto; }
+  .new-tip { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(360px, calc(100% - 48px)); background: var(--green-dark); color: #fff; border-radius: 16px; padding: 20px 22px; font-size: 13px; line-height: 1.45; box-shadow: 0 20px 48px rgba(0,0,0,.28); z-index: 36; display: none; pointer-events: auto; }
   .new-tip.show { display: block; }
-  .new-tip::before { content: ""; position: absolute; top: -6px; left: var(--tip-arrow-x, 40px); width: 12px; height: 12px; background: var(--green-dark); transform: rotate(45deg); border-radius: 2px; }
   .new-tip .k { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .06em; background: rgba(255,255,255,.15); padding: 2px 6px; border-radius: 4px; margin-bottom: 8px; }
-  .new-tip h4 { margin: 0 0 6px; font-size: 15px; font-weight: 600; line-height: 1.35; }
+  .new-tip h4 { margin: 0 0 6px; font-size: 16px; font-weight: 600; line-height: 1.35; }
   .new-tip .body { margin: 0; opacity: .95; }
-  .frame.post-tip-on.dim-handoff::after { content: ""; position: absolute; inset: 41px 0 0; background: rgba(28,31,29,.22); pointer-events: none; z-index: 13; }
-  .frame.post-tip-on .picker { position: relative; z-index: 36; box-shadow: 0 0 0 3px rgba(44,122,95,.45); }
+  .frame.post-tip-on.dim-handoff::after { content: ""; position: absolute; inset: 0; background: rgba(28,31,29,.45); pointer-events: auto; z-index: 34; }
+  .frame.post-tip-on .picker { position: relative; z-index: 37; box-shadow: 0 0 0 3px rgba(44,122,95,.45); }
   .frame.post-tip-on .menu.open { z-index: 42; }
   .new-tip .acts { display: flex; gap: 8px; margin-top: 12px; }
   .new-tip .acts button { font-size: 12px; font-weight: 600; padding: 8px 12px; border-radius: 8px; }
@@ -484,9 +483,12 @@
   .citta-input:focus { outline: none; }
   .citta-panel .ask-row .send { width: 36px; height: 36px; border-radius: 10px; }
 
-  .coach { position: absolute; left: 48px; bottom: 120px; width: 340px; max-width: calc(100% - 96px); background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; box-shadow: 0 16px 40px rgba(28,31,29,.12); z-index: 30; display: none; line-height: 1.45; pointer-events: auto; }
-  .coach.wide { width: 400px; max-width: calc(100% - 80px); padding: 20px 22px; }
+  .coach-scrim { position: absolute; inset: 0; background: rgba(28,31,29,.45); z-index: 28; display: none; pointer-events: auto; }
+  .coach-scrim.on { display: block; }
+  .coach { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(400px, calc(100% - 48px)); max-width: calc(100% - 48px); max-height: calc(100% - 64px); overflow: auto; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; box-shadow: 0 20px 48px rgba(28,31,29,.22); z-index: 30; display: none; line-height: 1.45; pointer-events: auto; }
+  .coach.wide { width: min(440px, calc(100% - 48px)); padding: 22px 24px; }
   .coach.on { display: block; }
+  .frame.tutorial-on .tutorial-spotlight { opacity: .9; z-index: 29; }
   .coach .coach-who { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; font-size: 12px; font-weight: 500; color: var(--muted); }
   .coach .coach-who .av { width: 28px; height: 28px; border-radius: 14px; background: var(--green-tint); color: var(--green-dark); font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex: none; overflow: hidden; }
   .coach .coach-who .av.citta-portrait { background: transparent; border-radius: 10px; padding: 0; }
@@ -554,7 +556,7 @@
   .tutorial-doc-switcher .badge { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 999px; background: var(--green-tint); color: var(--green-dark); }
   .tutorial-doc-switcher .foot { font-size: 11px; color: var(--muted); padding: 8px 8px 4px; line-height: 1.4; border-top: 1px solid var(--line); margin-top: 6px; }
   .proto-rule { flex: none; margin: 0 170px 24px; padding: 8px 14px; border-radius: 8px; background: var(--amber-tint); border: 1px solid rgba(154,91,7,.15); font-size: 12px; color: var(--amber); }
-  .coach.switch-coach { width: 332px; padding: 14px 16px; z-index: 32; }
+  .coach.switch-coach { width: min(360px, calc(100% - 48px)); padding: 18px 20px; z-index: 32; }
   .coach .step-pill.new-pill { background: var(--green-tint); color: var(--green-dark); letter-spacing: .04em; }
   #tutorialTrySpot { display: flex; flex-direction: column; gap: 10px; }
   .tutorial-spot-target { position: relative; z-index: 14; }
@@ -1221,8 +1223,9 @@
       </aside>
 
       <div class="tutorial-spotlight" id="tutorialSpotlight" aria-hidden="true"></div>
+      <div class="coach-scrim" id="coachScrim" hidden></div>
 
-      <div class="coach" id="coach" role="dialog" aria-live="polite">
+      <div class="coach" id="coach" role="dialog" aria-modal="true" aria-live="polite">
         <div class="coach-who" id="coachWho" hidden><span class="av" id="coachAv" aria-hidden="true"><span class="spark-icon"></span></span><span id="coachWhoText">Citta · your assistant in Symbion</span></div>
         <span class="step-pill" id="coachStep">Step 1 of 4</span>
         <h4 id="coachTitle">Let’s make your first thing together.</h4>
@@ -1473,15 +1476,11 @@
   }
 
   function positionNewTip() {
-    if (!newTip.classList.contains('show')) return;
-    const topPad = 26;
-    const leftPad = pageGutterPx();
-    const working = picker.closest('.working');
-    newTip.style.top = `${topPad + working.offsetTop + picker.offsetTop + picker.offsetHeight + 12}px`;
-    newTip.style.left = `${leftPad + picker.offsetLeft}px`;
-    const switchIcon = picker.querySelector('svg');
-    const iconLeft = switchIcon ? switchIcon.offsetLeft + switchIcon.offsetWidth / 2 : picker.offsetWidth - 14;
-    newTip.style.setProperty('--tip-arrow-x', `${Math.max(16, iconLeft - 6)}px`);
+    // Centered modal — CSS handles placement; clear any legacy offsets.
+    if (!newTip) return;
+    newTip.style.top = '';
+    newTip.style.left = '';
+    newTip.style.removeProperty('--tip-arrow-x');
   }
 
   function hidePostTutorialTip({ dismissed = true } = {}) {
@@ -1652,6 +1651,7 @@
       sw?.classList.add('spot');
       sw?.setAttribute('aria-expanded', 'true');
       coach.classList.remove('on');
+      setCoachScrim(false);
       clearTutorialSpotlight();
     });
     sec.addEventListener('click', () => finishTutorialDocToTryTools());
@@ -1724,48 +1724,21 @@
     return { top: r.top - fr.top, left: r.left - fr.left, bottom: r.bottom - fr.top, right: r.right - fr.left };
   }
 
+  function setCoachScrim(on) {
+    const scrim = $('coachScrim');
+    if (!scrim) return;
+    scrim.classList.toggle('on', on);
+    scrim.hidden = !on;
+  }
+
   function positionCoach() {
-    if (screen !== 'tutorial' || !coach.classList.contains('on')) return;
-    const step = TUTORIAL_STEPS[tutorialStep - 1];
-    const pad = pageGutterPx();
-    coach.style.bottom = 'auto';
+    // Centered modal with gray scrim — CSS handles placement.
+    const on = coach.classList.contains('on');
+    setCoachScrim(on);
     coach.style.top = '';
-    coach.style.left = `${pad}px`;
+    coach.style.left = '';
+    coach.style.bottom = '';
     coach.style.maxHeight = '';
-    if (tutorialDocPhase === 'doc') {
-      const sw = $('tutorialDocSwitch');
-      if (sw) {
-        const t = frameRectOffset(sw);
-        coach.style.top = `${t.bottom + 12}px`;
-        coach.style.left = `${Math.max(pad, t.left - 40)}px`;
-      }
-    } else if (step.spot === 'composer') {
-      const c = frameRectOffset(composer);
-      coach.style.top = `${c.bottom + 20}px`;
-      coach.style.left = `${Math.max(pad, c.left)}px`;
-    } else if (step.spot === 'try') {
-      const el = getTrySpotElement();
-      if (el) {
-        const t = frameRectOffset(el);
-        coach.style.top = `${Math.min(t.bottom + 16, frame.offsetHeight - 200)}px`;
-        coach.style.left = `${Math.max(pad, t.left)}px`;
-      }
-    } else if (step.spot === 'picker') {
-      const c = frameRectOffset(composer);
-      const p = frameRectOffset(picker);
-      coach.style.top = `${c.top + 80}px`;
-      coach.style.left = `${Math.max(pad, p.left)}px`;
-    } else {
-      coach.style.top = 'auto';
-      coach.style.bottom = '120px';
-    }
-    const fr = frame.getBoundingClientRect();
-    const ch = coach.getBoundingClientRect();
-    if (ch.bottom > fr.bottom - 8) {
-      const overflow = ch.bottom - fr.bottom + 24;
-      const curTop = parseFloat(coach.style.top);
-      if (Number.isFinite(curTop)) coach.style.top = `${Math.max(48, curTop - overflow)}px`;
-    }
   }
 
   function syncTutorialNav() {
@@ -2208,12 +2181,10 @@
     }
     if (next === 'tutorial') {
       renderCoach();
-      requestAnimationFrame(() => {
-        positionCoach();
-        coach.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      });
+      requestAnimationFrame(() => positionCoach());
     } else {
       coach.classList.remove('on', 'switch-coach');
+      setCoachScrim(false);
       frame.classList.remove('tutorial-on', 'dim');
       clearTutorialSpotlight();
       exitTutorialDoc();
