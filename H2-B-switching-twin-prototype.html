@@ -480,10 +480,9 @@
   .citta-panel .ask-row .plus:hover { background: var(--surface); color: var(--ink); }
   .citta-panel .ask-row .plus:active { transform: scale(.96); }
   .citta-input { flex: 1; min-width: 0; font-size: 13px; line-height: 1.45; color: var(--ink); background: transparent; border: 0; padding: 0; margin: 0; resize: none; font-family: inherit; min-height: 1.45em; overflow: hidden; text-align: left; }
-  .citta-input:placeholder-shown { text-align: center; }
-  .citta-input::placeholder { color: var(--placeholder); text-align: center; }
+  .citta-input::placeholder { color: var(--placeholder); text-align: left; }
   .citta-input:focus { outline: none; }
-  .citta-panel .ask-row .send { width: 36px; height: 36px; border-radius: 10px; }
+  .citta-panel .ask-row .send { width: 36px; height: 36px; border-radius: 10px; margin-left: auto; flex: none; }
 
   .coach-scrim { position: fixed; inset: 0; background: rgba(28,31,29,.48); z-index: 10000; display: none; pointer-events: auto; }
   .coach-scrim.on { display: block; }
@@ -2498,6 +2497,18 @@
     if (e.key !== 'Enter' || e.shiftKey) return;
     e.preventDefault();
     sendFromCittaPanel(document.querySelector('.citta-panel .send'));
+  });
+  // Direct bind so send still works if a parent stops bubbling.
+  document.querySelector('.citta-panel .send')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    sendFromCittaPanel(e.currentTarget);
+  });
+  document.querySelectorAll('.citta-panel .suggest button').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setCittaDraft(btn.textContent.trim());
+      sendFromCittaPanel(btn);
+    });
   });
   setAI('citta', { announce: false });
   if (location.hash) readHash();
