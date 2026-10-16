@@ -1313,14 +1313,79 @@
     resizeTextarea(el);
   }
   function sendFromComposer(flashTarget) {
+    const input = $('composerInput');
+    const text = (input?.value || '').trim();
     setCittaExpanded(true);
+    if (text) {
+      setCittaDraft(text);
+      if (input) { input.value = ''; resizeTextarea(input); }
+      sendFromCittaPanel(flashTarget || document.querySelector('.composer .send'));
+      return;
+    }
     flashEl(flashTarget || document.querySelector('.composer .send'));
     showToastMsg('Sent to Citta (prototype)');
   }
+
+  function cittaReplyFor(text) {
+    const t = text.toLowerCase();
+    if (t.includes('elaborate') || t.includes('deck editor')) {
+      return {
+        html: 'Opening the deck editor with speaker notes expanded on slides 1–3. You can edit anything before I keep going.',
+        link: 'Open in Deck',
+      };
+    }
+    if (t.includes('lab 3') || t.includes('trends') || t.includes('slides')) {
+      return {
+        html: 'I’ll turn Lab 3 trends into a 6-slide deck with a chart on slide 2. Drafting now…',
+        link: 'Open in Deck',
+      };
+    }
+    return {
+      html: `Got it — working on “${text.length > 72 ? `${text.slice(0, 72)}…` : text}”. I’ll keep the file open so you can edit as I go.`,
+      link: null,
+    };
+  }
+
   function sendFromCittaPanel(flashTarget) {
+    const input = $('cittaInput');
+    const scroll = document.querySelector('.citta-panel .citta-scroll');
+    const text = (input?.value || '').trim();
     setCittaExpanded(true);
     flashEl(flashTarget || document.querySelector('.citta-panel .send'));
-    showToastMsg('Sent to Citta (prototype)');
+    if (!text || !scroll) {
+      showToastMsg(text ? 'Sent to Citta (prototype)' : 'Type a message first');
+      return;
+    }
+
+    const user = document.createElement('div');
+    user.className = 'user-bubble';
+    user.textContent = text;
+    scroll.appendChild(user);
+
+    if (input) {
+      input.value = '';
+      resizeTextarea(input);
+    }
+
+    const reply = cittaReplyFor(text);
+    const asst = document.createElement('div');
+    asst.className = 'asst-card';
+    asst.textContent = reply.html;
+    if (reply.link) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'act-link';
+      btn.innerHTML = `${reply.link}<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span>`;
+      asst.appendChild(btn);
+    }
+    // Brief beat so send feels like a turn, not instant paint.
+    setTimeout(() => {
+      scroll.appendChild(asst);
+      scroll.scrollTop = scroll.scrollHeight;
+    }, 220);
+
+    scroll.scrollTop = scroll.scrollHeight;
+    showToastMsg('Sent to Citta');
   }
 
   function setAI(key, { announce = true } = {}) {
@@ -2429,6 +2494,11 @@
   composerInputEl?.addEventListener('input', () => resizeTextarea(composerInputEl));
   const cittaInputEl = $('cittaInput');
   cittaInputEl?.addEventListener('input', () => resizeTextarea(cittaInputEl));
+  cittaInputEl?.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' || e.shiftKey) return;
+    e.preventDefault();
+    sendFromCittaPanel(document.querySelector('.citta-panel .send'));
+  });
   setAI('citta', { announce: false });
   if (location.hash) readHash();
   else setScreen('home');
