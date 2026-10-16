@@ -500,11 +500,12 @@
   .citta-input:focus { outline: none; }
   .citta-panel .ask-row .send { width: 36px; height: 36px; border-radius: 10px; margin-left: auto; flex: none; }
 
-  /* Tutorial dim = spotlight cutout inside the frame (not a viewport-wide scrim). */
-  .coach-scrim { position: absolute; inset: 0; background: rgba(28,31,29,.28); z-index: 12; display: none; pointer-events: none; }
-  .coach-scrim.on { display: block; }
+  /* Spotlight steps: cutout dim. Final step: full-frame gray + centered modal. */
+  .coach-scrim { position: absolute; inset: 0; background: rgba(28,31,29,.48); z-index: 14; display: none; pointer-events: none; }
+  .coach-scrim.on { display: block; pointer-events: auto; }
   .coach { position: absolute; left: 56px; top: 200px; transform: none; width: min(400px, calc(100% - 112px)); max-width: calc(100% - 112px); max-height: none; overflow: visible; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; box-shadow: 0 16px 40px rgba(28,31,29,.18); z-index: 15; display: none; line-height: 1.45; pointer-events: auto; }
   .coach.wide { width: min(440px, calc(100% - 112px)); padding: 22px 24px; }
+  .coach.centered { left: 50%; top: 50%; right: auto; bottom: auto; transform: translate(-50%, -50%); width: min(400px, calc(100% - 80px)); max-width: calc(100% - 80px); box-shadow: 0 0 0 1px rgba(255,255,255,.6), 0 28px 64px rgba(28,31,29,.35); z-index: 16; }
   .coach.on { display: block; }
   .coach .coach-who { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; font-size: 12px; font-weight: 500; color: var(--muted); }
   .coach .coach-who .av { width: 28px; height: 28px; border-radius: 14px; background: var(--green-tint); color: var(--green-dark); font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex: none; overflow: hidden; }
@@ -1568,6 +1569,7 @@
       title: 'You’re set.',
       body: 'Your first summary lands in Doc and appears under Continue with on your next visit.',
       spot: '',
+      center: true,
       primary: 'Finish tutorial',
       secondary: 'Back to home',
     },
@@ -1858,30 +1860,50 @@
   }
 
   function setCoachScrim(on) {
-    // Tutorial uses spotlight cutout for dim — never a full-viewport gray sheet.
     const scrim = $('coachScrim');
     if (!scrim) return;
-    scrim.classList.remove('on');
-    scrim.setAttribute('aria-hidden', 'true');
+    scrim.classList.toggle('on', !!on);
+    scrim.setAttribute('aria-hidden', String(!on));
   }
 
   function positionCoach() {
     if (!coach.classList.contains('on')) {
       setCoachScrim(false);
+      coach.classList.remove('centered');
       return;
     }
-    setCoachScrim(false);
-    if (screen !== 'tutorial') return;
+    if (screen !== 'tutorial') {
+      setCoachScrim(false);
+      coach.classList.remove('centered');
+      return;
+    }
 
     const step = TUTORIAL_STEPS[tutorialStep - 1] || {};
     const pad = pageGutterPx();
+    const isSwitch = tutorialDocPhase === 'doc' || tutorialDocPhase === 'switch-open' || coach.classList.contains('switch-coach');
+    // Final step: centered modal + gray frame scrim (no spotlight target).
+    const centerModal = !isSwitch && (!!step.center || !step.spot);
+
     coach.style.bottom = 'auto';
     coach.style.top = '';
-    coach.style.left = `${pad}px`;
+    coach.style.left = '';
+    coach.style.width = '';
     coach.style.maxHeight = '';
+    coach.style.transform = '';
+
+    if (centerModal) {
+      coach.classList.add('centered');
+      clearTutorialSpotlight();
+      setCoachScrim(true);
+      return;
+    }
+
+    coach.classList.remove('centered');
+    setCoachScrim(false);
+    coach.style.left = `${pad}px`;
     coach.style.transform = 'none';
 
-    if (tutorialDocPhase === 'doc' || tutorialDocPhase === 'switch-open' || coach.classList.contains('switch-coach')) {
+    if (isSwitch) {
       const sw = $('tutorialDocSwitch');
       if (sw) {
         const t = frameRectOffset(sw);
@@ -1910,9 +1932,6 @@
       const p = frameRectOffset(picker);
       coach.style.top = `${c.top + 80}px`;
       coach.style.left = `${Math.max(pad, p.left)}px`;
-    } else {
-      coach.style.top = 'auto';
-      coach.style.bottom = '120px';
     }
 
     // Keep the card inside the frame (bottom + right).
