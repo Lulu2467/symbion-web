@@ -228,10 +228,10 @@
   .chip .ic.ico-report svg { width: 16px; height: 16px; transform: scale(1.08); transform-origin: center; }
   .chip .ar { font-weight: 600; }
   .chip b { font-weight: 600; }
-  .pct { display: inline-flex; gap: 5px; align-items: center; background: var(--green-tint); border-radius: 999px; padding: 2px 7px 2px 6px; font-size: 11px; font-weight: 600; color: var(--green-dark); }
-  .pct .bar { width: 22px; height: 4px; border-radius: 2px; background: #fff; overflow: hidden; }
-  .pct .bar span { display: block; height: 4px; background: var(--green); border-radius: 2px; }
-  .pct.done { background: var(--green-tint); color: var(--green-dark); }
+  .pct { display: inline-flex; gap: 5px; align-items: center; background: linear-gradient(90deg, #d4ebe0 0%, #e6f2eb 55%, #f0f7f3 100%); border-radius: 999px; padding: 2px 7px 2px 6px; font-size: 11px; font-weight: 600; color: var(--green-dark); }
+  .pct .bar { width: 22px; height: 4px; border-radius: 2px; background: rgba(255,255,255,.85); overflow: hidden; }
+  .pct .bar span { display: block; height: 4px; background: linear-gradient(90deg, #7ab89a, var(--green)); border-radius: 2px; }
+  .pct.done { background: linear-gradient(90deg, #cfe8da 0%, #e6f2eb 100%); color: var(--green-dark); }
 
   /* Switcher menu */
   .menu { position: absolute; left: 134px; top: 66px; width: 300px; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 8px; display: flex; flex-direction: column; gap: 2px; box-shadow: 0 12px 16px rgba(0,0,0,.14); z-index: 30; opacity: 0; transform: translateY(-4px); pointer-events: none; transition: opacity .14s, transform .14s; }
