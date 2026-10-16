@@ -144,6 +144,8 @@
   .stack span { width: 24px; height: 24px; border-radius: 12px; border: 2px solid #fff; background: var(--surface-2); color: var(--muted); font-size: 8.64px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; margin-right: -6px; }
   .stack span.agent { background: var(--amber-tint); color: var(--amber); border-radius: 7px; margin-right: 0; }
   .link { color: var(--green); font-weight: 500; cursor: pointer; }
+  #backToCitta { display: inline-flex; align-items: center; gap: 6px; }
+  #backToCitta .spark-icon { width: 12px; height: 12px; color: var(--green); }
   .link:hover { text-decoration: underline; text-underline-offset: 2px; }
   .sec .act { cursor: pointer; }
   .sec .act:hover { text-decoration: underline; }
@@ -233,6 +235,9 @@
   .menu .item[aria-checked="true"]:focus-visible { background: var(--green-tint); }
   .menu .item .mav { width: 32px; height: 32px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: var(--muted); flex: none; }
   .menu .item .mav.citta { background: var(--green-tint); border-color: transparent; color: var(--green); }
+  .menu .item .mav.citta .spark-icon { width: 14px; height: 14px; color: var(--green); }
+  .tutorial-doc-switcher .si-row .av .spark-icon { width: 12px; height: 12px; color: var(--green); }
+  .coach .coach-who .av .spark-icon { width: 12px; height: 12px; color: var(--green); }
   .menu .item .mav.agent { background: var(--amber-tint); color: var(--amber); border-radius: 8px; }
   .menu .item .tx { flex: 1; display: flex; flex-direction: column; }
   .menu .item .tx b { font-size: 13px; font-weight: 600; }
@@ -406,7 +411,8 @@
   .pick-card .col { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
   .pick-card .t { font-size: 15px; font-weight: 400; color: var(--ink); }
   .pick-card .meta { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; font-size: 12px; color: var(--faint); }
-  .pick-card .btn { background: var(--green-tint); border: none; border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--green-dark); white-space: pre; flex: none; }
+  .pick-card .btn { display: inline-flex; align-items: center; gap: 6px; background: var(--green-tint); border: none; border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--green-dark); white-space: nowrap; flex: none; }
+  .pick-card .btn .spark-icon { width: 12px; height: 12px; color: var(--green-dark); }
   .activity.cosmos-compact { border: 1px solid var(--line); border-radius: 16px; padding: 20px; gap: 12px; background: #fff; }
   .activity.cosmos-compact > p { margin: 0; font-size: 13px; line-height: 1.4; color: var(--muted); }
   .activity.cosmos-compact .cosmos-see { align-self: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--ink); cursor: pointer; }
@@ -813,7 +819,7 @@
                   </span>
                   <span id="whenTwin" style="display:none">
                     <span class="faint">·</span>
-                    <button type="button" class="link" id="backToCitta">≋ Back to Citta</button>
+                    <button type="button" class="link" id="backToCitta"><span class="spark-icon" aria-hidden="true"></span>Back to Citta</button>
                   </span>
                 </div>
 
@@ -874,7 +880,7 @@
               <div class="menu" id="menu" role="menu" aria-label="Work with">
                 <div class="hd">WORK WITH · switch anytime</div>
                 <button type="button" class="item" role="menuitemradio" data-ai="citta" aria-checked="true">
-                  <span class="mav citta">≋</span><span class="tx"><b>Citta</b><small>Default · works in every tool</small></span><span class="ck">✓</span>
+                  <span class="mav citta"><span class="spark-icon" aria-hidden="true"></span></span><span class="tx"><b>Citta</b><small>Default · works in every tool</small></span><span class="ck">✓</span>
                 </button>
                 <button type="button" class="item" role="menuitemradio" data-ai="roland" aria-checked="false">
                   <span class="mav">GR</span><span class="tx"><b>Prof. Roland’s twin</b><small>✦ Heavy-ion physics · your course</small></span><span class="ck">✓</span>
@@ -1017,9 +1023,9 @@
                 <div class="hdr">
                   <h3>Pick up where you left off</h3>
                 </div>
-                <div class="pick-card"><span class="tag">Missed</span><div class="col"><span class="t">Reading report was due Tuesday</span><span class="meta"><span class="badge course">Course · Prof. Roland</span>820 / 1,500 words · extension request?</span></div><button type="button" class="btn">≋  Finish it with Citta</button></div>
-                <div class="pick-card"><span class="tag">Missed</span><div class="col"><span class="t">Lectures 6 and 7</span><span class="meta"><span class="badge course">Course · Prof. Roland</span>2 lectures · 1h 40m</span></div><button type="button" class="btn">≋  Make catch-up notes</button></div>
-                <div class="pick-card"><span class="tag today">Today</span><div class="col"><span class="t">Reply to Prof. Roland (sent 8 days ago)</span><span class="meta"><span class="badge email">Email</span></span></div><button type="button" class="btn">≋  Draft reply</button></div>
+                <div class="pick-card"><span class="tag">Missed</span><div class="col"><span class="t">Reading report was due Tuesday</span><span class="meta"><span class="badge course">Course · Prof. Roland</span>820 / 1,500 words · extension request?</span></div><button type="button" class="btn" data-spark-label="Finish it with Citta"></button></div>
+                <div class="pick-card"><span class="tag">Missed</span><div class="col"><span class="t">Lectures 6 and 7</span><span class="meta"><span class="badge course">Course · Prof. Roland</span>2 lectures · 1h 40m</span></div><button type="button" class="btn" data-spark-label="Make catch-up notes"></button></div>
+                <div class="pick-card"><span class="tag today">Today</span><div class="col"><span class="t">Reply to Prof. Roland (sent 8 days ago)</span><span class="meta"><span class="badge email">Email</span></span></div><button type="button" class="btn" data-spark-label="Draft reply"></button></div>
               </section>
 
               <section class="two">
@@ -1078,11 +1084,11 @@
                 <div id="tutorialTrySpot">
                 <div class="hdr"><h3>Try each tool with Citta</h3><span class="sub">1 minute each · uses Prof. Roland’s course material</span></div>
                 <div class="tutorial-try-cards" id="tutorialTryCards">
-                  <div class="tutorial-try-card" data-tool="doc"><div class="trow"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></div><p class="lead">Lecture 1 → one-page summary</p><p class="sub">A Doc with headings + key formulas</p><button type="button" class="try-it">≋ Try it</button></div>
-                  <div class="tutorial-try-card" data-tool="deck"><div class="trow"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></div><p class="lead">Lecture 1 → 6 study slides</p><p class="sub">A Deck you can present or revise</p><button type="button" class="try-it">≋ Try it</button></div>
-                  <div class="tutorial-try-card" data-tool="numbers"><div class="trow"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></div><p class="lead">Plot the sPHENIX sample data</p><p class="sub">A sheet + chart, explained</p><button type="button" class="try-it">≋ Try it</button></div>
-                  <div class="tutorial-try-card" data-tool="symtex"><div class="trow"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></div><p class="lead">Typeset the Bjorken energy formula</p><p class="sub">Clean LaTeX you can reuse</p><button type="button" class="try-it">≋ Try it</button></div>
-                  <div class="tutorial-try-card" data-tool="code"><div class="trow"><i style="background:var(--slate-tint);color:var(--slate);font-size:10px">&lt;/&gt;</i><b>Code</b></div><p class="lead">Run a tiny particle simulation</p><p class="sub">A Python notebook, commented</p><button type="button" class="try-it">≋ Try it</button></div>
+                  <div class="tutorial-try-card" data-tool="doc"><div class="trow"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></div><p class="lead">Lecture 1 → one-page summary</p><p class="sub">A Doc with headings + key formulas</p><button type="button" class="try-it">Try it</button></div>
+                  <div class="tutorial-try-card" data-tool="deck"><div class="trow"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></div><p class="lead">Lecture 1 → 6 study slides</p><p class="sub">A Deck you can present or revise</p><button type="button" class="try-it">Try it</button></div>
+                  <div class="tutorial-try-card" data-tool="numbers"><div class="trow"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></div><p class="lead">Plot the sPHENIX sample data</p><p class="sub">A sheet + chart, explained</p><button type="button" class="try-it">Try it</button></div>
+                  <div class="tutorial-try-card" data-tool="symtex"><div class="trow"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></div><p class="lead">Typeset the Bjorken energy formula</p><p class="sub">Clean LaTeX you can reuse</p><button type="button" class="try-it">Try it</button></div>
+                  <div class="tutorial-try-card" data-tool="code"><div class="trow"><i style="background:var(--slate-tint);color:var(--slate);font-size:10px">&lt;/&gt;</i><b>Code</b></div><p class="lead">Run a tiny particle simulation</p><p class="sub">A Python notebook, commented</p><button type="button" class="try-it">Try it</button></div>
                 </div>
                 </div>
               </section>
@@ -1148,7 +1154,7 @@
               <div class="learn-tip"><span class="k">TIP</span>Click any line to rewrite it, or ask me here: “add a diagram”, “make it simpler”.</div>
               <div class="tutorial-doc-switcher" id="tutorialDocSwitcher" role="menu" aria-label="Who helps with this task">
                 <div class="lbl">WHO HELPS WITH THIS TASK</div>
-                <button type="button" class="si-row on" data-ai="citta"><span class="av">≋</span><span class="txt"><span class="name">Citta <span class="badge">Default</span></span><small>Knows your files and every Symbion tool</small></span><span aria-hidden="true">✓</span></button>
+                <button type="button" class="si-row on" data-ai="citta"><span class="av"><span class="spark-icon" aria-hidden="true"></span></span><span class="txt"><span class="name">Citta <span class="badge">Default</span></span><small>Knows your files and every Symbion tool</small></span><span aria-hidden="true">✓</span></button>
                 <button type="button" class="si-row" data-ai="roland"><span class="av">GR</span><span class="txt"><span class="name">Prof. Roland’s twin <span class="badge">✦ Twin</span></span><small>Heavy-ion Physics · course-specific help</small></span></button>
                 <button type="button" class="si-row" data-ai="lr"><span class="av">LR</span><span class="txt"><span class="name">Lab Report Coach <span class="badge">AI agent</span></span><small>Added by you · step-by-step lab write-ups</small></span></button>
                 <p class="foot">Switch anytime — even halfway through a task. Your file stays the same.</p>
@@ -1215,7 +1221,7 @@
       <div class="tutorial-spotlight" id="tutorialSpotlight" aria-hidden="true"></div>
 
       <div class="coach" id="coach" role="dialog" aria-live="polite">
-        <div class="coach-who" id="coachWho" hidden><span class="av" id="coachAv" aria-hidden="true">≋</span><span id="coachWhoText">Citta · your assistant in Symbion</span></div>
+        <div class="coach-who" id="coachWho" hidden><span class="av" id="coachAv" aria-hidden="true"><span class="spark-icon"></span></span><span id="coachWhoText">Citta · your assistant in Symbion</span></div>
         <span class="step-pill" id="coachStep">Step 1 of 4</span>
         <h4 id="coachTitle">Let’s make your first thing together.</h4>
         <p id="coachBody">I’ll turn Prof. Roland’s Lecture 1 (24 slides) into a one-page summary in Doc. You watch, then edit anything you like.</p>
@@ -1240,7 +1246,7 @@
   // Everyone the picker can hand the composer to. Roland's copy is from the Figma frame;
   // the others follow the same pattern.
   const AIS = {
-    citta:  { name: 'Citta', initials: '≋', twin: false, prefix: '≋',
+    citta:  { name: 'Citta', initials: '★', twin: false, prefix: '★',
               placeholder: 'What do you want to work on?' },
     roland: { name: 'Prof. Roland’s twin', initials: 'GR', twin: true, prefix: 'GR',
               placeholder: 'Ask Prof. Roland’s twin — e.g. “Which lecture 5 topics are on the exam?”',
@@ -1672,7 +1678,7 @@
         coachAv.innerHTML = `<img src="${CITTA_AVATAR_SRC}" width="28" height="28" alt="">`;
       } else if (coachAv) {
         coachAv.className = 'av';
-        coachAv.textContent = '≋';
+        coachAv.innerHTML = `<span class="spark-icon" aria-hidden="true">${SPARK_SOLID}</span>`;
       }
     } else {
       coachWho.hidden = true;
@@ -2329,6 +2335,18 @@
     });
     const badgeIcon = $('pickerBadge')?.querySelector('.spark-icon');
     if (badgeIcon) badgeIcon.innerHTML = SPARK_HOLLOW;
+
+    const back = $('backToCitta');
+    if (back) {
+      back.innerHTML = `<span class="spark-icon" aria-hidden="true">${SPARK_SOLID}</span>Back to Citta`;
+    }
+    document.querySelectorAll('.pick-card .btn[data-spark-label]').forEach((el) => {
+      const label = el.dataset.sparkLabel || '';
+      el.innerHTML = `<span class="spark-icon" aria-hidden="true">${SPARK_SOLID}</span>${label}`;
+    });
+    document.querySelectorAll('.mav.citta .spark-icon, .si-row[data-ai="citta"] .av .spark-icon, #coachAv .spark-icon').forEach((el) => {
+      if (!el.querySelector('svg')) el.innerHTML = SPARK_SOLID;
+    });
   }
 
   function decorateLectureBookIcons() {
