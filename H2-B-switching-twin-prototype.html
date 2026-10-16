@@ -500,12 +500,12 @@
   .citta-input:focus { outline: none; }
   .citta-panel .ask-row .send { width: 36px; height: 36px; border-radius: 10px; margin-left: auto; flex: none; }
 
-  /* Spotlight steps: cutout dim. Final step: full-frame gray + centered modal. */
-  .coach-scrim { position: absolute; inset: 0; background: rgba(28,31,29,.48); z-index: 14; display: none; pointer-events: none; }
+  /* Spotlight steps: cutout dim inside .frame. Final step: viewport-fixed gray + centered modal (outside .scaler — transform traps fixed). */
+  .coach-scrim { position: fixed; inset: 0; background: rgba(28,31,29,.48); z-index: 10000; display: none; pointer-events: none; }
   .coach-scrim.on { display: block; pointer-events: auto; }
   .coach { position: absolute; left: 56px; top: 200px; transform: none; width: min(400px, calc(100% - 112px)); max-width: calc(100% - 112px); max-height: none; overflow: visible; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; box-shadow: 0 16px 40px rgba(28,31,29,.18); z-index: 15; display: none; line-height: 1.45; pointer-events: auto; }
   .coach.wide { width: min(440px, calc(100% - 112px)); padding: 22px 24px; }
-  .coach.centered { left: 50%; top: 50%; right: auto; bottom: auto; transform: translate(-50%, -50%); width: min(400px, calc(100% - 80px)); max-width: calc(100% - 80px); box-shadow: 0 0 0 1px rgba(255,255,255,.6), 0 28px 64px rgba(28,31,29,.35); z-index: 16; }
+  .coach.centered { position: fixed; left: 50%; top: 50%; right: auto; bottom: auto; transform: translate(-50%, -50%); width: min(400px, calc(100vw - 48px)); max-width: min(400px, calc(100vw - 48px)); box-shadow: 0 0 0 1px rgba(255,255,255,.6), 0 28px 64px rgba(28,31,29,.35); z-index: 10010; }
   .coach.on { display: block; }
   .coach .coach-who { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; font-size: 12px; font-weight: 500; color: var(--muted); }
   .coach .coach-who .av { width: 28px; height: 28px; border-radius: 14px; background: var(--green-tint); color: var(--green-dark); font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex: none; overflow: hidden; }
@@ -1866,22 +1866,32 @@
     scrim.setAttribute('aria-hidden', String(!on));
   }
 
+  /** Final-step coach uses viewport-fixed placement; must leave .scaler or fixed is trapped. */
+  function mountCoachForViewport(center) {
+    const host = center ? ($('fsRoot') || document.body) : frame;
+    const scrim = $('coachScrim');
+    if (scrim && scrim.parentElement !== host) host.appendChild(scrim);
+    if (coach.parentElement !== host) host.appendChild(coach);
+  }
+
   function positionCoach() {
     if (!coach.classList.contains('on')) {
       setCoachScrim(false);
       coach.classList.remove('centered');
+      mountCoachForViewport(false);
       return;
     }
     if (screen !== 'tutorial') {
       setCoachScrim(false);
       coach.classList.remove('centered');
+      mountCoachForViewport(false);
       return;
     }
 
     const step = TUTORIAL_STEPS[tutorialStep - 1] || {};
     const pad = pageGutterPx();
     const isSwitch = tutorialDocPhase === 'doc' || tutorialDocPhase === 'switch-open' || coach.classList.contains('switch-coach');
-    // Final step: centered modal + gray frame scrim (no spotlight target).
+    // Final step: viewport-centered modal + gray scrim (same as NEW tip — not mid-page of the tall frame).
     const centerModal = !isSwitch && (!!step.center || !step.spot);
 
     coach.style.bottom = 'auto';
@@ -1892,12 +1902,14 @@
     coach.style.transform = '';
 
     if (centerModal) {
+      mountCoachForViewport(true);
       coach.classList.add('centered');
       clearTutorialSpotlight();
       setCoachScrim(true);
       return;
     }
 
+    mountCoachForViewport(false);
     coach.classList.remove('centered');
     setCoachScrim(false);
     coach.style.left = `${pad}px`;
