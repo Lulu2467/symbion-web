@@ -426,7 +426,7 @@
   .new-tip .k { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .06em; background: rgba(255,255,255,.15); padding: 2px 6px; border-radius: 4px; margin-bottom: 8px; }
   .new-tip h4 { margin: 0 0 6px; font-size: 16px; font-weight: 600; line-height: 1.35; }
   .new-tip .body { margin: 0; opacity: .95; }
-  .frame.post-tip-on.dim-handoff::after { content: ""; position: absolute; inset: 0; background: rgba(28,31,29,.45); pointer-events: auto; z-index: 34; }
+  .frame.post-tip-on.dim-handoff::after { content: ""; position: absolute; inset: 0; background: rgba(28,31,29,.52); pointer-events: auto; z-index: 34; }
   .frame.post-tip-on .picker { position: relative; z-index: 37; box-shadow: 0 0 0 3px rgba(44,122,95,.45); }
   .frame.post-tip-on .menu.open { z-index: 42; }
   .new-tip .acts { display: flex; gap: 8px; margin-top: 12px; }
@@ -483,12 +483,12 @@
   .citta-input:focus { outline: none; }
   .citta-panel .ask-row .send { width: 36px; height: 36px; border-radius: 10px; }
 
-  .coach-scrim { position: absolute; inset: 0; background: rgba(28,31,29,.45); z-index: 28; display: none; pointer-events: auto; }
+  .coach-scrim { position: absolute; inset: 0; background: rgba(28,31,29,.52); z-index: 31; display: none; pointer-events: auto; }
   .coach-scrim.on { display: block; }
-  .coach { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(400px, calc(100% - 48px)); max-width: calc(100% - 48px); max-height: calc(100% - 64px); overflow: auto; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; box-shadow: 0 20px 48px rgba(28,31,29,.22); z-index: 30; display: none; line-height: 1.45; pointer-events: auto; }
+  .frame:has(.coach-scrim.on) .tutorial-spotlight { display: none !important; }
+  .coach { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(400px, calc(100% - 48px)); max-width: calc(100% - 48px); max-height: calc(100% - 64px); overflow: auto; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; box-shadow: 0 24px 56px rgba(28,31,29,.28); z-index: 32; display: none; line-height: 1.45; pointer-events: auto; }
   .coach.wide { width: min(440px, calc(100% - 48px)); padding: 22px 24px; }
   .coach.on { display: block; }
-  .frame.tutorial-on .tutorial-spotlight { opacity: .9; z-index: 29; }
   .coach .coach-who { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; font-size: 12px; font-weight: 500; color: var(--muted); }
   .coach .coach-who .av { width: 28px; height: 28px; border-radius: 14px; background: var(--green-tint); color: var(--green-dark); font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex: none; overflow: hidden; }
   .coach .coach-who .av.citta-portrait { background: transparent; border-radius: 10px; padding: 0; }
