@@ -489,11 +489,11 @@
   .citta-input:focus { outline: none; }
   .citta-panel .ask-row .send { width: 36px; height: 36px; border-radius: 10px; margin-left: auto; flex: none; }
 
-  .coach-scrim { position: fixed; inset: 0; background: rgba(28,31,29,.48); z-index: 10000; display: none; pointer-events: auto; }
+  /* Tutorial dim = spotlight cutout inside the frame (not a viewport-wide scrim). */
+  .coach-scrim { position: absolute; inset: 0; background: rgba(28,31,29,.28); z-index: 12; display: none; pointer-events: none; }
   .coach-scrim.on { display: block; }
-  .frame:has(.coach-scrim.on) .tutorial-spotlight { display: none !important; }
-  .coach { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(400px, calc(100vw - 48px)); max-width: calc(100vw - 48px); max-height: calc(100vh - 64px); overflow: auto; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; box-shadow: 0 0 0 1px rgba(255,255,255,.6), 0 28px 64px rgba(28,31,29,.4); z-index: 10010; display: none; line-height: 1.45; pointer-events: auto; isolation: isolate; }
-  .coach.wide { width: min(440px, calc(100vw - 48px)); padding: 22px 24px; }
+  .coach { position: absolute; left: 56px; top: 200px; transform: none; width: min(400px, calc(100% - 112px)); max-width: calc(100% - 112px); max-height: none; overflow: visible; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; box-shadow: 0 16px 40px rgba(28,31,29,.18); z-index: 15; display: none; line-height: 1.45; pointer-events: auto; }
+  .coach.wide { width: min(440px, calc(100% - 112px)); padding: 22px 24px; }
   .coach.on { display: block; }
   .coach .coach-who { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; font-size: 12px; font-weight: 500; color: var(--muted); }
   .coach .coach-who .av { width: 28px; height: 28px; border-radius: 14px; background: var(--green-tint); color: var(--green-dark); font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex: none; overflow: hidden; }
@@ -514,9 +514,10 @@
   .coach .acts .link { color: var(--green); padding: 8px 0; }
 
   .spot { position: relative; z-index: 14; }
-  .tutorial-spotlight { position: absolute; z-index: 13; pointer-events: none; border-radius: 16px; box-shadow: 0 0 0 9999px rgba(28,31,29,.28); background: transparent; display: none; }
+  .tutorial-spotlight { position: absolute; z-index: 13; pointer-events: none; border-radius: 16px; box-shadow: 0 0 0 9999px rgba(28,31,29,.32); background: transparent; display: none; }
   .tutorial-spotlight.on { display: block; }
   .frame.tutorial-on { position: relative; }
+  .frame.tutorial-on .tutorial-spot-target { z-index: 14; }
   .frame.tutorial-doc-on .tutorial-spotlight { display: none !important; }
   .frame.tutorial-doc-on .dock { opacity: 0; pointer-events: none; }
 
@@ -1219,6 +1220,15 @@
       </aside>
 
       <div class="tutorial-spotlight" id="tutorialSpotlight" aria-hidden="true"></div>
+      <div class="coach-scrim" id="coachScrim" aria-hidden="true"></div>
+      <div class="coach" id="coach" role="dialog" aria-modal="true" aria-live="polite">
+        <div class="coach-who" id="coachWho" hidden><span class="av" id="coachAv" aria-hidden="true"><span class="spark-icon"></span></span><span id="coachWhoText">Citta · your assistant in Symbion</span></div>
+        <span class="step-pill" id="coachStep">Step 1 of 4</span>
+        <h4 id="coachTitle">Let’s make your first thing together.</h4>
+        <p id="coachBody">I’ll turn Prof. Roland’s Lecture 1 (24 slides) into a one-page summary in Doc. You watch, then edit anything you like.</p>
+        <div class="coach-meta" id="coachMeta" hidden></div>
+        <div class="acts" id="coachActs"></div>
+      </div>
 
       <button type="button" class="dock" id="dock" aria-label="Citta dock" aria-expanded="false"><img class="dock-av" src="assets/citta-avatar.png" width="32" height="32" alt="">
         <span class="count">3</span>
@@ -1233,16 +1243,7 @@
   </div>
 </div>
 
-<div class="coach-scrim" id="coachScrim" aria-hidden="true"></div>
 <div class="tip-scrim" id="tipScrim" aria-hidden="true"></div>
-<div class="coach" id="coach" role="dialog" aria-modal="true" aria-live="polite">
-  <div class="coach-who" id="coachWho" hidden><span class="av" id="coachAv" aria-hidden="true"><span class="spark-icon"></span></span><span id="coachWhoText">Citta · your assistant in Symbion</span></div>
-  <span class="step-pill" id="coachStep">Step 1 of 4</span>
-  <h4 id="coachTitle">Let’s make your first thing together.</h4>
-  <p id="coachBody">I’ll turn Prof. Roland’s Lecture 1 (24 slides) into a one-page summary in Doc. You watch, then edit anything you like.</p>
-  <div class="coach-meta" id="coachMeta" hidden></div>
-  <div class="acts" id="coachActs"></div>
-</div>
 <div class="new-tip" id="newTip" role="dialog" aria-label="Switch to a twin" hidden>
   <span class="k">NEW</span>
   <h4>You’re not limited to Citta</h4>
@@ -1803,30 +1804,79 @@
   }
 
   function frameRectOffset(el) {
+    // getBoundingClientRect is in scaled screen px; absolute layout inside .frame is unscaled.
     const fr = frame.getBoundingClientRect();
     const r = el.getBoundingClientRect();
-    return { top: r.top - fr.top, left: r.left - fr.left, bottom: r.bottom - fr.top, right: r.right - fr.left };
+    const s = fr.width / frame.offsetWidth || 1;
+    return {
+      top: (r.top - fr.top) / s,
+      left: (r.left - fr.left) / s,
+      bottom: (r.bottom - fr.top) / s,
+      right: (r.right - fr.left) / s,
+    };
   }
 
   function setCoachScrim(on) {
+    // Tutorial uses spotlight cutout for dim — never a full-viewport gray sheet.
     const scrim = $('coachScrim');
     if (!scrim) return;
-    if (on) {
-      document.body.appendChild(scrim);
-      document.body.appendChild(coach);
-    }
-    scrim.classList.toggle('on', on);
-    scrim.setAttribute('aria-hidden', String(!on));
+    scrim.classList.remove('on');
+    scrim.setAttribute('aria-hidden', 'true');
   }
 
   function positionCoach() {
-    // Centered modal with gray scrim — CSS handles placement.
-    const on = coach.classList.contains('on');
-    setCoachScrim(on);
+    if (!coach.classList.contains('on')) {
+      setCoachScrim(false);
+      return;
+    }
+    setCoachScrim(false);
+    if (screen !== 'tutorial') return;
+
+    const step = TUTORIAL_STEPS[tutorialStep - 1] || {};
+    const pad = pageGutterPx();
+    coach.style.bottom = 'auto';
     coach.style.top = '';
-    coach.style.left = '';
-    coach.style.bottom = '';
+    coach.style.left = `${pad}px`;
     coach.style.maxHeight = '';
+    coach.style.transform = 'none';
+
+    if (tutorialDocPhase === 'doc' || tutorialDocPhase === 'switch-open' || coach.classList.contains('switch-coach')) {
+      const sw = $('tutorialDocSwitch');
+      if (sw) {
+        const t = frameRectOffset(sw);
+        coach.style.top = `${t.bottom + 12}px`;
+        coach.style.left = `${Math.max(pad, t.left - 40)}px`;
+      }
+    } else if (step.spot === 'composer') {
+      const c = frameRectOffset(composer);
+      coach.style.top = `${c.bottom + 20}px`;
+      coach.style.left = `${Math.max(pad, c.left)}px`;
+    } else if (step.spot === 'try') {
+      const el = getTrySpotElement();
+      if (el) {
+        const t = frameRectOffset(el);
+        coach.style.top = `${Math.min(t.bottom + 16, frame.offsetHeight - 220)}px`;
+        coach.style.left = `${Math.max(pad, t.left)}px`;
+      }
+    } else if (step.spot === 'picker') {
+      const c = frameRectOffset(composer);
+      const p = frameRectOffset(picker);
+      coach.style.top = `${c.top + 80}px`;
+      coach.style.left = `${Math.max(pad, p.left)}px`;
+    } else {
+      coach.style.top = 'auto';
+      coach.style.bottom = '120px';
+    }
+
+    // Keep the card inside the frame when it would overflow the bottom.
+    const fr = frame.getBoundingClientRect();
+    const ch = coach.getBoundingClientRect();
+    const s = fr.width / frame.offsetWidth || 1;
+    if (ch.bottom > fr.bottom - 8) {
+      const overflow = (ch.bottom - fr.bottom + 24) / s;
+      const curTop = parseFloat(coach.style.top);
+      if (Number.isFinite(curTop)) coach.style.top = `${Math.max(48, curTop - overflow)}px`;
+    }
   }
 
   function syncTutorialNav() {
