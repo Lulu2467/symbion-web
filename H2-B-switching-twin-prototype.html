@@ -124,7 +124,10 @@
   .picker { display: inline-flex; gap: 8px; align-items: center; padding: 4px 12px 4px 4px; border-radius: 999px; background: var(--green-tint); border: 1.5px solid #b8dbc9; transition: background .15s, border-color .15s, box-shadow .15s; }
   .picker:hover { background: #dceee4; border-color: rgba(44,122,95,.42); }
   .picker[aria-expanded="true"] { background: #d4e8dc; border-color: var(--green); box-shadow: 0 0 0 3px rgba(44,122,95,.12); }
-  .picker .pav { width: 26px; height: 26px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; background: rgba(44,122,95,.12); color: var(--green-dark); }
+  .picker .pav { width: 26px; height: 26px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; background: rgba(44,122,95,.12); color: var(--green-dark); flex: none; overflow: hidden; }
+  .picker .pav.citta-portrait { background: transparent; border-radius: 8px; padding: 0; }
+  .citta-portrait img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: inherit; }
+  .picker .pav.citta-portrait img { border-radius: 8px; }
   .picker .pname { font-size: 14px; font-weight: 600; color: var(--ink); }
   .picker .twin-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,.55); color: var(--green-dark); font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 999px; }
   .picker .twin-badge .spark-icon { width: 11px; height: 11px; }
@@ -171,11 +174,10 @@
   .composer-input { flex: 1; min-width: 0; font-size: 21px; font-weight: 300; line-height: 1.4; color: var(--ink); background: transparent; border: 0; padding: 0; margin: 0; resize: none; font-family: inherit; min-height: 1.4em; overflow: hidden; }
   .composer-input::placeholder { color: var(--placeholder); }
   .composer-input:focus { outline: none; }
-  .send { width: 44px; height: 44px; border-radius: 14px; background: var(--green); color: #fff; flex: none; display: flex; align-items: center; justify-content: center; padding: 0; transition: background .12s, transform .08s; }
+  .send { width: 36px; height: 36px; border-radius: 10px; background: var(--green); color: #fff; flex: none; display: flex; align-items: center; justify-content: center; padding: 0; transition: background .12s, transform .08s; }
   .send:hover { background: var(--green-dark); }
   .send:active { transform: scale(.96); }
-  .composer .ask-row .send svg { display: block; width: 30px; height: 30px; transform: scale(1.08); transform-origin: center; }
-  .send svg { display: block; width: 22px; height: 22px; }
+  .send svg { display: block; width: 15px; height: 15px; flex: none; }
   .ico-ne { display: inline-flex; align-items: center; justify-content: center; flex: none; vertical-align: -0.12em; width: 0.78em; height: 0.78em; margin-left: 0.32em; line-height: 0; }
   .ico-ne svg { display: block; width: 100%; height: 100%; }
   .week-card .go-link { display: inline-flex; align-items: center; }
@@ -301,7 +303,8 @@
   .tpl .use { margin-top: auto; align-self: stretch; text-align: center; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 12px; font-weight: 500; background: #fff; }
 
   /* Dock + toast */
-  .dock { position: absolute; right: var(--page-gutter); top: 843px; width: 44px; height: 44px; border-radius: 22px; background: #fff; border: 1.5px solid var(--green); color: var(--green); font-size: 17px; font-weight: 600; display: flex; align-items: center; justify-content: center; left: auto; }
+  .dock { position: absolute; right: var(--page-gutter); top: 843px; width: 44px; height: 44px; border-radius: 22px; background: #fff; border: 1.5px solid var(--green); color: var(--green); font-size: 0; font-weight: 600; display: flex; align-items: center; justify-content: center; left: auto; padding: 0; overflow: visible; }
+  .dock .dock-av { width: 36px; height: 36px; border-radius: 10px; object-fit: cover; display: block; flex: none; }
   .dock .count { position: absolute; left: 28.5px; top: -5.5px; width: 18px; height: 18px; border-radius: 9px; background: var(--green); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
   .dock .sw { position: absolute; left: 12.5px; top: 34.5px; width: 16px; height: 16px; border-radius: 8px; background: #fff; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; }
   .toast { position: absolute; left: 50%; top: 1240px; transform: translate(-50%, 8px); background: var(--toast); color: #fff; font-size: 13px; padding: 10px 16px 10px 14px; border-radius: 12px; display: flex; gap: 10px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
@@ -413,7 +416,8 @@
   .frame.citta-open .citta-panel { transform: none; }
   .frame.citta-open .body .main { margin-right: 368px; }
   .citta-panel .ph { padding: 14px 16px 12px; border-bottom: 1px solid var(--line); display: flex; gap: 8px; align-items: center; flex: none; }
-  .citta-panel .ph .citta-av { width: 28px; height: 28px; border-radius: 14px; background: var(--green-tint); color: var(--green-dark); font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex: none; }
+  .citta-panel .ph .citta-av { width: 28px; height: 28px; border-radius: 10px; background: transparent; color: var(--green-dark); font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex: none; overflow: hidden; padding: 0; }
+  .citta-panel .ph .citta-av img { border-radius: 10px; }
   .citta-panel .ph b { font-size: 16px; font-weight: 600; flex: none; }
   .citta-panel .ph .sw-sm { color: var(--green); display: flex; align-items: center; flex: none; }
   .citta-panel .ph .task-pill { font-size: 11px; font-weight: 600; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px 8px; flex: none; white-space: nowrap; }
@@ -452,7 +456,6 @@
   .citta-input::placeholder { color: var(--placeholder); }
   .citta-input:focus { outline: none; }
   .citta-panel .ask-row .send { width: 36px; height: 36px; border-radius: 10px; }
-  .citta-panel .ask-row .send svg { width: 20px; height: 20px; }
 
   .coach { position: absolute; left: 48px; bottom: 120px; width: 340px; max-width: calc(100% - 96px); background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; box-shadow: 0 16px 40px rgba(28,31,29,.12); z-index: 30; display: none; line-height: 1.45; pointer-events: auto; }
   .coach.wide { width: 400px; max-width: calc(100% - 80px); padding: 20px 22px; }
@@ -683,7 +686,7 @@
                 <div class="working">
                   <span class="k">WORKING WITH</span>
                   <button type="button" class="picker" id="picker" aria-haspopup="menu" aria-expanded="false">
-                    <span class="pav" id="pickerAv">≋</span>
+                    <span class="pav citta-portrait" id="pickerAv"><img src="assets/citta-avatar.png" width="26" height="26" alt=""></span>
                     <span class="pname" id="pickerName">Citta</span>
                     <span class="twin-badge" id="pickerBadge" hidden><span class="spark-icon" aria-hidden="true"></span> Twin</span>
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#2c7a5f" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h8M8 2l2 2-2 2M10 8H2M4 6 2 8l2 2"/></svg>
@@ -702,9 +705,9 @@
                 <div class="ask-row">
                   <textarea class="composer-input" id="composerInput" rows="1" placeholder="What do you want to work on?" aria-label="What do you want to work on?"></textarea>
                   <button type="button" class="send" aria-label="Send">
-                    <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      <path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                      <path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                      <path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                   </button>
                 </div>
@@ -997,7 +1000,7 @@
 
       <aside class="citta-panel" id="cittaPanel" aria-label="Citta panel" hidden>
         <div class="ph">
-          <span class="citta-av" aria-hidden="true">≋</span>
+          <span class="citta-av citta-portrait" aria-hidden="true"><img src="assets/citta-avatar.png" width="28" height="28" alt=""></span>
           <b>Citta</b>
           <span class="sw-sm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h8M8 2l2 2-2 2M10 8H2M4 6 2 8l2 2"/></svg></span>
           <span class="task-pill">3 tasks</span>
@@ -1039,9 +1042,9 @@
             <button type="button" class="plus" aria-label="Attach">+</button>
             <textarea class="citta-input" id="cittaInput" rows="1" placeholder="Ask Citta, or / for a tool…" aria-label="Ask Citta"></textarea>
             <button type="button" class="send" aria-label="Send">
-              <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                <path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                <path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
           </div>
@@ -1057,7 +1060,7 @@
         <div class="acts" id="coachActs"></div>
       </div>
 
-      <button type="button" class="dock" id="dock" aria-label="Citta dock" aria-expanded="false">≋
+      <button type="button" class="dock" id="dock" aria-label="Citta dock" aria-expanded="false"><img class="dock-av" src="assets/citta-avatar.png" width="36" height="36" alt="">
         <span class="count">3</span>
         <span class="sw"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="#6b716d" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h8M8 2l2 2-2 2M10 8H2M4 6 2 8l2 2"/></svg></span>
       </button>
@@ -1094,6 +1097,21 @@
   const composer = $('composer'), picker = $('picker'), menu = $('menu'), toast = $('toast');
   let current = 'citta', previous = 'citta', toastTimer;
 
+  const CITTA_AVATAR_SRC = 'assets/citta-avatar.png';
+  const CITTA_PICKER_AVATAR = `<img src="${CITTA_AVATAR_SRC}" width="26" height="26" alt="">`;
+
+  function setPickerAvatar(isCitta, ai) {
+    const el = $('pickerAv');
+    if (!el) return;
+    if (isCitta) {
+      el.className = 'pav citta-portrait';
+      el.innerHTML = CITTA_PICKER_AVATAR;
+    } else {
+      el.className = 'pav';
+      el.textContent = ai.initials;
+    }
+  }
+
   const SPARK_SOLID = '<svg width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg>';
   const SPARK_HOLLOW = '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M510.464 950.784c-14.336 0-40.96-6.656-55.808-50.688l-69.12-200.192c-8.704-25.088-39.424-55.808-64.512-64.512l-197.12-68.608c-44.032-15.36-50.688-41.984-50.688-56.32 0-14.336 6.656-40.96 50.688-55.808L322.56 387.072c25.6-8.704 55.808-38.912 64.512-64l67.584-200.192c14.848-44.032 41.472-50.688 55.808-50.688 14.336 0 40.96 6.656 55.808 50.688l69.632 201.728c8.704 25.088 39.424 55.296 64 64l198.656 67.072c44.032 14.848 50.688 41.472 51.2 55.808 0 14.336-6.656 40.96-50.688 55.808l-201.728 69.12c-25.088 8.704-55.296 38.912-64 64l-67.072 199.168c-14.848 44.544-41.472 51.2-55.808 51.2zM181.76 510.976l163.328 56.832c46.08 15.872 92.672 62.976 108.544 109.056l56.832 164.864 55.296-164.352c15.36-46.08 62.464-93.184 108.544-109.056l166.4-56.832-163.328-55.296c-46.08-15.872-93.184-62.464-109.056-108.544l-57.344-166.912-56.32 165.376c-15.872 46.08-62.464 93.184-108.544 108.544l-164.352 56.32z" fill="currentColor"/></svg>';
 
@@ -1120,7 +1138,7 @@
     const isCitta = key === 'citta';
 
     composer.classList.toggle('is-twin', !isCitta);
-    $('pickerAv').textContent = ai.initials;
+    setPickerAvatar(isCitta, ai);
     $('pickerName').textContent = ai.name;
     $('pickerBadge').hidden = !ai.twin;
     $('whenCitta').style.display = isCitta ? 'contents' : 'none';
