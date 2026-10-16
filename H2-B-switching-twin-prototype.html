@@ -1223,7 +1223,7 @@
       </aside>
 
       <div class="tutorial-spotlight" id="tutorialSpotlight" aria-hidden="true"></div>
-      <div class="coach-scrim" id="coachScrim" hidden></div>
+      <div class="coach-scrim" id="coachScrim" aria-hidden="true"></div>
 
       <div class="coach" id="coach" role="dialog" aria-modal="true" aria-live="polite">
         <div class="coach-who" id="coachWho" hidden><span class="av" id="coachAv" aria-hidden="true"><span class="spark-icon"></span></span><span id="coachWhoText">Citta · your assistant in Symbion</span></div>
@@ -1728,7 +1728,7 @@
     const scrim = $('coachScrim');
     if (!scrim) return;
     scrim.classList.toggle('on', on);
-    scrim.hidden = !on;
+    scrim.setAttribute('aria-hidden', String(!on));
   }
 
   function positionCoach() {
@@ -2271,6 +2271,7 @@
     $('tutorialDocSwitcher')?.classList.add('open');
     $('tutorialDocSwitch')?.setAttribute('aria-expanded', 'true');
     coach.classList.remove('on');
+    setCoachScrim(false);
   });
   $('tutorialDocSwitcher')?.querySelectorAll('.si-row').forEach((row) => {
     row.addEventListener('click', () => {
