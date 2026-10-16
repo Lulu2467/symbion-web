@@ -652,17 +652,17 @@
   .fs-toggle.is-fullscreen .fs-ico-exit { display: block; }
   .fs-toggle:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
 
-  /* Edge-to-edge review mode: no canvas gutter, no presenter chrome, frame flush. */
+  /* Edge-to-edge review mode: flush frame, but keep normal page scroll. */
   html:fullscreen,
-  html:-webkit-full-screen { background: #fff; height: 100%; }
+  html:-webkit-full-screen { background: #fff; height: auto; min-height: 100%; }
   html:fullscreen body,
-  html:-webkit-full-screen body { background: #fff; overflow: hidden; height: 100%; }
+  html:-webkit-full-screen body { background: #fff; overflow-x: hidden; overflow-y: auto; height: auto; min-height: 100%; }
   html:fullscreen .presenter,
   html:-webkit-full-screen .presenter { display: none !important; }
   html:fullscreen .stage,
-  html:-webkit-full-screen .stage { padding: 0; margin: 0; min-height: 100vh; height: auto; overflow-x: hidden; overflow-y: auto; background: #fff; }
+  html:-webkit-full-screen .stage { padding: 0; margin: 0; min-height: 0; overflow: hidden; background: #fff; }
   html:fullscreen .scaler,
-  html:-webkit-full-screen .scaler { margin: 0; }
+  html:-webkit-full-screen .scaler { margin: 0; transform-origin: top left; }
   html:fullscreen .frame,
   html:-webkit-full-screen .frame { border: 0; border-radius: 0; }
 </style>
@@ -2453,13 +2453,18 @@
   function fit() {
     const stageEl = document.querySelector('.stage');
     const fs = isDocFullscreen();
-    // Fullscreen = edge-to-edge product (no gray canvas gutter).
+    // Fullscreen = edge-to-edge product; body scrolls the full scaled page.
     const avail = fs ? window.innerWidth : Math.max(0, stageEl.clientWidth - 32);
     const s = fs ? avail / 1440 : Math.min(1, avail / 1440);
+    const scaledH = frame.offsetHeight * s;
     scaler.style.transform = `scale(${s})`;
-    stageEl.style.height = fs
-      ? `${Math.max(window.innerHeight, frame.offsetHeight * s)}px`
-      : `${frame.offsetHeight * s + 72}px`;
+    scaler.style.transformOrigin = 'top left';
+    // transform doesn't shrink layout — stage height = visual height so the page can scroll.
+    stageEl.style.height = `${scaledH + (fs ? 0 : 72)}px`;
+    stageEl.style.overflow = fs ? 'hidden' : '';
+    document.documentElement.style.overflowY = fs ? 'auto' : '';
+    document.body.style.overflowY = fs ? 'auto' : '';
+    document.body.style.height = fs ? 'auto' : '';
     positionNewTip();
     if (menu.classList.contains('open')) positionSwitcherMenu();
     if (coach.classList.contains('on')) positionCoach();
