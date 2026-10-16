@@ -652,19 +652,26 @@
   .fs-toggle.is-fullscreen .fs-ico-exit { display: block; }
   .fs-toggle:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
 
-  /* Edge-to-edge review mode: flush frame, but keep normal page scroll. */
-  html:fullscreen,
-  html:-webkit-full-screen { background: #fff; height: auto; min-height: 100%; }
-  html:fullscreen body,
-  html:-webkit-full-screen body { background: #fff; overflow-x: hidden; overflow-y: auto; height: auto; min-height: 100%; }
-  html:fullscreen .presenter,
-  html:-webkit-full-screen .presenter { display: none !important; }
-  html:fullscreen .stage,
-  html:-webkit-full-screen .stage { padding: 0; margin: 0; min-height: 0; overflow: hidden; background: #fff; }
-  html:fullscreen .scaler,
-  html:-webkit-full-screen .scaler { margin: 0; transform-origin: top left; }
-  html:fullscreen .frame,
-  html:-webkit-full-screen .frame { border: 0; border-radius: 0; }
+  /* Fullscreen scrolls on #fsRoot (the fullscreen element), like a normal page. */
+  .fs-root { display: block; }
+  .fs-root:fullscreen,
+  .fs-root:-webkit-full-screen {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: #fff;
+    box-sizing: border-box;
+  }
+  .fs-root:fullscreen .stage,
+  .fs-root:-webkit-full-screen .stage { padding: 0; margin: 0; min-height: 0; overflow: hidden; background: #fff; }
+  .fs-root:fullscreen .scaler,
+  .fs-root:-webkit-full-screen .scaler { margin: 0; transform-origin: top left; }
+  .fs-root:fullscreen .frame,
+  .fs-root:-webkit-full-screen .frame { border: 0; border-radius: 0; }
+  .fs-root:fullscreen .fs-toggle,
+  .fs-root:-webkit-full-screen .fs-toggle { position: fixed; top: 10px; right: 14px; z-index: 100; }
 </style>
 </head>
 <body>
@@ -692,6 +699,7 @@
   <span class="hint">Deep links: <code>#screen=tutorial</code> (Figma 8541) · <code>#screen=handoff&amp;tip=1</code> (8554) · <code>#citta=expanded</code></span>
 </div>
 
+<div class="fs-root" id="fsRoot">
 <button type="button" class="fs-toggle" id="fsToggle" aria-label="Enter fullscreen" title="Fullscreen" aria-pressed="false">
   <svg class="fs-ico-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>
   <svg class="fs-ico-exit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h5V3M16 3v5h5M3 16h5v5M16 21v-5h5"/></svg>
@@ -1277,6 +1285,7 @@
     <button type="button" class="sec" id="newTipDismiss">Got it</button>
   </div>
 </div>
+</div><!-- /#fsRoot -->
 
 <script>
   // Everyone the picker can hand the composer to. Roland's copy is from the Figma frame;
@@ -1600,10 +1609,11 @@
   function showPostTutorialTip() {
     if (newTipSeen || screen !== 'handoff' || current !== 'citta') return;
     postTutorialTipPending = true;
-    // Scrim first, tip last — tip must paint above the gray overlay.
+    // Keep tip inside #fsRoot so it still shows during native fullscreen.
+    const host = $('fsRoot') || document.body;
     const scrim = $('tipScrim');
-    if (scrim) document.body.appendChild(scrim);
-    document.body.appendChild(newTip);
+    if (scrim) host.appendChild(scrim);
+    host.appendChild(newTip);
     newTip.hidden = false;
     newTip.classList.add('show');
     setTipScrim(true);
@@ -2452,19 +2462,18 @@
   }
   function fit() {
     const stageEl = document.querySelector('.stage');
+    const fsRoot = $('fsRoot');
     const fs = isDocFullscreen();
-    // Fullscreen = edge-to-edge product; body scrolls the full scaled page.
+    // Fullscreen = edge-to-edge; #fsRoot is the scroll container.
     const avail = fs ? window.innerWidth : Math.max(0, stageEl.clientWidth - 32);
     const s = fs ? avail / 1440 : Math.min(1, avail / 1440);
     const scaledH = frame.offsetHeight * s;
     scaler.style.transform = `scale(${s})`;
     scaler.style.transformOrigin = 'top left';
-    // transform doesn't shrink layout — stage height = visual height so the page can scroll.
+    // transform doesn't shrink layout — stage height = visual height for scroll range.
     stageEl.style.height = `${scaledH + (fs ? 0 : 72)}px`;
-    stageEl.style.overflow = fs ? 'hidden' : '';
-    document.documentElement.style.overflowY = fs ? 'auto' : '';
-    document.body.style.overflowY = fs ? 'auto' : '';
-    document.body.style.height = fs ? 'auto' : '';
+    stageEl.style.overflow = 'hidden';
+    if (fsRoot) fsRoot.classList.toggle('is-fs', fs);
     positionNewTip();
     if (menu.classList.contains('open')) positionSwitcherMenu();
     if (coach.classList.contains('on')) positionCoach();
@@ -2529,12 +2538,12 @@
 
   function initFullscreenToggle() {
     const btn = $('fsToggle');
+    const root = $('fsRoot') || document.documentElement;
     if (!btn) return;
-    const root = document.documentElement;
     function isFullscreen() { return isDocFullscreen(); }
     function syncFsUi() {
       const on = isFullscreen();
-      document.documentElement.classList.toggle('is-fs', on);
+      root.classList.toggle('is-fs', on);
       btn.classList.toggle('is-fullscreen', on);
       btn.setAttribute('aria-pressed', String(on));
       btn.setAttribute('aria-label', on ? 'Exit fullscreen' : 'Enter fullscreen');
