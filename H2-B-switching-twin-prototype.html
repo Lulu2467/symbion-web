@@ -55,19 +55,27 @@
   .scaler { width: 1440px; transform-origin: top left; }
   .frame { position: relative; width: 1440px; background: #fff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
 
-  .osbar { display: flex; gap: 18px; align-items: center; padding: 8px var(--page-gutter) 8px 20px; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--muted); line-height: 1.4; }
-  .osbar .b { font-weight: 600; color: var(--ink); }
+  .osbar { display: flex; gap: 14px; align-items: center; padding: 8px var(--page-gutter) 8px 20px; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--muted); line-height: 1.4; }
   .osbar .sp { flex: 1; }
-  .osbar .ink { color: var(--ink); }
-  .av-s { width: 20px; height: 20px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); display: inline-flex; align-items: center; justify-content: center; font-size: 7px; font-weight: 600; margin-right: 6px; }
+  .osbar-ico { width: 1em; height: 1em; display: block; flex: none; }
+  .osbar-cosmo { display: inline-flex; align-items: center; gap: 8px; flex: none; }
+  .osbar-cosmo-btn { border: 0; padding: 0; background: none; font: inherit; font-size: 12px; font-weight: 600; color: var(--ink); cursor: pointer; line-height: 1.4; }
+  .osbar-book-mgr { width: 28px; height: 28px; border: 1px solid var(--line); border-radius: 7px; padding: 0; background: #fff; color: var(--ink); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; flex: none; }
+  .osbar-book-mgr .osbar-ico { width: 14px; height: 14px; }
+  .osbar-bm { display: inline-flex; align-items: center; gap: 7px; border: 0; padding: 2px 0; background: none; font: inherit; font-size: 12px; color: var(--ink); cursor: pointer; flex: none; }
+  .osbar-bm .osbar-ico { color: var(--muted); }
+  .osbar-app { display: inline-flex; align-items: center; gap: 6px; border: 0; padding: 0; background: none; font: inherit; font-size: 12px; color: #333; cursor: pointer; flex: none; }
+  .osbar-app .osbar-ico { width: 14px; height: 14px; color: #6b726c; }
+  .av-s { width: 20px; height: 20px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); display: inline-flex; align-items: center; justify-content: center; font-size: 7px; font-weight: 600; flex: none; }
 
   .body { display: flex; }
-  .rail { width: 52px; border-right: 1px solid var(--line); padding: 18px 8px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
-  .rail .r { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--muted); }
-  .rail .r.o { border: 1px solid var(--line); }
-  .rail .r.on { background: var(--green-tint); color: var(--green); }
+  .rail { width: 52px; border-right: 1px solid var(--line); padding: 18px 8px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .rail .r { width: 36px; height: 36px; border-radius: 10px; border: 0; padding: 0; background: transparent; display: flex; align-items: center; justify-content: center; color: #6b726c; font: inherit; }
+  .rail .r .rail-ico { width: 20px; height: 20px; display: block; flex: none; }
+  .rail .r.o { border: 1px solid var(--line); background: #fff; }
+  .rail .r.on { background: var(--green-tint); color: #1f5c45; }
   .rail .div { width: 24px; height: 1px; background: var(--line); }
-  .rail .p { width: 30px; height: 30px; border-radius: 15px; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--muted); }
+  .rail .p { width: 30px; height: 30px; border-radius: 15px; background: var(--surface); border: 1px solid var(--line); padding: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--muted); font: inherit; cursor: pointer; }
 
   .main { flex: 1; min-width: 0; }
   .logo-row { display: flex; align-items: center; padding: 26px var(--page-gutter); gap: 12px; }
@@ -535,22 +543,28 @@
   <div class="scaler" id="scaler">
     <div class="frame" id="frame">
 
-      <div class="osbar">
-        <span class="b">Cosmo</span><span>|||\</span><span>⊜ Scholar</span><span>▤ arXiv</span><span>▣ Notion</span>
+      <div class="osbar" aria-label="Bookmarks and applications">
+        <div class="osbar-cosmo">
+          <button type="button" class="osbar-cosmo-btn" data-osbar="cosmo">Cosmo</button>
+          <button type="button" class="osbar-book-mgr" aria-label="Manage bookmarks" data-osbar="bookmarks"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 6 4 14M12 6v14M8 8v12M4 4v16"/></svg></button>
+        </div>
+        <button type="button" class="osbar-bm" aria-label="Open Scholar" data-osbar="scholar"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 9 12 4 2 9l10 5 10-5Zm-17 3v5c0 1.5 3 3 7 3s7-1.5 7-3v-5M22 9v6"/></svg><span>Scholar</span></button>
+        <button type="button" class="osbar-bm" aria-label="Open arXiv" data-osbar="arxiv"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7l-5-5Zm-1 0v5h5M8 13h8M8 17h6M8 9h2"/></svg><span>arXiv</span></button>
+        <button type="button" class="osbar-bm" aria-label="Open Notion" data-osbar="notion"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3zM16 12h2M16 8h2M6 12h2M6 8h2"/></svg><span>Notion</span></button>
         <span class="sp"></span>
-        <span class="ink">⌂ Desk</span>
-        <span class="b"><span class="av-s">S</span>Symbion</span>
+        <button type="button" class="osbar-app" aria-label="Desk" data-osbar="desk"><svg class="osbar-ico" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M525.866667 219.008a21.333333 21.333333 0 0 0-27.733334 0l-256 219.434667a21.333333 21.333333 0 0 0-7.466666 16.213333v321.706667a21.333333 21.333333 0 0 0 21.333333 21.333333h512a21.333333 21.333333 0 0 0 21.333333-21.333333v-321.706667a21.333333 21.333333 0 0 0-7.466666-16.213333l-256-219.434667z m27.776-32.384l256 219.434667a64 64 0 0 1 22.357333 48.597333v321.706667a64 64 0 0 1-64 64H256a64 64 0 0 1-64-64v-321.706667a64 64 0 0 1 22.357333-48.64l256-219.392a64 64 0 0 1 83.285334 0z" fill="currentColor"/><path d="M405.333333 640h213.333334a21.333333 21.333333 0 1 1 0 42.666667h-213.333334a21.333333 21.333333 0 1 1 0-42.666667z" fill="currentColor"/></svg><span>Desk</span></button>
+        <button type="button" class="osbar-app" aria-label="Symbion" data-osbar="symbion"><span class="av-s" aria-hidden="true">S</span><span>Symbion</span></button>
       </div>
 
       <div class="body">
-        <nav class="rail" aria-label="Rail">
-          <div class="r o">›</div>
-          <div class="r on">◉</div>
-          <div class="r">▤</div>
-          <div class="r">✣</div>
-          <div class="r">⚙</div>
-          <div class="div"></div>
-          <div class="p">GR</div><div class="p">王</div><div class="p">EP</div><div class="p">HX</div>
+        <nav class="rail" aria-label="Primary">
+          <button type="button" class="r o" aria-label="Expand rail"><svg class="rail-ico" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button type="button" class="r on" aria-label="Cosmo" aria-current="page"><svg class="rail-ico" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="12" cy="12" r="7.25" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="2.75" fill="currentColor"/></svg></button>
+          <button type="button" class="r" aria-label="Post"><svg class="rail-ico" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="5.5" y="4" width="13" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M8.5 8.5h7M8.5 12h7M8.5 15.5h5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+          <button type="button" class="r" aria-label="Community"><svg class="rail-ico" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="12" cy="8.25" r="2.85" stroke="currentColor" stroke-width="1.5"/><circle cx="7.35" cy="13.1" r="2.85" stroke="currentColor" stroke-width="1.5"/><circle cx="16.65" cy="13.1" r="2.85" stroke="currentColor" stroke-width="1.5"/><path d="M12 11.1v1.35M9.55 12.55l-.95 1.65M14.45 12.55l.95 1.65" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M12 16.75v2.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+          <button type="button" class="r" aria-label="Settings"><svg class="rail-ico" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 9.25a2.75 2.75 0 1 0 0 5.5 2.75 2.75 0 0 0 0-5.5z" stroke="currentColor" stroke-width="1.5"/><path d="M12 4.25v1.65M12 18.1v1.65M4.25 12h1.65M18.1 12h1.65M6.15 6.15l1.17 1.17M16.68 16.68l1.17 1.17M6.15 17.85l1.17-1.17M16.68 7.32l1.17-1.17M7.32 16.68l-1.17 1.17M17.85 6.15l-1.17 1.17M7.32 7.32L6.15 6.15M17.85 17.85l-1.17-1.17" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/><circle cx="12" cy="12" r="1.1" fill="currentColor"/></svg></button>
+          <div class="div" role="presentation"></div>
+          <button type="button" class="p" aria-label="Prof. Roland">GR</button><button type="button" class="p" aria-label="王">王</button><button type="button" class="p" aria-label="Prof. Pajer">EP</button><button type="button" class="p" aria-label="Prof. Xu">HX</button>
         </nav>
 
         <div class="main">
@@ -1668,10 +1682,32 @@
       });
     });
 
-    frame.querySelectorAll('.rail .r, .rail .p').forEach((el) => {
+    frame.querySelectorAll('.osbar button[data-osbar]').forEach((el) => {
       el.addEventListener('click', () => {
         flashEl(el);
-        showToastMsg(`Rail · ${el.textContent.trim() || 'profile'}`);
+        const label = el.getAttribute('aria-label') || el.textContent.trim();
+        showToastMsg(`Chrome · ${label}`);
+      });
+    });
+
+    frame.querySelectorAll('.rail .r').forEach((el) => {
+      el.addEventListener('click', () => {
+        flashEl(el);
+        if (!el.classList.contains('o')) {
+          frame.querySelectorAll('.rail .r').forEach((r) => {
+            const on = r === el;
+            r.classList.toggle('on', on);
+            if (on) r.setAttribute('aria-current', 'page');
+            else r.removeAttribute('aria-current');
+          });
+        }
+        showToastMsg(`Rail · ${el.getAttribute('aria-label') || 'item'}`);
+      });
+    });
+    frame.querySelectorAll('.rail .p').forEach((el) => {
+      el.addEventListener('click', () => {
+        flashEl(el);
+        showToastMsg(`Rail · ${el.getAttribute('aria-label') || el.textContent.trim()}`);
       });
     });
 
