@@ -79,10 +79,7 @@
 
   .main { flex: 1; min-width: 0; }
   .logo-row { display: flex; align-items: center; padding: 26px var(--page-gutter); gap: 12px; }
-  .logo { display: inline-flex; align-items: center; gap: 10px; flex: none; color: var(--ink); text-decoration: none; }
-  .logo-mark { width: 30px; height: 22px; flex: none; display: block; }
-  .logo-mark path { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-  .logo-type { font-size: 20px; font-weight: 500; letter-spacing: 0.32em; line-height: 1; }
+  .logo { flex: none; font-size: 20px; font-weight: 500; letter-spacing: 1.6px; line-height: 1.4; color: var(--ink); white-space: pre; }
   .spark-icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; flex: none; line-height: 0; }
   .spark-icon svg { display: block; width: 100%; height: 100%; }
   .tpl .use, .try-it { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
@@ -90,7 +87,11 @@
   .nav-tutorial:hover { background: var(--green-dark); }
   .nav-tutorial:active { transform: scale(.98); }
   .nav-tutorial[aria-pressed="true"] { box-shadow: inset 0 0 0 2px rgba(255,255,255,.35), 0 2px 8px rgba(44,122,95,.28); }
-  .search { flex: none; background: var(--surface); border-radius: 999px; padding: 8px 16px; font-size: 13px; color: var(--faint); white-space: pre; border: 0; text-align: left; }
+  .search-wrap { position: relative; flex: none; display: inline-flex; align-items: center; min-width: 254px; }
+  .search-wrap .search { width: 100%; min-width: 254px; box-sizing: border-box; background: var(--surface); border-radius: 999px; padding: 8px 44px 8px 16px; font-size: 13px; font-family: inherit; color: var(--ink); border: 0; text-align: left; outline: none; }
+  .search-wrap .search::placeholder { color: var(--faint); }
+  .search-wrap .search:focus { box-shadow: inset 0 0 0 1.5px rgba(44,122,95,.35); }
+  .search-wrap .search-kbd { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 13px; color: var(--faint); pointer-events: none; line-height: 1; }
   .content { padding: 0 var(--page-gutter) 72px; display: flex; flex-direction: column; gap: 24px; }
 
   /* Greeting */
@@ -105,6 +106,7 @@
   .day { position: relative; width: 420px; height: 78px; font-size: 10px; }
   .day .lbl { position: absolute; top: 0; left: 0; font-weight: 600; letter-spacing: .8px; color: var(--muted); }
   .day .ev-free { position: absolute; top: 0; right: 0; font-size: 11px; color: var(--faint); }
+  .day .items { position: absolute; top: 0; right: 0; font-size: 11px; font-weight: 600; color: var(--green-dark); }
   .day .track { position: absolute; top: 46px; left: 0; width: 420px; height: 4px; border-radius: 2px; background: var(--line); }
   .day .elapsed { position: absolute; top: 46px; left: 0; width: 58px; height: 4px; border-radius: 2px; background: linear-gradient(90deg, rgba(44,122,95,.15), var(--green)); }
   .day .evt { position: absolute; top: 19px; font-size: 10.5px; color: var(--muted); white-space: nowrap; }
@@ -117,8 +119,8 @@
   .day .tick.now-l { left: 34px; color: var(--green); font-weight: 500; }
 
   /* Composer (the hero) */
-  .composer { position: relative; background: #fff; border: 1.5px solid rgba(44,122,95,.28); border-radius: 24px; box-shadow: 0 2px 6px rgba(28,31,29,.05), 0 16px 40px -8px rgba(44,122,95,.14); }
-  .composer .top { padding: 26px 28px 22px; display: flex; flex-direction: column; gap: 16px; }
+  .composer { position: relative; isolation: isolate; background: #fff; border: 1.5px solid rgba(44,122,95,.28); border-radius: 24px; box-shadow: 0 2px 6px rgba(28,31,29,.05), 0 16px 40px -8px rgba(44,122,95,.14); }
+  .composer .top { padding: 26px 28px 22px; display: flex; flex-direction: column; gap: 16px; position: relative; z-index: 1; }
   .working { display: flex; gap: 10px; align-items: center; font-size: 12px; }
   .working .k { font-size: 11px; font-weight: 600; letter-spacing: .88px; color: var(--muted); }
   .picker { display: inline-flex; gap: 8px; align-items: center; padding: 4px 12px 4px 4px; border-radius: 999px; background: var(--green-tint); border: 1.5px solid #b8dbc9; transition: background .15s, border-color .15s, box-shadow .15s; }
@@ -163,8 +165,6 @@
   .tools .attach-hit:hover { color: var(--green-dark); }
   .rail .r, .rail .p { cursor: pointer; transition: background .12s; }
   .rail .r:hover:not(.on) { background: var(--surface); }
-  .search-hit { cursor: pointer; }
-  .search-hit:hover { background: #e8ebe6; }
   .citta-panel .asst-card a { cursor: pointer; }
   .citta-panel .asst-card a:hover { text-decoration: underline; }
   .tap-active:active { transform: scale(.98); }
@@ -203,13 +203,14 @@
   .foot .k { padding-top: 11px; font-size: 11px; font-weight: 600; letter-spacing: .88px; color: var(--muted); white-space: nowrap; }
   .foot .wrap { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
   .chip { display: inline-flex; gap: 6px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px 8px 12px; font-size: 13px; line-height: 1.4; cursor: pointer; transition: border-color .12s, background .12s, transform .08s; }
+  .chip > .ic { margin-right: 2px; }
   .chip:hover { border-color: rgba(44,122,95,.35); background: var(--green-wash); }
   .chip:active { transform: scale(.98); }
   .foot .link-btn { font-size: 13px; font-weight: 500; color: var(--green); padding: 8px 0; cursor: pointer; }
   .foot .link-btn:hover { text-decoration: underline; text-underline-offset: 2px; }
   .chip .ic, .chip .ar { color: var(--green); font-weight: 500; }
-  .chip .ic.ico-book, .chip .ic.ico-report { display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; flex: none; line-height: 0; font-weight: normal; }
-  .chip .ic.ico-book svg, .chip .ic.ico-report svg { display: block; width: 100%; height: 100%; }
+  .chip .ic { display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; flex: none; line-height: 1; font-weight: normal; font-size: 14px; }
+  .chip .ic svg { display: block; width: 14px; height: 14px; flex: none; }
   .chip .ar { font-weight: 600; }
   .chip b { font-weight: 600; }
   .pct { display: inline-flex; gap: 5px; align-items: center; background: var(--green-tint); border-radius: 999px; padding: 2px 7px 2px 6px; font-size: 11px; font-weight: 600; color: var(--green-dark); }
@@ -218,12 +219,16 @@
   .pct.done { background: var(--green-tint); color: var(--green-dark); }
 
   /* Switcher menu */
-  .menu { position: absolute; left: 134px; top: 66px; width: 300px; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 8px; display: flex; flex-direction: column; gap: 2px; box-shadow: 0 12px 16px rgba(0,0,0,.14); z-index: 10; opacity: 0; transform: translateY(-4px); pointer-events: none; transition: opacity .14s, transform .14s; }
-  .menu.open { opacity: 1; transform: none; pointer-events: auto; }
+  .menu { position: absolute; left: 134px; top: 66px; width: 300px; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 8px; display: flex; flex-direction: column; gap: 2px; box-shadow: 0 12px 16px rgba(0,0,0,.14); z-index: 30; opacity: 0; transform: translateY(-4px); pointer-events: none; transition: opacity .14s, transform .14s; }
+  .menu.open { opacity: 1; transform: none; pointer-events: auto; z-index: 40; }
   .menu .hd { padding: 4px 8px 6px; font-size: 10px; font-weight: 600; color: var(--faint); }
-  .menu .item { display: flex; gap: 10px; align-items: center; padding: 8px; border-radius: 10px; text-align: left; width: 100%; line-height: 1.4; }
-  .menu .item:hover { background: var(--green-wash); }
+  .menu .item { display: flex; gap: 10px; align-items: center; padding: 8px; border-radius: 10px; text-align: left; width: 100%; line-height: 1.4; background: transparent; }
+  .menu .item[aria-checked="false"]:hover { background: var(--green-wash); }
   .menu .item[aria-checked="true"] { background: var(--green-tint); }
+  .menu .item[aria-checked="true"]:hover { background: var(--green-tint); }
+  .menu .item:focus { outline: none; }
+  .menu .item:focus-visible { box-shadow: inset 0 0 0 2px rgba(44,122,95,.35); }
+  .menu .item[aria-checked="true"]:focus-visible { background: var(--green-tint); }
   .menu .item .mav { width: 32px; height: 32px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: var(--muted); flex: none; }
   .menu .item .mav.citta { background: var(--green-tint); border-color: transparent; color: var(--green); }
   .menu .item .mav.agent { background: var(--amber-tint); color: var(--amber); border-radius: 8px; }
@@ -233,7 +238,8 @@
   .menu .item .ck { color: var(--green); font-weight: 700; font-size: 13px; visibility: hidden; }
   .menu .item[aria-checked="true"] .ck { visibility: visible; }
   .menu .rule { height: 1px; background: var(--line); margin: 0 0; }
-  .menu .browse { padding: 8px; font-size: 13px; font-weight: 500; color: var(--green); text-align: left; }
+  .menu .browse { display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px; font-size: 13px; font-weight: 500; line-height: 1.4; color: var(--green); text-align: left; }
+  .menu .browse .plus { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 14px; height: 14px; font-size: 14px; font-weight: 500; line-height: 1; transform: translateY(-0.5px); }
 
   /* Discover */
   .discover { display: flex; gap: 12px; align-items: center; padding: 10px 12px 10px 16px; border: 1px solid var(--line); border-radius: 14px; font-size: 12px; line-height: 1.35; }
@@ -399,21 +405,15 @@
   .activity.cosmos-compact .cosmos-see { align-self: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--ink); cursor: pointer; }
   .activity.cosmos-compact .cosmos-see:hover { border-color: var(--green); background: var(--green-wash); }
 
-  .day.compact { width: 280px; height: 56px; }
-  .day.compact .track { top: 36px; width: 280px; }
-  .day.compact .elapsed { top: 36px; width: 84px; }
-  .day.compact .now { top: 32px; left: 78px; }
-  .day.compact .items { position: absolute; top: 0; right: 0; font-size: 11px; font-weight: 600; color: var(--green-dark); }
-
-  .new-tip { position: absolute; left: 0; top: 0; width: min(320px, calc(100% - 56px)); background: var(--green-dark); color: #fff; border-radius: 14px; padding: 14px 16px; font-size: 13px; line-height: 1.45; box-shadow: 0 12px 28px rgba(0,0,0,.18); z-index: 20; display: none; pointer-events: auto; }
+  .new-tip { position: absolute; left: 0; top: 0; width: min(320px, calc(100% - 56px)); background: var(--green-dark); color: #fff; border-radius: 14px; padding: 14px 16px; font-size: 13px; line-height: 1.45; box-shadow: 0 12px 28px rgba(0,0,0,.18); z-index: 35; display: none; pointer-events: auto; }
   .new-tip.show { display: block; }
   .new-tip::before { content: ""; position: absolute; top: -6px; left: var(--tip-arrow-x, 40px); width: 12px; height: 12px; background: var(--green-dark); transform: rotate(45deg); border-radius: 2px; }
   .new-tip .k { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .06em; background: rgba(255,255,255,.15); padding: 2px 6px; border-radius: 4px; margin-bottom: 8px; }
   .new-tip h4 { margin: 0 0 6px; font-size: 15px; font-weight: 600; line-height: 1.35; }
   .new-tip .body { margin: 0; opacity: .95; }
-  .frame.post-tip-on .composer .top { position: relative; z-index: 14; }
   .frame.post-tip-on.dim-handoff::after { content: ""; position: absolute; inset: 41px 0 0; background: rgba(28,31,29,.22); pointer-events: none; z-index: 13; }
-  .frame.post-tip-on .picker { position: relative; z-index: 16; box-shadow: 0 0 0 3px rgba(44,122,95,.45); }
+  .frame.post-tip-on .picker { position: relative; z-index: 36; box-shadow: 0 0 0 3px rgba(44,122,95,.45); }
+  .frame.post-tip-on .menu.open { z-index: 42; }
   .new-tip .acts { display: flex; gap: 8px; margin-top: 12px; }
   .new-tip .acts button { font-size: 12px; font-weight: 600; padding: 8px 12px; border-radius: 8px; }
   .new-tip .acts .pri { background: #fff; color: var(--green-dark); }
@@ -471,7 +471,9 @@
   .coach.wide { width: 400px; max-width: calc(100% - 80px); padding: 20px 22px; }
   .coach.on { display: block; }
   .coach .coach-who { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; font-size: 12px; font-weight: 500; color: var(--muted); }
-  .coach .coach-who .av { width: 28px; height: 28px; border-radius: 14px; background: var(--green-tint); color: var(--green-dark); font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex: none; }
+  .coach .coach-who .av { width: 28px; height: 28px; border-radius: 14px; background: var(--green-tint); color: var(--green-dark); font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex: none; overflow: hidden; }
+  .coach .coach-who .av.citta-portrait { background: transparent; border-radius: 10px; padding: 0; }
+  .coach .coach-who .av.citta-portrait img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; display: block; }
   .coach .step-pill { display: inline-block; font-size: 11px; font-weight: 700; color: var(--green-dark); background: var(--green-tint); padding: 3px 8px; border-radius: 999px; margin-bottom: 8px; }
   .coach .step-pill[hidden] { display: none; }
   .coach h4 { margin: 0 0 6px; font-size: 16px; font-weight: 600; }
@@ -486,10 +488,59 @@
   .coach .acts .sec { border: 1px solid var(--line); background: #fff; }
   .coach .acts .link { color: var(--green); padding: 8px 0; }
 
-  .spot { position: relative; z-index: 14; box-shadow: 0 0 0 3px rgba(44,122,95,.45); border-radius: 16px; }
-  .dim::after { content: ""; display: none; position: absolute; inset: 41px 0 0; background: rgba(28,31,29,.28); pointer-events: none; z-index: 13; }
+  .spot { position: relative; z-index: 14; }
+  .tutorial-spotlight { position: absolute; z-index: 13; pointer-events: none; border-radius: 16px; box-shadow: 0 0 0 9999px rgba(28,31,29,.28); background: transparent; display: none; }
+  .tutorial-spotlight.on { display: block; }
   .frame.tutorial-on { position: relative; }
-  .frame.tutorial-on.dim::after { display: block; }
+  .frame.tutorial-doc-on .tutorial-spotlight { display: none !important; }
+  .frame.tutorial-doc-on .dock { opacity: 0; pointer-events: none; }
+
+  .tutorial-doc-view { flex: 1; min-width: 0; display: none; flex-direction: column; background: #fff; min-height: 860px; }
+  .frame.tutorial-doc-on .tutorial-doc-view { display: flex; }
+  .frame.tutorial-doc-on .body > .main { display: none; }
+  .doc-editor-bar { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; border-bottom: 1px solid var(--line); flex: none; }
+  .doc-editor-bar .crumb { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 500; color: var(--muted); }
+  .doc-editor-bar .crumb i { width: 28px; height: 28px; border-radius: 8px; background: var(--blue-tint); color: var(--blue); font-style: normal; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; }
+  .doc-editor-bar .crumb b { color: var(--ink); font-weight: 600; }
+  .doc-editor-bar .saved { font-size: 12px; color: var(--faint); }
+  .tutorial-doc-split { flex: 1; display: flex; min-height: 0; }
+  .doc-page { flex: 1; min-width: 0; padding: 48px 56px 32px 118px; overflow: auto; }
+  .doc-page .kicker { font-size: 12px; font-weight: 600; color: var(--faint); margin: 0 0 10px; letter-spacing: .02em; }
+  .doc-page h1 { margin: 0 0 28px; font-size: 28px; font-weight: 600; letter-spacing: -.4px; line-height: 1.25; max-width: 520px; }
+  .doc-page h2 { margin: 0 0 10px; font-size: 15px; font-weight: 600; }
+  .doc-page .ghost-line { display: block; height: 8px; border-radius: 4px; background: var(--surface); margin: 0 0 10px; max-width: 608px; }
+  .doc-page .ghost-line.short { max-width: 55%; }
+  .doc-page .writing { display: flex; align-items: center; gap: 8px; margin: 8px 0 20px; max-width: 270px; }
+  .doc-page .writing .bar { flex: 1; height: 8px; border-radius: 4px; background: var(--green-tint); }
+  .doc-page .writing .caret { width: 2px; height: 18px; background: var(--green); border-radius: 1px; animation: doc-caret 1s step-end infinite; }
+  @keyframes doc-caret { 50% { opacity: 0; } }
+  .tutorial-doc-citta { width: 380px; flex: none; border-left: 1px solid var(--line); display: flex; flex-direction: column; background: #fff; position: relative; }
+  .tutorial-doc-citta .ph { display: flex; align-items: center; gap: 10px; padding: 20px 21px 12px; flex: none; }
+  .tutorial-doc-citta .ph b { font-size: 16px; font-weight: 600; }
+  .tutorial-doc-citta .doc-switch { margin-left: 4px; color: var(--green); display: inline-flex; align-items: center; padding: 4px; border-radius: 8px; border: 0; background: transparent; cursor: pointer; }
+  .tutorial-doc-citta .doc-switch.spot { box-shadow: 0 0 0 2px rgba(44,122,95,.35); border-radius: 10px; }
+  .tutorial-doc-citta .msg { margin: 0 21px; padding: 15px 17px; background: var(--green-wash); border: 1px solid rgba(44,122,95,.12); border-radius: 14px; font-size: 13px; line-height: 1.45; color: var(--ink); }
+  .tutorial-doc-citta .doc-prog { margin: 14px 21px 0; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+  .tutorial-doc-citta .doc-prog span { display: block; height: 6px; width: 60%; background: var(--green); border-radius: 3px; }
+  .tutorial-doc-citta .learn-tip { margin: 14px 21px 0; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); font-size: 12px; line-height: 1.45; color: var(--muted); }
+  .tutorial-doc-citta .learn-tip .k { display: block; font-size: 10px; font-weight: 700; letter-spacing: .08em; color: var(--faint); margin-bottom: 6px; }
+  .tutorial-doc-switcher { display: none; margin: 12px 21px 0; padding: 9px; border: 1px solid var(--line); border-radius: 14px; background: #fff; box-shadow: 0 12px 32px rgba(28,31,29,.12); }
+  .tutorial-doc-switcher.open { display: block; }
+  .tutorial-doc-switcher .lbl { font-size: 10px; font-weight: 700; letter-spacing: .06em; color: var(--faint); padding: 2px 8px 8px; }
+  .tutorial-doc-switcher .si-row { display: flex; gap: 10px; align-items: flex-start; padding: 8px; border-radius: 10px; width: 100%; text-align: left; border: 0; background: transparent; font: inherit; cursor: pointer; }
+  .tutorial-doc-switcher .si-row:hover { background: var(--surface); }
+  .tutorial-doc-switcher .si-row.on { background: var(--green-tint); }
+  .tutorial-doc-switcher .si-row .av { width: 30px; height: 30px; border-radius: 15px; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex: none; }
+  .tutorial-doc-switcher .si-row .txt { flex: 1; min-width: 0; }
+  .tutorial-doc-switcher .si-row .name { font-size: 13px; font-weight: 600; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .tutorial-doc-switcher .si-row small { display: block; font-size: 11px; color: var(--faint); margin-top: 2px; }
+  .tutorial-doc-switcher .badge { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 999px; background: var(--green-tint); color: var(--green-dark); }
+  .tutorial-doc-switcher .foot { font-size: 11px; color: var(--muted); padding: 8px 8px 4px; line-height: 1.4; border-top: 1px solid var(--line); margin-top: 6px; }
+  .proto-rule { flex: none; margin: 0 170px 24px; padding: 8px 14px; border-radius: 8px; background: var(--amber-tint); border: 1px solid rgba(154,91,7,.15); font-size: 12px; color: var(--amber); }
+  .coach.switch-coach { width: 332px; padding: 14px 16px; z-index: 32; }
+  .coach .step-pill.new-pill { background: var(--green-tint); color: var(--green-dark); letter-spacing: .04em; }
+  #tutorialTrySpot { display: flex; flex-direction: column; gap: 10px; }
+  .tutorial-spot-target { position: relative; z-index: 14; }
 
   .presenter-tutorial-cta { flex: none; background: var(--green); color: #fff; font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 999px; box-shadow: 0 2px 10px rgba(44,122,95,.25); margin-right: 4px; }
   .presenter-tutorial-cta:hover { background: var(--green-dark); }
@@ -584,16 +635,12 @@
 
         <div class="main">
           <div class="logo-row">
-            <div class="logo" aria-label="Symbion">
-              <svg class="logo-mark" viewBox="0 0 36 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 7c6-3 10 3 17 0s12-3 17 0"/>
-                <path d="M0 12c8-4 12 4 20 0s10-4 18 0"/>
-                <path d="M2 17c5-3 9 3 16 0s11-3 16 0"/>
-              </svg>
-              <span class="logo-type">SYMBION</span>
-            </div>
+            <div class="logo" aria-label="Symbion">≋  S Y M B I O N</div>
             <button type="button" class="nav-tutorial" data-action="open-tutorial" data-start-tutorial aria-label="Start interactive tutorial" aria-pressed="false">Tutorial · 4 steps</button>
-            <button type="button" class="search search-hit" aria-label="Search">Search files, Cosmos, people…   ⌘K</button>
+            <label class="search-wrap">
+              <input type="search" class="search" id="headerSearch" placeholder="Search files, Cosmos, people…" autocomplete="off" spellcheck="false" aria-label="Search files, Cosmos, people">
+              <span class="search-kbd" aria-hidden="true">⌘K</span>
+            </label>
           </div>
 
           <div class="content hub">
@@ -682,10 +729,18 @@
                   <h2>Good morning, <span>Jess</span></h2>
                   <p>Your <b>Lecture 1 summary</b> is in Doc. Pick up your deck or start something new with Citta.</p>
                 </div>
-                <div class="day compact" aria-label="This day">
+                <div class="day" aria-label="This day">
                   <span class="lbl">THIS DAY</span>
                   <span class="items">1 / 3 items done</span>
-                  <span class="track"></span><span class="elapsed"></span><span class="now"></span>
+                  <span class="evt" style="left:56px"><b>11:00</b>Reply Roland</span>
+                  <span class="evt" style="left:189px"><b>2:30</b>Lecture 5</span>
+                  <span class="track"></span><span class="elapsed"></span>
+                  <span class="dot hollow" style="left:100px"></span>
+                  <span class="dot fill" style="left:222px"></span>
+                  <span class="now"></span>
+                  <span class="tick" style="left:0">8 am</span>
+                  <span class="tick now-l">now · 9:40</span>
+                  <span class="tick" style="right:0">8 pm</span>
                 </div>
               </section>
             </div>
@@ -738,12 +793,15 @@
                 <div class="wrap" id="composerContinue">
                   <button type="button" class="chip" data-continue-tool="doc"><span class="ic ico-report" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M728.3 928.2H297.9c-84.2 0-152.8-68.5-152.8-152.8V329.1c0-84.2 68.5-152.8 152.8-152.8H365v60h-67.1c-51.2 0-92.8 41.6-92.8 92.8v446.3c0 51.2 41.6 92.8 92.8 92.8h430.4c51.2 0 92.8-41.6 92.8-92.8V329.1c0-51.2-41.6-92.8-92.8-92.8H661v-60h67.3c84.2 0 152.8 68.5 152.8 152.8v446.3c0 84.3-68.6 152.8-152.8 152.8z" fill="currentColor"/><path d="M593.6 308.1h-161c-49.3 0-89.4-40.1-89.4-89.4v-31.4c0-49.3 40.1-89.4 89.4-89.4h161c49.3 0 89.4 40.1 89.4 89.4v31.4c0 49.3-40.1 89.4-89.4 89.4zM432.6 158c-16.2 0-29.4 13.2-29.4 29.4v31.4c0 16.2 13.2 29.4 29.4 29.4h161c16.2 0 29.4-13.2 29.4-29.4v-31.4c0-16.2-13.2-29.4-29.4-29.4h-161z" fill="currentColor"/><path d="M511.3 477.1H320.1c-16.6 0-30-13.4-30-30s13.4-30 30-30h191.3c16.6 0 30 13.4 30 30s-13.5 30-30.1 30zM576.1 604.1h-256c-16.6 0-30-13.4-30-30s13.4-30 30-30h256.1c16.6 0 30 13.4 30 30s-13.5 30-30.1 30zM640.1 732.1h-320c-16.6 0-30-13.4-30-30s13.4-30 30-30h320.1c16.6 0 30 13.4 30 30s-13.5 30-30.1 30z" fill="currentColor"/></svg></span><b>Reading report — QGP</b><span class="pct"><span class="bar"><span style="width:12px"></span></span>55%</span><span class="ar ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
                   <button type="button" class="chip" data-continue-tool="deck"><span class="ic ico-book" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M139.661795 93.098382c-25.742144 0-46.563413 20.82127-46.563413 46.534969v651.631787c0 25.713699 20.82127 46.534969 46.534969 46.534969h176.355017c45.937637 0 90.851278 13.624847 129.080494 39.110991L511.998436 921.511851l66.929573-44.600753a232.731733 232.731733 0 0 1 129.023606-39.110991h176.411905c25.713699 0 46.534969-20.82127 46.534969-46.534969V139.633351c0-25.713699-20.82127-46.534969-46.534969-46.534969h-176.355017c-19.342163 0-48.753629 8.362641-73.557108 22.812375-12.003519 6.968868-20.650604 14.079957-25.770588 19.996383a26.168809 26.168809 0 0 0-3.726211 5.262206v556.99741a46.534969 46.534969 0 0 1-93.098382 0V139.661795c0-26.993695 12.942183-49.066517 26.396364-64.597135a194.929182 194.929182 0 0 1 49.493182-39.651435C623.016763 14.904843 668.442402 0 707.980059 0h176.355017A139.661795 139.661795 0 0 1 1023.996871 139.661795v651.603343a139.661795 139.661795 0 0 1-139.661795 139.661795h-176.355017a139.661795 139.661795 0 0 0-77.425541 23.438151l-92.728606 61.809589a46.534969 46.534969 0 0 1-51.654953 0l-92.728606-61.809589a139.661795 139.661795 0 0 0-77.453985-23.466595h-176.355017A139.661795 139.661795 0 0 1 0 791.265138V139.633351A139.661795 139.661795 0 0 1 139.661795 0h176.355017c45.909193 0 90.822834 13.624847 129.05205 39.110992a46.534969 46.534969 0 0 1-51.626509 77.425541 139.661795 139.661795 0 0 0-77.453985-23.438151h-176.355017z" fill="currentColor"/><path d="M170.666145 360.304677C170.666145 334.135868 191.032305 312.887933 216.177117 312.887933h136.532916c25.144812 0 45.510972 21.219491 45.510972 47.416744 0 26.168809-20.36616 47.3883-45.510972 47.388299H216.177117c-25.144812 0-45.510972-21.219491-45.510972-47.388299z m45.510972 189.610087c0-12.572406 4.807096-24.632814 13.340404-33.507453 8.533307-8.903084 20.110161-13.880846 32.170568-13.880846h91.021944c25.144812 0 45.510972 21.219491 45.510972 47.388299 0 26.168809-20.36616 47.416744-45.510972 47.416744H261.688089c-25.144812 0-45.510972-21.219491-45.510972-47.416744z" fill="currentColor"/></svg></span><b>Lecture 4 summary</b><span class="pct"><span class="bar"><span style="width:13px"></span></span>60%</span><span class="ar ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
-                  <button type="button" class="chip" data-continue-tool="numbers"><span class="ic">▦</span><b>Lab 3</b><span class="pct"><span class="bar"><span style="width:7px"></span></span>30%</span><span class="ar ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
+                  <button type="button" class="chip" data-continue-tool="numbers"><span class="ic ico-lab" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M956.288 804.48L640 277.44V63.968h32c17.6 0 32-14.4 32-32s-14.4-32-32-32H352c-17.6 0-32 14.4-32 32s14.4 32 32 32h32V277.44L67.712 804.48C-4.736 925.216 51.2 1024 192 1024h640c140.8 0 196.736-98.784 124.288-219.52zM241.024 640L448 295.072V64h128v231.072L782.976 640H241.056z" fill="currentColor"/></svg></span><b>Lab 3</b><span class="pct"><span class="bar"><span style="width:7px"></span></span>30%</span><span class="ar ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
                   <button type="button" class="link-btn">All files<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
                 </div>
                 <div class="wrap" id="composerContinueHandoff" hidden>
+                  <button type="button" class="chip" data-continue-tool="doc"><span class="ic ico-report" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M728.3 928.2H297.9c-84.2 0-152.8-68.5-152.8-152.8V329.1c0-84.2 68.5-152.8 152.8-152.8H365v60h-67.1c-51.2 0-92.8 41.6-92.8 92.8v446.3c0 51.2 41.6 92.8 92.8 92.8h430.4c51.2 0 92.8-41.6 92.8-92.8V329.1c0-51.2-41.6-92.8-92.8-92.8H661v-60h67.3c84.2 0 152.8 68.5 152.8 152.8v446.3c0 84.3-68.6 152.8-152.8 152.8z" fill="currentColor"/><path d="M593.6 308.1h-161c-49.3 0-89.4-40.1-89.4-89.4v-31.4c0-49.3 40.1-89.4 89.4-89.4h161c49.3 0 89.4 40.1 89.4 89.4v31.4c0 49.3-40.1 89.4-89.4 89.4zM432.6 158c-16.2 0-29.4 13.2-29.4 29.4v31.4c0 16.2 13.2 29.4 29.4 29.4h161c16.2 0 29.4-13.2 29.4-29.4v-31.4c0-16.2-13.2-29.4-29.4-29.4h-161z" fill="currentColor"/><path d="M511.3 477.1H320.1c-16.6 0-30-13.4-30-30s13.4-30 30-30h191.3c16.6 0 30 13.4 30 30s-13.5 30-30.1 30zM576.1 604.1h-256c-16.6 0-30-13.4-30-30s13.4-30 30-30h256.1c16.6 0 30 13.4 30 30s-13.5 30-30.1 30zM640.1 732.1h-320c-16.6 0-30-13.4-30-30s13.4-30 30-30h320.1c16.6 0 30 13.4 30 30s-13.5 30-30.1 30z" fill="currentColor"/></svg></span><b>Reading report — QGP</b><span class="pct"><span class="bar"><span style="width:12px"></span></span>55%</span><span class="ar ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
                   <button type="button" class="chip" data-continue-tool="doc"><span class="ic ico-book" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M139.661795 93.098382c-25.742144 0-46.563413 20.82127-46.563413 46.534969v651.631787c0 25.713699 20.82127 46.534969 46.534969 46.534969h176.355017c45.937637 0 90.851278 13.624847 129.080494 39.110991L511.998436 921.511851l66.929573-44.600753a232.731733 232.731733 0 0 1 129.023606-39.110991h176.411905c25.713699 0 46.534969-20.82127 46.534969-46.534969V139.633351c0-25.713699-20.82127-46.534969-46.534969-46.534969h-176.355017c-19.342163 0-48.753629 8.362641-73.557108 22.812375-12.003519 6.968868-20.650604 14.079957-25.770588 19.996383a26.168809 26.168809 0 0 0-3.726211 5.262206v556.99741a46.534969 46.534969 0 0 1-93.098382 0V139.661795c0-26.993695 12.942183-49.066517 26.396364-64.597135a194.929182 194.929182 0 0 1 49.493182-39.651435C623.016763 14.904843 668.442402 0 707.980059 0h176.355017A139.661795 139.661795 0 0 1 1023.996871 139.661795v651.603343a139.661795 139.661795 0 0 1-139.661795 139.661795h-176.355017a139.661795 139.661795 0 0 0-77.425541 23.438151l-92.728606 61.809589a46.534969 46.534969 0 0 1-51.654953 0l-92.728606-61.809589a139.661795 139.661795 0 0 0-77.453985-23.466595h-176.355017A139.661795 139.661795 0 0 1 0 791.265138V139.633351A139.661795 139.661795 0 0 1 139.661795 0h176.355017c45.909193 0 90.822834 13.624847 129.05205 39.110992a46.534969 46.534969 0 0 1-51.626509 77.425541 139.661795 139.661795 0 0 0-77.453985-23.438151h-176.355017z" fill="currentColor"/><path d="M170.666145 360.304677C170.666145 334.135868 191.032305 312.887933 216.177117 312.887933h136.532916c25.144812 0 45.510972 21.219491 45.510972 47.416744 0 26.168809-20.36616 47.3883-45.510972 47.388299H216.177117c-25.144812 0-45.510972-21.219491-45.510972-47.388299z m45.510972 189.610087c0-12.572406 4.807096-24.632814 13.340404-33.507453 8.533307-8.903084 20.110161-13.880846 32.170568-13.880846h91.021944c25.144812 0 45.510972 21.219491 45.510972 47.388299 0 26.168809-20.36616 47.416744-45.510972 47.416744H261.688089c-25.144812 0-45.510972-21.219491-45.510972-47.416744z" fill="currentColor"/></svg></span><b>Lecture 1 summary</b><span class="pct done">Done</span><span class="ar ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
+                  <button type="button" class="chip" data-continue-tool="deck"><span class="ic ico-book" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M139.661795 93.098382c-25.742144 0-46.563413 20.82127-46.563413 46.534969v651.631787c0 25.713699 20.82127 46.534969 46.534969 46.534969h176.355017c45.937637 0 90.851278 13.624847 129.080494 39.110991L511.998436 921.511851l66.929573-44.600753a232.731733 232.731733 0 0 1 129.023606-39.110991h176.411905c25.713699 0 46.534969-20.82127 46.534969-46.534969V139.633351c0-25.713699-20.82127-46.534969-46.534969-46.534969h-176.355017c-19.342163 0-48.753629 8.362641-73.557108 22.812375-12.003519 6.968868-20.650604 14.079957-25.770588 19.996383a26.168809 26.168809 0 0 0-3.726211 5.262206v556.99741a46.534969 46.534969 0 0 1-93.098382 0V139.661795c0-26.993695 12.942183-49.066517 26.396364-64.597135a194.929182 194.929182 0 0 1 49.493182-39.651435C623.016763 14.904843 668.442402 0 707.980059 0h176.355017A139.661795 139.661795 0 0 1 1023.996871 139.661795v651.603343a139.661795 139.661795 0 0 1-139.661795 139.661795h-176.355017a139.661795 139.661795 0 0 0-77.425541 23.438151l-92.728606 61.809589a46.534969 46.534969 0 0 1-51.654953 0l-92.728606-61.809589a139.661795 139.661795 0 0 0-77.453985-23.466595h-176.355017A139.661795 139.661795 0 0 1 0 791.265138V139.633351A139.661795 139.661795 0 0 1 139.661795 0h176.355017c45.909193 0 90.822834 13.624847 129.05205 39.110992a46.534969 46.534969 0 0 1-51.626509 77.425541 139.661795 139.661795 0 0 0-77.453985-23.438151h-176.355017z" fill="currentColor"/><path d="M170.666145 360.304677C170.666145 334.135868 191.032305 312.887933 216.177117 312.887933h136.532916c25.144812 0 45.510972 21.219491 45.510972 47.416744 0 26.168809-20.36616 47.3883-45.510972 47.388299H216.177117c-25.144812 0-45.510972-21.219491-45.510972-47.388299z m45.510972 189.610087c0-12.572406 4.807096-24.632814 13.340404-33.507453 8.533307-8.903084 20.110161-13.880846 32.170568-13.880846h91.021944c25.144812 0 45.510972 21.219491 45.510972 47.388299 0 26.168809-20.36616 47.416744-45.510972 47.416744H261.688089c-25.144812 0-45.510972-21.219491-45.510972-47.416744z" fill="currentColor"/></svg></span><b>Lecture 4 summary</b><span class="pct"><span class="bar"><span style="width:13px"></span></span>60%</span><span class="ar ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
                   <button type="button" class="chip" data-continue-tool="deck"><span class="ic ico-book" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M139.661795 93.098382c-25.742144 0-46.563413 20.82127-46.563413 46.534969v651.631787c0 25.713699 20.82127 46.534969 46.534969 46.534969h176.355017c45.937637 0 90.851278 13.624847 129.080494 39.110991L511.998436 921.511851l66.929573-44.600753a232.731733 232.731733 0 0 1 129.023606-39.110991h176.411905c25.713699 0 46.534969-20.82127 46.534969-46.534969V139.633351c0-25.713699-20.82127-46.534969-46.534969-46.534969h-176.355017c-19.342163 0-48.753629 8.362641-73.557108 22.812375-12.003519 6.968868-20.650604 14.079957-25.770588 19.996383a26.168809 26.168809 0 0 0-3.726211 5.262206v556.99741a46.534969 46.534969 0 0 1-93.098382 0V139.661795c0-26.993695 12.942183-49.066517 26.396364-64.597135a194.929182 194.929182 0 0 1 49.493182-39.651435C623.016763 14.904843 668.442402 0 707.980059 0h176.355017A139.661795 139.661795 0 0 1 1023.996871 139.661795v651.603343a139.661795 139.661795 0 0 1-139.661795 139.661795h-176.355017a139.661795 139.661795 0 0 0-77.425541 23.438151l-92.728606 61.809589a46.534969 46.534969 0 0 1-51.654953 0l-92.728606-61.809589a139.661795 139.661795 0 0 0-77.453985-23.466595h-176.355017A139.661795 139.661795 0 0 1 0 791.265138V139.633351A139.661795 139.661795 0 0 1 139.661795 0h176.355017c45.909193 0 90.822834 13.624847 129.05205 39.110992a46.534969 46.534969 0 0 1-51.626509 77.425541 139.661795 139.661795 0 0 0-77.453985-23.438151h-176.355017z" fill="currentColor"/><path d="M170.666145 360.304677C170.666145 334.135868 191.032305 312.887933 216.177117 312.887933h136.532916c25.144812 0 45.510972 21.219491 45.510972 47.416744 0 26.168809-20.36616 47.3883-45.510972 47.388299H216.177117c-25.144812 0-45.510972-21.219491-45.510972-47.388299z m45.510972 189.610087c0-12.572406 4.807096-24.632814 13.340404-33.507453 8.533307-8.903084 20.110161-13.880846 32.170568-13.880846h91.021944c25.144812 0 45.510972 21.219491 45.510972 47.388299 0 26.168809-20.36616 47.416744-45.510972 47.416744H261.688089c-25.144812 0-45.510972-21.219491-45.510972-47.416744z" fill="currentColor"/></svg></span><b>Lecture 1 slides</b><span class="pct"><span class="bar"><span style="width:18px"></span></span>80%</span><span class="ar ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
+                  <button type="button" class="chip" data-continue-tool="numbers"><span class="ic ico-lab" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M956.288 804.48L640 277.44V63.968h32c17.6 0 32-14.4 32-32s-14.4-32-32-32H352c-17.6 0-32 14.4-32 32s14.4 32 32 32h32V277.44L67.712 804.48C-4.736 925.216 51.2 1024 192 1024h640c140.8 0 196.736-98.784 124.288-219.52zM241.024 640L448 295.072V64h128v231.072L782.976 640H241.056z" fill="currentColor"/></svg></span><b>Lab 3</b><span class="pct"><span class="bar"><span style="width:7px"></span></span>30%</span><span class="ar ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
                   <button type="button" class="link-btn">All files<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
                 </div>
                 <div class="wrap suggest-chips" id="composerSuggest" hidden>
@@ -782,7 +840,7 @@
                   <span class="mav agent">LR</span><span class="tx"><b>Lab Report Coach</b><small>AI agent · drafts lab reports in Doc</small></span><span class="ck">✓</span>
                 </button>
                 <div class="rule"></div>
-                <button type="button" class="browse">+ Browse digital twins</button>
+                <button type="button" class="browse"><span class="plus" aria-hidden="true">+</span><span>Browse digital twins</span></button>
               </div>
             </section>
 
@@ -967,13 +1025,15 @@
               </section>
 
               <section class="tool-sec" id="sec-try-tutorial" aria-label="Try each tool (tutorial)">
+                <div id="tutorialTrySpot">
                 <div class="hdr"><h3>Try each tool with Citta</h3><span class="sub">1 minute each · uses Prof. Roland’s course material</span></div>
-                <div class="tutorial-try-cards">
+                <div class="tutorial-try-cards" id="tutorialTryCards">
                   <div class="tutorial-try-card" data-tool="doc"><div class="trow"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></div><p class="lead">Lecture 1 → one-page summary</p><p class="sub">A Doc with headings + key formulas</p><button type="button" class="try-it">≋ Try it</button></div>
                   <div class="tutorial-try-card" data-tool="deck"><div class="trow"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></div><p class="lead">Lecture 1 → 6 study slides</p><p class="sub">A Deck you can present or revise</p><button type="button" class="try-it">≋ Try it</button></div>
                   <div class="tutorial-try-card" data-tool="numbers"><div class="trow"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></div><p class="lead">Plot the sPHENIX sample data</p><p class="sub">A sheet + chart, explained</p><button type="button" class="try-it">≋ Try it</button></div>
                   <div class="tutorial-try-card" data-tool="symtex"><div class="trow"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></div><p class="lead">Typeset the Bjorken energy formula</p><p class="sub">Clean LaTeX you can reuse</p><button type="button" class="try-it">≋ Try it</button></div>
                   <div class="tutorial-try-card" data-tool="code"><div class="trow"><i style="background:var(--slate-tint);color:var(--slate);font-size:10px">&lt;/&gt;</i><b>Code</b></div><p class="lead">Run a tiny particle simulation</p><p class="sub">A Python notebook, commented</p><button type="button" class="try-it">≋ Try it</button></div>
+                </div>
                 </div>
               </section>
 
@@ -1005,6 +1065,47 @@
               </section>
             </div>
           </div>
+        </div>
+
+        <div class="tutorial-doc-view" id="tutorialDocView" hidden aria-hidden="true">
+          <header class="doc-editor-bar">
+            <div class="crumb"><i aria-hidden="true">≡</i><span>Doc</span><span>/</span><b>Lecture 1 — one-page summary</b></div>
+            <span class="saved">Saved to your Library</span>
+          </header>
+          <div class="tutorial-doc-split">
+            <article class="doc-page" aria-label="Lecture 1 summary document">
+              <p class="kicker">Heavy-ion Physics · Lecture 1</p>
+              <h1>What is a quark-gluon plasma?</h1>
+              <h2>1 Why collide heavy ions</h2>
+              <span class="ghost-line"></span><span class="ghost-line"></span><span class="ghost-line short"></span>
+              <h2>2 The phase diagram</h2>
+              <span class="ghost-line"></span><span class="ghost-line"></span><span class="ghost-line short"></span>
+              <h2>3 How we detect it</h2>
+              <div class="writing" aria-label="Citta is writing"><span class="bar"></span><span class="caret"></span></div>
+              <h2>4 Key formulas</h2>
+              <h2>5 Check yourself — 3 questions</h2>
+            </article>
+            <aside class="tutorial-doc-citta" aria-label="Citta">
+              <div class="ph">
+                <span class="citta-av citta-portrait" aria-hidden="true"><img src="assets/citta-avatar.png" width="28" height="28" alt=""></span>
+                <b>Citta</b>
+                <button type="button" class="doc-switch" id="tutorialDocSwitch" aria-label="Switch who helps with this task" aria-expanded="false">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h8M8 2l2 2-2 2M10 8H2M4 6 2 8l2 2"/></svg>
+                </button>
+              </div>
+              <p class="msg">Writing your summary from Prof. Roland’s Lecture 1 slides. Section 3 of 5…</p>
+              <div class="doc-prog" aria-hidden="true"><span></span></div>
+              <div class="learn-tip"><span class="k">TIP</span>Click any line to rewrite it, or ask me here: “add a diagram”, “make it simpler”.</div>
+              <div class="tutorial-doc-switcher" id="tutorialDocSwitcher" role="menu" aria-label="Who helps with this task">
+                <div class="lbl">WHO HELPS WITH THIS TASK</div>
+                <button type="button" class="si-row on" data-ai="citta"><span class="av">≋</span><span class="txt"><span class="name">Citta <span class="badge">Default</span></span><small>Knows your files and every Symbion tool</small></span><span aria-hidden="true">✓</span></button>
+                <button type="button" class="si-row" data-ai="roland"><span class="av">GR</span><span class="txt"><span class="name">Prof. Roland’s twin <span class="badge">✦ Twin</span></span><small>Heavy-ion Physics · course-specific help</small></span></button>
+                <button type="button" class="si-row" data-ai="lr"><span class="av">LR</span><span class="txt"><span class="name">Lab Report Coach <span class="badge">AI agent</span></span><small>Added by you · step-by-step lab write-ups</small></span></button>
+                <p class="foot">Switch anytime — even halfway through a task. Your file stays the same.</p>
+              </div>
+            </aside>
+          </div>
+          <p class="proto-rule">Figma 8541 · 1b — Doc opens while Citta writes; the file stays open if you switch twins mid-task.</p>
         </div>
       </div>
 
@@ -1061,8 +1162,10 @@
         </div>
       </aside>
 
+      <div class="tutorial-spotlight" id="tutorialSpotlight" aria-hidden="true"></div>
+
       <div class="coach" id="coach" role="dialog" aria-live="polite">
-        <div class="coach-who" id="coachWho" hidden><span class="av" aria-hidden="true">≋</span><span id="coachWhoText">Citta · your assistant in Symbion</span></div>
+        <div class="coach-who" id="coachWho" hidden><span class="av" id="coachAv" aria-hidden="true">≋</span><span id="coachWhoText">Citta · your assistant in Symbion</span></div>
         <span class="step-pill" id="coachStep">Step 1 of 4</span>
         <h4 id="coachTitle">Let’s make your first thing together.</h4>
         <p id="coachBody">I’ll turn Prof. Roland’s Lecture 1 (24 slides) into a one-page summary in Doc. You watch, then edit anything you like.</p>
@@ -1196,11 +1299,10 @@
   }
 
   function positionSwitcherMenu() {
-    const topPad = 26;
-    const leftPad = pageGutterPx();
-    const working = picker.closest('.working');
-    menu.style.left = `${leftPad + picker.offsetLeft}px`;
-    menu.style.top = `${topPad + working.offsetTop + picker.offsetTop + picker.offsetHeight + 6}px`;
+    const cRect = composer.getBoundingClientRect();
+    const pRect = picker.getBoundingClientRect();
+    menu.style.left = `${pRect.left - cRect.left}px`;
+    menu.style.top = `${pRect.bottom - cRect.top + 6}px`;
   }
 
   function setMenu(open) {
@@ -1246,13 +1348,22 @@
     syncPresenter(s);
   }));
 
-  let screen = 'home', tutorialStep = 1, cittaExpanded = false, newTipSeen = false, postTutorialTipPending = false;
+  let screen = 'home', tutorialStep = 1, tutorialDocPhase = null, cittaExpanded = false, newTipSeen = false, postTutorialTipPending = false;
   const frame = $('frame');
   const coach = $('coach'), coachActs = $('coachActs');
   const newTip = $('newTip');
+  const tutorialSpotlight = $('tutorialSpotlight');
+  const tutorialDocView = $('tutorialDocView');
+  const TUTORIAL_DOC_SWITCH = {
+    title: 'You’re not limited to Citta',
+    body: 'Swap in Prof. Roland’s twin, any SI you’ve added (twins and AI agents) like Lab Report Coach — anytime, even halfway through a task. Your file stays the same.',
+    primary: 'Show me',
+    secondary: 'Got it',
+  };
   const TUTORIAL_STEPS = [
     {
       who: 'Citta · your assistant in Symbion',
+      usePortrait: true,
       title: 'Let’s make your first thing together.',
       body: 'I’ll turn Prof. Roland’s Lecture 1 (24 slides) into a one-page summary in Doc. You watch, then edit anything you like.',
       meta: ['≈ 1 min', 'Uses: Lecture 1 slides', 'You can undo'],
@@ -1277,7 +1388,9 @@
       secondary: 'Back',
     },
     {
-      title: 'You’re set',
+      who: 'Citta · your assistant in Symbion',
+      usePortrait: true,
+      title: 'You’re set.',
       body: 'Your first summary lands in Doc and appears under Continue with on your next visit.',
       spot: '',
       primary: 'Finish tutorial',
@@ -1288,7 +1401,8 @@
   function syncHash() {
     const q = new URLSearchParams();
     if (screen !== 'home') q.set('screen', screen);
-    if (screen === 'tutorial' && tutorialStep > 1) q.set('tutorial', String(tutorialStep));
+    if (screen === 'tutorial' && tutorialDocPhase) q.set('tutorial', '1b');
+    else if (screen === 'tutorial' && tutorialStep > 1) q.set('tutorial', String(tutorialStep));
     if (cittaExpanded) q.set('citta', 'expanded');
     if (postTutorialTipPending && screen === 'handoff' && !newTipSeen) q.set('tip', '1');
     const h = q.toString();
@@ -1380,14 +1494,131 @@
     }
   }
 
+  function clearTutorialSpotlight() {
+    tutorialSpotlight.classList.remove('on');
+    tutorialSpotlight.setAttribute('aria-hidden', 'true');
+    document.querySelectorAll('.tutorial-spot-target').forEach((n) => n.classList.remove('tutorial-spot-target'));
+  }
+
+  function positionTutorialSpotlight(el, inset = 10) {
+    document.querySelectorAll('.tutorial-spot-target').forEach((n) => n.classList.remove('tutorial-spot-target'));
+    if (!el) { clearTutorialSpotlight(); return; }
+    el.classList.add('tutorial-spot-target');
+    const t = frameRectOffset(el);
+    tutorialSpotlight.style.top = `${Math.max(0, t.top - inset)}px`;
+    tutorialSpotlight.style.left = `${Math.max(0, t.left - inset)}px`;
+    tutorialSpotlight.style.width = `${t.right - t.left + inset * 2}px`;
+    tutorialSpotlight.style.height = `${t.bottom - t.top + inset * 2}px`;
+    tutorialSpotlight.classList.add('on');
+    tutorialSpotlight.setAttribute('aria-hidden', 'false');
+  }
+
+  function getTrySpotElement() {
+    return $('tutorialTrySpot') || document.querySelector('#sec-try-tutorial .tutorial-try-cards') || $('sec-try-each')?.querySelector('.try-cards');
+  }
+
+  function getTutorialSpotTarget(stepKey) {
+    if (stepKey === 'composer') return composer;
+    if (stepKey === 'try') return getTrySpotElement();
+    if (stepKey === 'picker') return picker.closest('.working') || picker;
+    if (stepKey === 'doc-switch') return $('tutorialDocSwitch');
+    return null;
+  }
+
+  function exitTutorialDoc() {
+    tutorialDocPhase = null;
+    frame.classList.remove('tutorial-doc-on');
+    if (tutorialDocView) {
+      tutorialDocView.hidden = true;
+      tutorialDocView.setAttribute('aria-hidden', 'true');
+    }
+    $('tutorialDocSwitcher')?.classList.remove('open');
+    $('tutorialDocSwitch')?.classList.remove('spot');
+    $('tutorialDocSwitch')?.setAttribute('aria-expanded', 'false');
+    coach.classList.remove('switch-coach');
+  }
+
+  function enterTutorialDoc() {
+    tutorialDocPhase = 'doc';
+    frame.classList.add('tutorial-doc-on', 'tutorial-on');
+    clearTutorialSpotlight();
+    frame.classList.remove('dim');
+    if (tutorialDocView) {
+      tutorialDocView.hidden = false;
+      tutorialDocView.setAttribute('aria-hidden', 'false');
+    }
+    setCittaExpanded(false);
+    setMenu(false);
+    renderCoach();
+    requestAnimationFrame(() => {
+      positionCoach();
+      fit();
+    });
+  }
+
+  function finishTutorialDocToTryTools() {
+    exitTutorialDoc();
+    setScreen('tutorial', { step: 2 });
+  }
+
+  function renderDocSwitchCoach() {
+    const coachWho = $('coachWho');
+    const coachAv = $('coachAv');
+    const coachMeta = $('coachMeta');
+    const coachStep = $('coachStep');
+    coach.classList.add('switch-coach');
+    coach.classList.remove('wide');
+    coachWho.hidden = true;
+    coachStep.hidden = false;
+    coachStep.classList.add('new-pill');
+    coachStep.textContent = 'NEW';
+    $('coachTitle').textContent = TUTORIAL_DOC_SWITCH.title;
+    $('coachBody').textContent = TUTORIAL_DOC_SWITCH.body;
+    coachMeta.hidden = true;
+    coachMeta.replaceChildren();
+    coachActs.replaceChildren();
+    const pri = document.createElement('button');
+    pri.type = 'button'; pri.className = 'pri'; pri.textContent = TUTORIAL_DOC_SWITCH.primary;
+    const sec = document.createElement('button');
+    sec.type = 'button'; sec.className = 'sec'; sec.textContent = TUTORIAL_DOC_SWITCH.secondary;
+    coachActs.append(pri, sec);
+    pri.addEventListener('click', () => {
+      tutorialDocPhase = 'switch-open';
+      $('tutorialDocSwitcher')?.classList.add('open');
+      const sw = $('tutorialDocSwitch');
+      sw?.classList.add('spot');
+      sw?.setAttribute('aria-expanded', 'true');
+      coach.classList.remove('on');
+      clearTutorialSpotlight();
+    });
+    sec.addEventListener('click', () => finishTutorialDocToTryTools());
+    coach.classList.toggle('on', screen === 'tutorial');
+    positionCoach();
+    fit();
+  }
+
   function renderCoach() {
+    if (screen === 'tutorial' && tutorialStep === 1 && tutorialDocPhase) {
+      renderDocSwitchCoach();
+      return;
+    }
+    coach.classList.remove('switch-coach');
+    $('coachStep').classList.remove('new-pill');
     const step = TUTORIAL_STEPS[tutorialStep - 1];
     const coachWho = $('coachWho');
+    const coachAv = $('coachAv');
     const coachMeta = $('coachMeta');
     coach.classList.toggle('wide', !!step.wide);
     if (step.who) {
       coachWho.hidden = false;
       $('coachWhoText').textContent = step.who;
+      if (step.usePortrait && coachAv) {
+        coachAv.className = 'av citta-portrait';
+        coachAv.innerHTML = `<img src="${CITTA_AVATAR_SRC}" width="28" height="28" alt="">`;
+      } else if (coachAv) {
+        coachAv.className = 'av';
+        coachAv.textContent = '≋';
+      }
     } else {
       coachWho.hidden = true;
     }
@@ -1416,11 +1647,9 @@
     sec.addEventListener('click', () => onCoachSecondary(tutorialStep));
 
     document.querySelectorAll('.spot').forEach((el) => el.classList.remove('spot'));
-    frame.classList.toggle('tutorial-on', screen === 'tutorial');
-    frame.classList.toggle('dim', screen === 'tutorial' && !!step.spot);
-    if (step.spot === 'composer') composer.classList.add('spot');
-    if (step.spot === 'try') (document.getElementById('sec-try-tutorial') || document.getElementById('tail-tutorial') || $('sec-try-each'))?.classList.add('spot');
-    if (step.spot === 'picker') picker.classList.add('spot');
+    frame.classList.toggle('tutorial-on', screen === 'tutorial' && !tutorialDocPhase);
+    if (step.spot) positionTutorialSpotlight(getTutorialSpotTarget(step.spot), step.spot === 'composer' ? 6 : 10);
+    else clearTutorialSpotlight();
     coach.classList.toggle('on', screen === 'tutorial');
     positionCoach();
     fit();
@@ -1440,15 +1669,22 @@
     coach.style.top = '';
     coach.style.left = `${pad}px`;
     coach.style.maxHeight = '';
-    if (step.spot === 'composer') {
+    if (tutorialDocPhase === 'doc') {
+      const sw = $('tutorialDocSwitch');
+      if (sw) {
+        const t = frameRectOffset(sw);
+        coach.style.top = `${t.bottom + 12}px`;
+        coach.style.left = `${Math.max(pad, t.left - 40)}px`;
+      }
+    } else if (step.spot === 'composer') {
       const c = frameRectOffset(composer);
       coach.style.top = `${c.bottom + 20}px`;
       coach.style.left = `${Math.max(pad, c.left)}px`;
     } else if (step.spot === 'try') {
-      const el = document.getElementById('sec-try-tutorial') || document.getElementById('tail-tutorial') || $('sec-try-each');
+      const el = getTrySpotElement();
       if (el) {
         const t = frameRectOffset(el);
-        coach.style.top = `${t.bottom + 16}px`;
+        coach.style.top = `${Math.min(t.bottom + 16, frame.offsetHeight - 200)}px`;
         coach.style.left = `${Math.max(pad, t.left)}px`;
       }
     } else if (step.spot === 'picker') {
@@ -1507,17 +1743,20 @@
     setComposerDraft(`Try ${label} with Citta — what should we make first?`);
   }
 
-  function startTutorial({ step = 1 } = {}) {
+  function startTutorial({ step = 1, docPhase = false } = {}) {
     postTutorialTipPending = false;
     if (step === 1) newTipSeen = false;
     hidePostTutorialTip({ dismissed: false });
+    exitTutorialDoc();
     setCittaExpanded(false);
     setAI('citta', { announce: false });
     setMenu(false);
     syncPresenter('citta');
     setScreen('tutorial', { step });
+    if (docPhase) enterTutorialDoc();
     requestAnimationFrame(() => {
       positionCoach();
+      if (tutorialSpotlight.classList.contains('on')) positionTutorialSpotlight(getTutorialSpotTarget(TUTORIAL_STEPS[(step || 1) - 1]?.spot));
       coach.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
   }
@@ -1664,12 +1903,6 @@
         e.stopPropagation();
         flashEl(addsi);
         showToastMsg('Added to your SIs');
-        return;
-      }
-
-      const search = e.target.closest('.search-hit');
-      if (search) {
-        showToastMsg('Search (⌘K prototype)');
         return;
       }
 
@@ -1838,17 +2071,35 @@
   }
 
   function onCoachPrimary(step) {
-    if (step === 1) { setScreen('tutorial', { step: 2 }); return; }
+    if (step === 1) {
+      if (!tutorialDocPhase) { enterTutorialDoc(); return; }
+      return;
+    }
     if (step === 2) { setScreen('tutorial', { step: 3 }); return; }
     if (step === 3) { setMenu(false); setScreen('tutorial', { step: 4 }); return; }
     if (step === 4) { finishTutorialToHome(); return; }
   }
 
   function onCoachSecondary(step) {
-    if (step === 1) { postTutorialTipPending = false; setScreen('home'); return; }
+    if (step === 1) {
+      if (tutorialDocPhase) { finishTutorialDocToTryTools(); return; }
+      postTutorialTipPending = false;
+      exitTutorialDoc();
+      setScreen('home');
+      return;
+    }
     if (step === 2) { setScreen('tutorial', { step: 1 }); return; }
     if (step === 3) { setMenu(false); setScreen('tutorial', { step: 2 }); return; }
-    if (step === 4) { setScreen('tutorial', { step: 3 }); return; }
+    if (step === 4) {
+      setMenu(false);
+      tutorialStep = 1;
+      postTutorialTipPending = false;
+      hidePostTutorialTip({ dismissed: true });
+      setAI('citta', { announce: false });
+      syncPresenter('citta');
+      setScreen('handoff');
+      return;
+    }
   }
 
   function setScreen(next, { step, afterTutorial = false, showTip = false } = {}) {
@@ -1877,7 +2128,13 @@
         positionCoach();
         coach.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       });
-    } else { coach.classList.remove('on'); frame.classList.remove('tutorial-on', 'dim'); document.querySelectorAll('.spot').forEach((el) => el.classList.remove('spot')); }
+    } else {
+      coach.classList.remove('on', 'switch-coach');
+      frame.classList.remove('tutorial-on', 'dim');
+      clearTutorialSpotlight();
+      exitTutorialDoc();
+      document.querySelectorAll('.spot').forEach((el) => el.classList.remove('spot'));
+    }
     syncTutorialNav();
     syncHash();
     fit();
@@ -1942,13 +2199,32 @@
     if (showTip) postTutorialTipPending = true;
     const step = Number.isFinite(t) ? t : 1;
     if (s === 'tutorial') {
-      startTutorial({ step });
+      const raw = q.get('tutorial') || '1';
+      if (raw === '1b') startTutorial({ step: 1, docPhase: true });
+      else startTutorial({ step });
     } else {
       setScreen(s, { step, afterTutorial: s === 'handoff' && showTip, showTip });
     }
     if (q.get('citta') === 'expanded') setCittaExpanded(true);
   }
   window.addEventListener('hashchange', readHash);
+
+  $('tutorialDocSwitch')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (tutorialDocPhase !== 'doc' && tutorialDocPhase !== 'switch-open') return;
+    tutorialDocPhase = 'switch-open';
+    $('tutorialDocSwitcher')?.classList.add('open');
+    $('tutorialDocSwitch')?.setAttribute('aria-expanded', 'true');
+    coach.classList.remove('on');
+  });
+  $('tutorialDocSwitcher')?.querySelectorAll('.si-row').forEach((row) => {
+    row.addEventListener('click', () => {
+      $('tutorialDocSwitcher')?.querySelectorAll('.si-row').forEach((r) => r.classList.toggle('on', r === row));
+      const ai = row.dataset.ai;
+      if (ai && AIS[ai]) setAI(ai, { announce: false });
+      finishTutorialDocToTryTools();
+    });
+  });
 
   // Scale the 1440px Figma frame to fit the window.
   const scaler = $('scaler');
@@ -1960,6 +2236,10 @@
     positionNewTip();
     if (menu.classList.contains('open')) positionSwitcherMenu();
     if (coach.classList.contains('on')) positionCoach();
+    const stepCfg = TUTORIAL_STEPS[tutorialStep - 1];
+    if (screen === 'tutorial' && stepCfg?.spot && !tutorialDocPhase) {
+      positionTutorialSpotlight(getTutorialSpotTarget(stepCfg.spot), stepCfg.spot === 'composer' ? 6 : 10);
+    }
   }
   window.addEventListener('resize', fit);
   const BOOK_ICON = '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M139.661795 93.098382c-25.742144 0-46.563413 20.82127-46.563413 46.534969v651.631787c0 25.713699 20.82127 46.534969 46.534969 46.534969h176.355017c45.937637 0 90.851278 13.624847 129.080494 39.110991L511.998436 921.511851l66.929573-44.600753a232.731733 232.731733 0 0 1 129.023606-39.110991h176.411905c25.713699 0 46.534969-20.82127 46.534969-46.534969V139.633351c0-25.713699-20.82127-46.534969-46.534969-46.534969h-176.355017c-19.342163 0-48.753629 8.362641-73.557108 22.812375-12.003519 6.968868-20.650604 14.079957-25.770588 19.996383a26.168809 26.168809 0 0 0-3.726211 5.262206v556.99741a46.534969 46.534969 0 0 1-93.098382 0V139.661795c0-26.993695 12.942183-49.066517 26.396364-64.597135a194.929182 194.929182 0 0 1 49.493182-39.651435C623.016763 14.904843 668.442402 0 707.980059 0h176.355017A139.661795 139.661795 0 0 1 1023.996871 139.661795v651.603343a139.661795 139.661795 0 0 1-139.661795 139.661795h-176.355017a139.661795 139.661795 0 0 0-77.425541 23.438151l-92.728606 61.809589a46.534969 46.534969 0 0 1-51.654953 0l-92.728606-61.809589a139.661795 139.661795 0 0 0-77.453985-23.466595h-176.355017A139.661795 139.661795 0 0 1 0 791.265138V139.633351A139.661795 139.661795 0 0 1 139.661795 0h176.355017c45.909193 0 90.822834 13.624847 129.05205 39.110992a46.534969 46.534969 0 0 1-51.626509 77.425541 139.661795 139.661795 0 0 0-77.453985-23.438151h-176.355017z" fill="currentColor"/><path d="M170.666145 360.304677C170.666145 334.135868 191.032305 312.887933 216.177117 312.887933h136.532916c25.144812 0 45.510972 21.219491 45.510972 47.416744 0 26.168809-20.36616 47.3883-45.510972 47.388299H216.177117c-25.144812 0-45.510972-21.219491-45.510972-47.388299z m45.510972 189.610087c0-12.572406 4.807096-24.632814 13.340404-33.507453 8.533307-8.903084 20.110161-13.880846 32.170568-13.880846h91.021944c25.144812 0 45.510972 21.219491 45.510972 47.388299 0 26.168809-20.36616 47.416744-45.510972 47.416744H261.688089c-25.144812 0-45.510972-21.219491-45.510972-47.416744z" fill="currentColor"/></svg>';
@@ -1984,9 +2264,29 @@
     });
   }
 
+  function initHeaderSearch() {
+    const input = $('headerSearch');
+    if (!input) return;
+    input.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter') return;
+      e.preventDefault();
+      const q = input.value.trim();
+      showToastMsg(q ? `Search · ${q} (prototype)` : 'Search (prototype)');
+    });
+    document.addEventListener('keydown', (e) => {
+      if (!(e.metaKey || e.ctrlKey) || e.key.toLowerCase() !== 'k') return;
+      const tag = document.activeElement?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+      e.preventDefault();
+      input.focus();
+      input.select();
+    });
+  }
+
   initComposerTools();
   initToolInteractions();
   initFrameInteractions();
+  initHeaderSearch();
   decorateSparkIcons();
   decorateLectureBookIcons();
   const composerInputEl = $('composerInput');
