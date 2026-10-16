@@ -45,6 +45,10 @@
   .seg button { font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 999px; color: var(--muted); }
   .seg button[aria-pressed="true"] { background: var(--green); color: #fff; }
   .presenter .hint { font-size: 12px; color: var(--faint); }
+  .presenter .tutorial-cta { flex: none; font-size: 13px; font-weight: 700; padding: 8px 18px; border-radius: 999px; background: var(--green); color: #fff; box-shadow: 0 2px 8px rgba(44,122,95,.28); white-space: nowrap; transition: background .12s, transform .12s; }
+  .presenter .tutorial-cta:hover { background: var(--green-dark); }
+  .presenter .tutorial-cta:active { transform: scale(.98); }
+  .presenter .tutorial-cta[aria-pressed="true"] { box-shadow: inset 0 0 0 2px rgba(255,255,255,.35), 0 2px 8px rgba(44,122,95,.28); }
 
   /* Stage that scales the 1440px frame to fit */
   .stage { padding: 24px 16px 48px; }
@@ -66,9 +70,19 @@
   .rail .p { width: 30px; height: 30px; border-radius: 15px; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--muted); }
 
   .main { flex: 1; min-width: 0; }
-  .logo-row { display: flex; align-items: flex-start; padding: 26px var(--page-gutter); }
-  .logo { font-size: 20px; font-weight: 500; letter-spacing: 1.6px; white-space: pre; }
-  .search { margin-left: auto; background: var(--surface); border-radius: 999px; padding: 8px 16px; font-size: 13px; color: var(--faint); white-space: pre; border: 0; text-align: left; }
+  .logo-row { display: flex; align-items: center; padding: 26px var(--page-gutter); gap: 12px; }
+  .logo { display: inline-flex; align-items: center; gap: 10px; flex: none; color: var(--ink); text-decoration: none; }
+  .logo-mark { width: 30px; height: 22px; flex: none; display: block; }
+  .logo-mark path { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .logo-type { font-size: 20px; font-weight: 500; letter-spacing: 0.32em; line-height: 1; }
+  .spark-icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; flex: none; line-height: 0; }
+  .spark-icon svg { display: block; width: 100%; height: 100%; }
+  .tpl .use, .try-it { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+  .nav-tutorial { margin-left: auto; flex: none; background: var(--green); color: #fff; font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 999px; box-shadow: 0 2px 8px rgba(44,122,95,.28); transition: background .12s, transform .12s; }
+  .nav-tutorial:hover { background: var(--green-dark); }
+  .nav-tutorial:active { transform: scale(.98); }
+  .nav-tutorial[aria-pressed="true"] { box-shadow: inset 0 0 0 2px rgba(255,255,255,.35), 0 2px 8px rgba(44,122,95,.28); }
+  .search { flex: none; background: var(--surface); border-radius: 999px; padding: 8px 16px; font-size: 13px; color: var(--faint); white-space: pre; border: 0; text-align: left; }
   .content { padding: 0 var(--page-gutter) 72px; display: flex; flex-direction: column; gap: 24px; }
 
   /* Greeting */
@@ -104,7 +118,10 @@
   .picker[aria-expanded="true"] { background: #d4e8dc; border-color: var(--green); box-shadow: 0 0 0 3px rgba(44,122,95,.12); }
   .picker .pav { width: 26px; height: 26px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; background: rgba(44,122,95,.12); color: var(--green-dark); }
   .picker .pname { font-size: 14px; font-weight: 600; color: var(--ink); }
-  .picker .twin-badge { background: rgba(255,255,255,.55); color: var(--green-dark); font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 999px; }
+  .picker .twin-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,.55); color: var(--green-dark); font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 999px; }
+  .picker .twin-badge .spark-icon { width: 11px; height: 11px; }
+  .tpl .use .spark-icon { width: 12px; height: 12px; color: var(--green); }
+  .try-it .citta-mark { width: 12px; height: 12px; color: #fff; }
   .is-twin .picker { background: #fff; border-color: rgba(44,122,95,.4); box-shadow: none; }
   .is-twin .picker:hover { background: var(--green-wash); }
   .is-twin .picker[aria-expanded="true"] { background: var(--green-wash); border-color: var(--green); box-shadow: 0 0 0 3px rgba(44,122,95,.1); }
@@ -127,8 +144,8 @@
   .tpl:hover { border-color: rgba(44,122,95,.35); }
   .tpl .use { cursor: pointer; }
   .tpl .use:hover { border-color: var(--green); background: var(--green-wash); }
-  .act-item a, .activity .act-link { cursor: pointer; display: block; font-size: 12px; font-weight: 600; color: var(--green); text-decoration: none; background: none; border: 0; padding: 0; text-align: left; }
-  .act-item a:hover, .activity .act-link:hover { text-decoration: underline; }
+  .act-item a { cursor: pointer; display: block; font-size: 12px; font-weight: 600; color: var(--green); text-decoration: none; }
+  .act-item a:hover { text-decoration: underline; }
   .course-banner a { cursor: pointer; }
   .course-banner a:hover { text-decoration: underline; }
   .pick-card .btn { cursor: pointer; transition: border-color .12s, background .12s; }
@@ -142,22 +159,29 @@
   .citta-panel .asst-card a { cursor: pointer; }
   .citta-panel .asst-card a:hover { text-decoration: underline; }
   .tap-active:active { transform: scale(.98); }
-  .ask-row { display: flex; gap: 14px; align-items: center; }
-  .ask-row .ph { flex: 1; font-size: 21px; font-weight: 300; line-height: 1.4; color: var(--placeholder); }
+  .ask-row { display: flex; gap: 14px; align-items: flex-start; }
+  .composer-input { flex: 1; min-width: 0; font-size: 21px; font-weight: 300; line-height: 1.4; color: var(--ink); background: transparent; border: 0; padding: 0; margin: 0; resize: none; font-family: inherit; min-height: 1.4em; overflow: hidden; }
+  .composer-input::placeholder { color: var(--placeholder); }
+  .composer-input:focus { outline: none; }
   .send { width: 44px; height: 44px; border-radius: 14px; background: var(--green); color: #fff; flex: none; display: flex; align-items: center; justify-content: center; padding: 0; transition: background .12s, transform .08s; }
   .send:hover { background: var(--green-dark); }
   .send:active { transform: scale(.96); }
   .composer .ask-row .send svg { display: block; width: 30px; height: 30px; transform: scale(1.08); transform-origin: center; }
   .send svg { display: block; width: 22px; height: 22px; }
+  .ico-ne { display: inline-flex; align-items: center; justify-content: center; flex: none; vertical-align: -0.12em; width: 0.78em; height: 0.78em; margin-left: 0.32em; line-height: 0; }
+  .ico-ne svg { display: block; width: 100%; height: 100%; }
+  .week-card .go-link { display: inline-flex; align-items: center; }
+  .link.course-back, .link[data-action="browse-discover"] { display: inline-flex; align-items: center; }
+  .chip .ar.ico-ne { width: 13px; height: 13px; margin-left: 6px; vertical-align: middle; }
   .tools { display: flex; gap: 10px; align-items: center; }
-  .tool { display: inline-flex; gap: 9px; align-items: center; padding: 6px 14px 6px 6px; border-radius: 12px; border: 1.5px solid var(--line); background: #fff; font-size: 14px; font-weight: 500; color: var(--ink); cursor: pointer; transition: border-color .12s, background .12s, color .12s, box-shadow .12s; box-sizing: border-box; }
-  .tool:hover { border-color: #cfd4cf; }
-  .tool.sel { background: var(--green-wash); border-color: var(--green); color: var(--green-dark); font-weight: 600; box-shadow: inset 0 0 0 0.5px var(--green); }
-  .tool.sel:hover { border-color: var(--green); }
+  .tool { display: inline-flex; gap: 9px; align-items: center; padding: 6px 14px 6px 6px; border-radius: 12px; border: 1.5px solid var(--line); background: #fff; font-size: 14px; font-weight: 500; color: var(--ink); cursor: pointer; transition: background .12s, color .12s, box-shadow .12s; box-sizing: border-box; box-shadow: inset 0 0 0 0 transparent; }
+  .tool:hover { box-shadow: inset 0 0 0 1.5px #cfd4cf; }
+  .tool.sel { background: var(--green-wash); color: var(--green-dark); box-shadow: inset 0 0 0 1.5px var(--green); }
+  .tool.sel:hover { box-shadow: inset 0 0 0 1.5px var(--green); }
   .tool i { font-style: normal; width: 28px; height: 28px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
   .tools .sp { flex: 1; }
   .tools .attach { font-size: 13px; color: var(--muted); white-space: pre; }
-  .composer .foot { background: #fff; border-top: 1px solid var(--line); padding: 14px 28px; display: flex; gap: 10px; align-items: flex-start; border-radius: 0 0 22px 22px; }
+  .composer .foot { background: #fff; border-top: 0; padding: 14px 28px 18px; display: flex; gap: 10px; align-items: flex-start; border-radius: 0 0 22px 22px; }
   .foot .k { padding-top: 11px; font-size: 11px; font-weight: 600; letter-spacing: .88px; color: var(--muted); white-space: nowrap; }
   .foot .wrap { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
   .chip { display: inline-flex; gap: 6px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px 8px 12px; font-size: 13px; line-height: 1.4; cursor: pointer; transition: border-color .12s, background .12s, transform .08s; }
@@ -198,7 +222,11 @@
   .interest:not(.on):hover { border-color: #cfd4cf; background: var(--surface); }
   .interest.on { background: var(--green-tint); border-color: var(--green); color: var(--green-dark); font-weight: 600; }
   .vr { width: 1px; height: 28px; background: var(--line); }
-  .hscroll { flex: 1; min-width: 0; display: flex; gap: 8px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: rgba(44,122,95,.35) transparent; padding-bottom: 4px; cursor: grab; }
+  .discover-scroll-wrap { position: relative; flex: 1; min-width: 0; }
+  .discover-scroll-wrap::after { content: ""; position: absolute; top: 0; right: 0; width: 72px; height: calc(100% - 6px); pointer-events: none; z-index: 2; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.82) 48%, #fff 100%); }
+  .discover .hscroll { flex: none; width: 100%; mask-image: linear-gradient(90deg, #000 0%, #000 calc(100% - 56px), transparent 100%); -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 calc(100% - 56px), transparent 100%); }
+  .hscroll { flex: 1; min-width: 0; display: flex; gap: 8px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: rgba(44,122,95,.35) transparent; padding-bottom: 4px; scroll-padding-inline-end: 16px; cursor: grab; }
+  .hscroll::after { content: ""; flex: none; width: 80px; height: 1px; scroll-snap-align: end; }
   .hscroll.is-dragging { cursor: grabbing; user-select: none; }
   .hscroll::-webkit-scrollbar { height: 6px; }
   .hscroll::-webkit-scrollbar-thumb { background: rgba(44,122,95,.28); border-radius: 999px; }
@@ -248,17 +276,19 @@
   .act-item { display: flex; gap: 12px; line-height: 1.4; }
   .act-item .aav { width: 32px; height: 32px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: var(--muted); flex: none; }
   .act-item .t { font-size: 14px; }
-  .act-item small { display: block; font-size: 12px; color: var(--faint); }
-  .act-item a { display: block; font-size: 12px; font-weight: 600; color: var(--green); text-decoration: none; }
+  .act-item small { display: block; font-size: 12px; color: var(--faint); margin-top: 2px; }
+  .activity .act-item .act-link { cursor: pointer; display: inline-flex; align-items: center; font-size: 12px; font-weight: 500; color: var(--ink); text-decoration: none; background: none; border: 0; padding: 4px 0 0; margin: 0; text-align: left; }
+  .activity .act-item .act-link:hover { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+  .activity .act-item .act-link .ico-ne { color: var(--muted); }
 
   /* Templates */
-  .goals { display: flex; gap: 16px; align-items: flex-start; }
-  .tpl { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; line-height: 1.4; text-align: left; width: 100%; }
-  .tpl .h { display: flex; gap: 8px; align-items: center; font-size: 12px; font-weight: 600; color: var(--muted); }
-  .tpl .h i { font-style: normal; width: 28px; height: 28px; border-radius: 10px; background: var(--green-wash); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; color: var(--green); }
-  .tpl b { font-size: 14px; font-weight: 600; }
-  .tpl small { font-size: 12px; color: var(--faint); }
-  .tpl .use { border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 12px; font-weight: 500; }
+  .goals { display: flex; gap: 16px; align-items: stretch; }
+  .tpl { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 10px; align-items: stretch; line-height: 1.4; text-align: left; width: 100%; min-height: 168px; box-sizing: border-box; background: #fff; }
+  .tpl .h { display: flex; gap: 8px; align-items: center; font-size: 12px; font-weight: 600; color: var(--muted); flex: none; min-height: 28px; }
+  .tpl .h i { font-style: normal; width: 28px; height: 28px; border-radius: 10px; background: var(--green-wash); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; color: var(--green); flex: none; }
+  .tpl b { font-size: 14px; font-weight: 600; display: block; min-height: 2.8em; width: 100%; }
+  .tpl small { font-size: 12px; color: var(--faint); display: block; min-height: 2.8em; width: 100%; }
+  .tpl .use { margin-top: auto; align-self: stretch; text-align: center; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 12px; font-weight: 500; background: #fff; }
 
   /* Dock + toast */
   .dock { position: absolute; right: var(--page-gutter); top: 843px; width: 44px; height: 44px; border-radius: 22px; background: #fff; border: 1.5px solid var(--green); color: var(--green); font-size: 17px; font-weight: 600; display: flex; align-items: center; justify-content: center; left: auto; }
@@ -293,8 +323,8 @@
 
   .btn-citta { display: inline-flex; gap: 6px; align-items: center; align-self: flex-start; margin-top: auto; background: var(--green); color: #fff; font-size: 12px; font-weight: 600; line-height: 1.2; padding: 7px 12px; border-radius: 999px; white-space: nowrap; transition: background .15s; }
   .btn-citta:hover { background: var(--green-dark); }
-  .btn-citta .citta-mark { display: inline-flex; align-items: center; justify-content: center; width: 15px; height: 15px; flex: none; line-height: 0; opacity: .98; color: #fff; }
-  .btn-citta .citta-mark svg { display: block; width: 15px; height: 15px; }
+  .btn-citta .citta-mark { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; flex: none; line-height: 0; opacity: .98; color: #fff; }
+  .btn-citta .citta-mark svg { display: block; width: 0.85em; height: 0.85em; max-width: 11px; max-height: 11px; }
 
   .try-cards { display: flex; gap: 16px; min-height: 196px; }
   .try-card { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; background: #fff; text-align: left; transition: border-color .15s, box-shadow .15s; }
@@ -378,14 +408,16 @@
   .citta-panel .ph .sw-sm { color: var(--green); display: flex; align-items: center; flex: none; }
   .citta-panel .ph .task-pill { font-size: 11px; font-weight: 600; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px 8px; flex: none; white-space: nowrap; }
   .citta-panel .ph .sp { flex: 1; min-width: 4px; }
-  .citta-panel .ph .win { width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--line); background: #fff; color: var(--muted); font-size: 14px; display: flex; align-items: center; justify-content: center; flex: none; }
-  .citta-panel .ph .win:hover { background: var(--surface); }
+  .citta-panel .ph .panel-close { width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--line); background: #fff; color: var(--muted); font-size: 20px; font-weight: 300; line-height: 1; display: flex; align-items: center; justify-content: center; flex: none; }
+  .citta-panel .ph .panel-close:hover { background: var(--surface); color: var(--ink); }
   .citta-panel .ctx { padding: 10px 16px 12px; font-size: 12px; color: var(--muted); border-bottom: 1px solid var(--line); flex: none; }
   .citta-panel .ctx .where { display: inline-block; font-weight: 600; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 2px 8px; margin-left: 4px; }
   .citta-panel .citta-scroll { flex: 1; min-height: 0; overflow: auto; padding: 14px 16px 12px; display: flex; flex-direction: column; gap: 12px; }
   .citta-panel .user-bubble { align-self: flex-end; max-width: 92%; background: var(--green-dark); color: #fff; font-size: 13px; line-height: 1.45; padding: 10px 14px; border-radius: 14px 14px 4px 14px; }
   .citta-panel .asst-card { background: var(--green-wash); border: 1px solid rgba(44,122,95,.12); border-radius: 14px; padding: 12px 14px; font-size: 13px; line-height: 1.45; color: var(--ink); }
-  .citta-panel .asst-card a { display: inline-block; margin-top: 8px; font-size: 12px; font-weight: 600; color: var(--green); text-decoration: none; }
+  .citta-panel .asst-card a,
+  .citta-panel .asst-card .act-link { display: inline-flex; align-items: center; margin-top: 8px; font-size: 12px; font-weight: 600; color: var(--green); text-decoration: none; background: none; border: 0; padding: 0; cursor: pointer; }
+  .citta-panel .asst-card .act-link:hover { text-decoration: underline; }
   .citta-panel .run-hd { font-size: 10px; font-weight: 700; letter-spacing: .08em; color: var(--faint); margin: 4px 0 2px; }
   .citta-panel .run-list { display: flex; flex-direction: column; gap: 8px; }
   .citta-run { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; background: #fff; }
@@ -400,17 +432,19 @@
   .citta-run .prog span { display: block; height: 4px; background: var(--green); border-radius: 2px; width: 70%; }
   .citta-run .act { align-self: flex-end; font-size: 12px; font-weight: 600; color: var(--green); background: none; padding: 0; }
   .citta-run.err .act { color: #b42318; }
-  .citta-panel .foot { flex: none; border-top: 1px solid var(--line); padding: 10px 16px 14px; display: flex; flex-direction: column; gap: 8px; background: #fff; }
+  .citta-panel .foot { flex: none; border-top: 0; padding: 10px 16px 14px; display: flex; flex-direction: column; gap: 8px; background: #fff; }
   .citta-panel .suggest { display: flex; flex-wrap: wrap; gap: 6px; }
   .citta-panel .suggest button { font-size: 11px; font-weight: 500; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; line-height: 1.3; text-align: left; }
   .citta-panel .suggest button:hover { border-color: rgba(44,122,95,.35); background: var(--green-wash); }
-  .citta-panel .ask-row { display: flex; gap: 8px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 8px 8px 8px 10px; }
-  .citta-panel .ask-row .plus { width: 28px; height: 28px; border-radius: 8px; color: var(--muted); font-size: 18px; line-height: 1; flex: none; display: flex; align-items: center; justify-content: center; }
-  .citta-panel .ask-row .ph { flex: 1; font-size: 13px; color: var(--placeholder); min-width: 0; }
+  .citta-panel .ask-row { display: flex; gap: 8px; align-items: flex-start; background: #fafbfa; border: 1px solid var(--line); border-radius: 12px; padding: 8px 8px 8px 10px; }
+  .citta-panel .ask-row .plus { width: 28px; height: 28px; border-radius: 8px; color: var(--muted); font-size: 18px; line-height: 1; flex: none; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .citta-input { flex: 1; min-width: 0; font-size: 13px; line-height: 1.45; color: var(--ink); background: transparent; border: 0; padding: 4px 0 0; margin: 0; resize: none; font-family: inherit; min-height: 1.45em; overflow: hidden; }
+  .citta-input::placeholder { color: var(--placeholder); }
+  .citta-input:focus { outline: none; }
   .citta-panel .ask-row .send { width: 36px; height: 36px; border-radius: 10px; }
   .citta-panel .ask-row .send svg { width: 20px; height: 20px; }
 
-  .coach { position: absolute; left: 48px; bottom: 120px; width: 340px; max-width: calc(100% - 96px); background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; box-shadow: 0 16px 40px rgba(28,31,29,.12); z-index: 25; display: none; line-height: 1.45; pointer-events: auto; }
+  .coach { position: absolute; left: 48px; bottom: 120px; width: 340px; max-width: calc(100% - 96px); background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; box-shadow: 0 16px 40px rgba(28,31,29,.12); z-index: 30; display: none; line-height: 1.45; pointer-events: auto; }
   .coach.wide { width: 400px; max-width: calc(100% - 80px); padding: 20px 22px; }
   .coach.on { display: block; }
   .coach .coach-who { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; font-size: 12px; font-weight: 500; color: var(--muted); }
@@ -430,13 +464,15 @@
   .coach .acts .link { color: var(--green); padding: 8px 0; }
 
   .spot { position: relative; z-index: 14; box-shadow: 0 0 0 3px rgba(44,122,95,.45); border-radius: 16px; }
-  .dim::after { content: ""; position: absolute; inset: 41px 0 0; background: rgba(28,31,29,.28); pointer-events: none; z-index: 13; }
+  .dim::after { content: ""; display: none; position: absolute; inset: 41px 0 0; background: rgba(28,31,29,.28); pointer-events: none; z-index: 13; }
   .frame.tutorial-on { position: relative; }
   .frame.tutorial-on.dim::after { display: block; }
 
+  .presenter-tutorial-cta { flex: none; background: var(--green); color: #fff; font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 999px; box-shadow: 0 2px 10px rgba(44,122,95,.25); margin-right: 4px; }
+  .presenter-tutorial-cta:hover { background: var(--green-dark); }
   .presenter .seg.screen { margin-left: 8px; }
   .presenter .seg.panel { margin-left: 4px; }
-  .presenter .seg.screen button[data-screen="tutorial"] { box-shadow: inset 0 0 0 1px rgba(44,122,95,.35); }
+  .presenter .seg.screen button[data-screen="tutorial"] { background: var(--green-wash); color: var(--green-dark); box-shadow: inset 0 0 0 1.5px rgba(44,122,95,.45); font-weight: 700; }
   .presenter .seg.screen button[data-screen="tutorial"][aria-pressed="true"] { background: var(--green); color: #fff; box-shadow: none; }
 
   .tutorial-entry { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; padding: 12px 16px; border-radius: 14px; border: 1.5px solid rgba(44,122,95,.35); background: var(--green-wash); line-height: 1.4; }
@@ -474,6 +510,7 @@
 
 <div class="presenter">
   <h1>Home v2 · B · H2 — eng handoff</h1>
+  <button type="button" class="tutorial-cta" id="presenterTutorialBtn" data-action="open-tutorial" aria-pressed="false">Tutorial</button>
   <div class="seg screen" role="group" aria-label="Screen">
     <button type="button" data-screen="home" aria-pressed="true">Default home</button>
     <button type="button" data-screen="welcome" aria-pressed="false">Welcome back</button>
@@ -518,7 +555,15 @@
 
         <div class="main">
           <div class="logo-row">
-            <div class="logo">≋  S Y M B I O N</div>
+            <div class="logo" aria-label="Symbion">
+              <svg class="logo-mark" viewBox="0 0 36 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 7c6-3 10 3 17 0s12-3 17 0"/>
+                <path d="M0 12c8-4 12 4 20 0s10-4 18 0"/>
+                <path d="M2 17c5-3 9 3 16 0s11-3 16 0"/>
+              </svg>
+              <span class="logo-type">SYMBION</span>
+            </div>
+            <button type="button" class="nav-tutorial" data-action="open-tutorial" data-start-tutorial aria-label="Start interactive tutorial" aria-pressed="false">Tutorial · 4 steps</button>
             <button type="button" class="search search-hit" aria-label="Search">Search files, Cosmos, people…   ⌘K</button>
           </div>
 
@@ -549,7 +594,7 @@
             <div class="tutorial-entry" id="tutorialEntry" aria-label="Start interactive tutorial">
               <span class="k">FIGMA 8541</span>
               <p><b>Interactive tutorial</b> — 4 steps with Citta (starter task, try each tool, switch twins, finish).</p>
-              <button type="button" class="start" data-start-tutorial>Start tutorial →</button>
+              <button type="button" class="start" data-start-tutorial>Start tutorial<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
               <button type="button" class="link" data-start-tutorial data-step="1">Or jump in with #screen=tutorial</button>
             </div>
             </div>
@@ -581,7 +626,7 @@
               <div class="course-banner">
                 <span class="av">GR</span>
                 <span class="sp">You came from <b>Prof. Roland’s Cosmo</b> · Heavy-ion Physics</span>
-                <button type="button" class="link course-back">Back to the Cosmo ↗</button>
+                <button type="button" class="link course-back">Back to the Cosmo<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
               </div>
               <section class="greeting quiet">
                 <div class="hello">
@@ -600,7 +645,7 @@
               <div class="course-banner">
                 <span class="av">GR</span>
                 <span class="sp">Working in <b>Prof. Roland’s course</b> · Heavy-Ion Physics</span>
-                <button type="button" class="link course-back">Back to the course ↗</button>
+                <button type="button" class="link course-back">Back to the course<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
               </div>
               <section class="greeting quiet">
                 <div class="hello">
@@ -624,7 +669,7 @@
                   <button type="button" class="picker" id="picker" aria-haspopup="menu" aria-expanded="false">
                     <span class="pav" id="pickerAv">≋</span>
                     <span class="pname" id="pickerName">Citta</span>
-                    <span class="twin-badge" id="pickerBadge" hidden>✦ Twin</span>
+                    <span class="twin-badge" id="pickerBadge" hidden><span class="spark-icon" aria-hidden="true"></span> Twin</span>
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#2c7a5f" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h8M8 2l2 2-2 2M10 8H2M4 6 2 8l2 2"/></svg>
                   </button>
                   <span id="whenCitta" style="display:contents">
@@ -639,10 +684,11 @@
                 </div>
 
                 <div class="ask-row">
-                  <div class="ph" id="placeholder">What do you want to work on?</div>
+                  <textarea class="composer-input" id="composerInput" rows="1" placeholder="What do you want to work on?" aria-label="What do you want to work on?"></textarea>
                   <button type="button" class="send" aria-label="Send">
-                    <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      <path d="M24.5199 23.6679V12.1441L11.2055 25.4566L10.5417 24.7929L23.8561 11.4785H12.3324V10.541H25.4574V23.666H24.5199V23.6679Z" fill="currentColor"/>
+                    <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                      <path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                     </svg>
                   </button>
                 </div>
@@ -661,15 +707,15 @@
               <div class="foot" id="composerFoot">
                 <span class="k">CONTINUE WITH</span>
                 <div class="wrap" id="composerContinue">
-                  <button type="button" class="chip" data-continue-tool="doc"><span class="ic">≡</span><b>Reading report — QGP</b><span class="pct"><span class="bar"><span style="width:12px"></span></span>55%</span><span class="ar">→</span></button>
-                  <button type="button" class="chip" data-continue-tool="deck"><span class="ic">▧</span><b>Lecture 4 summary</b><span class="pct"><span class="bar"><span style="width:13px"></span></span>60%</span><span class="ar">→</span></button>
-                  <button type="button" class="chip" data-continue-tool="numbers"><span class="ic">▦</span><b>Lab 3</b><span class="pct"><span class="bar"><span style="width:7px"></span></span>30%</span><span class="ar">→</span></button>
-                  <button type="button" class="link-btn">All files →</button>
+                  <button type="button" class="chip" data-continue-tool="doc"><span class="ic">≡</span><b>Reading report — QGP</b><span class="pct"><span class="bar"><span style="width:12px"></span></span>55%</span><span class="ar ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
+                  <button type="button" class="chip" data-continue-tool="deck"><span class="ic">▧</span><b>Lecture 4 summary</b><span class="pct"><span class="bar"><span style="width:13px"></span></span>60%</span><span class="ar ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
+                  <button type="button" class="chip" data-continue-tool="numbers"><span class="ic">▦</span><b>Lab 3</b><span class="pct"><span class="bar"><span style="width:7px"></span></span>30%</span><span class="ar ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
+                  <button type="button" class="link-btn">All files<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
                 </div>
                 <div class="wrap" id="composerContinueHandoff" hidden>
-                  <button type="button" class="chip" data-continue-tool="doc"><span class="ic">≡</span><b>Lecture 1 summary</b><span class="pct done">Done</span><span class="ar">→</span></button>
-                  <button type="button" class="chip" data-continue-tool="deck"><span class="ic">▧</span><b>Lecture 1 slides</b><span class="pct"><span class="bar"><span style="width:18px"></span></span>80%</span><span class="ar">→</span></button>
-                  <button type="button" class="link-btn">All files →</button>
+                  <button type="button" class="chip" data-continue-tool="doc"><span class="ic">≡</span><b>Lecture 1 summary</b><span class="pct done">Done</span><span class="ar ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
+                  <button type="button" class="chip" data-continue-tool="deck"><span class="ic">▧</span><b>Lecture 1 slides</b><span class="pct"><span class="bar"><span style="width:18px"></span></span>80%</span><span class="ar ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
+                  <button type="button" class="link-btn">All files<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
                 </div>
                 <div class="wrap suggest-chips" id="composerSuggest" hidden>
                   <button type="button" class="chip">Summarise Prof. Roland’s lecture 1 in one page</button>
@@ -718,11 +764,11 @@
                 <span class="sub">One quick win in every workspace</span>
               </div>
               <div class="try-cards">
-                <div class="try-card" data-tool="doc"><span class="prev"><span class="mock">Reading summary · 3 sections · citations ready</span></span><span class="bot"><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Summarize a reading in one page</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
-                <div class="try-card" data-tool="deck"><span class="prev"><span class="mock">Slide 1–6 · speaker notes · course theme</span></span><span class="bot"><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></span><small>Turn lecture notes into slides</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
-                <div class="try-card" data-tool="numbers"><span class="prev"><span class="mock">Lab table · trend line · export chart</span></span><span class="bot"><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Plot my physics sample data</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
-                <div class="try-card" data-tool="symtex"><span class="prev"><span class="mock">ρ = n · m · ⟨v²⟩ · fraction</span></span><span class="bot"><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset the baryon density formula</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
-                <div class="try-card" data-tool="code"><span class="prev"><span class="mock">for p in particles: scatter()</span></span><span class="bot"><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a tiny particle simulation</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
+                <div class="try-card" data-tool="doc"><span class="prev"><span class="mock">Reading summary · 3 sections · citations ready</span></span><span class="bot"><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Summarize a reading in one page</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
+                <div class="try-card" data-tool="deck"><span class="prev"><span class="mock">Slide 1–6 · speaker notes · course theme</span></span><span class="bot"><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></span><small>Turn lecture notes into slides</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
+                <div class="try-card" data-tool="numbers"><span class="prev"><span class="mock">Lab table · trend line · export chart</span></span><span class="bot"><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Plot my physics sample data</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
+                <div class="try-card" data-tool="symtex"><span class="prev"><span class="mock">ρ = n · m · ⟨v²⟩ · fraction</span></span><span class="bot"><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset the baryon density formula</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
+                <div class="try-card" data-tool="code"><span class="prev"><span class="mock">for p in particles: scatter()</span></span><span class="bot"><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a tiny particle simulation</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
               </div>
             </section>
 
@@ -734,11 +780,11 @@
                 <button type="button" class="week-tools-close" data-dismiss-week-tools aria-label="Dismiss">×</button>
               </div>
               <div class="week-cards">
-                <div class="week-card tried" data-tool="doc"><span class="done" aria-label="Tried">✓</span><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Lecture 1 summary</small><button type="button" class="go-link" data-action="open">Open →</button></div>
-                <div class="week-card tried" data-tool="deck"><span class="done" aria-label="Tried">✓</span><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></span><small>6 study slides</small><button type="button" class="go-link" data-action="open">Open →</button></div>
-                <div class="week-card" data-tool="numbers"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Chart your lab data</small><button type="button" class="go-link" data-action="try-citta">Try with Citta →</button></div>
-                <div class="week-card" data-tool="symtex"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset a formula</small><button type="button" class="go-link" data-action="try-citta">Try with Citta →</button></div>
-                <div class="week-card" data-tool="code"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a simulation</small><button type="button" class="go-link" data-action="try-citta">Try with Citta →</button></div>
+                <div class="week-card tried" data-tool="doc"><span class="done" aria-label="Tried">✓</span><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Lecture 1 summary</small><button type="button" class="go-link" data-action="open">Open<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
+                <div class="week-card tried" data-tool="deck"><span class="done" aria-label="Tried">✓</span><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></span><small>6 study slides</small><button type="button" class="go-link" data-action="open">Open<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
+                <div class="week-card" data-tool="numbers"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Chart your lab data</small><button type="button" class="go-link" data-action="try-citta">Try with Citta<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
+                <div class="week-card" data-tool="symtex"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset a formula</small><button type="button" class="go-link" data-action="try-citta">Try with Citta<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
+                <div class="week-card" data-tool="code"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a simulation</small><button type="button" class="go-link" data-action="try-citta">Try with Citta<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
               </div>
             </section>
 
@@ -749,6 +795,7 @@
               <button type="button" class="interest" aria-pressed="false">Cosmology</button>
               <button type="button" class="interest" aria-label="Add interest">+</button>
               <span class="vr"></span>
+              <div class="discover-scroll-wrap">
               <div class="hscroll" id="discoverScroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
                 <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag">✦ Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi">+ Add SI</button></div>
                 <div class="dcard"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag">✦ Twin</span><small>Climate maths · Columbia</small></div><button type="button" class="addsi">+ Add SI</button></div>
@@ -757,8 +804,9 @@
                 <div class="dcard"><span class="dav">EP</span><div><span class="nm">Prof. Pajer</span><span class="tag">✦ Twin</span><small>Cosmology · Cornell</small></div><button type="button" class="addsi">+ Add SI</button></div>
                 <div class="dcard"><span class="dav">HX</span><div><span class="nm">Prof. Xu</span><span class="tag">✦ Twin</span><small>AI &amp; decisions</small></div><button type="button" class="addsi">+ Add SI</button></div>
               </div>
+              </div>
               <button type="button" class="round discover-next" id="discoverScrollNext" aria-label="Scroll discover cards">›</button>
-              <button type="button" class="link" data-action="browse-discover">Browse all ↗</button>
+              <button type="button" class="link" data-action="browse-discover">Browse all<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
             </section>
 
             <section class="two">
@@ -788,10 +836,10 @@
                   </div>
                 </div>
                 <aside class="activity two-main-r">
-                  <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland’s twin posted lecture 5 slides</div><small>Heavy-ion Physics · 1h ago</small><button type="button" class="act-link">Turn into study notes →</button></div></div>
-                  <div class="act-item"><span class="aav">王</span><div><div class="t">骆王宇 is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder →</button></div></div>
-                  <div class="act-item"><span class="aav">EP</span><div><div class="t">2 replies to your #cosmology thread</div><small>Prof. Pajer’s twin + @maya_k</small><button type="button" class="act-link">Open thread →</button></div></div>
-                  <div class="act-item"><span class="aav">HX</span><div><div class="t">Prof. Xu’s twin: new insight on pricing data</div><small>AI &amp; decisions · today</small><button type="button" class="act-link">View insight →</button></div></div>
+                  <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland’s twin posted lecture 5 slides</div><small>Heavy-ion Physics · 1h ago</small><button type="button" class="act-link">Turn into study notes<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                  <div class="act-item"><span class="aav">王</span><div><div class="t">骆王宇 is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                  <div class="act-item"><span class="aav">EP</span><div><div class="t">2 replies to your #cosmology thread</div><small>Prof. Pajer’s twin + @maya_k</small><button type="button" class="act-link">Open thread<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                  <div class="act-item"><span class="aav">HX</span><div><div class="t">Prof. Xu’s twin: new insight on pricing data</div><small>AI &amp; decisions · today</small><button type="button" class="act-link">View insight<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                 </aside>
               </div>
             </section>
@@ -816,14 +864,16 @@
                 <button type="button" class="interest" aria-pressed="false">Cosmology</button>
                 <button type="button" class="interest" aria-label="Add interest">+</button>
                 <span class="vr"></span>
+                <div class="discover-scroll-wrap">
                 <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
                   <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag">✦ Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi">+ Add SI</button></div>
                   <div class="dcard"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag">✦ Twin</span><small>Climate maths · Columbia</small></div><button type="button" class="addsi">+ Add SI</button></div>
                   <div class="dcard"><span class="dav agent">LR</span><div><span class="nm">Lab Report Coach</span><span class="tag agent">AI agent</span><small>Drafts in Doc</small></div><button type="button" class="addsi">+ Add SI</button></div>
                   <div class="dcard"><span class="dav">KS</span><div><span class="nm">Katherine F. Smith</span><span class="tag">✦ Twin</span><small>Planetary health · Brown</small></div><button type="button" class="addsi">+ Add SI</button></div>
                 </div>
+                </div>
                 <button type="button" class="round discover-next" aria-label="Scroll discover cards">›</button>
-                <button type="button" class="link" data-action="browse-discover">Browse all ↗</button>
+                <button type="button" class="link" data-action="browse-discover">Browse all<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
               </section>
 
               <section class="pickup">
@@ -860,11 +910,11 @@
                   <button type="button" class="week-tools-close" data-dismiss-week-tools aria-label="Dismiss">×</button>
                 </div>
                 <div class="week-cards">
-                  <div class="week-card tried" data-tool="doc"><span class="done" aria-label="Tried">✓</span><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Lecture 1 summary</small><button type="button" class="go-link" data-action="open">Open →</button></div>
-                  <div class="week-card tried" data-tool="deck"><span class="done" aria-label="Tried">✓</span><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></span><small>6 study slides</small><button type="button" class="go-link" data-action="continue">Continue →</button></div>
-                  <div class="week-card" data-tool="numbers"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Chart your lab data</small><button type="button" class="go-link" data-action="try-citta">Try with Citta →</button></div>
-                  <div class="week-card" data-tool="symtex"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset a formula</small><button type="button" class="go-link" data-action="try-citta">Try with Citta →</button></div>
-                  <div class="week-card" data-tool="code"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a simulation</small><button type="button" class="go-link" data-action="try-citta">Try with Citta →</button></div>
+                  <div class="week-card tried" data-tool="doc"><span class="done" aria-label="Tried">✓</span><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Lecture 1 summary</small><button type="button" class="go-link" data-action="open">Open<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
+                  <div class="week-card tried" data-tool="deck"><span class="done" aria-label="Tried">✓</span><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></span><small>6 study slides</small><button type="button" class="go-link" data-action="continue">Continue<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
+                  <div class="week-card" data-tool="numbers"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Chart your lab data</small><button type="button" class="go-link" data-action="try-citta">Try with Citta<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
+                  <div class="week-card" data-tool="symtex"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset a formula</small><button type="button" class="go-link" data-action="try-citta">Try with Citta<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
+                  <div class="week-card" data-tool="code"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a simulation</small><button type="button" class="go-link" data-action="try-citta">Try with Citta<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
                 </div>
               </section>
             </div>
@@ -875,14 +925,16 @@
                 <button type="button" class="interest on" aria-pressed="true">Heavy-ion physics</button>
                 <button type="button" class="interest" aria-pressed="false">Physics &amp; Space</button>
                 <span class="vr"></span>
+                <div class="discover-scroll-wrap">
                 <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="More in Cosmos — scroll horizontally">
                   <div class="dcard"><span class="dav">EP</span><div><span class="nm">Enrico Pajer</span><span class="tag">✦ Twin</span><small>Cosmology · Cambridge</small></div><button type="button" class="addsi">+ Follow</button></div>
                   <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag">✦ Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi">+ Follow</button></div>
                   <div class="dcard"><span class="dav agent">PC</span><div><span class="nm">Physics Problem Coach</span><span class="tag agent">AI agent</span><small>Step-by-step in SymTex</small></div><button type="button" class="addsi">+ Follow</button></div>
                   <div class="dcard"><span class="dav agent">GW</span><div><span class="nm">Gauge Theory 101</span><span class="tag agent">AI agent</span><small>Course · MIT OCW</small></div><button type="button" class="addsi">+ Follow</button></div>
                 </div>
+                </div>
                 <button type="button" class="round discover-next" aria-label="Scroll discover cards">›</button>
-                <button type="button" class="link" data-action="browse-discover">Browse all ↗</button>
+                <button type="button" class="link" data-action="browse-discover">Browse all<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
               </section>
 
               <section class="tool-sec" id="sec-try-tutorial" aria-label="Try each tool (tutorial)">
@@ -906,8 +958,8 @@
                     <div class="onboard-row"><div class="col"><b>Add your own</b><small>Or tell Citta: “remind me to finish my lab on Friday”</small></div><button type="button" class="ob-btn" data-action="add-reminder">+ Add reminder</button></div>
                   </div>
                   <aside class="activity two-main-r">
-                    <div class="act-item"><span class="aav">GR</span><div><div class="t">Lecture 5 slides posted</div><small>Heavy-ion Physics · 1h ago</small><button type="button" class="act-link">Turn into study notes →</button></div></div>
-                    <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland goes live Thu 7pm (the real person)</div><small>His twin has a recap of the last Q&amp;A</small><button type="button" class="act-link">Set reminder →</button></div></div>
+                    <div class="act-item"><span class="aav">GR</span><div><div class="t">Lecture 5 slides posted</div><small>Heavy-ion Physics · 1h ago</small><button type="button" class="act-link">Turn into study notes<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                    <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland goes live Thu 7pm (the real person)</div><small>His twin has a recap of the last Q&amp;A</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                   </aside>
                 </div>
               </section>
@@ -934,15 +986,14 @@
           <span class="sw-sm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h8M8 2l2 2-2 2M10 8H2M4 6 2 8l2 2"/></svg></span>
           <span class="task-pill">3 tasks</span>
           <span class="sp"></span>
-          <button type="button" class="win" aria-label="Pop out">↙</button>
-          <button type="button" class="win" id="cittaPanelClose" aria-label="Minimize">−</button>
+          <button type="button" class="panel-close" id="cittaPanelClose" aria-label="Close Citta panel">×</button>
         </div>
         <div class="ctx">Working with: <span class="where">Home</span></div>
         <div class="citta-scroll">
           <div class="user-bubble">Prep me for lecture 5</div>
           <div class="asst-card">
             I drafted a 10-slide deck from Prof. Roland’s lecture 5 slides, with 3 quiz questions at the end.
-            <button type="button" class="act-link">Open in Deck →</button>
+            <button type="button" class="act-link">Open in Deck<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
           </div>
           <div class="run-hd">RUNNING &amp; READY</div>
           <div class="run-list">
@@ -954,12 +1005,12 @@
             <div class="citta-run">
               <div class="top"><span class="tool-tag">NUMBERS</span><span class="title">Lab 3 trends</span></div>
               <span class="status">Analysis ready</span>
-              <button type="button" class="act tap-active">Review →</button>
+              <button type="button" class="act tap-active">Review<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
             </div>
             <div class="citta-run err">
               <div class="top"><span class="tool-tag">DECK</span><span class="title">Create a deck called “Lab 3”</span></div>
               <span class="status">Result not delivered</span>
-              <button type="button" class="act">Retry →</button>
+              <button type="button" class="act">Retry<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
             </div>
           </div>
         </div>
@@ -970,10 +1021,11 @@
           </div>
           <div class="ask-row">
             <button type="button" class="plus" aria-label="Attach">+</button>
-            <span class="ph">Ask Citta, or / for a tool…</span>
+            <textarea class="citta-input" id="cittaInput" rows="1" placeholder="Ask Citta, or / for a tool…" aria-label="Ask Citta"></textarea>
             <button type="button" class="send" aria-label="Send">
-              <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M24.5199 23.6679V12.1441L11.2055 25.4566L10.5417 24.7929L23.8561 11.4785H12.3324V10.541H25.4574V23.666H24.5199V23.6679Z" fill="currentColor"/>
+              <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
               </svg>
             </button>
           </div>
@@ -1026,6 +1078,25 @@
   const composer = $('composer'), picker = $('picker'), menu = $('menu'), toast = $('toast');
   let current = 'citta', previous = 'citta', toastTimer;
 
+  const SPARK_SOLID = '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg>';
+  const SPARK_HOLLOW = '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M510.464 950.784c-14.336 0-40.96-6.656-55.808-50.688l-69.12-200.192c-8.704-25.088-39.424-55.808-64.512-64.512l-197.12-68.608c-44.032-15.36-50.688-41.984-50.688-56.32 0-14.336 6.656-40.96 50.688-55.808L322.56 387.072c25.6-8.704 55.808-38.912 64.512-64l67.584-200.192c14.848-44.032 41.472-50.688 55.808-50.688 14.336 0 40.96 6.656 55.808 50.688l69.632 201.728c8.704 25.088 39.424 55.296 64 64l198.656 67.072c44.032 14.848 50.688 41.472 51.2 55.808 0 14.336-6.656 40.96-50.688 55.808l-201.728 69.12c-25.088 8.704-55.296 38.912-64 64l-67.072 199.168c-14.848 44.544-41.472 51.2-55.808 51.2zM181.76 510.976l163.328 56.832c46.08 15.872 92.672 62.976 108.544 109.056l56.832 164.864 55.296-164.352c15.36-46.08 62.464-93.184 108.544-109.056l166.4-56.832-163.328-55.296c-46.08-15.872-93.184-62.464-109.056-108.544l-57.344-166.912-56.32 165.376c-15.872 46.08-62.464 93.184-108.544 108.544l-164.352 56.32z" fill="currentColor"/></svg>';
+
+  function resizeTextarea(el) {
+    if (!el) return;
+    el.style.height = 'auto';
+    el.style.height = `${el.scrollHeight}px`;
+  }
+  function setComposerPlaceholder(text) {
+    const el = $('composerInput');
+    if (el) el.placeholder = text;
+  }
+  function setComposerDraft(text) {
+    const el = $('composerInput');
+    if (!el) return;
+    el.value = text;
+    resizeTextarea(el);
+  }
+
   function setAI(key, { announce = true } = {}) {
     if (key !== current) previous = current;
     current = key;
@@ -1038,7 +1109,7 @@
     $('pickerBadge').hidden = !ai.twin;
     $('whenCitta').style.display = isCitta ? 'contents' : 'none';
     $('whenTwin').style.display = isCitta ? 'none' : 'contents';
-    $('placeholder').textContent = ai.placeholder;
+    setComposerPlaceholder(ai.placeholder);
 
     // Reminder actions run with whoever is in the picker.
     document.querySelectorAll('.btn-soft').forEach((b) => {
@@ -1076,6 +1147,7 @@
     if (open) positionSwitcherMenu();
     menu.classList.toggle('open', open);
     picker.setAttribute('aria-expanded', String(open));
+    if (!open && newTipSeen) frame.classList.remove('post-tip-on', 'dim-handoff');
   }
 
   function syncPresenter(state) {
@@ -1138,11 +1210,11 @@
       secondary: 'Back',
     },
     {
-      title: 'You’re not limited to Citta',
-      body: 'Swap in Prof. Roland’s twin, any SI you’ve added (twins and AI agents) like Lab Report Coach — anytime, even halfway through a task. Your file stays the same.',
+      title: 'Twins & AI agents live here',
+      body: 'WORKING WITH is where you swap in Prof. Roland’s twin or an AI agent mid-task. Your file stays open — switch back to Citta anytime.',
       spot: 'picker',
-      primary: 'Show switcher',
-      secondary: 'Next',
+      primary: 'Next',
+      secondary: 'Back',
     },
     {
       title: 'You’re set',
@@ -1197,6 +1269,7 @@
 
   function finishTutorialToHome() {
     setMenu(false);
+    setCittaExpanded(false);
     setAI('citta', { announce: false });
     syncPresenter('citta');
     tutorialStep = 1;
@@ -1217,13 +1290,14 @@
 
   function initComposerTools() {
     document.querySelectorAll('#composerTools .tool').forEach((tool) => {
-      tool.addEventListener('click', () => {
+      tool.addEventListener('click', (e) => {
+        e.stopPropagation();
         const key = tool.dataset.tool;
         const next = selectedComposerTool === key ? null : key;
         setComposerToolSelection(next);
         if (next) {
-          const label = tool.textContent.trim();
-          showToastMsg(`Tool selected · ${label}`);
+          const label = tool.querySelector('b')?.textContent || tool.textContent.trim();
+          showToastMsg(`Tool selected · ${label} (editor link coming soon)`);
         }
       });
     });
@@ -1238,11 +1312,11 @@
     $('composerFoot').querySelector('.k').textContent = isTutorial ? 'START WITH' : 'CONTINUE WITH';
     setComposerToolSelection(null);
     if (isHandoff) {
-      $('placeholder').textContent = 'What do you want to work on?';
+      setComposerPlaceholder('What do you want to work on?');
     } else if (isTutorial) {
-      $('placeholder').textContent = 'What do you want to work on? Try a suggestion below.';
+      setComposerPlaceholder('What do you want to work on? Try a suggestion below.');
     } else {
-      $('placeholder').textContent = AIS[current].placeholder;
+      setComposerPlaceholder(AIS[current].placeholder);
     }
   }
 
@@ -1292,28 +1366,52 @@
     fit();
   }
 
+  function frameRectOffset(el) {
+    const fr = frame.getBoundingClientRect();
+    const r = el.getBoundingClientRect();
+    return { top: r.top - fr.top, left: r.left - fr.left, bottom: r.bottom - fr.top, right: r.right - fr.left };
+  }
+
   function positionCoach() {
     if (screen !== 'tutorial' || !coach.classList.contains('on')) return;
     const step = TUTORIAL_STEPS[tutorialStep - 1];
+    const pad = pageGutterPx();
     coach.style.bottom = 'auto';
     coach.style.top = '';
-    coach.style.left = '48px';
+    coach.style.left = `${pad}px`;
+    coach.style.maxHeight = '';
     if (step.spot === 'composer') {
-      coach.style.top = `${composer.offsetTop + composer.offsetHeight + 20}px`;
-      coach.style.left = `${Math.max(48, composer.offsetLeft)}px`;
+      const c = frameRectOffset(composer);
+      coach.style.top = `${c.bottom + 20}px`;
+      coach.style.left = `${Math.max(pad, c.left)}px`;
     } else if (step.spot === 'try') {
       const el = document.getElementById('sec-try-tutorial') || document.getElementById('tail-tutorial') || $('sec-try-each');
       if (el) {
-        coach.style.top = `${el.offsetTop + el.offsetHeight + 16}px`;
-        coach.style.left = `${Math.max(48, el.offsetLeft)}px`;
+        const t = frameRectOffset(el);
+        coach.style.top = `${t.bottom + 16}px`;
+        coach.style.left = `${Math.max(pad, t.left)}px`;
       }
     } else if (step.spot === 'picker') {
-      coach.style.top = `${composer.offsetTop + 80}px`;
-      coach.style.left = `${Math.max(48, composer.offsetLeft + picker.offsetLeft)}px`;
+      const c = frameRectOffset(composer);
+      const p = frameRectOffset(picker);
+      coach.style.top = `${c.top + 80}px`;
+      coach.style.left = `${Math.max(pad, p.left)}px`;
     } else {
       coach.style.top = 'auto';
       coach.style.bottom = '120px';
     }
+    const fr = frame.getBoundingClientRect();
+    const ch = coach.getBoundingClientRect();
+    if (ch.bottom > fr.bottom - 8) {
+      const overflow = ch.bottom - fr.bottom + 24;
+      const curTop = parseFloat(coach.style.top);
+      if (Number.isFinite(curTop)) coach.style.top = `${Math.max(48, curTop - overflow)}px`;
+    }
+  }
+
+  function syncTutorialNav() {
+    const on = screen === 'tutorial';
+    document.querySelectorAll('[data-action="open-tutorial"]').forEach((b) => b.setAttribute('aria-pressed', String(on)));
   }
 
   function showToastMsg(text, ms = 4500) {
@@ -1344,11 +1442,14 @@
     const labels = { doc: 'Doc', deck: 'Deck', numbers: 'Numbers', symtex: 'SymTex', code: 'Code' };
     const label = labels[tool] || tool;
     showToastMsg(`Citta is opening ${label} — ready when you are`);
-    $('placeholder').textContent = `Try ${label} with Citta — what should we make first?`;
+    setComposerDraft(`Try ${label} with Citta — what should we make first?`);
   }
 
   function startTutorial({ step = 1 } = {}) {
     postTutorialTipPending = false;
+    if (step === 1) newTipSeen = false;
+    hidePostTutorialTip({ dismissed: false });
+    setCittaExpanded(false);
     setAI('citta', { announce: false });
     setMenu(false);
     syncPresenter('citta');
@@ -1379,7 +1480,7 @@
     const tool = chip.dataset.continueTool;
     if (tool) setComposerToolSelection(tool);
     flashEl(chip);
-    $('placeholder').textContent = `Continue: ${label}`;
+    setComposerDraft(`Continue: ${label}`);
     showToastMsg(`Opening · ${label}`);
     setCittaExpanded(true);
   }
@@ -1421,7 +1522,7 @@
 
       const suggest = e.target.closest('#composerSuggest .chip');
       if (suggest) {
-        $('placeholder').textContent = suggest.textContent.trim();
+        setComposerDraft(suggest.textContent.trim());
         flashEl(suggest);
         showToastMsg('Starter prompt applied');
         return;
@@ -1515,6 +1616,12 @@
       const panelSuggest = e.target.closest('.citta-panel .suggest button');
       if (panelSuggest) {
         flashEl(panelSuggest);
+        const cittaEl = $('cittaInput');
+        if (cittaEl) {
+          cittaEl.value = panelSuggest.textContent.trim();
+          resizeTextarea(cittaEl);
+          cittaEl.focus();
+        }
         showToastMsg(panelSuggest.textContent.trim());
         return;
       }
@@ -1566,11 +1673,6 @@
         flashEl(el);
         showToastMsg(`Rail · ${el.textContent.trim() || 'profile'}`);
       });
-    });
-
-    frame.querySelectorAll('.citta-panel .ph .win').forEach((btn) => {
-      if (btn.id === 'cittaPanelClose') return;
-      btn.addEventListener('click', () => showToastMsg('Pop out Citta (prototype)'));
     });
 
     frame.querySelector('.citta-panel .ph .sw-sm')?.addEventListener('click', () => {
@@ -1654,20 +1756,23 @@
         startTutorial({ step: Number.isFinite(step) ? step : 1 });
       });
     });
+    document.querySelectorAll('[data-action="open-tutorial"]').forEach((btn) => {
+      btn.addEventListener('click', () => startTutorial({ step: 1 }));
+    });
   }
 
   function onCoachPrimary(step) {
     if (step === 1) { setScreen('tutorial', { step: 2 }); return; }
     if (step === 2) { setScreen('tutorial', { step: 3 }); return; }
-    if (step === 3) { setAI('citta', { announce: false }); setMenu(true); setScreen('tutorial', { step: 4 }); return; }
+    if (step === 3) { setMenu(false); setScreen('tutorial', { step: 4 }); return; }
     if (step === 4) { finishTutorialToHome(); return; }
   }
 
   function onCoachSecondary(step) {
     if (step === 1) { postTutorialTipPending = false; setScreen('home'); return; }
     if (step === 2) { setScreen('tutorial', { step: 1 }); return; }
-    if (step === 3) { setMenu(false); setScreen('tutorial', { step: 4 }); return; }
-    if (step === 4) { finishTutorialToHome(); return; }
+    if (step === 3) { setMenu(false); setScreen('tutorial', { step: 2 }); return; }
+    if (step === 4) { setScreen('tutorial', { step: 3 }); return; }
   }
 
   function setScreen(next, { step, afterTutorial = false, showTip = false } = {}) {
@@ -1679,6 +1784,7 @@
     document.querySelectorAll('.hub > .screen[data-screen]').forEach((el) => el.classList.toggle('on', el.dataset.screen === next));
     document.querySelectorAll('.hub > .screen[data-tail]').forEach((el) => el.classList.toggle('on', el.dataset.tail === next));
     document.querySelectorAll('.presenter [data-screen]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.screen === next)));
+    document.querySelectorAll('.nav-tutorial').forEach((b) => b.setAttribute('aria-pressed', String(next === 'tutorial')));
     const composerMode = next === 'tutorial' ? 'tutorial' : (next === 'handoff' ? 'handoff' : 'default');
     setComposerMode(composerMode);
     if (next === 'welcome' || next === 'tutorial') setComposerToolSelection('doc');
@@ -1686,14 +1792,18 @@
     if (dockCount) dockCount.textContent = next === 'welcome' ? '2' : '3';
     const wantTip = next === 'handoff' && (afterTutorial || showTip || postTutorialTipPending) && current === 'citta' && !newTipSeen;
     if (wantTip) {
-      showPostTutorialTip();
+      requestAnimationFrame(() => showPostTutorialTip());
     } else if (next !== 'handoff' || newTipSeen) {
       hidePostTutorialTip({ dismissed: false });
     }
     if (next === 'tutorial') {
       renderCoach();
-      requestAnimationFrame(() => coach.scrollIntoView({ behavior: 'smooth', block: 'nearest' }));
+      requestAnimationFrame(() => {
+        positionCoach();
+        coach.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
     } else { coach.classList.remove('on'); frame.classList.remove('tutorial-on', 'dim'); document.querySelectorAll('.spot').forEach((el) => el.classList.remove('spot')); }
+    syncTutorialNav();
     syncHash();
     fit();
   }
@@ -1742,6 +1852,9 @@
     newTip.classList.remove('show');
     newTip.hidden = true;
     frame.classList.remove('dim-handoff');
+    newTipSeen = true;
+    postTutorialTipPending = false;
+    syncHash();
     setMenu(true);
     syncPresenter('open');
   });
@@ -1752,7 +1865,12 @@
     const t = parseInt(q.get('tutorial') || '1', 10);
     const showTip = q.get('tip') === '1';
     if (showTip) postTutorialTipPending = true;
-    setScreen(s, { step: Number.isFinite(t) ? t : 1, afterTutorial: s === 'handoff' && showTip, showTip });
+    const step = Number.isFinite(t) ? t : 1;
+    if (s === 'tutorial') {
+      startTutorial({ step });
+    } else {
+      setScreen(s, { step, afterTutorial: s === 'handoff' && showTip, showTip });
+    }
     if (q.get('citta') === 'expanded') setCittaExpanded(true);
   }
   window.addEventListener('hashchange', readHash);
@@ -1769,9 +1887,25 @@
     if (coach.classList.contains('on')) positionCoach();
   }
   window.addEventListener('resize', fit);
+  function decorateSparkIcons() {
+    document.querySelectorAll('.tpl .use').forEach((el) => {
+      el.innerHTML = `<span class="spark-icon" aria-hidden="true">${SPARK_HOLLOW}</span>Use with Citta`;
+    });
+    document.querySelectorAll('.try-it').forEach((el) => {
+      el.innerHTML = `<span class="citta-mark spark-icon" aria-hidden="true">${SPARK_SOLID}</span>Try it`;
+    });
+    const badgeIcon = $('pickerBadge')?.querySelector('.spark-icon');
+    if (badgeIcon) badgeIcon.innerHTML = SPARK_HOLLOW;
+  }
+
   initComposerTools();
   initToolInteractions();
   initFrameInteractions();
+  decorateSparkIcons();
+  const composerInputEl = $('composerInput');
+  composerInputEl?.addEventListener('input', () => resizeTextarea(composerInputEl));
+  const cittaInputEl = $('cittaInput');
+  cittaInputEl?.addEventListener('input', () => resizeTextarea(cittaInputEl));
   setAI('citta', { announce: false });
   if (location.hash) readHash();
   else setScreen('home');
