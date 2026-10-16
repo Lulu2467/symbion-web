@@ -39,7 +39,7 @@
   button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
 
   /* Presenter bar */
-  .presenter { position: sticky; top: 0; z-index: 50; background: rgba(247,248,246,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); padding: 12px 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .presenter { position: sticky; top: 0; z-index: 50; background: rgba(247,248,246,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); padding: 12px 52px 12px 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
   .presenter h1 { font-size: 15px; font-weight: 600; margin: 0 12px 0 0; }
   .seg { display: inline-flex; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 3px; gap: 2px; }
   .seg button { font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 999px; color: var(--muted); }
@@ -586,6 +586,43 @@
 
   .dock { cursor: pointer; }
   .dock[aria-expanded="true"] { box-shadow: 0 0 0 4px rgba(44,122,95,.2); }
+
+  /* Fullscreen toggle — fixed chrome; outside Figma frame so layout stays faithful */
+  .fs-toggle {
+    position: fixed;
+    top: 10px;
+    right: 14px;
+    z-index: 90;
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.94);
+    backdrop-filter: blur(8px);
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 4px rgba(28,31,29,.07);
+    transition: background .12s, color .12s, border-color .12s, box-shadow .12s;
+  }
+  .fs-toggle:hover {
+    color: var(--ink);
+    border-color: rgba(44,122,95,.35);
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(28,31,29,.1);
+  }
+  .fs-toggle:active { transform: scale(.96); }
+  .fs-toggle.is-fullscreen {
+    color: var(--green-dark);
+    border-color: rgba(44,122,95,.4);
+    background: var(--green-wash);
+  }
+  .fs-toggle svg { width: 17px; height: 17px; display: block; }
+  .fs-toggle .fs-ico-exit { display: none; }
+  .fs-toggle.is-fullscreen .fs-ico-enter { display: none; }
+  .fs-toggle.is-fullscreen .fs-ico-exit { display: block; }
+  .fs-toggle:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
 </style>
 </head>
 <body>
@@ -612,6 +649,11 @@
   </div>
   <span class="hint">Deep links: <code>#screen=tutorial</code> (Figma 8541) · <code>#screen=handoff&amp;tip=1</code> (8554) · <code>#citta=expanded</code></span>
 </div>
+
+<button type="button" class="fs-toggle" id="fsToggle" aria-label="Enter fullscreen" title="Fullscreen" aria-pressed="false">
+  <svg class="fs-ico-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>
+  <svg class="fs-ico-exit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h5V3M16 3v5h5M3 16h5v5M16 21v-5h5"/></svg>
+</button>
 
 <div class="stage">
   <div class="scaler" id="scaler">
@@ -2317,10 +2359,59 @@
     });
   }
 
+  function initFullscreenToggle() {
+    const btn = $('fsToggle');
+    if (!btn) return;
+    const root = document.documentElement;
+    function isFullscreen() {
+      return !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
+    }
+    function syncFsUi() {
+      const on = isFullscreen();
+      btn.classList.toggle('is-fullscreen', on);
+      btn.setAttribute('aria-pressed', String(on));
+      btn.setAttribute('aria-label', on ? 'Exit fullscreen' : 'Enter fullscreen');
+      btn.title = on ? 'Exit fullscreen' : 'Fullscreen';
+      fit();
+    }
+    function enterFs() {
+      const req = root.requestFullscreen || root.webkitRequestFullscreen || root.msRequestFullscreen;
+      if (!req) {
+        showToastMsg('Fullscreen not supported in this browser');
+        return;
+      }
+      try {
+        const result = req.call(root);
+        if (result && typeof result.then === 'function') {
+          result.catch(() => showToastMsg('Could not enter fullscreen'));
+        }
+      } catch (_) {
+        showToastMsg('Could not enter fullscreen');
+      }
+    }
+    function exitFs() {
+      const exit = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
+      if (!exit) return;
+      try {
+        const result = exit.call(document);
+        if (result && typeof result.then === 'function') result.catch(() => {});
+      } catch (_) { /* ignore */ }
+    }
+    btn.addEventListener('click', () => {
+      if (isFullscreen()) exitFs();
+      else enterFs();
+    });
+    ['fullscreenchange', 'webkitfullscreenchange', 'MSFullscreenChange'].forEach((ev) => {
+      document.addEventListener(ev, syncFsUi);
+    });
+    syncFsUi();
+  }
+
   initComposerTools();
   initToolInteractions();
   initFrameInteractions();
   initHeaderSearch();
+  initFullscreenToggle();
   decorateSparkIcons();
   decorateLectureBookIcons();
   const composerInputEl = $('composerInput');
