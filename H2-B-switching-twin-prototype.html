@@ -250,15 +250,19 @@
   .interest:not(.on):hover { border-color: #cfd4cf; background: var(--surface); }
   .interest.on { background: var(--green-tint); border-color: var(--green); color: var(--green-dark); font-weight: 600; }
   .vr { width: 1px; height: 28px; background: var(--line); }
-  .discover-scroll-wrap { position: relative; flex: 1; min-width: 0; }
-  .discover-scroll-wrap::after { content: ""; position: absolute; top: 0; right: 0; width: 72px; height: calc(100% - 6px); pointer-events: none; z-index: 2; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.82) 48%, #fff 100%); }
-  .discover .hscroll { flex: none; width: 100%; mask-image: linear-gradient(90deg, #000 0%, #000 calc(100% - 56px), transparent 100%); -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 calc(100% - 56px), transparent 100%); }
-  .hscroll { flex: 1; min-width: 0; display: flex; gap: 8px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: rgba(44,122,95,.35) transparent; padding-bottom: 4px; scroll-padding-inline-end: 16px; cursor: grab; }
-  .hscroll::after { content: ""; flex: none; width: 80px; height: 1px; scroll-snap-align: end; }
+  /* Hug card width — no wide empty gutter / green scrollbar track before › */
+  .discover-scroll-wrap { position: relative; flex: 0 1 auto; min-width: 0; max-width: 100%; overflow: hidden; }
+  .discover-scroll-wrap::after { content: none; }
+  .discover-scroll-wrap.can-scroll::after { content: ""; position: absolute; top: 0; right: 0; width: 48px; height: 100%; pointer-events: none; z-index: 2; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.88) 55%, #fff 100%); }
+  .discover .hscroll { flex: none; mask-image: none; -webkit-mask-image: none; }
+  .discover-scroll-wrap.can-scroll .hscroll { mask-image: linear-gradient(90deg, #000 0%, #000 calc(100% - 40px), transparent 100%); -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 calc(100% - 40px), transparent 100%); }
+  .hscroll { flex: 0 1 auto; min-width: 0; display: flex; gap: 8px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; scrollbar-width: none; padding-bottom: 0; scroll-padding-inline-end: 8px; cursor: default; }
+  .discover-scroll-wrap.can-scroll .hscroll { cursor: grab; }
   .hscroll.is-dragging { cursor: grabbing; user-select: none; }
-  .hscroll::-webkit-scrollbar { height: 6px; }
-  .hscroll::-webkit-scrollbar-thumb { background: rgba(44,122,95,.28); border-radius: 999px; }
+  .hscroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
   .hscroll:focus-visible { outline: 2px solid rgba(44,122,95,.35); outline-offset: 2px; border-radius: 8px; }
+  .discover > .link { margin-left: auto; }
+  .discover-next[hidden] { display: none !important; }
   .dcard { display: flex; gap: 10px; align-items: center; padding: 6px 8px; border: 1px solid var(--line); border-radius: 12px; flex: none; scroll-snap-align: start; }
   .dcard .dav { width: 28px; height: 28px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; color: var(--muted); }
   .dcard .dav.agent { background: var(--amber-tint); color: var(--amber); border-radius: 8px; }
@@ -294,7 +298,8 @@
   .badge.email { background: var(--amber-tint); color: var(--amber); }
   .badge.course { background: var(--amber-tint); color: var(--amber); }
   .badge.yours { background: var(--surface); color: var(--muted); }
-  .btn-soft { background: var(--green-tint); color: var(--green-dark); font-size: 13px; font-weight: 500; padding: 8px 14px; border-radius: 10px; white-space: pre; transition: background .2s, transform .08s; flex: none; }
+  .btn-soft { display: inline-flex; align-items: center; gap: 6px; background: var(--green-tint); color: var(--green-dark); font-size: 13px; font-weight: 500; padding: 8px 14px; border-radius: 10px; white-space: nowrap; transition: background .2s, transform .08s; flex: none; }
+  .btn-soft .spark-icon { width: 12px; height: 12px; color: var(--green-dark); }
   .btn-soft:hover { background: #dceee4; }
   .btn-soft:active { transform: scale(.98); }
   .activity { width: 100%; flex: none; border: 1px solid var(--line); border-radius: 16px; padding: 16px 20px 20px; display: flex; flex-direction: column; gap: 16px; align-self: stretch; }
@@ -376,8 +381,8 @@
   .week-tools-hd .sp { flex: 1; min-width: 8px; }
   .week-tools-close { width: 28px; height: 28px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); font-size: 20px; line-height: 1; flex: none; cursor: pointer; }
   .week-tools-close:hover { background: var(--surface); color: var(--ink); }
-  .week-cards { display: flex; gap: 16px; min-height: 185px; }
-  .week-card { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 8px; background: #fff; position: relative; text-align: left; }
+  .week-cards { display: flex; gap: 16px; align-items: stretch; }
+  .week-card { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; background: #fff; position: relative; text-align: left; }
   .week-card.tried { background: #f6faf6; border-color: rgba(44,122,95,.16); }
   .week-card .done,
   .week-card .todo { position: absolute; top: 12px; right: 12px; width: 22px; height: 22px; border-radius: 11px; flex: none; box-sizing: border-box; }
@@ -385,8 +390,8 @@
   .week-card .todo { border: 1.5px solid #c8cec9; background: #fff; }
   .week-card .row { display: flex; gap: 8px; align-items: center; }
   .week-card b { font-size: 14px; font-weight: 600; }
-  .week-card small { font-size: 12px; color: var(--faint); flex: 1; }
-  .week-card .go-link { font-size: 12px; font-weight: 600; color: var(--green); margin-top: auto; align-self: flex-start; padding: 0; text-align: left; transition: color .12s; }
+  .week-card small { font-size: 12px; color: var(--faint); line-height: 1.35; }
+  .week-card .go-link { font-size: 12px; font-weight: 600; color: var(--green); margin-top: 2px; align-self: flex-start; padding: 0; text-align: left; transition: color .12s; }
   .week-card .go-link:hover { color: var(--green-dark); text-decoration: underline; text-underline-offset: 2px; }
   .week-card .go-link:active { opacity: .85; }
   .week-card .btn-citta:active { transform: scale(.98); }
@@ -979,8 +984,8 @@
                   <div class="sec two-title-l"><h3>Coming up</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act" data-action="add-reminder">+ Add</button></div>
                   <div class="two-title-r"><h3>From your Cosmos</h3></div>
                   <div class="two-main-l">
-                    <div class="rem"><span class="when hot">Thu</span><div class="col"><span class="t">Heavy-ion Physics — lecture 8</span><span class="meta"><span class="badge">Course · Prof. Roland</span></span></div><button type="button" class="btn-soft" data-verb="Prep a 10-min deck" data-tool="deck">≋  Prep a 10-min deck</button></div>
-                    <div class="rem"><span class="when">Fri</span><div class="col"><span class="t">Lab 3 analysis due</span><span class="meta"><span class="badge yours">Yours</span></span></div><button type="button" class="btn-soft" data-verb="Open in Numbers" data-tool="numbers">≋  Open in Numbers</button></div>
+                    <div class="rem"><span class="when hot">Thu</span><div class="col"><span class="t">Heavy-ion Physics — lecture 8</span><span class="meta"><span class="badge">Course · Prof. Roland</span></span></div><button type="button" class="btn-soft" data-verb="Prep a 10-min deck" data-tool="deck"></button></div>
+                    <div class="rem"><span class="when">Fri</span><div class="col"><span class="t">Lab 3 analysis due</span><span class="meta"><span class="badge yours">Yours</span></span></div><button type="button" class="btn-soft" data-verb="Open in Numbers" data-tool="numbers"></button></div>
                   </div>
                   <aside class="activity two-main-r cosmos-compact">
                     <p>14 updates while you were away · 3 replies to your threads · 2 new lectures</p>
@@ -1277,9 +1282,14 @@
     setComposerPlaceholder(ai.placeholder);
 
     // Reminder actions run with whoever is in the picker.
+    // Citta suggestions use the spark star (same as “Use with Citta” / Try it), not the ≋ wave.
     document.querySelectorAll('.btn-soft').forEach((b) => {
       const verb = (!isCitta && b.dataset.twinVerb) || b.dataset.verb;
-      b.textContent = `${ai.prefix}  ${verb}`;
+      if (isCitta) {
+        b.innerHTML = `<span class="spark-icon" aria-hidden="true">${SPARK_SOLID}</span>${verb}`;
+      } else {
+        b.textContent = `${ai.prefix}  ${verb}`;
+      }
       if (announce) { b.classList.remove('flash'); void b.offsetWidth; b.classList.add('flash'); }
     });
 
@@ -1994,18 +2004,30 @@
     initDiscoverScroll();
   }
 
+  function syncDiscoverOverflow(track, next) {
+    if (!track) return;
+    const wrap = track.closest('.discover-scroll-wrap');
+    const canScroll = track.scrollWidth > track.clientWidth + 1;
+    const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
+    wrap?.classList.toggle('can-scroll', canScroll);
+    if (next) next.hidden = !canScroll || atEnd;
+  }
+
   function bindDiscoverScroll(track, next) {
     if (!track || track.dataset.scrollBound) return;
     track.dataset.scrollBound = '1';
 
     const scrollStep = () => Math.max(220, Math.round(track.clientWidth * 0.72));
+    const sync = () => syncDiscoverOverflow(track, next);
 
     next?.addEventListener('click', (e) => {
       e.stopPropagation();
       track.scrollBy({ left: scrollStep(), behavior: 'smooth' });
     });
 
+    track.addEventListener('scroll', sync, { passive: true });
     track.addEventListener('wheel', (e) => {
+      if (!track.closest('.discover-scroll-wrap')?.classList.contains('can-scroll')) return;
       if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
       track.scrollLeft += e.deltaY;
       e.preventDefault();
@@ -2013,6 +2035,7 @@
 
     let drag = null;
     track.addEventListener('pointerdown', (e) => {
+      if (!track.closest('.discover-scroll-wrap')?.classList.contains('can-scroll')) return;
       if (e.target.closest('.addsi')) return;
       drag = { x: e.clientX, left: track.scrollLeft, id: e.pointerId };
       track.classList.add('is-dragging');
@@ -2030,6 +2053,14 @@
     };
     track.addEventListener('pointerup', endDrag);
     track.addEventListener('pointercancel', endDrag);
+
+    if (typeof ResizeObserver !== 'undefined') {
+      const ro = new ResizeObserver(sync);
+      ro.observe(track);
+      const wrap = track.closest('.discover-scroll-wrap');
+      if (wrap) ro.observe(wrap);
+    }
+    requestAnimationFrame(sync);
   }
 
   function initDiscoverScroll() {
