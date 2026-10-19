@@ -1711,9 +1711,10 @@
     el.style.height = 'auto';
     el.style.height = `${el.scrollHeight}px`;
   }
+  let composerPlaceholderText = 'What do you want to work on?';
   function setComposerPlaceholder(text) {
-    const el = $('composerInput');
-    if (el) el.placeholder = text;
+    composerPlaceholderText = text || '';
+    syncComposerPlaceholder();
   }
   function setComposerDraft(text) {
     const el = $('composerInput');
@@ -2201,12 +2202,21 @@
     return { kind: 'file', tool: 'doc', iconHtml: FILE_ICON_SVG, bg: m.bg, color: m.color, label: truncateAttachName(name) };
   }
 
+  function syncComposerPlaceholder() {
+    const el = $('composerInput');
+    if (!el) return;
+    const hasChips = !!selectedComposerTool
+      || composerAttachments.some((a) => a.target === 'composer');
+    el.placeholder = hasChips ? '' : composerPlaceholderText;
+  }
+
   function syncComposerChipsVisibility() {
     const host = $('composerChips');
     if (!host) return;
     const hasTool = !!selectedComposerTool;
     const hasFiles = composerAttachments.some((a) => a.target === 'composer');
     host.classList.toggle('on', hasTool || hasFiles);
+    syncComposerPlaceholder();
   }
 
   function renderAttachmentChips() {
