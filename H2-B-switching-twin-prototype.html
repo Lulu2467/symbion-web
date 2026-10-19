@@ -208,10 +208,9 @@
   .tool { display: inline-flex; gap: 9px; align-items: center; padding: 6px 14px 6px 6px; border-radius: 12px; border: 1.5px solid var(--line); background: #fff; font-size: 14px; font-weight: 500; color: var(--ink); cursor: pointer; transition: background .12s, color .12s, border-color .12s; box-sizing: border-box; min-height: 40px; }
   .tool:hover { border-color: #cfd4cf; }
   .tool:active { transform: none; }
-  /* Selected = one flat primary chip (no frosted icon tile nested inside). */
-  .tool.sel { background: var(--green); color: #fff; border-color: var(--green); box-shadow: none; }
-  .tool.sel:hover { background: var(--green-dark); border-color: var(--green-dark); color: #fff; }
-  .tool.sel i { background: transparent !important; color: #fff !important; box-shadow: none; }
+  /* Selected = same green line-frame as .composer — white fill, tint icons stay. */
+  .tool.sel { background: #fff; color: var(--ink); border-color: rgba(44,122,95,.45); box-shadow: 0 0 0 1px rgba(44,122,95,.08); }
+  .tool.sel:hover { background: var(--green-wash); border-color: var(--green); color: var(--ink); }
   .tools .sp { flex: 1; }
   .tools .attach { font-size: 13px; color: var(--muted); white-space: pre; }
   [hidden] { display: none !important; }
