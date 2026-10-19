@@ -184,13 +184,11 @@
   .citta-panel .asst-card a:hover { text-decoration: underline; }
   .tap-active:active { transform: scale(.98); }
   .ask-row { display: flex; gap: 14px; align-items: flex-start; }
-  /* Kimi-style dialog. Outer radius = send circle radius + inset so corners feel concentric. */
+  /* Match chip / + language: soft rounded rect, not concentric-with-circle. */
   .composer .ask-row {
-    --ask-send: 36px;
-    --ask-inset: 8px;
     background: #fafbfa;
-    border-radius: calc(var(--ask-send) / 2 + var(--ask-inset)); /* 26px with 18px send + 8px pad */
-    padding: 12px var(--ask-inset) var(--ask-inset) 12px;
+    border-radius: 20px;
+    padding: 12px 8px 8px 12px;
     margin: 0 -4px;
     display: block;
   }
@@ -210,8 +208,7 @@
   .composer .ask-bar .plus { width: 32px; height: 32px; border-radius: 10px; color: var(--muted); font-size: 22px; font-weight: 400; line-height: 1; flex: none; display: flex; align-items: center; justify-content: flex-start; padding: 0; box-sizing: border-box; transition: background .12s, color .12s; }
   .composer .ask-bar .plus:hover { background: #fff; color: var(--ink); }
   .composer .ask-bar .plus:active { transform: scale(.96); }
-  .composer .ask-row .send { width: var(--ask-send); height: var(--ask-send); }
-  .send { width: 36px; height: 36px; border-radius: 50%; background: var(--green); color: #fff; flex: none; display: flex; align-items: center; justify-content: center; padding: 8px; box-sizing: border-box; transition: background .12s, transform .08s; margin-left: auto; }
+  .send { width: 36px; height: 36px; border-radius: 10px; background: var(--green); color: #fff; flex: none; display: flex; align-items: center; justify-content: center; padding: 8px; box-sizing: border-box; transition: background .12s, transform .08s; margin-left: auto; }
   .send:hover { background: var(--green-dark); }
   .send:active { transform: scale(.96); }
   .send svg { display: block; width: 16px; height: 16px; flex: none; }
