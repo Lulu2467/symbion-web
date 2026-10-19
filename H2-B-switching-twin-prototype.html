@@ -40,6 +40,12 @@
   html, body { margin: 0; }
   body { background: var(--canvas); font-family: var(--font); color: var(--ink); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
   button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  /*
+   * Anti-jump rule for toggles/chips:
+   * - Keep the same border-width in default / hover / selected (change color only).
+   * - Keep the same font-weight across those states (bold on select widens text).
+   * - Prefer outline / background / color for emphasis — never add a border that wasn’t there.
+   */
 
   /* Presenter bar */
   .presenter { position: sticky; top: 0; z-index: 50; background: rgba(247,248,246,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); padding: 12px 52px 12px 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
@@ -90,7 +96,8 @@
   .rail .r.o .rail-ico-chev { transition: transform .18s ease; }
   .rail.is-open .r.o .rail-ico-chev { transform: scaleX(-1); }
   .rail .r.on { background: var(--green-tint); color: var(--green-dark); }
-  .rail.is-open .r.on { color: var(--green-dark); font-weight: 600; }
+  .rail.is-open .r { font-weight: 500; }
+  .rail.is-open .r.on { color: var(--green-dark); font-weight: 500; }
   .rail .r[data-rail]:hover:not(.on) { background: rgba(28,31,29,.04); color: var(--ink); }
   .rail .div { width: 24px; height: 1px; background: var(--line); align-self: center; }
   .rail.is-open .div { width: auto; margin: 4px 8px; align-self: stretch; }
@@ -331,9 +338,10 @@
   /* Discover */
   .discover { display: flex; gap: 14px; align-items: center; padding: 10px 12px 10px 16px; border: 1px solid var(--line); border-radius: 14px; font-size: 12px; line-height: 1.35; flex-wrap: nowrap; min-width: 0; }
   .discover .k { font-size: 13px; font-weight: 500; color: var(--muted); white-space: nowrap; flex: none; }
-  .interest { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); cursor: pointer; transition: background .12s, border-color .12s; white-space: nowrap; flex: none; line-height: 1.35; }
+  /* Stable chips: keep border-width + font-weight constant — only color/fill may change (no layout jump). */
+  .interest { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: #fff; font-weight: 500; cursor: pointer; transition: background .12s, border-color .12s, color .12s; white-space: nowrap; flex: none; line-height: 1.35; box-sizing: border-box; }
   .interest:not(.on):hover { border-color: #cfd4cf; background: var(--surface); }
-  .interest.on { background: var(--green-tint); border-color: var(--green); color: var(--green-dark); font-weight: 600; }
+  .interest.on { background: var(--green-tint); border-color: var(--green); color: var(--green-dark); font-weight: 500; }
   /* Add-interest: fixed circle so “+” doesn’t collapse into a pill squish */
   .interest.add { width: 28px; height: 28px; padding: 0; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 500; line-height: 1; color: var(--muted); box-sizing: border-box; }
   .interest.add:hover { border-color: var(--green); color: var(--green-dark); background: var(--green-wash); }
