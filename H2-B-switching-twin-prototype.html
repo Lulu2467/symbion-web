@@ -330,8 +330,10 @@
   .vr { width: 1px; height: 28px; background: var(--line); }
   /* Hug card width — no wide empty gutter / green scrollbar track before › */
   .discover-scroll-wrap { position: relative; flex: 0 1 auto; min-width: 0; max-width: 100%; overflow: hidden; }
+  .discover-scroll-wrap::before,
   .discover-scroll-wrap::after { content: none; }
-  /* Soft edge hint only ? never mask card content; gone once scrolled to the last card. */
+  /* Soft edge fades ? left when scrolled past start, right while more cards remain. */
+  .discover-scroll-wrap.can-scroll:not(.at-start)::before { content: ""; position: absolute; top: 0; left: 0; width: 28px; height: 100%; pointer-events: none; z-index: 2; background: linear-gradient(270deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 65%, #fff 100%); }
   .discover-scroll-wrap.can-scroll:not(.at-end)::after { content: ""; position: absolute; top: 0; right: 0; width: 28px; height: 100%; pointer-events: none; z-index: 2; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 65%, #fff 100%); }
   .discover .hscroll { flex: none; mask-image: none; -webkit-mask-image: none; }
   .hscroll { flex: 0 1 auto; min-width: 0; display: flex; gap: 12px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; scrollbar-width: none; padding-bottom: 0; scroll-padding-inline-end: 16px; cursor: default; }
@@ -2627,8 +2629,10 @@
     const wrap = track.closest('.discover-scroll-wrap');
     const canScroll = track.scrollWidth > track.clientWidth + 1;
     const maxLeft = Math.max(0, track.scrollWidth - track.clientWidth);
+    const atStart = !canScroll || track.scrollLeft <= 8;
     const atEnd = !canScroll || track.scrollLeft >= maxLeft - 8;
     wrap?.classList.toggle('can-scroll', canScroll);
+    wrap?.classList.toggle('at-start', atStart);
     wrap?.classList.toggle('at-end', atEnd);
     if (next) next.hidden = !canScroll || atEnd;
   }
