@@ -93,7 +93,7 @@
   .rail .r .rail-ico-spark { width: 15px; height: 15px; }
   .rail .r .rail-ico-chev { width: 14px; height: 14px; }
   .rail .r .rail-ico-cosmo { width: 16px; height: 16px; }
-  .round .chev-ico { width: 16px; height: 16px; display: block; flex: none; }
+  .round .chev-ico { width: 12px; height: 12px; display: block; flex: none; }
   .rail .r.o { border: 1px solid var(--line); background: #fff; width: 36px; height: 36px; justify-content: center; padding: 0; }
   /* Collapsed → chevron right (expand); open → chevron left (collapse). SVG is left-pointing. */
   .rail .r.o .rail-ico-chev { transition: transform .18s ease; transform: scaleX(-1); }
@@ -149,7 +149,8 @@
   .day .tick.now-l { left: 34px; color: var(--green); font-weight: 500; }
 
   /* Composer (the hero) */
-  .composer { position: relative; z-index: 2; isolation: isolate; background: #fff; border: 1.5px solid #d5dbd6; border-radius: 24px; box-shadow: 0 1px 3px rgba(28,31,29,.05), 0 4px 12px rgba(28,31,29,.04); }
+  /* Chat shell: muted grey-green frame — not bright brand green. */
+  .composer { position: relative; z-index: 2; isolation: isolate; background: #fff; border: 1.5px solid #c5d0c9; border-radius: 24px; box-shadow: 0 1px 3px rgba(28,31,29,.05), 0 4px 12px rgba(28,31,29,.06); }
   /* Menu lives inside .composer; raise the whole composer so week-tool cards don’t paint over it. */
   .composer:has(.menu.open),
   .composer.is-menu-open { z-index: 40; }
@@ -190,6 +191,7 @@
   .addsi { cursor: pointer; }
   .addsi:hover { filter: brightness(.96); }
   .round { cursor: pointer; }
+  .round:hover { background: var(--green-tint); border-color: var(--green); color: var(--green-dark); }
   .tpl { cursor: pointer; transition: border-color .12s, box-shadow .12s, transform .12s; }
   .tpl:hover {
     border-color: rgba(0,139,104,.35);
@@ -369,33 +371,10 @@
   .hscroll.is-dragging { cursor: grabbing; user-select: none; }
   .hscroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
   .hscroll:focus-visible { outline: 2px solid rgba(0,139,104,.35); outline-offset: 2px; border-radius: 8px; }
-  /* Discover trailing actions — one icon-button system (same hit / weight / hover). */
-  .discover .discover-next,
-  .discover .browse-all {
-    flex: none;
-    width: 28px;
-    height: 28px;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--muted);
-    background: transparent;
-    border: 0;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background .12s, color .12s;
-    line-height: 0;
-  }
   .discover .discover-next { margin-left: auto; }
-  .discover .discover-next + .browse-all { margin-left: 2px; }
-  .discover .discover-next:hover,
+  .discover .browse-all { flex: none; width: 28px; height: 28px; padding: 0; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; color: var(--muted); background: transparent; border: 0; border-radius: 8px; cursor: pointer; transition: background .12s, color .12s; }
   .discover .browse-all:hover { background: var(--green-tint); color: var(--green-dark); }
-  .discover .discover-next:active,
   .discover .browse-all:active { transform: scale(.96); }
-  .discover .discover-next .chev-ico,
   .discover .browse-all svg { display: block; width: 16px; height: 16px; flex: none; }
   .discover-next[hidden] { display: none !important; }
   .discover .discover-next[hidden] + .browse-all { margin-left: auto; }
@@ -407,23 +386,22 @@
   .tag.agent { background: var(--amber-tint); color: var(--amber); }
   .dcard small { display: block; font-size: 11px; color: var(--faint); }
   .addsi { background: var(--green-tint); color: var(--green-dark); font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: 8px; }
-  /* Fallback if .round is used outside Discover — same icon-button, no ring. */
+  /* Match browse-all hit size (28); lighter/thinner ring + chevron than before. */
   .round {
     width: 28px;
     height: 28px;
-    border-radius: 8px;
-    border: 0;
-    display: inline-flex;
+    border-radius: 14px;
+    border: 1px solid currentColor;
+    display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--muted);
-    background: transparent;
+    color: var(--faint);
+    font-size: 14px;
     flex: none;
     padding: 0;
     box-sizing: border-box;
     line-height: 0;
   }
-  .round:hover { background: var(--green-tint); color: var(--green-dark); }
 
   /* Reminders + activity — equal column height; Cosmos card stretches to Reminders bottom. */
   .two { display: block; }
@@ -888,7 +866,7 @@
     z-index: 14;
     background: #fff;
     border-color: var(--green);
-    box-shadow: 0 1px 3px rgba(28,31,29,.05), 0 4px 12px rgba(28,31,29,.04);
+    box-shadow: 0 1px 3px rgba(28,31,29,.05), 0 4px 12px rgba(0,139,104,.08);
   }
   /* Step 2: only the tool cards are lit — header + composer above stay muted. */
   .frame.tutorial-spot-try .composer {
