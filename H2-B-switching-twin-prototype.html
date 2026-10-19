@@ -1206,7 +1206,7 @@
   #tutorialTrySpot { display: flex; flex-direction: column; gap: 10px; }
   .tutorial-spot-target { position: relative; z-index: 14; }
 
-  .presenter .seg.screen { margin-left: 4px; }
+  .presenter .seg.scenario { margin-left: 4px; display: inline-flex; }
   #tail-welcome.screen.on { gap: 16px; }
   #tail-welcome .pickup + .two { margin-top: -4px; }
   .pickup .badge.course,
@@ -1436,12 +1436,11 @@
 
 <div class="presenter">
   <h1>Home v2</h1>
-  <div class="seg screen" role="group" aria-label="主页情境">
+  <div class="seg scenario" role="group" aria-label="主页情境">
     <button type="button" data-screen="tutorial" aria-pressed="false">第一次来</button>
     <button type="button" data-screen="welcome" aria-pressed="true">过几天来</button>
     <button type="button" data-screen="home" aria-pressed="false">平时在用</button>
   </div>
-  <span class="hint">切换三种主页：首次引导 · 回来后 · 日常使用</span>
 </div>
 
 <div class="fs-root" id="fsRoot">
