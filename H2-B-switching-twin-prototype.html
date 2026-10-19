@@ -1277,6 +1277,41 @@
   }
   .fs-root:fullscreen .fs-toggle,
   .fs-root:-webkit-full-screen .fs-toggle { position: fixed; top: 10px; right: 14px; z-index: 100; }
+
+  /*
+   * Fullscreen reads as a real web app — not a blown-up Figma artboard.
+   * fit() caps scale at 1; these nudge hero type toward product UI sizes.
+   */
+  .fs-root:fullscreen .hello h2,
+  .fs-root:-webkit-full-screen .hello h2,
+  .fs-root.is-fs .hello h2 { font-size: 32px; letter-spacing: -.4px; }
+  .fs-root:fullscreen .hello p,
+  .fs-root:-webkit-full-screen .hello p,
+  .fs-root.is-fs .hello p { font-size: 14px; line-height: 22px; }
+  .fs-root:fullscreen .composer-input,
+  .fs-root:-webkit-full-screen .composer-input,
+  .fs-root.is-fs .composer-input { font-size: 17px; }
+  .fs-root:fullscreen .sec h3,
+  .fs-root:-webkit-full-screen .sec h3,
+  .fs-root.is-fs .sec h3,
+  .fs-root:fullscreen .two-title-r h3,
+  .fs-root:-webkit-full-screen .two-title-r h3,
+  .fs-root.is-fs .two-title-r h3,
+  .fs-root:fullscreen .pickup .hdr h3,
+  .fs-root:-webkit-full-screen .pickup .hdr h3,
+  .fs-root.is-fs .pickup .hdr h3,
+  .fs-root:fullscreen .week-tools-hd h3,
+  .fs-root:-webkit-full-screen .week-tools-hd h3,
+  .fs-root.is-fs .week-tools-hd h3,
+  .fs-root:fullscreen .tool-sec .hdr h3,
+  .fs-root:-webkit-full-screen .tool-sec .hdr h3,
+  .fs-root.is-fs .tool-sec .hdr h3 { font-size: 17px; }
+  .fs-root:fullscreen .logo,
+  .fs-root:-webkit-full-screen .logo,
+  .fs-root.is-fs .logo,
+  .fs-root:fullscreen .logo .logo-word,
+  .fs-root:-webkit-full-screen .logo .logo-word,
+  .fs-root.is-fs .logo .logo-word { font-size: 16px; }
 </style>
 </head>
 <body>
@@ -3970,9 +4005,13 @@
     const fsRoot = $('fsRoot');
     const fs = isDocFullscreen();
     const avail = fs ? window.innerWidth : Math.max(0, stageEl.clientWidth - 32);
-    const s = fs ? avail / 1440 : Math.min(1, avail / 1440);
+    // Never enlarge past 1× — fullscreen used to stretch Figma type and feel oversized vs web apps.
+    const s = Math.min(1, avail / 1440);
+    const layoutW = fs ? Math.max(1440, avail) : 1440;
+    scaler.style.width = `${layoutW}px`;
     scaler.style.transform = `scale(${s})`;
     scaler.style.transformOrigin = 'top left';
+    frame.style.width = `${layoutW}px`;
     if (fsRoot) fsRoot.classList.toggle('is-fs', fs);
 
     if (fs) {
