@@ -767,7 +767,8 @@
   .citta-panel .ph { padding: 14px 16px 12px; display: flex; gap: 6px; align-items: center; flex: none; border-bottom: 1px solid var(--line); }
   .citta-panel .ph .citta-av { width: 28px; height: 28px; border-radius: 10px; background: transparent; color: var(--green-dark); font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex: none; overflow: hidden; padding: 0; }
   .citta-panel .ph .citta-av img { border-radius: 10px; }
-  .citta-panel .ph b { font-size: 16px; font-weight: 600; flex: none; line-height: 1; }
+  .citta-panel .ph .citta-av.twin-init { border-radius: 14px; background: var(--surface-2); color: var(--muted); font-size: 10px; }
+  .citta-panel .ph b { font-size: 16px; font-weight: 600; flex: none; line-height: 1; max-width: 148px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   /* Match task-pill height (~22px); resting small box so the control reads without hover. */
   .citta-panel .ph .sw-sm {
     color: var(--green);
@@ -2070,8 +2071,8 @@
 
       <aside class="citta-panel" id="cittaPanel" aria-label="Citta panel" hidden>
         <div class="ph">
-          <span class="citta-av citta-portrait" aria-hidden="true"><img src="assets/citta-avatar.png" width="28" height="28" alt=""></span>
-          <b>Citta</b>
+          <span class="citta-av citta-portrait" id="cittaPanelAv" aria-hidden="true"><img src="assets/citta-avatar.png" width="28" height="28" alt=""></span>
+          <b id="cittaPanelName">Citta</b>
           <button type="button" class="sw-sm" id="cittaPanelSwitch" aria-label="Switch who you’re working with"><svg class="switch-ico" width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M96 416h832c0.32 0 0.576-0.192 0.896-0.192a30.656 30.656 0 0 0 30.976-30.976c-0.064-0.256 0.128-0.512 0.128-0.832a31.424 31.424 0 0 0-14.912-26.368l-188.48-188.48a30.72 30.72 0 1 0-43.456 43.456L852.544 352H96a32 32 0 0 0 0 64z m832 192H96c-0.32 0-0.576 0.192-0.896 0.192a30.528 30.528 0 0 0-30.976 30.976c0.064 0.256-0.128 0.512-0.128 0.832 0 11.264 6.144 20.672 14.912 26.368l188.48 188.48a30.72 30.72 0 1 0 43.456-43.456L171.456 672H928a32 32 0 0 0 0-64z" fill="currentColor"/></svg></button>
           <span class="task-pill">3 tasks</span>
           <span class="sp"></span>
@@ -2208,6 +2209,25 @@
     }
   }
 
+  function setCittaPanelIdentity(isCitta, ai) {
+    const av = $('cittaPanelAv');
+    const name = $('cittaPanelName');
+    const panel = $('cittaPanel');
+    if (name) name.textContent = ai.name;
+    if (panel) {
+      panel.classList.toggle('is-twin', !isCitta);
+      panel.setAttribute('aria-label', `${ai.name} panel`);
+    }
+    if (!av) return;
+    if (isCitta) {
+      av.className = 'citta-av citta-portrait';
+      av.innerHTML = `<img src="${CITTA_AVATAR_SRC}" width="28" height="28" alt="">`;
+    } else {
+      av.className = 'citta-av twin-init';
+      av.textContent = ai.initials || '';
+    }
+  }
+
   const SPARK_SOLID = '<svg width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg>';
   const SPARK_HOLLOW = '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M510.464 950.784c-14.336 0-40.96-6.656-55.808-50.688l-69.12-200.192c-8.704-25.088-39.424-55.808-64.512-64.512l-197.12-68.608c-44.032-15.36-50.688-41.984-50.688-56.32 0-14.336 6.656-40.96 50.688-55.808L322.56 387.072c25.6-8.704 55.808-38.912 64.512-64l67.584-200.192c14.848-44.032 41.472-50.688 55.808-50.688 14.336 0 40.96 6.656 55.808 50.688l69.632 201.728c8.704 25.088 39.424 55.296 64 64l198.656 67.072c44.032 14.848 50.688 41.472 51.2 55.808 0 14.336-6.656 40.96-50.688 55.808l-201.728 69.12c-25.088 8.704-55.296 38.912-64 64l-67.072 199.168c-14.848 44.544-41.472 51.2-55.808 51.2zM181.76 510.976l163.328 56.832c46.08 15.872 92.672 62.976 108.544 109.056l56.832 164.864 55.296-164.352c15.36-46.08 62.464-93.184 108.544-109.056l166.4-56.832-163.328-55.296c-46.08-15.872-93.184-62.464-109.056-108.544l-57.344-166.912-56.32 165.376c-15.872 46.08-62.464 93.184-108.544 108.544l-164.352 56.32z" fill="currentColor"/></svg>';
 
@@ -2341,6 +2361,7 @@
 
     composer.classList.toggle('is-twin', !isCitta);
     setPickerAvatar(isCitta, ai);
+    setCittaPanelIdentity(isCitta, ai);
     $('pickerName').textContent = ai.name;
     $('pickerBadge').hidden = !ai.twin;
     $('whenCitta').style.display = isCitta ? 'contents' : 'none';
