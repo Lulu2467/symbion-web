@@ -713,7 +713,7 @@
     box-sizing: border-box;
   }
   .fs-root:fullscreen .stage,
-  .fs-root:-webkit-full-screen .stage { padding: 0; margin: 0; min-height: 0; overflow: hidden; background: #fff; }
+  .fs-root:-webkit-full-screen .stage { padding: 0; margin: 0; min-height: 0; overflow: visible; background: #fff; }
   .fs-root:fullscreen .scaler,
   .fs-root:-webkit-full-screen .scaler { margin: 0; transform-origin: top left; }
   .fs-root:fullscreen .frame,
@@ -1140,6 +1140,73 @@
                   <div class="week-card" data-tool="numbers"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Chart your lab data</small><button type="button" class="go-link" data-action="try-citta">Try with Citta<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
                   <div class="week-card" data-tool="symtex"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset a formula</small><button type="button" class="go-link" data-action="try-citta">Try with Citta<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
                   <div class="week-card" data-tool="code"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a simulation</small><button type="button" class="go-link" data-action="try-citta">Try with Citta<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
+                </div>
+              </section>
+
+              <section class="discover">
+                <span class="k">Discover in</span>
+                <button type="button" class="interest on" aria-pressed="true">Physics &amp; Space</button>
+                <button type="button" class="interest" aria-pressed="false">AI &amp; Data</button>
+                <button type="button" class="interest" aria-pressed="false">Cosmology</button>
+                <button type="button" class="interest" aria-label="Add interest">+</button>
+                <span class="vr"></span>
+                <div class="discover-scroll-wrap">
+                <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
+                  <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag">✦ Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                  <div class="dcard"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag">✦ Twin</span><small>Climate maths · Columbia</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                  <div class="dcard"><span class="dav agent">LR</span><div><span class="nm">Lab Report Coach</span><span class="tag agent">AI agent</span><small>Drafts in Doc</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                  <div class="dcard"><span class="dav">KS</span><div><span class="nm">Katherine F. Smith</span><span class="tag">✦ Twin</span><small>Planetary health · Brown</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                  <div class="dcard"><span class="dav">EP</span><div><span class="nm">Prof. Pajer</span><span class="tag">✦ Twin</span><small>Cosmology · Cornell</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                  <div class="dcard"><span class="dav">HX</span><div><span class="nm">Prof. Xu</span><span class="tag">✦ Twin</span><small>AI &amp; decisions</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                </div>
+                </div>
+                <button type="button" class="round discover-next" aria-label="Scroll discover cards">›</button>
+                <button type="button" class="link" data-action="browse-discover">Browse all<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
+              </section>
+
+              <section class="two">
+                <div class="two-grid">
+                  <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act" data-action="add-reminder">+ Add</button></div>
+                  <div class="two-title-r"><h3>From your Cosmos</h3><span class="new-badge">5 new</span></div>
+                  <div class="two-main-l">
+                    <div class="rem">
+                      <span class="when hot">2:30</span>
+                      <div class="col"><span class="t">Heavy-ion Physics — lecture 5</span><span class="meta"><span class="badge">Course · Prof. Roland</span>Room 6-120</span></div>
+                      <button type="button" class="btn-soft" data-verb="Prep a 10-min deck" data-tool="deck"></button>
+                    </div>
+                    <div class="rem">
+                      <span class="when">Today</span>
+                      <div class="col"><span class="t">Reply to Prof. Roland about the lab report</span><span class="meta"><span class="badge email">Email</span>Received 9:12</span></div>
+                      <button type="button" class="btn-soft" data-verb="Draft reply"></button>
+                    </div>
+                    <div class="rem">
+                      <span class="when">Tomorrow</span>
+                      <div class="col"><span class="t">Submit reading report</span><span class="meta"><span class="badge">Course · Prof. Roland</span>820 / 1,500 words</span></div>
+                      <button type="button" class="btn-soft" data-verb="Finish with Citta" data-twin-verb="Finish the report" data-tool="doc"></button>
+                    </div>
+                    <div class="rem">
+                      <span class="when">Fri</span>
+                      <div class="col"><span class="t">Lab 3 analysis due</span><span class="meta"><span class="badge yours">Yours</span></span></div>
+                      <button type="button" class="btn-soft" data-verb="Open in Numbers" data-tool="numbers"></button>
+                    </div>
+                  </div>
+                  <aside class="activity two-main-r">
+                    <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland’s twin posted lecture 5 slides</div><small>Heavy-ion Physics · 1h ago</small><button type="button" class="act-link">Turn into study notes<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                    <div class="act-item"><span class="aav">王</span><div><div class="t">骆王宇 is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                    <div class="act-item"><span class="aav">EP</span><div><div class="t">2 replies to your #cosmology thread</div><small>Prof. Pajer’s twin + @maya_k</small><button type="button" class="act-link">Open thread<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                    <div class="act-item"><span class="aav">HX</span><div><div class="t">Prof. Xu’s twin: new insight on pricing data</div><small>AI &amp; decisions · today</small><button type="button" class="act-link">View insight<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                  </aside>
+                </div>
+              </section>
+
+              <section>
+                <div class="sec" style="margin-bottom:16px"><h3>Start from a goal</h3><span class="sub">Templates with Citta built in</span><span class="sp"></span><button type="button" class="act" data-action="see-goals">See all</button></div>
+                <div class="goals">
+                  <button type="button" class="tpl" data-goal-tool="doc"><span class="h"><i>≡</i>Doc</span><b>Essay, start to finish</b><small>Topic → outline → draft → citations</small><span class="use">Use with Citta</span></button>
+                  <button type="button" class="tpl" data-goal-tool="deck"><span class="h"><i>▧</i>Deck</span><b>Class presentation</b><small>Notes or lecture → slides → speaker notes</small><span class="use">Use with Citta</span></button>
+                  <button type="button" class="tpl" data-goal-tool="numbers"><span class="h"><i>▦</i>Numbers</span><b>Data analysis</b><small>Upload CSV → trends → chart for your Deck</small><span class="use">Use with Citta</span></button>
+                  <button type="button" class="tpl" data-goal-tool="symtex"><span class="h"><i>Σ</i>SymTex</span><b>Proof or problem set</b><small>Handwritten steps → typeset LaTeX</small><span class="use">Use with Citta</span></button>
+                  <button type="button" class="tpl" data-goal-tool="code"><span class="h"><i style="font-size:10px">&lt;/&gt;</i>Code</span><b>Explain or fix my script</b><small>Paste code → explain → fix → test</small><span class="use">Use with Citta</span></button>
                 </div>
               </section>
             </div>
@@ -2737,14 +2804,15 @@
     // Fullscreen = edge-to-edge; #fsRoot is the scroll container.
     const avail = fs ? window.innerWidth : Math.max(0, stageEl.clientWidth - 32);
     const s = fs ? avail / 1440 : Math.min(1, avail / 1440);
-    // Use scrollHeight so below-fold H0 sections (Reminders → Goals) always expand the scroll range.
+    // scrollHeight covers Discover → Reminders → Goals below “Your tools this week”.
     const frameH = Math.max(frame.offsetHeight, frame.scrollHeight);
-    const scaledH = frameH * s;
     scaler.style.transform = `scale(${s})`;
     scaler.style.transformOrigin = 'top left';
-    // transform doesn't shrink layout — stage height = visual height for scroll range.
-    stageEl.style.height = `${scaledH + (fs ? 0 : 72)}px`;
-    stageEl.style.overflow = 'hidden';
+    // transform leaves full layout height; negative margin collapses the unused space so
+    // the page scroll range matches the visual frame (no clipping of below-fold sections).
+    scaler.style.marginBottom = `${frameH * (s - 1)}px`;
+    stageEl.style.height = '';
+    stageEl.style.overflow = 'visible';
     if (fsRoot) fsRoot.classList.toggle('is-fs', fs);
     positionNewTip();
     if (menu.classList.contains('open')) positionSwitcherMenu();
