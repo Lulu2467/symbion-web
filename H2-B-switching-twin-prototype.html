@@ -220,8 +220,9 @@
   .tpl .use:hover { border-color: var(--green); background: var(--green-wash); }
   .course-banner a { cursor: pointer; }
   .course-banner a:hover { text-decoration: underline; }
-  .pick-card .btn { cursor: pointer; transition: border-color .12s, background .12s; }
-  .pick-card .btn:hover { filter: brightness(.97); background: #dceee4; }
+  .pick-card .btn { cursor: pointer; transition: border-color .12s, background .12s, color .12s; }
+  .pick-card .btn:hover { background: #edd9b0; color: #7a4805; }
+  .pick-card .btn:hover .spark-icon { color: #7a4805; }
   .tools .attach-hit {
     cursor: pointer;
     padding: 4px 0;
@@ -711,8 +712,8 @@
   .pick-card .col { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
   .pick-card .t { font-size: 15px; font-weight: 400; color: var(--ink); }
   .pick-card .meta { display: flex; gap: 6px; align-items: center; flex-wrap: nowrap; white-space: nowrap; font-size: 12px; color: var(--faint); min-width: 0; }
-  .pick-card .btn { display: inline-flex; align-items: center; gap: 6px; background: var(--green-tint); border: none; border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; color: #1f5c47; white-space: nowrap; flex: none; }
-  .pick-card .btn .spark-icon { width: 12px; height: 12px; color: #1f5c47; }
+  .pick-card .btn { display: inline-flex; align-items: center; gap: 6px; background: #f3e4c4; border: 1px solid rgba(154,91,7,.18); border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--amber); white-space: nowrap; flex: none; }
+  .pick-card .btn .spark-icon { width: 12px; height: 12px; color: var(--amber); }
   .activity.cosmos-compact { border: 1px solid var(--line); border-radius: 16px; padding: 20px; gap: 12px; background: #fff; }
   .activity.cosmos-compact > p { margin: 0; font-size: 13px; line-height: 1.4; color: var(--muted); }
   .activity.cosmos-compact .cosmos-see { align-self: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--ink); cursor: pointer; }
