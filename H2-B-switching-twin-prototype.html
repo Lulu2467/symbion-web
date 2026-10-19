@@ -1139,24 +1139,83 @@
   .fs-toggle.is-fullscreen .fs-ico-exit { display: block; }
   .fs-toggle:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
 
-  /* Fullscreen scrolls on #fsRoot (the fullscreen element), like a normal page. */
+  /* Fullscreen: top osbar + left rail stay put; only .main (center) scrolls. */
   .fs-root { display: block; }
   .fs-root:fullscreen,
   .fs-root:-webkit-full-screen {
     width: 100%;
     height: 100%;
     max-height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
     background: #fff;
     box-sizing: border-box;
   }
   .fs-root:fullscreen .stage,
-  .fs-root:-webkit-full-screen .stage { padding: 0; margin: 0; min-height: 0; overflow: visible; background: #fff; }
+  .fs-root:-webkit-full-screen .stage {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+    background: #fff;
+  }
   .fs-root:fullscreen .scaler,
-  .fs-root:-webkit-full-screen .scaler { margin: 0; transform-origin: top left; }
+  .fs-root:-webkit-full-screen .scaler {
+    margin: 0 !important;
+    height: 100%;
+    transform-origin: top left;
+  }
   .fs-root:fullscreen .frame,
-  .fs-root:-webkit-full-screen .frame { border: 0; border-radius: 0; }
+  .fs-root:-webkit-full-screen .frame {
+    border: 0;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* height set in fit() so scaled visual = 100vh */
+  }
+  .fs-root:fullscreen .osbar,
+  .fs-root:-webkit-full-screen .osbar {
+    flex: none;
+    background: #fff;
+    z-index: 40;
+  }
+  .fs-root:fullscreen .body,
+  .fs-root:-webkit-full-screen .body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+    align-items: stretch;
+  }
+  .fs-root:fullscreen .rail,
+  .fs-root:-webkit-full-screen .rail {
+    flex: none;
+    align-self: stretch;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  .fs-root:fullscreen .main,
+  .fs-root:-webkit-full-screen .main {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  .fs-root:fullscreen .tutorial-doc-view,
+  .fs-root:-webkit-full-screen .tutorial-doc-view {
+    flex: 1 1 auto;
+    min-height: 0;
+    height: auto;
+    overflow: hidden;
+  }
+  .fs-root:fullscreen .dock,
+  .fs-root:-webkit-full-screen .dock {
+    top: auto;
+    bottom: 28px;
+  }
   .fs-root:fullscreen .fs-toggle,
   .fs-root:-webkit-full-screen .fs-toggle { position: fixed; top: 10px; right: 14px; z-index: 100; }
 </style>
@@ -2959,8 +3018,10 @@
 
   function getTutorialScrollParent() {
     const fsRoot = $('fsRoot');
-    if (fsRoot && (document.fullscreenElement === fsRoot || document.webkitFullscreenElement === fsRoot || fsRoot.classList.contains('is-fs'))) {
-      return fsRoot;
+    const fs = fsRoot && (document.fullscreenElement === fsRoot || document.webkitFullscreenElement === fsRoot || fsRoot.classList.contains('is-fs'));
+    if (fs) {
+      // Fullscreen: only the center column scrolls — osbar + rail stay fixed.
+      return frame?.querySelector?.('.main') || document.querySelector('#frame .main') || fsRoot;
     }
     return document.scrollingElement || document.documentElement;
   }
@@ -3846,19 +3907,28 @@
     const stageEl = document.querySelector('.stage');
     const fsRoot = $('fsRoot');
     const fs = isDocFullscreen();
-    // Fullscreen = edge-to-edge; #fsRoot is the scroll container.
     const avail = fs ? window.innerWidth : Math.max(0, stageEl.clientWidth - 32);
     const s = fs ? avail / 1440 : Math.min(1, avail / 1440);
-    // scrollHeight covers Discover → Reminders → Goals below “Your tools this week”.
-    const frameH = Math.max(frame.offsetHeight, frame.scrollHeight);
     scaler.style.transform = `scale(${s})`;
     scaler.style.transformOrigin = 'top left';
-    // transform leaves full layout height; negative margin collapses the unused space so
-    // the page scroll range matches the visual frame (no clipping of below-fold sections).
-    scaler.style.marginBottom = `${frameH * (s - 1)}px`;
-    stageEl.style.height = '';
-    stageEl.style.overflow = 'visible';
     if (fsRoot) fsRoot.classList.toggle('is-fs', fs);
+
+    if (fs) {
+      // Pin chrome: frame layout height = viewport / scale so visual fills 100vh;
+      // .main is the only scrollport (see fullscreen CSS).
+      const layoutH = window.innerHeight / s;
+      scaler.style.marginBottom = '0';
+      stageEl.style.height = '100%';
+      stageEl.style.overflow = 'hidden';
+      frame.style.height = `${layoutH}px`;
+    } else {
+      frame.style.height = '';
+      // transform leaves full layout height; negative margin collapses unused space.
+      const frameH = Math.max(frame.offsetHeight, frame.scrollHeight);
+      scaler.style.marginBottom = `${frameH * (s - 1)}px`;
+      stageEl.style.height = '';
+      stageEl.style.overflow = 'visible';
+    }
     positionNewTip();
     if (menu.classList.contains('open')) positionSwitcherMenu();
     if (coach.classList.contains('on') && !tutorialExploring) positionCoach();
@@ -3870,6 +3940,20 @@
       );
     }
   }
+
+  // Keep tutorial chrome aligned while scrolling the center column in fullscreen.
+  const mainScrollEl = frame.querySelector('.main');
+  mainScrollEl?.addEventListener('scroll', () => {
+    if (!(document.fullscreenElement || document.webkitFullscreenElement)) return;
+    if (coach.classList.contains('on') && !tutorialExploring) positionCoach();
+    const stepCfg = TUTORIAL_STEPS[tutorialStep - 1];
+    if (screen === 'tutorial' && !tutorialExploring && stepCfg?.spot && !tutorialDocPhase) {
+      positionTutorialSpotlight(
+        getTutorialSpotTarget(stepCfg.spot),
+        stepCfg.spot === 'composer' ? 6 : (stepCfg.spot === 'picker' ? 4 : 10)
+      );
+    }
+  }, { passive: true });
   window.addEventListener('resize', fit);
   // Keep stage scroll range in sync when tails/fonts/images change frame height.
   if (typeof ResizeObserver !== 'undefined') {
