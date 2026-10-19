@@ -181,9 +181,9 @@
   .citta-panel .asst-card a:hover { text-decoration: underline; }
   .tap-active:active { transform: scale(.98); }
   .ask-row { display: flex; gap: 14px; align-items: flex-start; }
-  .composer .ask-row { background: #fafbfa; border-radius: 14px; padding: 10px 4px 4px 12px; margin: 0 -4px; align-items: flex-end; }
-  .ask-field { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; padding: 2px 0 6px; }
-  /* Kimi-style: selected tool appears as a chip inside the dialog, not only as a highlight below. */
+  /* Kimi-style dialog: chip + text, then bottom bar with + (left) and send (right). */
+  .composer .ask-row { background: #fafbfa; border-radius: 14px; padding: 10px 10px 8px 12px; margin: 0 -4px; display: block; }
+  .ask-field { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
   .composer-tool-chip { display: none; align-items: center; gap: 6px; align-self: flex-start; max-width: 100%; padding: 4px 8px 4px 4px; border-radius: 8px; background: #fff; border: 1px solid var(--line); font-size: 12px; font-weight: 600; color: var(--ink); line-height: 1; box-shadow: 0 1px 2px rgba(28,31,29,.04); }
   .composer-tool-chip.on { display: inline-flex; }
   .composer-tool-chip .chip-ico { width: 22px; height: 22px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; font-style: normal; flex: none; line-height: 1; }
@@ -194,11 +194,14 @@
   .composer-input { flex: 1; min-width: 0; width: 100%; font-size: 21px; font-weight: 300; line-height: 1.4; color: var(--ink); background: transparent; border: 0; padding: 0; margin: 0; resize: none; font-family: inherit; min-height: 1.4em; overflow: hidden; }
   .composer-input::placeholder { color: var(--placeholder); }
   .composer-input:focus { outline: none; }
-  .composer .ask-row > .send { margin-bottom: 0; align-self: flex-end; }
-  .send { width: 36px; height: 36px; border-radius: 10px; background: var(--green); color: #fff; flex: none; display: flex; align-items: center; justify-content: center; padding: 10px; box-sizing: border-box; transition: background .12s, transform .08s; }
+  .ask-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 2px; }
+  .composer .ask-bar .plus { width: 32px; height: 32px; border-radius: 10px; color: var(--muted); font-size: 22px; font-weight: 400; line-height: 1; flex: none; display: flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; transition: background .12s, color .12s; }
+  .composer .ask-bar .plus:hover { background: #fff; color: var(--ink); }
+  .composer .ask-bar .plus:active { transform: scale(.96); }
+  .send { width: 36px; height: 36px; border-radius: 10px; background: var(--green); color: #fff; flex: none; display: flex; align-items: center; justify-content: center; padding: 8px; box-sizing: border-box; transition: background .12s, transform .08s; margin-left: auto; }
   .send:hover { background: var(--green-dark); }
   .send:active { transform: scale(.96); }
-  .send svg { display: block; width: 14px; height: 14px; flex: none; }
+  .send svg { display: block; width: 16px; height: 16px; flex: none; }
   .tool-glyph,
   .tool i,
   .week-card i,
@@ -893,13 +896,15 @@
                       <button type="button" class="chip-x" id="composerToolChipClear" aria-label="Remove tool">×</button>
                     </div>
                     <textarea class="composer-input" id="composerInput" rows="1" placeholder="What do you want to work on?" aria-label="What do you want to work on?"></textarea>
+                    <div class="ask-bar">
+                      <button type="button" class="plus" id="composerPlus" aria-label="Attach">+</button>
+                      <button type="button" class="send" aria-label="Send">
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                          <path d="M510.06 112h-0.578a37.81 37.81 0 0 0-21.442 7.042l-0.364 0.263 0.105-0.067a45.582 45.582 0 0 0-6.93 5.486l-0.598 0.587-270.946 270.62c-17.743 17.721-17.743 46.456 0 64.178l0.536 0.526c17.78 17.19 46.142 17.015 63.705-0.526l198.597-198.36v612.384c0 20.914 16.974 37.867 37.908 37.867h5.309c20.645-0.34 37.28-17.162 37.28-37.867V261.748l198.598 198.36c17.74 17.72 46.5 17.72 64.241 0 17.743-17.72 17.744-46.455 0.002-64.177L544.515 125.289l-0.575-0.564a45.577 45.577 0 0 0-6.257-5.045l-0.569-0.375 0.104 0.076A37.78 37.78 0 0 0 514.731 112h-4.671z" fill="currentColor"/>
+                        </svg>
+                      </button>
+                    </div>
                   </div>
-                  <button type="button" class="send" aria-label="Send">
-                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      <path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
-                      <path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </button>
                 </div>
 
                 <div class="tools" id="composerTools">
@@ -1259,9 +1264,8 @@
             <button type="button" class="plus" aria-label="Attach">+</button>
             <textarea class="citta-input" id="cittaInput" rows="1" placeholder="Ask Citta, or / for a tool…" aria-label="Ask Citta"></textarea>
             <button type="button" class="send" aria-label="Send">
-              <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
-                <path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+              <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M510.06 112h-0.578a37.81 37.81 0 0 0-21.442 7.042l-0.364 0.263 0.105-0.067a45.582 45.582 0 0 0-6.93 5.486l-0.598 0.587-270.946 270.62c-17.743 17.721-17.743 46.456 0 64.178l0.536 0.526c17.78 17.19 46.142 17.015 63.705-0.526l198.597-198.36v612.384c0 20.914 16.974 37.867 37.908 37.867h5.309c20.645-0.34 37.28-17.162 37.28-37.867V261.748l198.598 198.36c17.74 17.72 46.5 17.72 64.241 0 17.743-17.72 17.744-46.455 0.002-64.177L544.515 125.289l-0.575-0.564a45.577 45.577 0 0 0-6.257-5.045l-0.569-0.375 0.104 0.076A37.78 37.78 0 0 0 514.731 112h-4.671z" fill="currentColor"/>
               </svg>
             </button>
           </div>
@@ -2140,6 +2144,12 @@
       if (send) {
         if (send.closest('.composer')) sendFromComposer(send);
         else sendFromCittaPanel(send);
+        return;
+      }
+
+      const composerPlus = e.target.closest('#composerPlus, .composer .ask-bar .plus');
+      if (composerPlus) {
+        showToastMsg('+ Attach file · From a Cosmo · From Library');
         return;
       }
 
