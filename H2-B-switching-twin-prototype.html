@@ -720,10 +720,11 @@
     border-color: var(--green-bubble);
     color: #fff;
   }
+  /* Assistant reply: flat solid fill — no outline / wash rim. */
   .citta-panel .asst-card {
     align-self: flex-start;
-    background: var(--green-wash);
-    border-color: rgba(0,139,104,.18);
+    background: var(--green-tint);
+    border-color: var(--green-tint);
     color: var(--ink);
   }
   .citta-panel .asst-card a,
@@ -767,7 +768,7 @@
     min-height: 40px;
     box-sizing: border-box;
     box-shadow: none;
-    transition: border-color .12s;
+    transition: border-color .12s, box-shadow .12s;
   }
   .citta-panel .ask-compose {
     display: flex;
@@ -789,10 +790,10 @@
     margin: 0;
     padding: 0;
   }
-  /* Quiet focus: stay grey-green, no mint halo. */
+  /* Same focus language as before — brand green + soft ring. */
   .citta-panel .ask-row:focus-within {
-    border-color: #aeb8b2;
-    box-shadow: none;
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(0,139,104,.12);
   }
   /* Chips present: wrap chips above, keep actions on the trailing row. */
   .citta-panel .ask-row:has(.composer-chips.on) {
