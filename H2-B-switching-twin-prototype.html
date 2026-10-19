@@ -35,6 +35,8 @@
     --toast-link: #9fd3bc;
     --canvas: #f7f8f6;
     --page-gutter: 56px;
+    /* Chat shell / Citta ask capsule — muted grey-green, not brand green. */
+    --chat-frame: #c5d0c9;
     /* Latin → Inter; CJK → Noto / system Chinese UI fonts (avoid ugly bitmap fallbacks). */
     --font: Inter, "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
   }
@@ -150,7 +152,20 @@
 
   /* Composer (the hero) */
   /* Chat shell: muted grey-green frame — not bright brand green. */
-  .composer { position: relative; z-index: 2; isolation: isolate; background: #fff; border: 1.5px solid #c5d0c9; border-radius: 24px; box-shadow: 0 1px 3px rgba(28,31,29,.05), 0 4px 12px rgba(28,31,29,.06); }
+  .composer {
+    position: relative;
+    z-index: 2;
+    isolation: isolate;
+    background: #fff;
+    border: 1.5px solid var(--chat-frame);
+    border-radius: 24px;
+    box-shadow: 0 1px 3px rgba(28,31,29,.05), 0 4px 12px rgba(28,31,29,.06);
+  }
+  /* Keep grey-green on focus — no brand-green ring. */
+  .composer:focus-within {
+    border-color: var(--chat-frame);
+    box-shadow: 0 1px 3px rgba(28,31,29,.05), 0 4px 12px rgba(28,31,29,.06);
+  }
   /* Menu lives inside .composer; raise the whole composer so week-tool cards don’t paint over it. */
   .composer:has(.menu.open),
   .composer.is-menu-open { z-index: 40; }
@@ -746,13 +761,13 @@
     align-items: center;
     gap: 6px;
     background: #fff;
-    border: 1.5px solid #c5d0c9;
+    border: 1.5px solid var(--chat-frame);
     border-radius: 999px;
     padding: 5px 6px 5px 14px;
     min-height: 40px;
     box-sizing: border-box;
     box-shadow: none;
-    transition: border-color .12s, box-shadow .12s;
+    transition: border-color .12s;
   }
   .citta-panel .ask-compose {
     display: flex;
@@ -774,9 +789,10 @@
     margin: 0;
     padding: 0;
   }
+  /* Quiet focus: stay grey-green, no mint halo. */
   .citta-panel .ask-row:focus-within {
-    border-color: rgba(0,139,104,.45);
-    box-shadow: 0 0 0 3px rgba(0,139,104,.1);
+    border-color: #aeb8b2;
+    box-shadow: none;
   }
   /* Chips present: wrap chips above, keep actions on the trailing row. */
   .citta-panel .ask-row:has(.composer-chips.on) {
