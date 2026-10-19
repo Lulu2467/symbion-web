@@ -3028,9 +3028,8 @@
   function continueWithChip(chip) {
     const label = chip.querySelector('b')?.textContent || chip.textContent.trim();
     const tool = chip.dataset.continueTool;
-    if (tool) setComposerToolSelection(tool);
+    // Continue opens the prior thread in Citta — do not put a tool/file chip in the ask row.
     flashEl(chip);
-    // Jump straight into the prior conversation — no compose-then-send step.
     setComposerDraft('');
     setCittaExpanded(true);
     resumeCittaThread(label, tool);
