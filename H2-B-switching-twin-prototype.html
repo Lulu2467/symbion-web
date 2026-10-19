@@ -233,7 +233,7 @@
   .tool i svg { display: block; width: 16px; height: 16px; flex: none; }
   .week-card i { width: 28px; height: 28px; border-radius: 10px; font-size: 14px; font-weight: 600; }
   .week-card i svg { display: block; width: 16px; height: 16px; flex: none; }
-  .tpl .h i { width: 28px; height: 28px; border-radius: 10px; font-size: 14px; font-weight: 500; background: var(--green-wash); border: 1px solid var(--line); color: var(--green); }
+  .tpl .h i { width: 28px; height: 28px; border-radius: 10px; font-size: 14px; font-weight: 500; border: 0; }
   .tpl .h i svg,
   .try-card .bot i svg { display: block; width: 16px; height: 16px; flex: none; }
   .try-card .bot i { width: 28px; height: 28px; border-radius: 8px; font-size: 13px; font-weight: 600; }
@@ -2934,21 +2934,27 @@
 
   function decorateLectureBookIcons() {
     paintToolGlyph(
-      '.week-card[data-tool="doc"] > .row > i, .tutorial-try-card[data-tool="doc"] .trow > i, .try-card[data-tool="doc"] .bot .row > i, #composerTools .tool[data-tool="doc"] > i',
+      '.week-card[data-tool="doc"] > .row > i, .tutorial-try-card[data-tool="doc"] .trow > i, .try-card[data-tool="doc"] .bot .row > i, #composerTools .tool[data-tool="doc"] > i, .tpl[data-goal-tool="doc"] .h > i',
       DOC_ICON_SVG, 'var(--blue-tint)', 'var(--blue)'
     );
     paintToolGlyph(
-      '.week-card[data-tool="deck"] > .row > i, .tutorial-try-card[data-tool="deck"] .trow > i, .try-card[data-tool="deck"] .bot .row > i, #composerTools .tool[data-tool="deck"] > i',
+      '.week-card[data-tool="deck"] > .row > i, .tutorial-try-card[data-tool="deck"] .trow > i, .try-card[data-tool="deck"] .bot .row > i, #composerTools .tool[data-tool="deck"] > i, .tpl[data-goal-tool="deck"] .h > i',
       DECK_ICON_SVG, 'var(--amber-tint)', 'var(--amber)'
     );
     paintToolGlyph(
-      '.week-card[data-tool="numbers"] > .row > i, .tutorial-try-card[data-tool="numbers"] .trow > i, .try-card[data-tool="numbers"] .bot .row > i, #composerTools .tool[data-tool="numbers"] > i',
+      '.week-card[data-tool="numbers"] > .row > i, .tutorial-try-card[data-tool="numbers"] .trow > i, .try-card[data-tool="numbers"] .bot .row > i, #composerTools .tool[data-tool="numbers"] > i, .tpl[data-goal-tool="numbers"] .h > i',
       NUMBERS_ICON_SVG, 'var(--green-tint)', 'var(--green)'
     );
     paintToolGlyph(
-      '.week-card[data-tool="code"] > .row > i, .tutorial-try-card[data-tool="code"] .trow > i, .try-card[data-tool="code"] .bot .row > i, #composerTools .tool[data-tool="code"] > i',
+      '.week-card[data-tool="code"] > .row > i, .tutorial-try-card[data-tool="code"] .trow > i, .try-card[data-tool="code"] .bot .row > i, #composerTools .tool[data-tool="code"] > i, .tpl[data-goal-tool="code"] .h > i',
       CODE_ICON_SVG, 'var(--slate-tint)', 'var(--slate)'
     );
+    document.querySelectorAll('.tpl[data-goal-tool="symtex"] .h > i, .week-card[data-tool="symtex"] > .row > i, .tutorial-try-card[data-tool="symtex"] .trow > i, .try-card[data-tool="symtex"] .bot .row > i, #composerTools .tool[data-tool="symtex"] > i').forEach((el) => {
+      el.style.background = 'var(--purple-tint)';
+      el.style.color = 'var(--purple)';
+      el.style.fontSize = '';
+      el.innerHTML = 'Σ';
+    });
   }
 
   function initHeaderSearch() {
