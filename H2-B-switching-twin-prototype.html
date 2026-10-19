@@ -1018,7 +1018,12 @@
     background: #d8dcd9;
     color: #fff;
   }
-  .citta-panel .ask-bar .send:hover { background: var(--green); }
+  .citta-panel .ask-bar .send:hover { background: #c5cbc7; }
+  .citta-panel .ask-bar .send.is-ready {
+    background: var(--green);
+    color: #fff;
+  }
+  .citta-panel .ask-bar .send.is-ready:hover { background: var(--green-dark); }
   .citta-panel .ask-bar .send svg { width: 13px; height: 13px; }
 
   /* Spotlight steps: cutout dim inside .frame. Final step: viewport-fixed gray + centered modal (outside .scaler — transform traps fixed). */
@@ -2196,11 +2201,20 @@
     el.value = text;
     resizeTextarea(el);
   }
+  function syncCittaSendReady() {
+    const input = $('cittaInput');
+    const send = document.querySelector('.citta-panel .ask-bar .send');
+    if (!send) return;
+    const hasText = !!(input?.value || '').trim();
+    const hasAttach = composerAttachments.some((a) => a.target === 'citta');
+    send.classList.toggle('is-ready', hasText || hasAttach);
+  }
   function setCittaDraft(text) {
     const el = $('cittaInput');
     if (!el) return;
     el.value = text;
     resizeTextarea(el);
+    syncCittaSendReady();
   }
   function sendFromComposer(flashTarget) {
     const input = $('composerInput');
@@ -2268,6 +2282,7 @@
       resizeTextarea(input);
     }
     clearAttachments('citta');
+    syncCittaSendReady();
 
     const reply = cittaReplyFor(text);
     const asst = document.createElement('div');
@@ -2780,6 +2795,7 @@
       cittaHost.classList.toggle('on', composerAttachments.some((a) => a.target === 'citta'));
     }
     syncComposerChipsVisibility();
+    syncCittaSendReady();
   }
 
   function removeAttachment(id) {
@@ -4306,7 +4322,10 @@
   const composerInputEl = $('composerInput');
   composerInputEl?.addEventListener('input', () => resizeTextarea(composerInputEl));
   const cittaInputEl = $('cittaInput');
-  cittaInputEl?.addEventListener('input', () => resizeTextarea(cittaInputEl));
+  cittaInputEl?.addEventListener('input', () => {
+    resizeTextarea(cittaInputEl);
+    syncCittaSendReady();
+  });
   cittaInputEl?.addEventListener('keydown', (e) => {
     if (e.key !== 'Enter' || e.shiftKey) return;
     e.preventDefault();
@@ -4324,6 +4343,7 @@
       sendFromCittaPanel(btn);
     });
   });
+  syncCittaSendReady();
   setAI('citta', { announce: false });
   // Figma 122:2523 — land on Welcome back unless the hash asks for another screen.
   if (location.hash) readHash();
