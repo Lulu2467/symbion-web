@@ -96,10 +96,11 @@
   .rail.is-open .r .rail-lab { display: inline; }
   .rail .r .rail-ico { width: 18px; height: 18px; display: block; flex: none; }
   .rail .r .rail-ico-spark { width: 15px; height: 15px; }
-  .rail .r .rail-ico-chev { width: 14px; height: 14px; }
+  .rail .r .rail-ico-chev { width: 12px; height: 12px; }
   .rail .r .rail-ico-cosmo { width: 16px; height: 16px; }
   .round .chev-ico { width: 12px; height: 12px; display: block; flex: none; }
-  .rail .r.o { border: 1px solid var(--line); background: #fff; width: 36px; height: 36px; justify-content: center; padding: 0; }
+  /* Boxed expand control — smaller than the 36px icon hits so the border doesn’t outweigh the naked icons below. */
+  .rail .r.o { border: 1px solid var(--line); background: #fff; width: 28px; height: 28px; border-radius: 8px; justify-content: center; padding: 0; }
   /* Collapsed → chevron right (expand); open → chevron left (collapse). SVG is left-pointing. */
   .rail .r.o .rail-ico-chev { transition: transform .18s ease; transform: scaleX(-1); }
   .rail.is-open .r.o .rail-ico-chev { transform: none; }
