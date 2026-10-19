@@ -628,11 +628,11 @@
   .frame.tutorial-on .tutorial-spot-target { position: relative; z-index: 14; }
   /* Spotlight steps: cutout alone is not enough on white siblings — force-dim the extras. */
   .frame.tutorial-on .composer > .foot { position: relative; z-index: 1; }
-  .frame.tutorial-on .composer > .top.tutorial-spot-target { background: #fff; border-radius: 22px 22px 0 0; }
-  .frame.tutorial-spot-composer .composer > .foot {
-    opacity: 0.42;
-    filter: brightness(0.9);
-    pointer-events: none;
+  /* Step 1: whole green chat card is the cutout — keep it bright above the dim. */
+  .frame.tutorial-spot-composer #composer.tutorial-spot-target {
+    z-index: 14;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(28,31,29,.05), 0 16px 40px -8px rgba(44,122,95,.14), 0 0 0 3px rgba(255,255,255,.92);
   }
   /* Step 2: only the tool cards are lit — header + composer above stay muted. */
   .frame.tutorial-spot-try .composer {
@@ -2179,15 +2179,14 @@
     if (!el) { clearTutorialSpotlight(); return; }
     el.classList.add('tutorial-spot-target');
     const t = frameRectOffset(el);
-    const isAskSurface = el.classList?.contains('top');
+    const isComposer = el.id === 'composer' || el.classList?.contains('composer');
     const isPicker = el.id === 'picker';
     const isTryCards = el.id === 'tutorialTryCards' || el.classList?.contains('tutorial-try-cards');
-    // Ask surface: pad sides/top only — no bottom pad, or START WITH leaks into the cutout.
-    const insetX = isPicker ? Math.min(inset, 4) : inset;
-    const insetTop = isAskSurface ? inset : (isPicker ? 4 : inset);
-    const insetBottom = isAskSurface ? 0 : (isPicker ? 4 : inset);
+    const insetX = isPicker ? Math.min(inset, 4) : (isComposer ? Math.min(inset, 8) : inset);
+    const insetTop = isPicker ? 4 : (isComposer ? 6 : inset);
+    const insetBottom = isPicker ? 4 : (isComposer ? 6 : inset);
     let radius = '';
-    if (isAskSurface) radius = '22px 22px 14px 14px';
+    if (isComposer) radius = '24px';
     else if (isPicker) radius = '999px';
     else if (isTryCards) radius = '16px';
     tutorialSpotlight.style.borderRadius = radius;
@@ -2208,8 +2207,8 @@
   }
 
   function getTutorialSpotTarget(stepKey) {
-    // Step 1: ask surface only (.top), not START WITH / Continue foot.
-    if (stepKey === 'composer') return composer?.querySelector('.top') || composer;
+    // Step 1: the whole green chat card (#composer), not just .top / ask-row.
+    if (stepKey === 'composer') return composer;
     // Step 2: tool cards only, not the "Try each tool" header.
     if (stepKey === 'try') return getTrySpotElement();
     // Step 3: Citta picker pill only, not the whole WORKING WITH row.
@@ -2514,13 +2513,8 @@
     } else if (step.spot === 'composer') {
       const spotEl = getTutorialSpotTarget('composer') || composer;
       const c = frameRectOffset(spotEl);
-      const ask = composer?.querySelector('.ask-row') || composer?.querySelector('.ask-field');
-      const askBox = ask ? frameRectOffset(ask) : null;
-      // Overlap the chat input: coach top sits on the ask row, covering tools + START WITH.
-      const top = askBox
-        ? askBox.bottom - 20
-        : c.bottom - Math.max(140, Math.round((c.bottom - c.top) * 0.45));
-      coach.style.top = `${Math.max(48, top)}px`;
+      // Anchor under the green chat card — slight edge kiss only, never cover the ask input.
+      coach.style.top = `${c.bottom - 10}px`;
       coach.style.left = `${Math.max(pad, c.left)}px`;
       coach.style.width = `${Math.min(400, Math.max(280, c.right - c.left - 24))}px`;
     } else if (step.spot === 'try') {
