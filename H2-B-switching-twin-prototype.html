@@ -805,7 +805,6 @@
     min-height: 40px;
     box-sizing: border-box;
     box-shadow: none;
-    transition: border-color .12s, box-shadow .12s;
   }
   .citta-panel .ask-compose {
     display: flex;
@@ -827,10 +826,10 @@
     margin: 0;
     padding: 0;
   }
-  /* Soft focus: stay in the sage family — not solid brand green. */
+  /* No focus ring / border shift — resting sage frame only. */
   .citta-panel .ask-row:focus-within {
-    border-color: #9bbfb3;
-    box-shadow: 0 0 0 3px rgba(155, 191, 179, .28);
+    border-color: var(--chat-frame);
+    box-shadow: none;
   }
   /* Chips present: chips stack above the text inside ask-compose; + stays left, send right. */
   .citta-panel .ask-row:has(.composer-chips.on) {
