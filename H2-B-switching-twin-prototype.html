@@ -352,10 +352,10 @@
   .rem { display: flex; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--line); line-height: 1.4; }
   .rem .when { width: 80px; font-size: 13px; font-weight: 500; color: var(--muted); flex: none; }
   .rem .when.hot { color: var(--green); }
-  .rem .col { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+  .rem .col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
   .rem .t { font-size: 15px; }
-  .rem .meta { display: flex; gap: 6px; align-items: center; font-size: 12px; color: var(--faint); }
-  .badge { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 999px; background: var(--green-tint); color: var(--green-dark); }
+  .rem .meta { display: flex; gap: 6px; align-items: center; flex-wrap: nowrap; white-space: nowrap; font-size: 12px; color: var(--faint); min-width: 0; }
+  .badge { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 999px; background: var(--green-tint); color: var(--green-dark); white-space: nowrap; flex: none; }
   .badge.email { background: var(--amber-tint); color: var(--amber); }
   .badge.course { background: var(--amber-tint); color: var(--amber); }
   .badge.yours { background: var(--surface); color: var(--muted); }
@@ -466,7 +466,7 @@
   .pick-card .tag.today { color: var(--muted); }
   .pick-card .col { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
   .pick-card .t { font-size: 15px; font-weight: 400; color: var(--ink); }
-  .pick-card .meta { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; font-size: 12px; color: var(--faint); }
+  .pick-card .meta { display: flex; gap: 6px; align-items: center; flex-wrap: nowrap; white-space: nowrap; font-size: 12px; color: var(--faint); min-width: 0; }
   .pick-card .btn { display: inline-flex; align-items: center; gap: 6px; background: var(--green-tint); border: none; border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--green-dark); white-space: nowrap; flex: none; }
   .pick-card .btn .spark-icon { width: 12px; height: 12px; color: var(--green-dark); }
   .activity.cosmos-compact { border: 1px solid var(--line); border-radius: 16px; padding: 20px; gap: 12px; background: #fff; }
