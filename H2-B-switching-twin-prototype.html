@@ -1168,7 +1168,14 @@
   .tutorial-doc-citta .doc-switch { margin-left: 4px; color: var(--muted); display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; padding: 0; border-radius: 8px; border: 0; background: transparent; cursor: pointer; }
   .tutorial-doc-citta.is-twin .doc-switch { color: var(--muted); }
   /* Same solid-green highlight language as dialog primary buttons. */
-  .tutorial-doc-citta .doc-switch.spot { background: var(--green); color: #fff; box-shadow: 0 0 0 3px rgba(0,139,104,.18); border-radius: 10px; }
+  /* Match citta-panel chat switch: white well + green glyph, not solid green fill. */
+  .tutorial-doc-citta .doc-switch.spot {
+    background: #fff;
+    color: var(--green);
+    border: 1px solid var(--line);
+    box-shadow: 0 0 0 3px rgba(0,139,104,.16);
+    border-radius: 8px;
+  }
   .tutorial-doc-citta .twin-notice { margin: 0 21px 14px; padding: 12px 14px; background: #1f5c47; border-radius: 12px; display: flex; flex-direction: column; gap: 8px; flex: none; }
   .tutorial-doc-citta .twin-notice b { font-size: 13px; font-weight: 600; color: #fff; }
   .tutorial-doc-citta .twin-notice p { margin: 0; font-size: 12px; color: #d1e5db; line-height: 1.4; }
