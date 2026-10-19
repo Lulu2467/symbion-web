@@ -576,7 +576,7 @@
   /* Scrim dims only — keep pointer-events none so the page can still scroll to below-fold H0 content. */
   .coach-scrim { position: fixed; inset: 0; background: rgba(28,31,29,.48); z-index: 10000; display: none; pointer-events: none; }
   .coach-scrim.on { display: block; pointer-events: none; }
-  .coach { position: absolute; left: 56px; top: 200px; transform: none; width: min(400px, calc(100% - 112px)); max-width: calc(100% - 112px); max-height: none; overflow: visible; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; box-shadow: 0 16px 40px rgba(28,31,29,.18); z-index: 15; display: none; line-height: 1.45; pointer-events: auto; }
+  .coach { position: absolute; left: 56px; top: 200px; transform: none; width: min(400px, calc(100% - 112px)); max-width: calc(100% - 112px); max-height: none; overflow: visible; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; box-shadow: 0 16px 40px rgba(28,31,29,.18); z-index: 20; display: none; line-height: 1.45; pointer-events: auto; }
   .coach.wide { width: min(440px, calc(100% - 112px)); padding: 22px 24px; }
   .coach.centered { position: fixed; left: 50%; top: 50%; right: auto; bottom: auto; transform: translate(-50%, -50%); width: min(400px, calc(100vw - 48px)); max-width: min(400px, calc(100vw - 48px)); box-shadow: 0 0 0 1px rgba(255,255,255,.6), 0 28px 64px rgba(28,31,29,.35); z-index: 10010; }
   .coach.on { display: block; }
@@ -599,10 +599,18 @@
   .coach .acts .link { color: var(--green); padding: 8px 0; }
 
   .spot { position: relative; z-index: 14; }
-  .tutorial-spotlight { position: absolute; z-index: 13; pointer-events: none; border-radius: 16px; box-shadow: 0 0 0 9999px rgba(28,31,29,.32); background: transparent; display: none; }
+  .tutorial-spotlight { position: absolute; z-index: 13; pointer-events: none; border-radius: 16px; box-shadow: 0 0 0 9999px rgba(28,31,29,.40); background: transparent; display: none; }
   .tutorial-spotlight.on { display: block; }
   .frame.tutorial-on { position: relative; }
-  .frame.tutorial-on .tutorial-spot-target { z-index: 14; }
+  .frame.tutorial-on .tutorial-spot-target { position: relative; z-index: 14; }
+  /* Step 1: ask surface only is cut out; foot stays under the dim + under coach. */
+  .frame.tutorial-on .composer > .foot { position: relative; z-index: 1; }
+  .frame.tutorial-on .composer > .top.tutorial-spot-target { background: #fff; border-radius: 22px 22px 0 0; }
+  .frame.tutorial-spot-composer .composer > .foot {
+    opacity: 0.42;
+    filter: brightness(0.9);
+    pointer-events: none;
+  }
   /* Dock sits in the try-step spotlight cutout on the right; hide fully so no green ring peeks. */
   .frame.tutorial-on .dock { display: none !important; }
   .frame.tutorial-doc-on .tutorial-spotlight { display: none !important; }
@@ -1929,10 +1937,16 @@
     if (!el) { clearTutorialSpotlight(); return; }
     el.classList.add('tutorial-spot-target');
     const t = frameRectOffset(el);
-    tutorialSpotlight.style.top = `${Math.max(0, t.top - inset)}px`;
-    tutorialSpotlight.style.left = `${Math.max(0, t.left - inset)}px`;
-    tutorialSpotlight.style.width = `${t.right - t.left + inset * 2}px`;
-    tutorialSpotlight.style.height = `${t.bottom - t.top + inset * 2}px`;
+    const isAskSurface = el.classList?.contains('top');
+    // Ask surface: pad sides/top only ? no bottom pad, or START WITH leaks into the cutout.
+    const insetX = inset;
+    const insetTop = inset;
+    const insetBottom = isAskSurface ? 0 : inset;
+    tutorialSpotlight.style.borderRadius = isAskSurface ? '22px 22px 14px 14px' : '';
+    tutorialSpotlight.style.top = `${Math.max(0, t.top - insetTop)}px`;
+    tutorialSpotlight.style.left = `${Math.max(0, t.left - insetX)}px`;
+    tutorialSpotlight.style.width = `${t.right - t.left + insetX * 2}px`;
+    tutorialSpotlight.style.height = `${t.bottom - t.top + insetTop + insetBottom}px`;
     tutorialSpotlight.classList.add('on');
     tutorialSpotlight.setAttribute('aria-hidden', 'false');
   }
@@ -1942,7 +1956,8 @@
   }
 
   function getTutorialSpotTarget(stepKey) {
-    if (stepKey === 'composer') return composer;
+    // Step 1: light only the ask surface (.top), not START WITH / Continue foot.
+    if (stepKey === 'composer') return composer?.querySelector('.top') || composer;
     if (stepKey === 'try') return getTrySpotElement();
     if (stepKey === 'picker') return picker.closest('.working') || picker;
     if (stepKey === 'doc-switch') return $('tutorialDocSwitch');
@@ -2030,7 +2045,7 @@
       coach.classList.remove('on', 'centered', 'switch-coach');
       setCoachScrim(false);
       clearTutorialSpotlight();
-      frame.classList.remove('tutorial-on', 'dim');
+      frame.classList.remove('tutorial-on', 'tutorial-spot-composer', 'dim');
       document.querySelectorAll('.spot').forEach((el) => el.classList.remove('spot'));
       mountCoachForViewport(false);
       fit();
@@ -2086,6 +2101,7 @@
 
     document.querySelectorAll('.spot').forEach((el) => el.classList.remove('spot'));
     frame.classList.toggle('tutorial-on', screen === 'tutorial' && !tutorialDocPhase);
+    frame.classList.toggle('tutorial-spot-composer', screen === 'tutorial' && !tutorialDocPhase && step.spot === 'composer');
     if (step.spot) positionTutorialSpotlight(getTutorialSpotTarget(step.spot), step.spot === 'composer' ? 6 : 10);
     else clearTutorialSpotlight();
     coach.classList.toggle('on', screen === 'tutorial');
@@ -2176,9 +2192,17 @@
         coach.style.width = `${coachW}px`;
       }
     } else if (step.spot === 'composer') {
-      const c = frameRectOffset(composer);
-      coach.style.top = `${c.bottom + 20}px`;
+      const spotEl = getTutorialSpotTarget('composer') || composer;
+      const c = frameRectOffset(spotEl);
+      const ask = composer?.querySelector('.ask-row') || composer?.querySelector('.ask-field');
+      const askBox = ask ? frameRectOffset(ask) : null;
+      // Overlap the chat input: coach top sits on the ask row, covering tools + START WITH.
+      const top = askBox
+        ? askBox.bottom - 20
+        : c.bottom - Math.max(140, Math.round((c.bottom - c.top) * 0.45));
+      coach.style.top = `${Math.max(48, top)}px`;
       coach.style.left = `${Math.max(pad, c.left)}px`;
+      coach.style.width = `${Math.min(400, Math.max(280, c.right - c.left - 24))}px`;
     } else if (step.spot === 'try') {
       const el = getTrySpotElement();
       if (el) {
@@ -2274,7 +2298,7 @@
     coach.classList.remove('on', 'centered', 'switch-coach', 'wide');
     setCoachScrim(false);
     clearTutorialSpotlight();
-    frame.classList.remove('tutorial-on', 'dim', 'tutorial-doc-on');
+    frame.classList.remove('tutorial-on', 'tutorial-spot-composer', 'dim', 'tutorial-doc-on');
     document.querySelectorAll('.spot').forEach((el) => el.classList.remove('spot'));
     mountCoachForViewport(false);
     // Stay on tutorial screen + tail (arrival, try tools, empty reminders, goals).
@@ -2765,7 +2789,7 @@
       tutorialExploring = false;
       coach.classList.remove('on', 'switch-coach');
       setCoachScrim(false);
-      frame.classList.remove('tutorial-on', 'dim');
+      frame.classList.remove('tutorial-on', 'tutorial-spot-composer', 'dim');
       if (!wantTip) clearTutorialSpotlight();
       exitTutorialDoc();
       document.querySelectorAll('.spot').forEach((el) => el.classList.remove('spot'));
