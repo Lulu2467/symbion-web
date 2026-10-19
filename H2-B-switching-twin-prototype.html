@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>H2 Switching Twin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   /* Tokens from Figma · Home v2 · B · H2 */
   :root {
@@ -32,10 +33,12 @@
     --toast-link: #9fd3bc;
     --canvas: #f7f8f6;
     --page-gutter: 56px;
+    /* Latin → Inter; CJK → Noto / system Chinese UI fonts (avoid ugly bitmap fallbacks). */
+    --font: Inter, "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; }
-  body { background: var(--canvas); font-family: Inter, system-ui, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { background: var(--canvas); font-family: var(--font); color: var(--ink); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
   button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
 
   /* Presenter bar */
@@ -192,7 +195,7 @@
   .composer-tool-chip .chip-x { width: 18px; height: 18px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; color: var(--faint); font-size: 14px; line-height: 1; flex: none; margin-left: 2px; }
   .composer-tool-chip .chip-x:hover { background: var(--surface); color: var(--ink); }
   /* Placeholder / typed text share the same left edge as the + glyph (not past it). */
-  .composer-input { flex: 1; min-width: 0; width: 100%; font-size: 21px; font-weight: 300; line-height: 1.4; color: var(--ink); background: transparent; border: 0; padding: 0; margin: 0; resize: none; font-family: inherit; min-height: 1.4em; overflow: hidden; }
+  .composer-input { flex: 1; min-width: 0; width: 100%; font-size: 21px; font-weight: 400; line-height: 1.4; color: var(--ink); background: transparent; border: 0; padding: 0; margin: 0; resize: none; font-family: var(--font); min-height: 1.4em; overflow: hidden; }
   .composer-input::placeholder { color: var(--placeholder); }
   .composer-input:focus { outline: none; }
   .ask-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 2px; }
@@ -522,7 +525,7 @@
   .citta-panel .ask-row .plus { width: 28px; height: 28px; border-radius: 8px; color: var(--muted); font-size: 16px; line-height: 1; flex: none; display: flex; align-items: center; justify-content: center; margin-top: 0; padding: 0; box-sizing: border-box; transition: background .12s, color .12s; }
   .citta-panel .ask-row .plus:hover { background: var(--surface); color: var(--ink); }
   .citta-panel .ask-row .plus:active { transform: scale(.96); }
-  .citta-input { flex: 1; min-width: 0; font-size: 13px; line-height: 1.45; color: var(--ink); background: transparent; border: 0; padding: 0; margin: 0; resize: none; font-family: inherit; min-height: 1.45em; overflow: hidden; text-align: left; }
+  .citta-input { flex: 1; min-width: 0; font-size: 13px; line-height: 1.45; color: var(--ink); background: transparent; border: 0; padding: 0; margin: 0; resize: none; font-family: var(--font); min-height: 1.45em; overflow: hidden; text-align: left; }
   .citta-input::placeholder { color: var(--placeholder); text-align: left; }
   .citta-input:focus { outline: none; }
   .citta-panel .ask-row .send { width: 36px; height: 36px; border-radius: 10px; margin-left: auto; flex: none; }
