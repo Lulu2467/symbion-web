@@ -529,8 +529,8 @@
   .tutorial-spotlight.on { display: block; }
   .frame.tutorial-on { position: relative; }
   .frame.tutorial-on .tutorial-spot-target { z-index: 14; }
-  /* Dock paints after the spotlight in DOM and would sit above the dim — hide it for every tutorial step. */
-  .frame.tutorial-on .dock { opacity: 0; pointer-events: none; }
+  /* Dock sits in the try-step spotlight cutout on the right; hide fully so no green ring peeks. */
+  .frame.tutorial-on .dock { display: none !important; }
   .frame.tutorial-doc-on .tutorial-spotlight { display: none !important; }
 
   .tutorial-doc-view { flex: 1; min-width: 0; display: none; flex-direction: column; background: #fff; min-height: 860px; }
