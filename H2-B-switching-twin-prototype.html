@@ -875,7 +875,7 @@
     z-index: 13;
     pointer-events: none;
     box-sizing: border-box;
-    border: 1.5px solid transparent;
+    border: 0;
     border-radius: 16px;
     box-shadow: 0 0 0 9999px rgba(28,31,29,.40);
     background: transparent;
@@ -2921,14 +2921,19 @@
 
   function frameRectOffset(el) {
     // getBoundingClientRect is in scaled screen px; absolute layout inside .frame is unscaled.
+    // Absolute children are relative to the padding box — subtract frame border or the
+    // spotlight sits 1px down/right of the target (right + bottom look misaligned).
     const fr = frame.getBoundingClientRect();
     const r = el.getBoundingClientRect();
     const s = fr.width / frame.offsetWidth || 1;
+    const cs = getComputedStyle(frame);
+    const borderLeft = parseFloat(cs.borderLeftWidth) || 0;
+    const borderTop = parseFloat(cs.borderTopWidth) || 0;
     return {
-      top: (r.top - fr.top) / s,
-      left: (r.left - fr.left) / s,
-      bottom: (r.bottom - fr.top) / s,
-      right: (r.right - fr.left) / s,
+      top: (r.top - fr.top) / s - borderTop,
+      left: (r.left - fr.left) / s - borderLeft,
+      bottom: (r.bottom - fr.top) / s - borderTop,
+      right: (r.right - fr.left) / s - borderLeft,
     };
   }
 
@@ -3069,10 +3074,12 @@
     } else if (step.spot === 'composer') {
       const spotEl = getTutorialSpotTarget('composer') || composer;
       const c = frameRectOffset(spotEl);
-      // Anchor under the green chat card — slight edge kiss only, never cover the ask input.
-      coach.style.top = `${c.bottom - 10}px`;
+      // Clear gap under the chat card — never cover START WITH / ask.
+      const gap = 20;
+      coach.style.top = `${c.bottom + gap}px`;
       coach.style.left = `${Math.max(pad, c.left)}px`;
       coach.style.width = `${Math.min(400, Math.max(280, c.right - c.left - 24))}px`;
+      coach.dataset.anchorBottom = String(c.bottom + gap);
     } else if (step.spot === 'try') {
       const el = getTrySpotElement();
       if (el) {
@@ -3087,20 +3094,24 @@
       coach.style.left = `${Math.max(pad, p.left)}px`;
     }
 
-    // Keep the card inside the frame (bottom + right).
+    // Keep the card inside the frame (bottom + right). Never pull step-1 coach back over chat.
     const fr = frame.getBoundingClientRect();
     const ch = coach.getBoundingClientRect();
     const s = fr.width / frame.offsetWidth || 1;
+    const minTop = step.spot === 'composer'
+      ? (parseFloat(coach.dataset.anchorBottom) || 0)
+      : 48;
     if (ch.bottom > fr.bottom - 8) {
       const overflow = (ch.bottom - fr.bottom + 24) / s;
       const curTop = parseFloat(coach.style.top);
-      if (Number.isFinite(curTop)) coach.style.top = `${Math.max(48, curTop - overflow)}px`;
+      if (Number.isFinite(curTop)) coach.style.top = `${Math.max(minTop, curTop - overflow)}px`;
     }
     if (ch.right > fr.right - 8) {
       const overflowX = (ch.right - fr.right + 16) / s;
       const curLeft = parseFloat(coach.style.left);
       if (Number.isFinite(curLeft)) coach.style.left = `${Math.max(pad, curLeft - overflowX)}px`;
     }
+    if (step.spot !== 'composer') delete coach.dataset.anchorBottom;
   }
 
   function syncTutorialNav() {
