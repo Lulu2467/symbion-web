@@ -1282,8 +1282,8 @@
   <h1>Home v2 · B · H2 — eng handoff</h1>
   <button type="button" class="tutorial-cta" id="presenterTutorialBtn" data-action="open-tutorial" aria-pressed="false">Tutorial</button>
   <div class="seg screen" role="group" aria-label="Screen">
-    <button type="button" data-screen="home" aria-pressed="true">Default home</button>
-    <button type="button" data-screen="welcome" aria-pressed="false">Welcome back</button>
+    <button type="button" data-screen="home" aria-pressed="false">Default home</button>
+    <button type="button" data-screen="welcome" aria-pressed="true">Welcome back</button>
     <button type="button" data-screen="tutorial" aria-pressed="false">Interactive tutorial</button>
     <button type="button" data-screen="handoff" aria-pressed="false">Post-tutorial · 8554</button>
   </div>
@@ -1344,7 +1344,7 @@
           </div>
 
           <div class="content hub">
-            <div class="screen on" id="screen-home" data-screen="home">
+            <div class="screen" id="screen-home" data-screen="home">
             <section class="greeting quiet" id="greeting-home">
               <div class="hello">
                 <div class="eyebrow" id="greeting-eyebrow">
@@ -1375,7 +1375,7 @@
             </div>
             </div>
 
-            <div class="screen" id="screen-welcome" data-screen="welcome">
+            <div class="screen on" id="screen-welcome" data-screen="welcome">
               <section class="greeting quiet">
                 <div class="hello">
                   <div class="eyebrow">
@@ -1538,7 +1538,7 @@
               </div>
             </section>
 
-            <div class="screen on" id="tail-home" data-tail="home">
+            <div class="screen" id="tail-home" data-tail="home">
             <section class="tool-sec" id="sec-try-each">
               <div class="hdr">
                 <h3>Try each tool with Citta</h3>
@@ -1641,7 +1641,27 @@
             </section>
             </div>
 
-            <div class="screen" id="tail-welcome" data-tail="welcome">
+            <!-- Figma 122:2523 · Welcome back — Discover → Pick up → Coming up / Cosmos -->
+            <div class="screen on" id="tail-welcome" data-tail="welcome">
+              <section class="discover">
+                <span class="k">Discover in</span>
+                <button type="button" class="interest on" aria-pressed="true">Physics &amp; Space</button>
+                <button type="button" class="interest" aria-pressed="false">AI &amp; Data</button>
+                <button type="button" class="interest" aria-pressed="false">Cosmology</button>
+                <button type="button" class="interest add" aria-label="Add interest">+</button>
+                <span class="vr"></span>
+                <div class="discover-scroll-wrap">
+                <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
+                  <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag">✦ Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                  <div class="dcard"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag">✦ Twin</span><small>Climate maths · Columbia</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                  <div class="dcard"><span class="dav agent">LR</span><div><span class="nm">Lab Report Coach</span><span class="tag agent">AI agent</span><small>Drafts in Doc</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                  <div class="dcard"><span class="dav">KS</span><div><span class="nm">Katherine F. Smith</span><span class="tag">✦ Twin</span><small>Planetary health · Brown</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                </div>
+                </div>
+                <button type="button" class="round discover-next" aria-label="Scroll discover cards"><svg class="chev-ico" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 3.25 10.75 8 6 12.75" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <button type="button" class="browse-all" data-action="browse-discover" aria-label="Browse all"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M460.8 486.4 486.4 486.4 486.4 460.8 486.4 243.2C486.4 108.884349 377.51565 0 243.2 0 108.884349 0 0 108.884349 0 243.2 0 377.51565 108.884349 486.4 243.2 486.4L460.8 486.4ZM51.2 243.2C51.2 137.161328 137.161328 51.2 243.2 51.2 349.238671 51.2 435.2 137.161328 435.2 243.2L435.2 460.8 460.8 435.2 243.2 435.2C137.161328 435.2 51.2 349.238671 51.2 243.2ZM460.8 588.8 435.2 563.2 435.2 780.8C435.2 886.838671 349.238671 972.8 243.2 972.8 137.161328 972.8 51.2 886.838671 51.2 780.8 51.2 674.761329 137.161328 588.8 243.2 588.8L460.8 588.8ZM0 780.8C0 915.11565 108.884349 1024 243.2 1024 377.51565 1024 486.4 915.11565 486.4 780.8L486.4 563.2 486.4 537.6 460.8 537.6 243.2 537.6C108.884349 537.6 0 646.48435 0 780.8ZM563.2 435.2 588.8 460.8 588.8 243.2C588.8 137.161328 674.761329 51.2 780.8 51.2 886.838671 51.2 972.8 137.161328 972.8 243.2 972.8 349.238671 886.838671 435.2 780.8 435.2L563.2 435.2ZM1024 243.2C1024 108.884349 915.11565 0 780.8 0 646.48435 0 537.6 108.884349 537.6 243.2L537.6 460.8 537.6 486.4 563.2 486.4 780.8 486.4C915.11565 486.4 1024 377.51565 1024 243.2ZM1024 780.8C1024 646.48435 915.11565 537.6 780.8 537.6L563.2 537.6 537.6 537.6 537.6 563.2 537.6 780.8C537.6 915.11565 646.48435 1024 780.8 1024 818.513163 1024 855.051123 1015.390662 888.179087 999.065099 900.861235 992.815296 906.075682 977.467919 899.825882 964.785773 893.576079 952.103625 878.228702 946.889178 865.546554 953.138978 839.420429 966.014014 810.620764 972.8 780.8 972.8 674.761329 972.8 588.8 886.838671 588.8 780.8L588.8 563.2 563.2 588.8 780.8 588.8C886.838671 588.8 972.8 674.761329 972.8 780.8 972.8 799.469549 970.142607 817.755731 964.968006 835.279443 960.963957 848.839106 968.71031 863.07731 982.269973 867.081361 995.829636 871.085412 1010.06784 863.339057 1014.071891 849.779394 1020.63305 827.560122 1024 804.391296 1024 780.8Z" fill="currentColor"/></svg></button>
+              </section>
+
               <section class="pickup">
                 <div class="hdr">
                   <h3>Pick up where you left off</h3>
@@ -1670,24 +1690,7 @@
                 </div>
               </section>
 
-              <section class="discover">
-                <span class="k">Discover in</span>
-                <button type="button" class="interest on" aria-pressed="true">Physics &amp; Space</button>
-                <button type="button" class="interest" aria-pressed="false">AI &amp; Data</button>
-                <button type="button" class="interest" aria-pressed="false">Cosmology</button>
-                <button type="button" class="interest add" aria-label="Add interest">+</button>
-                <span class="vr"></span>
-                <div class="discover-scroll-wrap">
-                <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
-                  <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag">✦ Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi">+ Add SI</button></div>
-                  <div class="dcard"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag">✦ Twin</span><small>Climate maths · Columbia</small></div><button type="button" class="addsi">+ Add SI</button></div>
-                  <div class="dcard"><span class="dav agent">LR</span><div><span class="nm">Lab Report Coach</span><span class="tag agent">AI agent</span><small>Drafts in Doc</small></div><button type="button" class="addsi">+ Add SI</button></div>
-                  <div class="dcard"><span class="dav">KS</span><div><span class="nm">Katherine F. Smith</span><span class="tag">✦ Twin</span><small>Planetary health · Brown</small></div><button type="button" class="addsi">+ Add SI</button></div>
-                </div>
-                </div>
-                <button type="button" class="round discover-next" aria-label="Scroll discover cards"><svg class="chev-ico" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 3.25 10.75 8 6 12.75" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                <button type="button" class="browse-all" data-action="browse-discover" aria-label="Browse all"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M460.8 486.4 486.4 486.4 486.4 460.8 486.4 243.2C486.4 108.884349 377.51565 0 243.2 0 108.884349 0 0 108.884349 0 243.2 0 377.51565 108.884349 486.4 243.2 486.4L460.8 486.4ZM51.2 243.2C51.2 137.161328 137.161328 51.2 243.2 51.2 349.238671 51.2 435.2 137.161328 435.2 243.2L435.2 460.8 460.8 435.2 243.2 435.2C137.161328 435.2 51.2 349.238671 51.2 243.2ZM460.8 588.8 435.2 563.2 435.2 780.8C435.2 886.838671 349.238671 972.8 243.2 972.8 137.161328 972.8 51.2 886.838671 51.2 780.8 51.2 674.761329 137.161328 588.8 243.2 588.8L460.8 588.8ZM0 780.8C0 915.11565 108.884349 1024 243.2 1024 377.51565 1024 486.4 915.11565 486.4 780.8L486.4 563.2 486.4 537.6 460.8 537.6 243.2 537.6C108.884349 537.6 0 646.48435 0 780.8ZM563.2 435.2 588.8 460.8 588.8 243.2C588.8 137.161328 674.761329 51.2 780.8 51.2 886.838671 51.2 972.8 137.161328 972.8 243.2 972.8 349.238671 886.838671 435.2 780.8 435.2L563.2 435.2ZM1024 243.2C1024 108.884349 915.11565 0 780.8 0 646.48435 0 537.6 108.884349 537.6 243.2L537.6 460.8 537.6 486.4 563.2 486.4 780.8 486.4C915.11565 486.4 1024 377.51565 1024 243.2ZM1024 780.8C1024 646.48435 915.11565 537.6 780.8 537.6L563.2 537.6 537.6 537.6 537.6 563.2 537.6 780.8C537.6 915.11565 646.48435 1024 780.8 1024 818.513163 1024 855.051123 1015.390662 888.179087 999.065099 900.861235 992.815296 906.075682 977.467919 899.825882 964.785773 893.576079 952.103625 878.228702 946.889178 865.546554 953.138978 839.420429 966.014014 810.620764 972.8 780.8 972.8 674.761329 972.8 588.8 886.838671 588.8 780.8L588.8 563.2 563.2 588.8 780.8 588.8C886.838671 588.8 972.8 674.761329 972.8 780.8 972.8 799.469549 970.142607 817.755731 964.968006 835.279443 960.963957 848.839106 968.71031 863.07731 982.269973 867.081361 995.829636 871.085412 1010.06784 863.339057 1014.071891 849.779394 1020.63305 827.560122 1024 804.391296 1024 780.8Z" fill="currentColor"/></svg></button>
-              </section>
+              
             </div>
 
             <div class="screen" id="tail-handoff" data-tail="handoff">
@@ -4174,8 +4177,9 @@
     });
   });
   setAI('citta', { announce: false });
+  // Figma 122:2523 — land on Welcome back unless the hash asks for another screen.
   if (location.hash) readHash();
-  else setScreen('home');
+  else setScreen('welcome');
   fit();
   bindCittaScrollFade();
   document.fonts && document.fonts.ready.then(fit);
