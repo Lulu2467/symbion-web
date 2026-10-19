@@ -243,7 +243,7 @@
   .rail .r, .rail .p { cursor: pointer; transition: background .12s; }
   .rail .r:hover:not(.on) { background: var(--surface); }
   .citta-panel .asst-card a { cursor: pointer; }
-  .citta-panel .asst-card a:hover { text-decoration: underline; }
+  .citta-panel .asst-card a:hover { text-decoration: none; }
   .tap-active:active { transform: scale(.98); }
   .ask-row { display: flex; gap: 14px; align-items: flex-start; }
   /* Soft ask well: placeholder on top, + and send on the bottom row. */
@@ -906,9 +906,25 @@
     color: var(--ink);
     border-radius: 14px 14px 14px 4px;
   }
+  /* Same quiet green as Cosmo act-links: sage rest → deepen on hover, never underline. */
   .citta-panel .asst-card a,
-  .citta-panel .asst-card .act-link { display: inline-flex; align-items: center; margin-top: 8px; font-size: 12px; font-weight: 600; color: var(--green); text-decoration: none; background: none; border: 0; padding: 0; cursor: pointer; }
-  .citta-panel .asst-card .act-link:hover { text-decoration: underline; }
+  .citta-panel .asst-card .act-link {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #759a87;
+    text-decoration: none;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    transition: color .12s;
+  }
+  .citta-panel .asst-card a:hover,
+  .citta-panel .asst-card .act-link:hover { color: var(--green); text-decoration: none; }
+  .citta-panel .asst-card .act-link .ico-ne { color: inherit; }
   .citta-panel .run-hd { font-size: 10px; font-weight: 700; letter-spacing: .08em; color: var(--faint); margin: 4px 0 2px; }
   .citta-panel .run-list { display: flex; flex-direction: column; gap: 8px; }
   .citta-run { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; background: #fff; }
@@ -921,8 +937,20 @@
   .citta-run.err .status { color: #b42318; }
   .citta-run .prog { height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; }
   .citta-run .prog span { display: block; height: 4px; background: var(--green); border-radius: 2px; width: 70%; }
-  .citta-run .act { align-self: flex-end; font-size: 12px; font-weight: 600; color: var(--green); background: none; padding: 0; }
+  .citta-run .act {
+    align-self: flex-end;
+    font-size: 12px;
+    font-weight: 500;
+    color: #759a87;
+    background: none;
+    padding: 0;
+    text-decoration: none;
+    transition: color .12s;
+  }
+  .citta-run .act:hover { color: var(--green); text-decoration: none; }
   .citta-run.err .act { color: #b42318; }
+  .citta-run.err .act:hover { color: #912018; text-decoration: none; }
+  .citta-run .act .ico-ne { color: inherit; }
   /* Citta dock foot: one capsule row — text + + + send on one mid-line. */
   .citta-panel .foot {
     flex: none;
