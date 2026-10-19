@@ -165,6 +165,7 @@
   .citta-portrait img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: inherit; }
   .picker .pav.citta-portrait img { border-radius: 8px; }
   .picker .pname { font-size: 14px; font-weight: 600; color: var(--ink); }
+  .picker .switch-ico { width: 14px; height: 14px; flex: none; display: block; color: var(--green); }
   .picker .twin-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,.55); color: var(--green-dark); font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 999px; }
   .picker .twin-badge .spark-icon { width: 11px; height: 11px; }
   .tpl .use .spark-icon { width: 12px; height: 12px; color: var(--green); }
@@ -436,7 +437,7 @@
   .dock:active { transform: scale(.96); }
   .dock .dock-av { width: 32px; height: 32px; border-radius: 9px; object-fit: cover; display: block; flex: none; }
   .dock .count { position: absolute; left: 28.5px; top: -5.5px; width: 18px; height: 18px; border-radius: 9px; background: var(--green); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-  .dock .sw { position: absolute; left: 12.5px; top: 34.5px; width: 16px; height: 16px; border-radius: 8px; background: #fff; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; }
+  .dock .sw { position: absolute; left: 12.5px; top: 34.5px; width: 16px; height: 16px; border-radius: 8px; background: #fff; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; color: var(--muted); }
   .toast { position: absolute; left: 50%; top: 1240px; transform: translate(-50%, 8px); background: var(--toast); color: #fff; font-size: 13px; padding: 10px 16px 10px 14px; border-radius: 12px; display: flex; gap: 10px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
   .toast.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
   .toast button { color: var(--toast-link); font-weight: 600; }
@@ -995,7 +996,7 @@
                     <span class="pav citta-portrait" id="pickerAv"><img src="assets/citta-avatar.png" width="26" height="26" alt=""></span>
                     <span class="pname" id="pickerName">Citta</span>
                     <span class="twin-badge" id="pickerBadge" hidden><span class="spark-icon" aria-hidden="true"></span> Twin</span>
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#2c7a5f" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h8M8 2l2 2-2 2M10 8H2M4 6 2 8l2 2"/></svg>
+                    <svg class="switch-ico" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M96 416h832c0.32 0 0.576-0.192 0.896-0.192a30.656 30.656 0 0 0 30.976-30.976c-0.064-0.256 0.128-0.512 0.128-0.832a31.424 31.424 0 0 0-14.912-26.368l-188.48-188.48a30.72 30.72 0 1 0-43.456 43.456L852.544 352H96a32 32 0 0 0 0 64z m832 192H96c-0.32 0-0.576 0.192-0.896 0.192a30.528 30.528 0 0 0-30.976 30.976c0.064 0.256-0.128 0.512-0.128 0.832 0 11.264 6.144 20.672 14.912 26.368l188.48 188.48a30.72 30.72 0 1 0 43.456-43.456L171.456 672H928a32 32 0 0 0 0-64z" fill="currentColor"/></svg>
                   </button>
                   <span id="whenCitta" style="display:contents">
                     <span class="faint">or switch to</span>
@@ -1405,7 +1406,7 @@
                 <span class="citta-av citta-portrait" aria-hidden="true"><img src="assets/citta-avatar.png" width="28" height="28" alt=""></span>
                 <b>Citta</b>
                 <button type="button" class="doc-switch" id="tutorialDocSwitch" aria-label="Switch who helps with this task" aria-expanded="false">
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h8M8 2l2 2-2 2M10 8H2M4 6 2 8l2 2"/></svg>
+                  <svg class="switch-ico" width="14" height="14" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M96 416h832c0.32 0 0.576-0.192 0.896-0.192a30.656 30.656 0 0 0 30.976-30.976c-0.064-0.256 0.128-0.512 0.128-0.832a31.424 31.424 0 0 0-14.912-26.368l-188.48-188.48a30.72 30.72 0 1 0-43.456 43.456L852.544 352H96a32 32 0 0 0 0 64z m832 192H96c-0.32 0-0.576 0.192-0.896 0.192a30.528 30.528 0 0 0-30.976 30.976c0.064 0.256-0.128 0.512-0.128 0.832 0 11.264 6.144 20.672 14.912 26.368l188.48 188.48a30.72 30.72 0 1 0 43.456-43.456L171.456 672H928a32 32 0 0 0 0-64z" fill="currentColor"/></svg>
                 </button>
               </div>
               <p class="msg">Writing your summary from Prof. Roland’s Lecture 1 slides. Section 3 of 5…</p>
@@ -1428,7 +1429,7 @@
         <div class="ph">
           <span class="citta-av citta-portrait" aria-hidden="true"><img src="assets/citta-avatar.png" width="28" height="28" alt=""></span>
           <b>Citta</b>
-          <span class="sw-sm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h8M8 2l2 2-2 2M10 8H2M4 6 2 8l2 2"/></svg></span>
+          <span class="sw-sm" aria-hidden="true"><svg class="switch-ico" width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M96 416h832c0.32 0 0.576-0.192 0.896-0.192a30.656 30.656 0 0 0 30.976-30.976c-0.064-0.256 0.128-0.512 0.128-0.832a31.424 31.424 0 0 0-14.912-26.368l-188.48-188.48a30.72 30.72 0 1 0-43.456 43.456L852.544 352H96a32 32 0 0 0 0 64z m832 192H96c-0.32 0-0.576 0.192-0.896 0.192a30.528 30.528 0 0 0-30.976 30.976c0.064 0.256-0.128 0.512-0.128 0.832 0 11.264 6.144 20.672 14.912 26.368l188.48 188.48a30.72 30.72 0 1 0 43.456-43.456L171.456 672H928a32 32 0 0 0 0-64z" fill="currentColor"/></svg></span>
           <span class="task-pill">3 tasks</span>
           <span class="sp"></span>
           <button type="button" class="panel-close" id="cittaPanelClose" aria-label="Close Citta panel">×</button>
@@ -1490,7 +1491,7 @@
 
       <button type="button" class="dock" id="dock" aria-label="Citta dock" aria-expanded="false"><img class="dock-av" src="assets/citta-avatar.png" width="32" height="32" alt="">
         <span class="count">3</span>
-        <span class="sw"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="#6b716d" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h8M8 2l2 2-2 2M10 8H2M4 6 2 8l2 2"/></svg></span>
+        <span class="sw"><svg class="switch-ico" width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M96 416h832c0.32 0 0.576-0.192 0.896-0.192a30.656 30.656 0 0 0 30.976-30.976c-0.064-0.256 0.128-0.512 0.128-0.832a31.424 31.424 0 0 0-14.912-26.368l-188.48-188.48a30.72 30.72 0 1 0-43.456 43.456L852.544 352H96a32 32 0 0 0 0 64z m832 192H96c-0.32 0-0.576 0.192-0.896 0.192a30.528 30.528 0 0 0-30.976 30.976c0.064 0.256-0.128 0.512-0.128 0.832 0 11.264 6.144 20.672 14.912 26.368l188.48 188.48a30.72 30.72 0 1 0 43.456-43.456L171.456 672H928a32 32 0 0 0 0-64z" fill="currentColor"/></svg></span>
       </button>
 
       <div class="toast" id="toast" role="status">
