@@ -725,25 +725,30 @@
   .pick-card .col { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
   .pick-card .t { font-size: 15px; font-weight: 400; color: var(--ink); }
   .pick-card .meta { display: flex; gap: 6px; align-items: center; flex-wrap: nowrap; white-space: nowrap; font-size: 12px; color: var(--faint); min-width: 0; }
-  /* Grey wash over the peach panel — sage text like Cosmo act-links, deepen on hover, never underline. */
+  /* Warm grey from yellow/orange palette (#F7F3EC fill, #A0845C type) — no green, no underline. */
   .pick-card .btn {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(240, 241, 238, 0.78);
-    border: 1px solid rgba(28, 31, 29, 0.08);
+    background: #F7F3EC;
+    border: 1px solid rgba(160, 132, 92, 0.22);
     border-radius: 10px;
     padding: 8px 14px;
     font-size: 13px;
     font-weight: 500;
-    color: #759a87;
+    color: #A0845C;
     white-space: nowrap;
     flex: none;
     backdrop-filter: none;
     text-decoration: none;
     transition: color .12s, background .12s, border-color .12s;
   }
-  .pick-card .btn:hover { background: rgba(228, 230, 227, 0.92); color: var(--green); text-decoration: none; }
+  .pick-card .btn:hover {
+    background: #efe8dc;
+    border-color: rgba(160, 132, 92, 0.36);
+    color: #937225;
+    text-decoration: none;
+  }
   .pick-card .btn .more-ico { width: 12px; height: 12px; color: inherit; flex: none; display: block; }
   .pick-card .btn .more-ico svg { display: block; width: 100%; height: 100%; }
   .activity.cosmos-compact { border: 1px solid var(--line); border-radius: 16px; padding: 20px; gap: 12px; background: #fff; }
