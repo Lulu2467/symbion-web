@@ -575,14 +575,45 @@
   .citta-panel[hidden] { display: none !important; }
   .frame.citta-open .citta-panel { transform: none; }
   .frame.citta-open .body .main { margin-right: 320px; }
-  .citta-panel .ph { padding: 14px 16px 12px; display: flex; gap: 8px; align-items: center; flex: none; border-bottom: 1px solid var(--line); }
+  .citta-panel .ph { padding: 14px 16px 12px; display: flex; gap: 6px; align-items: center; flex: none; border-bottom: 1px solid var(--line); }
   .citta-panel .ph .citta-av { width: 28px; height: 28px; border-radius: 10px; background: transparent; color: var(--green-dark); font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex: none; overflow: hidden; padding: 0; }
   .citta-panel .ph .citta-av img { border-radius: 10px; }
-  .citta-panel .ph b { font-size: 16px; font-weight: 600; flex: none; }
-  .citta-panel .ph .sw-sm { color: var(--green); display: inline-flex; align-items: center; justify-content: center; flex: none; width: 28px; height: 28px; padding: 0; border: 0; border-radius: 8px; background: transparent; cursor: pointer; }
+  .citta-panel .ph b { font-size: 16px; font-weight: 600; flex: none; line-height: 1; }
+  /* Match task-pill height (~22px); keep optical mid-line with name + pill. */
+  .citta-panel .ph .sw-sm {
+    color: var(--green);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+    line-height: 0;
+  }
+  .citta-panel .ph .sw-sm .switch-ico { width: 11px; height: 11px; display: block; }
   .citta-panel .ph .sw-sm:hover { background: var(--green-tint); }
   .citta-panel .ph .sw-sm[aria-expanded="true"] { background: var(--green-tint); }
-  .citta-panel .ph .task-pill { font-size: 11px; font-weight: 600; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px 8px; flex: none; white-space: nowrap; }
+  .citta-panel .ph .task-pill {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 3px 8px;
+    height: 22px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    flex: none;
+    white-space: nowrap;
+    line-height: 1;
+  }
   .citta-panel .ph .sp { flex: 1; min-width: 4px; }
   .citta-panel .ph .panel-close { width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--line); background: #fff; color: var(--muted); font-size: 20px; font-weight: 300; line-height: 1; display: flex; align-items: center; justify-content: center; flex: none; }
   .citta-panel .ph .panel-close:hover { background: var(--surface); color: var(--ink); }
