@@ -626,6 +626,11 @@
   .tutorial-spotlight.on { display: block; }
   .frame.tutorial-on { position: relative; }
   .frame.tutorial-on .tutorial-spot-target { position: relative; z-index: 14; }
+  /* Rail normally sits at z:30 (above menus). Drop it under the spotlight mask so the gray covers it. */
+  .frame.tutorial-on .rail {
+    z-index: 1;
+    pointer-events: none;
+  }
   /* Spotlight steps: cutout alone is not enough on white siblings — force-dim the extras. */
   .frame.tutorial-on .composer > .foot { position: relative; z-index: 1; }
   /* Step 1: whole green chat card is the cutout — keep it bright above the dim. */
