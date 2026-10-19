@@ -712,14 +712,13 @@
   }
   .citta-panel .citta-scroll-wrap.show-top-fade::before { opacity: 1; }
   .citta-panel .citta-scroll-wrap.show-bot-fade::after { opacity: 1; }
-  /* Same bubble shell (radius / pad / border / type) — only fill + text color differ. */
+  /* Same bubble shell (pad / border / type) — corner near the sender is tighter. */
   .citta-panel .user-bubble,
   .citta-panel .asst-card {
     max-width: 92%;
     font-size: 13px;
     line-height: 1.45;
     padding: 12px 14px;
-    border-radius: 14px;
     border: 1px solid transparent;
     box-sizing: border-box;
   }
@@ -728,13 +727,16 @@
     background: var(--green-bubble);
     border-color: var(--green-bubble);
     color: #fff;
+    /* My messages: smaller bottom-right. */
+    border-radius: 14px 14px 4px 14px;
   }
-  /* Assistant reply: flat solid fill — no outline / wash rim. */
+  /* Assistant reply: flat solid fill; smaller bottom-left. */
   .citta-panel .asst-card {
     align-self: flex-start;
     background: var(--green-tint);
     border-color: var(--green-tint);
     color: var(--ink);
+    border-radius: 14px 14px 14px 4px;
   }
   .citta-panel .asst-card a,
   .citta-panel .asst-card .act-link { display: inline-flex; align-items: center; margin-top: 8px; font-size: 12px; font-weight: 600; color: var(--green); text-decoration: none; background: none; border: 0; padding: 0; cursor: pointer; }
