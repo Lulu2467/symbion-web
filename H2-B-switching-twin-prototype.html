@@ -898,15 +898,16 @@
     border-color: var(--green);
     box-shadow: 0 1px 3px rgba(28,31,29,.05), 0 4px 12px rgba(0,139,104,.08);
   }
-  /* Step 2: only the tool cards are lit — header + composer above stay muted. */
+  /* Step 2: title + cards lit together; composer above stays muted. */
   .frame.tutorial-spot-try .composer {
     opacity: 0.42;
     filter: brightness(0.9);
     pointer-events: none;
   }
-  .frame.tutorial-spot-try #tutorialTrySpot > .hdr {
-    opacity: 0.45;
-    filter: brightness(0.92);
+  /* Equal-inset green frame around the try block (title included). */
+  .frame.tutorial-spot-try .tutorial-spotlight {
+    border: 1.5px solid var(--green);
+    background: #fff;
   }
   /* Step 3: only the Citta picker pill — rest of the composer card stays muted. */
   .frame.tutorial-spot-picker .composer .ask-row,
@@ -2643,15 +2644,19 @@
     const t = frameRectOffset(el);
     const isComposer = el.id === 'composer' || el.classList?.contains('composer');
     const isPicker = el.id === 'picker';
-    const isTryCards = el.id === 'tutorialTryCards' || el.classList?.contains('tutorial-try-cards');
-    // Composer / picker: hole flush to the element edge so the green border is the wireframe (no white gap).
-    const insetX = isComposer || isPicker ? 0 : inset;
-    const insetTop = isComposer || isPicker ? 0 : inset;
-    const insetBottom = isComposer || isPicker ? 0 : inset;
+    const isTrySpot = el.id === 'tutorialTrySpot'
+      || el.id === 'tutorialTryCards'
+      || el.classList?.contains('tutorial-try-cards');
+    // Composer / picker: hole flush to the element edge so the green border is the wireframe.
+    // Try block: equal inset on all four sides (title + cards inside one frame).
+    const pad = isTrySpot ? Math.max(inset, 12) : inset;
+    const insetX = isComposer || isPicker ? 0 : pad;
+    const insetTop = isComposer || isPicker ? 0 : pad;
+    const insetBottom = isComposer || isPicker ? 0 : pad;
     let radius = '';
     if (isComposer) radius = '24px';
     else if (isPicker) radius = '999px';
-    else if (isTryCards) radius = '16px';
+    else if (isTrySpot) radius = '16px';
     tutorialSpotlight.style.borderRadius = radius;
     tutorialSpotlight.style.top = `${Math.max(0, t.top - insetTop)}px`;
     tutorialSpotlight.style.left = `${Math.max(0, t.left - insetX)}px`;
@@ -2662,17 +2667,17 @@
   }
 
   function getTrySpotElement() {
-    // Cards only — not the section hdr (same leak pattern as START WITH on step 1).
-    return $('tutorialTryCards')
-      || document.querySelector('#sec-try-tutorial .tutorial-try-cards')
-      || $('tutorialTrySpot')
+    // Title + cards — one frame so “Try each tool with Citta” is inside the highlight.
+    return $('tutorialTrySpot')
+      || document.querySelector('#sec-try-tutorial')
+      || $('tutorialTryCards')
       || $('sec-try-each')?.querySelector('.try-cards');
   }
 
   function getTutorialSpotTarget(stepKey) {
     // Step 1: the whole green chat card (#composer), not just .top / ask-row.
     if (stepKey === 'composer') return composer;
-    // Step 2: tool cards only, not the "Try each tool" header.
+    // Step 2: whole try block (hdr + cards).
     if (stepKey === 'try') return getTrySpotElement();
     // Step 3: Citta picker pill only, not the whole WORKING WITH row.
     if (stepKey === 'picker') return picker;
