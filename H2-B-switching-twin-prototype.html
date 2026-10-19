@@ -171,9 +171,11 @@
   .stack span { width: 24px; height: 24px; border-radius: 12px; border: 2px solid #fff; background: var(--surface-2); color: var(--muted); font-size: 8.64px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; margin-right: -6px; }
   .stack span.agent { background: var(--amber-tint); color: var(--amber); border-radius: 7px; margin-right: 0; }
   .link { color: var(--green); font-weight: 500; cursor: pointer; }
-  #backToCitta { display: inline-flex; align-items: center; gap: 6px; }
-  #backToCitta .spark-icon { width: 12px; height: 12px; color: var(--green); }
+  #backToCitta { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; margin-left: 4px; border-radius: 999px; border: 0; background: transparent; font: inherit; color: var(--green); transition: background .12s, color .12s; }
+  #backToCitta .spark-icon { width: 12px; height: 12px; color: currentColor; }
+  #backToCitta:hover { background: var(--green-tint); color: var(--green-dark); text-decoration: none; }
   .link:hover { text-decoration: underline; text-underline-offset: 2px; }
+  #backToCitta.link:hover { text-decoration: none; }
   .sec .act { cursor: pointer; }
   .sec .act:hover { text-decoration: underline; }
   .dcard { cursor: pointer; transition: border-color .12s, box-shadow .12s; }
@@ -571,7 +573,7 @@
   .citta-panel .suggest button:hover { border-color: rgba(44,122,95,.35); background: var(--green-wash); }
   .citta-panel .ask-row { display: flex; gap: 8px; align-items: center; background: #fafbfa; border: 1px solid var(--line); border-radius: 12px; padding: 4px 4px 4px 10px; }
   .citta-panel .ask-row .plus { width: 28px; height: 28px; border-radius: 8px; color: var(--muted); font-size: 16px; line-height: 1; flex: none; display: flex; align-items: center; justify-content: center; margin-top: 0; padding: 0; box-sizing: border-box; transition: background .12s, color .12s; }
-  .citta-panel .ask-row .plus:hover { background: var(--green-wash); color: var(--green-dark); }
+  .citta-panel .ask-row .plus:hover { background: var(--green-tint); color: var(--green-dark); }
   .citta-panel .ask-row .plus:active { transform: scale(.96); }
   .citta-input { flex: 1; min-width: 0; font-size: 13px; line-height: 1.45; color: var(--ink); background: transparent; border: 0; padding: 0; margin: 0; resize: none; font-family: var(--font); min-height: 1.45em; overflow: hidden; text-align: left; }
   .citta-input::placeholder { color: var(--placeholder); text-align: left; }
@@ -989,7 +991,6 @@
                     <button type="button" class="link" id="openTwinBrowse">your twins &amp; AI agents — anytime</button>
                   </span>
                   <span id="whenTwin" style="display:none">
-                    <span class="faint">·</span>
                     <button type="button" class="link" id="backToCitta"><span class="spark-icon" aria-hidden="true"></span>Back to Citta</button>
                   </span>
                 </div>
