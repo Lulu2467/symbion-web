@@ -491,10 +491,9 @@
   .week-cards { display: flex; gap: 16px; align-items: stretch; }
   .week-card { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; background: #fff; position: relative; text-align: left; }
   .week-card.tried { background: #f6faf6; border-color: rgba(44,122,95,.16); }
-  .week-card .done,
-  .week-card .todo { position: absolute; top: 12px; right: 12px; width: 22px; height: 22px; border-radius: 11px; flex: none; box-sizing: border-box; }
-  .week-card .done { background: transparent; color: var(--green); font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center; border: none; }
-  .week-card .todo { border: 1.5px solid #c8cec9; background: #fff; }
+  .week-card .done { position: absolute; top: 12px; right: 12px; width: 22px; height: 22px; border-radius: 11px; flex: none; box-sizing: border-box; background: transparent; color: var(--green); font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center; border: none; }
+  /* Untested cards: no empty ring — only show ✓ after tried. */
+  .week-card .todo { display: none; }
   .week-card .row { display: flex; gap: 8px; align-items: center; }
   .week-card b { font-size: 14px; font-weight: 600; }
   .week-card small { font-size: 12px; color: var(--faint); line-height: 1.35; }
