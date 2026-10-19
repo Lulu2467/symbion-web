@@ -728,9 +728,8 @@
   .citta-run .prog span { display: block; height: 4px; background: var(--green); border-radius: 2px; width: 70%; }
   .citta-run .act { align-self: flex-end; font-size: 12px; font-weight: 600; color: var(--green); background: none; padding: 0; }
   .citta-run.err .act { color: #b42318; }
-  /* Citta dock foot: capsule ask only — no top rule, no suggest stack. */
+  /* Citta dock foot: one capsule row — text + + + send on one mid-line. */
   .citta-panel .foot {
-    --citta-inset: 10px;
     flex: none;
     border-top: 0;
     padding: 10px 14px 14px;
@@ -743,40 +742,53 @@
   .citta-panel .ask-row {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
-    gap: 6px 8px;
+    gap: 6px;
     background: #fff;
-    border: 1.5px solid rgba(0,139,104,.35);
+    border: 1.5px solid #c5d0c9;
     border-radius: 999px;
-    padding: 6px 8px 6px 12px;
+    padding: 5px 6px 5px 14px;
+    min-height: 40px;
     box-sizing: border-box;
     box-shadow: none;
     transition: border-color .12s, box-shadow .12s;
   }
   .citta-panel .ask-compose {
     display: flex;
-    flex: 1 1 120px;
-    flex-wrap: wrap;
+    flex: 1 1 auto;
+    flex-wrap: nowrap;
     align-items: center;
     gap: 6px;
     min-width: 0;
+    width: auto;
   }
-  .citta-panel .composer-chips { padding: 0; margin: 0; }
+  .citta-panel .composer-chips { padding: 0; margin: 0; flex: none; }
   .citta-panel .ask-bar {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 4px;
-    flex: none;
+    gap: 2px;
+    flex: 0 0 auto;
+    width: auto;
     margin: 0;
     padding: 0;
-    margin-left: auto;
   }
   .citta-panel .ask-row:focus-within {
-    border-color: var(--green);
-    box-shadow: 0 0 0 3px rgba(0,139,104,.12);
+    border-color: rgba(0,139,104,.45);
+    box-shadow: 0 0 0 3px rgba(0,139,104,.1);
   }
+  /* Chips present: wrap chips above, keep actions on the trailing row. */
+  .citta-panel .ask-row:has(.composer-chips.on) {
+    flex-wrap: wrap;
+    border-radius: 18px;
+    padding: 8px 8px 6px 12px;
+  }
+  .citta-panel .ask-row:has(.composer-chips.on) .ask-compose {
+    flex: 1 1 100%;
+    flex-wrap: wrap;
+  }
+  .citta-panel .ask-row:has(.composer-chips.on) .ask-bar { margin-left: auto; }
   .citta-panel .ask-bar .plus {
     width: 28px;
     height: 28px;
@@ -796,12 +808,30 @@
   }
   .citta-panel .ask-bar .plus:hover { background: var(--green-tint); color: var(--green-dark); }
   .citta-panel .ask-bar .plus:active { transform: scale(.96); }
-  .citta-input { flex: 1 1 80px; min-width: 72px; width: auto; font-size: 13px; line-height: 1.45; color: var(--ink); background: transparent; border: 0; padding: 0; margin: 0; resize: none; font-family: var(--font); min-height: 1.45em; overflow: hidden; text-align: left; }
+  .citta-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: 100%;
+    font-size: 13px;
+    line-height: 28px;
+    min-height: 28px;
+    height: 28px;
+    color: var(--ink);
+    background: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    resize: none;
+    font-family: var(--font);
+    overflow: hidden;
+    text-align: left;
+    vertical-align: middle;
+  }
   .citta-input::placeholder { color: var(--placeholder); text-align: left; }
   .citta-input:focus { outline: none; }
   .citta-panel .ask-bar .send {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border-radius: 999px;
     margin-left: 0;
     flex: none;
@@ -811,7 +841,7 @@
     padding: 0;
     box-sizing: border-box;
   }
-  .citta-panel .ask-bar .send svg { width: 14px; height: 14px; }
+  .citta-panel .ask-bar .send svg { width: 13px; height: 13px; }
 
   /* Spotlight steps: cutout dim inside .frame. Final step: viewport-fixed gray + centered modal (outside .scaler — transform traps fixed). */
   /* Scrim dims only — keep pointer-events none so the page can still scroll to below-fold H0 content. */
