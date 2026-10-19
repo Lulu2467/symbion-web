@@ -436,16 +436,20 @@
   .activity.cosmos-compact .cosmos-see { align-self: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--ink); cursor: pointer; }
   .activity.cosmos-compact .cosmos-see:hover { border-color: var(--green); background: var(--green-wash); }
 
-  /* Overlay stack: scrim under dialog. Keep both outside .scaler (transform traps fixed). */
-  .tip-scrim { position: fixed; inset: 0; background: rgba(28,31,29,.48); z-index: 10000; display: none; pointer-events: auto; }
-  .tip-scrim.on { display: block; }
-  .new-tip { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(360px, calc(100vw - 48px)); background: #247a5c; color: #fff; border-radius: 16px; padding: 20px 22px; font-size: 13px; line-height: 1.45; box-shadow: 0 0 0 1px rgba(255,255,255,.14), 0 28px 64px rgba(0,0,0,.45); z-index: 10010; display: none; pointer-events: auto; isolation: isolate; }
+  /* Post-tutorial Citta-switch tip: dim via in-frame spotlight cutout (Citta pill only).
+     Do NOT use a full-viewport blocking scrim — that greys out the page and traps clicks. */
+  .tip-scrim { position: fixed; inset: 0; background: transparent; z-index: 10000; display: none; pointer-events: none; }
+  .tip-scrim.on { display: none; }
+  .new-tip { position: fixed; left: 0; top: 0; transform: none; width: min(340px, calc(100vw - 48px)); background: #247a5c; color: #fff; border-radius: 16px; padding: 18px 20px; font-size: 13px; line-height: 1.45; box-shadow: 0 0 0 1px rgba(255,255,255,.14), 0 20px 48px rgba(0,0,0,.35); z-index: 10010; display: none; pointer-events: auto; isolation: isolate; }
   .new-tip.show { display: block; }
+  .new-tip::before { content: ''; position: absolute; top: -7px; left: var(--tip-arrow-x, 28px); width: 14px; height: 14px; background: #247a5c; transform: translateX(-50%) rotate(45deg); border-radius: 2px; box-shadow: -1px -1px 0 rgba(255,255,255,.12); }
   .new-tip .k { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .06em; background: rgba(255,255,255,.22); padding: 2px 6px; border-radius: 4px; margin-bottom: 8px; }
   .new-tip h4 { margin: 0 0 6px; font-size: 16px; font-weight: 600; line-height: 1.35; }
   .new-tip .body { margin: 0; opacity: 1; }
-  .frame.post-tip-on .picker { position: relative; z-index: 37; box-shadow: 0 0 0 3px rgba(44,122,95,.45); }
-  .frame.post-tip-on .menu.open { z-index: 10020; }
+  /* Figma: Citta pill = green line frame (same language as tool.sel / composer), not a muddy outer glow. */
+  .frame.post-tip-on .picker { position: relative; z-index: 14; background: var(--green-tint); border: 2px solid var(--green); box-shadow: 0 0 0 3px rgba(44,122,95,.16); }
+  .frame.post-tip-on .tutorial-spotlight { border-radius: 999px; box-shadow: 0 0 0 9999px rgba(28,31,29,.40); }
+  .frame.post-tip-on .menu.open { z-index: 16; }
   .new-tip .acts { display: flex; gap: 10px; margin-top: 12px; }
   .new-tip .acts button { font-size: 12px; font-weight: 600; padding: 8px 12px; border-radius: 8px; }
   .new-tip .acts .pri { background: #fff; color: var(--green-dark); }
@@ -1579,18 +1583,35 @@
   }
 
   function positionNewTip() {
-    // Centered modal — CSS handles placement; clear any legacy offsets.
-    if (!newTip) return;
-    newTip.style.top = '';
-    newTip.style.left = '';
-    newTip.style.removeProperty('--tip-arrow-x');
+    if (!newTip || newTip.hidden || !newTip.classList.contains('show')) return;
+    const p = picker.getBoundingClientRect();
+    const tipW = Math.min(340, window.innerWidth - 48);
+    let left = p.left + p.width / 2 - tipW / 2;
+    left = Math.max(24, Math.min(left, window.innerWidth - tipW - 24));
+    let top = p.bottom + 16;
+    newTip.style.width = `${tipW}px`;
+    newTip.style.left = `${left}px`;
+    newTip.style.top = `${top}px`;
+    newTip.style.transform = 'none';
+    const arrowX = Math.max(16, Math.min(p.left + p.width / 2 - left, tipW - 16));
+    newTip.style.setProperty('--tip-arrow-x', `${arrowX}px`);
+    // If tip would clip below the viewport, flip above the pill.
+    requestAnimationFrame(() => {
+      if (!newTip.classList.contains('show')) return;
+      const tipRect = newTip.getBoundingClientRect();
+      if (tipRect.bottom > window.innerHeight - 16) {
+        top = Math.max(16, p.top - tipRect.height - 16);
+        newTip.style.top = `${top}px`;
+      }
+    });
   }
 
-  function setTipScrim(on) {
+  function setTipScrim(_on) {
+    // Post-tutorial tip must never mount a blocking full-page gray (traps clicks).
     const scrim = $('tipScrim');
     if (!scrim) return;
-    scrim.classList.toggle('on', on);
-    scrim.setAttribute('aria-hidden', String(!on));
+    scrim.classList.remove('on');
+    scrim.setAttribute('aria-hidden', 'true');
   }
 
   function hidePostTutorialTip({ dismissed = true } = {}) {
@@ -1599,6 +1620,7 @@
     newTip.classList.remove('show');
     newTip.hidden = true;
     setTipScrim(false);
+    clearTutorialSpotlight();
     frame.classList.remove('post-tip-on', 'dim-handoff');
     syncHash();
   }
@@ -1608,13 +1630,15 @@
     postTutorialTipPending = true;
     // Keep tip inside #fsRoot so it still shows during native fullscreen.
     const host = $('fsRoot') || document.body;
-    const scrim = $('tipScrim');
-    if (scrim) host.appendChild(scrim);
     host.appendChild(newTip);
+    setTipScrim(false);
     newTip.hidden = false;
     newTip.classList.add('show');
-    setTipScrim(true);
-    frame.classList.add('post-tip-on', 'dim-handoff');
+    frame.classList.add('post-tip-on');
+    frame.classList.remove('dim-handoff');
+    // Spotlight cutout on the Citta pill only (not the whole WORKING WITH row).
+    positionTutorialSpotlight(picker, 4);
+    tutorialSpotlight.style.borderRadius = '999px';
     positionNewTip();
     positionSwitcherMenu();
     syncHash();
@@ -1675,6 +1699,7 @@
   function clearTutorialSpotlight() {
     tutorialSpotlight.classList.remove('on');
     tutorialSpotlight.setAttribute('aria-hidden', 'true');
+    tutorialSpotlight.style.borderRadius = '';
     document.querySelectorAll('.tutorial-spot-target').forEach((n) => n.classList.remove('tutorial-spot-target'));
   }
 
@@ -2386,9 +2411,7 @@
     const dockCount = dock.querySelector('.count');
     if (dockCount) dockCount.textContent = next === 'welcome' ? '2' : '3';
     const wantTip = next === 'handoff' && (afterTutorial || showTip || postTutorialTipPending) && current === 'citta' && !newTipSeen;
-    if (wantTip) {
-      requestAnimationFrame(() => showPostTutorialTip());
-    } else if (next !== 'handoff' || newTipSeen) {
+    if (!wantTip && (next !== 'handoff' || newTipSeen)) {
       hidePostTutorialTip({ dismissed: false });
     }
     if (next === 'tutorial') {
@@ -2398,13 +2421,17 @@
       coach.classList.remove('on', 'switch-coach');
       setCoachScrim(false);
       frame.classList.remove('tutorial-on', 'dim');
-      clearTutorialSpotlight();
+      if (!wantTip) clearTutorialSpotlight();
       exitTutorialDoc();
       document.querySelectorAll('.spot').forEach((el) => el.classList.remove('spot'));
     }
     syncTutorialNav();
     syncHash();
     fit();
+    if (wantTip) {
+      // After tutorial chrome is cleared + layout fit, show Citta-switch tip with pill spotlight.
+      requestAnimationFrame(() => showPostTutorialTip());
+    }
   }
 
   function setCittaExpanded(open) {
@@ -2448,9 +2475,13 @@
   });
   $('newTipShow').addEventListener('click', (e) => {
     e.stopPropagation();
+    // Clear dim + tip first so the page never stays gray/unclickable.
     newTip.classList.remove('show');
     newTip.hidden = true;
+    setTipScrim(false);
+    clearTutorialSpotlight();
     frame.classList.remove('dim-handoff');
+    // Keep post-tip-on so the Citta pill stays green-framed while the switcher is open.
     newTipSeen = true;
     postTutorialTipPending = false;
     syncHash();
