@@ -309,7 +309,8 @@
   .foot #composerContinue { overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
   .foot #composerContinue::-webkit-scrollbar { display: none; }
   .foot #composerContinue .chip { flex: none; white-space: nowrap; }
-  .foot .wrap .link-btn { margin-left: auto; flex: none; white-space: nowrap; }
+  /* Trail the chips with the same gap — don’t shove “All files” to the far right. */
+  .foot .wrap .link-btn { margin-left: 0; flex: none; white-space: nowrap; }
   .foot .suggest-chips { flex-wrap: wrap; }
   .chip { display: inline-flex; gap: 6px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px 8px 12px; font-size: 13px; line-height: 1.4; cursor: pointer; transition: border-color .12s, background .12s, transform .08s; }
   .chip > .ic { margin-right: 2px; }
