@@ -267,7 +267,7 @@
   .menu .browse .plus { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 14px; height: 14px; font-size: 14px; font-weight: 500; line-height: 1; transform: translateY(-0.5px); }
 
   /* Discover */
-  .discover { display: flex; gap: 10px; align-items: center; padding: 10px 12px 10px 16px; border: 1px solid var(--line); border-radius: 14px; font-size: 12px; line-height: 1.35; }
+  .discover { display: flex; gap: 14px; align-items: center; padding: 10px 12px 10px 16px; border: 1px solid var(--line); border-radius: 14px; font-size: 12px; line-height: 1.35; }
   .discover .k { font-size: 13px; font-weight: 500; color: var(--muted); }
   .interest { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); cursor: pointer; transition: background .12s, border-color .12s; }
   .interest:not(.on):hover { border-color: #cfd4cf; background: var(--surface); }
@@ -529,8 +529,9 @@
   .tutorial-spotlight.on { display: block; }
   .frame.tutorial-on { position: relative; }
   .frame.tutorial-on .tutorial-spot-target { z-index: 14; }
+  /* Dock paints after the spotlight in DOM and would sit above the dim — hide it for every tutorial step. */
+  .frame.tutorial-on .dock { opacity: 0; pointer-events: none; }
   .frame.tutorial-doc-on .tutorial-spotlight { display: none !important; }
-  .frame.tutorial-doc-on .dock { opacity: 0; pointer-events: none; }
 
   .tutorial-doc-view { flex: 1; min-width: 0; display: none; flex-direction: column; background: #fff; min-height: 860px; }
   .frame.tutorial-doc-on .tutorial-doc-view { display: flex; }
