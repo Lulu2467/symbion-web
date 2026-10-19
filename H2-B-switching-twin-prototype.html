@@ -954,7 +954,22 @@
   .tutorial-doc-citta { width: 380px; flex: none; border-left: 1px solid var(--line); display: flex; flex-direction: column; background: #fff; position: relative; }
   .tutorial-doc-citta.is-twin { background: var(--green-wash); }
   .tutorial-doc-citta .ph { display: flex; align-items: center; gap: 10px; padding: 20px 21px 12px; flex: none; width: fit-content; max-width: calc(100% - 42px); box-sizing: border-box; }
-  .tutorial-doc-citta .ph.spot-ring { border: 2px dashed #2c7a5f; border-radius: 10px; box-shadow: none; outline: none; }
+  /* Thin dashed ring — short dash, wide gap (SVG so dasharray isn’t browser-default). */
+  .tutorial-doc-citta .ph.spot-ring {
+    border: 0;
+    border-radius: 10px;
+    box-shadow: none;
+    outline: none;
+    position: relative;
+  }
+  .tutorial-doc-citta .ph.spot-ring::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 12px;
+    pointer-events: none;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 48' fill='none' preserveAspectRatio='none'%3E%3Crect x='0.5' y='0.5' width='239' height='47' rx='12' ry='12' pathLength='100' stroke='%232c7a5f' stroke-width='1' stroke-dasharray='2 6' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  }
   .tutorial-doc-citta .ph b { font-size: 15px; font-weight: 600; }
   .tutorial-doc-citta .ph .citta-av { width: 28px; height: 28px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; background: var(--green-tint); color: var(--green-dark); flex: none; overflow: hidden; }
   .tutorial-doc-citta .ph .citta-av.citta-portrait { border-radius: 8px; background: transparent; }
