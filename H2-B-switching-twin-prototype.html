@@ -301,11 +301,23 @@
   .week-card i,
   .tpl .h i,
   .try-card .bot i,
-  .tutorial-try-card .trow i { font-style: normal; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; flex: none; line-height: 1; padding: 0; text-align: center; }
+  .tutorial-try-card .trow i {
+    font-style: normal;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    line-height: 0;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    overflow: hidden;
+  }
   .tool i { width: 28px; height: 28px; border-radius: 8px; font-size: 14px; font-weight: 600; }
-  .tool i svg { display: block; width: 16px; height: 16px; flex: none; }
+  .tool i svg { display: block; width: 16px; height: 16px; flex: none; margin: 0; }
   .week-card i { width: 28px; height: 28px; border-radius: 10px; font-size: 14px; font-weight: 600; }
-  .week-card i svg { display: block; width: 16px; height: 16px; flex: none; }
+  .week-card i svg { display: block; width: 15px; height: 15px; flex: none; margin: 0; }
   .tpl .h i { width: 28px; height: 28px; border-radius: 10px; font-size: 14px; font-weight: 500; border: 0; }
   .tpl .h i svg,
   .try-card .bot i svg { display: block; width: 16px; height: 16px; flex: none; }
@@ -643,7 +655,32 @@
   .week-tools-hd h3 { margin: 0; font-size: 20px; font-weight: 500; }
   .week-tools-hd .badge { font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--green-tint); color: var(--green-dark); flex: none; }
   .week-tools-hd .sp { flex: 1; min-width: 8px; }
-  .week-tools-close { width: 28px; height: 28px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); font-size: 20px; line-height: 1; flex: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0; }
+  .week-tools-close {
+    width: 28px;
+    height: 28px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--muted);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 0;
+    flex: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  /* Optical center for × (glyph sits high in the em box). */
+  .week-tools-close::before {
+    content: '×';
+    display: block;
+    line-height: 1;
+    transform: translateY(-0.04em);
+  }
   .week-tools-close:hover { background: var(--surface); color: var(--ink); }
   .week-cards { display: flex; gap: 16px; align-items: stretch; }
   .week-card { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; background: #fff; position: relative; text-align: left; }
@@ -1683,7 +1720,7 @@
                 <h3>Your tools this week</h3>
                 <span class="badge">2 of 5 tried</span>
                 <span class="sp"></span>
-                <button type="button" class="week-tools-close" data-dismiss-week-tools aria-label="Dismiss">×</button>
+                <button type="button" class="week-tools-close" data-dismiss-week-tools aria-label="Dismiss"></button>
               </div>
               <div class="week-cards">
                 <div class="week-card tried" data-tool="doc"><span class="done" aria-label="Tried">✓</span><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Lecture 1 summary</small><button type="button" class="go-link" data-action="open">Open<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
@@ -1824,7 +1861,7 @@
                   <h3>Your tools this week</h3>
                   <span class="badge">2 of 5 tried</span>
                   <span class="sp"></span>
-                  <button type="button" class="week-tools-close" data-dismiss-week-tools aria-label="Dismiss">×</button>
+                  <button type="button" class="week-tools-close" data-dismiss-week-tools aria-label="Dismiss"></button>
                 </div>
                 <div class="week-cards">
                   <div class="week-card tried" data-tool="doc"><span class="done" aria-label="Tried">✓</span><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Lecture 1 summary</small><button type="button" class="go-link" data-action="open">Open<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
