@@ -1205,14 +1205,7 @@
   #tutorialTrySpot { display: flex; flex-direction: column; gap: 10px; }
   .tutorial-spot-target { position: relative; z-index: 14; }
 
-  .presenter-tutorial-cta { flex: none; background: var(--green); color: #fff; font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 999px; box-shadow: 0 2px 10px rgba(0,139,104,.25); margin-right: 4px; }
-  .presenter-tutorial-cta:hover { background: var(--green-dark); }
-  .presenter .seg.screen { margin-left: 8px; }
-  .presenter .seg.panel { margin-left: 4px; }
-  .presenter .seg.screen button[data-screen="welcome"],
-  .presenter .seg.screen button[data-screen="tutorial"] { background: var(--green-wash); color: var(--green-dark); box-shadow: inset 0 0 0 1.5px rgba(0,139,104,.45); font-weight: 700; }
-  .presenter .seg.screen button[data-screen="welcome"][aria-pressed="true"],
-  .presenter .seg.screen button[data-screen="tutorial"][aria-pressed="true"] { background: var(--green); color: #fff; box-shadow: none; }
+  .presenter .seg.screen { margin-left: 4px; }
   #tail-welcome.screen.on { gap: 16px; }
   #tail-welcome .pickup + .two { margin-top: -4px; }
   .pickup .badge.course,
@@ -1441,24 +1434,13 @@
 <body>
 
 <div class="presenter">
-  <h1>Home v2 · B · H2 — eng handoff</h1>
-  <button type="button" class="tutorial-cta" id="presenterTutorialBtn" data-action="open-tutorial" aria-pressed="false">Tutorial</button>
-  <div class="seg screen" role="group" aria-label="Screen">
-    <button type="button" data-screen="home" aria-pressed="false">Default home</button>
-    <button type="button" data-screen="welcome" aria-pressed="true">Welcome back</button>
-    <button type="button" data-screen="tutorial" aria-pressed="false">Interactive tutorial</button>
-    <button type="button" data-screen="handoff" aria-pressed="false">Post-tutorial · 8554</button>
+  <h1>Home v2</h1>
+  <div class="seg screen" role="group" aria-label="主页情境">
+    <button type="button" data-screen="tutorial" aria-pressed="false">第一次来</button>
+    <button type="button" data-screen="welcome" aria-pressed="true">过几天来</button>
+    <button type="button" data-screen="home" aria-pressed="false">平时在用</button>
   </div>
-  <div class="seg" role="group" aria-label="Twin state">
-    <button type="button" data-goto="citta" aria-pressed="true">Citta</button>
-    <button type="button" data-goto="open" aria-pressed="false">Switcher open</button>
-    <button type="button" data-goto="twin" aria-pressed="false">Twin switched</button>
-  </div>
-  <div class="seg panel" role="group" aria-label="Citta panel">
-    <button type="button" data-panel="dock" aria-pressed="false">Dock</button>
-    <button type="button" data-panel="expanded" aria-pressed="false">Citta expanded</button>
-  </div>
-  <span class="hint">Deep links: <code>#screen=welcome</code> · <code>#screen=tutorial</code> (8541) · <code>#screen=handoff&amp;tip=1</code> (8554) · <code>#citta=expanded</code></span>
+  <span class="hint">切换三种主页：首次引导 · 回来后 · 日常使用</span>
 </div>
 
 <div class="fs-root" id="fsRoot">
@@ -3950,7 +3932,12 @@
     }
     document.querySelectorAll('.hub > .screen[data-screen]').forEach((el) => el.classList.toggle('on', el.dataset.screen === next));
     document.querySelectorAll('.hub > .screen[data-tail]').forEach((el) => el.classList.toggle('on', el.dataset.tail === next));
-    document.querySelectorAll('.presenter [data-screen]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.screen === next)));
+    // Scenario bar: handoff (post-tutorial) still counts as「第一次来」.
+    document.querySelectorAll('.presenter [data-screen]').forEach((b) => {
+      const s = b.dataset.screen;
+      const on = s === next || (next === 'handoff' && s === 'tutorial');
+      b.setAttribute('aria-pressed', String(on));
+    });
     const composerMode = next === 'tutorial' ? 'tutorial' : (next === 'handoff' ? 'handoff' : (next === 'welcome' ? 'welcome' : 'default'));
     setComposerMode(composerMode);
     if (next === 'welcome' || next === 'tutorial') setComposerToolSelection('doc');
