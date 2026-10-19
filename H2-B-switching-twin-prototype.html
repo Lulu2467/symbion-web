@@ -750,7 +750,7 @@
   .frame.tutorial-on .dock { display: none !important; }
   .frame.tutorial-doc-on .tutorial-spotlight { display: none !important; }
 
-  .tutorial-doc-view { flex: 1; min-width: 0; display: none; flex-direction: column; background: #fff; min-height: 860px; }
+  .tutorial-doc-view { flex: 1; min-width: 0; display: none; flex-direction: column; background: #fff; min-height: 860px; position: relative; }
   .frame.tutorial-doc-on .tutorial-doc-view { display: flex; }
   .frame.tutorial-doc-on .body > .main { display: none; }
   .doc-editor-bar { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; border-bottom: 1px solid var(--line); flex: none; }
@@ -770,16 +770,42 @@
   .doc-page .writing .caret { width: 2px; height: 18px; background: var(--green); border-radius: 1px; animation: doc-caret 1s step-end infinite; }
   @keyframes doc-caret { 50% { opacity: 0; } }
   .tutorial-doc-citta { width: 380px; flex: none; border-left: 1px solid var(--line); display: flex; flex-direction: column; background: #fff; position: relative; }
-  .tutorial-doc-citta .ph { display: flex; align-items: center; gap: 10px; padding: 20px 21px 12px; flex: none; }
-  .tutorial-doc-citta .ph b { font-size: 16px; font-weight: 600; }
-  .tutorial-doc-citta .doc-switch { margin-left: 4px; color: var(--green); display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; padding: 0; border-radius: 8px; border: 0; background: transparent; cursor: pointer; }
+  .tutorial-doc-citta.is-twin { background: var(--green-wash); }
+  .tutorial-doc-citta .ph { display: flex; align-items: center; gap: 10px; padding: 20px 21px 12px; flex: none; width: fit-content; max-width: calc(100% - 42px); box-sizing: border-box; }
+  .tutorial-doc-citta .ph.spot-ring { box-shadow: 0 0 0 2px #2c7a5f; border-radius: 10px; outline: 2px dashed #2c7a5f; outline-offset: 2px; }
+  .tutorial-doc-citta .ph b { font-size: 15px; font-weight: 600; }
+  .tutorial-doc-citta .ph .citta-av { width: 28px; height: 28px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; background: var(--green-tint); color: var(--green-dark); flex: none; overflow: hidden; }
+  .tutorial-doc-citta .ph .citta-av.citta-portrait { border-radius: 8px; background: transparent; }
+  .tutorial-doc-citta .ph .citta-av.twin-init { border-radius: 14px; }
+  .tutorial-doc-citta .doc-switch { margin-left: 4px; color: var(--muted); display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; padding: 0; border-radius: 8px; border: 0; background: transparent; cursor: pointer; }
+  .tutorial-doc-citta.is-twin .doc-switch { color: var(--muted); }
   /* Same solid-green highlight language as dialog primary buttons. */
   .tutorial-doc-citta .doc-switch.spot { background: var(--green); color: #fff; box-shadow: 0 0 0 3px rgba(0,139,104,.18); border-radius: 10px; }
-  .tutorial-doc-citta .msg { margin: 0 21px; padding: 15px 17px; background: var(--green-wash); border: 1px solid rgba(0,139,104,.12); border-radius: 14px; font-size: 13px; line-height: 1.45; color: var(--ink); }
+  .tutorial-doc-citta .twin-notice { margin: 0 21px 14px; padding: 12px 14px; background: #1f5c47; border-radius: 12px; display: flex; flex-direction: column; gap: 8px; flex: none; }
+  .tutorial-doc-citta .twin-notice b { font-size: 13px; font-weight: 600; color: #fff; }
+  .tutorial-doc-citta .twin-notice p { margin: 0; font-size: 12px; color: #d1e5db; line-height: 1.4; }
+  .tutorial-doc-citta .twin-notice .back-citta { align-self: flex-start; border: 1px solid rgba(255,255,255,.5); border-radius: 999px; padding: 5px 12px; background: transparent; color: #fff; font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
+  .tutorial-doc-citta .twin-notice .back-citta:hover { background: rgba(255,255,255,.08); }
+  .tutorial-doc-citta .msg { margin: 0 21px; padding: 14px 16px; background: var(--green-wash); border: 1px solid rgba(0,139,104,.12); border-radius: 12px; font-size: 14px; line-height: 1.45; color: var(--ink); }
+  .tutorial-doc-citta.is-twin .msg { background: #fff; border-color: var(--line); }
   .tutorial-doc-citta .doc-prog { margin: 14px 21px 0; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
-  .tutorial-doc-citta .doc-prog span { display: block; height: 6px; width: 60%; background: var(--green); border-radius: 3px; }
-  .tutorial-doc-citta .learn-tip { margin: 14px 21px 0; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); font-size: 12px; line-height: 1.45; color: var(--muted); }
+  .tutorial-doc-citta .doc-prog span { display: block; height: 6px; width: 60%; background: var(--green); border-radius: 3px; transition: width .35s ease; }
+  .tutorial-doc-citta.is-twin .doc-prog span { width: 100%; background: #2c7a5f; }
+  .tutorial-doc-citta .learn-tip { margin: 14px 21px 0; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); font-size: 13px; line-height: 1.45; color: var(--muted); }
+  .tutorial-doc-citta.is-twin .learn-tip { background: var(--green-tint); border: none; color: #1f5c47; }
   .tutorial-doc-citta .learn-tip .k { display: block; font-size: 10px; font-weight: 700; letter-spacing: .08em; color: var(--faint); margin-bottom: 6px; }
+  .tutorial-doc-citta.is-twin .learn-tip .k { color: #1f5c47; }
+  .doc-page.twin-done .writing { display: none; }
+  .doc-page.twin-done h2.pending { color: var(--faint); }
+  .doc-next-toast { position: absolute; left: 301px; bottom: 36px; z-index: 20; display: none; align-items: center; gap: 16px; padding: 14px 16px 14px 20px; background: var(--toast); color: #fff; border-radius: 14px; box-shadow: 0 12px 32px -4px rgba(28,31,28,.16); max-width: calc(100% - 420px); }
+  .doc-next-toast.show { display: flex; }
+  .doc-next-toast .t { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .doc-next-toast .t b { font-size: 14px; font-weight: 600; white-space: nowrap; }
+  .doc-next-toast .t span { font-size: 13px; color: #c9cec9; white-space: nowrap; }
+  .doc-next-toast .pri { background: #fff; color: var(--ink); font-size: 13px; font-weight: 600; padding: 9px 16px; border-radius: 10px; border: 0; cursor: pointer; flex: none; }
+  .doc-next-toast .pri:hover { filter: brightness(.97); }
+  .doc-next-toast .sec { background: transparent; color: #c9cec9; font-size: 13px; font-weight: 500; border: 0; cursor: pointer; padding: 8px 4px; flex: none; }
+  .doc-next-toast .sec:hover { color: #fff; }
   .tutorial-doc-switcher { display: none; margin: 12px 21px 0; padding: 9px; border: 1px solid var(--line); border-radius: 14px; background: #fff; box-shadow: 0 12px 32px rgba(28,31,29,.12); }
   .tutorial-doc-switcher.open { display: flex; flex-direction: column; gap: 4px; }
   .tutorial-doc-switcher .lbl { font-size: 10px; font-weight: 700; letter-spacing: .06em; color: var(--faint); padding: 2px 8px 8px; }
@@ -1487,20 +1513,25 @@
               <h2>2 The phase diagram</h2>
               <span class="ghost-line"></span><span class="ghost-line"></span><span class="ghost-line short"></span>
               <h2>3 How we detect it</h2>
-              <div class="writing" aria-label="Citta is writing"><span class="bar"></span><span class="caret"></span></div>
-              <h2>4 Key formulas</h2>
-              <h2>5 Check yourself — 3 questions</h2>
+              <div class="writing" id="tutorialDocWriting" aria-label="Citta is writing"><span class="bar"></span><span class="caret"></span></div>
+              <h2 class="sec-later" data-sec="4">4 Key formulas</h2>
+              <h2 class="sec-later" data-sec="5">5 Check yourself — 3 questions</h2>
             </article>
-            <aside class="tutorial-doc-citta" aria-label="Citta">
-              <div class="ph">
-                <span class="citta-av citta-portrait" aria-hidden="true"><img src="assets/citta-avatar.png" width="28" height="28" alt=""></span>
-                <b>Citta</b>
+            <aside class="tutorial-doc-citta" id="tutorialDocCitta" aria-label="Citta">
+              <div class="ph" id="tutorialDocPh">
+                <span class="citta-av citta-portrait" id="tutorialDocAv" aria-hidden="true"><img src="assets/citta-avatar.png" width="28" height="28" alt=""></span>
+                <b id="tutorialDocName">Citta</b>
                 <button type="button" class="doc-switch" id="tutorialDocSwitch" aria-label="Switch who helps with this task" aria-expanded="false">
                   <svg class="switch-ico" width="14" height="14" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M96 416h832c0.32 0 0.576-0.192 0.896-0.192a30.656 30.656 0 0 0 30.976-30.976c-0.064-0.256 0.128-0.512 0.128-0.832a31.424 31.424 0 0 0-14.912-26.368l-188.48-188.48a30.72 30.72 0 1 0-43.456 43.456L852.544 352H96a32 32 0 0 0 0 64z m832 192H96c-0.32 0-0.576 0.192-0.896 0.192a30.528 30.528 0 0 0-30.976 30.976c0.064 0.256-0.128 0.512-0.128 0.832 0 11.264 6.144 20.672 14.912 26.368l188.48 188.48a30.72 30.72 0 1 0 43.456-43.456L171.456 672H928a32 32 0 0 0 0-64z" fill="currentColor"/></svg>
                 </button>
               </div>
-              <p class="msg">Writing your summary from Prof. Roland’s Lecture 1 slides. Section 3 of 5…</p>
-              <div class="doc-prog" aria-hidden="true"><span></span></div>
+              <div class="twin-notice" id="tutorialTwinNotice" hidden>
+                <b id="tutorialTwinNoticeTitle">Now working with Prof. Roland’s twin</b>
+                <p>Same file, same chat history — nothing was lost.</p>
+                <button type="button" class="back-citta" id="tutorialBackToCitta">↩ Back to Citta</button>
+              </div>
+              <p class="msg" id="tutorialDocMsg">Writing your summary from Prof. Roland’s Lecture 1 slides. Section 3 of 5…</p>
+              <div class="doc-prog" id="tutorialDocProg" aria-hidden="true"><span></span></div>
               <div class="learn-tip"><span class="k">TIP</span>Click any line to rewrite it, or ask me here: “add a diagram”, “make it simpler”.</div>
               <div class="tutorial-doc-switcher" id="tutorialDocSwitcher" role="menu" aria-label="Who helps with this task">
                 <div class="lbl">WHO HELPS WITH THIS TASK</div>
@@ -1511,7 +1542,12 @@
               </div>
             </aside>
           </div>
-          <p class="proto-rule">Figma 8541 · 1b — Doc opens while Citta writes; the file stays open if you switch twins mid-task.</p>
+          <div class="doc-next-toast" id="tutorialDocNextToast" role="status" hidden>
+            <div class="t"><b>Summary done in 48s ✓</b><span>Turn it into 6 study slides in Deck?</span></div>
+            <button type="button" class="pri" id="tutorialMakeDeck">Make the Deck</button>
+            <button type="button" class="sec" id="tutorialNotNow">Not now</button>
+          </div>
+          <p class="proto-rule" id="tutorialDocProtoRule">Figma 8541 · 1b — Doc opens while Citta writes; the file stays open if you switch twins mid-task.</p>
         </div>
       </div>
 
@@ -1909,7 +1945,8 @@
   function syncHash() {
     const q = new URLSearchParams();
     if (screen !== 'home') q.set('screen', screen);
-    if (screen === 'tutorial' && tutorialDocPhase) q.set('tutorial', '1b');
+    if (screen === 'tutorial' && tutorialDocPhase === 'twin-finish') q.set('tutorial', '1d');
+    else if (screen === 'tutorial' && tutorialDocPhase) q.set('tutorial', '1b');
     else if (screen === 'tutorial' && tutorialStep > 1) q.set('tutorial', String(tutorialStep));
     if (cittaExpanded) q.set('citta', 'expanded');
     if (postTutorialTipPending && screen === 'handoff' && !newTipSeen) q.set('tip', '1');
@@ -2313,6 +2350,37 @@
     return null;
   }
 
+  function resetTutorialDocCittaUi() {
+    const panel = $('tutorialDocCitta');
+    panel?.classList.remove('is-twin');
+    $('tutorialDocPh')?.classList.remove('spot-ring');
+    const av = $('tutorialDocAv');
+    if (av) {
+      av.className = 'citta-av citta-portrait';
+      av.innerHTML = `<img src="${CITTA_AVATAR_SRC}" width="28" height="28" alt="">`;
+    }
+    const name = $('tutorialDocName');
+    if (name) name.textContent = 'Citta';
+    const notice = $('tutorialTwinNotice');
+    if (notice) notice.hidden = true;
+    const msg = $('tutorialDocMsg');
+    if (msg) msg.textContent = 'Writing your summary from Prof. Roland’s Lecture 1 slides. Section 3 of 5…';
+    const prog = $('tutorialDocProg')?.querySelector('span');
+    if (prog) prog.style.width = '';
+    const writing = $('tutorialDocWriting');
+    if (writing) writing.hidden = false;
+    tutorialDocView?.querySelector('.doc-page')?.classList.remove('twin-done');
+    tutorialDocView?.querySelectorAll('.sec-later').forEach((h) => h.classList.remove('pending'));
+    const nextToast = $('tutorialDocNextToast');
+    if (nextToast) {
+      nextToast.hidden = true;
+      nextToast.classList.remove('show');
+    }
+    const rule = $('tutorialDocProtoRule');
+    if (rule) rule.textContent = 'Figma 8541 · 1b — Doc opens while Citta writes; the file stays open if you switch twins mid-task.';
+    panel?.setAttribute('aria-label', 'Citta');
+  }
+
   function exitTutorialDoc() {
     tutorialDocPhase = null;
     frame.classList.remove('tutorial-doc-on');
@@ -2324,6 +2392,7 @@
     $('tutorialDocSwitch')?.classList.remove('spot');
     $('tutorialDocSwitch')?.setAttribute('aria-expanded', 'false');
     coach.classList.remove('switch-coach');
+    resetTutorialDocCittaUi();
   }
 
   function enterTutorialDoc() {
@@ -2331,6 +2400,7 @@
     frame.classList.add('tutorial-doc-on', 'tutorial-on');
     clearTutorialSpotlight();
     frame.classList.remove('dim');
+    resetTutorialDocCittaUi();
     if (tutorialDocView) {
       tutorialDocView.hidden = false;
       tutorialDocView.setAttribute('aria-hidden', 'false');
@@ -2340,6 +2410,73 @@
     renderCoach();
     fit();
     afterTutorialChrome(() => scrollTutorialFocusIntoView({ smooth: true }));
+  }
+
+  function enterTutorialDocTwinFinish(key = 'roland') {
+    const ai = AIS[key] || AIS.roland;
+    if (!tutorialDocView || tutorialDocView.hidden) enterTutorialDoc();
+    tutorialDocPhase = 'twin-finish';
+    frame.classList.add('tutorial-doc-on', 'tutorial-on');
+    setAI(key, { announce: false });
+    setCittaExpanded(false);
+    setMenu(false);
+    $('tutorialDocSwitcher')?.classList.remove('open');
+    $('tutorialDocSwitch')?.classList.remove('spot');
+    $('tutorialDocSwitch')?.setAttribute('aria-expanded', 'false');
+    coach.classList.remove('on', 'switch-coach');
+    setCoachScrim(false);
+    clearTutorialSpotlight();
+
+    const panel = $('tutorialDocCitta');
+    panel?.classList.add('is-twin');
+    panel?.setAttribute('aria-label', ai.name);
+    $('tutorialDocPh')?.classList.add('spot-ring');
+    const av = $('tutorialDocAv');
+    if (av) {
+      av.className = 'citta-av twin-init';
+      av.textContent = ai.initials || 'GR';
+    }
+    const name = $('tutorialDocName');
+    if (name) name.textContent = ai.name;
+    const notice = $('tutorialTwinNotice');
+    if (notice) {
+      notice.hidden = false;
+      const title = $('tutorialTwinNoticeTitle');
+      if (title) title.textContent = `Now working with ${ai.name}`;
+    }
+    const msg = $('tutorialDocMsg');
+    if (msg) {
+      msg.textContent = key === 'lr'
+        ? 'Done. I drafted sections 4–5 in a lab-report voice — skim the formulas, then ask me to tighten anything.'
+        : 'Done. I wrote sections 4–5 using the derivations from my lectures — check the formulas in section 4.';
+    }
+    const prog = $('tutorialDocProg')?.querySelector('span');
+    if (prog) prog.style.width = '100%';
+    const writing = $('tutorialDocWriting');
+    if (writing) writing.hidden = true;
+    tutorialDocView?.querySelector('.doc-page')?.classList.add('twin-done');
+    tutorialDocView?.querySelectorAll('.sec-later').forEach((h) => h.classList.add('pending'));
+    const nextToast = $('tutorialDocNextToast');
+    if (nextToast) {
+      nextToast.hidden = false;
+      nextToast.classList.add('show');
+    }
+    const rule = $('tutorialDocProtoRule');
+    if (rule) rule.textContent = 'Figma 122:8048 · 1d — Twin finishes the same Doc; chat history and file stay.';
+    syncPresenter('twin');
+    syncHash();
+    fit();
+  }
+
+  function restoreTutorialDocCitta() {
+    setAI('citta', { announce: false });
+    syncPresenter('citta');
+    tutorialDocPhase = 'doc';
+    resetTutorialDocCittaUi();
+    $('tutorialDocSwitcher')?.classList.remove('open');
+    renderDocSwitchCoach();
+    syncHash();
+    fit();
   }
 
   function finishTutorialDocToTryTools() {
@@ -2394,6 +2531,14 @@
       clearTutorialSpotlight();
       frame.classList.remove('tutorial-on', 'tutorial-spot-composer', 'tutorial-spot-try', 'tutorial-spot-picker', 'dim');
       document.querySelectorAll('.spot').forEach((el) => el.classList.remove('spot'));
+      mountCoachForViewport(false);
+      fit();
+      return;
+    }
+    if (screen === 'tutorial' && tutorialStep === 1 && tutorialDocPhase === 'twin-finish') {
+      coach.classList.remove('on', 'switch-coach');
+      setCoachScrim(false);
+      clearTutorialSpotlight();
       mountCoachForViewport(false);
       fit();
       return;
@@ -3276,6 +3421,10 @@
     if (s === 'tutorial') {
       const raw = q.get('tutorial') || '1';
       if (raw === '1b') startTutorial({ step: 1, docPhase: true });
+      else if (raw === '1d') {
+        startTutorial({ step: 1, docPhase: true });
+        enterTutorialDocTwinFinish('roland');
+      }
       else startTutorial({ step });
     } else {
       setScreen(s, { step, afterTutorial: s === 'handoff' && showTip, showTip });
@@ -3286,8 +3435,8 @@
 
   $('tutorialDocSwitch')?.addEventListener('click', (e) => {
     e.stopPropagation();
-    if (tutorialDocPhase !== 'doc' && tutorialDocPhase !== 'switch-open') return;
-    tutorialDocPhase = 'switch-open';
+    if (tutorialDocPhase !== 'doc' && tutorialDocPhase !== 'switch-open' && tutorialDocPhase !== 'twin-finish') return;
+    tutorialDocPhase = tutorialDocPhase === 'twin-finish' ? 'twin-finish' : 'switch-open';
     $('tutorialDocSwitcher')?.classList.add('open');
     $('tutorialDocSwitch')?.setAttribute('aria-expanded', 'true');
     coach.classList.remove('on');
@@ -3297,9 +3446,32 @@
     row.addEventListener('click', () => {
       $('tutorialDocSwitcher')?.querySelectorAll('.si-row').forEach((r) => r.classList.toggle('on', r === row));
       const ai = row.dataset.ai;
-      if (ai && AIS[ai]) setAI(ai, { announce: false });
-      finishTutorialDocToTryTools();
+      if (!ai || !AIS[ai]) return;
+      if (ai === 'citta') {
+        if (tutorialDocPhase === 'twin-finish') restoreTutorialDocCitta();
+        else {
+          setAI('citta', { announce: false });
+          $('tutorialDocSwitcher')?.classList.remove('open');
+          $('tutorialDocSwitch')?.setAttribute('aria-expanded', 'false');
+          tutorialDocPhase = 'doc';
+          renderDocSwitchCoach();
+        }
+        return;
+      }
+      enterTutorialDocTwinFinish(ai);
     });
+  });
+  $('tutorialBackToCitta')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    restoreTutorialDocCitta();
+  });
+  $('tutorialMakeDeck')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    finishTutorialDocToTryTools();
+  });
+  $('tutorialNotNow')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    finishTutorialDocToTryTools();
   });
 
   // Scale the 1440px Figma frame to fit the window.
