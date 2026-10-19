@@ -514,8 +514,8 @@
   .pick-card .col { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
   .pick-card .t { font-size: 15px; font-weight: 400; color: var(--ink); }
   .pick-card .meta { display: flex; gap: 6px; align-items: center; flex-wrap: nowrap; white-space: nowrap; font-size: 12px; color: var(--faint); min-width: 0; }
-  .pick-card .btn { display: inline-flex; align-items: center; gap: 6px; background: var(--green-tint); border: none; border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--green-dark); white-space: nowrap; flex: none; }
-  .pick-card .btn .spark-icon { width: 12px; height: 12px; color: var(--green-dark); }
+  .pick-card .btn { display: inline-flex; align-items: center; gap: 6px; background: var(--green-tint); border: none; border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; color: #1f5c47; white-space: nowrap; flex: none; }
+  .pick-card .btn .spark-icon { width: 12px; height: 12px; color: #1f5c47; }
   .activity.cosmos-compact { border: 1px solid var(--line); border-radius: 16px; padding: 20px; gap: 12px; background: #fff; }
   .activity.cosmos-compact > p { margin: 0; font-size: 13px; line-height: 1.4; color: var(--muted); }
   .activity.cosmos-compact .cosmos-see { align-self: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--ink); cursor: pointer; }
@@ -802,8 +802,14 @@
   .presenter-tutorial-cta:hover { background: var(--green-dark); }
   .presenter .seg.screen { margin-left: 8px; }
   .presenter .seg.panel { margin-left: 4px; }
+  .presenter .seg.screen button[data-screen="welcome"],
   .presenter .seg.screen button[data-screen="tutorial"] { background: var(--green-wash); color: var(--green-dark); box-shadow: inset 0 0 0 1.5px rgba(0,139,104,.45); font-weight: 700; }
+  .presenter .seg.screen button[data-screen="welcome"][aria-pressed="true"],
   .presenter .seg.screen button[data-screen="tutorial"][aria-pressed="true"] { background: var(--green); color: #fff; box-shadow: none; }
+  #tail-welcome.screen.on { gap: 16px; }
+  #tail-welcome .pickup + .two { margin-top: -4px; }
+  .pickup .badge.course,
+  .pickup .badge.email { background: #fbf1de; color: #9a5b07; }
 
   .tutorial-entry { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; padding: 12px 16px; border-radius: 14px; border: 1.5px solid rgba(0,139,104,.35); background: var(--green-wash); line-height: 1.4; }
   .tutorial-entry .k { font-size: 10px; font-weight: 700; letter-spacing: .06em; color: var(--green-dark); background: var(--green-tint); padding: 3px 8px; border-radius: 999px; flex: none; }
@@ -907,9 +913,7 @@
   <div class="seg screen" role="group" aria-label="Screen">
     <button type="button" data-screen="home" aria-pressed="true">Default home</button>
     <button type="button" data-screen="welcome" aria-pressed="false">Welcome back</button>
-    <span class="hint" style="font-size:12px;color:var(--faint);margin-left:8px">· #screen=welcome</span>
     <button type="button" data-screen="tutorial" aria-pressed="false">Interactive tutorial</button>
-    <span class="hint" style="font-size:12px;color:var(--faint);margin-left:4px">· #screen=tutorial</span>
     <button type="button" data-screen="handoff" aria-pressed="false">Post-tutorial · 8554</button>
   </div>
   <div class="seg" role="group" aria-label="Twin state">
@@ -921,7 +925,7 @@
     <button type="button" data-panel="dock" aria-pressed="false">Dock</button>
     <button type="button" data-panel="expanded" aria-pressed="false">Citta expanded</button>
   </div>
-  <span class="hint">Deep links: <code>#screen=tutorial</code> (Figma 8541) · <code>#screen=handoff&amp;tip=1</code> (8554) · <code>#citta=expanded</code></span>
+  <span class="hint">Deep links: <code>#screen=welcome</code> · <code>#screen=tutorial</code> (8541) · <code>#screen=handoff&amp;tip=1</code> (8554) · <code>#citta=expanded</code></span>
 </div>
 
 <div class="fs-root" id="fsRoot">
@@ -1128,8 +1132,9 @@
               <div class="foot" id="composerFoot">
                 <span class="k">CONTINUE WITH</span>
                 <div class="wrap" id="composerContinue">
-                  <button type="button" class="chip" data-continue-tool="deck"><span class="ic ico-book" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M139.661795 93.098382c-25.742144 0-46.563413 20.82127-46.563413 46.534969v651.631787c0 25.713699 20.82127 46.534969 46.534969 46.534969h176.355017c45.937637 0 90.851278 13.624847 129.080494 39.110991L511.998436 921.511851l66.929573-44.600753a232.731733 232.731733 0 0 1 129.023606-39.110991h176.411905c25.713699 0 46.534969-20.82127 46.534969-46.534969V139.633351c0-25.713699-20.82127-46.534969-46.534969-46.534969h-176.355017c-19.342163 0-48.753629 8.362641-73.557108 22.812375-12.003519 6.968868-20.650604 14.079957-25.770588 19.996383a26.168809 26.168809 0 0 0-3.726211 5.262206v556.99741a46.534969 46.534969 0 0 1-93.098382 0V139.661795c0-26.993695 12.942183-49.066517 26.396364-64.597135a194.929182 194.929182 0 0 1 49.493182-39.651435C623.016763 14.904843 668.442402 0 707.980059 0h176.355017A139.661795 139.661795 0 0 1 1023.996871 139.661795v651.603343a139.661795 139.661795 0 0 1-139.661795 139.661795h-176.355017a139.661795 139.661795 0 0 0-77.425541 23.438151l-92.728606 61.809589a46.534969 46.534969 0 0 1-51.654953 0l-92.728606-61.809589a139.661795 139.661795 0 0 0-77.453985-23.466595h-176.355017A139.661795 139.661795 0 0 1 0 791.265138V139.633351A139.661795 139.661795 0 0 1 139.661795 0h176.355017c45.909193 0 90.822834 13.624847 129.05205 39.110992a46.534969 46.534969 0 0 1-51.626509 77.425541 139.661795 139.661795 0 0 0-77.453985-23.438151h-176.355017z" fill="currentColor"/><path d="M170.666145 360.304677C170.666145 334.135868 191.032305 312.887933 216.177117 312.887933h136.532916c25.144812 0 45.510972 21.219491 45.510972 47.416744 0 26.168809-20.36616 47.3883-45.510972 47.388299H216.177117c-25.144812 0-45.510972-21.219491-45.510972-47.388299z m45.510972 189.610087c0-12.572406 4.807096-24.632814 13.340404-33.507453 8.533307-8.903084 20.110161-13.880846 32.170568-13.880846h91.021944c25.144812 0 45.510972 21.219491 45.510972 47.388299 0 26.168809-20.36616 47.416744-45.510972 47.416744H261.688089c-25.144812 0-45.510972-21.219491-45.510972-47.416744z" fill="currentColor"/></svg></span><b>Lecture 4 summary</b><span class="pct"><span class="bar"><span style="width:13px"></span></span>60%</span><span class="ar ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
                   <button type="button" class="chip" data-continue-tool="doc"><span class="ic ico-report" aria-hidden="true"><svg viewBox="145 90 736 848" xmlns="http://www.w3.org/2000/svg"><path d="M728.3 928.2H297.9c-84.2 0-152.8-68.5-152.8-152.8V329.1c0-84.2 68.5-152.8 152.8-152.8H365v60h-67.1c-51.2 0-92.8 41.6-92.8 92.8v446.3c0 51.2 41.6 92.8 92.8 92.8h430.4c51.2 0 92.8-41.6 92.8-92.8V329.1c0-51.2-41.6-92.8-92.8-92.8H661v-60h67.3c84.2 0 152.8 68.5 152.8 152.8v446.3c0 84.3-68.6 152.8-152.8 152.8z" fill="currentColor"/><path d="M593.6 308.1h-161c-49.3 0-89.4-40.1-89.4-89.4v-31.4c0-49.3 40.1-89.4 89.4-89.4h161c49.3 0 89.4 40.1 89.4 89.4v31.4c0 49.3-40.1 89.4-89.4 89.4zM432.6 158c-16.2 0-29.4 13.2-29.4 29.4v31.4c0 16.2 13.2 29.4 29.4 29.4h161c16.2 0 29.4-13.2 29.4-29.4v-31.4c0-16.2-13.2-29.4-29.4-29.4h-161z" fill="currentColor"/><path d="M511.3 477.1H320.1c-16.6 0-30-13.4-30-30s13.4-30 30-30h191.3c16.6 0 30 13.4 30 30s-13.5 30-30.1 30zM576.1 604.1h-256c-16.6 0-30-13.4-30-30s13.4-30 30-30h256.1c16.6 0 30 13.4 30 30s-13.5 30-30.1 30zM640.1 732.1h-320c-16.6 0-30-13.4-30-30s13.4-30 30-30h320.1c16.6 0 30 13.4 30 30s-13.5 30-30.1 30z" fill="currentColor"/></svg></span><b>Reading report — QGP</b><span class="pct"><span class="bar"><span style="width:12px"></span></span>55%</span><span class="ar ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
+                  <button type="button" class="chip" data-continue-tool="deck"><span class="ic ico-book" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M139.661795 93.098382c-25.742144 0-46.563413 20.82127-46.563413 46.534969v651.631787c0 25.713699 20.82127 46.534969 46.534969 46.534969h176.355017c45.937637 0 90.851278 13.624847 129.080494 39.110991L511.998436 921.511851l66.929573-44.600753a232.731733 232.731733 0 0 1 129.023606-39.110991h176.411905c25.713699 0 46.534969-20.82127 46.534969-46.534969V139.633351c0-25.713699-20.82127-46.534969-46.534969-46.534969h-176.355017c-19.342163 0-48.753629 8.362641-73.557108 22.812375-12.003519 6.968868-20.650604 14.079957-25.770588 19.996383a26.168809 26.168809 0 0 0-3.726211 5.262206v556.99741a46.534969 46.534969 0 0 1-93.098382 0V139.661795c0-26.993695 12.942183-49.066517 26.396364-64.597135a194.929182 194.929182 0 0 1 49.493182-39.651435C623.016763 14.904843 668.442402 0 707.980059 0h176.355017A139.661795 139.661795 0 0 1 1023.996871 139.661795v651.603343a139.661795 139.661795 0 0 1-139.661795 139.661795h-176.355017a139.661795 139.661795 0 0 0-77.425541 23.438151l-92.728606 61.809589a46.534969 46.534969 0 0 1-51.654953 0l-92.728606-61.809589a139.661795 139.661795 0 0 0-77.453985-23.466595h-176.355017A139.661795 139.661795 0 0 1 0 791.265138V139.633351A139.661795 139.661795 0 0 1 139.661795 0h176.355017c45.909193 0 90.822834 13.624847 129.05205 39.110992a46.534969 46.534969 0 0 1-51.626509 77.425541 139.661795 139.661795 0 0 0-77.453985-23.438151h-176.355017z" fill="currentColor"/><path d="M170.666145 360.304677C170.666145 334.135868 191.032305 312.887933 216.177117 312.887933h136.532916c25.144812 0 45.510972 21.219491 45.510972 47.416744 0 26.168809-20.36616 47.3883-45.510972 47.388299H216.177117c-25.144812 0-45.510972-21.219491-45.510972-47.388299z m45.510972 189.610087c0-12.572406 4.807096-24.632814 13.340404-33.507453 8.533307-8.903084 20.110161-13.880846 32.170568-13.880846h91.021944c25.144812 0 45.510972 21.219491 45.510972 47.388299 0 26.168809-20.36616 47.416744-45.510972 47.416744H261.688089c-25.144812 0-45.510972-21.219491-45.510972-47.416744z" fill="currentColor"/></svg></span><b>Lecture 4 summary</b><span class="pct"><span class="bar"><span style="width:13px"></span></span>60%</span><span class="ar ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
+                  <button type="button" class="chip" data-continue-tool="numbers" data-continue-for="welcome" hidden><span class="ic ico-numbers" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M740.266667 128a36.266667 36.266667 0 0 0-36.266667 36.266667V763.733333c0 20.053333 16.213333 36.266667 36.266667 36.266667h119.466666c20.053333 0 36.266667-16.213333 36.266667-36.266667V164.266667a36.266667 36.266667 0 0 0-36.266667-36.266667h-119.466666zM768 736V192h64v544H768z" fill="currentColor"/><path d="M160 832a32 32 0 0 0 0 64h704a32 32 0 0 0 0-64H160z" fill="currentColor"/><path d="M416 345.6c0-20.053333 16.213333-36.266667 36.266667-36.266667h119.466666c20.053333 0 36.266667 16.213333 36.266667 36.266667v418.133333c0 20.053333-16.213333 36.266667-36.266667 36.266667h-119.466666a36.266667 36.266667 0 0 1-36.266667-36.266667V345.6z m64 27.733333v362.666667h64v-362.666667h-64zM164.266667 480a36.266667 36.266667 0 0 0-36.266667 36.266667v247.466666c0 20.053333 16.213333 36.266667 36.266667 36.266667h119.466666c20.053333 0 36.266667-16.213333 36.266667-36.266667v-247.466666a36.266667 36.266667 0 0 0-36.266667-36.266667h-119.466666z m27.733333 256v-192H256v192H192z" fill="currentColor"/></svg></span><b>Lab 3</b><span class="pct"><span class="bar"><span style="width:7px"></span></span>30%</span><span class="ar ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
                   <button type="button" class="link-btn">All files<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
                 </div>
                 <div class="wrap suggest-chips" id="composerSuggest" hidden>
@@ -1266,25 +1271,6 @@
             </div>
 
             <div class="screen" id="tail-welcome" data-tail="welcome">
-              <section class="discover">
-                <span class="k">Discover in</span>
-                <button type="button" class="interest on" aria-pressed="true">Physics &amp; Space</button>
-                <button type="button" class="interest" aria-pressed="false">AI &amp; Data</button>
-                <button type="button" class="interest" aria-pressed="false">Cosmology</button>
-                <button type="button" class="interest add" aria-label="Add interest">+</button>
-                <span class="vr"></span>
-                <div class="discover-scroll-wrap">
-                <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
-                  <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag">✦ Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi">+ Add SI</button></div>
-                  <div class="dcard"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag">✦ Twin</span><small>Climate maths · Columbia</small></div><button type="button" class="addsi">+ Add SI</button></div>
-                  <div class="dcard"><span class="dav agent">LR</span><div><span class="nm">Lab Report Coach</span><span class="tag agent">AI agent</span><small>Drafts in Doc</small></div><button type="button" class="addsi">+ Add SI</button></div>
-                  <div class="dcard"><span class="dav">KS</span><div><span class="nm">Katherine F. Smith</span><span class="tag">✦ Twin</span><small>Planetary health · Brown</small></div><button type="button" class="addsi">+ Add SI</button></div>
-                </div>
-                </div>
-                <button type="button" class="round discover-next" aria-label="Scroll discover cards"><svg class="chev-ico" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 3.25 10.75 8 6 12.75" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                <button type="button" class="browse-all" data-action="browse-discover" aria-label="Browse all"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M460.8 486.4 486.4 486.4 486.4 460.8 486.4 243.2C486.4 108.884349 377.51565 0 243.2 0 108.884349 0 0 108.884349 0 243.2 0 377.51565 108.884349 486.4 243.2 486.4L460.8 486.4ZM51.2 243.2C51.2 137.161328 137.161328 51.2 243.2 51.2 349.238671 51.2 435.2 137.161328 435.2 243.2L435.2 460.8 460.8 435.2 243.2 435.2C137.161328 435.2 51.2 349.238671 51.2 243.2ZM460.8 588.8 435.2 563.2 435.2 780.8C435.2 886.838671 349.238671 972.8 243.2 972.8 137.161328 972.8 51.2 886.838671 51.2 780.8 51.2 674.761329 137.161328 588.8 243.2 588.8L460.8 588.8ZM0 780.8C0 915.11565 108.884349 1024 243.2 1024 377.51565 1024 486.4 915.11565 486.4 780.8L486.4 563.2 486.4 537.6 460.8 537.6 243.2 537.6C108.884349 537.6 0 646.48435 0 780.8ZM563.2 435.2 588.8 460.8 588.8 243.2C588.8 137.161328 674.761329 51.2 780.8 51.2 886.838671 51.2 972.8 137.161328 972.8 243.2 972.8 349.238671 886.838671 435.2 780.8 435.2L563.2 435.2ZM1024 243.2C1024 108.884349 915.11565 0 780.8 0 646.48435 0 537.6 108.884349 537.6 243.2L537.6 460.8 537.6 486.4 563.2 486.4 780.8 486.4C915.11565 486.4 1024 377.51565 1024 243.2ZM1024 780.8C1024 646.48435 915.11565 537.6 780.8 537.6L563.2 537.6 537.6 537.6 537.6 563.2 537.6 780.8C537.6 915.11565 646.48435 1024 780.8 1024 818.513163 1024 855.051123 1015.390662 888.179087 999.065099 900.861235 992.815296 906.075682 977.467919 899.825882 964.785773 893.576079 952.103625 878.228702 946.889178 865.546554 953.138978 839.420429 966.014014 810.620764 972.8 780.8 972.8 674.761329 972.8 588.8 886.838671 588.8 780.8L588.8 563.2 563.2 588.8 780.8 588.8C886.838671 588.8 972.8 674.761329 972.8 780.8 972.8 799.469549 970.142607 817.755731 964.968006 835.279443 960.963957 848.839106 968.71031 863.07731 982.269973 867.081361 995.829636 871.085412 1010.06784 863.339057 1014.071891 849.779394 1020.63305 827.560122 1024 804.391296 1024 780.8Z" fill="currentColor"/></svg></button>
-              </section>
-
               <section class="pickup">
                 <div class="hdr">
                   <h3>Pick up where you left off</h3>
@@ -1311,6 +1297,25 @@
                     </aside>
                   </div>
                 </div>
+              </section>
+
+              <section class="discover">
+                <span class="k">Discover in</span>
+                <button type="button" class="interest on" aria-pressed="true">Physics &amp; Space</button>
+                <button type="button" class="interest" aria-pressed="false">AI &amp; Data</button>
+                <button type="button" class="interest" aria-pressed="false">Cosmology</button>
+                <button type="button" class="interest add" aria-label="Add interest">+</button>
+                <span class="vr"></span>
+                <div class="discover-scroll-wrap">
+                <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
+                  <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag">✦ Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                  <div class="dcard"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag">✦ Twin</span><small>Climate maths · Columbia</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                  <div class="dcard"><span class="dav agent">LR</span><div><span class="nm">Lab Report Coach</span><span class="tag agent">AI agent</span><small>Drafts in Doc</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                  <div class="dcard"><span class="dav">KS</span><div><span class="nm">Katherine F. Smith</span><span class="tag">✦ Twin</span><small>Planetary health · Brown</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                </div>
+                </div>
+                <button type="button" class="round discover-next" aria-label="Scroll discover cards"><svg class="chev-ico" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 3.25 10.75 8 6 12.75" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <button type="button" class="browse-all" data-action="browse-discover" aria-label="Browse all"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M460.8 486.4 486.4 486.4 486.4 460.8 486.4 243.2C486.4 108.884349 377.51565 0 243.2 0 108.884349 0 0 108.884349 0 243.2 0 377.51565 108.884349 486.4 243.2 486.4L460.8 486.4ZM51.2 243.2C51.2 137.161328 137.161328 51.2 243.2 51.2 349.238671 51.2 435.2 137.161328 435.2 243.2L435.2 460.8 460.8 435.2 243.2 435.2C137.161328 435.2 51.2 349.238671 51.2 243.2ZM460.8 588.8 435.2 563.2 435.2 780.8C435.2 886.838671 349.238671 972.8 243.2 972.8 137.161328 972.8 51.2 886.838671 51.2 780.8 51.2 674.761329 137.161328 588.8 243.2 588.8L460.8 588.8ZM0 780.8C0 915.11565 108.884349 1024 243.2 1024 377.51565 1024 486.4 915.11565 486.4 780.8L486.4 563.2 486.4 537.6 460.8 537.6 243.2 537.6C108.884349 537.6 0 646.48435 0 780.8ZM563.2 435.2 588.8 460.8 588.8 243.2C588.8 137.161328 674.761329 51.2 780.8 51.2 886.838671 51.2 972.8 137.161328 972.8 243.2 972.8 349.238671 886.838671 435.2 780.8 435.2L563.2 435.2ZM1024 243.2C1024 108.884349 915.11565 0 780.8 0 646.48435 0 537.6 108.884349 537.6 243.2L537.6 460.8 537.6 486.4 563.2 486.4 780.8 486.4C915.11565 486.4 1024 377.51565 1024 243.2ZM1024 780.8C1024 646.48435 915.11565 537.6 780.8 537.6L563.2 537.6 537.6 537.6 537.6 563.2 537.6 780.8C537.6 915.11565 646.48435 1024 780.8 1024 818.513163 1024 855.051123 1015.390662 888.179087 999.065099 900.861235 992.815296 906.075682 977.467919 899.825882 964.785773 893.576079 952.103625 878.228702 946.889178 865.546554 953.138978 839.420429 966.014014 810.620764 972.8 780.8 972.8 674.761329 972.8 588.8 886.838671 588.8 780.8L588.8 563.2 563.2 588.8 780.8 588.8C886.838671 588.8 972.8 674.761329 972.8 780.8 972.8 799.469549 970.142607 817.755731 964.968006 835.279443 960.963957 848.839106 968.71031 863.07731 982.269973 867.081361 995.829636 871.085412 1010.06784 863.339057 1014.071891 849.779394 1020.63305 827.560122 1024 804.391296 1024 780.8Z" fill="currentColor"/></svg></button>
               </section>
             </div>
 
@@ -2241,11 +2246,15 @@
   function setComposerMode(mode) {
     const isTutorial = mode === 'tutorial';
     const isHandoff = mode === 'handoff';
+    const isWelcome = mode === 'welcome';
     $('composerContinue').hidden = isTutorial;
     $('composerSuggest').hidden = !isTutorial;
     $('composerFoot').querySelector('.k').textContent = isTutorial ? 'START WITH' : 'CONTINUE WITH';
+    document.querySelectorAll('#composerContinue .chip[data-continue-for]').forEach((chip) => {
+      chip.hidden = chip.dataset.continueFor !== mode;
+    });
     setComposerToolSelection(null);
-    if (isHandoff) {
+    if (isHandoff || isWelcome) {
       setComposerPlaceholder('What do you want to work on?');
     } else if (isTutorial) {
       setComposerPlaceholder('What do you want to work on? Try a suggestion below.');
@@ -3165,11 +3174,14 @@
     document.querySelectorAll('.hub > .screen[data-screen]').forEach((el) => el.classList.toggle('on', el.dataset.screen === next));
     document.querySelectorAll('.hub > .screen[data-tail]').forEach((el) => el.classList.toggle('on', el.dataset.tail === next));
     document.querySelectorAll('.presenter [data-screen]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.screen === next)));
-    const composerMode = next === 'tutorial' ? 'tutorial' : (next === 'handoff' ? 'handoff' : 'default');
+    const composerMode = next === 'tutorial' ? 'tutorial' : (next === 'handoff' ? 'handoff' : (next === 'welcome' ? 'welcome' : 'default'));
     setComposerMode(composerMode);
     if (next === 'welcome' || next === 'tutorial') setComposerToolSelection('doc');
     const dockCount = dock.querySelector('.count');
     if (dockCount) dockCount.textContent = next === 'welcome' ? '2' : '3';
+    if (next === 'welcome') {
+      requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'auto' }));
+    }
     // Never auto-show after finishing tutorial (redundant with step 3 / doc-switch).
     // Presenter / #tip=1 can still request it explicitly via showTip.
     const wantTip = next === 'handoff' && !afterTutorial && (showTip || postTutorialTipPending) && current === 'citta' && !newTipSeen;
