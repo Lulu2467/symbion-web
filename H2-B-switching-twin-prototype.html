@@ -181,10 +181,19 @@
   .citta-panel .asst-card a:hover { text-decoration: underline; }
   .tap-active:active { transform: scale(.98); }
   .ask-row { display: flex; gap: 14px; align-items: flex-start; }
-  .composer .ask-row { background: #fafbfa; border-radius: 14px; padding: 4px 4px 4px 12px; margin: 0 -4px; }
-  .composer-input { flex: 1; min-width: 0; font-size: 21px; font-weight: 300; line-height: 1.4; color: var(--ink); background: transparent; border: 0; padding: 0; margin: 0; resize: none; font-family: inherit; min-height: 1.4em; overflow: hidden; }
+  .composer .ask-row { background: #fafbfa; border-radius: 14px; padding: 10px 4px 4px 12px; margin: 0 -4px; align-items: flex-end; }
+  .ask-field { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; padding: 2px 0 6px; }
+  /* Kimi-style: selected tool appears as a chip inside the dialog, not only as a highlight below. */
+  .composer-tool-chip { display: none; align-items: center; gap: 6px; align-self: flex-start; max-width: 100%; padding: 4px 8px 4px 4px; border-radius: 8px; background: #fff; border: 1px solid var(--line); font-size: 12px; font-weight: 600; color: var(--ink); line-height: 1; box-shadow: 0 1px 2px rgba(28,31,29,.04); }
+  .composer-tool-chip.on { display: inline-flex; }
+  .composer-tool-chip .chip-ico { width: 22px; height: 22px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; font-style: normal; flex: none; line-height: 1; }
+  .composer-tool-chip .chip-label { white-space: nowrap; }
+  .composer-tool-chip .chip-x { width: 18px; height: 18px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; color: var(--faint); font-size: 14px; line-height: 1; flex: none; margin-left: 2px; }
+  .composer-tool-chip .chip-x:hover { background: var(--surface); color: var(--ink); }
+  .composer-input { flex: 1; min-width: 0; width: 100%; font-size: 21px; font-weight: 300; line-height: 1.4; color: var(--ink); background: transparent; border: 0; padding: 0; margin: 0; resize: none; font-family: inherit; min-height: 1.4em; overflow: hidden; }
   .composer-input::placeholder { color: var(--placeholder); }
   .composer-input:focus { outline: none; }
+  .composer .ask-row > .send { margin-bottom: 0; align-self: flex-end; }
   .send { width: 36px; height: 36px; border-radius: 10px; background: var(--green); color: #fff; flex: none; display: flex; align-items: center; justify-content: center; padding: 10px; box-sizing: border-box; transition: background .12s, transform .08s; }
   .send:hover { background: var(--green-dark); }
   .send:active { transform: scale(.96); }
@@ -876,7 +885,14 @@
                 </div>
 
                 <div class="ask-row">
-                  <textarea class="composer-input" id="composerInput" rows="1" placeholder="What do you want to work on?" aria-label="What do you want to work on?"></textarea>
+                  <div class="ask-field">
+                    <div class="composer-tool-chip" id="composerToolChip" hidden aria-live="polite">
+                      <span class="chip-ico" id="composerToolChipIco" aria-hidden="true"></span>
+                      <span class="chip-label" id="composerToolChipLabel"></span>
+                      <button type="button" class="chip-x" id="composerToolChipClear" aria-label="Remove tool">×</button>
+                    </div>
+                    <textarea class="composer-input" id="composerInput" rows="1" placeholder="What do you want to work on?" aria-label="What do you want to work on?"></textarea>
+                  </div>
                   <button type="button" class="send" aria-label="Send">
                     <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                       <path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
@@ -1656,6 +1672,39 @@
 
   let selectedComposerTool = null;
 
+  const COMPOSER_TOOL_META = {
+    doc: { label: 'Doc', icon: '≡', bg: 'var(--blue-tint)', color: 'var(--blue)' },
+    deck: { label: 'Deck', icon: '▧', bg: 'var(--amber-tint)', color: 'var(--amber)' },
+    numbers: { label: 'Numbers', icon: '▦', bg: 'var(--green-tint)', color: 'var(--green)' },
+    symtex: { label: 'SymTex', icon: 'Σ', bg: 'var(--purple-tint)', color: 'var(--purple)' },
+    code: { label: 'Code', icon: '</>', bg: 'var(--slate-tint)', color: 'var(--slate)' }
+  };
+
+  function syncComposerToolChip(selected) {
+    const chip = $('composerToolChip');
+    const ico = $('composerToolChipIco');
+    const label = $('composerToolChipLabel');
+    if (!chip || !ico || !label) return;
+    const meta = selected ? COMPOSER_TOOL_META[selected] : null;
+    if (!meta) {
+      chip.hidden = true;
+      chip.classList.remove('on');
+      chip.removeAttribute('data-tool');
+      ico.textContent = '';
+      ico.style.background = '';
+      ico.style.color = '';
+      label.textContent = '';
+      return;
+    }
+    chip.hidden = false;
+    chip.classList.add('on');
+    chip.dataset.tool = selected;
+    ico.textContent = meta.icon;
+    ico.style.background = meta.bg;
+    ico.style.color = meta.color;
+    label.textContent = meta.label;
+  }
+
   function setComposerToolSelection(selected) {
     selectedComposerTool = selected || null;
     document.querySelectorAll('#composerTools .tool').forEach((tool) => {
@@ -1663,6 +1712,7 @@
       tool.classList.toggle('sel', on);
       tool.setAttribute('aria-pressed', String(on));
     });
+    syncComposerToolChip(selectedComposerTool);
   }
 
   function initComposerTools() {
@@ -1673,10 +1723,16 @@
         const next = selectedComposerTool === key ? null : key;
         setComposerToolSelection(next);
         if (next) {
-          const label = tool.querySelector('b')?.textContent || tool.textContent.trim();
-          showToastMsg(`Tool selected · ${label} (editor link coming soon)`);
+          const meta = COMPOSER_TOOL_META[next];
+          showToastMsg(`Working in ${meta?.label || key} — type what you want Citta to do`);
+          $('composerInput')?.focus();
         }
       });
+    });
+    $('composerToolChipClear')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setComposerToolSelection(null);
+      $('composerInput')?.focus();
     });
   }
 
