@@ -1237,16 +1237,17 @@
   .tutorial-doc-citta.is-twin .learn-tip .k { color: #1f5c47; }
   .doc-page.twin-done .writing { display: none; }
   .doc-page.twin-done h2.pending { color: var(--faint); }
-  /* In-flow under the doc split — centered, no overlay on copy or the amber rule. */
+  /* Float centered over the tutorial Doc view (horizontally middle). */
   .doc-next-toast {
-    position: relative;
-    left: auto;
-    bottom: auto;
-    z-index: 2;
+    position: absolute;
+    left: 50%;
+    bottom: 36px;
+    transform: translateX(-50%);
+    z-index: 6;
     display: none;
     align-items: center;
     gap: 14px;
-    margin: 8px auto 12px;
+    margin: 0;
     padding: 12px 14px 12px 18px;
     background: var(--toast);
     color: #fff;
@@ -1256,6 +1257,7 @@
     max-width: min(560px, calc(100% - 48px));
     width: max-content;
     box-sizing: border-box;
+    pointer-events: auto;
   }
   .doc-next-toast.show { display: flex; }
   .doc-next-toast .t { display: flex; flex-direction: column; gap: 2px; min-width: 0; justify-content: center; }
