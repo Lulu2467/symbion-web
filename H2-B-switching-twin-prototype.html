@@ -220,7 +220,9 @@
   .tpl .use:hover { border-color: var(--green); background: var(--green-wash); }
   .course-banner a { cursor: pointer; }
   .course-banner a:hover { text-decoration: underline; }
-  .pick-card .btn { cursor: pointer; }
+  .pick-card .btn { cursor: pointer; transition: border-color .12s, background .12s, color .12s; }
+  .pick-card .btn:hover { background: rgba(228, 230, 227, 0.92); color: var(--ink); }
+  .pick-card .btn:hover .spark-icon { color: var(--ink); }
   .tools .attach-hit {
     cursor: pointer;
     padding: 4px 0;
@@ -457,8 +459,8 @@
   .discover .browse-all { flex: none; width: 28px; height: 28px; padding: 0; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; color: var(--muted); background: transparent; border: 0; border-radius: 8px; cursor: pointer; transition: background .12s, color .12s; }
   .discover .browse-all:hover { background: var(--green-tint); color: var(--green-dark); }
   .discover .browse-all:active { transform: scale(.96); }
-  /* Glyph denser than the circled chevron — draw larger so optical size matches. */
-  .discover .browse-all svg { display: block; width: 22px; height: 22px; flex: none; }
+  /* Vertical more (⋮) for Browse all — slightly smaller than the old ⌘ glyph. */
+  .discover .browse-all svg { display: block; width: 16px; height: 16px; flex: none; }
   .discover-next[hidden] { display: none !important; }
   .discover .discover-next[hidden] + .browse-all { margin-left: auto; }
   .dcard { display: flex; gap: 10px; align-items: center; padding: 6px 8px; border: 1px solid var(--line); border-radius: 12px; flex: none; scroll-snap-align: start; }
@@ -496,14 +498,11 @@
     line-height: 1.2;
   }
   .addsi .attach-plus {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
+    display: inline-block;
+    font-size: 12px;
     font-weight: 500;
     line-height: 1;
-    /* + glyph sits low vs caps — lift to the text midline. */
-    transform: translateY(-0.5px);
+    transform: translateY(0.5px);
   }
   /* Match browse-all hit size (28); lighter/thinner ring + chevron than before. */
   .round {
@@ -728,33 +727,9 @@
   .pick-card .col { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
   .pick-card .t { font-size: 15px; font-weight: 400; color: var(--ink); }
   .pick-card .meta { display: flex; gap: 6px; align-items: center; flex-wrap: nowrap; white-space: nowrap; font-size: 12px; color: var(--faint); min-width: 0; }
-  /* Rest: lighter greyer wash. Pressed/hover: palette warm grey (#F7F3EC / #A0845C). */
-  .pick-card .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(247, 243, 236, 0.55);
-    border: 1px solid rgba(160, 132, 92, 0.12);
-    border-radius: 10px;
-    padding: 8px 14px;
-    font-size: 13px;
-    font-weight: 500;
-    color: #c4b49a;
-    white-space: nowrap;
-    flex: none;
-    backdrop-filter: none;
-    text-decoration: none;
-    transition: color .12s, background .12s, border-color .12s;
-  }
-  .pick-card .btn:hover,
-  .pick-card .btn:active {
-    background: #F7F3EC;
-    border-color: rgba(160, 132, 92, 0.28);
-    color: #A0845C;
-    text-decoration: none;
-  }
-  .pick-card .btn .more-ico { width: 12px; height: 12px; color: inherit; flex: none; display: block; }
-  .pick-card .btn .more-ico svg { display: block; width: 100%; height: 100%; }
+  /* Grey wash over the peach panel — not a solid white chip. */
+  .pick-card .btn { display: inline-flex; align-items: center; gap: 6px; background: rgba(240, 241, 238, 0.78); border: 1px solid rgba(28, 31, 29, 0.08); border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--muted); white-space: nowrap; flex: none; backdrop-filter: none; }
+  .pick-card .btn .spark-icon { width: 12px; height: 12px; color: var(--muted); }
   .activity.cosmos-compact { border: 1px solid var(--line); border-radius: 16px; padding: 20px; gap: 12px; background: #fff; }
   .activity.cosmos-compact > p { margin: 0; font-size: 13px; line-height: 1.4; color: var(--muted); }
   .activity.cosmos-compact .cosmos-see { align-self: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--ink); cursor: pointer; }
@@ -1240,17 +1215,16 @@
   .tutorial-doc-citta.is-twin .learn-tip .k { color: #1f5c47; }
   .doc-page.twin-done .writing { display: none; }
   .doc-page.twin-done h2.pending { color: var(--faint); }
-  /* Float centered over the tutorial Doc view (horizontally middle). */
+  /* In-flow under the doc split — centered, no overlay on copy or the amber rule. */
   .doc-next-toast {
-    position: absolute;
-    left: 50%;
-    bottom: 36px;
-    transform: translateX(-50%);
-    z-index: 6;
+    position: relative;
+    left: auto;
+    bottom: auto;
+    z-index: 2;
     display: none;
     align-items: center;
     gap: 14px;
-    margin: 0;
+    margin: 8px auto 12px;
     padding: 12px 14px 12px 18px;
     background: var(--toast);
     color: #fff;
@@ -1260,7 +1234,6 @@
     max-width: min(560px, calc(100% - 48px));
     width: max-content;
     box-sizing: border-box;
-    pointer-events: auto;
   }
   .doc-next-toast.show { display: flex; }
   .doc-next-toast .t { display: flex; flex-direction: column; gap: 2px; min-width: 0; justify-content: center; }
@@ -1812,7 +1785,7 @@
               </div>
               </div>
               <button type="button" class="round discover-next" id="discoverScrollNext" aria-label="Scroll discover cards"><svg class="chev-ico" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 3.25 10.75 8 6 12.75" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-              <button type="button" class="browse-all" data-action="browse-discover" aria-label="Browse all"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M460.8 486.4 486.4 486.4 486.4 460.8 486.4 243.2C486.4 108.884349 377.51565 0 243.2 0 108.884349 0 0 108.884349 0 243.2 0 377.51565 108.884349 486.4 243.2 486.4L460.8 486.4ZM51.2 243.2C51.2 137.161328 137.161328 51.2 243.2 51.2 349.238671 51.2 435.2 137.161328 435.2 243.2L435.2 460.8 460.8 435.2 243.2 435.2C137.161328 435.2 51.2 349.238671 51.2 243.2ZM460.8 588.8 435.2 563.2 435.2 780.8C435.2 886.838671 349.238671 972.8 243.2 972.8 137.161328 972.8 51.2 886.838671 51.2 780.8 51.2 674.761329 137.161328 588.8 243.2 588.8L460.8 588.8ZM0 780.8C0 915.11565 108.884349 1024 243.2 1024 377.51565 1024 486.4 915.11565 486.4 780.8L486.4 563.2 486.4 537.6 460.8 537.6 243.2 537.6C108.884349 537.6 0 646.48435 0 780.8ZM563.2 435.2 588.8 460.8 588.8 243.2C588.8 137.161328 674.761329 51.2 780.8 51.2 886.838671 51.2 972.8 137.161328 972.8 243.2 972.8 349.238671 886.838671 435.2 780.8 435.2L563.2 435.2ZM1024 243.2C1024 108.884349 915.11565 0 780.8 0 646.48435 0 537.6 108.884349 537.6 243.2L537.6 460.8 537.6 486.4 563.2 486.4 780.8 486.4C915.11565 486.4 1024 377.51565 1024 243.2ZM1024 780.8C1024 646.48435 915.11565 537.6 780.8 537.6L563.2 537.6 537.6 537.6 537.6 563.2 537.6 780.8C537.6 915.11565 646.48435 1024 780.8 1024 818.513163 1024 855.051123 1015.390662 888.179087 999.065099 900.861235 992.815296 906.075682 977.467919 899.825882 964.785773 893.576079 952.103625 878.228702 946.889178 865.546554 953.138978 839.420429 966.014014 810.620764 972.8 780.8 972.8 674.761329 972.8 588.8 886.838671 588.8 780.8L588.8 563.2 563.2 588.8 780.8 588.8C886.838671 588.8 972.8 674.761329 972.8 780.8 972.8 799.469549 970.142607 817.755731 964.968006 835.279443 960.963957 848.839106 968.71031 863.07731 982.269973 867.081361 995.829636 871.085412 1010.06784 863.339057 1014.071891 849.779394 1020.63305 827.560122 1024 804.391296 1024 780.8Z" fill="currentColor"/></svg></button>
+              <button type="button" class="browse-all" data-action="browse-discover" aria-label="Browse all"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M512 688a80 80 0 1 1 0 160 80 80 0 0 1 0-160z m0-256a80 80 0 1 1 0 160 80 80 0 0 1 0-160z m0-256a80 80 0 1 1 0 160 80 80 0 0 1 0-160z" fill="currentColor"/></svg></button>
             </section>
 
             <section class="two">
@@ -1884,7 +1857,7 @@
                 </div>
                 </div>
                 <button type="button" class="round discover-next" aria-label="Scroll discover cards"><svg class="chev-ico" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 3.25 10.75 8 6 12.75" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                <button type="button" class="browse-all" data-action="browse-discover" aria-label="Browse all"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M460.8 486.4 486.4 486.4 486.4 460.8 486.4 243.2C486.4 108.884349 377.51565 0 243.2 0 108.884349 0 0 108.884349 0 243.2 0 377.51565 108.884349 486.4 243.2 486.4L460.8 486.4ZM51.2 243.2C51.2 137.161328 137.161328 51.2 243.2 51.2 349.238671 51.2 435.2 137.161328 435.2 243.2L435.2 460.8 460.8 435.2 243.2 435.2C137.161328 435.2 51.2 349.238671 51.2 243.2ZM460.8 588.8 435.2 563.2 435.2 780.8C435.2 886.838671 349.238671 972.8 243.2 972.8 137.161328 972.8 51.2 886.838671 51.2 780.8 51.2 674.761329 137.161328 588.8 243.2 588.8L460.8 588.8ZM0 780.8C0 915.11565 108.884349 1024 243.2 1024 377.51565 1024 486.4 915.11565 486.4 780.8L486.4 563.2 486.4 537.6 460.8 537.6 243.2 537.6C108.884349 537.6 0 646.48435 0 780.8ZM563.2 435.2 588.8 460.8 588.8 243.2C588.8 137.161328 674.761329 51.2 780.8 51.2 886.838671 51.2 972.8 137.161328 972.8 243.2 972.8 349.238671 886.838671 435.2 780.8 435.2L563.2 435.2ZM1024 243.2C1024 108.884349 915.11565 0 780.8 0 646.48435 0 537.6 108.884349 537.6 243.2L537.6 460.8 537.6 486.4 563.2 486.4 780.8 486.4C915.11565 486.4 1024 377.51565 1024 243.2ZM1024 780.8C1024 646.48435 915.11565 537.6 780.8 537.6L563.2 537.6 537.6 537.6 537.6 563.2 537.6 780.8C537.6 915.11565 646.48435 1024 780.8 1024 818.513163 1024 855.051123 1015.390662 888.179087 999.065099 900.861235 992.815296 906.075682 977.467919 899.825882 964.785773 893.576079 952.103625 878.228702 946.889178 865.546554 953.138978 839.420429 966.014014 810.620764 972.8 780.8 972.8 674.761329 972.8 588.8 886.838671 588.8 780.8L588.8 563.2 563.2 588.8 780.8 588.8C886.838671 588.8 972.8 674.761329 972.8 780.8 972.8 799.469549 970.142607 817.755731 964.968006 835.279443 960.963957 848.839106 968.71031 863.07731 982.269973 867.081361 995.829636 871.085412 1010.06784 863.339057 1014.071891 849.779394 1020.63305 827.560122 1024 804.391296 1024 780.8Z" fill="currentColor"/></svg></button>
+                <button type="button" class="browse-all" data-action="browse-discover" aria-label="Browse all"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M512 688a80 80 0 1 1 0 160 80 80 0 0 1 0-160z m0-256a80 80 0 1 1 0 160 80 80 0 0 1 0-160z m0-256a80 80 0 1 1 0 160 80 80 0 0 1 0-160z" fill="currentColor"/></svg></button>
               </section>
 
               <section class="pickup">
@@ -1953,7 +1926,7 @@
                 </div>
                 </div>
                 <button type="button" class="round discover-next" aria-label="Scroll discover cards"><svg class="chev-ico" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 3.25 10.75 8 6 12.75" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                <button type="button" class="browse-all" data-action="browse-discover" aria-label="Browse all"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M460.8 486.4 486.4 486.4 486.4 460.8 486.4 243.2C486.4 108.884349 377.51565 0 243.2 0 108.884349 0 0 108.884349 0 243.2 0 377.51565 108.884349 486.4 243.2 486.4L460.8 486.4ZM51.2 243.2C51.2 137.161328 137.161328 51.2 243.2 51.2 349.238671 51.2 435.2 137.161328 435.2 243.2L435.2 460.8 460.8 435.2 243.2 435.2C137.161328 435.2 51.2 349.238671 51.2 243.2ZM460.8 588.8 435.2 563.2 435.2 780.8C435.2 886.838671 349.238671 972.8 243.2 972.8 137.161328 972.8 51.2 886.838671 51.2 780.8 51.2 674.761329 137.161328 588.8 243.2 588.8L460.8 588.8ZM0 780.8C0 915.11565 108.884349 1024 243.2 1024 377.51565 1024 486.4 915.11565 486.4 780.8L486.4 563.2 486.4 537.6 460.8 537.6 243.2 537.6C108.884349 537.6 0 646.48435 0 780.8ZM563.2 435.2 588.8 460.8 588.8 243.2C588.8 137.161328 674.761329 51.2 780.8 51.2 886.838671 51.2 972.8 137.161328 972.8 243.2 972.8 349.238671 886.838671 435.2 780.8 435.2L563.2 435.2ZM1024 243.2C1024 108.884349 915.11565 0 780.8 0 646.48435 0 537.6 108.884349 537.6 243.2L537.6 460.8 537.6 486.4 563.2 486.4 780.8 486.4C915.11565 486.4 1024 377.51565 1024 243.2ZM1024 780.8C1024 646.48435 915.11565 537.6 780.8 537.6L563.2 537.6 537.6 537.6 537.6 563.2 537.6 780.8C537.6 915.11565 646.48435 1024 780.8 1024 818.513163 1024 855.051123 1015.390662 888.179087 999.065099 900.861235 992.815296 906.075682 977.467919 899.825882 964.785773 893.576079 952.103625 878.228702 946.889178 865.546554 953.138978 839.420429 966.014014 810.620764 972.8 780.8 972.8 674.761329 972.8 588.8 886.838671 588.8 780.8L588.8 563.2 563.2 588.8 780.8 588.8C886.838671 588.8 972.8 674.761329 972.8 780.8 972.8 799.469549 970.142607 817.755731 964.968006 835.279443 960.963957 848.839106 968.71031 863.07731 982.269973 867.081361 995.829636 871.085412 1010.06784 863.339057 1014.071891 849.779394 1020.63305 827.560122 1024 804.391296 1024 780.8Z" fill="currentColor"/></svg></button>
+                <button type="button" class="browse-all" data-action="browse-discover" aria-label="Browse all"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M512 688a80 80 0 1 1 0 160 80 80 0 0 1 0-160z m0-256a80 80 0 1 1 0 160 80 80 0 0 1 0-160z m0-256a80 80 0 1 1 0 160 80 80 0 0 1 0-160z" fill="currentColor"/></svg></button>
               </section>
 
               <section class="two">
@@ -2022,7 +1995,7 @@
                 </div>
                 </div>
                 <button type="button" class="round discover-next" aria-label="Scroll discover cards"><svg class="chev-ico" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 3.25 10.75 8 6 12.75" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                <button type="button" class="browse-all" data-action="browse-discover" aria-label="Browse all"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M460.8 486.4 486.4 486.4 486.4 460.8 486.4 243.2C486.4 108.884349 377.51565 0 243.2 0 108.884349 0 0 108.884349 0 243.2 0 377.51565 108.884349 486.4 243.2 486.4L460.8 486.4ZM51.2 243.2C51.2 137.161328 137.161328 51.2 243.2 51.2 349.238671 51.2 435.2 137.161328 435.2 243.2L435.2 460.8 460.8 435.2 243.2 435.2C137.161328 435.2 51.2 349.238671 51.2 243.2ZM460.8 588.8 435.2 563.2 435.2 780.8C435.2 886.838671 349.238671 972.8 243.2 972.8 137.161328 972.8 51.2 886.838671 51.2 780.8 51.2 674.761329 137.161328 588.8 243.2 588.8L460.8 588.8ZM0 780.8C0 915.11565 108.884349 1024 243.2 1024 377.51565 1024 486.4 915.11565 486.4 780.8L486.4 563.2 486.4 537.6 460.8 537.6 243.2 537.6C108.884349 537.6 0 646.48435 0 780.8ZM563.2 435.2 588.8 460.8 588.8 243.2C588.8 137.161328 674.761329 51.2 780.8 51.2 886.838671 51.2 972.8 137.161328 972.8 243.2 972.8 349.238671 886.838671 435.2 780.8 435.2L563.2 435.2ZM1024 243.2C1024 108.884349 915.11565 0 780.8 0 646.48435 0 537.6 108.884349 537.6 243.2L537.6 460.8 537.6 486.4 563.2 486.4 780.8 486.4C915.11565 486.4 1024 377.51565 1024 243.2ZM1024 780.8C1024 646.48435 915.11565 537.6 780.8 537.6L563.2 537.6 537.6 537.6 537.6 563.2 537.6 780.8C537.6 915.11565 646.48435 1024 780.8 1024 818.513163 1024 855.051123 1015.390662 888.179087 999.065099 900.861235 992.815296 906.075682 977.467919 899.825882 964.785773 893.576079 952.103625 878.228702 946.889178 865.546554 953.138978 839.420429 966.014014 810.620764 972.8 780.8 972.8 674.761329 972.8 588.8 886.838671 588.8 780.8L588.8 563.2 563.2 588.8 780.8 588.8C886.838671 588.8 972.8 674.761329 972.8 780.8 972.8 799.469549 970.142607 817.755731 964.968006 835.279443 960.963957 848.839106 968.71031 863.07731 982.269973 867.081361 995.829636 871.085412 1010.06784 863.339057 1014.071891 849.779394 1020.63305 827.560122 1024 804.391296 1024 780.8Z" fill="currentColor"/></svg></button>
+                <button type="button" class="browse-all" data-action="browse-discover" aria-label="Browse all"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M512 688a80 80 0 1 1 0 160 80 80 0 0 1 0-160z m0-256a80 80 0 1 1 0 160 80 80 0 0 1 0-160z m0-256a80 80 0 1 1 0 160 80 80 0 0 1 0-160z" fill="currentColor"/></svg></button>
               </section>
 
               <section class="tool-sec" id="sec-try-tutorial" aria-label="Try each tool (tutorial)">
@@ -2285,7 +2258,6 @@
 
   const SPARK_SOLID = '<svg width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg>';
   const SPARK_HOLLOW = '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M510.464 950.784c-14.336 0-40.96-6.656-55.808-50.688l-69.12-200.192c-8.704-25.088-39.424-55.808-64.512-64.512l-197.12-68.608c-44.032-15.36-50.688-41.984-50.688-56.32 0-14.336 6.656-40.96 50.688-55.808L322.56 387.072c25.6-8.704 55.808-38.912 64.512-64l67.584-200.192c14.848-44.032 41.472-50.688 55.808-50.688 14.336 0 40.96 6.656 55.808 50.688l69.632 201.728c8.704 25.088 39.424 55.296 64 64l198.656 67.072c44.032 14.848 50.688 41.472 51.2 55.808 0 14.336-6.656 40.96-50.688 55.808l-201.728 69.12c-25.088 8.704-55.296 38.912-64 64l-67.072 199.168c-14.848 44.544-41.472 51.2-55.808 51.2zM181.76 510.976l163.328 56.832c46.08 15.872 92.672 62.976 108.544 109.056l56.832 164.864 55.296-164.352c15.36-46.08 62.464-93.184 108.544-109.056l166.4-56.832-163.328-55.296c-46.08-15.872-93.184-62.464-109.056-108.544l-57.344-166.912-56.32 165.376c-15.872 46.08-62.464 93.184-108.544 108.544l-164.352 56.32z" fill="currentColor"/></svg>';
-  const MORE_DOTS = '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M512 688a80 80 0 1 1 0 160 80 80 0 0 1 0-160z m0-256a80 80 0 1 1 0 160 80 80 0 0 1 0-160z m0-256a80 80 0 1 1 0 160 80 80 0 0 1 0-160z" fill="currentColor"/></svg>';
 
   function resizeTextarea(el) {
     if (!el) return;
@@ -3524,61 +3496,6 @@
     toastTimer = setTimeout(() => toast.classList.remove('show'), ms);
   }
 
-  const ICO_NE = '<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span>';
-
-  /** Newbie checklist: update “N of 5” and hide the panel once every tool is tried. */
-  function syncWeekToolsProgress() {
-    let cleared = false;
-    document.querySelectorAll('.week-tools-panel').forEach((panel) => {
-      if (panel.classList.contains('is-dismissed')) return;
-      const cards = [...panel.querySelectorAll('.week-card[data-tool]')];
-      if (!cards.length) return;
-      const tried = cards.filter((c) => c.classList.contains('tried')).length;
-      const total = cards.length;
-      const badge = panel.querySelector('.week-tools-hd .badge');
-      if (badge) badge.textContent = `${tried} of ${total} tried`;
-      if (tried >= total) {
-        panel.classList.add('is-dismissed');
-        cleared = true;
-      }
-    });
-    if (cleared) {
-      showToastMsg('All tools tried — week checklist cleared');
-      fit();
-    }
-    return cleared;
-  }
-
-  function markWeekToolTried(tool) {
-    if (!tool) return false;
-    let changed = false;
-    document.querySelectorAll(`.week-card[data-tool="${tool}"]`).forEach((card) => {
-      if (card.classList.contains('tried')) return;
-      changed = true;
-      card.classList.add('tried');
-      const todo = card.querySelector('.todo');
-      if (todo) {
-        const done = document.createElement('span');
-        done.className = 'done';
-        done.setAttribute('aria-label', 'Tried');
-        done.textContent = '✓';
-        todo.replaceWith(done);
-      } else if (!card.querySelector('.done')) {
-        const done = document.createElement('span');
-        done.className = 'done';
-        done.setAttribute('aria-label', 'Tried');
-        done.textContent = '✓';
-        card.prepend(done);
-      }
-      const link = card.querySelector('.go-link[data-action]');
-      if (link && link.dataset.action === 'try-citta') {
-        link.dataset.action = 'open';
-        link.innerHTML = `Open${ICO_NE}`;
-      }
-    });
-    return changed ? syncWeekToolsProgress() : false;
-  }
-
   function openWeekTool(card, action) {
     const tool = card.dataset.tool;
     const label = card.querySelector('b')?.textContent || tool;
@@ -3586,11 +3503,8 @@
     card.classList.add('is-opening');
     setTimeout(() => card.classList.remove('is-opening'), 600);
     setComposerToolSelection(tool);
-    const cleared = markWeekToolTried(tool);
-    if (!cleared) {
-      const verb = action === 'continue' ? 'Continuing in' : 'Opening';
-      showToastMsg(`${verb} ${label} · ${sub}`);
-    }
+    const verb = action === 'continue' ? 'Continuing in' : 'Opening';
+    showToastMsg(`${verb} ${label} · ${sub}`);
   }
 
   function tryToolWithCitta(sourceEl) {
@@ -3600,10 +3514,9 @@
     setAI('citta', { announce: false });
     setComposerToolSelection(tool);
     setCittaExpanded(true);
-    const cleared = markWeekToolTried(tool);
     const labels = { doc: 'Doc', deck: 'Deck', numbers: 'Numbers', symtex: 'SymTex', code: 'Code' };
     const label = labels[tool] || tool;
-    if (!cleared) showToastMsg(`Citta is opening ${label} — ready when you are`);
+    showToastMsg(`Citta is opening ${label} — ready when you are`);
     setComposerDraft(`Try ${label} with Citta — what should we make first?`);
   }
 
@@ -4366,7 +4279,7 @@
     }
     document.querySelectorAll('.pick-card .btn[data-spark-label]').forEach((el) => {
       const label = el.dataset.sparkLabel || '';
-      el.innerHTML = `<span class="more-ico" aria-hidden="true">${MORE_DOTS}</span>${label}`;
+      el.innerHTML = `<span class="spark-icon" aria-hidden="true">${SPARK_SOLID}</span>${label}`;
     });
     document.querySelectorAll('.mav.citta .spark-icon, .si-row[data-ai="citta"] .av .spark-icon, #coachAv .spark-icon, .tag .spark-icon').forEach((el) => {
       if (!el.querySelector('svg')) el.innerHTML = SPARK_SOLID;
@@ -4480,7 +4393,6 @@
   initFullscreenToggle();
   decorateSparkIcons();
   decorateLectureBookIcons();
-  syncWeekToolsProgress();
   const composerInputEl = $('composerInput');
   composerInputEl?.addEventListener('input', () => resizeTextarea(composerInputEl));
   const cittaInputEl = $('cittaInput');
