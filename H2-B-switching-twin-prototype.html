@@ -207,19 +207,32 @@
   .citta-panel .asst-card a:hover { text-decoration: underline; }
   .tap-active:active { transform: scale(.98); }
   .ask-row { display: flex; gap: 14px; align-items: flex-start; }
-  /* Soft ask well: equal inset on L/R; chip / text / + share one left edge. */
+  /* Capsule ask: one pill — chips + text + actions on one row; no inner divider line. */
   .composer .ask-row {
-    --ask-inset: 12px;
-    background: #fafbfa;
-    border-radius: 20px;
-    padding: var(--ask-inset);
+    --ask-inset: 10px;
+    background: #fff;
+    border: 1.5px solid rgba(0,139,104,.35);
+    border-radius: 999px;
+    padding: 8px 10px 8px 14px;
     margin: 0;
-    display: block;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
     box-sizing: border-box;
   }
-  .ask-field { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+  .ask-field {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
   /* Kimi-style: chips sit on the same line as typed text — no extra row that jumps the box. */
-  .ask-compose { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; width: 100%; min-width: 0; }
+  .ask-compose { display: flex; flex: 1 1 160px; flex-wrap: wrap; align-items: center; gap: 8px; min-width: 0; }
   .composer-chips { display: none; flex: 0 1 auto; flex-wrap: wrap; gap: 6px; align-items: center; max-width: 100%; margin: 0; padding: 0; }
   .composer-chips.on { display: inline-flex; }
   .composer-tool-chip { display: none; align-items: center; gap: 5px; max-width: 100%; min-height: 28px; height: auto; padding: 4px 6px 4px 3px; border-radius: 8px; background: #fff; border: 1px solid var(--line); font-size: 12px; font-weight: 600; color: var(--ink); line-height: 1.25; box-shadow: none; box-sizing: border-box; }
@@ -233,11 +246,11 @@
   .composer-input { flex: 1 1 160px; min-width: 140px; width: auto; font-size: 21px; font-weight: 400; line-height: 1.4; color: var(--ink); background: transparent; border: 0; padding: 0; margin: 0; resize: none; font-family: var(--font); min-height: 1.4em; overflow: hidden; box-sizing: border-box; }
   .composer-input::placeholder { color: var(--placeholder); }
   .composer-input:focus { outline: none; }
-  .ask-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0; padding: 0; width: 100%; box-sizing: border-box; }
-  .composer .ask-bar .plus { width: 32px; height: 32px; border-radius: 10px; color: var(--muted); font-size: 22px; font-weight: 400; line-height: 1; flex: none; display: inline-flex; align-items: center; justify-content: flex-start; padding: 0; margin: 0; box-sizing: border-box; transition: background .12s, color .12s; }
+  .ask-bar { display: flex; align-items: center; justify-content: flex-end; gap: 6px; margin: 0; padding: 0; flex: none; margin-left: auto; box-sizing: border-box; }
+  .composer .ask-bar .plus { width: 32px; height: 32px; border-radius: 999px; color: var(--muted); font-size: 22px; font-weight: 400; line-height: 1; flex: none; display: inline-flex; align-items: center; justify-content: center; padding: 0; margin: 0; box-sizing: border-box; transition: background .12s, color .12s; }
   .composer .ask-bar .plus:hover { background: var(--green-tint); color: var(--green-dark); }
   .composer .ask-bar .plus:active { transform: scale(.96); }
-  .send { width: 36px; height: 36px; border-radius: 10px; background: var(--green); color: #fff; flex: none; display: inline-flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; transition: background .12s, transform .08s; margin-left: auto; }
+  .send { width: 36px; height: 36px; border-radius: 999px; background: var(--green); color: #fff; flex: none; display: inline-flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; transition: background .12s, transform .08s; margin-left: 0; }
   .send:hover { background: var(--green-dark); }
   .send:active { transform: scale(.96); }
   .send svg { display: block; width: 16px; height: 16px; flex: none; }
@@ -605,57 +618,50 @@
   .citta-run .prog span { display: block; height: 4px; background: var(--green); border-radius: 2px; width: 70%; }
   .citta-run .act { align-self: flex-end; font-size: 12px; font-weight: 600; color: var(--green); background: none; padding: 0; }
   .citta-run.err .act { color: #b42318; }
-  /* Citta dock: one column — chips + ask share the same left edge and inset. */
+  /* Citta dock foot: capsule ask only — no top rule, no suggest stack. */
   .citta-panel .foot {
     --citta-inset: 10px;
     flex: none;
-    border-top: 1px solid var(--line);
-    padding: 12px 14px 14px;
+    border-top: 0;
+    padding: 10px 14px 14px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    background: linear-gradient(180deg, #f6f8f6 0%, #fff 28%);
-  }
-  .citta-panel .suggest { display: flex; flex-direction: column; align-items: stretch; gap: 6px; margin: 0; padding: 0; }
-  .citta-panel .suggest button {
-    width: 100%;
-    box-sizing: border-box;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--ink);
+    gap: 0;
     background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 8px var(--citta-inset);
-    line-height: 1.35;
-    text-align: left;
-    transition: border-color .12s, background .12s, color .12s;
   }
-  .citta-panel .suggest button:hover { border-color: rgba(0,139,104,.35); background: var(--green-wash); color: var(--green-dark); }
-  .citta-panel .suggest button:active { transform: scale(.99); }
+  .citta-panel .suggest { display: none; }
   .citta-panel .ask-row {
     display: flex;
-    flex-direction: column;
-    gap: 6px;
-    align-items: stretch;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 8px;
     background: #fff;
-    border: 1.5px solid rgba(0,139,104,.28);
-    border-radius: 14px;
-    padding: 8px var(--citta-inset);
+    border: 1.5px solid rgba(0,139,104,.35);
+    border-radius: 999px;
+    padding: 6px 8px 6px 12px;
     box-sizing: border-box;
-    box-shadow: 0 1px 2px rgba(28,31,29,.04);
+    box-shadow: none;
     transition: border-color .12s, box-shadow .12s;
   }
-  .citta-panel .ask-compose { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; width: 100%; min-width: 0; }
+  .citta-panel .ask-compose {
+    display: flex;
+    flex: 1 1 120px;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+  }
   .citta-panel .composer-chips { padding: 0; margin: 0; }
   .citta-panel .ask-bar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    width: 100%;
+    justify-content: flex-end;
+    gap: 4px;
+    flex: none;
     margin: 0;
     padding: 0;
+    margin-left: auto;
   }
   .citta-panel .ask-row:focus-within {
     border-color: var(--green);
@@ -664,7 +670,7 @@
   .citta-panel .ask-bar .plus {
     width: 28px;
     height: 28px;
-    border-radius: 8px;
+    border-radius: 999px;
     color: var(--muted);
     font-size: 18px;
     font-weight: 400;
@@ -672,7 +678,7 @@
     flex: none;
     display: inline-flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -680,14 +686,14 @@
   }
   .citta-panel .ask-bar .plus:hover { background: var(--green-tint); color: var(--green-dark); }
   .citta-panel .ask-bar .plus:active { transform: scale(.96); }
-  .citta-input { flex: 1 1 120px; min-width: 100px; width: auto; font-size: 13px; line-height: 1.45; color: var(--ink); background: transparent; border: 0; padding: 0; margin: 0; resize: none; font-family: var(--font); min-height: 1.45em; overflow: hidden; text-align: left; }
+  .citta-input { flex: 1 1 80px; min-width: 72px; width: auto; font-size: 13px; line-height: 1.45; color: var(--ink); background: transparent; border: 0; padding: 0; margin: 0; resize: none; font-family: var(--font); min-height: 1.45em; overflow: hidden; text-align: left; }
   .citta-input::placeholder { color: var(--placeholder); text-align: left; }
   .citta-input:focus { outline: none; }
   .citta-panel .ask-bar .send {
     width: 32px;
     height: 32px;
-    border-radius: 10px;
-    margin-left: auto;
+    border-radius: 999px;
+    margin-left: 0;
     flex: none;
     display: inline-flex;
     align-items: center;
