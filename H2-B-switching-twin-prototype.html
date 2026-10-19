@@ -221,7 +221,7 @@
   .course-banner a { cursor: pointer; }
   .course-banner a:hover { text-decoration: underline; }
   .pick-card .btn { cursor: pointer; transition: border-color .12s, background .12s, color .12s; }
-  .pick-card .btn:hover { background: #e4e6e3; color: var(--ink); }
+  .pick-card .btn:hover { background: rgba(228, 230, 227, 0.92); color: var(--ink); }
   .pick-card .btn:hover .spark-icon { color: var(--ink); }
   .tools .attach-hit {
     cursor: pointer;
@@ -718,7 +718,8 @@
   .pick-card .col { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
   .pick-card .t { font-size: 15px; font-weight: 400; color: var(--ink); }
   .pick-card .meta { display: flex; gap: 6px; align-items: center; flex-wrap: nowrap; white-space: nowrap; font-size: 12px; color: var(--faint); min-width: 0; }
-  .pick-card .btn { display: inline-flex; align-items: center; gap: 6px; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--muted); white-space: nowrap; flex: none; }
+  /* Grey wash over the peach panel — not a solid white chip. */
+  .pick-card .btn { display: inline-flex; align-items: center; gap: 6px; background: rgba(240, 241, 238, 0.78); border: 1px solid rgba(28, 31, 29, 0.08); border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--muted); white-space: nowrap; flex: none; backdrop-filter: none; }
   .pick-card .btn .spark-icon { width: 12px; height: 12px; color: var(--muted); }
   .activity.cosmos-compact { border: 1px solid var(--line); border-radius: 16px; padding: 20px; gap: 12px; background: #fff; }
   .activity.cosmos-compact > p { margin: 0; font-size: 13px; line-height: 1.4; color: var(--muted); }
