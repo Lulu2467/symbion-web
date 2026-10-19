@@ -603,13 +603,42 @@
   .tutorial-spotlight.on { display: block; }
   .frame.tutorial-on { position: relative; }
   .frame.tutorial-on .tutorial-spot-target { position: relative; z-index: 14; }
-  /* Step 1: ask surface only is cut out; foot stays under the dim + under coach. */
+  /* Spotlight steps: cutout alone is not enough on white siblings — force-dim the extras. */
   .frame.tutorial-on .composer > .foot { position: relative; z-index: 1; }
   .frame.tutorial-on .composer > .top.tutorial-spot-target { background: #fff; border-radius: 22px 22px 0 0; }
   .frame.tutorial-spot-composer .composer > .foot {
     opacity: 0.42;
     filter: brightness(0.9);
     pointer-events: none;
+  }
+  /* Step 2: only the tool cards are lit — header + composer above stay muted. */
+  .frame.tutorial-spot-try .composer {
+    opacity: 0.42;
+    filter: brightness(0.9);
+    pointer-events: none;
+  }
+  .frame.tutorial-spot-try #tutorialTrySpot > .hdr {
+    opacity: 0.45;
+    filter: brightness(0.92);
+  }
+  /* Step 3: only the Citta picker pill — rest of the composer card stays muted. */
+  .frame.tutorial-spot-picker .composer .ask-row,
+  .frame.tutorial-spot-picker .composer .tools,
+  .frame.tutorial-spot-picker .composer > .foot {
+    opacity: 0.42;
+    filter: brightness(0.9);
+    pointer-events: none;
+  }
+  /* #whenCitta uses display:contents — target the visible bits directly. */
+  .frame.tutorial-spot-picker .composer .working .k,
+  .frame.tutorial-spot-picker .composer .working .faint,
+  .frame.tutorial-spot-picker .composer .working .stack,
+  .frame.tutorial-spot-picker .composer .working .link {
+    opacity: 0.4;
+  }
+  .frame.tutorial-spot-picker #picker.tutorial-spot-target {
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(255,255,255,.92);
   }
   /* Dock sits in the try-step spotlight cutout on the right; hide fully so no green ring peeks. */
   .frame.tutorial-on .dock { display: none !important; }
@@ -1938,11 +1967,17 @@
     el.classList.add('tutorial-spot-target');
     const t = frameRectOffset(el);
     const isAskSurface = el.classList?.contains('top');
-    // Ask surface: pad sides/top only ? no bottom pad, or START WITH leaks into the cutout.
-    const insetX = inset;
-    const insetTop = inset;
-    const insetBottom = isAskSurface ? 0 : inset;
-    tutorialSpotlight.style.borderRadius = isAskSurface ? '22px 22px 14px 14px' : '';
+    const isPicker = el.id === 'picker';
+    const isTryCards = el.id === 'tutorialTryCards' || el.classList?.contains('tutorial-try-cards');
+    // Ask surface: pad sides/top only — no bottom pad, or START WITH leaks into the cutout.
+    const insetX = isPicker ? Math.min(inset, 4) : inset;
+    const insetTop = isAskSurface ? inset : (isPicker ? 4 : inset);
+    const insetBottom = isAskSurface ? 0 : (isPicker ? 4 : inset);
+    let radius = '';
+    if (isAskSurface) radius = '22px 22px 14px 14px';
+    else if (isPicker) radius = '999px';
+    else if (isTryCards) radius = '16px';
+    tutorialSpotlight.style.borderRadius = radius;
     tutorialSpotlight.style.top = `${Math.max(0, t.top - insetTop)}px`;
     tutorialSpotlight.style.left = `${Math.max(0, t.left - insetX)}px`;
     tutorialSpotlight.style.width = `${t.right - t.left + insetX * 2}px`;
@@ -1952,14 +1987,20 @@
   }
 
   function getTrySpotElement() {
-    return $('tutorialTrySpot') || document.querySelector('#sec-try-tutorial .tutorial-try-cards') || $('sec-try-each')?.querySelector('.try-cards');
+    // Cards only — not the section hdr (same leak pattern as START WITH on step 1).
+    return $('tutorialTryCards')
+      || document.querySelector('#sec-try-tutorial .tutorial-try-cards')
+      || $('tutorialTrySpot')
+      || $('sec-try-each')?.querySelector('.try-cards');
   }
 
   function getTutorialSpotTarget(stepKey) {
-    // Step 1: light only the ask surface (.top), not START WITH / Continue foot.
+    // Step 1: ask surface only (.top), not START WITH / Continue foot.
     if (stepKey === 'composer') return composer?.querySelector('.top') || composer;
+    // Step 2: tool cards only, not the "Try each tool" header.
     if (stepKey === 'try') return getTrySpotElement();
-    if (stepKey === 'picker') return picker.closest('.working') || picker;
+    // Step 3: Citta picker pill only, not the whole WORKING WITH row.
+    if (stepKey === 'picker') return picker;
     if (stepKey === 'doc-switch') return $('tutorialDocSwitch');
     return null;
   }
@@ -2045,7 +2086,7 @@
       coach.classList.remove('on', 'centered', 'switch-coach');
       setCoachScrim(false);
       clearTutorialSpotlight();
-      frame.classList.remove('tutorial-on', 'tutorial-spot-composer', 'dim');
+      frame.classList.remove('tutorial-on', 'tutorial-spot-composer', 'tutorial-spot-try', 'tutorial-spot-picker', 'dim');
       document.querySelectorAll('.spot').forEach((el) => el.classList.remove('spot'));
       mountCoachForViewport(false);
       fit();
@@ -2102,7 +2143,10 @@
     document.querySelectorAll('.spot').forEach((el) => el.classList.remove('spot'));
     frame.classList.toggle('tutorial-on', screen === 'tutorial' && !tutorialDocPhase);
     frame.classList.toggle('tutorial-spot-composer', screen === 'tutorial' && !tutorialDocPhase && step.spot === 'composer');
-    if (step.spot) positionTutorialSpotlight(getTutorialSpotTarget(step.spot), step.spot === 'composer' ? 6 : 10);
+    frame.classList.toggle('tutorial-spot-try', screen === 'tutorial' && !tutorialDocPhase && step.spot === 'try');
+    frame.classList.toggle('tutorial-spot-picker', screen === 'tutorial' && !tutorialDocPhase && step.spot === 'picker');
+    const spotInset = step.spot === 'composer' ? 6 : (step.spot === 'picker' ? 4 : 10);
+    if (step.spot) positionTutorialSpotlight(getTutorialSpotTarget(step.spot), spotInset);
     else clearTutorialSpotlight();
     coach.classList.toggle('on', screen === 'tutorial');
     positionCoach();
@@ -2298,7 +2342,7 @@
     coach.classList.remove('on', 'centered', 'switch-coach', 'wide');
     setCoachScrim(false);
     clearTutorialSpotlight();
-    frame.classList.remove('tutorial-on', 'tutorial-spot-composer', 'dim', 'tutorial-doc-on');
+    frame.classList.remove('tutorial-on', 'tutorial-spot-composer', 'tutorial-spot-try', 'tutorial-spot-picker', 'dim', 'tutorial-doc-on');
     document.querySelectorAll('.spot').forEach((el) => el.classList.remove('spot'));
     mountCoachForViewport(false);
     // Stay on tutorial screen + tail (arrival, try tools, empty reminders, goals).
@@ -2789,7 +2833,7 @@
       tutorialExploring = false;
       coach.classList.remove('on', 'switch-coach');
       setCoachScrim(false);
-      frame.classList.remove('tutorial-on', 'tutorial-spot-composer', 'dim');
+      frame.classList.remove('tutorial-on', 'tutorial-spot-composer', 'tutorial-spot-try', 'tutorial-spot-picker', 'dim');
       if (!wantTip) clearTutorialSpotlight();
       exitTutorialDoc();
       document.querySelectorAll('.spot').forEach((el) => el.classList.remove('spot'));
@@ -2921,7 +2965,10 @@
     if (coach.classList.contains('on') && !tutorialExploring) positionCoach();
     const stepCfg = TUTORIAL_STEPS[tutorialStep - 1];
     if (screen === 'tutorial' && !tutorialExploring && stepCfg?.spot && !tutorialDocPhase) {
-      positionTutorialSpotlight(getTutorialSpotTarget(stepCfg.spot), stepCfg.spot === 'composer' ? 6 : 10);
+      positionTutorialSpotlight(
+        getTutorialSpotTarget(stepCfg.spot),
+        stepCfg.spot === 'composer' ? 6 : (stepCfg.spot === 'picker' ? 4 : 10)
+      );
     }
   }
   window.addEventListener('resize', fit);
