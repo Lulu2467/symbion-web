@@ -3519,6 +3519,61 @@
     toastTimer = setTimeout(() => toast.classList.remove('show'), ms);
   }
 
+  const ICO_NE = '<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span>';
+
+  /** Newbie checklist: update “N of 5” and hide the panel once every tool is tried. */
+  function syncWeekToolsProgress() {
+    let cleared = false;
+    document.querySelectorAll('.week-tools-panel').forEach((panel) => {
+      if (panel.classList.contains('is-dismissed')) return;
+      const cards = [...panel.querySelectorAll('.week-card[data-tool]')];
+      if (!cards.length) return;
+      const tried = cards.filter((c) => c.classList.contains('tried')).length;
+      const total = cards.length;
+      const badge = panel.querySelector('.week-tools-hd .badge');
+      if (badge) badge.textContent = `${tried} of ${total} tried`;
+      if (tried >= total) {
+        panel.classList.add('is-dismissed');
+        cleared = true;
+      }
+    });
+    if (cleared) {
+      showToastMsg('All tools tried — week checklist cleared');
+      fit();
+    }
+    return cleared;
+  }
+
+  function markWeekToolTried(tool) {
+    if (!tool) return false;
+    let changed = false;
+    document.querySelectorAll(`.week-card[data-tool="${tool}"]`).forEach((card) => {
+      if (card.classList.contains('tried')) return;
+      changed = true;
+      card.classList.add('tried');
+      const todo = card.querySelector('.todo');
+      if (todo) {
+        const done = document.createElement('span');
+        done.className = 'done';
+        done.setAttribute('aria-label', 'Tried');
+        done.textContent = '✓';
+        todo.replaceWith(done);
+      } else if (!card.querySelector('.done')) {
+        const done = document.createElement('span');
+        done.className = 'done';
+        done.setAttribute('aria-label', 'Tried');
+        done.textContent = '✓';
+        card.prepend(done);
+      }
+      const link = card.querySelector('.go-link[data-action]');
+      if (link && link.dataset.action === 'try-citta') {
+        link.dataset.action = 'open';
+        link.innerHTML = `Open${ICO_NE}`;
+      }
+    });
+    return changed ? syncWeekToolsProgress() : false;
+  }
+
   function openWeekTool(card, action) {
     const tool = card.dataset.tool;
     const label = card.querySelector('b')?.textContent || tool;
@@ -3526,8 +3581,11 @@
     card.classList.add('is-opening');
     setTimeout(() => card.classList.remove('is-opening'), 600);
     setComposerToolSelection(tool);
-    const verb = action === 'continue' ? 'Continuing in' : 'Opening';
-    showToastMsg(`${verb} ${label} · ${sub}`);
+    const cleared = markWeekToolTried(tool);
+    if (!cleared) {
+      const verb = action === 'continue' ? 'Continuing in' : 'Opening';
+      showToastMsg(`${verb} ${label} · ${sub}`);
+    }
   }
 
   function tryToolWithCitta(sourceEl) {
@@ -3537,9 +3595,10 @@
     setAI('citta', { announce: false });
     setComposerToolSelection(tool);
     setCittaExpanded(true);
+    const cleared = markWeekToolTried(tool);
     const labels = { doc: 'Doc', deck: 'Deck', numbers: 'Numbers', symtex: 'SymTex', code: 'Code' };
     const label = labels[tool] || tool;
-    showToastMsg(`Citta is opening ${label} — ready when you are`);
+    if (!cleared) showToastMsg(`Citta is opening ${label} — ready when you are`);
     setComposerDraft(`Try ${label} with Citta — what should we make first?`);
   }
 
@@ -4416,6 +4475,7 @@
   initFullscreenToggle();
   decorateSparkIcons();
   decorateLectureBookIcons();
+  syncWeekToolsProgress();
   const composerInputEl = $('composerInput');
   composerInputEl?.addEventListener('input', () => resizeTextarea(composerInputEl));
   const cittaInputEl = $('cittaInput');
