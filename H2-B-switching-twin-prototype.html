@@ -662,7 +662,30 @@
     line-height: 1;
   }
   .citta-panel .ph .sp { flex: 1; min-width: 4px; }
-  .citta-panel .ph .panel-close { width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--line); background: #fff; color: var(--muted); font-size: 20px; font-weight: 300; line-height: 1; display: flex; align-items: center; justify-content: center; flex: none; }
+  .citta-panel .ph .panel-close {
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--muted);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  /* Optical center for × (glyph sits high in the em box). */
+  .citta-panel .ph .panel-close::before {
+    content: '×';
+    display: block;
+    transform: translateY(-0.04em);
+  }
   .citta-panel .ph .panel-close:hover { background: var(--surface); color: var(--ink); }
   .citta-panel .ctx { padding: 10px 16px 4px; font-size: 12px; color: var(--muted); border-bottom: 0; flex: none; }
   .citta-panel .ctx .where { display: inline-block; font-weight: 600; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 2px 8px; margin-left: 4px; }
@@ -1880,7 +1903,7 @@
           <button type="button" class="sw-sm" id="cittaPanelSwitch" aria-label="Switch who you’re working with"><svg class="switch-ico" width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M96 416h832c0.32 0 0.576-0.192 0.896-0.192a30.656 30.656 0 0 0 30.976-30.976c-0.064-0.256 0.128-0.512 0.128-0.832a31.424 31.424 0 0 0-14.912-26.368l-188.48-188.48a30.72 30.72 0 1 0-43.456 43.456L852.544 352H96a32 32 0 0 0 0 64z m832 192H96c-0.32 0-0.576 0.192-0.896 0.192a30.528 30.528 0 0 0-30.976 30.976c0.064 0.256-0.128 0.512-0.128 0.832 0 11.264 6.144 20.672 14.912 26.368l188.48 188.48a30.72 30.72 0 1 0 43.456-43.456L171.456 672H928a32 32 0 0 0 0-64z" fill="currentColor"/></svg></button>
           <span class="task-pill">3 tasks</span>
           <span class="sp"></span>
-          <button type="button" class="panel-close" id="cittaPanelClose" aria-label="Close Citta panel">×</button>
+          <button type="button" class="panel-close" id="cittaPanelClose" aria-label="Close Citta panel"></button>
         </div>
         <div class="ctx">Working with: <span class="where">Home</span></div>
         <div class="citta-scroll-wrap" id="cittaScrollWrap">
