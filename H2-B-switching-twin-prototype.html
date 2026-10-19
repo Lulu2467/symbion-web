@@ -577,7 +577,52 @@
   .citta-panel .ph .panel-close:hover { background: var(--surface); color: var(--ink); }
   .citta-panel .ctx { padding: 10px 16px 4px; font-size: 12px; color: var(--muted); border-bottom: 0; flex: none; }
   .citta-panel .ctx .where { display: inline-block; font-weight: 600; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 2px 8px; margin-left: 4px; }
-  .citta-panel .citta-scroll { flex: 1; min-height: 0; overflow: auto; padding: 14px 16px 12px; display: flex; flex-direction: column; gap: 12px; }
+  .citta-panel .citta-scroll-wrap {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .citta-panel .citta-scroll {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    padding: 14px 16px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    scrollbar-width: thin;
+  }
+  /* Message overflow: frosted blur fades at the edges while scrolling. */
+  .citta-panel .citta-scroll-wrap::before,
+  .citta-panel .citta-scroll-wrap::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 40px;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity .18s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .citta-panel .citta-scroll-wrap::before {
+    top: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,.88) 0%, rgba(255,255,255,.35) 55%, rgba(255,255,255,0) 100%);
+    -webkit-mask-image: linear-gradient(180deg, #000 20%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 20%, transparent 100%);
+  }
+  .citta-panel .citta-scroll-wrap::after {
+    bottom: 0;
+    background: linear-gradient(0deg, rgba(255,255,255,.92) 0%, rgba(255,255,255,.4) 55%, rgba(255,255,255,0) 100%);
+    -webkit-mask-image: linear-gradient(0deg, #000 20%, transparent 100%);
+    mask-image: linear-gradient(0deg, #000 20%, transparent 100%);
+  }
+  .citta-panel .citta-scroll-wrap.show-top-fade::before { opacity: 1; }
+  .citta-panel .citta-scroll-wrap.show-bot-fade::after { opacity: 1; }
   /* Same bubble shell (radius / pad / border / type) — only fill + text color differ. */
   .citta-panel .user-bubble,
   .citta-panel .asst-card {
@@ -1603,28 +1648,35 @@
           <button type="button" class="panel-close" id="cittaPanelClose" aria-label="Close Citta panel">×</button>
         </div>
         <div class="ctx">Working with: <span class="where">Home</span></div>
-        <div class="citta-scroll">
-          <div class="user-bubble">Prep me for lecture 5</div>
-          <div class="asst-card">
-            I drafted a 10-slide deck from Prof. Roland’s lecture 5 slides, with 3 quiz questions at the end.
-            <button type="button" class="act-link">Open in Deck<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
-          </div>
-          <div class="run-hd">RUNNING &amp; READY</div>
-          <div class="run-list">
-            <div class="citta-run">
-              <div class="top"><span class="tool-tag">DECK</span><span class="title">Lecture 4 summary</span></div>
-              <span class="status">Drafting slide 7 of 10…</span>
-              <div class="prog" aria-hidden="true"><span></span></div>
+        <div class="citta-scroll-wrap" id="cittaScrollWrap">
+          <div class="citta-scroll" id="cittaScroll">
+            <div class="user-bubble">Prep me for lecture 5</div>
+            <div class="asst-card">
+              I drafted a 10-slide deck from Prof. Roland’s lecture 5 slides, with 3 quiz questions at the end.
+              <button type="button" class="act-link">Open in Deck<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
             </div>
-            <div class="citta-run">
-              <div class="top"><span class="tool-tag">NUMBERS</span><span class="title">Lab 3 trends</span></div>
-              <span class="status">Analysis ready</span>
-              <button type="button" class="act tap-active">Review<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
+            <div class="user-bubble">Can you also pull quiz answers from the reading?</div>
+            <div class="asst-card">
+              Yes — I lined up 3 quiz prompts with short answer keys from the QGP reading notes. Open the deck to tweak wording.
+              <button type="button" class="act-link">Open in Deck<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
             </div>
-            <div class="citta-run err">
-              <div class="top"><span class="tool-tag">DECK</span><span class="title">Create a deck called “Lab 3”</span></div>
-              <span class="status">Result not delivered</span>
-              <button type="button" class="act">Retry<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
+            <div class="run-hd">RUNNING &amp; READY</div>
+            <div class="run-list">
+              <div class="citta-run">
+                <div class="top"><span class="tool-tag">DECK</span><span class="title">Lecture 4 summary</span></div>
+                <span class="status">Drafting slide 7 of 10…</span>
+                <div class="prog" aria-hidden="true"><span></span></div>
+              </div>
+              <div class="citta-run">
+                <div class="top"><span class="tool-tag">NUMBERS</span><span class="title">Lab 3 trends</span></div>
+                <span class="status">Analysis ready</span>
+                <button type="button" class="act tap-active">Review<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
+              </div>
+              <div class="citta-run err">
+                <div class="top"><span class="tool-tag">DECK</span><span class="title">Create a deck called “Lab 3”</span></div>
+                <span class="status">Result not delivered</span>
+                <button type="button" class="act">Retry<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
+              </div>
             </div>
           </div>
         </div>
@@ -1832,9 +1884,11 @@
     setTimeout(() => {
       scroll.appendChild(asst);
       scroll.scrollTop = scroll.scrollHeight;
+      syncCittaScrollFade();
     }, 220);
 
     scroll.scrollTop = scroll.scrollHeight;
+    syncCittaScrollFade();
     showToastMsg('Sent to Citta');
   }
 
@@ -3022,6 +3076,7 @@
         </div>
       </div>`;
     scroll.scrollTop = 0;
+    syncCittaScrollFade();
     const cittaInput = $('cittaInput');
     if (cittaInput) { cittaInput.value = ''; resizeTextarea(cittaInput); }
   }
@@ -3453,6 +3508,26 @@
     }
   }
 
+  function syncCittaScrollFade() {
+    const scroll = $('cittaScroll') || document.querySelector('.citta-panel .citta-scroll');
+    const wrap = $('cittaScrollWrap') || scroll?.closest('.citta-scroll-wrap');
+    if (!scroll || !wrap) return;
+    const max = Math.max(0, scroll.scrollHeight - scroll.clientHeight);
+    const canScroll = max > 4;
+    const top = scroll.scrollTop;
+    wrap.classList.toggle('show-top-fade', canScroll && top > 6);
+    wrap.classList.toggle('show-bot-fade', canScroll && top < max - 6);
+  }
+
+  function bindCittaScrollFade() {
+    const scroll = $('cittaScroll') || document.querySelector('.citta-panel .citta-scroll');
+    if (!scroll || scroll.dataset.fadeBound) return;
+    scroll.dataset.fadeBound = '1';
+    scroll.addEventListener('scroll', syncCittaScrollFade, { passive: true });
+    window.addEventListener('resize', syncCittaScrollFade, { passive: true });
+    syncCittaScrollFade();
+  }
+
   function setCittaExpanded(open) {
     cittaExpanded = open;
     frame.classList.toggle('citta-open', open);
@@ -3464,6 +3539,7 @@
     });
     syncHash();
     fit();
+    if (open) requestAnimationFrame(() => { bindCittaScrollFade(); syncCittaScrollFade(); });
   }
 
   const dock = $('dock');
@@ -3763,6 +3839,7 @@
   if (location.hash) readHash();
   else setScreen('home');
   fit();
+  bindCittaScrollFade();
   document.fonts && document.fonts.ready.then(fit);
 </script>
 </body>
