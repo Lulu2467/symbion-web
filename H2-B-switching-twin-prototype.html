@@ -37,6 +37,9 @@
     --page-gutter: 56px;
     /* Chat shell / Citta ask capsule — sage grey-green from frame reference. */
     --chat-frame: #c4dad3;
+    /* Soft sage cast for the composer lift (not neutral grey). */
+    --shadow-sage: rgba(90, 120, 110, .10);
+    --shadow-sage-deep: rgba(70, 100, 90, .14);
     /* Latin → Inter; CJK → Noto / system Chinese UI fonts (avoid ugly bitmap fallbacks). */
     --font: Inter, "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
   }
@@ -159,12 +162,12 @@
     background: #fff;
     border: 1.5px solid var(--chat-frame);
     border-radius: 24px;
-    box-shadow: 0 1px 3px rgba(28,31,29,.05), 0 4px 12px rgba(28,31,29,.06);
+    box-shadow: 0 1px 3px var(--shadow-sage), 0 6px 18px var(--shadow-sage-deep);
   }
   /* Keep grey-green on focus — no brand-green ring. */
   .composer:focus-within {
     border-color: var(--chat-frame);
-    box-shadow: 0 1px 3px rgba(28,31,29,.05), 0 4px 12px rgba(28,31,29,.06);
+    box-shadow: 0 1px 3px var(--shadow-sage), 0 6px 18px var(--shadow-sage-deep);
   }
   /* Menu lives inside .composer; raise the whole composer so week-tool cards don’t paint over it. */
   .composer:has(.menu.open),
@@ -952,7 +955,7 @@
     z-index: 14;
     background: #fff;
     border-color: var(--green);
-    box-shadow: 0 1px 3px rgba(28,31,29,.05), 0 4px 12px rgba(0,139,104,.08);
+    box-shadow: 0 1px 3px var(--shadow-sage), 0 6px 18px var(--shadow-sage-deep);
   }
   /* Step 2: title + cards lit together; composer above stays muted. */
   .frame.tutorial-spot-try .composer {
