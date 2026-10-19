@@ -207,27 +207,34 @@
   .composer-input::placeholder { color: var(--placeholder); }
   .composer-input:focus { outline: none; }
   .ask-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 2px; }
-  .composer .ask-bar .plus { width: 32px; height: 32px; border-radius: 10px; color: var(--muted); font-size: 22px; font-weight: 400; line-height: 1; flex: none; display: flex; align-items: center; justify-content: flex-start; padding: 0; box-sizing: border-box; transition: background .12s, color .12s; }
+  .composer .ask-bar .plus { width: 32px; height: 32px; border-radius: 10px; color: var(--muted); font-size: 22px; font-weight: 400; line-height: 1; flex: none; display: inline-flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; transition: background .12s, color .12s; }
   .composer .ask-bar .plus:hover { background: #fff; color: var(--ink); }
   .composer .ask-bar .plus:active { transform: scale(.96); }
-  .send { width: 36px; height: 36px; border-radius: 10px; background: var(--green); color: #fff; flex: none; display: flex; align-items: center; justify-content: center; padding: 8px; box-sizing: border-box; transition: background .12s, transform .08s; margin-left: auto; }
+  .send { width: 36px; height: 36px; border-radius: 10px; background: var(--green); color: #fff; flex: none; display: inline-flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; transition: background .12s, transform .08s; margin-left: auto; }
   .send:hover { background: var(--green-dark); }
   .send:active { transform: scale(.96); }
   .send svg { display: block; width: 16px; height: 16px; flex: none; }
+  /* Icon wells: glyph dead-center in the frame; keep label text on the same mid-line via parent flex. */
   .tool-glyph,
   .tool i,
   .week-card i,
   .tpl .h i,
   .try-card .bot i,
-  .tutorial-try-card .trow i { font-style: normal; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; flex: none; line-height: 1; }
-  .tool i { width: 28px; height: 28px; border-radius: 8px; padding: 6px; font-size: 13px; font-weight: 600; }
-  .tool i svg { display: block; width: 16px; height: 16px; }
-  .week-card i { width: 28px; height: 28px; border-radius: 10px; padding: 6px; font-size: 13px; font-weight: 600; }
-  .week-card i svg { display: block; width: 16px; height: 16px; }
-  .ico-ne { display: inline-flex; align-items: center; justify-content: center; flex: none; vertical-align: -0.12em; width: 0.78em; height: 0.78em; margin-left: 0.32em; line-height: 0; }
+  .tutorial-try-card .trow i { font-style: normal; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; flex: none; line-height: 1; padding: 0; text-align: center; }
+  .tool i { width: 28px; height: 28px; border-radius: 8px; font-size: 14px; font-weight: 600; }
+  .tool i svg { display: block; width: 16px; height: 16px; flex: none; }
+  .week-card i { width: 28px; height: 28px; border-radius: 10px; font-size: 14px; font-weight: 600; }
+  .week-card i svg { display: block; width: 16px; height: 16px; flex: none; }
+  .tpl .h i { width: 28px; height: 28px; border-radius: 10px; font-size: 14px; font-weight: 500; background: var(--green-wash); border: 1px solid var(--line); color: var(--green); }
+  .tpl .h i svg,
+  .try-card .bot i svg { display: block; width: 16px; height: 16px; flex: none; }
+  .try-card .bot i { width: 28px; height: 28px; border-radius: 8px; font-size: 13px; font-weight: 600; }
+  .tutorial-try-card .trow i { width: 32px; height: 32px; border-radius: 10px; font-size: 14px; font-weight: 600; }
+  .ico-ne { display: inline-flex; align-items: center; justify-content: center; flex: none; vertical-align: middle; width: 0.78em; height: 0.78em; margin-left: 0.32em; line-height: 0; }
   .ico-ne svg { display: block; width: 100%; height: 100%; }
-  .week-card .go-link { display: inline-flex; align-items: center; }
-  .link.course-back, .link[data-action="browse-discover"] { display: inline-flex; align-items: center; }
+  .week-card .go-link { display: inline-flex; align-items: center; gap: 4px; }
+  .week-card .row { display: flex; gap: 8px; align-items: center; }
+  .link.course-back, .link[data-action="browse-discover"], .link.act-link, .act-link { display: inline-flex; align-items: center; }
   .chip .ar.ico-ne { width: 13px; height: 13px; margin-left: 6px; vertical-align: middle; }
   .tools { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; min-height: 40px; }
   .tool { display: inline-flex; gap: 9px; align-items: center; padding: 6px 14px 6px 6px; border-radius: 12px; border: 1.5px solid var(--line); background: #fff; font-size: 14px; font-weight: 500; color: var(--ink); cursor: pointer; transition: background .12s, color .12s, border-color .12s; box-sizing: border-box; min-height: 40px; }
@@ -264,7 +271,8 @@
   .foot .link-btn { font-size: 13px; font-weight: 500; color: var(--green); padding: 8px 0; cursor: pointer; }
   .foot .link-btn:hover { text-decoration: underline; text-underline-offset: 2px; }
   .chip .ic, .chip .ar { color: var(--green); font-weight: 500; }
-  .chip .ic { display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; flex: none; line-height: 1; font-weight: normal; font-size: 14px; }
+  .chip .ic { display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; flex: none; line-height: 0; font-weight: normal; font-size: 14px; }
+  .chip .ic svg { display: block; width: 100%; height: 100%; }
   .chip .ic svg { display: block; width: 14px; height: 14px; flex: none; }
   /* Report clipboard glyph has more viewBox padding than book/flask — fill slot + slight scale for equal optical weight */
   .chip .ic.ico-report svg { width: 16px; height: 16px; transform: scale(1.08); transform-origin: center; }
@@ -332,7 +340,7 @@
   .tag.agent { background: var(--amber-tint); color: var(--amber); }
   .dcard small { display: block; font-size: 11px; color: var(--faint); }
   .addsi { background: var(--green-tint); color: var(--green-dark); font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: 8px; }
-  .round { width: 28px; height: 28px; border-radius: 14px; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 14px; flex: none; }
+  .round { width: 28px; height: 28px; border-radius: 14px; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 14px; flex: none; padding: 0; box-sizing: border-box; line-height: 0; }
 
   /* Reminders + activity */
   .two { display: block; }
@@ -379,15 +387,14 @@
   .goals { display: flex; gap: 16px; align-items: stretch; }
   .tpl { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 10px; align-items: stretch; line-height: 1.4; text-align: left; width: 100%; min-height: 168px; box-sizing: border-box; background: #fff; }
   .tpl .h { display: flex; gap: 8px; align-items: center; font-size: 12px; font-weight: 600; color: var(--muted); flex: none; min-height: 28px; }
-  .tpl .h i { width: 28px; height: 28px; border-radius: 10px; padding: 6px; background: var(--green-wash); border: 1px solid var(--line); font-size: 13px; font-weight: 500; color: var(--green); }
   .tpl b { font-size: 14px; font-weight: 600; display: block; min-height: 2.8em; width: 100%; }
   .tpl small { font-size: 12px; color: var(--faint); display: block; min-height: 2.8em; width: 100%; }
   .tpl .use { margin-top: auto; align-self: stretch; text-align: center; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 12px; font-weight: 500; background: #fff; }
 
   /* Dock + toast */
-  .dock { position: absolute; right: var(--page-gutter); top: 843px; width: 44px; height: 44px; border-radius: 22px; background: #fff; border: 1.5px solid var(--green); color: var(--green); font-size: 0; font-weight: 600; display: flex; align-items: center; justify-content: center; left: auto; padding: 6px; box-sizing: border-box; overflow: visible; transition: transform .08s, box-shadow .12s; }
+  .dock { position: absolute; right: var(--page-gutter); top: 843px; width: 44px; height: 44px; border-radius: 22px; background: #fff; border: 1.5px solid var(--green); color: var(--green); font-size: 0; font-weight: 600; display: flex; align-items: center; justify-content: center; left: auto; padding: 0; box-sizing: border-box; overflow: visible; transition: transform .08s, box-shadow .12s; }
   .dock:active { transform: scale(.96); }
-  .dock .dock-av { width: 100%; height: 100%; max-width: 32px; max-height: 32px; border-radius: 9px; object-fit: cover; display: block; flex: none; }
+  .dock .dock-av { width: 32px; height: 32px; border-radius: 9px; object-fit: cover; display: block; flex: none; }
   .dock .count { position: absolute; left: 28.5px; top: -5.5px; width: 18px; height: 18px; border-radius: 9px; background: var(--green); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
   .dock .sw { position: absolute; left: 12.5px; top: 34.5px; width: 16px; height: 16px; border-radius: 8px; background: #fff; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; }
   .toast { position: absolute; left: 50%; top: 1240px; transform: translate(-50%, 8px); background: var(--toast); color: #fff; font-size: 13px; padding: 10px 16px 10px 14px; border-radius: 12px; display: flex; gap: 10px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
@@ -429,7 +436,6 @@
   .try-card .prev .mock { flex: 1; border: 1px solid var(--line); border-radius: 8px; background: #fff; padding: 8px; font-size: 9px; color: var(--faint); line-height: 1.35; overflow: hidden; }
   .try-card .bot { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px; }
   .try-card .bot .row { display: flex; gap: 8px; align-items: center; }
-  .try-card .bot i { width: 28px; height: 28px; border-radius: 8px; padding: 6px; font-size: 12px; font-weight: 600; }
   .try-card .bot b { font-size: 14px; font-weight: 600; }
   .try-card .bot small { font-size: 12px; color: var(--faint); }
   .try-card .bot .btn-citta { margin-top: 8px; }
@@ -440,7 +446,7 @@
   .week-tools-hd h3 { margin: 0; font-size: 20px; font-weight: 500; }
   .week-tools-hd .badge { font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--green-tint); color: var(--green-dark); flex: none; }
   .week-tools-hd .sp { flex: 1; min-width: 8px; }
-  .week-tools-close { width: 28px; height: 28px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); font-size: 20px; line-height: 1; flex: none; cursor: pointer; }
+  .week-tools-close { width: 28px; height: 28px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); font-size: 20px; line-height: 1; flex: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0; }
   .week-tools-close:hover { background: var(--surface); color: var(--ink); }
   .week-cards { display: flex; gap: 16px; align-items: stretch; }
   .week-card { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; background: #fff; position: relative; text-align: left; }
@@ -539,7 +545,7 @@
   .citta-input { flex: 1; min-width: 0; font-size: 13px; line-height: 1.45; color: var(--ink); background: transparent; border: 0; padding: 0; margin: 0; resize: none; font-family: var(--font); min-height: 1.45em; overflow: hidden; text-align: left; }
   .citta-input::placeholder { color: var(--placeholder); text-align: left; }
   .citta-input:focus { outline: none; }
-  .citta-panel .ask-row .send { width: 36px; height: 36px; border-radius: 10px; margin-left: auto; flex: none; }
+  .citta-panel .ask-row .send { width: 36px; height: 36px; border-radius: 10px; margin-left: auto; flex: none; display: inline-flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; }
 
   /* Spotlight steps: cutout dim inside .frame. Final step: viewport-fixed gray + centered modal (outside .scaler — transform traps fixed). */
   /* Scrim dims only — keep pointer-events none so the page can still scroll to below-fold H0 content. */
@@ -643,7 +649,8 @@
   .tutorial-try-cards { display: flex; gap: 16px; min-height: 186px; }
   .tutorial-try-card { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 16px; padding: 17px; background: #fff; display: flex; flex-direction: column; gap: 6px; text-align: left; }
   .tutorial-try-card .trow { display: flex; gap: 8px; align-items: center; }
-  .tutorial-try-card .trow i { width: 32px; height: 32px; border-radius: 10px; padding: 8px; font-size: 13px; font-weight: 600; }
+  .tutorial-try-card .trow i { width: 32px; height: 32px; border-radius: 10px; font-size: 14px; font-weight: 600; }
+  .tutorial-try-card .trow i svg { display: block; width: 16px; height: 16px; flex: none; }
   .tutorial-try-card .lead { font-size: 15px; font-weight: 500; line-height: 1.35; margin: 4px 0 0; min-height: 40px; }
   .tutorial-try-card .sub { font-size: 12px; color: var(--faint); margin: 0; }
   .tutorial-try-card .try-it { align-self: flex-start; margin-top: auto; background: var(--green); color: #fff; font-size: 12px; font-weight: 600; padding: 7px 14px; border-radius: 999px; white-space: nowrap; }
