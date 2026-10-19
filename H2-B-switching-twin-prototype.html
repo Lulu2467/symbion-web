@@ -2133,14 +2133,69 @@
     showToastMsg(`${AIS[current].prefix}  ${verb} — Citta is on it`);
   }
 
+  const CONTINUE_THREADS = {
+    deck: {
+      toolTag: 'DECK',
+      user: 'Continue Lecture 4 summary',
+      asst: 'Picking up your Lecture 4 summary where you left off — drafting slide 7 of 10. Ask me to rewrite any slide or jump into the editor.',
+      link: 'Open in Deck',
+      status: 'Drafting slide 7 of 10…',
+      progress: true
+    },
+    doc: {
+      toolTag: 'DOC',
+      user: 'Continue Reading report — QGP',
+      asst: 'Resuming your Reading report — QGP at 55%. Section 3 is open; say “tighten the methods section” or open the Doc to edit directly.',
+      link: 'Open in Doc',
+      status: 'Editing section 3 of 5…',
+      progress: true
+    }
+  };
+
+  function resumeCittaThread(label, tool) {
+    const thread = CONTINUE_THREADS[tool] || {
+      toolTag: (tool || 'TASK').toUpperCase(),
+      user: `Continue ${label}`,
+      asst: `Picking up “${label}” where you left off. Your file stays open — tell me what to do next.`,
+      link: null,
+      status: 'In progress',
+      progress: false
+    };
+    const where = document.querySelector('.citta-panel .ctx .where');
+    if (where) where.textContent = label;
+    const scroll = document.querySelector('.citta-panel .citta-scroll');
+    if (!scroll) return;
+
+    const linkHtml = thread.link
+      ? `<button type="button" class="act-link">${thread.link}<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>`
+      : '';
+    const progHtml = thread.progress ? '<div class="prog" aria-hidden="true"><span></span></div>' : '';
+    scroll.innerHTML = `
+      <div class="user-bubble">${thread.user}</div>
+      <div class="asst-card">${thread.asst}${linkHtml}</div>
+      <div class="run-hd">RUNNING &amp; READY</div>
+      <div class="run-list">
+        <div class="citta-run">
+          <div class="top"><span class="tool-tag">${thread.toolTag}</span><span class="title">${label}</span></div>
+          <span class="status">${thread.status}</span>
+          ${progHtml}
+        </div>
+      </div>`;
+    scroll.scrollTop = 0;
+    const cittaInput = $('cittaInput');
+    if (cittaInput) { cittaInput.value = ''; resizeTextarea(cittaInput); }
+  }
+
   function continueWithChip(chip) {
     const label = chip.querySelector('b')?.textContent || chip.textContent.trim();
     const tool = chip.dataset.continueTool;
     if (tool) setComposerToolSelection(tool);
     flashEl(chip);
-    setComposerDraft(`Continue: ${label}`);
-    showToastMsg(`Opening · ${label}`);
+    // Jump straight into the prior conversation — no compose-then-send step.
+    setComposerDraft('');
     setCittaExpanded(true);
+    resumeCittaThread(label, tool);
+    showToastMsg(`Continuing · ${label}`);
   }
 
   function initFrameInteractions() {
