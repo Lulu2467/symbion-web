@@ -439,7 +439,8 @@
   .dock:active { transform: scale(.96); }
   .dock .dock-av { width: 32px; height: 32px; border-radius: 9px; object-fit: cover; display: block; flex: none; }
   .dock .count { position: absolute; left: 28.5px; top: -5.5px; width: 18px; height: 18px; border-radius: 9px; background: var(--green); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-  .dock .sw { position: absolute; left: 12.5px; top: 34.5px; width: 16px; height: 16px; border-radius: 8px; background: #fff; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; color: var(--muted); }
+  .dock .sw { position: absolute; left: 12.5px; top: 34.5px; width: 16px; height: 16px; border-radius: 8px; background: #fff; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; color: var(--muted); cursor: pointer; }
+  .dock .sw:hover { border-color: var(--green); color: var(--green); }
   .toast { position: absolute; left: 50%; top: 1240px; transform: translate(-50%, 8px); background: var(--toast); color: #fff; font-size: 13px; padding: 10px 16px 10px 14px; border-radius: 12px; display: flex; gap: 10px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
   .toast.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
   .toast button { color: var(--toast-link); font-weight: 600; }
@@ -555,7 +556,8 @@
   .citta-panel .ph .citta-av { width: 28px; height: 28px; border-radius: 10px; background: transparent; color: var(--green-dark); font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex: none; overflow: hidden; padding: 0; }
   .citta-panel .ph .citta-av img { border-radius: 10px; }
   .citta-panel .ph b { font-size: 16px; font-weight: 600; flex: none; }
-  .citta-panel .ph .sw-sm { color: var(--green); display: flex; align-items: center; flex: none; }
+  .citta-panel .ph .sw-sm { color: var(--green); display: inline-flex; align-items: center; justify-content: center; flex: none; width: 28px; height: 28px; padding: 0; border: 0; border-radius: 8px; background: transparent; cursor: pointer; }
+  .citta-panel .ph .sw-sm:hover { background: var(--green-tint); }
   .citta-panel .ph .task-pill { font-size: 11px; font-weight: 600; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px 8px; flex: none; white-space: nowrap; }
   .citta-panel .ph .sp { flex: 1; min-width: 4px; }
   .citta-panel .ph .panel-close { width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--line); background: #fff; color: var(--muted); font-size: 20px; font-weight: 300; line-height: 1; display: flex; align-items: center; justify-content: center; flex: none; }
@@ -1573,7 +1575,7 @@
         <div class="ph">
           <span class="citta-av citta-portrait" aria-hidden="true"><img src="assets/citta-avatar.png" width="28" height="28" alt=""></span>
           <b>Citta</b>
-          <span class="sw-sm" aria-hidden="true"><svg class="switch-ico" width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M96 416h832c0.32 0 0.576-0.192 0.896-0.192a30.656 30.656 0 0 0 30.976-30.976c-0.064-0.256 0.128-0.512 0.128-0.832a31.424 31.424 0 0 0-14.912-26.368l-188.48-188.48a30.72 30.72 0 1 0-43.456 43.456L852.544 352H96a32 32 0 0 0 0 64z m832 192H96c-0.32 0-0.576 0.192-0.896 0.192a30.528 30.528 0 0 0-30.976 30.976c0.064 0.256-0.128 0.512-0.128 0.832 0 11.264 6.144 20.672 14.912 26.368l188.48 188.48a30.72 30.72 0 1 0 43.456-43.456L171.456 672H928a32 32 0 0 0 0-64z" fill="currentColor"/></svg></span>
+          <button type="button" class="sw-sm" id="cittaPanelSwitch" aria-label="Switch who you’re working with"><svg class="switch-ico" width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M96 416h832c0.32 0 0.576-0.192 0.896-0.192a30.656 30.656 0 0 0 30.976-30.976c-0.064-0.256 0.128-0.512 0.128-0.832a31.424 31.424 0 0 0-14.912-26.368l-188.48-188.48a30.72 30.72 0 1 0-43.456 43.456L852.544 352H96a32 32 0 0 0 0 64z m832 192H96c-0.32 0-0.576 0.192-0.896 0.192a30.528 30.528 0 0 0-30.976 30.976c0.064 0.256-0.128 0.512-0.128 0.832 0 11.264 6.144 20.672 14.912 26.368l188.48 188.48a30.72 30.72 0 1 0 43.456-43.456L171.456 672H928a32 32 0 0 0 0-64z" fill="currentColor"/></svg></button>
           <span class="task-pill">3 tasks</span>
           <span class="sp"></span>
           <button type="button" class="panel-close" id="cittaPanelClose" aria-label="Close Citta panel">×</button>
@@ -1639,7 +1641,7 @@
 
       <button type="button" class="dock" id="dock" aria-label="Citta dock" aria-expanded="false"><img class="dock-av" src="assets/citta-avatar.png" width="32" height="32" alt="">
         <span class="count">3</span>
-        <span class="sw"><svg class="switch-ico" width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M96 416h832c0.32 0 0.576-0.192 0.896-0.192a30.656 30.656 0 0 0 30.976-30.976c-0.064-0.256 0.128-0.512 0.128-0.832a31.424 31.424 0 0 0-14.912-26.368l-188.48-188.48a30.72 30.72 0 1 0-43.456 43.456L852.544 352H96a32 32 0 0 0 0 64z m832 192H96c-0.32 0-0.576 0.192-0.896 0.192a30.528 30.528 0 0 0-30.976 30.976c0.064 0.256-0.128 0.512-0.128 0.832 0 11.264 6.144 20.672 14.912 26.368l188.48 188.48a30.72 30.72 0 1 0 43.456-43.456L171.456 672H928a32 32 0 0 0 0-64z" fill="currentColor"/></svg></span>
+        <span class="sw" id="dockSwitch" role="button" tabindex="0" aria-label="Switch who you’re working with"><svg class="switch-ico" width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M96 416h832c0.32 0 0.576-0.192 0.896-0.192a30.656 30.656 0 0 0 30.976-30.976c-0.064-0.256 0.128-0.512 0.128-0.832a31.424 31.424 0 0 0-14.912-26.368l-188.48-188.48a30.72 30.72 0 1 0-43.456 43.456L852.544 352H96a32 32 0 0 0 0 64z m832 192H96c-0.32 0-0.576 0.192-0.896 0.192a30.528 30.528 0 0 0-30.976 30.976c0.064 0.256-0.128 0.512-0.128 0.832 0 11.264 6.144 20.672 14.912 26.368l188.48 188.48a30.72 30.72 0 1 0 43.456-43.456L171.456 672H928a32 32 0 0 0 0-64z" fill="currentColor"/></svg></span>
       </button>
 
       <div class="toast" id="toast" role="status">
@@ -1875,19 +1877,62 @@
     document.querySelectorAll('[data-goto]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.goto === state)));
   }
 
+  /** Every Citta switch icon: same effect — open twin switcher (doc-local when in tutorial Doc). */
+  function openCittaSwitcher() {
+    if (tutorialDocPhase === 'doc' || tutorialDocPhase === 'switch-open' || tutorialDocPhase === 'twin-finish') {
+      if (tutorialDocPhase !== 'twin-finish') tutorialDocPhase = 'switch-open';
+      $('tutorialDocSwitcher')?.classList.add('open');
+      const sw = $('tutorialDocSwitch');
+      sw?.classList.add('spot');
+      sw?.setAttribute('aria-expanded', 'true');
+      coach.classList.remove('on');
+      setCoachScrim(false);
+      clearTutorialSpotlight();
+      setMenu(false);
+      syncPresenter('open');
+      return;
+    }
+    setMenu(true);
+    syncPresenter('open');
+  }
+
+  function applySwitcherChoice(aiKey) {
+    if (!aiKey || !AIS[aiKey]) return;
+    if (tutorialDocPhase === 'doc' || tutorialDocPhase === 'switch-open' || tutorialDocPhase === 'twin-finish') {
+      if (aiKey === 'citta') {
+        if (tutorialDocPhase === 'twin-finish') restoreTutorialDocCitta();
+        else {
+          setAI('citta', { announce: false });
+          $('tutorialDocSwitcher')?.classList.remove('open');
+          $('tutorialDocSwitch')?.classList.remove('spot');
+          $('tutorialDocSwitch')?.setAttribute('aria-expanded', 'false');
+          tutorialDocPhase = 'doc';
+          renderDocSwitchCoach();
+        }
+        return;
+      }
+      enterTutorialDocTwinFinish(aiKey);
+      return;
+    }
+    setAI(aiKey);
+    setMenu(false);
+    syncPresenter(aiKey === 'citta' ? 'citta' : 'twin');
+  }
+
   picker.addEventListener('click', (e) => {
     e.stopPropagation();
-    const open = !menu.classList.contains('open');
-    setMenu(open);
-    syncPresenter(open ? 'open' : (current === 'citta' ? 'citta' : 'twin'));
+    if (menu.classList.contains('open')) {
+      setMenu(false);
+      syncPresenter(current === 'citta' ? 'citta' : 'twin');
+      return;
+    }
+    openCittaSwitcher();
   });
   menu.addEventListener('click', (e) => {
     e.stopPropagation();
     const item = e.target.closest('.item');
     if (!item) return;
-    setAI(item.dataset.ai);
-    setMenu(false);
-    syncPresenter(item.dataset.ai === 'citta' ? 'citta' : 'twin');
+    applySwitcherChoice(item.dataset.ai);
   });
   document.addEventListener('click', () => {
     if (!menu.classList.contains('open')) return;
@@ -1902,8 +1947,12 @@
     e.stopPropagation();
     const s = b.dataset.goto;
     if (s === 'citta') { setAI('citta', { announce: false }); setMenu(false); }
-    if (s === 'open')  { setAI('citta', { announce: false }); setMenu(true); }
-    if (s === 'twin')  { setMenu(false); setAI('roland'); }
+    if (s === 'open')  { setAI('citta', { announce: false }); openCittaSwitcher(); }
+    if (s === 'twin')  {
+      setMenu(false);
+      if (tutorialDocPhase) enterTutorialDocTwinFinish('roland');
+      else setAI('roland');
+    }
     syncPresenter(s);
   }));
 
@@ -2960,9 +3009,7 @@
   function initFrameInteractions() {
     $('openTwinBrowse')?.addEventListener('click', (e) => {
       e.stopPropagation();
-      setMenu(true);
-      syncPresenter('open');
-      showToastMsg('Browse twins & AI agents');
+      openCittaSwitcher();
     });
 
     frame.addEventListener('click', (e) => {
@@ -3185,9 +3232,9 @@
       });
     });
 
-    frame.querySelector('.citta-panel .ph .sw-sm')?.addEventListener('click', () => {
-      setMenu(true);
-      syncPresenter('open');
+    $('cittaPanelSwitch')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openCittaSwitcher();
     });
 
     initDiscoverScroll();
@@ -3408,6 +3455,17 @@
     if (b.dataset.panel === 'dock') setCittaExpanded(false);
   }));
   dock.addEventListener('click', () => setCittaExpanded(!cittaExpanded));
+  const dockSwitch = $('dockSwitch');
+  dockSwitch?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    openCittaSwitcher();
+  });
+  dockSwitch?.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    e.preventDefault();
+    e.stopPropagation();
+    openCittaSwitcher();
+  });
   $('cittaPanelClose').addEventListener('click', () => setCittaExpanded(false));
   newTip.addEventListener('click', (e) => e.stopPropagation());
   $('newTipDismiss').addEventListener('click', (e) => {
@@ -3426,8 +3484,7 @@
     newTipSeen = true;
     postTutorialTipPending = false;
     syncHash();
-    setMenu(true);
-    syncPresenter('open');
+    openCittaSwitcher();
   });
 
   function readHash() {
@@ -3454,30 +3511,12 @@
 
   $('tutorialDocSwitch')?.addEventListener('click', (e) => {
     e.stopPropagation();
-    if (tutorialDocPhase !== 'doc' && tutorialDocPhase !== 'switch-open' && tutorialDocPhase !== 'twin-finish') return;
-    tutorialDocPhase = tutorialDocPhase === 'twin-finish' ? 'twin-finish' : 'switch-open';
-    $('tutorialDocSwitcher')?.classList.add('open');
-    $('tutorialDocSwitch')?.setAttribute('aria-expanded', 'true');
-    coach.classList.remove('on');
-    setCoachScrim(false);
+    openCittaSwitcher();
   });
   $('tutorialDocSwitcher')?.querySelectorAll('.si-row').forEach((row) => {
     row.addEventListener('click', () => {
       $('tutorialDocSwitcher')?.querySelectorAll('.si-row').forEach((r) => r.classList.toggle('on', r === row));
-      const ai = row.dataset.ai;
-      if (!ai || !AIS[ai]) return;
-      if (ai === 'citta') {
-        if (tutorialDocPhase === 'twin-finish') restoreTutorialDocCitta();
-        else {
-          setAI('citta', { announce: false });
-          $('tutorialDocSwitcher')?.classList.remove('open');
-          $('tutorialDocSwitch')?.setAttribute('aria-expanded', 'false');
-          tutorialDocPhase = 'doc';
-          renderDocSwitchCoach();
-        }
-        return;
-      }
-      enterTutorialDocTwinFinish(ai);
+      applySwitcherChoice(row.dataset.ai);
     });
   });
   $('tutorialBackToCitta')?.addEventListener('click', (e) => {
