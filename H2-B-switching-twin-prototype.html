@@ -922,69 +922,55 @@
     background: #fff;
   }
   .citta-panel .suggest { display: none; }
+  /* Kimi-like ask card: text on top, + bottom-left, send bottom-right. */
   .citta-panel .ask-row {
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    gap: 4px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
     background: #fff;
     border: 1.5px solid var(--chat-frame);
-    border-radius: 999px;
-    padding: 5px 6px 5px 6px;
-    min-height: 40px;
+    border-radius: 18px;
+    padding: 12px 12px 10px;
+    min-height: 0;
     box-sizing: border-box;
     box-shadow: none;
   }
   .citta-panel .ask-compose {
     display: flex;
     flex: 1 1 auto;
-    flex-wrap: nowrap;
-    align-items: center;
+    flex-wrap: wrap;
+    align-items: flex-start;
     gap: 6px;
     min-width: 0;
-    width: auto;
+    width: 100%;
   }
   .citta-panel .composer-chips { padding: 0; margin: 0; flex: none; }
   .citta-panel .ask-bar {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    gap: 2px;
-    flex: 0 0 auto;
-    width: auto;
+    justify-content: space-between;
+    gap: 8px;
+    flex: none;
+    width: 100%;
     margin: 0;
     padding: 0;
   }
+  .citta-panel .ask-bar .sp { flex: 1; min-width: 4px; }
   /* No focus ring / border shift — resting sage frame only. */
   .citta-panel .ask-row:focus-within {
     border-color: var(--chat-frame);
     box-shadow: none;
   }
-  /* Chips present: chips stack above the text inside ask-compose; + stays left, send right. */
-  .citta-panel .ask-row:has(.composer-chips.on) {
-    border-radius: 18px;
-    padding: 8px 8px 6px 8px;
-    align-items: flex-end;
-  }
-  .citta-panel .ask-row:has(.composer-chips.on) .ask-compose {
-    flex-wrap: wrap;
-  }
-  .citta-panel .ask-row:has(.composer-chips.on) .composer-chips {
-    flex: 1 1 100%;
-  }
-  .citta-panel .ask-row:has(.composer-chips.on) .plus,
-  .citta-panel .ask-row:has(.composer-chips.on) .ask-bar {
-    align-self: flex-end;
-  }
   .citta-panel .ask-row .plus {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     border-radius: 999px;
-    color: var(--muted);
+    background: #f0f2f1;
+    color: #2a2e2c;
     font-size: 18px;
-    font-weight: 400;
-    line-height: 1;
+    font-weight: 300;
+    line-height: 0;
     flex: none;
     display: inline-flex;
     align-items: center;
@@ -994,16 +980,24 @@
     box-sizing: border-box;
     transition: background .12s, color .12s;
   }
-  .citta-panel .ask-row .plus:hover { background: var(--green-tint); color: var(--green-dark); }
+  /* Optical center for + (glyph sits high). */
+  .citta-panel .ask-row .plus::before {
+    content: '+';
+    display: block;
+    line-height: 1;
+    transform: translateY(-0.02em);
+  }
+  .citta-panel .ask-row .plus:hover { background: #e6e9e7; color: var(--ink); }
   .citta-panel .ask-row .plus:active { transform: scale(.96); }
   .citta-input {
-    flex: 1 1 auto;
+    flex: 1 1 100%;
     min-width: 0;
     width: 100%;
     font-size: 13px;
-    line-height: 28px;
-    min-height: 28px;
-    height: 28px;
+    line-height: 1.45;
+    min-height: 40px;
+    height: auto;
+    max-height: 120px;
     color: var(--ink);
     background: transparent;
     border: 0;
@@ -1013,13 +1007,12 @@
     font-family: var(--font);
     overflow: hidden;
     text-align: left;
-    vertical-align: middle;
   }
   .citta-input::placeholder { color: var(--placeholder); text-align: left; }
   .citta-input:focus { outline: none; }
   .citta-panel .ask-bar .send {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     border-radius: 999px;
     margin-left: 0;
     flex: none;
@@ -1028,7 +1021,10 @@
     justify-content: center;
     padding: 0;
     box-sizing: border-box;
+    background: #d8dcd9;
+    color: #fff;
   }
+  .citta-panel .ask-bar .send:hover { background: var(--green); }
   .citta-panel .ask-bar .send svg { width: 13px; height: 13px; }
 
   /* Spotlight steps: cutout dim inside .frame. Final step: viewport-fixed gray + centered modal (outside .scaler — transform traps fixed). */
@@ -2096,12 +2092,13 @@
             <button type="button">Turn Lab 3 trends into slides</button>
           </div>
           <div class="ask-row">
-            <button type="button" class="plus" id="cittaPlus" aria-label="Attach">+</button>
             <div class="ask-compose">
               <div class="composer-chips" id="cittaChips" aria-live="polite"></div>
-              <textarea class="citta-input" id="cittaInput" rows="1" placeholder="Ask Citta, or / for a tool…" aria-label="Ask Citta"></textarea>
+              <textarea class="citta-input" id="cittaInput" rows="2" placeholder="Ask Citta, or / for a tool…" aria-label="Ask Citta"></textarea>
             </div>
             <div class="ask-bar">
+              <button type="button" class="plus" id="cittaPlus" aria-label="Attach"></button>
+              <span class="sp" aria-hidden="true"></span>
               <button type="button" class="send" aria-label="Send">
                 <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                   <path d="M510.06 112h-0.578a37.81 37.81 0 0 0-21.442 7.042l-0.364 0.263 0.105-0.067a45.582 45.582 0 0 0-6.93 5.486l-0.598 0.587-270.946 270.62c-17.743 17.721-17.743 46.456 0 64.178l0.536 0.526c17.78 17.19 46.142 17.015 63.705-0.526l198.597-198.36v612.384c0 20.914 16.974 37.867 37.908 37.867h5.309c20.645-0.34 37.28-17.162 37.28-37.867V261.748l198.598 198.36c17.74 17.72 46.5 17.72 64.241 0 17.743-17.72 17.744-46.455 0.002-64.177L544.515 125.289l-0.575-0.564a45.577 45.577 0 0 0-6.257-5.045l-0.569-0.375 0.104 0.076A37.78 37.78 0 0 0 514.731 112h-4.671z" fill="currentColor"/>
