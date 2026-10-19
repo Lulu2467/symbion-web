@@ -351,21 +351,22 @@
   .addsi { background: var(--green-tint); color: var(--green-dark); font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: 8px; }
   .round { width: 28px; height: 28px; border-radius: 14px; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 14px; flex: none; padding: 0; box-sizing: border-box; line-height: 0; }
 
-  /* Reminders + activity */
+  /* Reminders + activity — two columns share one top edge (titles + content). */
   .two { display: block; }
-  .two-grid { display: grid; grid-template-columns: 1fr 440px; column-gap: 32px; row-gap: 8px; align-items: start; }
+  .two-grid { display: grid; grid-template-columns: 1fr 440px; column-gap: 32px; align-items: start; }
+  .two-col { min-width: 0; display: flex; flex-direction: column; gap: 8px; }
   .two-title-l,
-  .two-title-r { min-height: 32px; display: flex; align-items: center; gap: 10px; line-height: 1.4; }
+  .two-title-r { height: 32px; min-height: 32px; display: flex; align-items: center; gap: 10px; line-height: 1.4; flex: none; box-sizing: border-box; }
   .two-title-r { justify-content: space-between; }
-  .two-title-r h3 { margin: 0; font-size: 20px; font-weight: 500; flex: 1; }
-  .two-title-r .new-badge { font-size: 13px; color: var(--green); font-weight: 600; }
-  .two-main-l { min-width: 0; display: flex; flex-direction: column; gap: 0; }
+  .two-title-r h3 { margin: 0; font-size: 20px; font-weight: 500; flex: 1; min-width: 0; }
+  .two-title-r .new-badge { font-size: 13px; color: var(--green); font-weight: 600; flex: none; }
+  .two-main-l { min-width: 0; display: flex; flex-direction: column; gap: 0; flex: 1; }
   .reminders { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
   .sec { display: flex; gap: 10px; align-items: center; line-height: 1.4; }
   .sec h3 { margin: 0; font-size: 20px; font-weight: 500; }
-  .sec .sub { font-size: 13px; color: var(--faint); }
-  .sec .sp { flex: 1; }
-  .sec .act { font-size: 13px; font-weight: 500; color: var(--green); }
+  .sec .sub { font-size: 13px; color: var(--faint); white-space: nowrap; }
+  .sec .sp { flex: 1; min-width: 8px; }
+  .sec .act { font-size: 13px; font-weight: 500; color: var(--green); flex: none; white-space: nowrap; }
   .rem { display: flex; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--line); line-height: 1.4; }
   .rem .when { width: 80px; font-size: 13px; font-weight: 500; color: var(--muted); flex: none; }
   .rem .when.hot { color: var(--green); }
@@ -380,7 +381,7 @@
   .btn-soft .spark-icon { width: 12px; height: 12px; color: var(--green-dark); }
   .btn-soft:hover { background: #dceee4; }
   .btn-soft:active { transform: scale(.98); }
-  .activity { width: 100%; flex: none; border: 1px solid var(--line); border-radius: 16px; padding: 16px 20px 20px; display: flex; flex-direction: column; gap: 16px; align-self: stretch; }
+  .activity { width: 100%; flex: none; border: 1px solid var(--line); border-radius: 16px; padding: 14px 20px 20px; display: flex; flex-direction: column; gap: 16px; align-self: stretch; box-sizing: border-box; }
   .activity .row { display: flex; align-items: center; }
   .activity .row h3 { margin: 0; font-size: 20px; font-weight: 500; flex: 1; }
   .activity .row span { font-size: 13px; color: var(--green); }
@@ -1060,36 +1061,40 @@
 
             <section class="two">
               <div class="two-grid">
-                <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act" data-action="add-reminder">+ Add</button></div>
-                <div class="two-title-r"><h3>From your Cosmos</h3><span class="new-badge">5 new</span></div>
-                <div class="two-main-l">
-                  <div class="rem">
-                    <span class="when hot">2:30</span>
-                    <div class="col"><span class="t">Heavy-ion Physics — lecture 5</span><span class="meta"><span class="badge">Course · Prof. Roland</span>Room 6-120</span></div>
-                    <button type="button" class="btn-soft" data-verb="Prep a 10-min deck" data-tool="deck"></button>
-                  </div>
-                  <div class="rem">
-                    <span class="when">Today</span>
-                    <div class="col"><span class="t">Reply to Prof. Roland about the lab report</span><span class="meta"><span class="badge email">Email</span>Received 9:12</span></div>
-                    <button type="button" class="btn-soft" data-verb="Draft reply"></button>
-                  </div>
-                  <div class="rem">
-                    <span class="when">Tomorrow</span>
-                    <div class="col"><span class="t">Submit reading report</span><span class="meta"><span class="badge">Course · Prof. Roland</span>820 / 1,500 words</span></div>
-                    <button type="button" class="btn-soft" data-verb="Finish with Citta" data-twin-verb="Finish the report" data-tool="doc"></button>
-                  </div>
-                  <div class="rem">
-                    <span class="when">Fri</span>
-                    <div class="col"><span class="t">Lab 3 analysis due</span><span class="meta"><span class="badge yours">Yours</span></span></div>
-                    <button type="button" class="btn-soft" data-verb="Open in Numbers" data-tool="numbers"></button>
+                <div class="two-col">
+                  <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act" data-action="add-reminder">+ Add</button></div>
+                  <div class="two-main-l">
+                    <div class="rem">
+                      <span class="when hot">2:30</span>
+                      <div class="col"><span class="t">Heavy-ion Physics — lecture 5</span><span class="meta"><span class="badge">Course · Prof. Roland</span>Room 6-120</span></div>
+                      <button type="button" class="btn-soft" data-verb="Prep a 10-min deck" data-tool="deck"></button>
+                    </div>
+                    <div class="rem">
+                      <span class="when">Today</span>
+                      <div class="col"><span class="t">Reply to Prof. Roland about the lab report</span><span class="meta"><span class="badge email">Email</span>Received 9:12</span></div>
+                      <button type="button" class="btn-soft" data-verb="Draft reply"></button>
+                    </div>
+                    <div class="rem">
+                      <span class="when">Tomorrow</span>
+                      <div class="col"><span class="t">Submit reading report</span><span class="meta"><span class="badge">Course · Prof. Roland</span>820 / 1,500 words</span></div>
+                      <button type="button" class="btn-soft" data-verb="Finish with Citta" data-twin-verb="Finish the report" data-tool="doc"></button>
+                    </div>
+                    <div class="rem">
+                      <span class="when">Fri</span>
+                      <div class="col"><span class="t">Lab 3 analysis due</span><span class="meta"><span class="badge yours">Yours</span></span></div>
+                      <button type="button" class="btn-soft" data-verb="Open in Numbers" data-tool="numbers"></button>
+                    </div>
                   </div>
                 </div>
-                <aside class="activity two-main-r">
-                  <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland’s twin posted lecture 5 slides</div><small>Heavy-ion Physics · 1h ago</small><button type="button" class="act-link">Turn into study notes<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
-                  <div class="act-item"><span class="aav">王</span><div><div class="t">骆王宇 is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
-                  <div class="act-item"><span class="aav">EP</span><div><div class="t">2 replies to your #cosmology thread</div><small>Prof. Pajer’s twin + @maya_k</small><button type="button" class="act-link">Open thread<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
-                  <div class="act-item"><span class="aav">HX</span><div><div class="t">Prof. Xu’s twin: new insight on pricing data</div><small>AI &amp; decisions · today</small><button type="button" class="act-link">View insight<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
-                </aside>
+                <div class="two-col">
+                  <div class="two-title-r"><h3>From your Cosmos</h3><span class="new-badge">5 new</span></div>
+                  <aside class="activity two-main-r">
+                    <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland’s twin posted lecture 5 slides</div><small>Heavy-ion Physics · 1h ago</small><button type="button" class="act-link">Turn into study notes<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                    <div class="act-item"><span class="aav">王</span><div><div class="t">骆王宇 is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                    <div class="act-item"><span class="aav">EP</span><div><div class="t">2 replies to your #cosmology thread</div><small>Prof. Pajer’s twin + @maya_k</small><button type="button" class="act-link">Open thread<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                    <div class="act-item"><span class="aav">HX</span><div><div class="t">Prof. Xu’s twin: new insight on pricing data</div><small>AI &amp; decisions · today</small><button type="button" class="act-link">View insight<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                  </aside>
+                </div>
               </div>
             </section>
 
@@ -1136,16 +1141,20 @@
 
               <section class="two">
                 <div class="two-grid">
-                  <div class="sec two-title-l"><h3>Coming up</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act" data-action="add-reminder">+ Add</button></div>
-                  <div class="two-title-r"><h3>From your Cosmos</h3></div>
-                  <div class="two-main-l">
-                    <div class="rem"><span class="when hot">Thu</span><div class="col"><span class="t">Heavy-ion Physics — lecture 8</span><span class="meta"><span class="badge">Course · Prof. Roland</span></span></div><button type="button" class="btn-soft" data-verb="Prep a 10-min deck" data-tool="deck"></button></div>
-                    <div class="rem"><span class="when">Fri</span><div class="col"><span class="t">Lab 3 analysis due</span><span class="meta"><span class="badge yours">Yours</span></span></div><button type="button" class="btn-soft" data-verb="Open in Numbers" data-tool="numbers"></button></div>
+                  <div class="two-col">
+                    <div class="sec two-title-l"><h3>Coming up</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act" data-action="add-reminder">+ Add</button></div>
+                    <div class="two-main-l">
+                      <div class="rem"><span class="when hot">Thu</span><div class="col"><span class="t">Heavy-ion Physics — lecture 8</span><span class="meta"><span class="badge">Course · Prof. Roland</span></span></div><button type="button" class="btn-soft" data-verb="Prep a 10-min deck" data-tool="deck"></button></div>
+                      <div class="rem"><span class="when">Fri</span><div class="col"><span class="t">Lab 3 analysis due</span><span class="meta"><span class="badge yours">Yours</span></span></div><button type="button" class="btn-soft" data-verb="Open in Numbers" data-tool="numbers"></button></div>
+                    </div>
                   </div>
-                  <aside class="activity two-main-r cosmos-compact">
-                    <p>14 updates while you were away · 3 replies to your threads · 2 new lectures</p>
-                    <button type="button" class="cosmos-see act-link">See what’s new</button>
-                  </aside>
+                  <div class="two-col">
+                    <div class="two-title-r"><h3>From your Cosmos</h3></div>
+                    <aside class="activity two-main-r cosmos-compact">
+                      <p>14 updates while you were away · 3 replies to your threads · 2 new lectures</p>
+                      <button type="button" class="cosmos-see act-link">See what’s new</button>
+                    </aside>
+                  </div>
                 </div>
               </section>
             </div>
@@ -1190,36 +1199,40 @@
 
               <section class="two">
                 <div class="two-grid">
-                  <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act" data-action="add-reminder">+ Add</button></div>
-                  <div class="two-title-r"><h3>From your Cosmos</h3><span class="new-badge">5 new</span></div>
-                  <div class="two-main-l">
-                    <div class="rem">
-                      <span class="when hot">2:30</span>
-                      <div class="col"><span class="t">Heavy-ion Physics — lecture 5</span><span class="meta"><span class="badge">Course · Prof. Roland</span>Room 6-120</span></div>
-                      <button type="button" class="btn-soft" data-verb="Prep a 10-min deck" data-tool="deck"></button>
-                    </div>
-                    <div class="rem">
-                      <span class="when">Today</span>
-                      <div class="col"><span class="t">Reply to Prof. Roland about the lab report</span><span class="meta"><span class="badge email">Email</span>Received 9:12</span></div>
-                      <button type="button" class="btn-soft" data-verb="Draft reply"></button>
-                    </div>
-                    <div class="rem">
-                      <span class="when">Tomorrow</span>
-                      <div class="col"><span class="t">Submit reading report</span><span class="meta"><span class="badge">Course · Prof. Roland</span>820 / 1,500 words</span></div>
-                      <button type="button" class="btn-soft" data-verb="Finish with Citta" data-twin-verb="Finish the report" data-tool="doc"></button>
-                    </div>
-                    <div class="rem">
-                      <span class="when">Fri</span>
-                      <div class="col"><span class="t">Lab 3 analysis due</span><span class="meta"><span class="badge yours">Yours</span></span></div>
-                      <button type="button" class="btn-soft" data-verb="Open in Numbers" data-tool="numbers"></button>
+                  <div class="two-col">
+                    <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act" data-action="add-reminder">+ Add</button></div>
+                    <div class="two-main-l">
+                      <div class="rem">
+                        <span class="when hot">2:30</span>
+                        <div class="col"><span class="t">Heavy-ion Physics — lecture 5</span><span class="meta"><span class="badge">Course · Prof. Roland</span>Room 6-120</span></div>
+                        <button type="button" class="btn-soft" data-verb="Prep a 10-min deck" data-tool="deck"></button>
+                      </div>
+                      <div class="rem">
+                        <span class="when">Today</span>
+                        <div class="col"><span class="t">Reply to Prof. Roland about the lab report</span><span class="meta"><span class="badge email">Email</span>Received 9:12</span></div>
+                        <button type="button" class="btn-soft" data-verb="Draft reply"></button>
+                      </div>
+                      <div class="rem">
+                        <span class="when">Tomorrow</span>
+                        <div class="col"><span class="t">Submit reading report</span><span class="meta"><span class="badge">Course · Prof. Roland</span>820 / 1,500 words</span></div>
+                        <button type="button" class="btn-soft" data-verb="Finish with Citta" data-twin-verb="Finish the report" data-tool="doc"></button>
+                      </div>
+                      <div class="rem">
+                        <span class="when">Fri</span>
+                        <div class="col"><span class="t">Lab 3 analysis due</span><span class="meta"><span class="badge yours">Yours</span></span></div>
+                        <button type="button" class="btn-soft" data-verb="Open in Numbers" data-tool="numbers"></button>
+                      </div>
                     </div>
                   </div>
-                  <aside class="activity two-main-r">
-                    <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland’s twin posted lecture 5 slides</div><small>Heavy-ion Physics · 1h ago</small><button type="button" class="act-link">Turn into study notes<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
-                    <div class="act-item"><span class="aav">王</span><div><div class="t">骆王宇 is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
-                    <div class="act-item"><span class="aav">EP</span><div><div class="t">2 replies to your #cosmology thread</div><small>Prof. Pajer’s twin + @maya_k</small><button type="button" class="act-link">Open thread<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
-                    <div class="act-item"><span class="aav">HX</span><div><div class="t">Prof. Xu’s twin: new insight on pricing data</div><small>AI &amp; decisions · today</small><button type="button" class="act-link">View insight<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
-                  </aside>
+                  <div class="two-col">
+                    <div class="two-title-r"><h3>From your Cosmos</h3><span class="new-badge">5 new</span></div>
+                    <aside class="activity two-main-r">
+                      <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland’s twin posted lecture 5 slides</div><small>Heavy-ion Physics · 1h ago</small><button type="button" class="act-link">Turn into study notes<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                      <div class="act-item"><span class="aav">王</span><div><div class="t">骆王宇 is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                      <div class="act-item"><span class="aav">EP</span><div><div class="t">2 replies to your #cosmology thread</div><small>Prof. Pajer’s twin + @maya_k</small><button type="button" class="act-link">Open thread<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                      <div class="act-item"><span class="aav">HX</span><div><div class="t">Prof. Xu’s twin: new insight on pricing data</div><small>AI &amp; decisions · today</small><button type="button" class="act-link">View insight<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                    </aside>
+                  </div>
                 </div>
               </section>
 
@@ -1268,17 +1281,21 @@
 
               <section class="two">
                 <div class="two-grid">
-                  <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Nothing yet</span></div>
-                  <div class="two-title-r"><h3>From Prof. Roland’s Cosmo</h3></div>
-                  <div class="two-main-l" style="display:flex;flex-direction:column;gap:12px">
-                    <div class="onboard-row"><div class="col"><b>Join Heavy-ion Physics</b><small>Get lecture and deadline reminders from the course</small></div><button type="button" class="ob-btn pri">Join course</button></div>
-                    <div class="onboard-row"><div class="col"><b>Connect your email</b><small>Citta flags emails that need a reply and drafts it in Doc</small></div><button type="button" class="ob-btn">Connect</button></div>
-                    <div class="onboard-row"><div class="col"><b>Add your own</b><small>Or tell Citta: “remind me to finish my lab on Friday”</small></div><button type="button" class="ob-btn" data-action="add-reminder">+ Add reminder</button></div>
+                  <div class="two-col">
+                    <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Nothing yet</span></div>
+                    <div class="two-main-l" style="display:flex;flex-direction:column;gap:12px">
+                      <div class="onboard-row"><div class="col"><b>Join Heavy-ion Physics</b><small>Get lecture and deadline reminders from the course</small></div><button type="button" class="ob-btn pri">Join course</button></div>
+                      <div class="onboard-row"><div class="col"><b>Connect your email</b><small>Citta flags emails that need a reply and drafts it in Doc</small></div><button type="button" class="ob-btn">Connect</button></div>
+                      <div class="onboard-row"><div class="col"><b>Add your own</b><small>Or tell Citta: “remind me to finish my lab on Friday”</small></div><button type="button" class="ob-btn" data-action="add-reminder">+ Add reminder</button></div>
+                    </div>
                   </div>
-                  <aside class="activity two-main-r">
-                    <div class="act-item"><span class="aav">GR</span><div><div class="t">Lecture 5 slides posted</div><small>Heavy-ion Physics · 1h ago</small><button type="button" class="act-link">Turn into study notes<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
-                    <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland goes live Thu 7pm (the real person)</div><small>His twin has a recap of the last Q&amp;A</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
-                  </aside>
+                  <div class="two-col">
+                    <div class="two-title-r"><h3>From Prof. Roland’s Cosmo</h3></div>
+                    <aside class="activity two-main-r">
+                      <div class="act-item"><span class="aav">GR</span><div><div class="t">Lecture 5 slides posted</div><small>Heavy-ion Physics · 1h ago</small><button type="button" class="act-link">Turn into study notes<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                      <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland goes live Thu 7pm (the real person)</div><small>His twin has a recap of the last Q&amp;A</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                    </aside>
+                  </div>
                 </div>
               </section>
 
