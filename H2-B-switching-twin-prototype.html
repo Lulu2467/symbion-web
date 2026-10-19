@@ -121,10 +121,9 @@
   .nav-tutorial:active { transform: scale(.98); }
   .nav-tutorial[aria-pressed="true"] { box-shadow: inset 0 0 0 2px rgba(255,255,255,.35), 0 2px 8px rgba(0,139,104,.28); }
   .search-wrap { position: relative; flex: none; display: inline-flex; align-items: center; min-width: 254px; }
-  .search-wrap .search { width: 100%; min-width: 254px; box-sizing: border-box; background: var(--surface); border-radius: 999px; padding: 8px 44px 8px 16px; font-size: 13px; font-family: inherit; color: var(--ink); border: 0; text-align: left; outline: none; }
+  .search-wrap .search { width: 100%; min-width: 254px; box-sizing: border-box; background: var(--surface); border-radius: 999px; padding: 8px 16px; font-size: 13px; font-family: inherit; color: var(--ink); border: 0; text-align: left; outline: none; }
   .search-wrap .search::placeholder { color: var(--faint); }
   .search-wrap .search:focus { box-shadow: inset 0 0 0 1.5px rgba(0,139,104,.35); }
-  .search-wrap .search-kbd { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 13px; color: var(--faint); pointer-events: none; line-height: 1; }
   .content { padding: 0 var(--page-gutter) 72px; display: flex; flex-direction: column; gap: 24px; }
 
   /* Greeting */
@@ -970,7 +969,6 @@
             <button type="button" class="nav-tutorial" data-action="open-tutorial" data-start-tutorial aria-label="Start interactive tutorial" aria-pressed="false">Tutorial · 4 steps</button>
             <label class="search-wrap">
               <input type="search" class="search" id="headerSearch" placeholder="Search files, Cosmos, people…" autocomplete="off" spellcheck="false" aria-label="Search files, Cosmos, people">
-              <span class="search-kbd" aria-hidden="true">⌘K</span>
             </label>
           </div>
 
