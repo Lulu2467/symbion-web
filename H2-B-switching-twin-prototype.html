@@ -700,8 +700,23 @@
   .coach .acts .link { color: var(--green); padding: 8px 0; }
 
   .spot { position: relative; z-index: 14; }
-  .tutorial-spotlight { position: absolute; z-index: 13; pointer-events: none; border-radius: 16px; box-shadow: 0 0 0 9999px rgba(28,31,29,.40); background: transparent; display: none; }
+  .tutorial-spotlight {
+    position: absolute;
+    z-index: 13;
+    pointer-events: none;
+    box-sizing: border-box;
+    border: 1.5px solid transparent;
+    border-radius: 16px;
+    box-shadow: 0 0 0 9999px rgba(28,31,29,.40);
+    background: transparent;
+    display: none;
+  }
   .tutorial-spotlight.on { display: block; }
+  /* Green wireframe sits on the cutout edge — flush with the dim, one stroke only. */
+  .frame.tutorial-spot-composer .tutorial-spotlight.on,
+  .frame.tutorial-spot-picker .tutorial-spotlight.on {
+    border-color: var(--green);
+  }
   .frame.tutorial-on { position: relative; }
   .frame.tutorial-on .tutorial-spot-target { position: relative; z-index: 14; }
   /* Rail normally sits at z:30 (above menus). Drop it under the spotlight mask so the gray covers it. */
@@ -711,12 +726,12 @@
   }
   /* Spotlight steps: cutout alone is not enough on white siblings — force-dim the extras. */
   .frame.tutorial-on .composer > .foot { position: relative; z-index: 1; }
-  /* Step 1: cutout flush to the card — green border is the wireframe, no white gap. */
+  /* Step 1: card stays bright; wireframe is on the spotlight (avoid double green + white gap). */
   .frame.tutorial-spot-composer #composer.tutorial-spot-target {
     z-index: 14;
     background: #fff;
-    border-color: var(--green);
-    box-shadow: 0 2px 6px rgba(28,31,29,.05), 0 16px 40px -8px rgba(0,139,104,.14);
+    border-color: transparent;
+    box-shadow: none;
   }
   /* Step 2: only the tool cards are lit — header + composer above stay muted. */
   .frame.tutorial-spot-try .composer {
