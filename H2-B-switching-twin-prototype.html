@@ -496,11 +496,14 @@
     line-height: 1.2;
   }
   .addsi .attach-plus {
-    display: inline-block;
-    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
     font-weight: 500;
     line-height: 1;
-    transform: translateY(0.5px);
+    /* + glyph sits low vs caps — lift to the text midline. */
+    transform: translateY(-0.5px);
   }
   /* Match browse-all hit size (28); lighter/thinner ring + chevron than before. */
   .round {
