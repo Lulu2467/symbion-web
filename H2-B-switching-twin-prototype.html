@@ -3971,7 +3971,8 @@
     });
     const composerMode = next === 'tutorial' ? 'tutorial' : (next === 'handoff' ? 'handoff' : (next === 'welcome' ? 'welcome' : 'default'));
     setComposerMode(composerMode);
-    if (next === 'welcome' || next === 'tutorial') setComposerToolSelection('doc');
+    // Tutorial seeds Doc for the starter task; welcome stays empty until the user picks a tool.
+    if (next === 'tutorial') setComposerToolSelection('doc');
     const dockCount = dock.querySelector('.count');
     if (dockCount) dockCount.textContent = next === 'welcome' ? '2' : '3';
     if (next === 'welcome') {
