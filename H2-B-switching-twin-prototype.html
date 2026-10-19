@@ -565,8 +565,29 @@
   .citta-panel .ctx { padding: 10px 16px 4px; font-size: 12px; color: var(--muted); border-bottom: 0; flex: none; }
   .citta-panel .ctx .where { display: inline-block; font-weight: 600; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 2px 8px; margin-left: 4px; }
   .citta-panel .citta-scroll { flex: 1; min-height: 0; overflow: auto; padding: 14px 16px 12px; display: flex; flex-direction: column; gap: 12px; }
-  .citta-panel .user-bubble { align-self: flex-end; max-width: 92%; background: var(--green-bubble); color: #fff; font-size: 13px; line-height: 1.45; padding: 10px 14px; border-radius: 14px 14px 4px 14px; }
-  .citta-panel .asst-card { background: var(--green-wash); border: 1px solid rgba(0,139,104,.12); border-radius: 14px; padding: 12px 14px; font-size: 13px; line-height: 1.45; color: var(--ink); }
+  /* Same bubble shell (radius / pad / border / type) — only fill + text color differ. */
+  .citta-panel .user-bubble,
+  .citta-panel .asst-card {
+    max-width: 92%;
+    font-size: 13px;
+    line-height: 1.45;
+    padding: 12px 14px;
+    border-radius: 14px;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+  }
+  .citta-panel .user-bubble {
+    align-self: flex-end;
+    background: var(--green-bubble);
+    border-color: var(--green-bubble);
+    color: #fff;
+  }
+  .citta-panel .asst-card {
+    align-self: flex-start;
+    background: var(--green-wash);
+    border-color: rgba(0,139,104,.18);
+    color: var(--ink);
+  }
   .citta-panel .asst-card a,
   .citta-panel .asst-card .act-link { display: inline-flex; align-items: center; margin-top: 8px; font-size: 12px; font-weight: 600; color: var(--green); text-decoration: none; background: none; border: 0; padding: 0; cursor: pointer; }
   .citta-panel .asst-card .act-link:hover { text-decoration: underline; }
