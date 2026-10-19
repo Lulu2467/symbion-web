@@ -91,7 +91,7 @@
   .rail .r .rail-ico-spark { width: 15px; height: 15px; }
   .rail .r .rail-ico-chev { width: 14px; height: 14px; }
   .rail .r .rail-ico-cosmo { width: 16px; height: 16px; }
-  .round .chev-ico { width: 14px; height: 14px; display: block; flex: none; margin-left: 1px; }
+  .round .chev-ico { width: 14px; height: 14px; display: block; flex: none; }
   .rail .r.o { border: 1px solid var(--line); background: #fff; width: 36px; height: 36px; justify-content: center; padding: 0; }
   .rail .r.o .rail-ico-chev { transition: transform .18s ease; }
   .rail.is-open .r.o .rail-ico-chev { transform: scaleX(-1); }
@@ -374,7 +374,8 @@
   .tag.agent { background: var(--amber-tint); color: var(--amber); }
   .dcard small { display: block; font-size: 11px; color: var(--faint); }
   .addsi { background: var(--green-tint); color: var(--green-dark); font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: 8px; }
-  .round { width: 28px; height: 28px; border-radius: 14px; border: 1.5px solid #c5cbc6; display: flex; align-items: center; justify-content: center; color: var(--ink); font-size: 14px; flex: none; padding: 0; box-sizing: border-box; line-height: 0; }
+  /* One muted ink for ring + chevron (currentColor); hover turns both green together. */
+  .round { width: 28px; height: 28px; border-radius: 14px; border: 1.5px solid currentColor; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 14px; flex: none; padding: 0; box-sizing: border-box; line-height: 0; }
 
   /* Reminders + activity — two columns share one top edge (titles + content). */
   .two { display: block; }
