@@ -149,7 +149,7 @@
   .day .tick.now-l { left: 34px; color: var(--green); font-weight: 500; }
 
   /* Composer (the hero) */
-  .composer { position: relative; z-index: 2; isolation: isolate; background: #fff; border: 1.5px solid rgba(0,139,104,.5); border-radius: 24px; box-shadow: 0 1px 3px rgba(28,31,29,.05), 0 4px 12px rgba(0,139,104,.08); }
+  .composer { position: relative; z-index: 2; isolation: isolate; background: #fff; border: 1.5px solid #d5dbd6; border-radius: 24px; box-shadow: 0 1px 3px rgba(28,31,29,.05), 0 4px 12px rgba(28,31,29,.04); }
   /* Menu lives inside .composer; raise the whole composer so week-tool cards don’t paint over it. */
   .composer:has(.menu.open),
   .composer.is-menu-open { z-index: 40; }
@@ -479,10 +479,32 @@
   .greeting.quiet h2 { font-size: 36px; }
   .greeting.quiet p { font-size: 14px; }
 
-  .course-banner { display: flex; gap: 12px; align-items: center; padding: 10px 14px; background: var(--green-wash); border: 1px solid var(--line); border-radius: 12px; font-size: 13px; line-height: 1.4; }
-  .course-banner .av { width: 28px; height: 28px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; flex: none; }
-  .course-banner .sp { flex: 1; }
-  .course-banner a { font-weight: 600; color: var(--green); white-space: nowrap; }
+  /* Quiet course strip — soft grey-mint wash (图二), not bright green. */
+  .course-banner {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 14px;
+    background: linear-gradient(90deg, #f1f4f2 0%, #f6f7f6 52%, #fafafa 100%);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .course-banner .av { width: 28px; height: 28px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; color: var(--muted); flex: none; }
+  .course-banner .sp { flex: 1; color: var(--ink); }
+  .course-banner a { font-weight: 600; color: var(--ink); white-space: nowrap; }
+  .course-banner .course-back {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 8px 14px;
+    color: var(--ink);
+    font-weight: 500;
+    white-space: nowrap;
+    flex: none;
+  }
+  .course-banner .course-back:hover { background: var(--surface); text-decoration: none; color: var(--ink); }
 
   .tool-sec { display: flex; flex-direction: column; gap: 10px; }
   .tool-sec .hdr { min-height: 28px; display: flex; gap: 10px; align-items: center; line-height: 1.4; }
@@ -843,7 +865,7 @@
     z-index: 14;
     background: #fff;
     border-color: var(--green);
-    box-shadow: 0 1px 3px rgba(28,31,29,.05), 0 4px 12px rgba(0,139,104,.08);
+    box-shadow: 0 1px 3px rgba(28,31,29,.05), 0 4px 12px rgba(28,31,29,.04);
   }
   /* Step 2: only the tool cards are lit — header + composer above stay muted. */
   .frame.tutorial-spot-try .composer {
@@ -966,14 +988,46 @@
   .pickup .badge.course,
   .pickup .badge.email { background: #fbf1de; color: #9a5b07; }
 
-  .tutorial-entry { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; padding: 12px 16px; border-radius: 14px; border: 1.5px solid rgba(0,139,104,.35); background: var(--green-wash); line-height: 1.4; }
-  .tutorial-entry .k { font-size: 10px; font-weight: 700; letter-spacing: .06em; color: var(--green-dark); background: var(--green-tint); padding: 3px 8px; border-radius: 999px; flex: none; }
+  /* Same quiet strip language as .course-banner (图二) — no loud green frame. */
+  .tutorial-entry {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 12px 16px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: linear-gradient(90deg, #f1f4f2 0%, #f6f7f6 52%, #fafafa 100%);
+    line-height: 1.4;
+  }
+  .tutorial-entry .k {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 3px 8px;
+    border-radius: 999px;
+    flex: none;
+  }
   .tutorial-entry p { margin: 0; flex: 1; min-width: 200px; font-size: 14px; color: var(--muted); }
   .tutorial-entry p b { color: var(--ink); font-weight: 600; }
-  .tutorial-entry .start { background: var(--green); color: #fff; font-size: 13px; font-weight: 600; padding: 9px 16px; border-radius: 999px; flex: none; white-space: nowrap; transition: background .12s; }
-  .tutorial-entry .start:hover { background: var(--green-dark); }
-  .tutorial-entry .link { font-size: 13px; font-weight: 600; color: var(--green); flex: none; }
-  .tutorial-entry .link:hover { text-decoration: underline; }
+  .tutorial-entry .start {
+    background: #fff;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 9px 16px;
+    border-radius: 999px;
+    flex: none;
+    white-space: nowrap;
+    transition: background .12s, border-color .12s;
+  }
+  .tutorial-entry .start:hover { background: var(--surface); border-color: #cfd4cf; }
+  .tutorial-entry .link { font-size: 13px; font-weight: 500; color: var(--muted); flex: none; }
+  .tutorial-entry .link:hover { color: var(--ink); text-decoration: underline; }
 
   .tutorial-try-cards { display: flex; gap: 16px; min-height: 186px; }
   .tutorial-try-card { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 16px; padding: 17px; background: #fff; display: flex; flex-direction: column; gap: 6px; text-align: left; }
