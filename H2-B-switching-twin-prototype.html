@@ -618,7 +618,7 @@
   .citta-panel .ph .citta-av { width: 28px; height: 28px; border-radius: 10px; background: transparent; color: var(--green-dark); font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex: none; overflow: hidden; padding: 0; }
   .citta-panel .ph .citta-av img { border-radius: 10px; }
   .citta-panel .ph b { font-size: 16px; font-weight: 600; flex: none; line-height: 1; }
-  /* Match task-pill height (~22px); keep optical mid-line with name + pill. */
+  /* Match task-pill height (~22px); resting small box so the control reads without hover. */
   .citta-panel .ph .sw-sm {
     color: var(--green);
     display: inline-flex;
@@ -628,15 +628,23 @@
     width: 22px;
     height: 22px;
     padding: 0;
-    border: 0;
+    border: 1px solid var(--line);
     border-radius: 6px;
-    background: transparent;
+    background: #fff;
     cursor: pointer;
     line-height: 0;
+    box-sizing: border-box;
+    transition: background .12s, border-color .12s;
   }
   .citta-panel .ph .sw-sm .switch-ico { width: 11px; height: 11px; display: block; }
-  .citta-panel .ph .sw-sm:hover { background: var(--green-tint); }
-  .citta-panel .ph .sw-sm[aria-expanded="true"] { background: var(--green-tint); }
+  .citta-panel .ph .sw-sm:hover {
+    background: var(--green-tint);
+    border-color: rgba(0,139,104,.28);
+  }
+  .citta-panel .ph .sw-sm[aria-expanded="true"] {
+    background: var(--green-tint);
+    border-color: rgba(0,139,104,.35);
+  }
   .citta-panel .ph .task-pill {
     font-size: 11px;
     font-weight: 600;
