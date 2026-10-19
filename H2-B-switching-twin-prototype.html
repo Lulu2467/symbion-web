@@ -273,14 +273,15 @@
   .composer-input::placeholder { color: var(--placeholder); }
   .composer-input:focus { outline: none; }
   .ask-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0; padding: 0; width: 100%; min-height: 36px; box-sizing: border-box; }
-  .composer .ask-bar .plus {
+  /* Same hit box on both ends of the ask bar. */
+  .composer .ask-bar .plus,
+  .composer .ask-bar .send {
     width: 36px;
     height: 36px;
+    min-width: 36px;
+    min-height: 36px;
     border-radius: 10px;
-    color: var(--muted);
-    font-size: 22px;
-    font-weight: 400;
-    line-height: 0;
+    border: 0;
     flex: none;
     display: inline-flex;
     align-items: center;
@@ -288,10 +289,21 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+  }
+  .composer .ask-bar .plus {
+    color: var(--muted);
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 0;
+    background: transparent;
     transition: background .12s, color .12s;
   }
   .composer .ask-bar .plus:hover { background: var(--surface); color: var(--ink); }
   .composer .ask-bar .plus:active { transform: scale(.96); }
+  .composer .ask-bar .send { background: var(--green); color: #fff; margin-left: auto; transition: background .12s, transform .08s; }
+  .composer .ask-bar .send:hover { background: var(--green-dark); }
+  .composer .ask-bar .send:active { transform: scale(.96); }
+  .composer .ask-bar .send svg { display: block; width: 16px; height: 16px; flex: none; }
   .send { width: 36px; height: 36px; border-radius: 10px; background: var(--green); color: #fff; flex: none; display: inline-flex; align-items: center; justify-content: center; padding: 0; margin: 0 0 0 auto; box-sizing: border-box; transition: background .12s, transform .08s; }
   .send:hover { background: var(--green-dark); }
   .send:active { transform: scale(.96); }
