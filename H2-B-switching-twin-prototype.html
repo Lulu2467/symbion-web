@@ -540,8 +540,9 @@
   .citta-panel .ask-row .send { width: 36px; height: 36px; border-radius: 10px; margin-left: auto; flex: none; }
 
   /* Spotlight steps: cutout dim inside .frame. Final step: viewport-fixed gray + centered modal (outside .scaler — transform traps fixed). */
+  /* Scrim dims only — keep pointer-events none so the page can still scroll to below-fold H0 content. */
   .coach-scrim { position: fixed; inset: 0; background: rgba(28,31,29,.48); z-index: 10000; display: none; pointer-events: none; }
-  .coach-scrim.on { display: block; pointer-events: auto; }
+  .coach-scrim.on { display: block; pointer-events: none; }
   .coach { position: absolute; left: 56px; top: 200px; transform: none; width: min(400px, calc(100% - 112px)); max-width: calc(100% - 112px); max-height: none; overflow: visible; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; box-shadow: 0 16px 40px rgba(28,31,29,.18); z-index: 15; display: none; line-height: 1.45; pointer-events: auto; }
   .coach.wide { width: min(440px, calc(100% - 112px)); padding: 22px 24px; }
   .coach.centered { position: fixed; left: 50%; top: 50%; right: auto; bottom: auto; transform: translate(-50%, -50%); width: min(400px, calc(100vw - 48px)); max-width: min(400px, calc(100vw - 48px)); box-shadow: 0 0 0 1px rgba(255,255,255,.6), 0 28px 64px rgba(28,31,29,.35); z-index: 10010; }
@@ -651,6 +652,9 @@
   .onboard-row .col small { font-size: 12px; color: var(--faint); }
   .onboard-row .ob-btn { flex: none; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; white-space: nowrap; cursor: pointer; }
   .onboard-row .ob-btn:hover { border-color: var(--green); background: var(--green-wash); }
+  /* Figma H0: first empty-state CTA is solid green */
+  .onboard-row .ob-btn.pri { background: var(--green); border-color: var(--green); color: #fff; }
+  .onboard-row .ob-btn.pri:hover { background: var(--green-dark); border-color: var(--green-dark); color: #fff; }
   .suggest-chips .wrap { display: flex; flex-wrap: wrap; gap: 12px; }
   .suggest-chips .chip { cursor: pointer; }
   .suggest-chips .chip:hover { border-color: var(--green); background: var(--green-wash); }
@@ -1176,7 +1180,7 @@
                   <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Nothing yet</span></div>
                   <div class="two-title-r"><h3>From Prof. Roland’s Cosmo</h3></div>
                   <div class="two-main-l" style="display:flex;flex-direction:column;gap:12px">
-                    <div class="onboard-row"><div class="col"><b>Join Heavy-ion Physics</b><small>Get lecture and deadline reminders from the course</small></div><button type="button" class="ob-btn">Join course</button></div>
+                    <div class="onboard-row"><div class="col"><b>Join Heavy-ion Physics</b><small>Get lecture and deadline reminders from the course</small></div><button type="button" class="ob-btn pri">Join course</button></div>
                     <div class="onboard-row"><div class="col"><b>Connect your email</b><small>Citta flags emails that need a reply and drafts it in Doc</small></div><button type="button" class="ob-btn">Connect</button></div>
                     <div class="onboard-row"><div class="col"><b>Add your own</b><small>Or tell Citta: “remind me to finish my lab on Friday”</small></div><button type="button" class="ob-btn" data-action="add-reminder">+ Add reminder</button></div>
                   </div>
@@ -1565,6 +1569,8 @@
   }));
 
   let screen = 'home', tutorialStep = 1, tutorialDocPhase = null, cittaExpanded = false, newTipSeen = false, postTutorialTipPending = false;
+  /** H0 free-browse: coach/spotlight off, stay on tutorial tail so Reminders → Goals remain scrollable. */
+  let tutorialExploring = false;
   const frame = $('frame');
   const coach = $('coach'), coachActs = $('coachActs');
   const newTip = $('newTip');
@@ -1901,6 +1907,16 @@
   }
 
   function renderCoach() {
+    if (tutorialExploring) {
+      coach.classList.remove('on', 'centered', 'switch-coach');
+      setCoachScrim(false);
+      clearTutorialSpotlight();
+      frame.classList.remove('tutorial-on', 'dim');
+      document.querySelectorAll('.spot').forEach((el) => el.classList.remove('spot'));
+      mountCoachForViewport(false);
+      fit();
+      return;
+    }
     if (screen === 'tutorial' && tutorialStep === 1 && tutorialDocPhase) {
       renderDocSwitchCoach();
       return;
@@ -2114,6 +2130,7 @@
 
   function startTutorial({ step = 1, docPhase = false } = {}) {
     postTutorialTipPending = false;
+    tutorialExploring = false;
     if (step === 1) newTipSeen = false;
     hidePostTutorialTip({ dismissed: false });
     exitTutorialDoc();
@@ -2127,6 +2144,30 @@
       positionCoach();
       if (tutorialSpotlight.classList.contains('on')) positionTutorialSpotlight(getTutorialSpotTarget(TUTORIAL_STEPS[(step || 1) - 1]?.spot));
       coach.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  }
+
+  /** Figma H0 · B: dismiss coach, keep first-visit page so below-fold sections stay reachable by scroll. */
+  function exploreH0Home() {
+    tutorialExploring = true;
+    tutorialDocPhase = null;
+    exitTutorialDoc();
+    coach.classList.remove('on', 'centered', 'switch-coach', 'wide');
+    setCoachScrim(false);
+    clearTutorialSpotlight();
+    frame.classList.remove('tutorial-on', 'dim', 'tutorial-doc-on');
+    document.querySelectorAll('.spot').forEach((el) => el.classList.remove('spot'));
+    mountCoachForViewport(false);
+    // Stay on tutorial screen + tail (arrival, try tools, empty reminders, goals).
+    if (screen !== 'tutorial') setScreen('tutorial', { step: 1 });
+    else {
+      syncHash();
+      fit();
+    }
+    requestAnimationFrame(() => {
+      fit();
+      const rem = document.querySelector('#tail-tutorial .two');
+      if (rem) rem.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   }
 
@@ -2534,9 +2575,9 @@
   function onCoachSecondary(step) {
     if (step === 1) {
       if (tutorialDocPhase) { finishTutorialDocToTryTools(); return; }
+      // Stay on H0 (Figma 122:4205) so Try / Reminders / Cosmo / Goals can be scrolled into view.
       postTutorialTipPending = false;
-      exitTutorialDoc();
-      setScreen('home');
+      exploreH0Home();
       return;
     }
     if (step === 2) { setScreen('tutorial', { step: 1 }); return; }
@@ -2555,6 +2596,7 @@
 
   function setScreen(next, { step, afterTutorial = false, showTip = false } = {}) {
     screen = next;
+    if (next !== 'tutorial') tutorialExploring = false;
     if (next === 'tutorial') {
       tutorialStep = step || 1;
       hidePostTutorialTip({ dismissed: false });
@@ -2573,8 +2615,9 @@
     }
     if (next === 'tutorial') {
       renderCoach();
-      requestAnimationFrame(() => positionCoach());
+      if (!tutorialExploring) requestAnimationFrame(() => positionCoach());
     } else {
+      tutorialExploring = false;
       coach.classList.remove('on', 'switch-coach');
       setCoachScrim(false);
       frame.classList.remove('tutorial-on', 'dim');
@@ -2694,7 +2737,9 @@
     // Fullscreen = edge-to-edge; #fsRoot is the scroll container.
     const avail = fs ? window.innerWidth : Math.max(0, stageEl.clientWidth - 32);
     const s = fs ? avail / 1440 : Math.min(1, avail / 1440);
-    const scaledH = frame.offsetHeight * s;
+    // Use scrollHeight so below-fold H0 sections (Reminders → Goals) always expand the scroll range.
+    const frameH = Math.max(frame.offsetHeight, frame.scrollHeight);
+    const scaledH = frameH * s;
     scaler.style.transform = `scale(${s})`;
     scaler.style.transformOrigin = 'top left';
     // transform doesn't shrink layout — stage height = visual height for scroll range.
@@ -2703,13 +2748,22 @@
     if (fsRoot) fsRoot.classList.toggle('is-fs', fs);
     positionNewTip();
     if (menu.classList.contains('open')) positionSwitcherMenu();
-    if (coach.classList.contains('on')) positionCoach();
+    if (coach.classList.contains('on') && !tutorialExploring) positionCoach();
     const stepCfg = TUTORIAL_STEPS[tutorialStep - 1];
-    if (screen === 'tutorial' && stepCfg?.spot && !tutorialDocPhase) {
+    if (screen === 'tutorial' && !tutorialExploring && stepCfg?.spot && !tutorialDocPhase) {
       positionTutorialSpotlight(getTutorialSpotTarget(stepCfg.spot), stepCfg.spot === 'composer' ? 6 : 10);
     }
   }
   window.addEventListener('resize', fit);
+  // Keep stage scroll range in sync when tails/fonts/images change frame height.
+  if (typeof ResizeObserver !== 'undefined') {
+    let fitRaf = 0;
+    const ro = new ResizeObserver(() => {
+      cancelAnimationFrame(fitRaf);
+      fitRaf = requestAnimationFrame(fit);
+    });
+    ro.observe(frame);
+  }
   const BOOK_ICON = '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M139.661795 93.098382c-25.742144 0-46.563413 20.82127-46.563413 46.534969v651.631787c0 25.713699 20.82127 46.534969 46.534969 46.534969h176.355017c45.937637 0 90.851278 13.624847 129.080494 39.110991L511.998436 921.511851l66.929573-44.600753a232.731733 232.731733 0 0 1 129.023606-39.110991h176.411905c25.713699 0 46.534969-20.82127 46.534969-46.534969V139.633351c0-25.713699-20.82127-46.534969-46.534969-46.534969h-176.355017c-19.342163 0-48.753629 8.362641-73.557108 22.812375-12.003519 6.968868-20.650604 14.079957-25.770588 19.996383a26.168809 26.168809 0 0 0-3.726211 5.262206v556.99741a46.534969 46.534969 0 0 1-93.098382 0V139.661795c0-26.993695 12.942183-49.066517 26.396364-64.597135a194.929182 194.929182 0 0 1 49.493182-39.651435C623.016763 14.904843 668.442402 0 707.980059 0h176.355017A139.661795 139.661795 0 0 1 1023.996871 139.661795v651.603343a139.661795 139.661795 0 0 1-139.661795 139.661795h-176.355017a139.661795 139.661795 0 0 0-77.425541 23.438151l-92.728606 61.809589a46.534969 46.534969 0 0 1-51.654953 0l-92.728606-61.809589a139.661795 139.661795 0 0 0-77.453985-23.466595h-176.355017A139.661795 139.661795 0 0 1 0 791.265138V139.633351A139.661795 139.661795 0 0 1 139.661795 0h176.355017c45.909193 0 90.822834 13.624847 129.05205 39.110992a46.534969 46.534969 0 0 1-51.626509 77.425541 139.661795 139.661795 0 0 0-77.453985-23.438151h-176.355017z" fill="currentColor"/><path d="M170.666145 360.304677C170.666145 334.135868 191.032305 312.887933 216.177117 312.887933h136.532916c25.144812 0 45.510972 21.219491 45.510972 47.416744 0 26.168809-20.36616 47.3883-45.510972 47.388299H216.177117c-25.144812 0-45.510972-21.219491-45.510972-47.388299z m45.510972 189.610087c0-12.572406 4.807096-24.632814 13.340404-33.507453 8.533307-8.903084 20.110161-13.880846 32.170568-13.880846h91.021944c25.144812 0 45.510972 21.219491 45.510972 47.388299 0 26.168809-20.36616 47.416744-45.510972 47.416744H261.688089c-25.144812 0-45.510972-21.219491-45.510972-47.416744z" fill="currentColor"/></svg>';
 
   function decorateSparkIcons() {
