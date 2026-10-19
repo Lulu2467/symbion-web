@@ -191,8 +191,11 @@
   .addsi:hover { filter: brightness(.96); }
   .round { cursor: pointer; }
   .round:hover { background: var(--green-tint); border-color: var(--green); color: var(--green-dark); }
-  .tpl { cursor: pointer; transition: border-color .12s, box-shadow .12s; }
-  .tpl:hover { border-color: rgba(0,139,104,.35); }
+  .tpl { cursor: pointer; transition: border-color .12s, box-shadow .12s, transform .12s; }
+  .tpl:hover {
+    border-color: rgba(0,139,104,.35);
+    box-shadow: 0 4px 14px rgba(28,31,29,.08), 0 1px 3px rgba(28,31,29,.04);
+  }
   .tpl .use { cursor: pointer; }
   .tpl .use:hover { border-color: var(--green); background: var(--green-wash); }
   .course-banner a { cursor: pointer; }
