@@ -221,19 +221,19 @@
     box-sizing: border-box;
   }
   .ask-field { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
-  .composer-chips { display: none; flex-wrap: wrap; gap: 8px; align-self: flex-start; max-width: 100%; margin: 0; padding: 0; }
-  .composer-chips.on { display: flex; }
-  .composer-tool-chip { display: none; align-items: center; gap: 6px; max-width: 100%; padding: 4px 8px 4px 4px; border-radius: 8px; background: #fff; border: 1px solid var(--line); font-size: 12px; font-weight: 600; color: var(--ink); line-height: 1; box-shadow: 0 1px 2px rgba(28,31,29,.04); box-sizing: border-box; }
+  /* Kimi-style: chips sit on the same line as typed text — no extra row that jumps the box. */
+  .ask-compose { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; width: 100%; min-width: 0; }
+  .composer-chips { display: none; flex: 0 1 auto; flex-wrap: wrap; gap: 6px; align-items: center; max-width: 100%; margin: 0; padding: 0; }
+  .composer-chips.on { display: inline-flex; }
+  .composer-tool-chip { display: none; align-items: center; gap: 5px; max-width: 100%; height: 28px; padding: 2px 6px 2px 3px; border-radius: 8px; background: #fff; border: 1px solid var(--line); font-size: 12px; font-weight: 600; color: var(--ink); line-height: 1; box-shadow: none; box-sizing: border-box; }
   .composer-tool-chip.on { display: inline-flex; }
-  .composer-tool-chip .chip-ico { width: 22px; height: 22px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; font-style: normal; flex: none; line-height: 1; overflow: hidden; }
-  .composer-tool-chip .chip-ico svg { display: block; width: 13px; height: 13px; }
+  .composer-tool-chip .chip-ico { width: 20px; height: 20px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; font-style: normal; flex: none; line-height: 1; overflow: hidden; }
+  .composer-tool-chip .chip-ico svg { display: block; width: 12px; height: 12px; }
   .composer-tool-chip .chip-ico img { display: block; width: 100%; height: 100%; object-fit: cover; }
-  .composer-tool-chip .chip-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
-  .composer-tool-chip .chip-x { width: 18px; height: 18px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; color: var(--faint); font-size: 14px; line-height: 1; flex: none; margin-left: 2px; border: 0; background: transparent; padding: 0; cursor: pointer; }
+  .composer-tool-chip .chip-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
+  .composer-tool-chip .chip-x { width: 16px; height: 16px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; color: var(--faint); font-size: 13px; line-height: 1; flex: none; margin-left: 0; border: 0; background: transparent; padding: 0; cursor: pointer; }
   .composer-tool-chip .chip-x:hover { background: var(--surface); color: var(--ink); }
-  .citta-panel .composer-chips { padding: 0 16px 8px; max-width: 100%; box-sizing: border-box; }
-  /* Text + chip + + glyph: same left edge (no centered + in a wide hit box). */
-  .composer-input { flex: 1; min-width: 0; width: 100%; font-size: 21px; font-weight: 400; line-height: 1.4; color: var(--ink); background: transparent; border: 0; padding: 0; margin: 0; resize: none; font-family: var(--font); min-height: 1.4em; overflow: hidden; box-sizing: border-box; }
+  .composer-input { flex: 1 1 160px; min-width: 140px; width: auto; font-size: 21px; font-weight: 400; line-height: 1.4; color: var(--ink); background: transparent; border: 0; padding: 0; margin: 0; resize: none; font-family: var(--font); min-height: 1.4em; overflow: hidden; box-sizing: border-box; }
   .composer-input::placeholder { color: var(--placeholder); }
   .composer-input:focus { outline: none; }
   .ask-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0; padding: 0; width: 100%; box-sizing: border-box; }
@@ -613,24 +613,35 @@
   }
   .citta-panel .suggest button:hover { border-color: rgba(0,139,104,.35); background: var(--green-wash); color: var(--green-dark); }
   .citta-panel .suggest button:active { transform: scale(.99); }
-  .citta-panel .composer-chips { padding: 0; margin: 0; }
   .citta-panel .ask-row {
     display: flex;
-    gap: 8px;
-    align-items: center;
+    flex-direction: column;
+    gap: 6px;
+    align-items: stretch;
     background: #fff;
     border: 1.5px solid rgba(0,139,104,.28);
     border-radius: 14px;
-    padding: 6px var(--citta-inset) 6px var(--citta-inset);
+    padding: 8px var(--citta-inset);
     box-sizing: border-box;
     box-shadow: 0 1px 2px rgba(28,31,29,.04);
     transition: border-color .12s, box-shadow .12s;
+  }
+  .citta-panel .ask-compose { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; width: 100%; min-width: 0; }
+  .citta-panel .composer-chips { padding: 0; margin: 0; }
+  .citta-panel .ask-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
   }
   .citta-panel .ask-row:focus-within {
     border-color: var(--green);
     box-shadow: 0 0 0 3px rgba(0,139,104,.12);
   }
-  .citta-panel .ask-row .plus {
+  .citta-panel .ask-bar .plus {
     width: 28px;
     height: 28px;
     border-radius: 8px;
@@ -641,18 +652,18 @@
     flex: none;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    margin: 0 0 0 -4px;
+    justify-content: flex-start;
+    margin: 0;
     padding: 0;
     box-sizing: border-box;
     transition: background .12s, color .12s;
   }
-  .citta-panel .ask-row .plus:hover { background: var(--green-tint); color: var(--green-dark); }
-  .citta-panel .ask-row .plus:active { transform: scale(.96); }
-  .citta-input { flex: 1; min-width: 0; font-size: 13px; line-height: 1.45; color: var(--ink); background: transparent; border: 0; padding: 0; margin: 0; resize: none; font-family: var(--font); min-height: 1.45em; overflow: hidden; text-align: left; }
+  .citta-panel .ask-bar .plus:hover { background: var(--green-tint); color: var(--green-dark); }
+  .citta-panel .ask-bar .plus:active { transform: scale(.96); }
+  .citta-input { flex: 1 1 120px; min-width: 100px; width: auto; font-size: 13px; line-height: 1.45; color: var(--ink); background: transparent; border: 0; padding: 0; margin: 0; resize: none; font-family: var(--font); min-height: 1.45em; overflow: hidden; text-align: left; }
   .citta-input::placeholder { color: var(--placeholder); text-align: left; }
   .citta-input:focus { outline: none; }
-  .citta-panel .ask-row .send {
+  .citta-panel .ask-bar .send {
     width: 32px;
     height: 32px;
     border-radius: 10px;
@@ -664,7 +675,7 @@
     padding: 0;
     box-sizing: border-box;
   }
-  .citta-panel .ask-row .send svg { width: 14px; height: 14px; }
+  .citta-panel .ask-bar .send svg { width: 14px; height: 14px; }
 
   /* Spotlight steps: cutout dim inside .frame. Final step: viewport-fixed gray + centered modal (outside .scaler — transform traps fixed). */
   /* Scrim dims only — keep pointer-events none so the page can still scroll to below-fold H0 content. */
@@ -1088,14 +1099,16 @@
 
                 <div class="ask-row">
                   <div class="ask-field">
-                    <div class="composer-chips" id="composerChips" aria-live="polite">
-                      <div class="composer-tool-chip" id="composerToolChip" hidden>
-                        <span class="chip-ico" id="composerToolChipIco" aria-hidden="true"></span>
-                        <span class="chip-label" id="composerToolChipLabel"></span>
-                        <button type="button" class="chip-x" id="composerToolChipClear" aria-label="Remove tool">×</button>
+                    <div class="ask-compose">
+                      <div class="composer-chips" id="composerChips" aria-live="polite">
+                        <div class="composer-tool-chip" id="composerToolChip" hidden>
+                          <span class="chip-ico" id="composerToolChipIco" aria-hidden="true"></span>
+                          <span class="chip-label" id="composerToolChipLabel"></span>
+                          <button type="button" class="chip-x" id="composerToolChipClear" aria-label="Remove tool">×</button>
+                        </div>
                       </div>
+                      <textarea class="composer-input" id="composerInput" rows="1" placeholder="What do you want to work on?" aria-label="What do you want to work on?"></textarea>
                     </div>
-                    <textarea class="composer-input" id="composerInput" rows="1" placeholder="What do you want to work on?" aria-label="What do you want to work on?"></textarea>
                     <div class="ask-bar">
                       <button type="button" class="plus" id="composerPlus" aria-label="Attach">+</button>
                       <button type="button" class="send" aria-label="Send">
@@ -1543,15 +1556,19 @@
             <button type="button">Elaborate in the deck editor</button>
             <button type="button">Turn Lab 3 trends into slides</button>
           </div>
-          <div class="composer-chips" id="cittaChips" aria-live="polite"></div>
           <div class="ask-row">
-            <button type="button" class="plus" id="cittaPlus" aria-label="Attach">+</button>
-            <textarea class="citta-input" id="cittaInput" rows="1" placeholder="Ask Citta, or / for a tool…" aria-label="Ask Citta"></textarea>
-            <button type="button" class="send" aria-label="Send">
-              <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M510.06 112h-0.578a37.81 37.81 0 0 0-21.442 7.042l-0.364 0.263 0.105-0.067a45.582 45.582 0 0 0-6.93 5.486l-0.598 0.587-270.946 270.62c-17.743 17.721-17.743 46.456 0 64.178l0.536 0.526c17.78 17.19 46.142 17.015 63.705-0.526l198.597-198.36v612.384c0 20.914 16.974 37.867 37.908 37.867h5.309c20.645-0.34 37.28-17.162 37.28-37.867V261.748l198.598 198.36c17.74 17.72 46.5 17.72 64.241 0 17.743-17.72 17.744-46.455 0.002-64.177L544.515 125.289l-0.575-0.564a45.577 45.577 0 0 0-6.257-5.045l-0.569-0.375 0.104 0.076A37.78 37.78 0 0 0 514.731 112h-4.671z" fill="currentColor"/>
-              </svg>
-            </button>
+            <div class="ask-compose">
+              <div class="composer-chips" id="cittaChips" aria-live="polite"></div>
+              <textarea class="citta-input" id="cittaInput" rows="1" placeholder="Ask Citta, or / for a tool…" aria-label="Ask Citta"></textarea>
+            </div>
+            <div class="ask-bar">
+              <button type="button" class="plus" id="cittaPlus" aria-label="Attach">+</button>
+              <button type="button" class="send" aria-label="Send">
+                <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M510.06 112h-0.578a37.81 37.81 0 0 0-21.442 7.042l-0.364 0.263 0.105-0.067a45.582 45.582 0 0 0-6.93 5.486l-0.598 0.587-270.946 270.62c-17.743 17.721-17.743 46.456 0 64.178l0.536 0.526c17.78 17.19 46.142 17.015 63.705-0.526l198.597-198.36v612.384c0 20.914 16.974 37.867 37.908 37.867h5.309c20.645-0.34 37.28-17.162 37.28-37.867V261.748l198.598 198.36c17.74 17.72 46.5 17.72 64.241 0 17.743-17.72 17.744-46.455 0.002-64.177L544.515 125.289l-0.575-0.564a45.577 45.577 0 0 0-6.257-5.045l-0.569-0.375 0.104 0.076A37.78 37.78 0 0 0 514.731 112h-4.671z" fill="currentColor"/>
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </aside>
