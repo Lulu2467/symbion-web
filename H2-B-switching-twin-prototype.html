@@ -2692,7 +2692,7 @@
     if (docPhase) enterTutorialDoc();
   }
 
-  /** Figma H0 · B: dismiss coach, keep first-visit page so below-fold sections stay reachable by scroll. */
+  /** Dismiss coach/spotlight; stay on this page and this scroll position — no jump. */
   function exploreH0Home() {
     tutorialExploring = true;
     tutorialDocPhase = null;
@@ -2703,17 +2703,11 @@
     frame.classList.remove('tutorial-on', 'tutorial-spot-composer', 'tutorial-spot-try', 'tutorial-spot-picker', 'dim', 'tutorial-doc-on');
     document.querySelectorAll('.spot').forEach((el) => el.classList.remove('spot'));
     mountCoachForViewport(false);
-    // Stay on tutorial screen + tail (arrival, try tools, empty reminders, goals).
     if (screen !== 'tutorial') setScreen('tutorial', { step: 1 });
     else {
       syncHash();
       fit();
     }
-    requestAnimationFrame(() => {
-      fit();
-      const rem = document.querySelector('#tail-tutorial .two');
-      if (rem) rem.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
   }
 
   function flashEl(el) {
