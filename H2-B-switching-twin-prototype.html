@@ -769,11 +769,11 @@
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     background: #fff;
     border: 1.5px solid var(--chat-frame);
     border-radius: 999px;
-    padding: 5px 6px 5px 14px;
+    padding: 5px 6px 5px 6px;
     min-height: 40px;
     box-sizing: border-box;
     box-shadow: none;
@@ -804,18 +804,23 @@
     border-color: var(--green);
     box-shadow: 0 0 0 3px rgba(0,139,104,.12);
   }
-  /* Chips present: wrap chips above, keep actions on the trailing row. */
+  /* Chips present: chips stack above the text inside ask-compose; + stays left, send right. */
   .citta-panel .ask-row:has(.composer-chips.on) {
-    flex-wrap: wrap;
     border-radius: 18px;
-    padding: 8px 8px 6px 12px;
+    padding: 8px 8px 6px 8px;
+    align-items: flex-end;
   }
   .citta-panel .ask-row:has(.composer-chips.on) .ask-compose {
-    flex: 1 1 100%;
     flex-wrap: wrap;
   }
-  .citta-panel .ask-row:has(.composer-chips.on) .ask-bar { margin-left: auto; }
-  .citta-panel .ask-bar .plus {
+  .citta-panel .ask-row:has(.composer-chips.on) .composer-chips {
+    flex: 1 1 100%;
+  }
+  .citta-panel .ask-row:has(.composer-chips.on) .plus,
+  .citta-panel .ask-row:has(.composer-chips.on) .ask-bar {
+    align-self: flex-end;
+  }
+  .citta-panel .ask-row .plus {
     width: 28px;
     height: 28px;
     border-radius: 999px;
@@ -832,8 +837,8 @@
     box-sizing: border-box;
     transition: background .12s, color .12s;
   }
-  .citta-panel .ask-bar .plus:hover { background: var(--green-tint); color: var(--green-dark); }
-  .citta-panel .ask-bar .plus:active { transform: scale(.96); }
+  .citta-panel .ask-row .plus:hover { background: var(--green-tint); color: var(--green-dark); }
+  .citta-panel .ask-row .plus:active { transform: scale(.96); }
   .citta-input {
     flex: 1 1 auto;
     min-width: 0;
@@ -1914,12 +1919,12 @@
             <button type="button">Turn Lab 3 trends into slides</button>
           </div>
           <div class="ask-row">
+            <button type="button" class="plus" id="cittaPlus" aria-label="Attach">+</button>
             <div class="ask-compose">
               <div class="composer-chips" id="cittaChips" aria-live="polite"></div>
               <textarea class="citta-input" id="cittaInput" rows="1" placeholder="Ask Citta, or / for a tool…" aria-label="Ask Citta"></textarea>
             </div>
             <div class="ask-bar">
-              <button type="button" class="plus" id="cittaPlus" aria-label="Attach">+</button>
               <button type="button" class="send" aria-label="Send">
                 <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                   <path d="M510.06 112h-0.578a37.81 37.81 0 0 0-21.442 7.042l-0.364 0.263 0.105-0.067a45.582 45.582 0 0 0-6.93 5.486l-0.598 0.587-270.946 270.62c-17.743 17.721-17.743 46.456 0 64.178l0.536 0.526c17.78 17.19 46.142 17.015 63.705-0.526l198.597-198.36v612.384c0 20.914 16.974 37.867 37.908 37.867h5.309c20.645-0.34 37.28-17.162 37.28-37.867V261.748l198.598 198.36c17.74 17.72 46.5 17.72 64.241 0 17.743-17.72 17.744-46.455 0.002-64.177L544.515 125.289l-0.575-0.564a45.577 45.577 0 0 0-6.257-5.045l-0.569-0.375 0.104 0.076A37.78 37.78 0 0 0 514.731 112h-4.671z" fill="currentColor"/>
