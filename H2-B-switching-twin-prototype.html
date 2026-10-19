@@ -302,11 +302,14 @@
   .menu .browse .plus { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 14px; height: 14px; font-size: 14px; font-weight: 500; line-height: 1; transform: translateY(-0.5px); }
 
   /* Discover */
-  .discover { display: flex; gap: 14px; align-items: center; padding: 10px 12px 10px 16px; border: 1px solid var(--line); border-radius: 14px; font-size: 12px; line-height: 1.35; }
-  .discover .k { font-size: 13px; font-weight: 500; color: var(--muted); }
-  .interest { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); cursor: pointer; transition: background .12s, border-color .12s; }
+  .discover { display: flex; gap: 14px; align-items: center; padding: 10px 12px 10px 16px; border: 1px solid var(--line); border-radius: 14px; font-size: 12px; line-height: 1.35; flex-wrap: nowrap; min-width: 0; }
+  .discover .k { font-size: 13px; font-weight: 500; color: var(--muted); white-space: nowrap; flex: none; }
+  .interest { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); cursor: pointer; transition: background .12s, border-color .12s; white-space: nowrap; flex: none; line-height: 1.35; }
   .interest:not(.on):hover { border-color: #cfd4cf; background: var(--surface); }
   .interest.on { background: var(--green-tint); border-color: var(--green); color: var(--green-dark); font-weight: 600; }
+  /* Add-interest: fixed circle so “+” doesn’t collapse into a pill squish */
+  .interest.add { width: 28px; height: 28px; padding: 0; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 500; line-height: 1; color: var(--muted); box-sizing: border-box; }
+  .interest.add:hover { border-color: var(--green); color: var(--green-dark); background: var(--green-wash); }
   .vr { width: 1px; height: 28px; background: var(--line); }
   /* Hug card width — no wide empty gutter / green scrollbar track before › */
   .discover-scroll-wrap { position: relative; flex: 0 1 auto; min-width: 0; max-width: 100%; overflow: hidden; }
@@ -1017,7 +1020,7 @@
               <button type="button" class="interest on" aria-pressed="true">Physics &amp; Space</button>
               <button type="button" class="interest" aria-pressed="false">AI &amp; Data</button>
               <button type="button" class="interest" aria-pressed="false">Cosmology</button>
-              <button type="button" class="interest" aria-label="Add interest">+</button>
+              <button type="button" class="interest add" aria-label="Add interest">+</button>
               <span class="vr"></span>
               <div class="discover-scroll-wrap">
               <div class="hscroll" id="discoverScroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
@@ -1086,7 +1089,7 @@
                 <button type="button" class="interest on" aria-pressed="true">Physics &amp; Space</button>
                 <button type="button" class="interest" aria-pressed="false">AI &amp; Data</button>
                 <button type="button" class="interest" aria-pressed="false">Cosmology</button>
-                <button type="button" class="interest" aria-label="Add interest">+</button>
+                <button type="button" class="interest add" aria-label="Add interest">+</button>
                 <span class="vr"></span>
                 <div class="discover-scroll-wrap">
                 <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
@@ -1147,7 +1150,7 @@
                 <button type="button" class="interest on" aria-pressed="true">Physics &amp; Space</button>
                 <button type="button" class="interest" aria-pressed="false">AI &amp; Data</button>
                 <button type="button" class="interest" aria-pressed="false">Cosmology</button>
-                <button type="button" class="interest" aria-label="Add interest">+</button>
+                <button type="button" class="interest add" aria-label="Add interest">+</button>
                 <span class="vr"></span>
                 <div class="discover-scroll-wrap">
                 <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
