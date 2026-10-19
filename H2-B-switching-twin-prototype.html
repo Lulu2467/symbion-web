@@ -33,7 +33,7 @@
     --toast-link: #9fd3bc;
     --canvas: #f7f8f6;
     --page-gutter: 56px;
-    /* Latin �?Inter; CJK �?Noto / system Chinese UI fonts (avoid ugly bitmap fallbacks). */
+    /* Latin → Inter; CJK → Noto / system Chinese UI fonts (avoid ugly bitmap fallbacks). */
     --font: Inter, "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
   }
   * { box-sizing: border-box; }
@@ -283,7 +283,7 @@
   .chip .ic { display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; flex: none; line-height: 0; font-weight: normal; font-size: 14px; }
   .chip .ic svg { display: block; width: 100%; height: 100%; }
   .chip .ic svg { display: block; width: 14px; height: 14px; flex: none; }
-  /* Report clipboard glyph has more viewBox padding than book/flask �?fill slot + slight scale for equal optical weight */
+  /* Report clipboard glyph has more viewBox padding than book/flask — fill slot + slight scale for equal optical weight */
   .chip .ic.ico-report svg { width: 16px; height: 16px; transform: scale(1.08); transform-origin: center; }
   .chip .ar { font-weight: 600; }
   .chip b { font-weight: 600; }
@@ -324,11 +324,11 @@
   .interest { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); cursor: pointer; transition: background .12s, border-color .12s; white-space: nowrap; flex: none; line-height: 1.35; }
   .interest:not(.on):hover { border-color: #cfd4cf; background: var(--surface); }
   .interest.on { background: var(--green-tint); border-color: var(--green); color: var(--green-dark); font-weight: 600; }
-  /* Add-interest: fixed circle so �?�?doesn’t collapse into a pill squish */
+  /* Add-interest: fixed circle so “+” doesn’t collapse into a pill squish */
   .interest.add { width: 28px; height: 28px; padding: 0; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 500; line-height: 1; color: var(--muted); box-sizing: border-box; }
   .interest.add:hover { border-color: var(--green); color: var(--green-dark); background: var(--green-wash); }
   .vr { width: 1px; height: 28px; background: var(--line); }
-  /* Hug card width �?no wide empty gutter / green scrollbar track before �?*/
+  /* Hug card width — no wide empty gutter / green scrollbar track before › */
   .discover-scroll-wrap { position: relative; flex: 0 1 auto; min-width: 0; max-width: 100%; overflow: hidden; }
   .discover-scroll-wrap::after { content: none; }
   .discover-scroll-wrap.can-scroll::after { content: ""; position: absolute; top: 0; right: 0; width: 48px; height: 100%; pointer-events: none; z-index: 2; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.88) 55%, #fff 100%); }
@@ -353,7 +353,7 @@
   .addsi { background: var(--green-tint); color: var(--green-dark); font-size: 11px; font-weight: 600; padding: 5px 10px; border-radius: 8px; }
   .round { width: 28px; height: 28px; border-radius: 14px; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 14px; flex: none; padding: 0; box-sizing: border-box; line-height: 0; }
 
-  /* Reminders + activity �?two columns share one top edge (titles + content). */
+  /* Reminders + activity — two columns share one top edge (titles + content). */
   .two { display: block; }
   .two-grid { display: grid; grid-template-columns: 1fr 440px; column-gap: 32px; align-items: start; }
   .two-col { min-width: 0; display: flex; flex-direction: column; gap: 8px; }
@@ -369,6 +369,10 @@
   .sec .sub { font-size: 13px; color: var(--faint); white-space: nowrap; }
   .sec .sp { flex: 1; min-width: 8px; }
   .sec .act { font-size: 13px; font-weight: 500; color: var(--green); flex: none; white-space: nowrap; }
+  .sec .act-add { width: 28px; height: 28px; padding: 0; border: 1px solid var(--line); border-radius: 8px; background: #fff; color: var(--muted); display: inline-flex; align-items: center; justify-content: center; flex: none; cursor: pointer; box-sizing: border-box; transition: background .12s, border-color .12s, color .12s; }
+  .sec .act-add:hover { border-color: var(--green); color: var(--green-dark); background: var(--green-wash); }
+  .sec .act-add:active { transform: scale(.96); }
+  .sec .act-add svg { display: block; width: 14px; height: 14px; flex: none; }
   .rem { display: flex; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--line); line-height: 1.4; }
   .rem .when { width: 80px; font-size: 13px; font-weight: 500; color: var(--muted); flex: none; }
   .rem .when.hot { color: var(--green); }
@@ -493,7 +497,7 @@
   .activity.cosmos-compact .cosmos-see:hover { border-color: var(--green); background: var(--green-wash); }
 
   /* Post-tutorial Citta-switch tip: dim via in-frame spotlight cutout (Citta pill only).
-     Do NOT use a full-viewport blocking scrim �?that greys out the page and traps clicks. */
+     Do NOT use a full-viewport blocking scrim — that greys out the page and traps clicks. */
   .tip-scrim { position: fixed; inset: 0; background: transparent; z-index: 10000; display: none; pointer-events: none; }
   .tip-scrim.on { display: none; }
   .new-tip { position: fixed; left: 0; top: 0; transform: none; width: min(340px, calc(100vw - 48px)); background: #247a5c; color: #fff; border-radius: 16px; padding: 18px 20px; font-size: 13px; line-height: 1.45; box-shadow: 0 0 0 1px rgba(255,255,255,.14), 0 20px 48px rgba(0,0,0,.35); z-index: 10010; display: none; pointer-events: auto; isolation: isolate; }
@@ -559,8 +563,8 @@
   .citta-input:focus { outline: none; }
   .citta-panel .ask-row .send { width: 36px; height: 36px; border-radius: 10px; margin-left: auto; flex: none; display: inline-flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; }
 
-  /* Spotlight steps: cutout dim inside .frame. Final step: viewport-fixed gray + centered modal (outside .scaler �?transform traps fixed). */
-  /* Scrim dims only �?keep pointer-events none so the page can still scroll to below-fold H0 content. */
+  /* Spotlight steps: cutout dim inside .frame. Final step: viewport-fixed gray + centered modal (outside .scaler — transform traps fixed). */
+  /* Scrim dims only — keep pointer-events none so the page can still scroll to below-fold H0 content. */
   .coach-scrim { position: fixed; inset: 0; background: rgba(28,31,29,.48); z-index: 10000; display: none; pointer-events: none; }
   .coach-scrim.on { display: block; pointer-events: none; }
   .coach { position: absolute; left: 56px; top: 200px; transform: none; width: min(400px, calc(100% - 112px)); max-width: calc(100% - 112px); max-height: none; overflow: visible; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; box-shadow: 0 16px 40px rgba(28,31,29,.18); z-index: 15; display: none; line-height: 1.45; pointer-events: auto; }
@@ -683,7 +687,7 @@
   .dock { cursor: pointer; }
   .dock[aria-expanded="true"] { box-shadow: 0 0 0 4px rgba(44,122,95,.2); }
 
-  /* Fullscreen toggle �?fixed chrome; outside Figma frame so layout stays faithful */
+  /* Fullscreen toggle — fixed chrome; outside Figma frame so layout stays faithful */
   .fs-toggle {
     position: fixed;
     top: 10px;
@@ -746,7 +750,7 @@
 <body>
 
 <div class="presenter">
-  <h1>Home v2 · B · H2 �?eng handoff</h1>
+  <h1>Home v2 · B · H2 — eng handoff</h1>
   <button type="button" class="tutorial-cta" id="presenterTutorialBtn" data-action="open-tutorial" aria-pressed="false">Tutorial</button>
   <div class="seg screen" role="group" aria-label="Screen">
     <button type="button" data-screen="home" aria-pressed="true">Default home</button>
@@ -805,7 +809,7 @@
             <button type="button" class="rf" role="menuitem" data-rail="settings">Settings</button>
           </div>
           <div class="div" role="presentation"></div>
-          <button type="button" class="p" aria-label="Prof. Roland">GR</button><button type="button" class="p" aria-label="�?>�?/button><button type="button" class="p" aria-label="Prof. Pajer">EP</button><button type="button" class="p" aria-label="Prof. Xu">HX</button>
+          <button type="button" class="p" aria-label="Prof. Roland">GR</button><button type="button" class="p" aria-label="王">王</button><button type="button" class="p" aria-label="Prof. Pajer">EP</button><button type="button" class="p" aria-label="Prof. Xu">HX</button>
         </nav>
 
         <div class="main">
@@ -813,7 +817,7 @@
             <div class="logo" aria-label="Symbion"><span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 588 403" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M185.04 0C187.182 3.06253e-05 189.308 0.132502 191.416 0.392578H286.586V0.400391C341.645 1.26989 386.18 90.4861 386.501 200.658H386.502C386.502 256.016 397.767 306.114 415.962 342.356C434.169 378.623 459.247 400.902 486.827 400.902C507.519 400.902 526.803 388.362 542.833 366.783C529.371 380.528 514.049 388.306 497.791 388.307C479.154 388.306 461.745 378.087 446.961 360.373C471.082 323.732 486.693 217.758 486.821 152.566C527.76 167.042 549.726 138.984 587.553 124.762L587.551 124.766H587.965C587.965 180.223 576.681 306.343 558.418 342.722C540.167 379.076 514.879 401.715 486.827 401.715C484.625 401.715 482.44 401.576 480.273 401.301H385.281V401.293C330.226 400.423 285.693 311.22 285.366 201.058H285.365C285.365 145.699 274.1 95.6005 255.905 59.3574C237.699 23.0909 212.62 0.812901 185.04 0.8125C164.357 0.812501 145.082 13.3405 129.056 34.9014C142.512 21.1704 157.827 13.3994 174.076 13.3994C192.713 13.3996 210.122 23.6195 224.906 41.333C201.594 76.7453 186.233 132.003 185.112 194.521C188.22 199.377 191.517 203.495 195.087 207.117C207.406 219.616 226.5 229.76 263.77 239.379L267.474 299.194C231.961 313.226 210.157 325.952 194.709 340.73C179.655 355.132 168.548 373.497 158.114 402.569L98.7021 402.298C88.1495 372.03 79.0104 353.078 65.9092 338.014C52.9951 323.165 34.0985 309.707 0 294.966L4.2041 235.645C38.3376 226.325 56.6173 216.907 69.2891 204.628C74.6055 199.476 79.4868 193.287 84.2051 185.356C86.115 136.155 96.9255 91.9056 113.448 58.9932C131.699 22.6387 156.988 1.2262e-06 185.04 0ZM131.692 227.95C126.189 235.865 120.071 243.174 113.145 249.887C104.752 258.019 95.5671 264.895 85.5312 270.848C96.0057 278.698 105.241 287.203 113.463 296.656C119.726 303.858 125.214 311.402 130.13 319.292C136.342 310.725 143.28 302.715 151.144 295.191C159.464 287.232 168.565 280.065 178.521 273.458C168.069 267.181 158.645 259.921 150.202 251.355C143.112 244.161 137.019 236.352 131.692 227.95Z" fill="currentColor"/></svg></span><span class="logo-word">SYMBION</span></div>
             <button type="button" class="nav-tutorial" data-action="open-tutorial" data-start-tutorial aria-label="Start interactive tutorial" aria-pressed="false">Tutorial · 4 steps</button>
             <label class="search-wrap">
-              <input type="search" class="search" id="headerSearch" placeholder="Search files, Cosmos, people�? autocomplete="off" spellcheck="false" aria-label="Search files, Cosmos, people">
+              <input type="search" class="search" id="headerSearch" placeholder="Search files, Cosmos, people…" autocomplete="off" spellcheck="false" aria-label="Search files, Cosmos, people">
               <span class="search-kbd" aria-hidden="true">⌘K</span>
             </label>
           </div>
@@ -844,7 +848,7 @@
             </section>
             <div class="tutorial-entry" id="tutorialEntry" aria-label="Start interactive tutorial">
               <span class="k">FIGMA 8541</span>
-              <p><b>Interactive tutorial</b> �?4 steps with Citta (starter task, try each tool, switch twins, finish).</p>
+              <p><b>Interactive tutorial</b> — 4 steps with Citta (starter task, try each tool, switch twins, finish).</p>
               <button type="button" class="start" data-start-tutorial>Start tutorial<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
               <button type="button" class="link" data-start-tutorial data-step="1">Or jump in with #screen=tutorial</button>
             </div>
@@ -934,7 +938,7 @@
                   <span id="whenCitta" style="display:contents">
                     <span class="faint">or switch to</span>
                     <span class="stack"><span>GR</span><span>EP</span><span class="agent">LR</span></span>
-                    <button type="button" class="link" id="openTwinBrowse">your twins &amp; AI agents �?anytime</button>
+                    <button type="button" class="link" id="openTwinBrowse">your twins &amp; AI agents — anytime</button>
                   </span>
                   <span id="whenTwin" style="display:none">
                     <span class="faint">·</span>
@@ -976,7 +980,7 @@
                 <span class="k">CONTINUE WITH</span>
                 <div class="wrap" id="composerContinue">
                   <button type="button" class="chip" data-continue-tool="deck"><span class="ic ico-book" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M139.661795 93.098382c-25.742144 0-46.563413 20.82127-46.563413 46.534969v651.631787c0 25.713699 20.82127 46.534969 46.534969 46.534969h176.355017c45.937637 0 90.851278 13.624847 129.080494 39.110991L511.998436 921.511851l66.929573-44.600753a232.731733 232.731733 0 0 1 129.023606-39.110991h176.411905c25.713699 0 46.534969-20.82127 46.534969-46.534969V139.633351c0-25.713699-20.82127-46.534969-46.534969-46.534969h-176.355017c-19.342163 0-48.753629 8.362641-73.557108 22.812375-12.003519 6.968868-20.650604 14.079957-25.770588 19.996383a26.168809 26.168809 0 0 0-3.726211 5.262206v556.99741a46.534969 46.534969 0 0 1-93.098382 0V139.661795c0-26.993695 12.942183-49.066517 26.396364-64.597135a194.929182 194.929182 0 0 1 49.493182-39.651435C623.016763 14.904843 668.442402 0 707.980059 0h176.355017A139.661795 139.661795 0 0 1 1023.996871 139.661795v651.603343a139.661795 139.661795 0 0 1-139.661795 139.661795h-176.355017a139.661795 139.661795 0 0 0-77.425541 23.438151l-92.728606 61.809589a46.534969 46.534969 0 0 1-51.654953 0l-92.728606-61.809589a139.661795 139.661795 0 0 0-77.453985-23.466595h-176.355017A139.661795 139.661795 0 0 1 0 791.265138V139.633351A139.661795 139.661795 0 0 1 139.661795 0h176.355017c45.909193 0 90.822834 13.624847 129.05205 39.110992a46.534969 46.534969 0 0 1-51.626509 77.425541 139.661795 139.661795 0 0 0-77.453985-23.438151h-176.355017z" fill="currentColor"/><path d="M170.666145 360.304677C170.666145 334.135868 191.032305 312.887933 216.177117 312.887933h136.532916c25.144812 0 45.510972 21.219491 45.510972 47.416744 0 26.168809-20.36616 47.3883-45.510972 47.388299H216.177117c-25.144812 0-45.510972-21.219491-45.510972-47.388299z m45.510972 189.610087c0-12.572406 4.807096-24.632814 13.340404-33.507453 8.533307-8.903084 20.110161-13.880846 32.170568-13.880846h91.021944c25.144812 0 45.510972 21.219491 45.510972 47.388299 0 26.168809-20.36616 47.416744-45.510972 47.416744H261.688089c-25.144812 0-45.510972-21.219491-45.510972-47.416744z" fill="currentColor"/></svg></span><b>Lecture 4 summary</b><span class="pct"><span class="bar"><span style="width:13px"></span></span>60%</span><span class="ar ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
-                  <button type="button" class="chip" data-continue-tool="doc"><span class="ic ico-report" aria-hidden="true"><svg viewBox="145 90 736 848" xmlns="http://www.w3.org/2000/svg"><path d="M728.3 928.2H297.9c-84.2 0-152.8-68.5-152.8-152.8V329.1c0-84.2 68.5-152.8 152.8-152.8H365v60h-67.1c-51.2 0-92.8 41.6-92.8 92.8v446.3c0 51.2 41.6 92.8 92.8 92.8h430.4c51.2 0 92.8-41.6 92.8-92.8V329.1c0-51.2-41.6-92.8-92.8-92.8H661v-60h67.3c84.2 0 152.8 68.5 152.8 152.8v446.3c0 84.3-68.6 152.8-152.8 152.8z" fill="currentColor"/><path d="M593.6 308.1h-161c-49.3 0-89.4-40.1-89.4-89.4v-31.4c0-49.3 40.1-89.4 89.4-89.4h161c49.3 0 89.4 40.1 89.4 89.4v31.4c0 49.3-40.1 89.4-89.4 89.4zM432.6 158c-16.2 0-29.4 13.2-29.4 29.4v31.4c0 16.2 13.2 29.4 29.4 29.4h161c16.2 0 29.4-13.2 29.4-29.4v-31.4c0-16.2-13.2-29.4-29.4-29.4h-161z" fill="currentColor"/><path d="M511.3 477.1H320.1c-16.6 0-30-13.4-30-30s13.4-30 30-30h191.3c16.6 0 30 13.4 30 30s-13.5 30-30.1 30zM576.1 604.1h-256c-16.6 0-30-13.4-30-30s13.4-30 30-30h256.1c16.6 0 30 13.4 30 30s-13.5 30-30.1 30zM640.1 732.1h-320c-16.6 0-30-13.4-30-30s13.4-30 30-30h320.1c16.6 0 30 13.4 30 30s-13.5 30-30.1 30z" fill="currentColor"/></svg></span><b>Reading report �?QGP</b><span class="pct"><span class="bar"><span style="width:12px"></span></span>55%</span><span class="ar ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
+                  <button type="button" class="chip" data-continue-tool="doc"><span class="ic ico-report" aria-hidden="true"><svg viewBox="145 90 736 848" xmlns="http://www.w3.org/2000/svg"><path d="M728.3 928.2H297.9c-84.2 0-152.8-68.5-152.8-152.8V329.1c0-84.2 68.5-152.8 152.8-152.8H365v60h-67.1c-51.2 0-92.8 41.6-92.8 92.8v446.3c0 51.2 41.6 92.8 92.8 92.8h430.4c51.2 0 92.8-41.6 92.8-92.8V329.1c0-51.2-41.6-92.8-92.8-92.8H661v-60h67.3c84.2 0 152.8 68.5 152.8 152.8v446.3c0 84.3-68.6 152.8-152.8 152.8z" fill="currentColor"/><path d="M593.6 308.1h-161c-49.3 0-89.4-40.1-89.4-89.4v-31.4c0-49.3 40.1-89.4 89.4-89.4h161c49.3 0 89.4 40.1 89.4 89.4v31.4c0 49.3-40.1 89.4-89.4 89.4zM432.6 158c-16.2 0-29.4 13.2-29.4 29.4v31.4c0 16.2 13.2 29.4 29.4 29.4h161c16.2 0 29.4-13.2 29.4-29.4v-31.4c0-16.2-13.2-29.4-29.4-29.4h-161z" fill="currentColor"/><path d="M511.3 477.1H320.1c-16.6 0-30-13.4-30-30s13.4-30 30-30h191.3c16.6 0 30 13.4 30 30s-13.5 30-30.1 30zM576.1 604.1h-256c-16.6 0-30-13.4-30-30s13.4-30 30-30h256.1c16.6 0 30 13.4 30 30s-13.5 30-30.1 30zM640.1 732.1h-320c-16.6 0-30-13.4-30-30s13.4-30 30-30h320.1c16.6 0 30 13.4 30 30s-13.5 30-30.1 30z" fill="currentColor"/></svg></span><b>Reading report — QGP</b><span class="pct"><span class="bar"><span style="width:12px"></span></span>55%</span><span class="ar ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
                   <button type="button" class="link-btn">All files<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
                 </div>
                 <div class="wrap suggest-chips" id="composerSuggest" hidden>
@@ -989,20 +993,20 @@
               <div class="menu" id="menu" role="menu" aria-label="Work with">
                 <div class="hd">WORK WITH · switch anytime</div>
                 <button type="button" class="item" role="menuitemradio" data-ai="citta" aria-checked="true">
-                  <span class="mav citta"><span class="spark-icon" aria-hidden="true"></span></span><span class="tx"><b>Citta</b><small>Default · works in every tool</small></span><span class="ck">�?/span>
+                  <span class="mav citta"><span class="spark-icon" aria-hidden="true"></span></span><span class="tx"><b>Citta</b><small>Default · works in every tool</small></span><span class="ck">✓</span>
                 </button>
                 <button type="button" class="item" role="menuitemradio" data-ai="roland" aria-checked="false">
-                  <span class="mav">GR</span><span class="tx"><b>Prof. Roland’s twin</b><small>�?Heavy-ion physics · your course</small></span><span class="ck">�?/span>
+                  <span class="mav">GR</span><span class="tx"><b>Prof. Roland’s twin</b><small>✦ Heavy-ion physics · your course</small></span><span class="ck">✓</span>
                 </button>
                 <button type="button" class="item" role="menuitemradio" data-ai="pajer" aria-checked="false">
-                  <span class="mav">EP</span><span class="tx"><b>Prof. Pajer’s twin</b><small>�?Cosmology</small></span><span class="ck">�?/span>
+                  <span class="mav">EP</span><span class="tx"><b>Prof. Pajer’s twin</b><small>✦ Cosmology</small></span><span class="ck">✓</span>
                 </button>
                 <button type="button" class="item" role="menuitemradio" data-ai="xu" aria-checked="false">
-                  <span class="mav">HX</span><span class="tx"><b>Prof. Xu’s twin</b><small>�?AI &amp; decisions · data, pricing</small></span><span class="ck">�?/span>
+                  <span class="mav">HX</span><span class="tx"><b>Prof. Xu’s twin</b><small>✦ AI &amp; decisions · data, pricing</small></span><span class="ck">✓</span>
                 </button>
                 <div class="hd">AI AGENTS</div>
                 <button type="button" class="item" role="menuitemradio" data-ai="lr" aria-checked="false">
-                  <span class="mav agent">LR</span><span class="tx"><b>Lab Report Coach</b><small>AI agent · drafts lab reports in Doc</small></span><span class="ck">�?/span>
+                  <span class="mav agent">LR</span><span class="tx"><b>Lab Report Coach</b><small>AI agent · drafts lab reports in Doc</small></span><span class="ck">✓</span>
                 </button>
                 <div class="rule"></div>
                 <button type="button" class="browse"><span class="plus" aria-hidden="true">+</span><span>Browse digital twins</span></button>
@@ -1016,10 +1020,10 @@
                 <span class="sub">One quick win in every workspace</span>
               </div>
               <div class="try-cards">
-                <div class="try-card" data-tool="doc"><span class="prev"><span class="mock">Reading summary · 3 sections · citations ready</span></span><span class="bot"><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">�?/i><b>Doc</b></span><small>Summarize a reading in one page</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
-                <div class="try-card" data-tool="deck"><span class="prev"><span class="mock">Slide 1�? · speaker notes · course theme</span></span><span class="bot"><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">�?/i><b>Deck</b></span><small>Turn lecture notes into slides</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
-                <div class="try-card" data-tool="numbers"><span class="prev"><span class="mock">Lab table · trend line · export chart</span></span><span class="bot"><span class="row"><i style="background:var(--green-tint);color:var(--green)">�?/i><b>Numbers</b></span><small>Plot my physics sample data</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
-                <div class="try-card" data-tool="symtex"><span class="prev"><span class="mock">ρ = n · m · ⟨v²�?· fraction</span></span><span class="bot"><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset the baryon density formula</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
+                <div class="try-card" data-tool="doc"><span class="prev"><span class="mock">Reading summary · 3 sections · citations ready</span></span><span class="bot"><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Summarize a reading in one page</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
+                <div class="try-card" data-tool="deck"><span class="prev"><span class="mock">Slide 1–6 · speaker notes · course theme</span></span><span class="bot"><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></span><small>Turn lecture notes into slides</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
+                <div class="try-card" data-tool="numbers"><span class="prev"><span class="mock">Lab table · trend line · export chart</span></span><span class="bot"><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Plot my physics sample data</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
+                <div class="try-card" data-tool="symtex"><span class="prev"><span class="mock">ρ = n · m · ⟨v²⟩ · fraction</span></span><span class="bot"><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset the baryon density formula</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
                 <div class="try-card" data-tool="code"><span class="prev"><span class="mock">for p in particles: scatter()</span></span><span class="bot"><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a tiny particle simulation</small><button type="button" class="btn-citta"><span class="citta-mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Try with Citta</button></span></div>
               </div>
             </section>
@@ -1032,9 +1036,9 @@
                 <button type="button" class="week-tools-close" data-dismiss-week-tools aria-label="Dismiss">×</button>
               </div>
               <div class="week-cards">
-                <div class="week-card tried" data-tool="doc"><span class="done" aria-label="Tried">�?/span><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">�?/i><b>Doc</b></span><small>Lecture 1 summary</small><button type="button" class="go-link" data-action="open">Open<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
-                <div class="week-card tried" data-tool="deck"><span class="done" aria-label="Tried">�?/span><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">�?/i><b>Deck</b></span><small>6 study slides</small><button type="button" class="go-link" data-action="open">Open<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
-                <div class="week-card" data-tool="numbers"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--green-tint);color:var(--green)">�?/i><b>Numbers</b></span><small>Chart your lab data</small><button type="button" class="go-link" data-action="try-citta">Try with Citta<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
+                <div class="week-card tried" data-tool="doc"><span class="done" aria-label="Tried">✓</span><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Lecture 1 summary</small><button type="button" class="go-link" data-action="open">Open<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
+                <div class="week-card tried" data-tool="deck"><span class="done" aria-label="Tried">✓</span><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></span><small>6 study slides</small><button type="button" class="go-link" data-action="open">Open<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
+                <div class="week-card" data-tool="numbers"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Chart your lab data</small><button type="button" class="go-link" data-action="try-citta">Try with Citta<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
                 <div class="week-card" data-tool="symtex"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset a formula</small><button type="button" class="go-link" data-action="try-citta">Try with Citta<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
                 <div class="week-card" data-tool="code"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a simulation</small><button type="button" class="go-link" data-action="try-citta">Try with Citta<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
               </div>
@@ -1048,13 +1052,13 @@
               <button type="button" class="interest add" aria-label="Add interest">+</button>
               <span class="vr"></span>
               <div class="discover-scroll-wrap">
-              <div class="hscroll" id="discoverScroll" tabindex="0" role="region" aria-label="People to discover �?scroll horizontally">
-                <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag">�?Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi">+ Add SI</button></div>
-                <div class="dcard"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag">�?Twin</span><small>Climate maths · Columbia</small></div><button type="button" class="addsi">+ Add SI</button></div>
+              <div class="hscroll" id="discoverScroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
+                <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag">✦ Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                <div class="dcard"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag">✦ Twin</span><small>Climate maths · Columbia</small></div><button type="button" class="addsi">+ Add SI</button></div>
                 <div class="dcard"><span class="dav agent">LR</span><div><span class="nm">Lab Report Coach</span><span class="tag agent">AI agent</span><small>Drafts in Doc</small></div><button type="button" class="addsi">+ Add SI</button></div>
-                <div class="dcard"><span class="dav">KS</span><div><span class="nm">Katherine F. Smith</span><span class="tag">�?Twin</span><small>Planetary health · Brown</small></div><button type="button" class="addsi">+ Add SI</button></div>
-                <div class="dcard"><span class="dav">EP</span><div><span class="nm">Prof. Pajer</span><span class="tag">�?Twin</span><small>Cosmology · Cornell</small></div><button type="button" class="addsi">+ Add SI</button></div>
-                <div class="dcard"><span class="dav">HX</span><div><span class="nm">Prof. Xu</span><span class="tag">�?Twin</span><small>AI &amp; decisions</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                <div class="dcard"><span class="dav">KS</span><div><span class="nm">Katherine F. Smith</span><span class="tag">✦ Twin</span><small>Planetary health · Brown</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                <div class="dcard"><span class="dav">EP</span><div><span class="nm">Prof. Pajer</span><span class="tag">✦ Twin</span><small>Cosmology · Cornell</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                <div class="dcard"><span class="dav">HX</span><div><span class="nm">Prof. Xu</span><span class="tag">✦ Twin</span><small>AI &amp; decisions</small></div><button type="button" class="addsi">+ Add SI</button></div>
               </div>
               </div>
               <button type="button" class="round discover-next" id="discoverScrollNext" aria-label="Scroll discover cards"><svg class="chev-ico" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M313.987456 1023.943672c-5.644178 0-11.313329-1.898042-15.983511-5.769049-10.589076-8.84088-12.012607-24.574648-3.196702-35.188699l378.909107-454.581042-380.832123-464.620685c-8.740982-10.663998-7.19258-26.397767 3.496393-35.13875 10.688973-8.740982 26.397767-7.167606 35.13875 3.496393l393.893649 480.579221c7.592167 9.265441 7.542219 22.601684-0.124871 31.817176l-392.145452 470.464656C328.247744 1020.896816 321.130087 1023.943672 313.987456 1023.943672z" fill="currentColor"/></svg></button>
@@ -1064,11 +1068,11 @@
             <section class="two">
               <div class="two-grid">
                 <div class="two-col">
-                  <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act" data-action="add-reminder">+ Add</button></div>
+                  <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act-add" data-action="add-reminder" aria-label="Add reminder"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 3.25v9.5M3.25 8h9.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button></div>
                   <div class="two-main-l">
                     <div class="rem">
                       <span class="when hot">2:30</span>
-                      <div class="col"><span class="t">Heavy-ion Physics �?lecture 5</span><span class="meta"><span class="badge">Course · Prof. Roland</span>Room 6-120</span></div>
+                      <div class="col"><span class="t">Heavy-ion Physics — lecture 5</span><span class="meta"><span class="badge">Course · Prof. Roland</span>Room 6-120</span></div>
                       <button type="button" class="btn-soft" data-verb="Prep a 10-min deck" data-tool="deck"></button>
                     </div>
                     <div class="rem">
@@ -1092,7 +1096,7 @@
                   <div class="two-title-r"><h3>From your Cosmos</h3><span class="new-badge">5 new</span></div>
                   <aside class="activity two-main-r">
                     <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland’s twin posted lecture 5 slides</div><small>Heavy-ion Physics · 1h ago</small><button type="button" class="act-link">Turn into study notes<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
-                    <div class="act-item"><span class="aav">�?/span><div><div class="t">骆王�?is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                    <div class="act-item"><span class="aav">王</span><div><div class="t">骆王宇 is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                     <div class="act-item"><span class="aav">EP</span><div><div class="t">2 replies to your #cosmology thread</div><small>Prof. Pajer’s twin + @maya_k</small><button type="button" class="act-link">Open thread<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                     <div class="act-item"><span class="aav">HX</span><div><div class="t">Prof. Xu’s twin: new insight on pricing data</div><small>AI &amp; decisions · today</small><button type="button" class="act-link">View insight<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                   </aside>
@@ -1103,11 +1107,11 @@
             <section>
               <div class="sec" style="margin-bottom:16px"><h3>Start from a goal</h3><span class="sub">Templates with Citta built in</span><span class="sp"></span><button type="button" class="act" data-action="see-goals">See all</button></div>
               <div class="goals">
-                <button type="button" class="tpl" data-goal-tool="doc"><span class="h"><i>�?/i>Doc</span><b>Essay, start to finish</b><small>Topic �?outline �?draft �?citations</small><span class="use">Use with Citta</span></button>
-                <button type="button" class="tpl" data-goal-tool="deck"><span class="h"><i>�?/i>Deck</span><b>Class presentation</b><small>Notes or lecture �?slides �?speaker notes</small><span class="use">Use with Citta</span></button>
-                <button type="button" class="tpl" data-goal-tool="numbers"><span class="h"><i>�?/i>Numbers</span><b>Data analysis</b><small>Upload CSV �?trends �?chart for your Deck</small><span class="use">Use with Citta</span></button>
-                <button type="button" class="tpl" data-goal-tool="symtex"><span class="h"><i>Σ</i>SymTex</span><b>Proof or problem set</b><small>Handwritten steps �?typeset LaTeX</small><span class="use">Use with Citta</span></button>
-                <button type="button" class="tpl" data-goal-tool="code"><span class="h"><i style="font-size:10px">&lt;/&gt;</i>Code</span><b>Explain or fix my script</b><small>Paste code �?explain �?fix �?test</small><span class="use">Use with Citta</span></button>
+                <button type="button" class="tpl" data-goal-tool="doc"><span class="h"><i>≡</i>Doc</span><b>Essay, start to finish</b><small>Topic → outline → draft → citations</small><span class="use">Use with Citta</span></button>
+                <button type="button" class="tpl" data-goal-tool="deck"><span class="h"><i>▧</i>Deck</span><b>Class presentation</b><small>Notes or lecture → slides → speaker notes</small><span class="use">Use with Citta</span></button>
+                <button type="button" class="tpl" data-goal-tool="numbers"><span class="h"><i>▦</i>Numbers</span><b>Data analysis</b><small>Upload CSV → trends → chart for your Deck</small><span class="use">Use with Citta</span></button>
+                <button type="button" class="tpl" data-goal-tool="symtex"><span class="h"><i>Σ</i>SymTex</span><b>Proof or problem set</b><small>Handwritten steps → typeset LaTeX</small><span class="use">Use with Citta</span></button>
+                <button type="button" class="tpl" data-goal-tool="code"><span class="h"><i style="font-size:10px">&lt;/&gt;</i>Code</span><b>Explain or fix my script</b><small>Paste code → explain → fix → test</small><span class="use">Use with Citta</span></button>
               </div>
             </section>
             </div>
@@ -1121,11 +1125,11 @@
                 <button type="button" class="interest add" aria-label="Add interest">+</button>
                 <span class="vr"></span>
                 <div class="discover-scroll-wrap">
-                <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="People to discover �?scroll horizontally">
-                  <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag">�?Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi">+ Add SI</button></div>
-                  <div class="dcard"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag">�?Twin</span><small>Climate maths · Columbia</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
+                  <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag">✦ Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                  <div class="dcard"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag">✦ Twin</span><small>Climate maths · Columbia</small></div><button type="button" class="addsi">+ Add SI</button></div>
                   <div class="dcard"><span class="dav agent">LR</span><div><span class="nm">Lab Report Coach</span><span class="tag agent">AI agent</span><small>Drafts in Doc</small></div><button type="button" class="addsi">+ Add SI</button></div>
-                  <div class="dcard"><span class="dav">KS</span><div><span class="nm">Katherine F. Smith</span><span class="tag">�?Twin</span><small>Planetary health · Brown</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                  <div class="dcard"><span class="dav">KS</span><div><span class="nm">Katherine F. Smith</span><span class="tag">✦ Twin</span><small>Planetary health · Brown</small></div><button type="button" class="addsi">+ Add SI</button></div>
                 </div>
                 </div>
                 <button type="button" class="round discover-next" aria-label="Scroll discover cards"><svg class="chev-ico" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M313.987456 1023.943672c-5.644178 0-11.313329-1.898042-15.983511-5.769049-10.589076-8.84088-12.012607-24.574648-3.196702-35.188699l378.909107-454.581042-380.832123-464.620685c-8.740982-10.663998-7.19258-26.397767 3.496393-35.13875 10.688973-8.740982 26.397767-7.167606 35.13875 3.496393l393.893649 480.579221c7.592167 9.265441 7.542219 22.601684-0.124871 31.817176l-392.145452 470.464656C328.247744 1020.896816 321.130087 1023.943672 313.987456 1023.943672z" fill="currentColor"/></svg></button>
@@ -1144,9 +1148,9 @@
               <section class="two">
                 <div class="two-grid">
                   <div class="two-col">
-                    <div class="sec two-title-l"><h3>Coming up</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act" data-action="add-reminder">+ Add</button></div>
+                    <div class="sec two-title-l"><h3>Coming up</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act-add" data-action="add-reminder" aria-label="Add reminder"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 3.25v9.5M3.25 8h9.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button></div>
                     <div class="two-main-l">
-                      <div class="rem"><span class="when hot">Thu</span><div class="col"><span class="t">Heavy-ion Physics �?lecture 8</span><span class="meta"><span class="badge">Course · Prof. Roland</span></span></div><button type="button" class="btn-soft" data-verb="Prep a 10-min deck" data-tool="deck"></button></div>
+                      <div class="rem"><span class="when hot">Thu</span><div class="col"><span class="t">Heavy-ion Physics — lecture 8</span><span class="meta"><span class="badge">Course · Prof. Roland</span></span></div><button type="button" class="btn-soft" data-verb="Prep a 10-min deck" data-tool="deck"></button></div>
                       <div class="rem"><span class="when">Fri</span><div class="col"><span class="t">Lab 3 analysis due</span><span class="meta"><span class="badge yours">Yours</span></span></div><button type="button" class="btn-soft" data-verb="Open in Numbers" data-tool="numbers"></button></div>
                     </div>
                   </div>
@@ -1170,9 +1174,9 @@
                   <button type="button" class="week-tools-close" data-dismiss-week-tools aria-label="Dismiss">×</button>
                 </div>
                 <div class="week-cards">
-                  <div class="week-card tried" data-tool="doc"><span class="done" aria-label="Tried">�?/span><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">�?/i><b>Doc</b></span><small>Lecture 1 summary</small><button type="button" class="go-link" data-action="open">Open<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
-                  <div class="week-card tried" data-tool="deck"><span class="done" aria-label="Tried">�?/span><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">�?/i><b>Deck</b></span><small>6 study slides</small><button type="button" class="go-link" data-action="continue">Continue<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
-                  <div class="week-card" data-tool="numbers"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--green-tint);color:var(--green)">�?/i><b>Numbers</b></span><small>Chart your lab data</small><button type="button" class="go-link" data-action="try-citta">Try with Citta<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
+                  <div class="week-card tried" data-tool="doc"><span class="done" aria-label="Tried">✓</span><span class="row"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></span><small>Lecture 1 summary</small><button type="button" class="go-link" data-action="open">Open<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
+                  <div class="week-card tried" data-tool="deck"><span class="done" aria-label="Tried">✓</span><span class="row"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></span><small>6 study slides</small><button type="button" class="go-link" data-action="continue">Continue<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
+                  <div class="week-card" data-tool="numbers"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></span><small>Chart your lab data</small><button type="button" class="go-link" data-action="try-citta">Try with Citta<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
                   <div class="week-card" data-tool="symtex"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></span><small>Typeset a formula</small><button type="button" class="go-link" data-action="try-citta">Try with Citta<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
                   <div class="week-card" data-tool="code"><span class="todo" aria-hidden="true"></span><span class="row"><i style="background:var(--slate-tint);color:var(--slate);font-size:9px">&lt;/&gt;</i><b>Code</b></span><small>Run a simulation</small><button type="button" class="go-link" data-action="try-citta">Try with Citta<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div>
                 </div>
@@ -1186,13 +1190,13 @@
                 <button type="button" class="interest add" aria-label="Add interest">+</button>
                 <span class="vr"></span>
                 <div class="discover-scroll-wrap">
-                <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="People to discover �?scroll horizontally">
-                  <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag">�?Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi">+ Add SI</button></div>
-                  <div class="dcard"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag">�?Twin</span><small>Climate maths · Columbia</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
+                  <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag">✦ Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                  <div class="dcard"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag">✦ Twin</span><small>Climate maths · Columbia</small></div><button type="button" class="addsi">+ Add SI</button></div>
                   <div class="dcard"><span class="dav agent">LR</span><div><span class="nm">Lab Report Coach</span><span class="tag agent">AI agent</span><small>Drafts in Doc</small></div><button type="button" class="addsi">+ Add SI</button></div>
-                  <div class="dcard"><span class="dav">KS</span><div><span class="nm">Katherine F. Smith</span><span class="tag">�?Twin</span><small>Planetary health · Brown</small></div><button type="button" class="addsi">+ Add SI</button></div>
-                  <div class="dcard"><span class="dav">EP</span><div><span class="nm">Prof. Pajer</span><span class="tag">�?Twin</span><small>Cosmology · Cornell</small></div><button type="button" class="addsi">+ Add SI</button></div>
-                  <div class="dcard"><span class="dav">HX</span><div><span class="nm">Prof. Xu</span><span class="tag">�?Twin</span><small>AI &amp; decisions</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                  <div class="dcard"><span class="dav">KS</span><div><span class="nm">Katherine F. Smith</span><span class="tag">✦ Twin</span><small>Planetary health · Brown</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                  <div class="dcard"><span class="dav">EP</span><div><span class="nm">Prof. Pajer</span><span class="tag">✦ Twin</span><small>Cosmology · Cornell</small></div><button type="button" class="addsi">+ Add SI</button></div>
+                  <div class="dcard"><span class="dav">HX</span><div><span class="nm">Prof. Xu</span><span class="tag">✦ Twin</span><small>AI &amp; decisions</small></div><button type="button" class="addsi">+ Add SI</button></div>
                 </div>
                 </div>
                 <button type="button" class="round discover-next" aria-label="Scroll discover cards"><svg class="chev-ico" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M313.987456 1023.943672c-5.644178 0-11.313329-1.898042-15.983511-5.769049-10.589076-8.84088-12.012607-24.574648-3.196702-35.188699l378.909107-454.581042-380.832123-464.620685c-8.740982-10.663998-7.19258-26.397767 3.496393-35.13875 10.688973-8.740982 26.397767-7.167606 35.13875 3.496393l393.893649 480.579221c7.592167 9.265441 7.542219 22.601684-0.124871 31.817176l-392.145452 470.464656C328.247744 1020.896816 321.130087 1023.943672 313.987456 1023.943672z" fill="currentColor"/></svg></button>
@@ -1202,11 +1206,11 @@
               <section class="two">
                 <div class="two-grid">
                   <div class="two-col">
-                    <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act" data-action="add-reminder">+ Add</button></div>
+                    <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act-add" data-action="add-reminder" aria-label="Add reminder"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 3.25v9.5M3.25 8h9.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button></div>
                     <div class="two-main-l">
                       <div class="rem">
                         <span class="when hot">2:30</span>
-                        <div class="col"><span class="t">Heavy-ion Physics �?lecture 5</span><span class="meta"><span class="badge">Course · Prof. Roland</span>Room 6-120</span></div>
+                        <div class="col"><span class="t">Heavy-ion Physics — lecture 5</span><span class="meta"><span class="badge">Course · Prof. Roland</span>Room 6-120</span></div>
                         <button type="button" class="btn-soft" data-verb="Prep a 10-min deck" data-tool="deck"></button>
                       </div>
                       <div class="rem">
@@ -1230,7 +1234,7 @@
                     <div class="two-title-r"><h3>From your Cosmos</h3><span class="new-badge">5 new</span></div>
                     <aside class="activity two-main-r">
                       <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland’s twin posted lecture 5 slides</div><small>Heavy-ion Physics · 1h ago</small><button type="button" class="act-link">Turn into study notes<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
-                      <div class="act-item"><span class="aav">�?/span><div><div class="t">骆王�?is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                      <div class="act-item"><span class="aav">王</span><div><div class="t">骆王宇 is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                       <div class="act-item"><span class="aav">EP</span><div><div class="t">2 replies to your #cosmology thread</div><small>Prof. Pajer’s twin + @maya_k</small><button type="button" class="act-link">Open thread<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                       <div class="act-item"><span class="aav">HX</span><div><div class="t">Prof. Xu’s twin: new insight on pricing data</div><small>AI &amp; decisions · today</small><button type="button" class="act-link">View insight<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                     </aside>
@@ -1241,11 +1245,11 @@
               <section>
                 <div class="sec" style="margin-bottom:16px"><h3>Start from a goal</h3><span class="sub">Templates with Citta built in</span><span class="sp"></span><button type="button" class="act" data-action="see-goals">See all</button></div>
                 <div class="goals">
-                  <button type="button" class="tpl" data-goal-tool="doc"><span class="h"><i>�?/i>Doc</span><b>Essay, start to finish</b><small>Topic �?outline �?draft �?citations</small><span class="use">Use with Citta</span></button>
-                  <button type="button" class="tpl" data-goal-tool="deck"><span class="h"><i>�?/i>Deck</span><b>Class presentation</b><small>Notes or lecture �?slides �?speaker notes</small><span class="use">Use with Citta</span></button>
-                  <button type="button" class="tpl" data-goal-tool="numbers"><span class="h"><i>�?/i>Numbers</span><b>Data analysis</b><small>Upload CSV �?trends �?chart for your Deck</small><span class="use">Use with Citta</span></button>
-                  <button type="button" class="tpl" data-goal-tool="symtex"><span class="h"><i>Σ</i>SymTex</span><b>Proof or problem set</b><small>Handwritten steps �?typeset LaTeX</small><span class="use">Use with Citta</span></button>
-                  <button type="button" class="tpl" data-goal-tool="code"><span class="h"><i style="font-size:10px">&lt;/&gt;</i>Code</span><b>Explain or fix my script</b><small>Paste code �?explain �?fix �?test</small><span class="use">Use with Citta</span></button>
+                  <button type="button" class="tpl" data-goal-tool="doc"><span class="h"><i>≡</i>Doc</span><b>Essay, start to finish</b><small>Topic → outline → draft → citations</small><span class="use">Use with Citta</span></button>
+                  <button type="button" class="tpl" data-goal-tool="deck"><span class="h"><i>▧</i>Deck</span><b>Class presentation</b><small>Notes or lecture → slides → speaker notes</small><span class="use">Use with Citta</span></button>
+                  <button type="button" class="tpl" data-goal-tool="numbers"><span class="h"><i>▦</i>Numbers</span><b>Data analysis</b><small>Upload CSV → trends → chart for your Deck</small><span class="use">Use with Citta</span></button>
+                  <button type="button" class="tpl" data-goal-tool="symtex"><span class="h"><i>Σ</i>SymTex</span><b>Proof or problem set</b><small>Handwritten steps → typeset LaTeX</small><span class="use">Use with Citta</span></button>
+                  <button type="button" class="tpl" data-goal-tool="code"><span class="h"><i style="font-size:10px">&lt;/&gt;</i>Code</span><b>Explain or fix my script</b><small>Paste code → explain → fix → test</small><span class="use">Use with Citta</span></button>
                 </div>
               </section>
             </div>
@@ -1257,9 +1261,9 @@
                 <button type="button" class="interest" aria-pressed="false">Physics &amp; Space</button>
                 <span class="vr"></span>
                 <div class="discover-scroll-wrap">
-                <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="More in Cosmos �?scroll horizontally">
-                  <div class="dcard"><span class="dav">EP</span><div><span class="nm">Enrico Pajer</span><span class="tag">�?Twin</span><small>Cosmology · Cambridge</small></div><button type="button" class="addsi">+ Follow</button></div>
-                  <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag">�?Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi">+ Follow</button></div>
+                <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="More in Cosmos — scroll horizontally">
+                  <div class="dcard"><span class="dav">EP</span><div><span class="nm">Enrico Pajer</span><span class="tag">✦ Twin</span><small>Cosmology · Cambridge</small></div><button type="button" class="addsi">+ Follow</button></div>
+                  <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag">✦ Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi">+ Follow</button></div>
                   <div class="dcard"><span class="dav agent">PC</span><div><span class="nm">Physics Problem Coach</span><span class="tag agent">AI agent</span><small>Step-by-step in SymTex</small></div><button type="button" class="addsi">+ Follow</button></div>
                   <div class="dcard"><span class="dav agent">GW</span><div><span class="nm">Gauge Theory 101</span><span class="tag agent">AI agent</span><small>Course · MIT OCW</small></div><button type="button" class="addsi">+ Follow</button></div>
                 </div>
@@ -1272,9 +1276,9 @@
                 <div id="tutorialTrySpot">
                 <div class="hdr"><h3>Try each tool with Citta</h3><span class="sub">1 minute each · uses Prof. Roland’s course material</span></div>
                 <div class="tutorial-try-cards" id="tutorialTryCards">
-                  <div class="tutorial-try-card" data-tool="doc"><div class="trow"><i style="background:var(--blue-tint);color:var(--blue)">�?/i><b>Doc</b></div><p class="lead">Lecture 1 �?one-page summary</p><p class="sub">A Doc with headings + key formulas</p><button type="button" class="try-it">Try it</button></div>
-                  <div class="tutorial-try-card" data-tool="deck"><div class="trow"><i style="background:var(--amber-tint);color:var(--amber)">�?/i><b>Deck</b></div><p class="lead">Lecture 1 �?6 study slides</p><p class="sub">A Deck you can present or revise</p><button type="button" class="try-it">Try it</button></div>
-                  <div class="tutorial-try-card" data-tool="numbers"><div class="trow"><i style="background:var(--green-tint);color:var(--green)">�?/i><b>Numbers</b></div><p class="lead">Plot the sPHENIX sample data</p><p class="sub">A sheet + chart, explained</p><button type="button" class="try-it">Try it</button></div>
+                  <div class="tutorial-try-card" data-tool="doc"><div class="trow"><i style="background:var(--blue-tint);color:var(--blue)">≡</i><b>Doc</b></div><p class="lead">Lecture 1 → one-page summary</p><p class="sub">A Doc with headings + key formulas</p><button type="button" class="try-it">Try it</button></div>
+                  <div class="tutorial-try-card" data-tool="deck"><div class="trow"><i style="background:var(--amber-tint);color:var(--amber)">▧</i><b>Deck</b></div><p class="lead">Lecture 1 → 6 study slides</p><p class="sub">A Deck you can present or revise</p><button type="button" class="try-it">Try it</button></div>
+                  <div class="tutorial-try-card" data-tool="numbers"><div class="trow"><i style="background:var(--green-tint);color:var(--green)">▦</i><b>Numbers</b></div><p class="lead">Plot the sPHENIX sample data</p><p class="sub">A sheet + chart, explained</p><button type="button" class="try-it">Try it</button></div>
                   <div class="tutorial-try-card" data-tool="symtex"><div class="trow"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i><b>SymTex</b></div><p class="lead">Typeset the Bjorken energy formula</p><p class="sub">Clean LaTeX you can reuse</p><button type="button" class="try-it">Try it</button></div>
                   <div class="tutorial-try-card" data-tool="code"><div class="trow"><i style="background:var(--slate-tint);color:var(--slate);font-size:10px">&lt;/&gt;</i><b>Code</b></div><p class="lead">Run a tiny particle simulation</p><p class="sub">A Python notebook, commented</p><button type="button" class="try-it">Try it</button></div>
                 </div>
@@ -1288,7 +1292,7 @@
                     <div class="two-main-l" style="display:flex;flex-direction:column;gap:12px">
                       <div class="onboard-row"><div class="col"><b>Join Heavy-ion Physics</b><small>Get lecture and deadline reminders from the course</small></div><button type="button" class="ob-btn pri">Join course</button></div>
                       <div class="onboard-row"><div class="col"><b>Connect your email</b><small>Citta flags emails that need a reply and drafts it in Doc</small></div><button type="button" class="ob-btn">Connect</button></div>
-                      <div class="onboard-row"><div class="col"><b>Add your own</b><small>Or tell Citta: “remind me to finish my lab on Friday�?/small></div><button type="button" class="ob-btn" data-action="add-reminder">+ Add reminder</button></div>
+                      <div class="onboard-row"><div class="col"><b>Add your own</b><small>Or tell Citta: “remind me to finish my lab on Friday”</small></div><button type="button" class="ob-btn" data-action="add-reminder">+ Add reminder</button></div>
                     </div>
                   </div>
                   <div class="two-col">
@@ -1304,11 +1308,11 @@
               <section>
                 <div class="sec" style="margin-bottom:16px"><h3>Start from a goal</h3><span class="sub">Templates with Citta built in</span><span class="sp"></span><button type="button" class="act" data-action="see-goals">See all</button></div>
                 <div class="goals">
-                  <button type="button" class="tpl" data-goal-tool="doc"><span class="h"><i>�?/i>Doc</span><b>Essay, start to finish</b><small>Topic �?outline �?draft �?citations</small><span class="use">Use with Citta</span></button>
-                  <button type="button" class="tpl" data-goal-tool="deck"><span class="h"><i>�?/i>Deck</span><b>Class presentation</b><small>Notes or lecture �?slides �?speaker notes</small><span class="use">Use with Citta</span></button>
-                  <button type="button" class="tpl" data-goal-tool="numbers"><span class="h"><i>�?/i>Numbers</span><b>Data analysis</b><small>Upload CSV �?trends �?chart for your Deck</small><span class="use">Use with Citta</span></button>
-                  <button type="button" class="tpl" data-goal-tool="symtex"><span class="h"><i>Σ</i>SymTex</span><b>Proof or problem set</b><small>Handwritten steps �?typeset LaTeX</small><span class="use">Use with Citta</span></button>
-                  <button type="button" class="tpl" data-goal-tool="code"><span class="h"><i style="font-size:10px">&lt;/&gt;</i>Code</span><b>Explain or fix my script</b><small>Paste code �?explain �?fix �?test</small><span class="use">Use with Citta</span></button>
+                  <button type="button" class="tpl" data-goal-tool="doc"><span class="h"><i>≡</i>Doc</span><b>Essay, start to finish</b><small>Topic → outline → draft → citations</small><span class="use">Use with Citta</span></button>
+                  <button type="button" class="tpl" data-goal-tool="deck"><span class="h"><i>▧</i>Deck</span><b>Class presentation</b><small>Notes or lecture → slides → speaker notes</small><span class="use">Use with Citta</span></button>
+                  <button type="button" class="tpl" data-goal-tool="numbers"><span class="h"><i>▦</i>Numbers</span><b>Data analysis</b><small>Upload CSV → trends → chart for your Deck</small><span class="use">Use with Citta</span></button>
+                  <button type="button" class="tpl" data-goal-tool="symtex"><span class="h"><i>Σ</i>SymTex</span><b>Proof or problem set</b><small>Handwritten steps → typeset LaTeX</small><span class="use">Use with Citta</span></button>
+                  <button type="button" class="tpl" data-goal-tool="code"><span class="h"><i style="font-size:10px">&lt;/&gt;</i>Code</span><b>Explain or fix my script</b><small>Paste code → explain → fix → test</small><span class="use">Use with Citta</span></button>
                 </div>
               </section>
             </div>
@@ -1317,7 +1321,7 @@
 
         <div class="tutorial-doc-view" id="tutorialDocView" hidden aria-hidden="true">
           <header class="doc-editor-bar">
-            <div class="crumb"><i aria-hidden="true">�?/i><span>Doc</span><span>/</span><b>Lecture 1 �?one-page summary</b></div>
+            <div class="crumb"><i aria-hidden="true">≡</i><span>Doc</span><span>/</span><b>Lecture 1 — one-page summary</b></div>
             <span class="saved">Saved to your Library</span>
           </header>
           <div class="tutorial-doc-split">
@@ -1331,7 +1335,7 @@
               <h2>3 How we detect it</h2>
               <div class="writing" aria-label="Citta is writing"><span class="bar"></span><span class="caret"></span></div>
               <h2>4 Key formulas</h2>
-              <h2>5 Check yourself �?3 questions</h2>
+              <h2>5 Check yourself — 3 questions</h2>
             </article>
             <aside class="tutorial-doc-citta" aria-label="Citta">
               <div class="ph">
@@ -1341,19 +1345,19 @@
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h8M8 2l2 2-2 2M10 8H2M4 6 2 8l2 2"/></svg>
                 </button>
               </div>
-              <p class="msg">Writing your summary from Prof. Roland’s Lecture 1 slides. Section 3 of 5�?/p>
+              <p class="msg">Writing your summary from Prof. Roland’s Lecture 1 slides. Section 3 of 5…</p>
               <div class="doc-prog" aria-hidden="true"><span></span></div>
-              <div class="learn-tip"><span class="k">TIP</span>Click any line to rewrite it, or ask me here: “add a diagram�? “make it simpler�?</div>
+              <div class="learn-tip"><span class="k">TIP</span>Click any line to rewrite it, or ask me here: “add a diagram”, “make it simpler”.</div>
               <div class="tutorial-doc-switcher" id="tutorialDocSwitcher" role="menu" aria-label="Who helps with this task">
                 <div class="lbl">WHO HELPS WITH THIS TASK</div>
-                <button type="button" class="si-row on" data-ai="citta"><span class="av"><span class="spark-icon" aria-hidden="true"></span></span><span class="txt"><span class="name">Citta <span class="badge">Default</span></span><small>Knows your files and every Symbion tool</small></span><span aria-hidden="true">�?/span></button>
-                <button type="button" class="si-row" data-ai="roland"><span class="av">GR</span><span class="txt"><span class="name">Prof. Roland’s twin <span class="badge">�?Twin</span></span><small>Heavy-ion Physics · course-specific help</small></span></button>
+                <button type="button" class="si-row on" data-ai="citta"><span class="av"><span class="spark-icon" aria-hidden="true"></span></span><span class="txt"><span class="name">Citta <span class="badge">Default</span></span><small>Knows your files and every Symbion tool</small></span><span aria-hidden="true">✓</span></button>
+                <button type="button" class="si-row" data-ai="roland"><span class="av">GR</span><span class="txt"><span class="name">Prof. Roland’s twin <span class="badge">✦ Twin</span></span><small>Heavy-ion Physics · course-specific help</small></span></button>
                 <button type="button" class="si-row" data-ai="lr"><span class="av">LR</span><span class="txt"><span class="name">Lab Report Coach <span class="badge">AI agent</span></span><small>Added by you · step-by-step lab write-ups</small></span></button>
-                <p class="foot">Switch anytime �?even halfway through a task. Your file stays the same.</p>
+                <p class="foot">Switch anytime — even halfway through a task. Your file stays the same.</p>
               </div>
             </aside>
           </div>
-          <p class="proto-rule">Figma 8541 · 1b �?Doc opens while Citta writes; the file stays open if you switch twins mid-task.</p>
+          <p class="proto-rule">Figma 8541 · 1b — Doc opens while Citta writes; the file stays open if you switch twins mid-task.</p>
         </div>
       </div>
 
@@ -1377,7 +1381,7 @@
           <div class="run-list">
             <div class="citta-run">
               <div class="top"><span class="tool-tag">DECK</span><span class="title">Lecture 4 summary</span></div>
-              <span class="status">Drafting slide 7 of 10�?/span>
+              <span class="status">Drafting slide 7 of 10…</span>
               <div class="prog" aria-hidden="true"><span></span></div>
             </div>
             <div class="citta-run">
@@ -1386,7 +1390,7 @@
               <button type="button" class="act tap-active">Review<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
             </div>
             <div class="citta-run err">
-              <div class="top"><span class="tool-tag">DECK</span><span class="title">Create a deck called “Lab 3�?/span></div>
+              <div class="top"><span class="tool-tag">DECK</span><span class="title">Create a deck called “Lab 3”</span></div>
               <span class="status">Result not delivered</span>
               <button type="button" class="act">Retry<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
             </div>
@@ -1399,7 +1403,7 @@
           </div>
           <div class="ask-row">
             <button type="button" class="plus" aria-label="Attach">+</button>
-            <textarea class="citta-input" id="cittaInput" rows="1" placeholder="Ask Citta, or / for a tool�? aria-label="Ask Citta"></textarea>
+            <textarea class="citta-input" id="cittaInput" rows="1" placeholder="Ask Citta, or / for a tool…" aria-label="Ask Citta"></textarea>
             <button type="button" class="send" aria-label="Send">
               <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path d="M510.06 112h-0.578a37.81 37.81 0 0 0-21.442 7.042l-0.364 0.263 0.105-0.067a45.582 45.582 0 0 0-6.93 5.486l-0.598 0.587-270.946 270.62c-17.743 17.721-17.743 46.456 0 64.178l0.536 0.526c17.78 17.19 46.142 17.015 63.705-0.526l198.597-198.36v612.384c0 20.914 16.974 37.867 37.908 37.867h5.309c20.645-0.34 37.28-17.162 37.28-37.867V261.748l198.598 198.36c17.74 17.72 46.5 17.72 64.241 0 17.743-17.72 17.744-46.455 0.002-64.177L544.515 125.289l-0.575-0.564a45.577 45.577 0 0 0-6.257-5.045l-0.569-0.375 0.104 0.076A37.78 37.78 0 0 0 514.731 112h-4.671z" fill="currentColor"/>
@@ -1426,7 +1430,7 @@
       </button>
 
       <div class="toast" id="toast" role="status">
-        <span id="toastText">Now working with Prof. Roland’s twin · trained on Heavy-ion Physics lectures 1�?</span>
+        <span id="toastText">Now working with Prof. Roland’s twin · trained on Heavy-ion Physics lectures 1–5</span>
         <button type="button" id="undo">Undo</button>
       </div>
     </div>
@@ -1437,7 +1441,7 @@
 <div class="new-tip" id="newTip" role="dialog" aria-label="Switch to a twin" hidden>
   <span class="k">NEW</span>
   <h4>You’re not limited to Citta</h4>
-  <p class="body">Tap �?to hand this task to Prof. Roland’s twin for course-specific help, then switch back to Citta whenever you like.</p>
+  <p class="body">Tap ⇄ to hand this task to Prof. Roland’s twin for course-specific help, then switch back to Citta whenever you like.</p>
   <div class="acts">
     <button type="button" class="pri" id="newTipShow">Show me</button>
     <button type="button" class="sec" id="newTipDismiss">Got it</button>
@@ -1449,19 +1453,19 @@
   // Everyone the picker can hand the composer to. Roland's copy is from the Figma frame;
   // the others follow the same pattern.
   const AIS = {
-    citta:  { name: 'Citta', initials: '�?, twin: false, prefix: '�?,
+    citta:  { name: 'Citta', initials: '★', twin: false, prefix: '★',
               placeholder: 'What do you want to work on?' },
     roland: { name: 'Prof. Roland’s twin', initials: 'GR', twin: true, prefix: 'GR',
-              placeholder: 'Ask Prof. Roland’s twin �?e.g. “Which lecture 5 topics are on the exam?�?,
-              toast: 'Now working with Prof. Roland’s twin · trained on Heavy-ion Physics lectures 1�?' },
+              placeholder: 'Ask Prof. Roland’s twin — e.g. “Which lecture 5 topics are on the exam?”',
+              toast: 'Now working with Prof. Roland’s twin · trained on Heavy-ion Physics lectures 1–5' },
     pajer:  { name: 'Prof. Pajer’s twin', initials: 'EP', twin: true, prefix: 'EP',
-              placeholder: 'Ask Prof. Pajer’s twin �?e.g. “Why is the CMB so uniform?�?,
+              placeholder: 'Ask Prof. Pajer’s twin — e.g. “Why is the CMB so uniform?”',
               toast: 'Now working with Prof. Pajer’s twin · trained on Cosmology lectures' },
     xu:     { name: 'Prof. Xu’s twin', initials: 'HX', twin: true, prefix: 'HX',
-              placeholder: 'Ask Prof. Xu’s twin �?e.g. “How should I price this dataset?�?,
+              placeholder: 'Ask Prof. Xu’s twin — e.g. “How should I price this dataset?”',
               toast: 'Now working with Prof. Xu’s twin · trained on AI & decisions lectures' },
     lr:     { name: 'Lab Report Coach', initials: 'LR', twin: false, agent: true, prefix: 'LR',
-              placeholder: 'Ask Lab Report Coach �?e.g. “Draft the method section for Lab 3�?,
+              placeholder: 'Ask Lab Report Coach — e.g. “Draft the method section for Lab 3”',
               toast: 'Now working with Lab Report Coach · drafts lab reports in Doc' },
   };
 
@@ -1526,18 +1530,18 @@
     const t = text.toLowerCase();
     if (t.includes('elaborate') || t.includes('deck editor')) {
       return {
-        html: 'Opening the deck editor with speaker notes expanded on slides 1�?. You can edit anything before I keep going.',
+        html: 'Opening the deck editor with speaker notes expanded on slides 1–3. You can edit anything before I keep going.',
         link: 'Open in Deck',
       };
     }
     if (t.includes('lab 3') || t.includes('trends') || t.includes('slides')) {
       return {
-        html: 'I’ll turn Lab 3 trends into a 6-slide deck with a chart on slide 2. Drafting now�?,
+        html: 'I’ll turn Lab 3 trends into a 6-slide deck with a chart on slide 2. Drafting now…',
         link: 'Open in Deck',
       };
     }
     return {
-      html: `Got it �?working on �?{text.length > 72 ? `${text.slice(0, 72)}…` : text}�? I’ll keep the file open so you can edit as I go.`,
+      html: `Got it — working on “${text.length > 72 ? `${text.slice(0, 72)}…` : text}”. I’ll keep the file open so you can edit as I go.`,
       link: null,
     };
   }
@@ -1599,7 +1603,7 @@
     setComposerPlaceholder(ai.placeholder);
 
     // Reminder actions run with whoever is in the picker.
-    // Citta suggestions use the spark star (same as “Use with Citta�?/ Try it), not the �?wave.
+    // Citta suggestions use the spark star (same as “Use with Citta” / Try it), not the ≋ wave.
     document.querySelectorAll('.btn-soft').forEach((b) => {
       const verb = (!isCitta && b.dataset.twinVerb) || b.dataset.verb;
       if (isCitta) {
@@ -1679,7 +1683,7 @@
   }));
 
   let screen = 'home', tutorialStep = 1, tutorialDocPhase = null, cittaExpanded = false, newTipSeen = false, postTutorialTipPending = false;
-  /** H0 free-browse: coach/spotlight off, stay on tutorial tail so Reminders �?Goals remain scrollable. */
+  /** H0 free-browse: coach/spotlight off, stay on tutorial tail so Reminders → Goals remain scrollable. */
   let tutorialExploring = false;
   const frame = $('frame');
   const coach = $('coach'), coachActs = $('coachActs');
@@ -1688,7 +1692,7 @@
   const tutorialDocView = $('tutorialDocView');
   const TUTORIAL_DOC_SWITCH = {
     title: 'You’re not limited to Citta',
-    body: 'Swap in Prof. Roland’s twin, any SI you’ve added (twins and AI agents) like Lab Report Coach �?anytime, even halfway through a task. Your file stays the same.',
+    body: 'Swap in Prof. Roland’s twin, any SI you’ve added (twins and AI agents) like Lab Report Coach — anytime, even halfway through a task. Your file stays the same.',
     primary: 'Show me',
     secondary: 'Got it',
   };
@@ -1698,7 +1702,7 @@
       usePortrait: true,
       title: 'Let’s make your first thing together.',
       body: 'I’ll turn Prof. Roland’s Lecture 1 (24 slides) into a one-page summary in Doc. You watch, then edit anything you like.',
-      meta: ['�?1 min', 'Uses: Lecture 1 slides', 'You can undo'],
+      meta: ['≈ 1 min', 'Uses: Lecture 1 slides', 'You can undo'],
       hideStepPill: true,
       wide: true,
       spot: 'composer',
@@ -1707,14 +1711,14 @@
     },
     {
       title: 'Try each tool with Citta',
-      body: '1 minute each �?each card uses Prof. Roland’s course material and opens the right workspace.',
+      body: '1 minute each — each card uses Prof. Roland’s course material and opens the right workspace.',
       spot: 'try',
       primary: 'Next',
       secondary: 'Back',
     },
     {
       title: 'Twins & AI agents live here',
-      body: 'WORKING WITH is where you swap in Prof. Roland’s twin or an AI agent mid-task. Your file stays open �?switch back to Citta anytime.',
+      body: 'WORKING WITH is where you swap in Prof. Roland’s twin or an AI agent mid-task. Your file stays open — switch back to Citta anytime.',
       spot: 'picker',
       primary: 'Next',
       secondary: 'Back',
@@ -1880,7 +1884,7 @@
         setComposerToolSelection(next);
         if (next) {
           const meta = COMPOSER_TOOL_META[next];
-          showToastMsg(`Working in ${meta?.label || key} �?type what you want Citta to do`);
+          showToastMsg(`Working in ${meta?.label || key} — type what you want Citta to do`);
           $('composerInput')?.focus();
         }
       });
@@ -2129,7 +2133,7 @@
     const step = TUTORIAL_STEPS[tutorialStep - 1] || {};
     const pad = pageGutterPx();
     const isSwitch = tutorialDocPhase === 'doc' || tutorialDocPhase === 'switch-open' || coach.classList.contains('switch-coach');
-    // Final step: viewport-centered modal + gray scrim (same as NEW tip �?not mid-page of the tall frame).
+    // Final step: viewport-centered modal + gray scrim (same as NEW tip — not mid-page of the tall frame).
     const centerModal = !isSwitch && (!!step.center || !step.spot);
 
     coach.style.bottom = 'auto';
@@ -2234,8 +2238,8 @@
     setCittaExpanded(true);
     const labels = { doc: 'Doc', deck: 'Deck', numbers: 'Numbers', symtex: 'SymTex', code: 'Code' };
     const label = labels[tool] || tool;
-    showToastMsg(`Citta is opening ${label} �?ready when you are`);
-    setComposerDraft(`Try ${label} with Citta �?what should we make first?`);
+    showToastMsg(`Citta is opening ${label} — ready when you are`);
+    setComposerDraft(`Try ${label} with Citta — what should we make first?`);
   }
 
   function startTutorial({ step = 1, docPhase = false } = {}) {
@@ -2293,24 +2297,24 @@
     flashEl(btn);
     setCittaExpanded(true);
     if (btn.dataset.tool) setComposerToolSelection(btn.dataset.tool);
-    showToastMsg(`${AIS[current].prefix}  ${verb} �?Citta is on it`);
+    showToastMsg(`${AIS[current].prefix}  ${verb} — Citta is on it`);
   }
 
   const CONTINUE_THREADS = {
     deck: {
       toolTag: 'DECK',
       user: 'Continue Lecture 4 summary',
-      asst: 'Picking up your Lecture 4 summary where you left off �?drafting slide 7 of 10. Ask me to rewrite any slide or jump into the editor.',
+      asst: 'Picking up your Lecture 4 summary where you left off — drafting slide 7 of 10. Ask me to rewrite any slide or jump into the editor.',
       link: 'Open in Deck',
-      status: 'Drafting slide 7 of 10�?,
+      status: 'Drafting slide 7 of 10…',
       progress: true
     },
     doc: {
       toolTag: 'DOC',
-      user: 'Continue Reading report �?QGP',
-      asst: 'Resuming your Reading report �?QGP at 55%. Section 3 is open; say “tighten the methods section�?or open the Doc to edit directly.',
+      user: 'Continue Reading report — QGP',
+      asst: 'Resuming your Reading report — QGP at 55%. Section 3 is open; say “tighten the methods section” or open the Doc to edit directly.',
       link: 'Open in Doc',
-      status: 'Editing section 3 of 5�?,
+      status: 'Editing section 3 of 5…',
       progress: true
     }
   };
@@ -2319,7 +2323,7 @@
     const thread = CONTINUE_THREADS[tool] || {
       toolTag: (tool || 'TASK').toUpperCase(),
       user: `Continue ${label}`,
-      asst: `Picking up �?{label}�?where you left off. Your file stays open �?tell me what to do next.`,
+      asst: `Picking up “${label}” where you left off. Your file stays open — tell me what to do next.`,
       link: null,
       status: 'In progress',
       progress: false
@@ -2354,7 +2358,7 @@
     const tool = chip.dataset.continueTool;
     if (tool) setComposerToolSelection(tool);
     flashEl(chip);
-    // Jump straight into the prior conversation �?no compose-then-send step.
+    // Jump straight into the prior conversation — no compose-then-send step.
     setComposerDraft('');
     setCittaExpanded(true);
     resumeCittaThread(label, tool);
@@ -2412,7 +2416,7 @@
       if (pickBtn) {
         flashEl(pickBtn);
         setCittaExpanded(true);
-        showToastMsg(`${AIS[current].prefix}  ${pickBtn.textContent.trim()} �?Citta is on it`);
+        showToastMsg(`${AIS[current].prefix}  ${pickBtn.textContent.trim()} — Citta is on it`);
         return;
       }
 
@@ -2889,7 +2893,7 @@
     // Fullscreen = edge-to-edge; #fsRoot is the scroll container.
     const avail = fs ? window.innerWidth : Math.max(0, stageEl.clientWidth - 32);
     const s = fs ? avail / 1440 : Math.min(1, avail / 1440);
-    // scrollHeight covers Discover �?Reminders �?Goals below “Your tools this week�?
+    // scrollHeight covers Discover → Reminders → Goals below “Your tools this week”.
     const frameH = Math.max(frame.offsetHeight, frame.scrollHeight);
     scaler.style.transform = `scale(${s})`;
     scaler.style.transformOrigin = 'top left';
