@@ -207,10 +207,11 @@
   .tools { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; min-height: 40px; }
   .tool { display: inline-flex; gap: 9px; align-items: center; padding: 6px 14px 6px 6px; border-radius: 12px; border: 1.5px solid var(--line); background: #fff; font-size: 14px; font-weight: 500; color: var(--ink); cursor: pointer; transition: background .12s, color .12s, border-color .12s; box-sizing: border-box; min-height: 40px; }
   .tool:hover { border-color: #cfd4cf; }
-  /* Selected tool matches coach / dialog primary: solid green + white label. */
-  .tool.sel { background: var(--green); color: #fff; border-color: var(--green); }
+  .tool:active { transform: none; }
+  /* Selected = one flat primary chip (no frosted icon tile nested inside). */
+  .tool.sel { background: var(--green); color: #fff; border-color: var(--green); box-shadow: none; }
   .tool.sel:hover { background: var(--green-dark); border-color: var(--green-dark); color: #fff; }
-  .tool.sel i { background: rgba(255,255,255,.22) !important; color: #fff !important; }
+  .tool.sel i { background: transparent !important; color: #fff !important; box-shadow: none; }
   .tools .sp { flex: 1; }
   .tools .attach { font-size: 13px; color: var(--muted); white-space: pre; }
   [hidden] { display: none !important; }
