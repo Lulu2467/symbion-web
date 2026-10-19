@@ -2030,10 +2030,8 @@
     setCittaExpanded(false);
     setMenu(false);
     renderCoach();
-    requestAnimationFrame(() => {
-      positionCoach();
-      fit();
-    });
+    fit();
+    afterTutorialChrome(() => scrollTutorialFocusIntoView({ smooth: true }));
   }
 
   function finishTutorialDocToTryTools() {
@@ -2077,8 +2075,8 @@
     const sw = $('tutorialDocSwitch');
     sw?.classList.add('spot');
     coach.classList.toggle('on', screen === 'tutorial');
-    positionCoach();
     fit();
+    afterTutorialChrome(() => scrollTutorialFocusIntoView({ smooth: true }));
   }
 
   function renderCoach() {
@@ -2164,6 +2162,71 @@
       bottom: (r.bottom - fr.top) / s,
       right: (r.right - fr.left) / s,
     };
+  }
+
+  function getTutorialScrollParent() {
+    const fsRoot = $('fsRoot');
+    if (fsRoot && (document.fullscreenElement === fsRoot || document.webkitFullscreenElement === fsRoot || fsRoot.classList.contains('is-fs'))) {
+      return fsRoot;
+    }
+    return document.scrollingElement || document.documentElement;
+  }
+
+  /** After a step change, bring the lit UI (and coach) into the middle of the viewport. */
+  function scrollTutorialFocusIntoView({ smooth = true } = {}) {
+    if (screen !== 'tutorial' || tutorialExploring) return;
+    if (coach.classList.contains('centered')) return; // viewport-fixed modal — already centered
+
+    const step = TUTORIAL_STEPS[tutorialStep - 1] || {};
+    let spotEl = null;
+    if (tutorialDocPhase) {
+      spotEl = $('tutorialDocSwitch') || tutorialDocView;
+    } else if (step.spot) {
+      spotEl = getTutorialSpotTarget(step.spot);
+    }
+
+    const coachOn = coach.classList.contains('on');
+    if (!spotEl && !coachOn) return;
+
+    let top;
+    let bottom;
+    if (spotEl && coachOn) {
+      const a = spotEl.getBoundingClientRect();
+      const b = coach.getBoundingClientRect();
+      top = Math.min(a.top, b.top);
+      bottom = Math.max(a.bottom, b.bottom);
+    } else if (spotEl) {
+      const a = spotEl.getBoundingClientRect();
+      top = a.top;
+      bottom = a.bottom;
+    } else {
+      const b = coach.getBoundingClientRect();
+      top = b.top;
+      bottom = b.bottom;
+    }
+
+    const mid = (top + bottom) / 2;
+    const target = window.innerHeight / 2;
+    const delta = mid - target;
+    if (Math.abs(delta) < 12) return;
+
+    const scroller = getTutorialScrollParent();
+    const isWindow = scroller === document.scrollingElement
+      || scroller === document.documentElement
+      || scroller === document.body;
+    const behavior = smooth ? 'smooth' : 'auto';
+    if (isWindow) {
+      window.scrollTo({ top: Math.max(0, window.scrollY + delta), behavior });
+    } else {
+      scroller.scrollTo({ top: Math.max(0, scroller.scrollTop + delta), behavior });
+    }
+  }
+
+  function afterTutorialChrome(fn) {
+    requestAnimationFrame(() => {
+      positionCoach();
+      requestAnimationFrame(fn);
+    });
   }
 
   function setCoachScrim(on) {
@@ -2327,11 +2390,6 @@
     syncPresenter('citta');
     setScreen('tutorial', { step });
     if (docPhase) enterTutorialDoc();
-    requestAnimationFrame(() => {
-      positionCoach();
-      if (tutorialSpotlight.classList.contains('on')) positionTutorialSpotlight(getTutorialSpotTarget(TUTORIAL_STEPS[(step || 1) - 1]?.spot));
-      coach.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    });
   }
 
   /** Figma H0 · B: dismiss coach, keep first-visit page so below-fold sections stay reachable by scroll. */
@@ -2828,7 +2886,9 @@
     }
     if (next === 'tutorial') {
       renderCoach();
-      if (!tutorialExploring) requestAnimationFrame(() => positionCoach());
+      if (!tutorialExploring) {
+        afterTutorialChrome(() => scrollTutorialFocusIntoView({ smooth: true }));
+      }
     } else {
       tutorialExploring = false;
       coach.classList.remove('on', 'switch-coach');
