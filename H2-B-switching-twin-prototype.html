@@ -1140,10 +1140,16 @@
   .tutorial-spotlight.on { display: block; }
   .frame.tutorial-on { position: relative; }
   .frame.tutorial-on .tutorial-spot-target { position: relative; z-index: 14; }
-  /* Rail normally sits at z:30 (above menus). Drop it under the spotlight mask so the gray covers it. */
-  .frame.tutorial-on .rail {
+  /* Rail (z:30) and osbar (fullscreen z:40) sit above the mask unless dropped — top stays bright. */
+  .frame.tutorial-on .rail,
+  .frame.tutorial-on .osbar {
+    position: relative;
     z-index: 1;
     pointer-events: none;
+  }
+  .fs-root:fullscreen .frame.tutorial-on .osbar,
+  .fs-root:-webkit-full-screen .frame.tutorial-on .osbar {
+    z-index: 1;
   }
   /* Spotlight steps: cutout alone is not enough on white siblings — force-dim the extras. */
   .frame.tutorial-on .composer > .foot { position: relative; z-index: 1; }
