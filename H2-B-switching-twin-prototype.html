@@ -1203,16 +1203,17 @@
   .tutorial-spotlight.on { display: block; }
   .frame.tutorial-on { position: relative; }
   .frame.tutorial-on .tutorial-spot-target { position: relative; z-index: 14; }
-  /* Rail (z:30) and osbar (fullscreen z:40) sit above the mask unless dropped — top stays bright. */
+  /* Keep chrome under the spotlight mask (never a bright strip above the cutout). */
   .frame.tutorial-on .rail,
   .frame.tutorial-on .osbar {
     position: relative;
-    z-index: 1;
+    z-index: 0;
     pointer-events: none;
   }
   .fs-root:fullscreen .frame.tutorial-on .osbar,
-  .fs-root:-webkit-full-screen .frame.tutorial-on .osbar {
-    z-index: 1;
+  .fs-root:-webkit-full-screen .frame.tutorial-on .osbar,
+  .fs-root.is-fs .frame.tutorial-on .osbar {
+    z-index: 0 !important;
   }
   /* Spotlight steps: cutout alone is not enough on white siblings — force-dim the extras. */
   .frame.tutorial-on .composer > .foot { position: relative; z-index: 1; }
@@ -3143,6 +3144,32 @@
     tutorialSpotlight.setAttribute('aria-hidden', 'false');
   }
 
+  function tutorialChromeBottom() {
+    const osbar = frame.querySelector('.osbar');
+    if (!osbar) return 16;
+    return osbar.getBoundingClientRect().bottom + 10;
+  }
+
+  /** Don’t let the lit card tuck under the osbar — that leaves a clipped START WITH strip at the top. */
+  function clampTutorialSpotBelowChrome() {
+    if (screen !== 'tutorial' || tutorialExploring || tutorialDocPhase) return;
+    if (coach.classList.contains('centered')) return;
+    const step = TUTORIAL_STEPS[tutorialStep - 1];
+    if (!step?.spot) return;
+    const el = getTutorialSpotTarget(step.spot);
+    if (!el) return;
+    const a = el.getBoundingClientRect();
+    const minTop = tutorialChromeBottom();
+    if (a.top >= minTop - 1) return;
+    const delta = a.top - minTop;
+    const scroller = getTutorialScrollParent();
+    const isWindow = scroller === document.scrollingElement
+      || scroller === document.documentElement
+      || scroller === document.body;
+    if (isWindow) window.scrollBy(0, delta);
+    else scroller.scrollTop = Math.max(0, scroller.scrollTop + delta);
+  }
+
   function syncTutorialChromeOnScroll() {
     // Handoff tip: spotlight stays on the Citta pill while the page scrolls.
     if (frame.classList.contains('post-tip-on') && newTip?.classList.contains('show')) {
@@ -3152,6 +3179,7 @@
       return;
     }
     if (screen !== 'tutorial' || tutorialExploring) return;
+    clampTutorialSpotBelowChrome();
     if (coach.classList.contains('on') && !coach.classList.contains('centered')) positionCoach();
     const stepCfg = TUTORIAL_STEPS[tutorialStep - 1];
     if (stepCfg?.spot && !tutorialDocPhase) {
@@ -3496,7 +3524,7 @@
     return document.scrollingElement || document.documentElement;
   }
 
-  /** After a step change, keep the lit target in view (don’t center a tall coach+spot union — that clips the cutout). */
+  /** After a step change, keep the lit card fully below the osbar (never tuck START WITH under the chrome). */
   function scrollTutorialFocusIntoView({ smooth = true } = {}) {
     if (screen !== 'tutorial' || tutorialExploring) return;
     if (coach.classList.contains('centered')) return; // viewport-fixed modal — already centered
@@ -3512,29 +3540,37 @@
     const coachOn = coach.classList.contains('on');
     if (!spotEl && !coachOn) return;
 
-    let top;
-    let bottom;
-    if (spotEl) {
-      // Anchor on the spotlight target; nudge so a bit of room remains below for the coach.
-      const a = spotEl.getBoundingClientRect();
-      top = a.top;
-      bottom = a.bottom + (coachOn ? 120 : 0);
-    } else {
-      const b = coach.getBoundingClientRect();
-      top = b.top;
-      bottom = b.bottom;
-    }
-
-    const mid = (top + bottom) / 2;
-    const target = window.innerHeight * 0.42;
-    const delta = mid - target;
-    if (Math.abs(delta) < 12) return;
-
     const scroller = getTutorialScrollParent();
     const isWindow = scroller === document.scrollingElement
       || scroller === document.documentElement
       || scroller === document.body;
     const behavior = smooth ? 'smooth' : 'auto';
+    const padTop = tutorialChromeBottom();
+    const padBot = 28;
+
+    let delta = 0;
+    if (spotEl) {
+      const a = spotEl.getBoundingClientRect();
+      // Prefer pinning the spot top just under chrome — centering a tall composer clips it.
+      if (a.top < padTop) delta = a.top - padTop;
+      else if (a.bottom > window.innerHeight - padBot) {
+        const down = a.bottom - (window.innerHeight - padBot);
+        // Don’t scroll so far that the top tucks under the osbar.
+        delta = Math.min(down, a.top - padTop);
+      } else if (coachOn && step.spot === 'composer') {
+        // Small nudge only if coach is mostly off-screen below — keep composer top fixed.
+        const b = coach.getBoundingClientRect();
+        if (b.top > window.innerHeight - 80) {
+          delta = Math.min(b.top - (window.innerHeight - 200), a.top - padTop);
+        }
+      }
+    } else {
+      const b = coach.getBoundingClientRect();
+      const mid = (b.top + b.bottom) / 2;
+      delta = mid - window.innerHeight * 0.42;
+    }
+    if (Math.abs(delta) < 8) return;
+
     if (isWindow) {
       window.scrollTo({ top: Math.max(0, window.scrollY + delta), behavior });
     } else {
