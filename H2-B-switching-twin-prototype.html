@@ -313,15 +313,29 @@
   }
   .composer .ask-bar .plus {
     border-radius: 999px;
-    color: var(--muted);
-    font-size: 22px;
-    font-weight: 400;
+    color: transparent;
+    font-size: 0;
     line-height: 0;
     background: transparent;
-    justify-content: center;
+    position: relative;
     transition: background .12s, color .12s;
   }
-  .composer .ask-bar .plus:hover { background: var(--surface); color: var(--ink); }
+  /* Geometric + — font glyph sits off-center in the circle. */
+  .composer .ask-bar .plus::before,
+  .composer .ask-bar .plus::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background: var(--muted);
+    border-radius: 1px;
+    transform: translate(-50%, -50%);
+  }
+  .composer .ask-bar .plus::before { width: 14px; height: 1.75px; }
+  .composer .ask-bar .plus::after { width: 1.75px; height: 14px; }
+  .composer .ask-bar .plus:hover { background: var(--surface); }
+  .composer .ask-bar .plus:hover::before,
+  .composer .ask-bar .plus:hover::after { background: var(--ink); }
   .composer .ask-bar .plus:active { transform: scale(.96); }
   .composer .ask-bar .send { background: var(--green); color: #fff; margin-left: auto; transition: background .12s, transform .08s; }
   .composer .ask-bar .send:hover { background: var(--green-dark); }
@@ -583,19 +597,23 @@
     line-height: 0;
   }
 
-  /* Reminders + Cosmos: titles share one baseline; Cosmos card shows ~3 rows, scrolls for more. */
+  /* Reminders + Cosmos: left list sets row height; Cosmos card bottom = last rem line. */
   .two { display: block; }
   .two-grid {
     display: grid;
     grid-template-columns: 1fr 440px;
     column-gap: 32px;
-    align-items: start;
+    align-items: stretch;
   }
   .two-col {
     min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 8px;
+  }
+  /* Right: title in flow; card pinned to column bottom so it matches left list. */
+  .two-grid > .two-col:nth-child(2) {
+    position: relative;
   }
   .two-title-l,
   .two-title-r {
@@ -618,12 +636,24 @@
   .two-title-r h3 { flex: 1; min-width: 0; }
   .two-title-r .new-badge { font-size: 13px; color: var(--green); font-weight: 600; flex: none; line-height: 1.2; white-space: nowrap; }
   .two-main-l { min-width: 0; display: flex; flex-direction: column; gap: 0; flex: none; }
+  .two-grid > .two-col:nth-child(2) > .two-main-r {
+    position: absolute;
+    top: calc(28px + 8px);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+    flex: none;
+    min-height: 0;
+  }
   .two-main-r { width: 100%; flex: none; }
-  /* Equal 20px inset; max-height ≈ 3 people; overflow scrolls inside. */
   .cosmos-scroll-wrap {
     position: relative;
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: 100%;
+    height: 100%;
     border: 1px solid var(--line);
     border-radius: 16px;
     background: #fff;
@@ -635,7 +665,9 @@
     border-radius: 0;
     background: transparent;
     padding: 20px;
-    max-height: 300px;
+    flex: 1 1 auto;
+    max-height: none;
+    height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -936,13 +968,22 @@
   .pick-card .btn .spark-icon { width: 12px; height: 12px; color: var(--muted); }
   .activity.cosmos-compact {
     flex: none;
-    overflow: visible;
+    overflow: auto;
     scrollbar-gutter: auto;
     border: 1px solid var(--line);
     border-radius: 16px;
     padding: 20px;
     gap: 12px;
     background: #fff;
+    height: 100%;
+    box-sizing: border-box;
+  }
+  .two-grid > .two-col:nth-child(2) > .activity.two-main-r {
+    height: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    box-sizing: border-box;
   }
   .activity.cosmos-compact > p { margin: 0; font-size: 13px; line-height: 1.4; color: var(--muted); }
   .activity.cosmos-compact .cosmos-see { align-self: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--ink); cursor: pointer; }
@@ -1221,9 +1262,8 @@
     height: 30px;
     border-radius: 999px;
     background: #f0f2f1;
-    color: #2a2e2c;
-    font-size: 18px;
-    font-weight: 300;
+    color: transparent;
+    font-size: 0;
     line-height: 0;
     flex: none;
     display: inline-flex;
@@ -1232,16 +1272,24 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    transition: background .12s, color .12s;
+    position: relative;
+    transition: background .12s;
   }
-  /* Optical center for + (glyph sits high). */
-  .citta-panel .ask-row .plus::before {
-    content: '+';
-    display: block;
-    line-height: 1;
-    transform: translateY(-0.02em);
+  .citta-panel .ask-row .plus::before,
+  .citta-panel .ask-row .plus::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background: #2a2e2c;
+    border-radius: 1px;
+    transform: translate(-50%, -50%);
   }
-  .citta-panel .ask-row .plus:hover { background: #e6e9e7; color: var(--ink); }
+  .citta-panel .ask-row .plus::before { width: 12px; height: 1.5px; }
+  .citta-panel .ask-row .plus::after { width: 1.5px; height: 12px; }
+  .citta-panel .ask-row .plus:hover { background: #e6e9e7; }
+  .citta-panel .ask-row .plus:hover::before,
+  .citta-panel .ask-row .plus:hover::after { background: var(--ink); }
   .citta-panel .ask-row .plus:active { transform: scale(.96); }
   .citta-input {
     flex: 1 1 100%;
