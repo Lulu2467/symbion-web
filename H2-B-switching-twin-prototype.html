@@ -841,10 +841,40 @@
   .sec .sub { font-size: 13px; color: var(--faint); white-space: nowrap; }
   .sec .sp { flex: 1; min-width: 8px; }
   .sec .act { font-size: 13px; font-weight: 500; color: #759a87; flex: none; white-space: nowrap; background: none; border: 0; padding: 0; }
-  .sec .act-add { width: 28px; height: 28px; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: #fff; color: var(--muted); display: inline-flex; align-items: center; justify-content: center; flex: none; cursor: pointer; box-sizing: border-box; transition: background .12s, border-color .12s, color .12s; }
+  .sec .act-add { position: relative; width: 28px; height: 28px; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: #fff; color: var(--muted); display: inline-flex; align-items: center; justify-content: center; flex: none; cursor: pointer; box-sizing: border-box; transition: background .12s, border-color .12s, color .12s; }
   .sec .act-add:hover { border-color: var(--green); color: var(--green-dark); background: var(--green-wash); }
   .sec .act-add:active { transform: scale(.96); }
   .sec .act-add svg { display: block; width: 14px; height: 14px; flex: none; }
+  /* Hover tip: add reminders via Citta */
+  .sec .act-add[data-action="add-reminder"]::after {
+    content: attr(data-tip);
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    z-index: 40;
+    width: max-content;
+    max-width: 220px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: #1c1f1d;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: 0;
+    white-space: normal;
+    text-align: left;
+    box-shadow: 0 8px 20px rgba(28,31,29,.18);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-2px);
+    transition: opacity .14s ease, transform .14s ease;
+  }
+  .sec .act-add[data-action="add-reminder"]:hover::after,
+  .sec .act-add[data-action="add-reminder"]:focus-visible::after {
+    opacity: 1;
+    transform: translateY(0);
+  }
   .rem { display: flex; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); line-height: 1.4; }
   .rem .when { width: 64px; font-size: 12px; font-weight: 500; color: var(--muted); flex: none; }
   .rem .when.hot { color: var(--green); }
@@ -1997,7 +2027,7 @@
         <button type="button" class="osbar-bm" aria-label="Open arXiv" data-osbar="arxiv"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7l-5-5Zm-1 0v5h5M8 13h8M8 17h6M8 9h2"/></svg><span>arXiv</span></button>
         <button type="button" class="osbar-bm" aria-label="Open Notion" data-osbar="notion"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3zM16 12h2M16 8h2M6 12h2M6 8h2"/></svg><span>Notion</span></button>
         <span class="sp"></span>
-        <button type="button" class="osbar-app" aria-label="Desk" data-osbar="desk"><svg class="osbar-ico" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M525.866667 219.008a21.333333 21.333333 0 0 0-27.733334 0l-256 219.434667a21.333333 21.333333 0 0 0-7.466666 16.213333v321.706667a21.333333 21.333333 0 0 0 21.333333 21.333333h512a21.333333 21.333333 0 0 0 21.333333-21.333333v-321.706667a21.333333 21.333333 0 0 0-7.466666-16.213333l-256-219.434667z m27.776-32.384l256 219.434667a64 64 0 0 1 22.357333 48.597333v321.706667a64 64 0 0 1-64 64H256a64 64 0 0 1-64-64v-321.706667a64 64 0 0 1 22.357333-48.64l256-219.392a64 64 0 0 1 83.285334 0z" fill="currentColor"/><path d="M405.333333 640h213.333334a21.333333 21.333333 0 1 1 0 42.666667h-213.333334a21.333333 21.333333 0 1 1 0-42.666667z" fill="currentColor"/></svg><span>Desk</span></button>
+        <button type="button" class="osbar-app" aria-label="Desk" data-osbar="desk"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h14V9.5"/><path d="M10 20v-6h4v6"/></svg><span>Desk</span></button>
         <button type="button" class="osbar-app" aria-label="Symbion" data-osbar="symbion"><span class="av-s" aria-hidden="true">S</span><span>Symbion</span></button>
       </div>
 
@@ -2277,7 +2307,7 @@
             <section class="two">
               <div class="two-grid">
                 <div class="two-col">
-                  <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act-add" data-action="add-reminder" aria-label="Add reminder"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 3.25v9.5M3.25 8h9.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button></div>
+                  <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act-add" data-action="add-reminder" data-tip="Add a reminder with Citta — tell it what and when" aria-label="Add reminder with Citta"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 3.25v9.5M3.25 8h9.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button></div>
                   <div class="two-main-l">
                     <div class="rem">
                       <span class="when hot">2:30</span>
@@ -2377,7 +2407,7 @@
               <section class="two">
                 <div class="two-grid">
                   <div class="two-col">
-                    <div class="sec two-title-l"><h3>Coming up</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act-add" data-action="add-reminder" aria-label="Add reminder"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 3.25v9.5M3.25 8h9.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button></div>
+                    <div class="sec two-title-l"><h3>Coming up</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act-add" data-action="add-reminder" data-tip="Add a reminder with Citta — tell it what and when" aria-label="Add reminder with Citta"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 3.25v9.5M3.25 8h9.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button></div>
                     <div class="two-main-l">
                       <div class="rem"><span class="when hot">Thu</span><div class="col"><span class="t">Heavy-ion Physics — lecture 8</span><span class="meta"><span class="badge">Course · Prof. Roland</span></span></div><button type="button" class="btn-soft" data-verb="Prep a 10-min deck" data-tool="deck"></button></div>
                       <div class="rem"><span class="when">Fri</span><div class="col"><span class="t">Lab 3 analysis due</span><span class="meta"><span class="badge yours">Yours</span></span></div><button type="button" class="btn-soft" data-verb="Open in Numbers" data-tool="numbers"></button></div>
@@ -2461,7 +2491,7 @@
               <section class="two">
                 <div class="two-grid">
                   <div class="two-col">
-                    <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act-add" data-action="add-reminder" aria-label="Add reminder"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 3.25v9.5M3.25 8h9.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button></div>
+                    <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act-add" data-action="add-reminder" data-tip="Add a reminder with Citta — tell it what and when" aria-label="Add reminder with Citta"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 3.25v9.5M3.25 8h9.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button></div>
                     <div class="two-main-l">
                       <div class="rem">
                         <span class="when hot">2:30</span>
