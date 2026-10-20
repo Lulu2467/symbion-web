@@ -1536,13 +1536,24 @@
   .citta-panel .ask-bar .send.is-ready:hover { background: var(--green-dark); }
   .citta-panel .ask-bar .send svg { width: 13px; height: 13px; }
 
-  /* Spotlight steps: cutout dim inside .frame. Final step: viewport-fixed gray + centered modal (outside .scaler — transform traps fixed). */
-  /* Scrim dims only — keep pointer-events none so the page can still scroll to below-fold H0 content. */
+  /* Spotlight steps: cutout dim inside .frame. Final step: centered card only — no full-page gray scrim. */
   .coach-scrim { position: fixed; inset: 0; background: rgba(28,31,29,.48); z-index: 10000; display: none; pointer-events: none; }
   .coach-scrim.on { display: block; pointer-events: none; }
   .coach { position: absolute; left: 56px; top: 200px; transform: none; width: min(400px, calc(100% - 112px)); max-width: calc(100% - 112px); max-height: none; overflow: visible; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; box-shadow: 0 16px 40px rgba(28,31,29,.18); z-index: 20; display: none; line-height: 1.45; pointer-events: auto; }
   .coach.wide { width: min(440px, calc(100% - 112px)); padding: 22px 24px; }
-  .coach.centered { position: fixed; left: 50%; top: 50%; right: auto; bottom: auto; transform: translate(-50%, -50%); width: min(400px, calc(100vw - 48px)); max-width: min(400px, calc(100vw - 48px)); box-shadow: 0 0 0 1px rgba(255,255,255,.6), 0 28px 64px rgba(28,31,29,.35); z-index: 10010; }
+  .coach.centered {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    width: min(400px, calc(100vw - 48px));
+    max-width: min(400px, calc(100vw - 48px));
+    /* Same quiet lift as spot-step coach — not a modal over a dimmed stage. */
+    box-shadow: 0 16px 40px rgba(28,31,29,.18);
+    z-index: 10010;
+  }
   .coach.on { display: block; }
   .coach .coach-who { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; font-size: 12px; font-weight: 500; color: var(--muted); }
   .coach .coach-who .av { width: 28px; height: 28px; border-radius: 14px; background: var(--green-tint); color: var(--green-dark); font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex: none; overflow: hidden; }
@@ -4173,7 +4184,7 @@
     const step = TUTORIAL_STEPS[tutorialStep - 1] || {};
     const pad = pageGutterPx();
     const isSwitch = tutorialDocPhase === 'doc' || tutorialDocPhase === 'switch-open' || coach.classList.contains('switch-coach');
-    // Final step: viewport-centered modal + gray scrim (same as NEW tip — not mid-page of the tall frame).
+    // Final step: viewport-centered card only — no gray full-page back (spot steps keep cutout dim).
     const centerModal = !isSwitch && (!!step.center || !step.spot);
 
     coach.style.bottom = 'auto';
@@ -4187,7 +4198,7 @@
       mountCoachForViewport(true);
       coach.classList.add('centered');
       clearTutorialSpotlight();
-      setCoachScrim(true);
+      setCoachScrim(false);
       return;
     }
 
