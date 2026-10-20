@@ -3693,7 +3693,7 @@
     return document.scrollingElement || document.documentElement;
   }
 
-  /** After a step change, scroll so the lit block + under-coach sit near the middle of the screen. */
+  /** After a step change, scroll so the under-spot coach lands near the middle of the page. */
   function scrollTutorialFocusIntoView({ smooth = true } = {}) {
     if (screen !== 'tutorial' || tutorialExploring) return;
     if (coach.classList.contains('centered')) return; // viewport-fixed modal — already centered
@@ -3725,20 +3725,17 @@
 
       if (spotCoach) {
         const b = coach.getBoundingClientRect();
-        // Aim the mid-point of (spot top → coach bottom) at ~42% of the viewport.
-        const bundleTop = Math.min(a.top, b.top);
-        const bundleBot = Math.max(a.bottom, b.bottom);
-        const bundleMid = (bundleTop + bundleBot) / 2;
-        const ideal = viewH * 0.42;
-        delta = bundleMid - ideal;
+        // Park the coach card itself mid-page (not the tall try bundle — that kept step 3 stuck at the top).
+        const coachMid = (b.top + b.bottom) / 2;
+        delta = coachMid - viewH * 0.48;
 
-        // Don’t tuck the spot under the osbar.
-        if (a.top - delta < padTop) delta = a.top - padTop;
-        // Don’t leave the coach clipped below the fold if we can avoid it.
+        // Keep a bit of the lit target below the osbar.
+        const minSpotTop = padTop + (step.spot === 'try' ? 12 : 4);
+        if (a.top - delta < minSpotTop) delta = a.top - minSpotTop;
+        // Keep the coach fully on-screen when possible.
         if (b.bottom - delta > viewH - padBot) {
-          const need = b.bottom - (viewH - padBot);
-          delta = Math.max(delta, need);
-          if (a.top - delta < padTop - 4) delta = a.top - padTop;
+          delta = Math.max(delta, b.bottom - (viewH - padBot));
+          if (a.top - delta < minSpotTop) delta = a.top - minSpotTop;
         }
       } else if (a.top < padTop) {
         delta = a.top - padTop;
@@ -3749,7 +3746,7 @@
     } else {
       const b = coach.getBoundingClientRect();
       const mid = (b.top + b.bottom) / 2;
-      delta = mid - viewH * 0.42;
+      delta = mid - viewH * 0.48;
     }
     if (Math.abs(delta) < 8) return;
 
@@ -4460,7 +4457,16 @@
     if (next === 'tutorial') {
       renderCoach();
       if (!tutorialExploring) {
-        afterTutorialChrome(() => scrollTutorialFocusIntoView({ smooth: true }));
+        afterTutorialChrome(() => {
+          scrollTutorialFocusIntoView({ smooth: true });
+          // Step 2→3 especially: re-measure after layout so the coach really lands mid-page.
+          if (tutorialStep === 2 || tutorialStep === 3) {
+            setTimeout(() => {
+              positionCoach();
+              scrollTutorialFocusIntoView({ smooth: false });
+            }, 220);
+          }
+        });
       }
     } else {
       tutorialExploring = false;
