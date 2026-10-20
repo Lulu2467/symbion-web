@@ -239,7 +239,7 @@
     padding: 4px 0;
     display: inline-flex;
     align-items: center;
-    gap: 3px;
+    gap: 5px;
     line-height: 1.2;
   }
   .tools .attach-hit:hover { color: var(--green-dark); }
@@ -252,6 +252,11 @@
     font-weight: 500;
     line-height: 1;
     transform: translateY(-1px);
+  }
+  .tools .attach-sep {
+    padding: 0 6px;
+    color: var(--faint);
+    user-select: none;
   }
   .rail .r, .rail .p { cursor: pointer; transition: background .12s; }
   .rail .r:hover:not(.on) { background: var(--surface); }
@@ -382,7 +387,7 @@
   .tools .attach {
     display: inline-flex;
     align-items: center;
-    gap: 0;
+    gap: 2px;
     font-size: 13px;
     color: var(--muted);
     white-space: nowrap;
