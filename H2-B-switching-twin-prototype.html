@@ -4176,6 +4176,8 @@
     frame.classList.remove('tutorial-on', 'tutorial-spot-composer', 'tutorial-spot-try', 'tutorial-spot-picker', 'dim', 'tutorial-doc-on');
     document.querySelectorAll('.spot').forEach((el) => el.classList.remove('spot'));
     mountCoachForViewport(false);
+    // Free-browse: empty ask — no seeded Doc chip/selection.
+    setComposerToolSelection(null);
     if (screen !== 'tutorial') setScreen('tutorial', { step: 1 });
     else {
       syncHash();
@@ -4727,8 +4729,9 @@
     });
     const composerMode = next === 'tutorial' ? 'tutorial' : (next === 'handoff' ? 'handoff' : (next === 'welcome' ? 'welcome' : 'default'));
     setComposerMode(composerMode);
-    // Tutorial seeds Doc for the starter task; welcome stays empty until the user picks a tool.
-    if (next === 'tutorial') setComposerToolSelection('doc');
+    // Seed Doc only while coaching the starter task — not after “I’ll explore myself”.
+    if (next === 'tutorial' && !tutorialExploring) setComposerToolSelection('doc');
+    else if (next === 'tutorial' && tutorialExploring) setComposerToolSelection(null);
     const dockCount = dock.querySelector('.count');
     if (dockCount) dockCount.textContent = next === 'welcome' ? '2' : '3';
     if (next === 'welcome') {
