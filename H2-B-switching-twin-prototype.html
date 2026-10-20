@@ -935,6 +935,8 @@
 
   .flash { animation: flash .6s ease; }
   @keyframes flash { from { background: #cfe8da; } to { background: var(--green-tint); } }
+  /* Pick-up peach panel: never flash brand green on click. */
+  .pick-card .btn.flash { animation: none; }
 
   .hub { width: 100%; max-width: none; }
   .screen { display: none; flex-direction: column; gap: 24px; }
@@ -4457,9 +4459,8 @@
 
       const pickBtn = e.target.closest('.pick-card .btn');
       if (pickBtn) {
-        flashEl(pickBtn);
         setCittaExpanded(true);
-        showToastMsg(`${AIS[current].prefix}  ${pickBtn.textContent.trim()} — Citta is on it`);
+        setCittaDraft(pickBtn.textContent.trim());
         return;
       }
 
