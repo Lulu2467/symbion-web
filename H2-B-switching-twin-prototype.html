@@ -213,8 +213,9 @@
   }
   #openTwinBrowse.link:hover { color: var(--green); text-decoration: none; }
   #openTwinBrowse.link:active { opacity: .85; }
-  .sec .act { cursor: pointer; }
-  .sec .act:hover { text-decoration: underline; }
+  .sec .act { cursor: pointer; text-decoration: none; }
+  /* Hover: underline like “See all” 图二 — rest stays plain (图一). */
+  .sec .act:hover { text-decoration: underline; text-underline-offset: 2px; }
   .dcard { cursor: pointer; transition: border-color .12s, box-shadow .12s; }
   .dcard:hover { border-color: rgba(0,139,104,.35); box-shadow: 0 2px 8px rgba(28,31,29,.05); }
   .addsi { cursor: pointer; }
@@ -401,7 +402,7 @@
   .chip > .ic { margin-right: 2px; }
   .chip:hover { border-color: rgba(0,139,104,.35); background: var(--green-wash); }
   .chip:active { transform: scale(.98); }
-  /* Same quiet sage as Cosmo act-links / “View insight”: light rest → deepen on hover, no underline. */
+  /* All files: sage rest, no line; hover deepen + underline (same as See all 图二). */
   .foot .link-btn {
     font-size: 13px;
     font-weight: 500;
@@ -411,7 +412,11 @@
     text-decoration: none;
     transition: color .12s;
   }
-  .foot .link-btn:hover { color: var(--green); text-decoration: none; }
+  .foot .link-btn:hover {
+    color: var(--green);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
   .foot .link-btn:active { opacity: .85; }
   .foot .link-btn .ico-ne { color: inherit; }
   .chip .ic, .chip .ar { color: var(--green); font-weight: 500; }
