@@ -1353,7 +1353,13 @@
   .tutorial-doc-switcher .badge { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 999px; background: var(--green-tint); color: var(--green-dark); }
   .tutorial-doc-switcher .foot { font-size: 11px; color: var(--muted); padding: 8px 8px 4px; line-height: 1.4; border-top: 1px solid var(--line); margin-top: 6px; }
   .proto-rule { flex: none; margin: 0 24px 20px; padding: 8px 14px; border-radius: 8px; background: var(--amber-tint); border: 1px solid rgba(154,91,7,.15); font-size: 12px; color: var(--amber); }
-  .coach.switch-coach { width: min(360px, calc(100% - 80px)); max-width: calc(100% - 80px); padding: 18px 20px; box-sizing: border-box; }
+  .coach.switch-coach {
+    width: min(360px, calc(100% - 80px));
+    max-width: calc(100% - 80px);
+    padding: 18px 20px;
+    box-sizing: border-box;
+    z-index: 60;
+  }
   .coach .step-pill.new-pill { background: var(--green-tint); color: var(--green-dark); letter-spacing: .04em; }
   #tutorialTrySpot { display: flex; flex-direction: column; gap: 10px; }
   .tutorial-spot-target { position: relative; z-index: 14; }
@@ -3397,7 +3403,11 @@
     const sec = document.createElement('button');
     sec.type = 'button'; sec.className = 'sec'; sec.textContent = TUTORIAL_DOC_SWITCH.secondary;
     coachActs.append(pri, sec);
-    pri.addEventListener('click', () => {
+    // stopPropagation: same click would bubble to document and closeTutorialDocSwitcher()
+    // the menu we just opened — Show me looked “dead”.
+    pri.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       tutorialDocPhase = 'switch-open';
       $('tutorialDocSwitcher')?.classList.add('open');
       const sw = $('tutorialDocSwitch');
@@ -3406,12 +3416,20 @@
       coach.classList.remove('on');
       setCoachScrim(false);
       clearTutorialSpotlight();
+      syncHash();
     });
-    sec.addEventListener('click', () => finishTutorialDocToTryTools());
+    sec.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      finishTutorialDocToTryTools();
+    });
     // Highlight the swap control while the NEW coach is up (same solid green as dialog primary).
     const sw = $('tutorialDocSwitch');
     sw?.classList.add('spot');
     coach.classList.toggle('on', screen === 'tutorial');
+    // Above the Doc surface so buttons aren’t covered by the writing pane.
+    coach.style.zIndex = '60';
+    frame.classList.remove('tutorial-spot-composer', 'tutorial-spot-try', 'tutorial-spot-picker');
     fit();
     afterTutorialChrome(() => scrollTutorialFocusIntoView({ smooth: true }));
   }
