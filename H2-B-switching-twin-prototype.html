@@ -1119,11 +1119,20 @@
   .week-card .btn-citta:active { transform: scale(.98); }
   .week-card.is-opening { border-color: rgba(0,139,104,.45); box-shadow: 0 0 0 2px rgba(0,139,104,.12); }
 
-  .pickup { display: flex; flex-direction: column; gap: 4px; padding: 20px; border-radius: 16px; background: #fbf1de; border: 1px solid #fbf1de; }
+  .pickup { display: flex; flex-direction: column; gap: 0; padding: 20px; border-radius: 16px; background: #fbf1de; border: 1px solid #fbf1de; }
   .pickup .hdr h3 { margin: 0; font-size: 18px; font-weight: 500; color: #9a5b07; }
-  .pick-card { display: flex; gap: 16px; align-items: center; padding: 12px 0; border-bottom: 0; line-height: 1.4; background: transparent; border-radius: 0; }
-  .pick-card:last-child { padding-bottom: 0; }
-  .pick-card:first-of-type { padding-top: 10px; }
+  .pick-card {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(154, 91, 7, 0.14);
+    line-height: 1.4;
+    background: transparent;
+    border-radius: 0;
+  }
+  .pick-card:last-child { border-bottom: 0; padding-bottom: 0; }
+  .pick-card:first-of-type { padding-top: 12px; }
   /* Plain status labels on peach — no green pill from the global .tag chip. */
   .pick-card .tag {
     font-size: 13px;
