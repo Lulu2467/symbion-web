@@ -205,6 +205,14 @@
   #backToCitta:hover { background: var(--green-tint); color: var(--green-dark); text-decoration: none; }
   .link:hover { text-decoration: underline; text-underline-offset: 2px; }
   #backToCitta.link:hover { text-decoration: none; }
+  /* Same quiet sage as week-card “Try with Citta” — no underline, deepen on hover. */
+  #openTwinBrowse.link {
+    color: #759a87;
+    text-decoration: none;
+    transition: color .12s;
+  }
+  #openTwinBrowse.link:hover { color: var(--green); text-decoration: none; }
+  #openTwinBrowse.link:active { opacity: .85; }
   .sec .act { cursor: pointer; }
   .sec .act:hover { text-decoration: underline; }
   .dcard { cursor: pointer; transition: border-color .12s, box-shadow .12s; }
