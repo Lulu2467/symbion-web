@@ -682,14 +682,14 @@
     line-height: 1;
     transition: background .12s, border-color .12s, color .12s;
   }
-  /* Geometric + — font glyph sits high/crooked vs “Add SI”. */
+  /* Geometric + — same stroke weight as ask-bar / Reminders + (not a chunky bar). */
   .addsi .attach-plus {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     flex: none;
-    width: 9px;
-    height: 9px;
+    width: 10px;
+    height: 10px;
     font-size: 0; /* hide text “+”; bars use inherited color */
     line-height: 0;
     color: inherit;
@@ -701,18 +701,18 @@
     content: "";
     position: absolute;
     background: currentColor;
-    border-radius: 1px;
+    border-radius: 0.5px;
   }
   .addsi .attach-plus::before {
-    width: 9px;
-    height: 1.5px;
+    width: 10px;
+    height: 1.15px;
     left: 0;
     top: 50%;
     transform: translateY(-50%);
   }
   .addsi .attach-plus::after {
-    width: 1.5px;
-    height: 9px;
+    width: 1.15px;
+    height: 10px;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
