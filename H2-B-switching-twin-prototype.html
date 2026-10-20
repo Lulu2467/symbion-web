@@ -545,7 +545,7 @@
     line-height: 0;
   }
 
-  /* Reminders + Cosmos: titles share one row height; left sets section height; right card scrolls. */
+  /* Reminders + Cosmos: titles on one baseline; left height drives row; right card fills + scrolls. */
   .two { display: block; }
   .two-grid {
     display: grid;
@@ -559,14 +559,22 @@
     flex-direction: column;
     gap: 8px;
   }
-  /* Left: natural height drives the grid row. */
-  .two-col:first-child { height: max-content; }
-  /* Right: can shrink below content so the card scrolls instead of stretching the row. */
+  /* Left content sets the row height. */
+  .two-col:first-child { min-height: 0; }
+  /*
+    Right: height:0 + min-height:100% fills the grid cell sized by the left column,
+    without letting Cosmos items inflate the row — overflow scrolls inside the card.
+  */
   .two-col:last-child {
-    min-height: 0;
-    height: auto;
+    height: 0;
+    min-height: 100%;
     align-self: stretch;
     overflow: hidden;
+  }
+  /* Welcome compact Cosmos: short card, don’t force-fill. */
+  .two-col:last-child:has(.cosmos-compact) {
+    height: auto;
+    min-height: 0;
   }
   .two-title-l,
   .two-title-r {
@@ -582,14 +590,14 @@
     margin: 0;
     padding: 0;
   }
-  .two-title-l.sec { align-items: center; }
+  .two-title-l.sec { align-items: center; line-height: 1.2; }
   .two-title-r { justify-content: space-between; }
   .two-title-l h3,
   .two-title-r h3 { margin: 0; font-size: 20px; font-weight: 500; line-height: 1.2; flex: none; }
   .two-title-r h3 { flex: 1; min-width: 0; }
-  .two-title-r .new-badge { font-size: 13px; color: var(--green); font-weight: 600; flex: none; line-height: 1.2; }
+  .two-title-r .new-badge { font-size: 13px; color: var(--green); font-weight: 600; flex: none; line-height: 1.2; white-space: nowrap; }
   .two-main-l { min-width: 0; display: flex; flex-direction: column; gap: 0; flex: none; }
-  .two-main-r { flex: 1 1 auto; min-height: 0; width: 100%; align-self: stretch; }
+  .two-main-r { flex: 1 1 0; min-height: 0; width: 100%; align-self: stretch; }
   .reminders { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
   .sec { display: flex; gap: 10px; align-items: center; line-height: 1.4; }
   .sec h3 { margin: 0; font-size: 20px; font-weight: 500; }
@@ -630,7 +638,7 @@
   .btn-soft:active { transform: scale(.98); }
   .activity {
     width: 100%;
-    flex: 1 1 auto;
+    flex: 1 1 0;
     min-height: 0;
     border: 1px solid var(--line);
     border-radius: 16px;
@@ -643,6 +651,7 @@
     overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior: contain;
+    scrollbar-gutter: stable;
     scrollbar-width: thin;
   }
   .activity::-webkit-scrollbar { width: 8px; }
@@ -832,7 +841,16 @@
     flex: none;
   }
   .pick-card .btn .spark-icon { width: 12px; height: 12px; color: var(--muted); }
-  .activity.cosmos-compact { border: 1px solid var(--line); border-radius: 16px; padding: 20px; gap: 12px; background: #fff; }
+  .activity.cosmos-compact {
+    flex: none;
+    overflow: visible;
+    scrollbar-gutter: auto;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 20px;
+    gap: 12px;
+    background: #fff;
+  }
   .activity.cosmos-compact > p { margin: 0; font-size: 13px; line-height: 1.4; color: var(--muted); }
   .activity.cosmos-compact .cosmos-see { align-self: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--ink); cursor: pointer; }
   .activity.cosmos-compact .cosmos-see:hover { border-color: var(--green); background: var(--green-wash); }
@@ -1956,6 +1974,7 @@
                     <div class="act-item"><span class="aav">王</span><div><div class="t">骆王宇 is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                     <div class="act-item"><span class="aav">EP</span><div><div class="t">2 replies to your #cosmology thread</div><small>Prof. Pajer’s twin + @maya_k</small><button type="button" class="act-link">Open thread<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                     <div class="act-item"><span class="aav">HX</span><div><div class="t">Prof. Xu’s twin: new insight on pricing data</div><small>AI &amp; decisions · today</small><button type="button" class="act-link">View insight<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                    <div class="act-item"><span class="aav">AR</span><div><div class="t">Anastasia’s twin shared a climate-math notebook</div><small>Physics &amp; Space · 3h ago</small><button type="button" class="act-link">Open in Code<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                   </aside>
                 </div>
               </div>
@@ -2097,6 +2116,7 @@
                       <div class="act-item"><span class="aav">王</span><div><div class="t">骆王宇 is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                       <div class="act-item"><span class="aav">EP</span><div><div class="t">2 replies to your #cosmology thread</div><small>Prof. Pajer’s twin + @maya_k</small><button type="button" class="act-link">Open thread<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                       <div class="act-item"><span class="aav">HX</span><div><div class="t">Prof. Xu’s twin: new insight on pricing data</div><small>AI &amp; decisions · today</small><button type="button" class="act-link">View insight<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                      <div class="act-item"><span class="aav">AR</span><div><div class="t">Anastasia’s twin shared a climate-math notebook</div><small>Physics &amp; Space · 3h ago</small><button type="button" class="act-link">Open in Code<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                     </aside>
                   </div>
                 </div>
