@@ -248,12 +248,7 @@
   .dcard { cursor: pointer; transition: border-color .12s, box-shadow .12s; }
   .dcard:hover { border-color: rgba(0,139,104,.35); box-shadow: 0 2px 8px rgba(28,31,29,.05); }
   .addsi { cursor: pointer; }
-  /* Hover → prior brand green (tint + dark), idle stays pale low-sat. */
-  .addsi:hover {
-    background: var(--green-tint);
-    border-color: var(--green);
-    color: var(--green-dark);
-  }
+  .addsi:hover { background: #e8efea; border-color: #b7c9bf; color: #5f8572; }
   .round { cursor: pointer; }
   .round:hover { background: var(--green-tint); border-color: var(--green); color: var(--green-dark); }
   .tpl { cursor: pointer; transition: border-color .12s, box-shadow .12s, transform .12s; }
@@ -514,21 +509,7 @@
   .menu .browse .plus { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 14px; height: 14px; font-size: 14px; font-weight: 500; line-height: 1; transform: translateY(-0.5px); }
 
   /* Discover — left topics capped so .vr stays put; right cards take the rest. */
-  .discover {
-    display: flex;
-    gap: 14px;
-    align-items: center;
-    padding: 10px 12px 10px 16px;
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    font-size: 12px;
-    line-height: 1.35;
-    flex-wrap: nowrap;
-    min-width: 0;
-    /* Lock row height so topic filter (0–n cards) doesn’t jump the frame. */
-    min-height: 64px;
-    box-sizing: border-box;
-  }
+  .discover { display: flex; gap: 14px; align-items: center; padding: 10px 12px 10px 16px; border: 1px solid var(--line); border-radius: 14px; font-size: 12px; line-height: 1.35; flex-wrap: nowrap; min-width: 0; }
   .discover-topics {
     flex: 0 1 38%;
     max-width: 440px;
@@ -582,21 +563,8 @@
     -webkit-overflow-scrolling: touch;
   }
   .interest-scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
-  /* Stable chips: fixed border box — selection only recolors (no layout jump). */
-  .interest {
-    padding: 6px 12px;
-    border-radius: 999px;
-    border: 1px solid var(--line);
-    background: #fff;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background .12s, border-color .12s, color .12s;
-    white-space: nowrap;
-    flex: none;
-    line-height: 1.35;
-    box-sizing: border-box;
-    height: 30px;
-  }
+  /* Stable chips: keep border-width + font-weight constant — only color/fill may change (no layout jump). */
+  .interest { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: #fff; font-weight: 500; cursor: pointer; transition: background .12s, border-color .12s, color .12s; white-space: nowrap; flex: none; line-height: 1.35; box-sizing: border-box; }
   .interest:not(.on):hover { border-color: #cfd4cf; background: var(--surface); }
   .interest.on { background: var(--green-tint); border-color: var(--green); color: var(--green-dark); font-weight: 500; }
   /* Add-interest: fixed circle so “+” doesn’t collapse into a pill squish */
@@ -651,63 +619,27 @@
   .interest-pop button[data-add-topic].is-added:hover { background: transparent; color: var(--faint); }
   .vr { width: 1px; height: 28px; background: var(--line); flex: none; }
   /* Right side fills remaining width after fixed topics + divider. */
-  .discover-scroll-wrap {
-    position: relative;
-    flex: 1 1 auto;
-    min-width: 0;
-    max-width: none;
-    overflow: hidden;
-    align-self: stretch;
-    display: flex;
-    align-items: center;
-    min-height: 44px;
-  }
+  .discover-scroll-wrap { position: relative; flex: 1 1 auto; min-width: 0; max-width: none; overflow: hidden; }
   .discover-scroll-wrap::before,
   .discover-scroll-wrap::after { content: none; }
   /* Soft edge fades ? left when scrolled past start, right while more cards remain. */
   .discover-scroll-wrap.can-scroll:not(.at-start)::before { content: ""; position: absolute; top: 0; left: 0; width: 28px; height: 100%; pointer-events: none; z-index: 2; background: linear-gradient(270deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 65%, #fff 100%); }
   .discover-scroll-wrap.can-scroll:not(.at-end)::after { content: ""; position: absolute; top: 0; right: 0; width: 28px; height: 100%; pointer-events: none; z-index: 2; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 65%, #fff 100%); }
-  .discover .hscroll {
-    flex: 1 1 auto;
-    width: 100%;
-    min-height: 44px;
-    align-items: center;
-    mask-image: none;
-    -webkit-mask-image: none;
-  }
+  .discover .hscroll { flex: none; mask-image: none; -webkit-mask-image: none; }
   .hscroll { flex: 0 1 auto; min-width: 0; display: flex; gap: 12px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; scrollbar-width: none; padding-bottom: 0; scroll-padding-inline-end: 16px; cursor: default; }
-  .discover-scroll-wrap.can-scroll .hscroll { cursor: grab; padding-right: 8px; box-sizing: border-box; }
+  .discover-scroll-wrap.can-scroll .hscroll { cursor: grab; padding-right: 8px; box-sizing: content-box; }
   .hscroll.is-dragging { cursor: grabbing; user-select: none; }
   .hscroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
   .hscroll:focus-visible { outline: 2px solid rgba(0,139,104,.35); outline-offset: 2px; border-radius: 8px; }
-  /* Empty topic: keep the slot, don’t collapse the row. */
-  .discover .hscroll:not(:has(.dcard:not([hidden])))::before {
-    content: "No twins in this topic yet";
-    display: flex;
-    align-items: center;
-    height: 44px;
-    padding: 0 4px;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--faint);
-    white-space: nowrap;
-  }
-  .discover .discover-next {
-    margin-left: auto;
-    flex: none;
-    /* Reserve chevron width even when idle — avoids browse-all jump. */
-    visibility: visible;
-  }
-  .discover .discover-next.is-idle {
-    visibility: hidden;
-    pointer-events: none;
-  }
+  .discover .discover-next { margin-left: auto; }
   .discover .browse-all { flex: none; width: 28px; height: 28px; padding: 0; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; color: var(--muted); background: transparent; border: 0; border-radius: 8px; cursor: pointer; transition: background .12s, color .12s; }
   .discover .browse-all:hover { background: var(--green-tint); color: var(--green-dark); }
   .discover .browse-all:active { transform: scale(.96); }
   /* Vertical more (⋮) for Browse all — slightly smaller than the old ⌘ glyph. */
   .discover .browse-all svg { display: block; width: 16px; height: 16px; flex: none; }
-  .dcard { display: flex; gap: 10px; align-items: center; padding: 6px 8px; border: 1px solid var(--line); border-radius: 12px; flex: none; scroll-snap-align: start; min-height: 42px; box-sizing: border-box; }
+  .discover-next[hidden] { display: none !important; }
+  .discover .discover-next[hidden] + .browse-all { margin-left: auto; }
+  .dcard { display: flex; gap: 10px; align-items: center; padding: 6px 8px; border: 1px solid var(--line); border-radius: 12px; flex: none; scroll-snap-align: start; }
   .dcard[hidden] { display: none !important; }
   .dcard .dav { width: 28px; height: 28px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; color: var(--muted); }
   .dcard .dav.agent { background: var(--amber-tint); color: var(--amber); border-radius: 8px; }
@@ -909,40 +841,10 @@
   .sec .sub { font-size: 13px; color: var(--faint); white-space: nowrap; }
   .sec .sp { flex: 1; min-width: 8px; }
   .sec .act { font-size: 13px; font-weight: 500; color: #759a87; flex: none; white-space: nowrap; background: none; border: 0; padding: 0; }
-  .sec .act-add { position: relative; width: 28px; height: 28px; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: #fff; color: var(--muted); display: inline-flex; align-items: center; justify-content: center; flex: none; cursor: pointer; box-sizing: border-box; transition: background .12s, border-color .12s, color .12s; }
+  .sec .act-add { width: 28px; height: 28px; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: #fff; color: var(--muted); display: inline-flex; align-items: center; justify-content: center; flex: none; cursor: pointer; box-sizing: border-box; transition: background .12s, border-color .12s, color .12s; }
   .sec .act-add:hover { border-color: var(--green); color: var(--green-dark); background: var(--green-wash); }
   .sec .act-add:active { transform: scale(.96); }
   .sec .act-add svg { display: block; width: 14px; height: 14px; flex: none; }
-  /* Hover tip: add reminders via Citta */
-  .sec .act-add[data-action="add-reminder"]::after {
-    content: attr(data-tip);
-    position: absolute;
-    right: 0;
-    top: calc(100% + 8px);
-    z-index: 40;
-    width: max-content;
-    max-width: 220px;
-    padding: 8px 10px;
-    border-radius: 10px;
-    background: #1c1f1d;
-    color: #fff;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 1.35;
-    letter-spacing: 0;
-    white-space: normal;
-    text-align: left;
-    box-shadow: 0 8px 20px rgba(28,31,29,.18);
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-2px);
-    transition: opacity .14s ease, transform .14s ease;
-  }
-  .sec .act-add[data-action="add-reminder"]:hover::after,
-  .sec .act-add[data-action="add-reminder"]:focus-visible::after {
-    opacity: 1;
-    transform: translateY(0);
-  }
   .rem { display: flex; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); line-height: 1.4; }
   .rem .when { width: 64px; font-size: 12px; font-weight: 500; color: var(--muted); flex: none; }
   .rem .when.hot { color: var(--green); }
@@ -2095,7 +1997,7 @@
         <button type="button" class="osbar-bm" aria-label="Open arXiv" data-osbar="arxiv"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7l-5-5Zm-1 0v5h5M8 13h8M8 17h6M8 9h2"/></svg><span>arXiv</span></button>
         <button type="button" class="osbar-bm" aria-label="Open Notion" data-osbar="notion"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3zM16 12h2M16 8h2M6 12h2M6 8h2"/></svg><span>Notion</span></button>
         <span class="sp"></span>
-        <button type="button" class="osbar-app" aria-label="Desk" data-osbar="desk"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h14V9.5"/><path d="M10 20v-6h4v6"/></svg><span>Desk</span></button>
+        <button type="button" class="osbar-app" aria-label="Desk" data-osbar="desk"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.8V20a1 1 0 0 0 1 1h4.5v-6h3v6H18a1 1 0 0 0 1-1V9.8"/></svg><span>Desk</span></button>
         <button type="button" class="osbar-app" aria-label="Symbion" data-osbar="symbion"><span class="av-s" aria-hidden="true">S</span><span>Symbion</span></button>
       </div>
 
@@ -2375,7 +2277,7 @@
             <section class="two">
               <div class="two-grid">
                 <div class="two-col">
-                  <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act-add" data-action="add-reminder" data-tip="Add a reminder with Citta — tell it what and when" aria-label="Add reminder with Citta"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 3.25v9.5M3.25 8h9.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button></div>
+                  <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act-add" data-action="add-reminder" aria-label="Add reminder"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 3.25v9.5M3.25 8h9.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button></div>
                   <div class="two-main-l">
                     <div class="rem">
                       <span class="when hot">2:30</span>
@@ -2457,8 +2359,6 @@
                   <div class="dcard" data-topics="Physics & Space,Climate"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Climate maths · Columbia</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
                   <div class="dcard" data-topics="Physics & Space,AI & Data"><span class="dav agent">LR</span><div><span class="nm">Lab Report Coach</span><span class="tag agent">AI agent</span><small>Drafts in Doc</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
                   <div class="dcard" data-topics="Physics & Space,Climate,Biophysics"><span class="dav">KS</span><div><span class="nm">Katherine F. Smith</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Planetary health · Brown</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
-                  <div class="dcard" data-topics="Physics & Space,Cosmology,Heavy-ion physics"><span class="dav">EP</span><div><span class="nm">Prof. Pajer</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Cosmology · Cornell</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
-                  <div class="dcard" data-topics="AI & Data,Machine Learning"><span class="dav">HX</span><div><span class="nm">Prof. Xu</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>AI &amp; decisions</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
                 </div>
                 </div>
                 <button type="button" class="round discover-next" aria-label="Scroll discover cards"><svg class="chev-ico" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 3.25 10.75 8 6 12.75" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -2477,7 +2377,7 @@
               <section class="two">
                 <div class="two-grid">
                   <div class="two-col">
-                    <div class="sec two-title-l"><h3>Coming up</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act-add" data-action="add-reminder" data-tip="Add a reminder with Citta — tell it what and when" aria-label="Add reminder with Citta"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 3.25v9.5M3.25 8h9.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button></div>
+                    <div class="sec two-title-l"><h3>Coming up</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act-add" data-action="add-reminder" aria-label="Add reminder"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 3.25v9.5M3.25 8h9.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button></div>
                     <div class="two-main-l">
                       <div class="rem"><span class="when hot">Thu</span><div class="col"><span class="t">Heavy-ion Physics — lecture 8</span><span class="meta"><span class="badge">Course · Prof. Roland</span></span></div><button type="button" class="btn-soft" data-verb="Prep a 10-min deck" data-tool="deck"></button></div>
                       <div class="rem"><span class="when">Fri</span><div class="col"><span class="t">Lab 3 analysis due</span><span class="meta"><span class="badge yours">Yours</span></span></div><button type="button" class="btn-soft" data-verb="Open in Numbers" data-tool="numbers"></button></div>
@@ -2561,7 +2461,7 @@
               <section class="two">
                 <div class="two-grid">
                   <div class="two-col">
-                    <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act-add" data-action="add-reminder" data-tip="Add a reminder with Citta — tell it what and when" aria-label="Add reminder with Citta"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 3.25v9.5M3.25 8h9.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button></div>
+                    <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act-add" data-action="add-reminder" aria-label="Add reminder"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 3.25v9.5M3.25 8h9.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button></div>
                     <div class="two-main-l">
                       <div class="rem">
                         <span class="when hot">2:30</span>
@@ -4749,12 +4649,7 @@
     wrap?.classList.toggle('can-scroll', canScroll);
     wrap?.classList.toggle('at-start', atStart);
     wrap?.classList.toggle('at-end', atEnd);
-    // Keep chevron in layout (visibility) so the Discover frame width doesn’t jump.
-    if (next) {
-      next.hidden = false;
-      next.classList.toggle('is-idle', !canScroll || atEnd);
-      next.setAttribute('aria-hidden', String(!canScroll || atEnd));
-    }
+    if (next) next.hidden = !canScroll || atEnd;
   }
 
   /** Filter twin cards by the selected “Discover in” topic. */
