@@ -3215,6 +3215,9 @@
     }
     const name = $('tutorialDocName');
     if (name) name.textContent = 'Citta';
+    $('tutorialDocSwitcher')?.querySelectorAll('.si-row').forEach((r) => {
+      r.classList.toggle('on', r.dataset.ai === 'citta');
+    });
     const notice = $('tutorialTwinNotice');
     if (notice) notice.hidden = true;
     const writing = $('tutorialDocWriting');
