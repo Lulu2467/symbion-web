@@ -4816,10 +4816,13 @@
     document.querySelectorAll('[data-cosmos-scroll]').forEach((scroll) => {
       const wrap = scroll.closest('.cosmos-scroll-wrap');
       if (!wrap) return;
+      // Hidden tails report 0×0 — skip so we don’t clear a sibling’s fade classes wrongly.
+      if (scroll.clientHeight < 8) return;
       const max = Math.max(0, scroll.scrollHeight - scroll.clientHeight);
       const canScroll = max > 4;
       const top = scroll.scrollTop;
       wrap.classList.toggle('show-top-fade', canScroll && top > 6);
+      // Bottom fade on load when more content below — not only after the first scroll.
       wrap.classList.toggle('show-bot-fade', canScroll && top < max - 8);
     });
   }
@@ -4829,9 +4832,19 @@
       if (scroll.dataset.fadeBound) return;
       scroll.dataset.fadeBound = '1';
       scroll.addEventListener('scroll', syncCosmosScrollFade, { passive: true });
+      if (typeof ResizeObserver !== 'undefined') {
+        const ro = new ResizeObserver(() => syncCosmosScrollFade());
+        ro.observe(scroll);
+        const wrap = scroll.closest('.cosmos-scroll-wrap');
+        if (wrap) ro.observe(wrap);
+      }
     });
     window.addEventListener('resize', syncCosmosScrollFade, { passive: true });
-    requestAnimationFrame(syncCosmosScrollFade);
+    // Double rAF: absolute cosmos height settles after first paint / fit().
+    requestAnimationFrame(() => {
+      syncCosmosScrollFade();
+      requestAnimationFrame(syncCosmosScrollFade);
+    });
   }
 
   function setCittaExpanded(open) {
@@ -4996,6 +5009,7 @@
         stepCfg.spot === 'composer' ? 6 : (stepCfg.spot === 'picker' ? 4 : 10)
       );
     }
+    syncCosmosScrollFade();
   }
 
   // Spotlight + coach are absolute on .frame; .main (FS) or the window can scroll underneath — re-glue every scroll.
