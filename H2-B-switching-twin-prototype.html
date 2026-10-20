@@ -257,8 +257,10 @@
     box-sizing: border-box;
   }
   .ask-field { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
-  /* Kimi-style: chips sit on the same line as typed text — no extra row that jumps the box. */
-  .ask-compose { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; width: 100%; min-width: 0; }
+  /* Kimi-style: chips sit on the same line as typed text — no extra row that jumps the box.
+     Left pad matches the centered + glyph inside the 36px hit so text and + share one edge
+     without shoving the + to the side of its hover well. */
+  .ask-compose { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; width: 100%; min-width: 0; padding-left: 11px; box-sizing: border-box; }
   .composer-chips { display: none; flex: 0 1 auto; flex-wrap: wrap; gap: 6px; align-items: center; max-width: 100%; margin: 0; padding: 0; }
   .composer-chips.on { display: inline-flex; }
   .composer-tool-chip { display: none; align-items: center; gap: 5px; max-width: 100%; min-height: 28px; height: auto; padding: 4px 6px 4px 3px; border-radius: 8px; background: #fff; border: 1px solid var(--line); font-size: 12px; font-weight: 600; color: var(--ink); line-height: 1.25; box-shadow: none; box-sizing: border-box; }
@@ -296,8 +298,7 @@
     font-weight: 400;
     line-height: 0;
     background: transparent;
-    /* Keep 36px hit, but pin the + glyph to the left so it shares one edge with the placeholder (Kimi). */
-    justify-content: flex-start;
+    justify-content: center;
     transition: background .12s, color .12s;
   }
   .composer .ask-bar .plus:hover { background: var(--surface); color: var(--ink); }
