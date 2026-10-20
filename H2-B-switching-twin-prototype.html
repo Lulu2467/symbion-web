@@ -407,7 +407,7 @@
   .chip > .ic { margin-right: 2px; }
   .chip:hover { border-color: rgba(0,139,104,.35); background: var(--green-wash); }
   .chip:active { transform: scale(.98); }
-  /* All files: sage rest, no line; hover deepen + underline (same as See all 图二). */
+  /* All files: sage rest → deepen on hover, never underline. */
   .foot .link-btn {
     font-size: 13px;
     font-weight: 500;
@@ -417,11 +417,7 @@
     text-decoration: none;
     transition: color .12s;
   }
-  .foot .link-btn:hover {
-    color: var(--green);
-    text-decoration: underline;
-    text-underline-offset: 2px;
-  }
+  .foot .link-btn:hover { color: var(--green); text-decoration: none; }
   .foot .link-btn:active { opacity: .85; }
   .foot .link-btn .ico-ne { color: inherit; }
   .chip .ic, .chip .ar { color: var(--green); font-weight: 500; }
