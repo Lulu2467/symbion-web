@@ -234,9 +234,15 @@
   }
   #openTwinBrowse.link:hover { color: var(--green); text-decoration: none; }
   #openTwinBrowse.link:active { opacity: .85; }
-  .sec .act { cursor: pointer; text-decoration: none; }
-  /* Hover: underline like “See all” 图二 — rest stays plain (图一). */
-  .sec .act:hover { text-decoration: underline; text-underline-offset: 2px; }
+  /* Same quiet sage as week-card “Try with Citta” — no underline, deepen on hover. */
+  .sec .act {
+    cursor: pointer;
+    color: #759a87;
+    text-decoration: none;
+    transition: color .12s;
+  }
+  .sec .act:hover { color: var(--green); text-decoration: none; }
+  .sec .act:active { opacity: .85; }
   .dcard { cursor: pointer; transition: border-color .12s, box-shadow .12s; }
   .dcard:hover { border-color: rgba(0,139,104,.35); box-shadow: 0 2px 8px rgba(28,31,29,.05); }
   .addsi { cursor: pointer; }
@@ -729,7 +735,7 @@
   .sec h3 { margin: 0; font-size: 20px; font-weight: 500; }
   .sec .sub { font-size: 13px; color: var(--faint); white-space: nowrap; }
   .sec .sp { flex: 1; min-width: 8px; }
-  .sec .act { font-size: 13px; font-weight: 500; color: var(--green); flex: none; white-space: nowrap; }
+  .sec .act { font-size: 13px; font-weight: 500; color: #759a87; flex: none; white-space: nowrap; background: none; border: 0; padding: 0; }
   .sec .act-add { width: 28px; height: 28px; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: #fff; color: var(--muted); display: inline-flex; align-items: center; justify-content: center; flex: none; cursor: pointer; box-sizing: border-box; transition: background .12s, border-color .12s, color .12s; }
   .sec .act-add:hover { border-color: var(--green); color: var(--green-dark); background: var(--green-wash); }
   .sec .act-add:active { transform: scale(.96); }
