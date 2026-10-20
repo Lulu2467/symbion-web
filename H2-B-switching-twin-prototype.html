@@ -522,21 +522,49 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 3px;
+    gap: 4px;
     background: var(--green-tint);
     color: var(--green-dark);
     font-size: 11px;
     font-weight: 600;
     padding: 5px 10px;
     border-radius: 8px;
-    line-height: 1.2;
-  }
-  .addsi .attach-plus {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 500;
     line-height: 1;
-    transform: translateY(0.5px);
+  }
+  /* Geometric + — font glyph sits high/crooked vs “Add SI”. */
+  .addsi .attach-plus {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 9px;
+    height: 9px;
+    font-size: 0;
+    line-height: 0;
+    color: transparent;
+    position: relative;
+    transform: none;
+  }
+  .addsi .attach-plus::before,
+  .addsi .attach-plus::after {
+    content: "";
+    position: absolute;
+    background: var(--green-dark);
+    border-radius: 1px;
+  }
+  .addsi .attach-plus::before {
+    width: 9px;
+    height: 1.5px;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .addsi .attach-plus::after {
+    width: 1.5px;
+    height: 9px;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
   }
   /* Match browse-all hit size (28); lighter/thinner ring + chevron than before. */
   .round {
