@@ -2122,7 +2122,7 @@
               <button type="button" class="interest on" aria-pressed="true">Physics &amp; Space</button>
               <button type="button" class="interest" aria-pressed="false">AI &amp; Data</button>
               <button type="button" class="interest" aria-pressed="false">Cosmology</button>
-              <button type="button" class="interest add" aria-label="Add interest">+</button>
+              <button type="button" class="interest add" data-action="add-interest" aria-label="Add interest">+</button>
               <span class="vr"></span>
               <div class="discover-scroll-wrap">
               <div class="hscroll" id="discoverScroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
@@ -2199,7 +2199,7 @@
                 <button type="button" class="interest on" aria-pressed="true">Physics &amp; Space</button>
                 <button type="button" class="interest" aria-pressed="false">AI &amp; Data</button>
                 <button type="button" class="interest" aria-pressed="false">Cosmology</button>
-                <button type="button" class="interest add" aria-label="Add interest">+</button>
+                <button type="button" class="interest add" data-action="add-interest" aria-label="Add interest">+</button>
                 <span class="vr"></span>
                 <div class="discover-scroll-wrap">
                 <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
@@ -2274,7 +2274,7 @@
                 <button type="button" class="interest on" aria-pressed="true">Physics &amp; Space</button>
                 <button type="button" class="interest" aria-pressed="false">AI &amp; Data</button>
                 <button type="button" class="interest" aria-pressed="false">Cosmology</button>
-                <button type="button" class="interest add" aria-label="Add interest">+</button>
+                <button type="button" class="interest add" data-action="add-interest" aria-label="Add interest">+</button>
                 <span class="vr"></span>
                 <div class="discover-scroll-wrap">
                 <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
@@ -4247,6 +4247,48 @@
         return;
       }
 
+      const addInterest = e.target.closest('[data-action="add-interest"], .discover .interest.add');
+      if (addInterest) {
+        e.preventDefault();
+        e.stopPropagation();
+        flashEl(addInterest);
+        const discover = addInterest.closest('.discover');
+        const extras = ['Materials', 'Climate', 'Biophysics', 'Quantum'];
+        const existing = new Set(
+          [...(discover?.querySelectorAll('.interest:not(.add)') || [])].map((b) => b.textContent.trim())
+        );
+        const topic = extras.find((t) => !existing.has(t));
+        if (!discover || !topic) {
+          showToastMsg('All sample topics added — browse for more');
+          return;
+        }
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'interest';
+        chip.setAttribute('aria-pressed', 'false');
+        chip.textContent = topic;
+        addInterest.before(chip);
+        discover.querySelectorAll('.interest:not(.add)').forEach((b) => {
+          const on = b === chip;
+          b.classList.toggle('on', on);
+          b.setAttribute('aria-pressed', String(on));
+        });
+        showToastMsg(`Added interest · ${topic}`);
+        return;
+      }
+
+      const interestChip = e.target.closest('.discover .interest:not(.add)');
+      if (interestChip) {
+        const discover = interestChip.closest('.discover');
+        discover?.querySelectorAll('.interest:not(.add)').forEach((b) => {
+          const on = b === interestChip;
+          b.classList.toggle('on', on);
+          b.setAttribute('aria-pressed', String(on));
+        });
+        showToastMsg(`Discover · ${interestChip.textContent.trim()}`);
+        return;
+      }
+
       const dismissWeek = e.target.closest('[data-dismiss-week-tools]');
       if (dismissWeek) {
         const panel = dismissWeek.closest('.week-tools-panel');
@@ -4318,21 +4360,6 @@
         showToastMsg('Browse digital twins');
         return;
       }
-    });
-
-    frame.querySelectorAll('.discover .interest').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        if (btn.textContent.trim() === '+') {
-          showToastMsg('Add interest topic');
-          return;
-        }
-        frame.querySelectorAll('.discover .interest').forEach((b) => {
-          const on = b === btn;
-          b.classList.toggle('on', on);
-          b.setAttribute('aria-pressed', String(on));
-        });
-        showToastMsg(`Discover · ${btn.textContent.trim()}`);
-      });
     });
 
     frame.querySelectorAll('.osbar button[data-osbar]').forEach((el) => {
