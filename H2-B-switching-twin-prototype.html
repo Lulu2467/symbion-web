@@ -135,7 +135,9 @@
   .greeting { display: flex; gap: 48px; align-items: center; padding: 4px 0; }
   .hello { flex: 1; display: flex; flex-direction: column; gap: 6px; }
   .eyebrow { display: flex; gap: 6px; align-items: center; font-size: 11px; font-weight: 600; letter-spacing: .99px; color: var(--muted); white-space: nowrap; }
-  .eyebrow svg { flex: none; display: block; }
+  .eyebrow svg,
+  .eyebrow .wx { flex: none; display: block; width: 14px; height: 14px; line-height: 0; }
+  .eyebrow .wx svg { width: 14px; height: 14px; display: block; }
   .hello h2 { margin: 0; font-size: 40px; font-weight: 300; letter-spacing: -.6px; }
   .hello h2 span { color: var(--green); font-weight: 400; }
   .hello p { margin: 0; font-size: 15px; line-height: 23px; color: var(--muted); }
@@ -2027,22 +2029,22 @@
               <span class="sp">You came from <b>Prof. Roland’s Cosmo</b> · Heavy-ion Physics</span>
               <button type="button" class="link course-back">Back to the Cosmo<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
             </div>
-            <section class="greeting quiet" id="greeting-home">
+            <section class="greeting quiet" id="greeting-home" data-greeting="home">
               <div class="hello">
-                <div class="eyebrow" id="greeting-eyebrow">
-                  <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="3" fill="#e8a33d"/><g stroke="#e8a33d" stroke-width="1.2" stroke-linecap="round"><path d="M7 .8v1.4M7 11.8v1.4M.8 7h1.4M11.8 7h1.4M2.6 2.6l1 1M10.4 10.4l1 1M2.6 11.4l1-1M10.4 3.6l1-1"/></g></svg>
-                  MONDAY 12 OCTOBER  ·  WEEK 6 OF FALL TERM
+                <div class="eyebrow" data-live="eyebrow">
+                  <span class="wx" data-live="weather" aria-hidden="true"></span>
+                  <span data-live="eyebrow-text">MONDAY 12 OCTOBER  ·  WEEK 6 OF FALL TERM</span>
                 </div>
-                <h2 id="greeting-title">Good morning, <span>Jess</span></h2>
-                <p id="greeting-sub">Lecture 5 is at <b>2:30</b>. Want Citta to prep a <b>10-minute deck</b> before you go?</p>
+                <h2 data-live="title">Good morning, <span data-live="name">Jess</span></h2>
+                <p data-live="sub">Lecture 5 is at <b>2:30</b>. Want Citta to prep a <b>10-minute deck</b> before you go?</p>
               </div>
-              <div class="day" id="greeting-day" aria-label="Your day">
-                <span class="lbl">YOUR DAY</span><span class="ev-free">Evening free</span>
-                <span class="evt" style="left:56px"><b>11:00</b>Reply Roland</span>
-                <span class="evt" style="left:189px"><b>2:30</b>Lecture 5</span>
+              <div class="day" data-live="day" aria-label="Your day">
+                <span class="lbl">YOUR DAY</span><span class="ev-free" data-live="day-note">Evening free</span>
+                <span class="evt" data-hm="11:00"><b>11:00</b>Reply Roland</span>
+                <span class="evt" data-hm="14:30"><b>2:30</b>Lecture 5</span>
                 <span class="track"></span><span class="elapsed"></span>
-                <span class="dot hollow" style="left:100px"></span>
-                <span class="dot fill" style="left:222px"></span>
+                <span class="dot hollow" data-hm="11:00"></span>
+                <span class="dot fill" data-hm="14:30"></span>
                 <span class="now"></span>
                 <span class="tick" style="left:0">8 am</span>
                 <span class="tick now-l">now · 9:40</span>
@@ -2052,20 +2054,20 @@
             </div>
 
             <div class="screen on" id="screen-welcome" data-screen="welcome">
-              <section class="greeting quiet">
+              <section class="greeting quiet" data-greeting="welcome">
                 <div class="hello">
-                  <div class="eyebrow">
-                    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="3" fill="#e8a33d"/><g stroke="#e8a33d" stroke-width="1.2" stroke-linecap="round"><path d="M7 .8v1.4M7 11.8v1.4M.8 7h1.4M11.8 7h1.4M2.6 2.6l1 1M10.4 10.4l1 1M2.6 11.4l1-1M10.4 3.6l1-1"/></g></svg>
-                    MONDAY 12 OCTOBER  ·  9 DAYS SINCE YOUR LAST VISIT
+                  <div class="eyebrow" data-live="eyebrow">
+                    <span class="wx" data-live="weather" aria-hidden="true"></span>
+                    <span data-live="eyebrow-text">MONDAY 12 OCTOBER  ·  9 DAYS SINCE YOUR LAST VISIT</span>
                   </div>
-                  <h2>Welcome back, <span>Jess</span></h2>
-                  <p><span class="lead">Everything is where you left it.</span> Your reading report is <b>due tomorrow</b>.</p>
+                  <h2 data-live="title">Welcome back, <span data-live="name">Jess</span></h2>
+                  <p data-live="sub"><span class="lead">Everything is where you left it.</span> Your reading report is <b>due tomorrow</b>.</p>
                 </div>
-                <div class="day" aria-label="Your day">
-                  <span class="lbl">YOUR DAY</span><span class="ev-free">Report due tmrw</span>
-                  <span class="evt" style="left:189px"><b>2:30</b>Lecture 5</span>
+                <div class="day" data-live="day" aria-label="Your day">
+                  <span class="lbl">YOUR DAY</span><span class="ev-free" data-live="day-note">Report due tmrw</span>
+                  <span class="evt" data-hm="14:30"><b>2:30</b>Lecture 5</span>
                   <span class="track"></span><span class="elapsed"></span>
-                  <span class="dot fill" style="left:222px"></span>
+                  <span class="dot fill" data-hm="14:30"></span>
                   <span class="now"></span>
                   <span class="tick" style="left:0">8 am</span>
                   <span class="tick now-l">now · 9:40</span>
@@ -2080,14 +2082,14 @@
                 <span class="sp">You came from <b>Prof. Roland’s Cosmo</b> · Heavy-ion Physics</span>
                 <button type="button" class="link course-back">Back to the Cosmo<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
               </div>
-              <section class="greeting quiet">
+              <section class="greeting quiet" data-greeting="tutorial">
                 <div class="hello">
-                  <div class="eyebrow">
-                    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="3" fill="#e8a33d"/><g stroke="#e8a33d" stroke-width="1.2" stroke-linecap="round"><path d="M7 .8v1.4M7 11.8v1.4M.8 7h1.4M11.8 7h1.4M2.6 2.6l1 1M10.4 10.4l1 1M2.6 11.4l1-1M10.4 3.6l1-1"/></g></svg>
-                    MONDAY 12 OCTOBER  ·  YOUR FIRST DAY
+                  <div class="eyebrow" data-live="eyebrow">
+                    <span class="wx" data-live="weather" aria-hidden="true"></span>
+                    <span data-live="eyebrow-text">MONDAY 12 OCTOBER  ·  YOUR FIRST DAY</span>
                   </div>
-                  <h2>Welcome, <span>Jess</span></h2>
-                  <p>You came in from Heavy-ion Physics. Pick a tool below and Citta will show you around.</p>
+                  <h2 data-live="title">Welcome, <span data-live="name">Jess</span></h2>
+                  <p data-live="sub">You came in from Heavy-ion Physics. Pick a tool below and Citta will show you around.</p>
                 </div>
               </section>
             </div>
@@ -2099,20 +2101,23 @@
                 <span class="sp">Working in <b>Prof. Roland’s course</b> · Heavy-Ion Physics</span>
                 <button type="button" class="link course-back">Back to the course<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
               </div>
-              <section class="greeting quiet">
+              <section class="greeting quiet" data-greeting="handoff">
                 <div class="hello">
-                  <div class="eyebrow">MONDAY 12 OCTOBER  ·  TUTORIAL COMPLETE</div>
-                  <h2>Good morning, <span>Jess</span></h2>
-                  <p>Your <b>Lecture 1 summary</b> is in Doc. Pick up your deck or start something new with Citta.</p>
+                  <div class="eyebrow" data-live="eyebrow">
+                    <span class="wx" data-live="weather" aria-hidden="true"></span>
+                    <span data-live="eyebrow-text">MONDAY 12 OCTOBER  ·  TUTORIAL COMPLETE</span>
+                  </div>
+                  <h2 data-live="title">Good morning, <span data-live="name">Jess</span></h2>
+                  <p data-live="sub">Your <b>Lecture 1 summary</b> is in Doc. Pick up your deck or start something new with Citta.</p>
                 </div>
-                <div class="day" aria-label="This day">
+                <div class="day" data-live="day" aria-label="This day">
                   <span class="lbl">THIS DAY</span>
-                  <span class="items">1 / 3 items done</span>
-                  <span class="evt" style="left:56px"><b>11:00</b>Reply Roland</span>
-                  <span class="evt" style="left:189px"><b>2:30</b>Lecture 5</span>
+                  <span class="items" data-live="day-note">1 / 3 items done</span>
+                  <span class="evt" data-hm="11:00"><b>11:00</b>Reply Roland</span>
+                  <span class="evt" data-hm="14:30"><b>2:30</b>Lecture 5</span>
                   <span class="track"></span><span class="elapsed"></span>
-                  <span class="dot hollow" style="left:100px"></span>
-                  <span class="dot fill" style="left:222px"></span>
+                  <span class="dot hollow" data-hm="11:00"></span>
+                  <span class="dot fill" data-hm="14:30"></span>
                   <span class="now"></span>
                   <span class="tick" style="left:0">8 am</span>
                   <span class="tick now-l">now · 9:40</span>
@@ -5242,6 +5247,227 @@
     syncFsUi();
   }
 
+  const USER_NAME = (() => {
+    try { return localStorage.getItem('symbion-user-name') || 'Jess'; } catch (_) { return 'Jess'; }
+  })();
+  const LAST_VISIT_KEY = 'symbion-last-visit';
+  const DAY_TRACK_W = 420;
+  const DAY_START_MIN = 8 * 60;
+  const DAY_END_MIN = 20 * 60;
+  const WX_SUN = '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="3" fill="#e8a33d"/><g stroke="#e8a33d" stroke-width="1.2" stroke-linecap="round"><path d="M7 .8v1.4M7 11.8v1.4M.8 7h1.4M11.8 7h1.4M2.6 2.6l1 1M10.4 10.4l1 1M2.6 11.4l1-1M10.4 3.6l1-1"/></g></svg>';
+  const WX_MOON = '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M9.2 2.2a5.2 5.2 0 1 0 2.4 9.1A5.4 5.4 0 0 1 9.2 2.2z" fill="#8a9bb0"/></svg>';
+  const WX_CLOUD = '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4.6 10.6h6.1a2.3 2.3 0 0 0 .2-4.6 3.1 3.1 0 0 0-5.9.9A2.2 2.2 0 0 0 4.6 10.6z" fill="#9aa5b1"/></svg>';
+  const WX_RAIN = '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4.6 8.2h6.1a2.3 2.3 0 0 0 .2-4.6 3.1 3.1 0 0 0-5.9.9A2.2 2.2 0 0 0 4.6 8.2z" fill="#9aa5b1"/><path d="M5.2 9.4l-.6 1.6M7.2 9.4l-.6 1.6M9.2 9.4l-.6 1.6" stroke="#6b8fbf" stroke-width="1.1" stroke-linecap="round"/></svg>';
+  let weatherIconHtml = WX_SUN;
+  let weatherKind = 'sun';
+
+  function pad2(n) { return String(n).padStart(2, '0'); }
+
+  function formatClock(d) {
+    let h = d.getHours();
+    const m = d.getMinutes();
+    const ap = h >= 12 ? 'pm' : 'am';
+    h = h % 12;
+    if (h === 0) h = 12;
+    return `${h}:${pad2(m)}`;
+  }
+
+  function formatEyebrowDate(d) {
+    const days = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+    const months = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
+    return `${days[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]}`;
+  }
+
+  function partOfDay(d) {
+    const h = d.getHours();
+    if (h < 12) return 'morning';
+    if (h < 17) return 'afternoon';
+    return 'evening';
+  }
+
+  function helloPhrase(d) {
+    const p = partOfDay(d);
+    return p === 'morning' ? 'Good morning' : (p === 'afternoon' ? 'Good afternoon' : 'Good evening');
+  }
+
+  function fallTermWeek(d) {
+    // Soft academic week: weeks since first Monday of September (prototype).
+    const y = d.getFullYear();
+    const sept1 = new Date(y, 8, 1);
+    const firstMon = new Date(sept1);
+    firstMon.setDate(1 + ((8 - sept1.getDay()) % 7));
+    const ms = d - firstMon;
+    if (ms < 0) return 1;
+    return Math.min(16, Math.max(1, Math.floor(ms / (7 * 24 * 3600 * 1000)) + 1));
+  }
+
+  function daysSinceLastVisit(now) {
+    try {
+      const prev = localStorage.getItem(LAST_VISIT_KEY);
+      if (!prev) return null;
+      const then = new Date(prev);
+      if (Number.isNaN(then.getTime())) return null;
+      return Math.max(0, Math.floor((now - then) / (24 * 3600 * 1000)));
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function stampVisit(now) {
+    try { localStorage.setItem(LAST_VISIT_KEY, now.toISOString()); } catch (_) { /* ignore */ }
+  }
+
+  function hmToPx(hm) {
+    const [h, m] = String(hm).split(':').map(Number);
+    const mins = (h * 60) + (m || 0);
+    const t = Math.min(DAY_END_MIN, Math.max(DAY_START_MIN, mins));
+    return ((t - DAY_START_MIN) / (DAY_END_MIN - DAY_START_MIN)) * DAY_TRACK_W;
+  }
+
+  function nowToPx(d) {
+    const mins = d.getHours() * 60 + d.getMinutes();
+    const t = Math.min(DAY_END_MIN, Math.max(DAY_START_MIN, mins));
+    return ((t - DAY_START_MIN) / (DAY_END_MIN - DAY_START_MIN)) * DAY_TRACK_W;
+  }
+
+  function weatherFromCode(code, hour) {
+    if (code == null) {
+      if (hour < 6 || hour >= 20) return { kind: 'moon', html: WX_MOON };
+      if (hour >= 17) return { kind: 'cloud', html: WX_CLOUD };
+      return { kind: 'sun', html: WX_SUN };
+    }
+    if (code === 0) return hour < 6 || hour >= 20 ? { kind: 'moon', html: WX_MOON } : { kind: 'sun', html: WX_SUN };
+    if (code <= 3) return { kind: 'cloud', html: WX_CLOUD };
+    return { kind: 'rain', html: WX_RAIN };
+  }
+
+  function applyWeather(kind, html) {
+    weatherKind = kind;
+    weatherIconHtml = html;
+    document.querySelectorAll('[data-live="weather"]').forEach((el) => { el.innerHTML = html; });
+  }
+
+  function fetchWeather() {
+    const applyLocal = () => {
+      const d = new Date();
+      const w = weatherFromCode(null, d.getHours());
+      applyWeather(w.kind, w.html);
+    };
+    const pull = (lat, lon) => {
+      fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=weather_code`)
+        .then((r) => r.ok ? r.json() : Promise.reject())
+        .then((data) => {
+          const code = data?.current?.weather_code;
+          const w = weatherFromCode(code, new Date().getHours());
+          applyWeather(w.kind, w.html);
+        })
+        .catch(applyLocal);
+    };
+    try {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => pull(pos.coords.latitude, pos.coords.longitude),
+          () => pull(42.36, -71.06), // Cambridge fallback
+          { timeout: 4000, maximumAge: 30 * 60 * 1000 }
+        );
+      } else {
+        pull(42.36, -71.06);
+      }
+    } catch (_) {
+      applyLocal();
+    }
+  }
+
+  function nextDayNote(kind, d) {
+    const mins = d.getHours() * 60 + d.getMinutes();
+    if (kind === 'welcome') return 'Report due tmrw';
+    if (kind === 'handoff') return '1 / 3 items done';
+    if (mins < 14 * 60 + 30) return 'Lecture 5 at 2:30';
+    if (mins < 18 * 60) return 'Evening free';
+    return 'Evening free';
+  }
+
+  function homeSub(d) {
+    const mins = d.getHours() * 60 + d.getMinutes();
+    if (mins < 11 * 60) {
+      return `Reply to Prof. Roland is at <b>11:00</b>. Lecture 5 follows at <b>2:30</b> — want Citta to prep a <b>10-minute deck</b>?`;
+    }
+    if (mins < 14 * 60 + 30) {
+      return `Lecture 5 is at <b>2:30</b>. Want Citta to prep a <b>10-minute deck</b> before you go?`;
+    }
+    return `Lecture 5 is done. Your reading report is <b>due tomorrow</b> — finish it with Citta?`;
+  }
+
+  function syncLiveGreeting() {
+    const now = new Date();
+    const dateStr = formatEyebrowDate(now);
+    const hello = helloPhrase(now);
+    const week = fallTermWeek(now);
+    const since = daysSinceLastVisit(now);
+    const sinceLabel = since == null
+      ? 'FIRST VISIT TODAY'
+      : (since === 0 ? 'BACK TODAY' : `${since} DAY${since === 1 ? '' : 'S'} SINCE YOUR LAST VISIT`);
+
+    document.querySelectorAll('[data-greeting]').forEach((sec) => {
+      const kind = sec.dataset.greeting;
+      sec.querySelectorAll('[data-live="name"]').forEach((el) => { el.textContent = USER_NAME; });
+      const wx = sec.querySelector('[data-live="weather"]');
+      if (wx) wx.innerHTML = weatherIconHtml;
+
+      const eye = sec.querySelector('[data-live="eyebrow-text"]');
+      if (eye) {
+        if (kind === 'home') eye.textContent = `${dateStr}  ·  WEEK ${week} OF FALL TERM`;
+        else if (kind === 'welcome') eye.textContent = `${dateStr}  ·  ${sinceLabel}`;
+        else if (kind === 'tutorial') eye.textContent = `${dateStr}  ·  YOUR FIRST DAY`;
+        else if (kind === 'handoff') eye.textContent = `${dateStr}  ·  TUTORIAL COMPLETE`;
+      }
+
+      const title = sec.querySelector('[data-live="title"]');
+      if (title) {
+        const nameHtml = `<span data-live="name">${USER_NAME}</span>`;
+        if (kind === 'welcome') title.innerHTML = `Welcome back, ${nameHtml}`;
+        else if (kind === 'tutorial') title.innerHTML = `Welcome, ${nameHtml}`;
+        else title.innerHTML = `${hello}, ${nameHtml}`;
+      }
+
+      const sub = sec.querySelector('[data-live="sub"]');
+      if (sub && kind === 'home') sub.innerHTML = homeSub(now);
+
+      const day = sec.querySelector('[data-live="day"]');
+      if (day) {
+        const px = nowToPx(now);
+        const elapsed = day.querySelector('.elapsed');
+        const marker = day.querySelector('.now');
+        const nowL = day.querySelector('.tick.now-l');
+        if (elapsed) elapsed.style.width = `${Math.max(8, px)}px`;
+        if (marker) marker.style.left = `${Math.max(0, Math.min(DAY_TRACK_W - 12, px - 6))}px`;
+        if (nowL) {
+          nowL.textContent = `now · ${formatClock(now)}`;
+          const labelLeft = Math.max(0, Math.min(DAY_TRACK_W - 72, px - 28));
+          nowL.style.left = `${labelLeft}px`;
+        }
+        day.querySelectorAll('[data-hm]').forEach((el) => {
+          const x = hmToPx(el.dataset.hm);
+          if (el.classList.contains('evt')) el.style.left = `${Math.max(0, x - 44)}px`;
+          else el.style.left = `${Math.max(0, x - 5)}px`;
+        });
+        const note = day.querySelector('[data-live="day-note"]');
+        if (note && (note.classList.contains('ev-free') || kind === 'handoff')) {
+          if (note.classList.contains('ev-free')) note.textContent = nextDayNote(kind, now);
+        }
+      }
+    });
+  }
+
+  function initLiveGreeting() {
+    const boot = weatherFromCode(null, new Date().getHours());
+    applyWeather(boot.kind, boot.html);
+    syncLiveGreeting();
+    stampVisit(new Date());
+    fetchWeather();
+    setInterval(syncLiveGreeting, 60 * 1000);
+  }
+
   initComposerTools();
   initToolInteractions();
   initFrameInteractions();
@@ -5249,6 +5475,7 @@
   initFullscreenToggle();
   decorateSparkIcons();
   decorateLectureBookIcons();
+  initLiveGreeting();
   const composerInputEl = $('composerInput');
   composerInputEl?.addEventListener('input', () => resizeTextarea(composerInputEl));
   const cittaInputEl = $('cittaInput');
