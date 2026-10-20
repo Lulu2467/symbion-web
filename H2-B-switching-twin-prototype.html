@@ -227,9 +227,8 @@
     border-color: rgba(0,139,104,.35);
     box-shadow: 0 4px 14px rgba(28,31,29,.08), 0 1px 3px rgba(28,31,29,.04);
   }
-  .tpl .use { cursor: pointer; color: var(--ink); transition: background .15s, border-color .15s, color .15s; }
-  .tpl .use:hover { background: var(--green); border-color: var(--green); color: #fff; }
-  .tpl .use:hover .spark-icon { color: #fff; }
+  .tpl .use { cursor: pointer; }
+  .tpl .use:hover { border-color: var(--green); background: var(--green-wash); }
   .course-banner a { cursor: pointer; }
   .course-banner a:hover { text-decoration: underline; }
   .pick-card .btn { cursor: pointer; transition: border-color .12s, background .12s, color .12s; }
@@ -707,19 +706,7 @@
   .tpl .h { display: flex; gap: 8px; align-items: center; font-size: 12px; font-weight: 600; color: var(--muted); flex: none; min-height: 28px; }
   .tpl b { font-size: 14px; font-weight: 600; display: block; min-height: 2.8em; width: 100%; }
   .tpl small { font-size: 12px; color: var(--faint); display: block; min-height: 2.8em; width: 100%; }
-  /* Hollow like 图二; solid green fill on hover. */
-  .tpl .use {
-    margin-top: auto;
-    align-self: stretch;
-    text-align: center;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 8px 14px;
-    font-size: 12px;
-    font-weight: 500;
-    background: #fff;
-    color: var(--ink);
-  }
+  .tpl .use { margin-top: auto; align-self: stretch; text-align: center; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 12px; font-weight: 500; background: #fff; }
 
   /* Dock + toast */
   .dock { position: absolute; right: var(--page-gutter); top: 843px; width: 44px; height: 44px; border-radius: 22px; background: #fff; border: 1.5px solid var(--green); color: var(--green); font-size: 0; font-weight: 600; display: flex; align-items: center; justify-content: center; left: auto; padding: 0; box-sizing: border-box; overflow: visible; transition: transform .08s, box-shadow .12s; }
