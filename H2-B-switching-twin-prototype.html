@@ -3413,10 +3413,16 @@
   function finishTutorialDocToTryTools() {
     exitTutorialDoc();
     setScreen('tutorial', { step: 2 });
-    // Doc → home layout swap needs an extra measure so step-2 try block + coach scroll into view.
-    requestAnimationFrame(() => {
+    // Doc → H0 layout swap: measure twice so try block + under-coach both land in view.
+    const settleTryStep = () => {
       positionCoach();
-      afterTutorialChrome(() => scrollTutorialFocusIntoView({ smooth: true }));
+      scrollTutorialFocusIntoView({ smooth: true });
+    };
+    requestAnimationFrame(() => {
+      afterTutorialChrome(() => {
+        settleTryStep();
+        setTimeout(settleTryStep, 120);
+      });
     });
   }
 
@@ -3580,7 +3586,7 @@
     return document.scrollingElement || document.documentElement;
   }
 
-  /** After a step change, keep the lit card fully below the osbar (never tuck START WITH under the chrome). */
+  /** After a step change, bring the lit block + under-coach into view (try/picker may scroll past the title). */
   function scrollTutorialFocusIntoView({ smooth = true } = {}) {
     if (screen !== 'tutorial' || tutorialExploring) return;
     if (coach.classList.contains('centered')) return; // viewport-fixed modal — already centered
@@ -3607,19 +3613,29 @@
     let delta = 0;
     if (spotEl) {
       const a = spotEl.getBoundingClientRect();
-      // Prefer pinning the spot top just under chrome — centering a tall composer clips it.
-      if (a.top < padTop) delta = a.top - padTop;
-      else if (a.bottom > window.innerHeight - padBot) {
-        const down = a.bottom - (window.innerHeight - padBot);
-        // Don’t scroll so far that the top tucks under the osbar.
-        delta = Math.min(down, a.top - padTop);
-      } else if (coachOn && (step.spot === 'composer' || step.spot === 'try' || step.spot === 'picker')) {
-        // Nudge so the coach under the lit block is on-screen — keep the spot top under chrome.
+      const spotCoach = coachOn && (step.spot === 'composer' || step.spot === 'try' || step.spot === 'picker');
+
+      if (spotCoach) {
         const b = coach.getBoundingClientRect();
-        if (b.bottom > window.innerHeight - padBot || b.top > window.innerHeight - 80) {
-          const need = Math.max(0, b.bottom - (window.innerHeight - padBot));
-          delta = Math.min(need, Math.max(0, a.top - padTop));
+        // Coach sits under the lit block — prioritize getting the card on-screen.
+        if (b.bottom > window.innerHeight - padBot || b.top > window.innerHeight - 96) {
+          delta = Math.max(0, b.bottom - (window.innerHeight - padBot));
+          // Keep a slice of the spot visible (cards / WORKING WITH), not only the coach.
+          const minSpot = step.spot === 'try' ? Math.min(200, a.height * 0.45) : Math.min(120, a.height * 0.5);
+          const maxDown = Math.max(0, a.bottom - padTop - minSpot);
+          if (maxDown > 0) delta = Math.min(delta, maxDown);
+        } else if (a.top < padTop - 4 && step.spot !== 'try') {
+          // Composer / picker: don’t leave START WITH tucked under the osbar.
+          delta = a.top - padTop;
+        } else if (step.spot === 'try' && a.top > padTop + 48 && b.bottom <= window.innerHeight - padBot) {
+          // Try block still below the fold — pin its top under chrome.
+          delta = a.top - padTop;
         }
+      } else if (a.top < padTop) {
+        delta = a.top - padTop;
+      } else if (a.bottom > window.innerHeight - padBot) {
+        const down = a.bottom - (window.innerHeight - padBot);
+        delta = Math.min(down, Math.max(0, a.top - padTop));
       }
     } else {
       const b = coach.getBoundingClientRect();
