@@ -638,6 +638,7 @@
   .discover-next[hidden] { display: none !important; }
   .discover .discover-next[hidden] + .browse-all { margin-left: auto; }
   .dcard { display: flex; gap: 10px; align-items: center; padding: 6px 8px; border: 1px solid var(--line); border-radius: 12px; flex: none; scroll-snap-align: start; }
+  .dcard[hidden] { display: none !important; }
   .dcard .dav { width: 28px; height: 28px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; color: var(--muted); }
   .dcard .dav.agent { background: var(--amber-tint); color: var(--amber); border-radius: 8px; }
   .dcard .nm { font-weight: 600; text-decoration: none; }
@@ -2256,12 +2257,12 @@
               <span class="vr"></span>
               <div class="discover-scroll-wrap">
               <div class="hscroll" id="discoverScroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
-                <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
-                <div class="dcard"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Climate maths · Columbia</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
-                <div class="dcard"><span class="dav agent">LR</span><div><span class="nm">Lab Report Coach</span><span class="tag agent">AI agent</span><small>Drafts in Doc</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
-                <div class="dcard"><span class="dav">KS</span><div><span class="nm">Katherine F. Smith</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Planetary health · Brown</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
-                <div class="dcard"><span class="dav">EP</span><div><span class="nm">Prof. Pajer</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Cosmology · Cornell</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
-                <div class="dcard"><span class="dav">HX</span><div><span class="nm">Prof. Xu</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>AI &amp; decisions</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
+                <div class="dcard" data-topics="Physics & Space,Materials,Heavy-ion physics"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
+                <div class="dcard" data-topics="Physics & Space,Climate"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Climate maths · Columbia</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
+                <div class="dcard" data-topics="Physics & Space,AI & Data"><span class="dav agent">LR</span><div><span class="nm">Lab Report Coach</span><span class="tag agent">AI agent</span><small>Drafts in Doc</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
+                <div class="dcard" data-topics="Physics & Space,Climate,Biophysics"><span class="dav">KS</span><div><span class="nm">Katherine F. Smith</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Planetary health · Brown</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
+                <div class="dcard" data-topics="Physics & Space,Cosmology,Heavy-ion physics"><span class="dav">EP</span><div><span class="nm">Prof. Pajer</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Cosmology · Cornell</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
+                <div class="dcard" data-topics="AI & Data,Machine Learning"><span class="dav">HX</span><div><span class="nm">Prof. Xu</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>AI &amp; decisions</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
               </div>
               </div>
               <button type="button" class="round discover-next" id="discoverScrollNext" aria-label="Scroll discover cards"><svg class="chev-ico" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 3.25 10.75 8 6 12.75" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -2349,10 +2350,10 @@
                 <span class="vr"></span>
                 <div class="discover-scroll-wrap">
                 <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
-                  <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
-                  <div class="dcard"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Climate maths · Columbia</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
-                  <div class="dcard"><span class="dav agent">LR</span><div><span class="nm">Lab Report Coach</span><span class="tag agent">AI agent</span><small>Drafts in Doc</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
-                  <div class="dcard"><span class="dav">KS</span><div><span class="nm">Katherine F. Smith</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Planetary health · Brown</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
+                  <div class="dcard" data-topics="Physics & Space,Materials,Heavy-ion physics"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
+                  <div class="dcard" data-topics="Physics & Space,Climate"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Climate maths · Columbia</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
+                  <div class="dcard" data-topics="Physics & Space,AI & Data"><span class="dav agent">LR</span><div><span class="nm">Lab Report Coach</span><span class="tag agent">AI agent</span><small>Drafts in Doc</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
+                  <div class="dcard" data-topics="Physics & Space,Climate,Biophysics"><span class="dav">KS</span><div><span class="nm">Katherine F. Smith</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Planetary health · Brown</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
                 </div>
                 </div>
                 <button type="button" class="round discover-next" aria-label="Scroll discover cards"><svg class="chev-ico" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 3.25 10.75 8 6 12.75" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -2440,12 +2441,12 @@
                 <span class="vr"></span>
                 <div class="discover-scroll-wrap">
                 <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
-                  <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
-                  <div class="dcard"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Climate maths · Columbia</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
-                  <div class="dcard"><span class="dav agent">LR</span><div><span class="nm">Lab Report Coach</span><span class="tag agent">AI agent</span><small>Drafts in Doc</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
-                  <div class="dcard"><span class="dav">KS</span><div><span class="nm">Katherine F. Smith</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Planetary health · Brown</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
-                  <div class="dcard"><span class="dav">EP</span><div><span class="nm">Prof. Pajer</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Cosmology · Cornell</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
-                  <div class="dcard"><span class="dav">HX</span><div><span class="nm">Prof. Xu</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>AI &amp; decisions</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
+                  <div class="dcard" data-topics="Physics & Space,Materials,Heavy-ion physics"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
+                  <div class="dcard" data-topics="Physics & Space,Climate"><span class="dav">AR</span><div><span class="nm">Anastasia Romanou</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Climate maths · Columbia</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
+                  <div class="dcard" data-topics="Physics & Space,AI & Data"><span class="dav agent">LR</span><div><span class="nm">Lab Report Coach</span><span class="tag agent">AI agent</span><small>Drafts in Doc</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
+                  <div class="dcard" data-topics="Physics & Space,Climate,Biophysics"><span class="dav">KS</span><div><span class="nm">Katherine F. Smith</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Planetary health · Brown</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
+                  <div class="dcard" data-topics="Physics & Space,Cosmology,Heavy-ion physics"><span class="dav">EP</span><div><span class="nm">Prof. Pajer</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Cosmology · Cornell</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
+                  <div class="dcard" data-topics="AI & Data,Machine Learning"><span class="dav">HX</span><div><span class="nm">Prof. Xu</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>AI &amp; decisions</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Add SI</button></div>
                 </div>
                 </div>
                 <button type="button" class="round discover-next" aria-label="Scroll discover cards"><svg class="chev-ico" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 3.25 10.75 8 6 12.75" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -2509,10 +2510,10 @@
                 <span class="vr"></span>
                 <div class="discover-scroll-wrap">
                 <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="More in Cosmos — scroll horizontally">
-                  <div class="dcard"><span class="dav">EP</span><div><span class="nm">Enrico Pajer</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Cosmology · Cambridge</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Follow</button></div>
-                  <div class="dcard"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Follow</button></div>
-                  <div class="dcard"><span class="dav agent">PC</span><div><span class="nm">Physics Problem Coach</span><span class="tag agent">AI agent</span><small>Step-by-step in SymTex</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Follow</button></div>
-                  <div class="dcard"><span class="dav agent">GW</span><div><span class="nm">Gauge Theory 101</span><span class="tag agent">AI agent</span><small>Course · MIT OCW</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Follow</button></div>
+                  <div class="dcard" data-topics="Heavy-ion physics,Physics & Space,Cosmology"><span class="dav">EP</span><div><span class="nm">Enrico Pajer</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Cosmology · Cambridge</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Follow</button></div>
+                  <div class="dcard" data-topics="Heavy-ion physics,Physics & Space,Materials"><span class="dav">JG</span><div><span class="nm">Julia R. Greer</span><span class="tag"><span class="spark-icon" aria-hidden="true"></span>Twin</span><small>Materials · Caltech</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Follow</button></div>
+                  <div class="dcard" data-topics="Heavy-ion physics,Physics & Space"><span class="dav agent">PC</span><div><span class="nm">Physics Problem Coach</span><span class="tag agent">AI agent</span><small>Step-by-step in SymTex</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Follow</button></div>
+                  <div class="dcard" data-topics="Heavy-ion physics,Physics & Space,Quantum"><span class="dav agent">GW</span><div><span class="nm">Gauge Theory 101</span><span class="tag agent">AI agent</span><small>Course · MIT OCW</small></div><button type="button" class="addsi"><span class="attach-plus" aria-hidden="true">+</span>Follow</button></div>
                 </div>
                 </div>
                 <button type="button" class="round discover-next" aria-label="Scroll discover cards"><svg class="chev-ico" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6 3.25 10.75 8 6 12.75" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -4445,6 +4446,7 @@
         if (addBtn) addBtn.setAttribute('aria-expanded', 'false');
         chip.scrollIntoView({ inline: 'nearest', block: 'nearest', behavior: 'smooth' });
         requestAnimationFrame(() => syncInterestOverflow(scroll));
+        filterDiscoverByTopic(discover);
         return;
       }
 
@@ -4490,7 +4492,7 @@
           b.classList.toggle('on', on);
           b.setAttribute('aria-pressed', String(on));
         });
-        // Selection is enough — don't fire the frame toast (it reads as a random black bar).
+        filterDiscoverByTopic(discover);
         return;
       }
 
@@ -4645,6 +4647,24 @@
     if (next) next.hidden = !canScroll || atEnd;
   }
 
+  /** Filter twin cards by the selected “Discover in” topic. */
+  function filterDiscoverByTopic(discover) {
+    if (!discover) return;
+    const topic = discover.querySelector('.interest-scroll .interest.on')?.textContent.trim() || '';
+    const track = discover.querySelector('.hscroll');
+    if (!track) return;
+    track.querySelectorAll('.dcard').forEach((card) => {
+      const topics = (card.dataset.topics || '')
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean);
+      const match = !topic || topics.length === 0 || topics.includes(topic);
+      card.hidden = !match;
+    });
+    track.scrollLeft = 0;
+    syncDiscoverOverflow(track, discover.querySelector('.discover-next'));
+  }
+
   function syncInterestOverflow(track) {
     if (!track) return;
     const wrap = track.closest('.interest-scroll-wrap');
@@ -4730,6 +4750,7 @@
     frame.querySelectorAll('.discover').forEach((sec) => {
       bindDiscoverScroll(sec.querySelector('.hscroll'), sec.querySelector('.discover-next'));
       bindInterestScroll(sec.querySelector('.interest-scroll'));
+      filterDiscoverByTopic(sec);
     });
   }
 
