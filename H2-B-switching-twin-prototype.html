@@ -4354,7 +4354,7 @@
       const addRem = e.target.closest('[data-action="add-reminder"]');
       if (addRem) {
         flashEl(addRem);
-        // Add reminder → open Citta with a starter prompt (same path as tutorial “tell Citta”).
+        // Add reminder → open Citta with a starter prompt; no toast overlay.
         setCittaExpanded(true);
         setCittaDraft('Remind me to ');
         const input = $('cittaInput');
@@ -4363,7 +4363,6 @@
           const len = input.value.length;
           try { input.setSelectionRange(len, len); } catch (_) { /* ignore */ }
         }
-        showToastMsg('Tell Citta what to remind you about');
         return;
       }
 
