@@ -2820,6 +2820,7 @@
       title: 'Try each tool with Citta',
       body: '1 minute each — each card uses Prof. Roland’s course material and opens the right workspace.',
       spot: 'try',
+      coachCenter: true,
       primary: 'Next',
       secondary: 'Back',
     },
@@ -2827,6 +2828,7 @@
       title: 'Twins & AI agents live here',
       body: 'WORKING WITH is where you swap in Prof. Roland’s twin or an AI agent mid-task. Your file stays open — switch back to Citta anytime.',
       spot: 'picker',
+      coachCenter: true,
       primary: 'Next',
       secondary: 'Back',
     },
@@ -3258,8 +3260,8 @@
   /** Don’t let the lit card tuck under the osbar — that leaves a clipped START WITH strip at the top. */
   function clampTutorialSpotBelowChrome() {
     if (screen !== 'tutorial' || tutorialExploring || tutorialDocPhase) return;
-    if (coach.classList.contains('centered')) return;
     const step = TUTORIAL_STEPS[tutorialStep - 1];
+    // Final centered modal has no spot; coachCenter steps still need the lit block clamped.
     if (!step?.spot) return;
     const el = getTutorialSpotTarget(step.spot);
     if (!el) return;
@@ -3653,12 +3655,14 @@
     return document.scrollingElement || document.documentElement;
   }
 
-  /** After a step change, bring the lit block + under-coach into view (try/picker may scroll past the title). */
+  /** After a step change, bring the lit block into view; coachCenter steps keep the spot in the upper half. */
   function scrollTutorialFocusIntoView({ smooth = true } = {}) {
     if (screen !== 'tutorial' || tutorialExploring) return;
-    if (coach.classList.contains('centered')) return; // viewport-fixed modal — already centered
 
     const step = TUTORIAL_STEPS[tutorialStep - 1] || {};
+    // Final centered modal has no spot — nothing to scroll.
+    if (coach.classList.contains('centered') && !step.spot) return;
+
     let spotEl = null;
     if (tutorialDocPhase) {
       spotEl = $('tutorialDocSwitch') || tutorialDocView;
@@ -3680,29 +3684,31 @@
     let delta = 0;
     if (spotEl) {
       const a = spotEl.getBoundingClientRect();
-      const spotCoach = coachOn && (step.spot === 'composer' || step.spot === 'try' || step.spot === 'picker');
 
-      if (spotCoach) {
-        const b = coach.getBoundingClientRect();
-        // Coach sits under the lit block — prioritize getting the card on-screen.
-        if (b.bottom > window.innerHeight - padBot || b.top > window.innerHeight - 96) {
-          delta = Math.max(0, b.bottom - (window.innerHeight - padBot));
-          // Keep a slice of the spot visible (cards / WORKING WITH), not only the coach.
-          const minSpot = step.spot === 'try' ? Math.min(200, a.height * 0.45) : Math.min(120, a.height * 0.5);
-          const maxDown = Math.max(0, a.bottom - padTop - minSpot);
-          if (maxDown > 0) delta = Math.min(delta, maxDown);
-        } else if (a.top < padTop - 4 && step.spot !== 'try') {
-          // Composer / picker: don’t leave START WITH tucked under the osbar.
+      if (step.coachCenter) {
+        // Coach is viewport-centered — park the lit block in the upper third so both read clearly.
+        const idealTop = padTop + (step.spot === 'try' ? 12 : 28);
+        if (Math.abs(a.top - idealTop) > 8) delta = a.top - idealTop;
+      } else {
+        const spotCoach = coachOn && (step.spot === 'composer' || step.spot === 'try' || step.spot === 'picker');
+        if (spotCoach) {
+          const b = coach.getBoundingClientRect();
+          if (b.bottom > window.innerHeight - padBot || b.top > window.innerHeight - 96) {
+            delta = Math.max(0, b.bottom - (window.innerHeight - padBot));
+            const minSpot = step.spot === 'try' ? Math.min(200, a.height * 0.45) : Math.min(120, a.height * 0.5);
+            const maxDown = Math.max(0, a.bottom - padTop - minSpot);
+            if (maxDown > 0) delta = Math.min(delta, maxDown);
+          } else if (a.top < padTop - 4 && step.spot !== 'try') {
+            delta = a.top - padTop;
+          } else if (step.spot === 'try' && a.top > padTop + 48 && b.bottom <= window.innerHeight - padBot) {
+            delta = a.top - padTop;
+          }
+        } else if (a.top < padTop) {
           delta = a.top - padTop;
-        } else if (step.spot === 'try' && a.top > padTop + 48 && b.bottom <= window.innerHeight - padBot) {
-          // Try block still below the fold — pin its top under chrome.
-          delta = a.top - padTop;
+        } else if (a.bottom > window.innerHeight - padBot) {
+          const down = a.bottom - (window.innerHeight - padBot);
+          delta = Math.min(down, Math.max(0, a.top - padTop));
         }
-      } else if (a.top < padTop) {
-        delta = a.top - padTop;
-      } else if (a.bottom > window.innerHeight - padBot) {
-        const down = a.bottom - (window.innerHeight - padBot);
-        delta = Math.min(down, Math.max(0, a.top - padTop));
       }
     } else {
       const b = coach.getBoundingClientRect();
@@ -3764,8 +3770,10 @@
     const step = TUTORIAL_STEPS[tutorialStep - 1] || {};
     const pad = pageGutterPx();
     const isSwitch = tutorialDocPhase === 'doc' || tutorialDocPhase === 'switch-open' || coach.classList.contains('switch-coach');
-    // Final step: viewport-centered modal + gray scrim (same as NEW tip — not mid-page of the tall frame).
+    // Final step: viewport-centered modal + gray scrim (clears spotlight).
     const centerModal = !isSwitch && (!!step.center || !step.spot);
+    // Steps 2–3: coach floats in screen center; spotlight stays on try / picker.
+    const coachCenter = !isSwitch && !!step.coachCenter && !!step.spot;
 
     coach.style.bottom = 'auto';
     coach.style.top = '';
@@ -3779,6 +3787,13 @@
       coach.classList.add('centered');
       clearTutorialSpotlight();
       setCoachScrim(true);
+      return;
+    }
+
+    if (coachCenter) {
+      mountCoachForViewport(true);
+      coach.classList.add('centered');
+      setCoachScrim(false);
       return;
     }
 
