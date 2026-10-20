@@ -928,8 +928,27 @@
   }
   .week-tools-close:hover { background: var(--surface); color: var(--ink); }
   .week-cards { display: flex; gap: 16px; align-items: stretch; }
-  .week-card { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; background: #fff; position: relative; text-align: left; }
+  .week-card {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: #fff;
+    position: relative;
+    text-align: left;
+    transition: border-color .15s, box-shadow .15s;
+  }
   .week-card.tried { background: #f6faf6; border-color: rgba(0,139,104,.16); }
+  /* Soft low-sat green frame on hover — not full brand green. */
+  .week-card:hover {
+    border-color: #c5d4cb;
+    box-shadow: 0 2px 10px rgba(28,31,29,.04);
+  }
+  .week-card.tried:hover { border-color: #b9cec2; }
   /* Untried tools: grey icon well (beats inline brand colors). */
   .week-card:not(.tried) i {
     background: var(--slate-tint) !important;
