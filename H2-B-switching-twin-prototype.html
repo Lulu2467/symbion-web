@@ -559,7 +559,7 @@
     line-height: 0;
   }
 
-  /* Reminders + Cosmos: titles share one baseline; Cosmos shows 3 people, even inset. */
+  /* Reminders + Cosmos: titles share one baseline; Cosmos card shows ~3 rows, scrolls for more. */
   .two { display: block; }
   .two-grid {
     display: grid;
@@ -595,14 +595,15 @@
   .two-title-r .new-badge { font-size: 13px; color: var(--green); font-weight: 600; flex: none; line-height: 1.2; white-space: nowrap; }
   .two-main-l { min-width: 0; display: flex; flex-direction: column; gap: 0; flex: none; }
   .two-main-r { width: 100%; flex: none; }
-  /* Three people only — equal inset on all sides (match left pad). */
+  /* Equal 20px inset; max-height ≈ 3 people; overflow scrolls inside. */
   .cosmos-scroll-wrap {
+    position: relative;
     display: block;
     width: 100%;
     border: 1px solid var(--line);
     border-radius: 16px;
     background: #fff;
-    overflow: visible;
+    overflow: hidden;
     box-sizing: border-box;
   }
   .cosmos-scroll-wrap > .activity {
@@ -610,11 +611,37 @@
     border-radius: 0;
     background: transparent;
     padding: 20px;
-    overflow: visible;
-    flex: none;
+    max-height: 300px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-gutter: stable;
     min-height: 0;
-    scrollbar-gutter: auto;
   }
+  .cosmos-scroll-wrap::before,
+  .cosmos-scroll-wrap::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 28px;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity .18s ease;
+  }
+  .cosmos-scroll-wrap::before {
+    top: 0;
+    background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,.8) 45%, rgba(255,255,255,0) 100%);
+  }
+  .cosmos-scroll-wrap::after {
+    bottom: 0;
+    height: 40px;
+    background: linear-gradient(0deg, #fff 0%, rgba(255,255,255,.85) 42%, rgba(255,255,255,0) 100%);
+  }
+  .cosmos-scroll-wrap.show-top-fade::before { opacity: 1; }
+  .cosmos-scroll-wrap.show-bot-fade::after { opacity: 1; }
   .reminders { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
   .sec { display: flex; gap: 10px; align-items: center; line-height: 1.4; }
   .sec h3 { margin: 0; font-size: 20px; font-weight: 500; }
@@ -2017,10 +2044,12 @@
                 <div class="two-col">
                   <div class="two-title-r"><h3>From your Cosmos</h3><span class="new-badge">5 new</span></div>
                   <div class="cosmos-scroll-wrap two-main-r">
-                  <aside class="activity">
+                  <aside class="activity" data-cosmos-scroll>
                     <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland’s twin posted lecture 5 slides</div><small>Heavy-ion Physics · 1h ago</small><button type="button" class="act-link">Turn into study notes<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                     <div class="act-item"><span class="aav">王</span><div><div class="t">骆王宇 is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                     <div class="act-item"><span class="aav">EP</span><div><div class="t">2 replies to your #cosmology thread</div><small>Prof. Pajer’s twin + @maya_k</small><button type="button" class="act-link">Open thread<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                    <div class="act-item"><span class="aav">HX</span><div><div class="t">Prof. Xu’s twin: new insight on pricing data</div><small>AI &amp; decisions · today</small><button type="button" class="act-link">View insight<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                    <div class="act-item"><span class="aav">AR</span><div><div class="t">Anastasia’s twin shared a climate-math notebook</div><small>Physics &amp; Space · 3h ago</small><button type="button" class="act-link">Open in Code<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                   </aside>
                   </div>
                 </div>
@@ -2159,10 +2188,12 @@
                   <div class="two-col">
                     <div class="two-title-r"><h3>From your Cosmos</h3><span class="new-badge">5 new</span></div>
                     <div class="cosmos-scroll-wrap two-main-r">
-                    <aside class="activity">
+                    <aside class="activity" data-cosmos-scroll>
                       <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland’s twin posted lecture 5 slides</div><small>Heavy-ion Physics · 1h ago</small><button type="button" class="act-link">Turn into study notes<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                       <div class="act-item"><span class="aav">王</span><div><div class="t">骆王宇 is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                       <div class="act-item"><span class="aav">EP</span><div><div class="t">2 replies to your #cosmology thread</div><small>Prof. Pajer’s twin + @maya_k</small><button type="button" class="act-link">Open thread<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                      <div class="act-item"><span class="aav">HX</span><div><div class="t">Prof. Xu’s twin: new insight on pricing data</div><small>AI &amp; decisions · today</small><button type="button" class="act-link">View insight<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                      <div class="act-item"><span class="aav">AR</span><div><div class="t">Anastasia’s twin shared a climate-math notebook</div><small>Physics &amp; Space · 3h ago</small><button type="button" class="act-link">Open in Code<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                     </aside>
                     </div>
                   </div>
@@ -4471,6 +4502,28 @@
     scroll.addEventListener('scroll', syncCittaScrollFade, { passive: true });
     window.addEventListener('resize', syncCittaScrollFade, { passive: true });
     syncCittaScrollFade();
+  }
+
+  function syncCosmosScrollFade() {
+    document.querySelectorAll('[data-cosmos-scroll]').forEach((scroll) => {
+      const wrap = scroll.closest('.cosmos-scroll-wrap');
+      if (!wrap) return;
+      const max = Math.max(0, scroll.scrollHeight - scroll.clientHeight);
+      const canScroll = max > 4;
+      const top = scroll.scrollTop;
+      wrap.classList.toggle('show-top-fade', canScroll && top > 6);
+      wrap.classList.toggle('show-bot-fade', canScroll && top < max - 8);
+    });
+  }
+
+  function bindCosmosScrollFade() {
+    document.querySelectorAll('[data-cosmos-scroll]').forEach((scroll) => {
+      if (scroll.dataset.fadeBound) return;
+      scroll.dataset.fadeBound = '1';
+      scroll.addEventListener('scroll', syncCosmosScrollFade, { passive: true });
+    });
+    window.addEventListener('resize', syncCosmosScrollFade, { passive: true });
+    requestAnimationFrame(syncCosmosScrollFade);
   }
 
   function setCittaExpanded(open) {
