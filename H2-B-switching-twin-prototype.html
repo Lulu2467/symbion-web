@@ -555,20 +555,17 @@
     line-height: 0;
   }
 
-  /* Reminders + Cosmos: titles share one baseline; Cosmos card shows ~3 rows, scrolls for more. */
+  /* Reminders + Cosmos: one grid — titles share row 1, content tops/bottoms share row 2. */
   .two { display: block; }
   .two-grid {
     display: grid;
     grid-template-columns: 1fr 440px;
+    grid-template-rows: 28px 1fr;
     column-gap: 32px;
-    align-items: start;
+    row-gap: 8px;
+    align-items: stretch;
   }
-  .two-col {
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
+  .two-col { display: contents; }
   .two-title-l,
   .two-title-r {
     height: 28px;
@@ -583,18 +580,39 @@
     margin: 0;
     padding: 0;
   }
+  .two-title-l { grid-column: 1; grid-row: 1; }
+  .two-title-r { grid-column: 2; grid-row: 1; justify-content: space-between; }
   .two-title-l.sec { align-items: center; line-height: 1.2; }
-  .two-title-r { justify-content: space-between; }
   .two-title-l h3,
   .two-title-r h3 { margin: 0; font-size: 20px; font-weight: 500; line-height: 1.2; flex: none; }
   .two-title-r h3 { flex: 1; min-width: 0; }
   .two-title-r .new-badge { font-size: 13px; color: var(--green); font-weight: 600; flex: none; line-height: 1.2; white-space: nowrap; }
-  .two-main-l { min-width: 0; display: flex; flex-direction: column; gap: 0; flex: none; }
-  .two-main-r { width: 100%; flex: none; }
-  /* Equal 20px inset; max-height ≈ 3 people; overflow scrolls inside. */
+  .two-main-l {
+    grid-column: 1;
+    grid-row: 2;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-self: stretch;
+  }
+  .two-main-l .rem:last-child { border-bottom: 0; }
+  .two-main-r {
+    grid-column: 2;
+    grid-row: 2;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    align-self: stretch;
+    box-sizing: border-box;
+  }
+  /* Card fills the shared content row; scroll inside when feed is taller. */
   .cosmos-scroll-wrap {
     position: relative;
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     border: 1px solid var(--line);
     border-radius: 16px;
@@ -606,8 +624,10 @@
     border: 0;
     border-radius: 0;
     background: transparent;
-    padding: 20px;
-    max-height: 300px;
+    padding: 16px 20px;
+    flex: 1 1 auto;
+    max-height: none;
+    height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -907,14 +927,23 @@
   }
   .pick-card .btn .spark-icon { width: 12px; height: 12px; color: var(--muted); }
   .activity.cosmos-compact {
-    flex: none;
-    overflow: visible;
+    overflow: auto;
     scrollbar-gutter: auto;
     border: 1px solid var(--line);
     border-radius: 16px;
-    padding: 20px;
+    padding: 16px 20px;
     gap: 12px;
     background: #fff;
+    height: 100%;
+    box-sizing: border-box;
+  }
+  /* Tutorial / non-scroll Cosmos as right column — fill shared row height. */
+  .activity.two-main-r:not(.cosmos-compact) {
+    height: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    padding: 16px 20px;
   }
   .activity.cosmos-compact > p { margin: 0; font-size: 13px; line-height: 1.4; color: var(--muted); }
   .activity.cosmos-compact .cosmos-see { align-self: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--ink); cursor: pointer; }
