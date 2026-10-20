@@ -189,7 +189,28 @@
   .picker .switch-ico { width: 14px; height: 14px; flex: none; display: block; color: var(--green); }
   .picker .twin-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,.55); color: var(--green-dark); font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 999px; }
   .picker .twin-badge .spark-icon { width: 11px; height: 11px; }
-  .tpl .use .spark-icon { width: 12px; height: 12px; color: var(--green); }
+  .tpl .use .spark-icon {
+    width: 12px;
+    height: 12px;
+    color: var(--green);
+    display: inline-grid;
+    place-items: center;
+  }
+  .tpl .use .spark-icon .spark-h,
+  .tpl .use .spark-icon .spark-f {
+    grid-area: 1 / 1;
+    display: block;
+    width: 12px;
+    height: 12px;
+    line-height: 0;
+  }
+  .tpl .use .spark-icon .spark-h svg,
+  .tpl .use .spark-icon .spark-f svg { width: 12px; height: 12px; }
+  .tpl .use .spark-icon .spark-h,
+  .tpl .use .spark-icon .spark-f { transition: opacity .12s; }
+  .tpl .use .spark-icon .spark-f { opacity: 0; }
+  .tpl .use:hover .spark-icon .spark-h { opacity: 0; }
+  .tpl .use:hover .spark-icon .spark-f { opacity: 1; }
   .try-it .citta-mark { width: 12px; height: 12px; color: currentColor; }
   .is-twin .picker { background: #fff; border-color: rgba(0,139,104,.4); box-shadow: none; }
   .is-twin .picker:hover { background: var(--green-wash); }
@@ -4759,7 +4780,7 @@
 
   function decorateSparkIcons() {
     document.querySelectorAll('.tpl .use').forEach((el) => {
-      el.innerHTML = `<span class="spark-icon" aria-hidden="true">${SPARK_HOLLOW}</span>Use with Citta`;
+      el.innerHTML = `<span class="spark-icon" aria-hidden="true"><span class="spark-h">${SPARK_HOLLOW}</span><span class="spark-f">${SPARK_SOLID}</span></span>Use with Citta`;
     });
     document.querySelectorAll('.try-it').forEach((el) => {
       el.innerHTML = `<span class="citta-mark spark-icon" aria-hidden="true">${SPARK_SOLID}</span>Try it`;
