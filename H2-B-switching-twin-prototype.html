@@ -534,16 +534,50 @@
     line-height: 0;
   }
 
-  /* Reminders + activity — equal column height; Cosmos card stretches to Reminders bottom. */
+  /* Reminders + Cosmos: titles share one row height; left sets section height; right card scrolls. */
   .two { display: block; }
-  .two-grid { display: grid; grid-template-columns: 1fr 440px; column-gap: 32px; align-items: stretch; }
-  .two-col { min-width: 0; height: 100%; display: flex; flex-direction: column; gap: 8px; }
+  .two-grid {
+    display: grid;
+    grid-template-columns: 1fr 440px;
+    column-gap: 32px;
+    align-items: stretch;
+  }
+  .two-col {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  /* Left: natural height drives the grid row. */
+  .two-col:first-child { height: max-content; }
+  /* Right: can shrink below content so the card scrolls instead of stretching the row. */
+  .two-col:last-child {
+    min-height: 0;
+    height: auto;
+    align-self: stretch;
+    overflow: hidden;
+  }
   .two-title-l,
-  .two-title-r { height: 32px; min-height: 32px; display: flex; align-items: center; gap: 10px; line-height: 1.4; flex: none; box-sizing: border-box; }
+  .two-title-r {
+    height: 28px;
+    min-height: 28px;
+    max-height: 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 1.2;
+    flex: none;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  .two-title-l.sec { align-items: center; }
   .two-title-r { justify-content: space-between; }
-  .two-title-r h3 { margin: 0; font-size: 20px; font-weight: 500; flex: 1; min-width: 0; }
-  .two-title-r .new-badge { font-size: 13px; color: var(--green); font-weight: 600; flex: none; }
-  .two-main-l { min-width: 0; display: flex; flex-direction: column; gap: 0; flex: 1; }
+  .two-title-l h3,
+  .two-title-r h3 { margin: 0; font-size: 20px; font-weight: 500; line-height: 1.2; flex: none; }
+  .two-title-r h3 { flex: 1; min-width: 0; }
+  .two-title-r .new-badge { font-size: 13px; color: var(--green); font-weight: 600; flex: none; line-height: 1.2; }
+  .two-main-l { min-width: 0; display: flex; flex-direction: column; gap: 0; flex: none; }
   .two-main-r { flex: 1 1 auto; min-height: 0; width: 100%; align-self: stretch; }
   .reminders { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
   .sec { display: flex; gap: 10px; align-items: center; line-height: 1.4; }
@@ -583,7 +617,25 @@
   .btn-soft .spark-icon { width: 11px; height: 11px; color: var(--green-dark); flex: none; }
   .btn-soft:hover { background: #dceee4; }
   .btn-soft:active { transform: scale(.98); }
-  .activity { width: 100%; flex: 1 1 auto; min-height: 0; border: 1px solid var(--line); border-radius: 16px; padding: 14px 20px 20px; display: flex; flex-direction: column; gap: 16px; align-self: stretch; box-sizing: border-box; }
+  .activity {
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 14px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-self: stretch;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  .activity::-webkit-scrollbar { width: 8px; }
+  .activity::-webkit-scrollbar-thumb { background: rgba(28,31,29,.16); border-radius: 999px; }
   .activity .row { display: flex; align-items: center; }
   .activity .row h3 { margin: 0; font-size: 20px; font-weight: 500; flex: 1; }
   .activity .row span { font-size: 13px; color: var(--green); }
