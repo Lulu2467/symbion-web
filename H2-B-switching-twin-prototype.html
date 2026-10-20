@@ -2579,12 +2579,34 @@
     if (!item) return;
     applySwitcherChoice(item.dataset.ai);
   });
+  function closeTutorialDocSwitcher({ restoreCoach = true } = {}) {
+    const sw = $('tutorialDocSwitcher');
+    if (!sw?.classList.contains('open')) return false;
+    sw.classList.remove('open');
+    $('tutorialDocSwitch')?.setAttribute('aria-expanded', 'false');
+    // Keep green spot on the control while still in the doc-switch beat.
+    if (tutorialDocPhase === 'switch-open') {
+      tutorialDocPhase = 'doc';
+      if (restoreCoach && screen === 'tutorial' && !tutorialExploring) renderDocSwitchCoach();
+    } else {
+      $('tutorialDocSwitch')?.classList.remove('spot');
+    }
+    syncPresenter(current === 'citta' ? 'citta' : 'twin');
+    return true;
+  }
+
   document.addEventListener('click', () => {
+    if (closeTutorialDocSwitcher()) return;
     if (!menu.classList.contains('open')) return;
     setMenu(false);
     syncPresenter(current === 'citta' ? 'citta' : 'twin');
   });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { setMenu(false); syncPresenter(current === 'citta' ? 'citta' : 'twin'); } });
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    if (closeTutorialDocSwitcher()) return;
+    setMenu(false);
+    syncPresenter(current === 'citta' ? 'citta' : 'twin');
+  });
   $('backToCitta').addEventListener('click', () => { setAI('citta'); syncPresenter('citta'); });
   $('undo').addEventListener('click', () => { const back = previous; setAI(back); syncPresenter(back === 'citta' ? 'citta' : 'twin'); });
 
@@ -3062,6 +3084,13 @@
   }
 
   function syncTutorialChromeOnScroll() {
+    // Handoff tip: spotlight stays on the Citta pill while the page scrolls.
+    if (frame.classList.contains('post-tip-on') && newTip?.classList.contains('show')) {
+      positionTutorialSpotlight(picker, 4);
+      tutorialSpotlight.style.borderRadius = '999px';
+      positionNewTip();
+      return;
+    }
     if (screen !== 'tutorial' || tutorialExploring) return;
     if (coach.classList.contains('on') && !coach.classList.contains('centered')) positionCoach();
     const stepCfg = TUTORIAL_STEPS[tutorialStep - 1];
@@ -3140,7 +3169,7 @@
     tutorialDocPhase = 'doc';
     frame.classList.add('tutorial-doc-on', 'tutorial-on');
     clearTutorialSpotlight();
-    frame.classList.remove('dim');
+    frame.classList.remove('dim', 'tutorial-spot-composer', 'tutorial-spot-try', 'tutorial-spot-picker');
     resetTutorialDocCittaUi();
     if (tutorialDocView) {
       tutorialDocView.hidden = false;
@@ -3407,7 +3436,7 @@
     return document.scrollingElement || document.documentElement;
   }
 
-  /** After a step change, bring the lit UI (and coach) into the middle of the viewport. */
+  /** After a step change, keep the lit target in view (don’t center a tall coach+spot union — that clips the cutout). */
   function scrollTutorialFocusIntoView({ smooth = true } = {}) {
     if (screen !== 'tutorial' || tutorialExploring) return;
     if (coach.classList.contains('centered')) return; // viewport-fixed modal — already centered
@@ -3425,15 +3454,11 @@
 
     let top;
     let bottom;
-    if (spotEl && coachOn) {
-      const a = spotEl.getBoundingClientRect();
-      const b = coach.getBoundingClientRect();
-      top = Math.min(a.top, b.top);
-      bottom = Math.max(a.bottom, b.bottom);
-    } else if (spotEl) {
+    if (spotEl) {
+      // Anchor on the spotlight target; nudge so a bit of room remains below for the coach.
       const a = spotEl.getBoundingClientRect();
       top = a.top;
-      bottom = a.bottom;
+      bottom = a.bottom + (coachOn ? 120 : 0);
     } else {
       const b = coach.getBoundingClientRect();
       top = b.top;
@@ -3441,7 +3466,7 @@
     }
 
     const mid = (top + bottom) / 2;
-    const target = window.innerHeight / 2;
+    const target = window.innerHeight * 0.42;
     const delta = mid - target;
     if (Math.abs(delta) < 12) return;
 
@@ -3557,10 +3582,13 @@
         coach.style.left = `${Math.max(pad, t.left)}px`;
       }
     } else if (step.spot === 'picker') {
+      // Below the chat card — never cover the lit Citta pill (old top+80 sat on the ask row).
       const c = frameRectOffset(composer);
       const p = frameRectOffset(picker);
-      coach.style.top = `${c.top + 80}px`;
+      const gap = 20;
+      coach.style.top = `${c.bottom + gap}px`;
       coach.style.left = `${Math.max(pad, p.left)}px`;
+      coach.style.width = `${Math.min(400, Math.max(280, c.right - c.left - 24))}px`;
     }
 
     // Keep the card inside the frame (bottom + right). Never pull step-1 coach back over chat.
@@ -4277,8 +4305,10 @@
     e.stopPropagation();
     openCittaSwitcher();
   });
+  $('tutorialDocSwitcher')?.addEventListener('click', (e) => e.stopPropagation());
   $('tutorialDocSwitcher')?.querySelectorAll('.si-row').forEach((row) => {
-    row.addEventListener('click', () => {
+    row.addEventListener('click', (e) => {
+      e.stopPropagation();
       $('tutorialDocSwitcher')?.querySelectorAll('.si-row').forEach((r) => r.classList.toggle('on', r === row));
       applySwitcherChoice(row.dataset.ai);
     });
