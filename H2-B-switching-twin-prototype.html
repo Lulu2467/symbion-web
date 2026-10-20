@@ -741,9 +741,30 @@
   .tool-sec .hdr .sp { flex: 1; }
   .tool-sec .hdr .sub { font-size: 13px; color: var(--faint); }
 
-  /* Soft tint — quieter than solid primary green on light try-cards. */
-  .btn-citta { display: inline-flex; gap: 6px; align-items: center; align-self: flex-start; margin-top: auto; background: var(--green-tint); color: var(--green-dark); border: 1px solid rgba(0,139,104,.18); font-size: 12px; font-weight: 600; line-height: 1.2; padding: 7px 12px; border-radius: 999px; white-space: nowrap; transition: background .15s, border-color .15s, color .15s; }
-  .btn-citta:hover { background: #d4ebe0; border-color: rgba(0,139,104,.32); color: var(--green); }
+  /* Rest: quiet sage (not filled green — that read as “already pressed”). Hover brings the tint. */
+  .btn-citta {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    align-self: flex-start;
+    margin-top: auto;
+    background: #fff;
+    color: #759a87;
+    border: 1px solid var(--line);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
+    padding: 7px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: background .15s, border-color .15s, color .15s;
+  }
+  .btn-citta:hover {
+    background: var(--green-tint);
+    border-color: rgba(0,139,104,.22);
+    color: var(--green-dark);
+  }
+  .btn-citta:active { transform: scale(.98); }
   .btn-citta .citta-mark { display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; flex: none; line-height: 0; color: currentColor; }
   .btn-citta .citta-mark svg { display: block; width: 12px; height: 12px; flex: none; }
 
@@ -1477,8 +1498,24 @@
   .tutorial-try-card .trow i svg { display: block; width: 16px; height: 16px; flex: none; }
   .tutorial-try-card .lead { font-size: 15px; font-weight: 500; line-height: 1.35; margin: 4px 0 0; min-height: 40px; }
   .tutorial-try-card .sub { font-size: 12px; color: var(--faint); margin: 0; }
-  .tutorial-try-card .try-it { align-self: flex-start; margin-top: auto; background: var(--green-tint); color: var(--green-dark); border: 1px solid rgba(0,139,104,.18); font-size: 12px; font-weight: 600; padding: 7px 14px; border-radius: 999px; white-space: nowrap; transition: background .15s, border-color .15s, color .15s; }
-  .tutorial-try-card .try-it:hover { background: #d4ebe0; border-color: rgba(0,139,104,.32); color: var(--green); }
+  .tutorial-try-card .try-it {
+    align-self: flex-start;
+    margin-top: auto;
+    background: #fff;
+    color: #759a87;
+    border: 1px solid var(--line);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 7px 14px;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: background .15s, border-color .15s, color .15s;
+  }
+  .tutorial-try-card .try-it:hover {
+    background: var(--green-tint);
+    border-color: rgba(0,139,104,.22);
+    color: var(--green-dark);
+  }
   .onboard-row { display: flex; gap: 16px; align-items: center; padding: 15px 17px; border: 1px solid var(--line); border-radius: 14px; background: #fff; line-height: 1.4; }
   .onboard-row .col { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
   .onboard-row .col b { font-size: 15px; font-weight: 500; }
