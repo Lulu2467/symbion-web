@@ -2513,8 +2513,8 @@
 
   /** Every Citta switch icon: same switcher. Pass { anchor } to pin it beside that control (e.g. panel). */
   function openCittaSwitcher(opts = {}) {
-    if (tutorialDocPhase === 'doc' || tutorialDocPhase === 'switch-open' || tutorialDocPhase === 'twin-finish') {
-      if (tutorialDocPhase !== 'twin-finish') tutorialDocPhase = 'switch-open';
+    if (tutorialDocPhase === 'doc' || tutorialDocPhase === 'switch-open' || tutorialDocPhase === 'twin-finish' || tutorialDocPhase === 'doc-done') {
+      if (tutorialDocPhase !== 'twin-finish' && tutorialDocPhase !== 'doc-done') tutorialDocPhase = 'switch-open';
       $('tutorialDocSwitcher')?.classList.add('open');
       const sw = $('tutorialDocSwitch');
       sw?.classList.add('spot');
@@ -2532,10 +2532,18 @@
 
   function applySwitcherChoice(aiKey) {
     if (!aiKey || !AIS[aiKey]) return;
-    if (tutorialDocPhase === 'doc' || tutorialDocPhase === 'switch-open' || tutorialDocPhase === 'twin-finish') {
+    if (tutorialDocPhase === 'doc' || tutorialDocPhase === 'switch-open' || tutorialDocPhase === 'twin-finish' || tutorialDocPhase === 'doc-done') {
       if (aiKey === 'citta') {
         if (tutorialDocPhase === 'twin-finish') restoreTutorialDocCitta();
-        else {
+        else if (tutorialDocPhase === 'doc-done') {
+          setAI('citta', { announce: false });
+          $('tutorialDocSwitcher')?.classList.remove('open');
+          $('tutorialDocSwitch')?.classList.remove('spot');
+          $('tutorialDocSwitch')?.setAttribute('aria-expanded', 'false');
+          showTutorialDocNextToast();
+          syncPresenter('citta');
+          syncHash();
+        } else {
           setAI('citta', { announce: false });
           $('tutorialDocSwitcher')?.classList.remove('open');
           $('tutorialDocSwitch')?.classList.remove('spot');
@@ -2647,6 +2655,7 @@
     const q = new URLSearchParams();
     if (screen !== 'home') q.set('screen', screen);
     if (screen === 'tutorial' && tutorialDocPhase === 'twin-finish') q.set('tutorial', '1d');
+    else if (screen === 'tutorial' && tutorialDocPhase === 'doc-done') q.set('tutorial', '1e');
     else if (screen === 'tutorial' && tutorialDocPhase) q.set('tutorial', '1b');
     else if (screen === 'tutorial' && tutorialStep > 1) q.set('tutorial', String(tutorialStep));
     if (cittaExpanded) q.set('citta', 'expanded');
@@ -3170,11 +3179,7 @@
     if (writing) writing.hidden = true;
     tutorialDocView?.querySelector('.doc-page')?.classList.add('twin-done');
     tutorialDocView?.querySelectorAll('.sec-later').forEach((h) => h.classList.add('pending'));
-    const nextToast = $('tutorialDocNextToast');
-    if (nextToast) {
-      nextToast.hidden = false;
-      nextToast.classList.add('show');
-    }
+    showTutorialDocNextToast();
     const rule = $('tutorialDocProtoRule');
     if (rule) rule.textContent = 'Figma 122:8048 · 1d — Twin finishes the same Doc; chat history and file stay.';
     syncPresenter('twin');
@@ -3182,13 +3187,49 @@
     fit();
   }
 
+  function showTutorialDocNextToast() {
+    const nextToast = $('tutorialDocNextToast');
+    if (!nextToast) return;
+    nextToast.hidden = false;
+    nextToast.classList.add('show');
+  }
+
   function restoreTutorialDocCitta() {
+    // Back from twin: Citta chrome again, but keep the finished Doc + black next-step toast.
     setAI('citta', { announce: false });
     syncPresenter('citta');
-    tutorialDocPhase = 'doc';
-    resetTutorialDocCittaUi();
+    tutorialDocPhase = 'doc-done';
     $('tutorialDocSwitcher')?.classList.remove('open');
-    renderDocSwitchCoach();
+    $('tutorialDocSwitch')?.classList.remove('spot');
+    $('tutorialDocSwitch')?.setAttribute('aria-expanded', 'false');
+    coach.classList.remove('on', 'switch-coach');
+    setCoachScrim(false);
+
+    const panel = $('tutorialDocCitta');
+    panel?.classList.remove('is-twin');
+    panel?.setAttribute('aria-label', 'Citta');
+    const av = $('tutorialDocAv');
+    if (av) {
+      av.className = 'citta-av citta-portrait';
+      av.innerHTML = `<img src="${CITTA_AVATAR_SRC}" width="28" height="28" alt="">`;
+    }
+    const name = $('tutorialDocName');
+    if (name) name.textContent = 'Citta';
+    const notice = $('tutorialTwinNotice');
+    if (notice) notice.hidden = true;
+    const writing = $('tutorialDocWriting');
+    if (writing) writing.hidden = true;
+    const prog = $('tutorialDocProg')?.querySelector('span');
+    if (prog) prog.style.width = '100%';
+    tutorialDocView?.querySelector('.doc-page')?.classList.add('twin-done');
+    tutorialDocView?.querySelectorAll('.sec-later').forEach((h) => h.classList.add('pending'));
+    const msg = $('tutorialDocMsg');
+    if (msg) {
+      msg.textContent = 'Done. Your summary is ready — edit any section, or turn it into slides below.';
+    }
+    showTutorialDocNextToast();
+    const rule = $('tutorialDocProtoRule');
+    if (rule) rule.textContent = 'Figma 122:8048 · back to Citta — same Doc; black next-step toast stays.';
     syncHash();
     fit();
   }
@@ -3249,7 +3290,7 @@
       fit();
       return;
     }
-    if (screen === 'tutorial' && tutorialStep === 1 && tutorialDocPhase === 'twin-finish') {
+    if (screen === 'tutorial' && tutorialStep === 1 && (tutorialDocPhase === 'twin-finish' || tutorialDocPhase === 'doc-done')) {
       coach.classList.remove('on', 'switch-coach');
       setCoachScrim(false);
       clearTutorialSpotlight();
@@ -4192,6 +4233,10 @@
       else if (raw === '1d') {
         startTutorial({ step: 1, docPhase: true });
         enterTutorialDocTwinFinish('roland');
+      } else if (raw === '1e') {
+        startTutorial({ step: 1, docPhase: true });
+        enterTutorialDocTwinFinish('roland');
+        restoreTutorialDocCitta();
       }
       else startTutorial({ step });
     } else {
