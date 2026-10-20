@@ -4221,7 +4221,17 @@
 
       const addRem = e.target.closest('[data-action="add-reminder"]');
       if (addRem) {
-        showToastMsg('Add reminder (prototype)');
+        flashEl(addRem);
+        // Add reminder → open Citta with a starter prompt (same path as tutorial “tell Citta”).
+        setCittaExpanded(true);
+        setCittaDraft('Remind me to ');
+        const input = $('cittaInput');
+        if (input) {
+          input.focus();
+          const len = input.value.length;
+          try { input.setSelectionRange(len, len); } catch (_) { /* ignore */ }
+        }
+        showToastMsg('Tell Citta what to remind you about');
         return;
       }
 
