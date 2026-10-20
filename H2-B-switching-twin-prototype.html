@@ -242,13 +242,15 @@
     line-height: 1.2;
   }
   .tools .attach-hit:hover { color: var(--green-dark); }
-  /* + glyph sits high in Inter — nudge down to the text x-height midline. */
+  /* + glyph sits low vs Latin caps — nudge up to the Attach file midline. */
   .tools .attach-hit .attach-plus {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     font-size: 14px;
     font-weight: 500;
     line-height: 1;
-    transform: translateY(0.5px);
+    transform: translateY(-1px);
   }
   .rail .r, .rail .p { cursor: pointer; transition: background .12s; }
   .rail .r:hover:not(.on) { background: var(--surface); }
