@@ -3596,11 +3596,12 @@
         const down = a.bottom - (window.innerHeight - padBot);
         // Don’t scroll so far that the top tucks under the osbar.
         delta = Math.min(down, a.top - padTop);
-      } else if (coachOn && step.spot === 'composer') {
-        // Small nudge only if coach is mostly off-screen below — keep composer top fixed.
+      } else if (coachOn && (step.spot === 'composer' || step.spot === 'picker')) {
+        // Nudge only if coach is mostly off-screen — keep the lit target fixed under chrome.
         const b = coach.getBoundingClientRect();
-        if (b.top > window.innerHeight - 80) {
-          delta = Math.min(b.top - (window.innerHeight - 200), a.top - padTop);
+        if (b.bottom > window.innerHeight - padBot || b.top > window.innerHeight - 80) {
+          const need = Math.max(0, b.bottom - (window.innerHeight - padBot));
+          delta = Math.min(need, Math.max(0, a.top - padTop));
         }
       }
     } else {
@@ -3717,20 +3718,22 @@
         coach.style.left = `${Math.max(pad, t.left)}px`;
       }
     } else if (step.spot === 'picker') {
-      // Below the chat card — never cover the lit Citta pill (old top+80 sat on the ask row).
-      const c = frameRectOffset(composer);
+      // Sit just under WORKING WITH / the lit pill — same beat as before (not under the whole card).
       const p = frameRectOffset(picker);
-      const gap = 20;
-      coach.style.top = `${c.bottom + gap}px`;
+      const working = composer.querySelector('.working');
+      const anchor = working ? frameRectOffset(working) : p;
+      const gap = 16;
+      coach.style.top = `${anchor.bottom + gap}px`;
       coach.style.left = `${Math.max(pad, p.left)}px`;
-      coach.style.width = `${Math.min(400, Math.max(280, c.right - c.left - 24))}px`;
+      coach.style.width = `${Math.min(380, Math.max(280, frame.offsetWidth - pad * 2 - 40))}px`;
+      coach.dataset.anchorBottom = String(anchor.bottom + gap);
     }
 
-    // Keep the card inside the frame (bottom + right). Never pull step-1 coach back over chat.
+    // Keep the card inside the frame (bottom + right). Never pull step-1/3 coach back over the lit target.
     const fr = frame.getBoundingClientRect();
     const ch = coach.getBoundingClientRect();
     const s = fr.width / frame.offsetWidth || 1;
-    const minTop = step.spot === 'composer'
+    const minTop = (step.spot === 'composer' || step.spot === 'picker')
       ? (parseFloat(coach.dataset.anchorBottom) || 0)
       : 48;
     if (ch.bottom > fr.bottom - 8) {
@@ -3743,7 +3746,7 @@
       const curLeft = parseFloat(coach.style.left);
       if (Number.isFinite(curLeft)) coach.style.left = `${Math.max(pad, curLeft - overflowX)}px`;
     }
-    if (step.spot !== 'composer') delete coach.dataset.anchorBottom;
+    if (step.spot !== 'composer' && step.spot !== 'picker') delete coach.dataset.anchorBottom;
   }
 
   function syncTutorialNav() {
