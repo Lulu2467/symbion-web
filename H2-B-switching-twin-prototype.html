@@ -506,19 +506,86 @@
   .menu .browse { display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px; font-size: 13px; font-weight: 500; line-height: 1.4; color: var(--green); text-align: left; }
   .menu .browse .plus { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 14px; height: 14px; font-size: 14px; font-weight: 500; line-height: 1; transform: translateY(-0.5px); }
 
-  /* Discover */
+  /* Discover — left topics capped so .vr stays put; right cards take the rest. */
   .discover { display: flex; gap: 14px; align-items: center; padding: 10px 12px 10px 16px; border: 1px solid var(--line); border-radius: 14px; font-size: 12px; line-height: 1.35; flex-wrap: nowrap; min-width: 0; }
+  .discover-topics {
+    flex: 0 1 38%;
+    max-width: 440px;
+    min-width: 200px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
   .discover .k { font-size: 13px; font-weight: 500; color: var(--muted); white-space: nowrap; flex: none; }
+  .interest-scroll {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .interest-scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
   /* Stable chips: keep border-width + font-weight constant — only color/fill may change (no layout jump). */
   .interest { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: #fff; font-weight: 500; cursor: pointer; transition: background .12s, border-color .12s, color .12s; white-space: nowrap; flex: none; line-height: 1.35; box-sizing: border-box; }
   .interest:not(.on):hover { border-color: #cfd4cf; background: var(--surface); }
   .interest.on { background: var(--green-tint); border-color: var(--green); color: var(--green-dark); font-weight: 500; }
   /* Add-interest: fixed circle so “+” doesn’t collapse into a pill squish */
+  .interest-add-wrap { position: relative; flex: none; }
   .interest.add { width: 28px; height: 28px; padding: 0; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 500; line-height: 1; color: var(--muted); box-sizing: border-box; }
-  .interest.add:hover { border-color: var(--green); color: var(--green-dark); background: var(--green-wash); }
-  .vr { width: 1px; height: 28px; background: var(--line); }
-  /* Hug card width — no wide empty gutter / green scrollbar track before › */
-  .discover-scroll-wrap { position: relative; flex: 0 1 auto; min-width: 0; max-width: 100%; overflow: hidden; }
+  .interest.add:hover,
+  .interest.add[aria-expanded="true"] { border-color: var(--green); color: var(--green-dark); background: var(--green-wash); }
+  .interest-pop {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    left: auto;
+    z-index: 45;
+    min-width: 196px;
+    padding: 8px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 12px 28px rgba(28,31,29,.14);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .interest-pop[hidden] { display: none !important; }
+  .interest-pop-hd {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--faint);
+    padding: 4px 8px 6px;
+  }
+  .interest-pop button[data-add-topic] {
+    display: block;
+    width: 100%;
+    text-align: left;
+    border: 0;
+    background: transparent;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .interest-pop button[data-add-topic]:hover { background: var(--green-wash); color: var(--green-dark); }
+  .interest-pop button[data-add-topic].is-added {
+    color: var(--faint);
+    cursor: default;
+  }
+  .interest-pop button[data-add-topic].is-added:hover { background: transparent; color: var(--faint); }
+  .vr { width: 1px; height: 28px; background: var(--line); flex: none; }
+  /* Right side fills remaining width after fixed topics + divider. */
+  .discover-scroll-wrap { position: relative; flex: 1 1 auto; min-width: 0; max-width: none; overflow: hidden; }
   .discover-scroll-wrap::before,
   .discover-scroll-wrap::after { content: none; }
   /* Soft edge fades ? left when scrolled past start, right while more cards remain. */
@@ -2118,11 +2185,25 @@
             </section>
 
             <section class="discover">
-              <span class="k">Discover in</span>
-              <button type="button" class="interest on" aria-pressed="true">Physics &amp; Space</button>
-              <button type="button" class="interest" aria-pressed="false">AI &amp; Data</button>
-              <button type="button" class="interest" aria-pressed="false">Cosmology</button>
-              <button type="button" class="interest add" data-action="add-interest" aria-label="Add interest">+</button>
+              <div class="discover-topics">
+                <span class="k">Discover in</span>
+                <div class="interest-scroll">
+                <button type="button" class="interest on" aria-pressed="true">Physics &amp; Space</button>
+                <button type="button" class="interest" aria-pressed="false">AI &amp; Data</button>
+                <button type="button" class="interest" aria-pressed="false">Cosmology</button>
+                </div>
+                              <div class="interest-add-wrap">
+                                <button type="button" class="interest add" data-action="add-interest" aria-label="Add interest" aria-haspopup="menu" aria-expanded="false">+</button>
+                                <div class="interest-pop" hidden role="menu" aria-label="Add a topic">
+                                  <div class="interest-pop-hd">Add a topic</div>
+                                  <button type="button" role="menuitem" data-add-topic="Materials">Materials</button>
+                                  <button type="button" role="menuitem" data-add-topic="Climate">Climate</button>
+                                  <button type="button" role="menuitem" data-add-topic="Biophysics">Biophysics</button>
+                                  <button type="button" role="menuitem" data-add-topic="Quantum">Quantum</button>
+                                  <button type="button" role="menuitem" data-add-topic="Machine Learning">Machine Learning</button>
+                                </div>
+                              </div>
+              </div>
               <span class="vr"></span>
               <div class="discover-scroll-wrap">
               <div class="hscroll" id="discoverScroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
@@ -2195,11 +2276,25 @@
             <!-- Figma 122:2523 · Welcome back — Discover → Pick up → Coming up / Cosmos -->
             <div class="screen on" id="tail-welcome" data-tail="welcome">
               <section class="discover">
-                <span class="k">Discover in</span>
-                <button type="button" class="interest on" aria-pressed="true">Physics &amp; Space</button>
-                <button type="button" class="interest" aria-pressed="false">AI &amp; Data</button>
-                <button type="button" class="interest" aria-pressed="false">Cosmology</button>
-                <button type="button" class="interest add" data-action="add-interest" aria-label="Add interest">+</button>
+                <div class="discover-topics">
+                  <span class="k">Discover in</span>
+                  <div class="interest-scroll">
+                  <button type="button" class="interest on" aria-pressed="true">Physics &amp; Space</button>
+                  <button type="button" class="interest" aria-pressed="false">AI &amp; Data</button>
+                  <button type="button" class="interest" aria-pressed="false">Cosmology</button>
+                  </div>
+                                <div class="interest-add-wrap">
+                                  <button type="button" class="interest add" data-action="add-interest" aria-label="Add interest" aria-haspopup="menu" aria-expanded="false">+</button>
+                                  <div class="interest-pop" hidden role="menu" aria-label="Add a topic">
+                                    <div class="interest-pop-hd">Add a topic</div>
+                                    <button type="button" role="menuitem" data-add-topic="Materials">Materials</button>
+                                    <button type="button" role="menuitem" data-add-topic="Climate">Climate</button>
+                                    <button type="button" role="menuitem" data-add-topic="Biophysics">Biophysics</button>
+                                    <button type="button" role="menuitem" data-add-topic="Quantum">Quantum</button>
+                                    <button type="button" role="menuitem" data-add-topic="Machine Learning">Machine Learning</button>
+                                  </div>
+                                </div>
+                </div>
                 <span class="vr"></span>
                 <div class="discover-scroll-wrap">
                 <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
@@ -2270,11 +2365,25 @@
               </section>
 
               <section class="discover">
-                <span class="k">Discover in</span>
-                <button type="button" class="interest on" aria-pressed="true">Physics &amp; Space</button>
-                <button type="button" class="interest" aria-pressed="false">AI &amp; Data</button>
-                <button type="button" class="interest" aria-pressed="false">Cosmology</button>
-                <button type="button" class="interest add" data-action="add-interest" aria-label="Add interest">+</button>
+                <div class="discover-topics">
+                  <span class="k">Discover in</span>
+                  <div class="interest-scroll">
+                  <button type="button" class="interest on" aria-pressed="true">Physics &amp; Space</button>
+                  <button type="button" class="interest" aria-pressed="false">AI &amp; Data</button>
+                  <button type="button" class="interest" aria-pressed="false">Cosmology</button>
+                  </div>
+                                <div class="interest-add-wrap">
+                                  <button type="button" class="interest add" data-action="add-interest" aria-label="Add interest" aria-haspopup="menu" aria-expanded="false">+</button>
+                                  <div class="interest-pop" hidden role="menu" aria-label="Add a topic">
+                                    <div class="interest-pop-hd">Add a topic</div>
+                                    <button type="button" role="menuitem" data-add-topic="Materials">Materials</button>
+                                    <button type="button" role="menuitem" data-add-topic="Climate">Climate</button>
+                                    <button type="button" role="menuitem" data-add-topic="Biophysics">Biophysics</button>
+                                    <button type="button" role="menuitem" data-add-topic="Quantum">Quantum</button>
+                                    <button type="button" role="menuitem" data-add-topic="Machine Learning">Machine Learning</button>
+                                  </div>
+                                </div>
+                </div>
                 <span class="vr"></span>
                 <div class="discover-scroll-wrap">
                 <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="People to discover — scroll horizontally">
@@ -2335,9 +2444,13 @@
 
             <div class="screen" id="tail-tutorial" data-tail="tutorial">
               <section class="discover">
-                <span class="k">More in</span>
-                <button type="button" class="interest on" aria-pressed="true">Heavy-ion physics</button>
-                <button type="button" class="interest" aria-pressed="false">Physics &amp; Space</button>
+                <div class="discover-topics">
+                  <span class="k">More in</span>
+                  <div class="interest-scroll">
+                  <button type="button" class="interest on" aria-pressed="true">Heavy-ion physics</button>
+                  <button type="button" class="interest" aria-pressed="false">Physics &amp; Space</button>
+                  </div>
+                </div>
                 <span class="vr"></span>
                 <div class="discover-scroll-wrap">
                 <div class="hscroll discover-scroll" tabindex="0" role="region" aria-label="More in Cosmos — scroll horizontally">
@@ -4247,40 +4360,76 @@
         return;
       }
 
-      const addInterest = e.target.closest('[data-action="add-interest"], .discover .interest.add');
-      if (addInterest) {
+      const pickTopic = e.target.closest('.interest-pop [data-add-topic]');
+      if (pickTopic) {
         e.preventDefault();
         e.stopPropagation();
-        flashEl(addInterest);
-        const discover = addInterest.closest('.discover');
-        const extras = ['Materials', 'Climate', 'Biophysics', 'Quantum'];
-        const existing = new Set(
-          [...(discover?.querySelectorAll('.interest:not(.add)') || [])].map((b) => b.textContent.trim())
-        );
-        const topic = extras.find((t) => !existing.has(t));
-        if (!discover || !topic) {
-          showToastMsg('All sample topics added — browse for more');
-          return;
-        }
+        if (pickTopic.classList.contains('is-added')) return;
+        const wrap = pickTopic.closest('.interest-add-wrap');
+        const discover = pickTopic.closest('.discover');
+        const scroll = discover?.querySelector('.interest-scroll');
+        const addBtn = wrap?.querySelector('.interest.add');
+        const pop = wrap?.querySelector('.interest-pop');
+        const topic = pickTopic.dataset.addTopic;
+        if (!scroll || !topic) return;
         const chip = document.createElement('button');
         chip.type = 'button';
         chip.className = 'interest';
         chip.setAttribute('aria-pressed', 'false');
         chip.textContent = topic;
-        addInterest.before(chip);
-        discover.querySelectorAll('.interest:not(.add)').forEach((b) => {
+        scroll.appendChild(chip);
+        discover.querySelectorAll('.interest-scroll .interest').forEach((b) => {
           const on = b === chip;
           b.classList.toggle('on', on);
           b.setAttribute('aria-pressed', String(on));
         });
+        pickTopic.classList.add('is-added');
+        pickTopic.setAttribute('aria-disabled', 'true');
+        if (pop) pop.hidden = true;
+        if (addBtn) addBtn.setAttribute('aria-expanded', 'false');
+        chip.scrollIntoView({ inline: 'nearest', block: 'nearest', behavior: 'smooth' });
         showToastMsg(`Added interest · ${topic}`);
         return;
       }
 
-      const interestChip = e.target.closest('.discover .interest:not(.add)');
+      const addInterest = e.target.closest('[data-action="add-interest"], .discover .interest.add');
+      if (addInterest) {
+        e.preventDefault();
+        e.stopPropagation();
+        const wrap = addInterest.closest('.interest-add-wrap');
+        const pop = wrap?.querySelector('.interest-pop');
+        if (!pop) return;
+        const open = pop.hidden;
+        // Close any other open interest pops first.
+        frame.querySelectorAll('.interest-pop').forEach((p) => { p.hidden = true; });
+        frame.querySelectorAll('.interest.add').forEach((b) => b.setAttribute('aria-expanded', 'false'));
+        if (open) {
+          const discover = addInterest.closest('.discover');
+          const existing = new Set(
+            [...(discover?.querySelectorAll('.interest-scroll .interest') || [])].map((b) => b.textContent.trim())
+          );
+          pop.querySelectorAll('[data-add-topic]').forEach((opt) => {
+            const taken = existing.has(opt.dataset.addTopic);
+            opt.classList.toggle('is-added', taken);
+            opt.setAttribute('aria-disabled', String(taken));
+          });
+          pop.hidden = false;
+          addInterest.setAttribute('aria-expanded', 'true');
+          flashEl(addInterest);
+        }
+        return;
+      }
+
+      // Click outside closes interest pop.
+      if (!e.target.closest('.interest-add-wrap')) {
+        frame.querySelectorAll('.interest-pop').forEach((p) => { p.hidden = true; });
+        frame.querySelectorAll('.interest.add').forEach((b) => b.setAttribute('aria-expanded', 'false'));
+      }
+
+      const interestChip = e.target.closest('.discover .interest-scroll .interest');
       if (interestChip) {
         const discover = interestChip.closest('.discover');
-        discover?.querySelectorAll('.interest:not(.add)').forEach((b) => {
+        discover?.querySelectorAll('.interest-scroll .interest').forEach((b) => {
           const on = b === interestChip;
           b.classList.toggle('on', on);
           b.setAttribute('aria-pressed', String(on));
