@@ -2851,7 +2851,6 @@
       title: 'Try each tool with Citta',
       body: '1 minute each — each card uses Prof. Roland’s course material and opens the right workspace.',
       spot: 'try',
-      coachCenter: true,
       primary: 'Next',
       secondary: 'Back',
     },
@@ -2859,7 +2858,6 @@
       title: 'Twins & AI agents live here',
       body: 'WORKING WITH is where you swap in Prof. Roland’s twin or an AI agent mid-task. Your file stays open — switch back to Citta anytime.',
       spot: 'picker',
-      coachCenter: true,
       primary: 'Next',
       secondary: 'Back',
     },
@@ -3291,8 +3289,8 @@
   /** Don’t let the lit card tuck under the osbar — that leaves a clipped START WITH strip at the top. */
   function clampTutorialSpotBelowChrome() {
     if (screen !== 'tutorial' || tutorialExploring || tutorialDocPhase) return;
+    if (coach.classList.contains('centered')) return;
     const step = TUTORIAL_STEPS[tutorialStep - 1];
-    // Final centered modal has no spot; coachCenter steps still need the lit block clamped.
     if (!step?.spot) return;
     const el = getTutorialSpotTarget(step.spot);
     if (!el) return;
@@ -3686,14 +3684,12 @@
     return document.scrollingElement || document.documentElement;
   }
 
-  /** After a step change, bring the lit block into view; coachCenter steps keep the spot in the upper half. */
+  /** After a step change, scroll so the lit block + under-coach sit near the middle of the screen. */
   function scrollTutorialFocusIntoView({ smooth = true } = {}) {
     if (screen !== 'tutorial' || tutorialExploring) return;
+    if (coach.classList.contains('centered')) return; // viewport-fixed modal — already centered
 
     const step = TUTORIAL_STEPS[tutorialStep - 1] || {};
-    // Final centered modal has no spot — nothing to scroll.
-    if (coach.classList.contains('centered') && !step.spot) return;
-
     let spotEl = null;
     if (tutorialDocPhase) {
       spotEl = $('tutorialDocSwitch') || tutorialDocView;
@@ -3711,40 +3707,40 @@
     const behavior = smooth ? 'smooth' : 'auto';
     const padTop = tutorialChromeBottom();
     const padBot = 28;
+    const viewH = window.innerHeight;
 
     let delta = 0;
     if (spotEl) {
       const a = spotEl.getBoundingClientRect();
+      const spotCoach = coachOn && (step.spot === 'composer' || step.spot === 'try' || step.spot === 'picker');
 
-      if (step.coachCenter) {
-        // Coach is viewport-centered — park the lit block in the upper third so both read clearly.
-        const idealTop = padTop + (step.spot === 'try' ? 12 : 28);
-        if (Math.abs(a.top - idealTop) > 8) delta = a.top - idealTop;
-      } else {
-        const spotCoach = coachOn && (step.spot === 'composer' || step.spot === 'try' || step.spot === 'picker');
-        if (spotCoach) {
-          const b = coach.getBoundingClientRect();
-          if (b.bottom > window.innerHeight - padBot || b.top > window.innerHeight - 96) {
-            delta = Math.max(0, b.bottom - (window.innerHeight - padBot));
-            const minSpot = step.spot === 'try' ? Math.min(200, a.height * 0.45) : Math.min(120, a.height * 0.5);
-            const maxDown = Math.max(0, a.bottom - padTop - minSpot);
-            if (maxDown > 0) delta = Math.min(delta, maxDown);
-          } else if (a.top < padTop - 4 && step.spot !== 'try') {
-            delta = a.top - padTop;
-          } else if (step.spot === 'try' && a.top > padTop + 48 && b.bottom <= window.innerHeight - padBot) {
-            delta = a.top - padTop;
-          }
-        } else if (a.top < padTop) {
-          delta = a.top - padTop;
-        } else if (a.bottom > window.innerHeight - padBot) {
-          const down = a.bottom - (window.innerHeight - padBot);
-          delta = Math.min(down, Math.max(0, a.top - padTop));
+      if (spotCoach) {
+        const b = coach.getBoundingClientRect();
+        // Aim the mid-point of (spot top → coach bottom) at ~42% of the viewport.
+        const bundleTop = Math.min(a.top, b.top);
+        const bundleBot = Math.max(a.bottom, b.bottom);
+        const bundleMid = (bundleTop + bundleBot) / 2;
+        const ideal = viewH * 0.42;
+        delta = bundleMid - ideal;
+
+        // Don’t tuck the spot under the osbar.
+        if (a.top - delta < padTop) delta = a.top - padTop;
+        // Don’t leave the coach clipped below the fold if we can avoid it.
+        if (b.bottom - delta > viewH - padBot) {
+          const need = b.bottom - (viewH - padBot);
+          delta = Math.max(delta, need);
+          if (a.top - delta < padTop - 4) delta = a.top - padTop;
         }
+      } else if (a.top < padTop) {
+        delta = a.top - padTop;
+      } else if (a.bottom > viewH - padBot) {
+        const down = a.bottom - (viewH - padBot);
+        delta = Math.min(down, Math.max(0, a.top - padTop));
       }
     } else {
       const b = coach.getBoundingClientRect();
       const mid = (b.top + b.bottom) / 2;
-      delta = mid - window.innerHeight * 0.42;
+      delta = mid - viewH * 0.42;
     }
     if (Math.abs(delta) < 8) return;
 
@@ -3801,10 +3797,8 @@
     const step = TUTORIAL_STEPS[tutorialStep - 1] || {};
     const pad = pageGutterPx();
     const isSwitch = tutorialDocPhase === 'doc' || tutorialDocPhase === 'switch-open' || coach.classList.contains('switch-coach');
-    // Final step: viewport-centered modal + gray scrim (clears spotlight).
+    // Final step: viewport-centered modal + gray scrim (same as NEW tip — not mid-page of the tall frame).
     const centerModal = !isSwitch && (!!step.center || !step.spot);
-    // Steps 2–3: coach floats in screen center; spotlight stays on try / picker.
-    const coachCenter = !isSwitch && !!step.coachCenter && !!step.spot;
 
     coach.style.bottom = 'auto';
     coach.style.top = '';
@@ -3818,13 +3812,6 @@
       coach.classList.add('centered');
       clearTutorialSpotlight();
       setCoachScrim(true);
-      return;
-    }
-
-    if (coachCenter) {
-      mountCoachForViewport(true);
-      coach.classList.add('centered');
-      setCoachScrim(false);
       return;
     }
 
@@ -4867,7 +4854,8 @@
   else setScreen('welcome');
   fit();
   bindCittaScrollFade();
-  document.fonts && document.fonts.ready.then(fit);
+  bindCosmosScrollFade();
+  document.fonts && document.fonts.ready.then(() => { fit(); syncCosmosScrollFade(); });
 </script>
 </body>
 </html>
