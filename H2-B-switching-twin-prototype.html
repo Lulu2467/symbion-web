@@ -724,7 +724,19 @@
   .pick-card { display: flex; gap: 16px; align-items: center; padding: 12px 0; border-bottom: 0; line-height: 1.4; background: transparent; border-radius: 0; }
   .pick-card:last-child { padding-bottom: 0; }
   .pick-card:first-of-type { padding-top: 10px; }
-  .pick-card .tag { font-size: 13px; font-weight: 500; color: #9a5b07; flex: none; width: 80px; }
+  /* Plain status labels on peach — no green pill from the global .tag chip. */
+  .pick-card .tag {
+    font-size: 13px;
+    font-weight: 500;
+    color: #9a5b07;
+    flex: none;
+    width: 80px;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    gap: 0;
+  }
   .pick-card .tag.today { color: var(--muted); }
   .pick-card .col { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
   .pick-card .t { font-size: 15px; font-weight: 400; color: var(--ink); }
