@@ -248,7 +248,12 @@
   .dcard { cursor: pointer; transition: border-color .12s, box-shadow .12s; }
   .dcard:hover { border-color: rgba(0,139,104,.35); box-shadow: 0 2px 8px rgba(28,31,29,.05); }
   .addsi { cursor: pointer; }
-  .addsi:hover { background: #e8efea; border-color: #b7c9bf; color: #5f8572; }
+  /* Hover → prior brand green (tint + dark), idle stays pale low-sat. */
+  .addsi:hover {
+    background: var(--green-tint);
+    border-color: var(--green);
+    color: var(--green-dark);
+  }
   .round { cursor: pointer; }
   .round:hover { background: var(--green-tint); border-color: var(--green); color: var(--green-dark); }
   .tpl { cursor: pointer; transition: border-color .12s, box-shadow .12s, transform .12s; }
