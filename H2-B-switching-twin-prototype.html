@@ -4388,7 +4388,6 @@
         if (pop) pop.hidden = true;
         if (addBtn) addBtn.setAttribute('aria-expanded', 'false');
         chip.scrollIntoView({ inline: 'nearest', block: 'nearest', behavior: 'smooth' });
-        showToastMsg(`Added interest · ${topic}`);
         return;
       }
 
@@ -4434,7 +4433,7 @@
           b.classList.toggle('on', on);
           b.setAttribute('aria-pressed', String(on));
         });
-        showToastMsg(`Discover · ${interestChip.textContent.trim()}`);
+        // Selection is enough — don't fire the frame toast (it reads as a random black bar).
         return;
       }
 
