@@ -115,7 +115,7 @@
   /* Match open nav icon inset (row pad 10px) so avatars don’t slide sideways on expand. */
   .rail.is-open .p { align-self: flex-start; margin-left: 10px; }
 
-  .main { flex: 1; min-width: 0; }
+  .main { flex: 1; min-width: 0; position: relative; }
   .logo-row { display: flex; align-items: center; padding: 26px var(--page-gutter); gap: 12px; }
   .logo { flex: none; display: inline-flex; align-items: center; gap: 12px; font-size: 18px; font-weight: 500; line-height: 1; color: var(--ink); }
   /* Figma symbion · 76:22 Union mark (spark + ribbon) */
@@ -3051,12 +3051,26 @@
     else if (isPicker) radius = '999px';
     else if (isTrySpot) radius = '16px';
     tutorialSpotlight.style.borderRadius = radius;
-    tutorialSpotlight.style.top = `${Math.max(0, t.top - insetTop)}px`;
-    tutorialSpotlight.style.left = `${Math.max(0, t.left - insetX)}px`;
+    // Allow negative top/left so the hole tracks the target when .main scrolls
+    // (clamping to 0 pinned the cutout to the frame edge and looked like it “ran”).
+    tutorialSpotlight.style.top = `${t.top - insetTop}px`;
+    tutorialSpotlight.style.left = `${t.left - insetX}px`;
     tutorialSpotlight.style.width = `${t.right - t.left + insetX * 2}px`;
     tutorialSpotlight.style.height = `${t.bottom - t.top + insetTop + insetBottom}px`;
     tutorialSpotlight.classList.add('on');
     tutorialSpotlight.setAttribute('aria-hidden', 'false');
+  }
+
+  function syncTutorialChromeOnScroll() {
+    if (screen !== 'tutorial' || tutorialExploring) return;
+    if (coach.classList.contains('on') && !coach.classList.contains('centered')) positionCoach();
+    const stepCfg = TUTORIAL_STEPS[tutorialStep - 1];
+    if (stepCfg?.spot && !tutorialDocPhase) {
+      positionTutorialSpotlight(
+        getTutorialSpotTarget(stepCfg.spot),
+        stepCfg.spot === 'composer' ? 6 : (stepCfg.spot === 'picker' ? 4 : 10)
+      );
+    }
   }
 
   function getTrySpotElement() {
@@ -3459,10 +3473,17 @@
 
   /** Final-step coach uses viewport-fixed placement; must leave .scaler or fixed is trapped. */
   function mountCoachForViewport(center) {
-    const host = center ? ($('fsRoot') || document.body) : frame;
     const scrim = $('coachScrim');
-    if (scrim && scrim.parentElement !== host) host.appendChild(scrim);
-    if (coach.parentElement !== host) host.appendChild(coach);
+    if (center) {
+      const host = $('fsRoot') || document.body;
+      if (scrim && scrim.parentElement !== host) host.appendChild(scrim);
+      if (coach.parentElement !== host) host.appendChild(coach);
+      return;
+    }
+    // Spot steps: coach stays on .frame (same containing block as the spotlight) so
+    // frameRectOffset + scroll sync keep card + cutout glued when .main scrolls.
+    if (scrim && scrim.parentElement !== frame) frame.appendChild(scrim);
+    if (coach.parentElement !== frame) frame.appendChild(coach);
   }
 
   function positionCoach() {
@@ -4322,19 +4343,10 @@
     }
   }
 
-  // Keep tutorial chrome aligned while scrolling the center column in fullscreen.
+  // Spotlight + coach are absolute on .frame; .main (FS) or the window can scroll underneath — re-glue every scroll.
   const mainScrollEl = frame.querySelector('.main');
-  mainScrollEl?.addEventListener('scroll', () => {
-    if (!(document.fullscreenElement || document.webkitFullscreenElement)) return;
-    if (coach.classList.contains('on') && !tutorialExploring) positionCoach();
-    const stepCfg = TUTORIAL_STEPS[tutorialStep - 1];
-    if (screen === 'tutorial' && !tutorialExploring && stepCfg?.spot && !tutorialDocPhase) {
-      positionTutorialSpotlight(
-        getTutorialSpotTarget(stepCfg.spot),
-        stepCfg.spot === 'composer' ? 6 : (stepCfg.spot === 'picker' ? 4 : 10)
-      );
-    }
-  }, { passive: true });
+  mainScrollEl?.addEventListener('scroll', syncTutorialChromeOnScroll, { passive: true });
+  window.addEventListener('scroll', syncTutorialChromeOnScroll, { passive: true, capture: true });
   window.addEventListener('resize', fit);
   // Keep stage scroll range in sync when tails/fonts/images change frame height.
   if (typeof ResizeObserver !== 'undefined') {
