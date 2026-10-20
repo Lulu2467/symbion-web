@@ -3413,6 +3413,11 @@
   function finishTutorialDocToTryTools() {
     exitTutorialDoc();
     setScreen('tutorial', { step: 2 });
+    // Doc → home layout swap needs an extra measure so step-2 try block + coach scroll into view.
+    requestAnimationFrame(() => {
+      positionCoach();
+      afterTutorialChrome(() => scrollTutorialFocusIntoView({ smooth: true }));
+    });
   }
 
   function renderDocSwitchCoach() {
@@ -3608,8 +3613,8 @@
         const down = a.bottom - (window.innerHeight - padBot);
         // Don’t scroll so far that the top tucks under the osbar.
         delta = Math.min(down, a.top - padTop);
-      } else if (coachOn && (step.spot === 'composer' || step.spot === 'picker')) {
-        // Nudge only if coach is mostly off-screen — keep the lit target fixed under chrome.
+      } else if (coachOn && (step.spot === 'composer' || step.spot === 'try' || step.spot === 'picker')) {
+        // Nudge so the coach under the lit block is on-screen — keep the spot top under chrome.
         const b = coach.getBoundingClientRect();
         if (b.bottom > window.innerHeight - padBot || b.top > window.innerHeight - 80) {
           const need = Math.max(0, b.bottom - (window.innerHeight - padBot));
@@ -3726,8 +3731,12 @@
       const el = getTrySpotElement();
       if (el) {
         const t = frameRectOffset(el);
-        coach.style.top = `${Math.min(t.bottom + 16, frame.offsetHeight - 220)}px`;
+        const gap = 16;
+        // Always under the lit try block — never let the overflow clamp drag this up over the cards.
+        coach.style.top = `${t.bottom + gap}px`;
         coach.style.left = `${Math.max(pad, t.left)}px`;
+        coach.style.width = `${Math.min(400, Math.max(280, t.right - t.left))}px`;
+        coach.dataset.anchorBottom = String(t.bottom + gap);
       }
     } else if (step.spot === 'picker') {
       // Sit just under WORKING WITH / the lit pill — same beat as before (not under the whole card).
@@ -3741,24 +3750,31 @@
       coach.dataset.anchorBottom = String(anchor.bottom + gap);
     }
 
-    // Keep the card inside the frame (bottom + right). Never pull step-1/3 coach back over the lit target.
+    // Keep the card on-screen (viewport ∪ frame). Never pull a spot-step coach over its lit target.
     const fr = frame.getBoundingClientRect();
     const ch = coach.getBoundingClientRect();
     const s = fr.width / frame.offsetWidth || 1;
-    const minTop = (step.spot === 'composer' || step.spot === 'picker')
+    const minTop = (step.spot === 'composer' || step.spot === 'try' || step.spot === 'picker')
       ? (parseFloat(coach.dataset.anchorBottom) || 0)
       : 48;
-    if (ch.bottom > fr.bottom - 8) {
-      const overflow = (ch.bottom - fr.bottom + 24) / s;
+    const clipBottom = Math.min(fr.bottom, window.innerHeight) - 8;
+    if (ch.bottom > clipBottom && minTop > 0) {
+      // Prefer scrolling into view over yanking the card onto the spotlight.
+      // Only nudge up if we still stay below the lit target.
+      const overflow = (ch.bottom - clipBottom + 16) / s;
       const curTop = parseFloat(coach.style.top);
-      if (Number.isFinite(curTop)) coach.style.top = `${Math.max(minTop, curTop - overflow)}px`;
+      if (Number.isFinite(curTop) && curTop - overflow >= minTop) {
+        coach.style.top = `${curTop - overflow}px`;
+      }
     }
     if (ch.right > fr.right - 8) {
       const overflowX = (ch.right - fr.right + 16) / s;
       const curLeft = parseFloat(coach.style.left);
       if (Number.isFinite(curLeft)) coach.style.left = `${Math.max(pad, curLeft - overflowX)}px`;
     }
-    if (step.spot !== 'composer' && step.spot !== 'picker') delete coach.dataset.anchorBottom;
+    if (step.spot !== 'composer' && step.spot !== 'try' && step.spot !== 'picker') {
+      delete coach.dataset.anchorBottom;
+    }
   }
 
   function syncTutorialNav() {
