@@ -546,36 +546,19 @@
     line-height: 0;
   }
 
-  /* Reminders + Cosmos: titles on one baseline; left height drives row; right card fills + scrolls. */
+  /* Reminders + Cosmos: titles share one baseline; Cosmos shows 3 people, even inset. */
   .two { display: block; }
   .two-grid {
     display: grid;
     grid-template-columns: 1fr 440px;
     column-gap: 32px;
-    align-items: stretch;
+    align-items: start;
   }
   .two-col {
     min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 8px;
-  }
-  /* Left content sets the row height. */
-  .two-col:first-child { min-height: 0; }
-  /*
-    Right: height:0 + min-height:100% fills the grid cell sized by the left column,
-    without letting Cosmos items inflate the row — overflow scrolls inside the card.
-  */
-  .two-col:last-child {
-    height: 0;
-    min-height: 100%;
-    align-self: stretch;
-    overflow: hidden;
-  }
-  /* Welcome compact Cosmos: short card, don’t force-fill. */
-  .two-col:last-child:has(.cosmos-compact) {
-    height: auto;
-    min-height: 0;
   }
   .two-title-l,
   .two-title-r {
@@ -598,50 +581,27 @@
   .two-title-r h3 { flex: 1; min-width: 0; }
   .two-title-r .new-badge { font-size: 13px; color: var(--green); font-weight: 600; flex: none; line-height: 1.2; white-space: nowrap; }
   .two-main-l { min-width: 0; display: flex; flex-direction: column; gap: 0; flex: none; }
-  .two-main-r { flex: 1 1 0; min-height: 0; width: 100%; align-self: stretch; }
-  /* Cosmos feed: card chrome on the wrap; list scrolls inside; soft edge fades like Citta. */
+  .two-main-r { width: 100%; flex: none; }
+  /* Three people only — equal inset on all sides (match left pad). */
   .cosmos-scroll-wrap {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
+    display: block;
+    width: 100%;
     border: 1px solid var(--line);
     border-radius: 16px;
     background: #fff;
-    overflow: hidden;
+    overflow: visible;
     box-sizing: border-box;
   }
   .cosmos-scroll-wrap > .activity {
     border: 0;
     border-radius: 0;
     background: transparent;
-    /* Extra bottom pad so the last item clears the fade and isn’t clipped when scrolled to end. */
-    padding: 14px 16px 36px 20px;
+    padding: 20px;
+    overflow: visible;
+    flex: none;
+    min-height: 0;
     scrollbar-gutter: auto;
   }
-  .cosmos-scroll-wrap::before,
-  .cosmos-scroll-wrap::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 36px;
-    pointer-events: none;
-    z-index: 2;
-    opacity: 0;
-    transition: opacity .18s ease;
-  }
-  .cosmos-scroll-wrap::before {
-    top: 0;
-    background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,.8) 40%, rgba(255,255,255,0) 100%);
-  }
-  .cosmos-scroll-wrap::after {
-    bottom: 0;
-    height: 48px;
-    background: linear-gradient(0deg, #fff 0%, rgba(255,255,255,.85) 42%, rgba(255,255,255,0) 100%);
-  }
-  .cosmos-scroll-wrap.show-top-fade::before { opacity: 1; }
-  .cosmos-scroll-wrap.show-bot-fade::after { opacity: 1; }
   .reminders { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
   .sec { display: flex; gap: 10px; align-items: center; line-height: 1.4; }
   .sec h3 { margin: 0; font-size: 20px; font-weight: 500; }
@@ -682,21 +642,14 @@
   .btn-soft:active { transform: scale(.98); }
   .activity {
     width: 100%;
-    flex: 1 1 0;
-    min-height: 0;
     border: 1px solid var(--line);
     border-radius: 16px;
-    padding: 14px 20px 20px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 16px;
-    align-self: stretch;
     box-sizing: border-box;
-    overflow-x: hidden;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    scrollbar-gutter: stable;
-    scrollbar-width: thin;
+    overflow: visible;
   }
   .activity::-webkit-scrollbar { width: 8px; }
   .activity::-webkit-scrollbar-thumb { background: rgba(28,31,29,.16); border-radius: 999px; }
@@ -2014,12 +1967,10 @@
                 <div class="two-col">
                   <div class="two-title-r"><h3>From your Cosmos</h3><span class="new-badge">5 new</span></div>
                   <div class="cosmos-scroll-wrap two-main-r">
-                  <aside class="activity" data-cosmos-scroll>
+                  <aside class="activity">
                     <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland’s twin posted lecture 5 slides</div><small>Heavy-ion Physics · 1h ago</small><button type="button" class="act-link">Turn into study notes<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                     <div class="act-item"><span class="aav">王</span><div><div class="t">骆王宇 is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                     <div class="act-item"><span class="aav">EP</span><div><div class="t">2 replies to your #cosmology thread</div><small>Prof. Pajer’s twin + @maya_k</small><button type="button" class="act-link">Open thread<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
-                    <div class="act-item"><span class="aav">HX</span><div><div class="t">Prof. Xu’s twin: new insight on pricing data</div><small>AI &amp; decisions · today</small><button type="button" class="act-link">View insight<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
-                    <div class="act-item"><span class="aav">AR</span><div><div class="t">Anastasia’s twin shared a climate-math notebook</div><small>Physics &amp; Space · 3h ago</small><button type="button" class="act-link">Open in Code<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                   </aside>
                   </div>
                 </div>
@@ -2158,12 +2109,10 @@
                   <div class="two-col">
                     <div class="two-title-r"><h3>From your Cosmos</h3><span class="new-badge">5 new</span></div>
                     <div class="cosmos-scroll-wrap two-main-r">
-                    <aside class="activity" data-cosmos-scroll>
+                    <aside class="activity">
                       <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland’s twin posted lecture 5 slides</div><small>Heavy-ion Physics · 1h ago</small><button type="button" class="act-link">Turn into study notes<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                       <div class="act-item"><span class="aav">王</span><div><div class="t">骆王宇 is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                       <div class="act-item"><span class="aav">EP</span><div><div class="t">2 replies to your #cosmology thread</div><small>Prof. Pajer’s twin + @maya_k</small><button type="button" class="act-link">Open thread<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
-                      <div class="act-item"><span class="aav">HX</span><div><div class="t">Prof. Xu’s twin: new insight on pricing data</div><small>AI &amp; decisions · today</small><button type="button" class="act-link">View insight<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
-                      <div class="act-item"><span class="aav">AR</span><div><div class="t">Anastasia’s twin shared a climate-math notebook</div><small>Physics &amp; Space · 3h ago</small><button type="button" class="act-link">Open in Code<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                     </aside>
                     </div>
                   </div>
@@ -4459,29 +4408,6 @@
     syncCittaScrollFade();
   }
 
-  function syncCosmosScrollFade() {
-    document.querySelectorAll('[data-cosmos-scroll]').forEach((scroll) => {
-      const wrap = scroll.closest('.cosmos-scroll-wrap');
-      if (!wrap) return;
-      const max = Math.max(0, scroll.scrollHeight - scroll.clientHeight);
-      const canScroll = max > 4;
-      const top = scroll.scrollTop;
-      wrap.classList.toggle('show-top-fade', canScroll && top > 6);
-      // Hide bottom fade at end so the last item isn’t veiled — padding clears the edge.
-      wrap.classList.toggle('show-bot-fade', canScroll && top < max - 8);
-    });
-  }
-
-  function bindCosmosScrollFade() {
-    document.querySelectorAll('[data-cosmos-scroll]').forEach((scroll) => {
-      if (scroll.dataset.fadeBound) return;
-      scroll.dataset.fadeBound = '1';
-      scroll.addEventListener('scroll', syncCosmosScrollFade, { passive: true });
-    });
-    window.addEventListener('resize', syncCosmosScrollFade, { passive: true });
-    requestAnimationFrame(syncCosmosScrollFade);
-  }
-
   function setCittaExpanded(open) {
     cittaExpanded = open;
     frame.classList.toggle('citta-open', open);
@@ -4637,7 +4563,6 @@
     positionNewTip();
     if (menu.classList.contains('open')) positionSwitcherMenu();
     if (coach.classList.contains('on') && !tutorialExploring) positionCoach();
-    syncCosmosScrollFade();
     const stepCfg = TUTORIAL_STEPS[tutorialStep - 1];
     if (screen === 'tutorial' && !tutorialExploring && stepCfg?.spot && !tutorialDocPhase) {
       positionTutorialSpotlight(
@@ -4824,8 +4749,7 @@
   else setScreen('welcome');
   fit();
   bindCittaScrollFade();
-  bindCosmosScrollFade();
-  document.fonts && document.fonts.ready.then(() => { fit(); syncCosmosScrollFade(); });
+  document.fonts && document.fonts.ready.then(fit);
 </script>
 </body>
 </html>
