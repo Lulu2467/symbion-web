@@ -296,6 +296,8 @@
     font-weight: 400;
     line-height: 0;
     background: transparent;
+    /* Keep 36px hit, but pin the + glyph to the left so it shares one edge with the placeholder (Kimi). */
+    justify-content: flex-start;
     transition: background .12s, color .12s;
   }
   .composer .ask-bar .plus:hover { background: var(--surface); color: var(--ink); }
