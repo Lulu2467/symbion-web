@@ -3032,14 +3032,9 @@
 
     menu.querySelectorAll('.item').forEach((i) => i.setAttribute('aria-checked', String(i.dataset.ai === key)));
 
+    // No black “Now working with …” toast when switching twins — picker state is enough.
     clearTimeout(toastTimer);
-    if (!isCitta && announce) {
-      $('toastText').textContent = ai.toast;
-      toast.classList.add('show');
-      toastTimer = setTimeout(() => toast.classList.remove('show'), 6000);
-    } else if (isCitta) {
-      toast.classList.remove('show');
-    }
+    toast.classList.remove('show');
   }
 
   function pageGutterPx() {
