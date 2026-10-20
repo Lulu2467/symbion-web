@@ -86,9 +86,10 @@
   .av-s { width: 16px; height: 16px; border-radius: 8px; background: var(--surface); border: 1px solid var(--line); display: inline-flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 600; line-height: 1; color: var(--muted); flex: none; }
 
   .body { display: flex; position: relative; }
-  .rail { width: 52px; border-right: 1px solid var(--line); padding: 18px 8px; display: flex; flex-direction: column; align-items: center; gap: 8px; flex: none; position: relative; z-index: 30; background: #fbfcfb; transition: width .18s ease; }
-  .rail.is-open { width: 168px; align-items: stretch; padding: 14px 10px 18px; }
-  .rail .rail-top { display: flex; width: 100%; justify-content: center; flex: none; }
+  /* Same vertical padding/gap open or closed — only width + horizontal inset change, so expand doesn’t jump. */
+  .rail { width: 52px; border-right: 1px solid var(--line); padding: 16px 8px 18px; display: flex; flex-direction: column; align-items: center; gap: 8px; flex: none; position: relative; z-index: 30; background: #fbfcfb; transition: width .18s ease, padding .18s ease; }
+  .rail.is-open { width: 168px; align-items: stretch; padding: 16px 10px 18px; }
+  .rail .rail-top { display: flex; width: 100%; height: 36px; align-items: center; justify-content: center; flex: none; }
   .rail.is-open .rail-top { justify-content: flex-end; }
   .rail .r { width: 36px; height: 36px; border-radius: 10px; border: 0; padding: 0; box-sizing: border-box; background: transparent; display: flex; align-items: center; justify-content: center; gap: 0; color: #6b726c; font: inherit; cursor: pointer; transition: background .12s, color .12s; }
   .rail.is-open .r[data-rail] { width: 100%; justify-content: flex-start; padding: 0 10px; gap: 10px; }
@@ -108,9 +109,10 @@
   .rail.is-open .r { font-weight: 500; }
   .rail.is-open .r.on { color: var(--green-dark); font-weight: 500; }
   .rail .r[data-rail]:hover:not(.on) { background: rgba(28,31,29,.04); color: var(--ink); }
-  .rail .div { width: 24px; height: 1px; background: var(--line); align-self: center; }
+  .rail .div { width: 24px; height: 1px; margin: 4px 0; background: var(--line); align-self: center; flex: none; }
   .rail.is-open .div { width: auto; margin: 4px 8px; align-self: stretch; }
   .rail .p { width: 30px; height: 30px; border-radius: 15px; background: var(--surface); border: 1px solid var(--line); padding: 0; display: flex; align-items: center; justify-content: center; font-family: inherit; font-size: 9px; font-weight: 600; line-height: 1; color: var(--muted); cursor: pointer; align-self: center; }
+  /* Match open nav icon inset (row pad 10px) so avatars don’t slide sideways on expand. */
   .rail.is-open .p { align-self: flex-start; margin-left: 10px; }
 
   .main { flex: 1; min-width: 0; }
