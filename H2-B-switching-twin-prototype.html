@@ -519,9 +519,41 @@
     gap: 10px;
   }
   .discover .k { font-size: 13px; font-weight: 500; color: var(--muted); white-space: nowrap; flex: none; }
-  .interest-scroll {
+  /* Topics row: soft edge fades into the + control (same idea as Cosmos / card strip). */
+  .interest-scroll-wrap {
+    position: relative;
     flex: 1 1 auto;
     min-width: 0;
+    overflow: hidden;
+  }
+  .interest-scroll-wrap::before,
+  .interest-scroll-wrap::after {
+    content: none;
+  }
+  .interest-scroll-wrap.can-scroll:not(.at-start)::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+    background: linear-gradient(270deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.65) 55%, #fff 100%);
+  }
+  .interest-scroll-wrap.can-scroll:not(.at-end)::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 28px;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.65) 55%, #fff 100%);
+  }
+  .interest-scroll {
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -2204,10 +2236,12 @@
             <section class="discover">
               <div class="discover-topics">
                 <span class="k">Discover in</span>
+                <div class="interest-scroll-wrap">
                 <div class="interest-scroll">
                 <button type="button" class="interest on" aria-pressed="true">Physics &amp; Space</button>
                 <button type="button" class="interest" aria-pressed="false">AI &amp; Data</button>
                 <button type="button" class="interest" aria-pressed="false">Cosmology</button>
+                </div>
                 </div>
                               <div class="interest-add-wrap">
                                 <button type="button" class="interest add" data-action="add-interest" aria-label="Add interest" aria-haspopup="menu" aria-expanded="false">+</button>
@@ -2295,10 +2329,12 @@
               <section class="discover">
                 <div class="discover-topics">
                   <span class="k">Discover in</span>
+                  <div class="interest-scroll-wrap">
                   <div class="interest-scroll">
                   <button type="button" class="interest on" aria-pressed="true">Physics &amp; Space</button>
                   <button type="button" class="interest" aria-pressed="false">AI &amp; Data</button>
                   <button type="button" class="interest" aria-pressed="false">Cosmology</button>
+                  </div>
                   </div>
                                 <div class="interest-add-wrap">
                                   <button type="button" class="interest add" data-action="add-interest" aria-label="Add interest" aria-haspopup="menu" aria-expanded="false">+</button>
@@ -2384,10 +2420,12 @@
               <section class="discover">
                 <div class="discover-topics">
                   <span class="k">Discover in</span>
+                  <div class="interest-scroll-wrap">
                   <div class="interest-scroll">
                   <button type="button" class="interest on" aria-pressed="true">Physics &amp; Space</button>
                   <button type="button" class="interest" aria-pressed="false">AI &amp; Data</button>
                   <button type="button" class="interest" aria-pressed="false">Cosmology</button>
+                  </div>
                   </div>
                                 <div class="interest-add-wrap">
                                   <button type="button" class="interest add" data-action="add-interest" aria-label="Add interest" aria-haspopup="menu" aria-expanded="false">+</button>
@@ -2463,9 +2501,11 @@
               <section class="discover">
                 <div class="discover-topics">
                   <span class="k">More in</span>
+                  <div class="interest-scroll-wrap">
                   <div class="interest-scroll">
                   <button type="button" class="interest on" aria-pressed="true">Heavy-ion physics</button>
                   <button type="button" class="interest" aria-pressed="false">Physics &amp; Space</button>
+                  </div>
                   </div>
                 </div>
                 <span class="vr"></span>
@@ -4406,6 +4446,7 @@
         if (pop) pop.hidden = true;
         if (addBtn) addBtn.setAttribute('aria-expanded', 'false');
         chip.scrollIntoView({ inline: 'nearest', block: 'nearest', behavior: 'smooth' });
+        requestAnimationFrame(() => syncInterestOverflow(scroll));
         return;
       }
 
@@ -4606,6 +4647,37 @@
     if (next) next.hidden = !canScroll || atEnd;
   }
 
+  function syncInterestOverflow(track) {
+    if (!track) return;
+    const wrap = track.closest('.interest-scroll-wrap');
+    if (!wrap) return;
+    if (track.clientWidth < 8) return;
+    const canScroll = track.scrollWidth > track.clientWidth + 1;
+    const maxLeft = Math.max(0, track.scrollWidth - track.clientWidth);
+    const atStart = !canScroll || track.scrollLeft <= 4;
+    const atEnd = !canScroll || track.scrollLeft >= maxLeft - 4;
+    wrap.classList.toggle('can-scroll', canScroll);
+    wrap.classList.toggle('at-start', atStart);
+    wrap.classList.toggle('at-end', atEnd);
+  }
+
+  function bindInterestScroll(track) {
+    if (!track || track.dataset.interestFadeBound) return;
+    track.dataset.interestFadeBound = '1';
+    const sync = () => syncInterestOverflow(track);
+    track.addEventListener('scroll', sync, { passive: true });
+    if (typeof ResizeObserver !== 'undefined') {
+      const ro = new ResizeObserver(sync);
+      ro.observe(track);
+      const wrap = track.closest('.interest-scroll-wrap');
+      if (wrap) ro.observe(wrap);
+    }
+    requestAnimationFrame(() => {
+      sync();
+      requestAnimationFrame(sync);
+    });
+  }
+
   function bindDiscoverScroll(track, next) {
     if (!track || track.dataset.scrollBound) return;
     track.dataset.scrollBound = '1';
@@ -4659,6 +4731,7 @@
   function initDiscoverScroll() {
     frame.querySelectorAll('.discover').forEach((sec) => {
       bindDiscoverScroll(sec.querySelector('.hscroll'), sec.querySelector('.discover-next'));
+      bindInterestScroll(sec.querySelector('.interest-scroll'));
     });
   }
 
