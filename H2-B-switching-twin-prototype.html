@@ -2837,7 +2837,7 @@
           <span class="dock-tip-dot" aria-hidden="true"></span>
           <span class="dock-tip-msg" id="dockTipMsg">Deck “Lecture 4 summary” is ready</span>
           <span class="dock-tip-act" id="dockTipAct" role="link" tabindex="0">Review →</span>
-          <button type="button" class="dock-tip-x" id="dockTipDismiss" aria-label="Dismiss notification">×</button>
+          <span class="dock-tip-x" id="dockTipDismiss" role="button" tabindex="0" aria-label="Dismiss notification">×</span>
         </span>
         <img class="dock-av" src="assets/citta-avatar.png" width="32" height="32" alt="" draggable="false">
         <span class="count" data-n="2">2</span>
@@ -5339,6 +5339,12 @@
     reviewDockNotice(e);
   });
   $('dockTipDismiss')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dismissDockTip();
+  });
+  $('dockTipDismiss')?.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
     e.preventDefault();
     e.stopPropagation();
     dismissDockTip();
