@@ -1626,6 +1626,10 @@
   }
   /* Dock sits in the try-step spotlight cutout on the right; hide fully so no green ring peeks. */
   .frame.tutorial-on .dock { display: none !important; }
+  /* Panel open = dock avatar gone; close panel to bring it back. */
+  .frame.citta-open .dock { display: none !important; }
+  /* Floating Citta is a home-surface control — not on tutorial (above) or other chrome. */
+  .frame:not([data-dock-home]) .dock { display: none !important; }
   .frame.tutorial-doc-on .tutorial-spotlight { display: none !important; }
 
   .tutorial-doc-view { flex: 1; min-width: 0; display: none; flex-direction: column; background: #fff; min-height: 860px; position: relative; }
@@ -1850,8 +1854,7 @@
   .suggest-chips .chip { cursor: pointer; }
   .suggest-chips .chip:hover { border-color: var(--green); background: var(--green-wash); }
 
-  .dock[aria-expanded="true"] { box-shadow: 0 0 0 4px rgba(0,139,104,.2); }
-  .dock.is-dragging[aria-expanded="true"] { box-shadow: 0 10px 28px rgba(28,31,29,.18); }
+  /* Expanded state uses the side panel; dock itself is hidden while open. */
 
   /* Fullscreen toggle — fixed chrome; outside Figma frame so layout stays faithful */
   .fs-toggle {
@@ -4965,6 +4968,7 @@
       document.querySelectorAll('.spot').forEach((el) => el.classList.remove('spot'));
     }
     syncTutorialNav();
+    syncDockHomeAttr();
     syncHash();
     fit();
     if (wantTip) {
@@ -5028,11 +5032,23 @@
     });
   }
 
+  function isDockHomeScreen() {
+    return screen === 'welcome' || screen === 'home' || screen === 'handoff';
+  }
+
+  function syncDockHomeAttr() {
+    if (isDockHomeScreen()) frame.setAttribute('data-dock-home', '');
+    else frame.removeAttribute('data-dock-home');
+  }
+
   function setCittaExpanded(open) {
     cittaExpanded = open;
     frame.classList.toggle('citta-open', open);
     $('cittaPanel').hidden = !open;
     dock.setAttribute('aria-expanded', String(open));
+    // Avatar dock only while the side panel is closed.
+    dock.hidden = !!open;
+    if (open) dock.classList.remove('is-dragging');
     document.querySelectorAll('[data-panel]').forEach((b) => {
       const on = (b.dataset.panel === 'expanded' && open) || (b.dataset.panel === 'dock' && !open);
       b.setAttribute('aria-pressed', String(on));
@@ -5258,6 +5274,7 @@
     dock.addEventListener('pointerdown', (e) => {
       if (e.button != null && e.button !== 0) return;
       if (e.target.closest('#dockSwitch, .sw')) return;
+      if (!isDockHomeScreen() || cittaExpanded) return;
       // Don't preventDefault here — it can block pointerup in some embeds.
       e.stopPropagation();
       startDrag(e.clientX, e.clientY, e.pointerId, 'pointer');
@@ -5267,6 +5284,7 @@
     dock.addEventListener('mousedown', (e) => {
       if (e.button !== 0) return;
       if (e.target.closest('#dockSwitch, .sw')) return;
+      if (!isDockHomeScreen() || cittaExpanded) return;
       if (drag) return;
       e.stopPropagation();
       startDrag(e.clientX, e.clientY, null, 'mouse');
@@ -5274,6 +5292,7 @@
 
     dock.addEventListener('click', (e) => {
       if (e.target.closest('#dockSwitch, .sw')) return;
+      if (!isDockHomeScreen()) return;
       if (suppressClick || openedByPointer) {
         e.preventDefault();
         e.stopPropagation();
@@ -5286,6 +5305,7 @@
     });
 
     restorePos();
+    syncDockHomeAttr();
     window.addEventListener('resize', () => {
       if (!dock.classList.contains('is-placed')) return;
       applyPos(parseFloat(dock.style.left) || 0, parseFloat(dock.style.top) || 0, { persist: true });
