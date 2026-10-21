@@ -950,7 +950,7 @@
     align-items: center;
     gap: 8px;
     height: 36px;
-    padding: 0 14px 0 12px;
+    padding: 0 8px 0 12px;
     box-sizing: border-box;
     background: #fff;
     border: 1px solid var(--line);
@@ -1010,6 +1010,25 @@
     line-height: 1.3;
   }
   .dock .dock-tip-act:hover { color: var(--green-dark); }
+  .dock .dock-tip-x {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--faint);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .dock .dock-tip-x:hover { color: var(--ink); background: var(--surface); }
   .toast { position: absolute; left: 50%; top: 1240px; transform: translate(-50%, 8px); background: var(--toast); color: #fff; font-size: 13px; padding: 10px 16px 10px 14px; border-radius: 12px; display: flex; gap: 10px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
   .toast.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
   .toast button { color: var(--toast-link); font-weight: 600; }
@@ -2818,6 +2837,7 @@
           <span class="dock-tip-dot" aria-hidden="true"></span>
           <span class="dock-tip-msg" id="dockTipMsg">Deck “Lecture 4 summary” is ready</span>
           <span class="dock-tip-act" id="dockTipAct" role="link" tabindex="0">Review →</span>
+          <button type="button" class="dock-tip-x" id="dockTipDismiss" aria-label="Dismiss notification">×</button>
         </span>
         <img class="dock-av" src="assets/citta-avatar.png" width="32" height="32" alt="" draggable="false">
         <span class="count" data-n="2">2</span>
@@ -3152,27 +3172,55 @@
       return;
     }
     if (menu.classList.contains('in-dock')) {
-      const sw = anchor || $('dockSwitch') || $('dock');
-      if (!frame || !sw) return;
+      const dockEl = $('dock');
+      if (!frame || !dockEl) return;
       const fRect = frame.getBoundingClientRect();
-      const aRect = sw.getBoundingClientRect();
       const scale = fRect.width / Math.max(1, frame.offsetWidth);
+      const toFrame = (r) => ({
+        left: (r.left - fRect.left) / scale,
+        top: (r.top - fRect.top) / scale,
+        right: (r.right - fRect.left) / scale,
+        bottom: (r.bottom - fRect.top) / scale,
+      });
+      // Avoid the whole floating cluster: avatar + badge + switch + tip pill.
+      const body = toFrame(dockEl.getBoundingClientRect());
+      let cluster = { ...body };
+      const tip = $('dockTip');
+      if (tip && !tip.hidden && dockEl.classList.contains('has-tip')) {
+        const t = toFrame(tip.getBoundingClientRect());
+        cluster = {
+          left: Math.min(cluster.left, t.left),
+          top: Math.min(cluster.top, t.top),
+          right: Math.max(cluster.right, t.right),
+          bottom: Math.max(cluster.bottom, t.bottom),
+        };
+      }
+      const sw = $('dockSwitch');
+      if (sw) {
+        const s = toFrame(sw.getBoundingClientRect());
+        cluster = {
+          left: Math.min(cluster.left, s.left),
+          top: Math.min(cluster.top, s.top),
+          right: Math.max(cluster.right, s.right),
+          bottom: Math.max(cluster.bottom, s.bottom),
+        };
+      }
       const menuW = Math.min(300, frame.offsetWidth - 16);
       const menuH = menu.offsetHeight || 340;
-      const dockEl = $('dock');
-      const onLeft = dockEl?.classList.contains('dock-side-left');
-      // Prefer above the avatar; flip below if not enough room.
-      let top = (aRect.top - fRect.top) / scale - menuH - 10;
-      if (top < 8) top = (aRect.bottom - fRect.top) / scale + 10;
-      // Right-docked → menu grows left; left-docked → grows right.
-      let left = onLeft
-        ? (aRect.left - fRect.left) / scale
-        : (aRect.right - fRect.left) / scale - menuW;
+      const gap = 14;
+      const spaceAbove = cluster.top - 8;
+      const spaceBelow = frame.offsetHeight - cluster.bottom - 8;
+      const placeAbove = (spaceAbove >= menuH + gap) || (spaceAbove >= spaceBelow && spaceAbove >= 80);
+      let top = placeAbove ? cluster.top - menuH - gap : cluster.bottom + gap;
+      // Horizontally center on the avatar (not the tip), then clamp to frame.
+      let left = (body.left + body.right) / 2 - menuW / 2;
       left = Math.max(8, Math.min(left, frame.offsetWidth - menuW - 8));
-      top = Math.max(8, Math.min(top, frame.offsetHeight - Math.min(menuH, frame.offsetHeight - 16)));
+      if (placeAbove) top = Math.max(8, top);
+      else top = Math.min(top, frame.offsetHeight - menuH - 8);
       menu.style.left = `${left}px`;
       menu.style.top = `${top}px`;
       menu.style.right = 'auto';
+      menu.dataset.dockPlace = placeAbove ? 'above' : 'below';
       return;
     }
     const cRect = composer.getBoundingClientRect();
@@ -3190,8 +3238,13 @@
       switcherAnchor = anchor;
       ensureSwitcherMenuHost(fromPanel ? 'panel' : fromDock ? 'dock' : 'composer');
       positionSwitcherMenu(anchor);
-      // Re-measure after open (menu height known) so dock popover sits correctly.
-      if (fromDock) requestAnimationFrame(() => positionSwitcherMenu(anchor));
+      // Re-measure after paint so dock popover clears avatar + tip (height known).
+      if (fromDock) {
+        requestAnimationFrame(() => {
+          positionSwitcherMenu(anchor);
+          requestAnimationFrame(() => positionSwitcherMenu(anchor));
+        });
+      }
     } else {
       switcherAnchor = null;
       ensureSwitcherMenuHost('composer');
@@ -5173,6 +5226,27 @@
     home: { n: 3, msg: 'Deck “Lecture 4 summary” is ready' },
     handoff: { n: 2, msg: 'Deck “Lecture 4 summary” is ready' },
   };
+  const DOCK_TIP_DISMISS_KEY = 'symbion-dock-tip-dismissed';
+  const DOCK_TIP_AUTO_MS = 5500;
+  let dockTipDismissed = false;
+  let dockTipTimer = null;
+  try { dockTipDismissed = sessionStorage.getItem(DOCK_TIP_DISMISS_KEY) === '1'; } catch (_) { /* ignore */ }
+
+  function dismissDockTip({ persist = true } = {}) {
+    dockTipDismissed = true;
+    if (dockTipTimer) { clearTimeout(dockTipTimer); dockTipTimer = null; }
+    dock.classList.remove('has-tip');
+    const tip = $('dockTip');
+    if (tip) tip.hidden = true;
+    if (persist) {
+      try { sessionStorage.setItem(DOCK_TIP_DISMISS_KEY, '1'); } catch (_) { /* ignore */ }
+    }
+  }
+
+  function scheduleDockTipAutoHide() {
+    if (dockTipTimer) clearTimeout(dockTipTimer);
+    dockTipTimer = setTimeout(() => dismissDockTip(), DOCK_TIP_AUTO_MS);
+  }
 
   function syncDockNotice(forScreen = screen) {
     const dockCount = dock.querySelector('.count');
@@ -5185,9 +5259,11 @@
       dockCount.dataset.n = String(n);
     }
     if (tipMsg && notice?.msg) tipMsg.textContent = notice.msg;
-    const showTip = n > 0 && isDockHomeScreen() && !cittaExpanded;
+    const showTip = n > 0 && isDockHomeScreen() && !cittaExpanded && !dockTipDismissed;
     dock.classList.toggle('has-tip', showTip);
     if (tip) tip.hidden = !showTip;
+    if (showTip) scheduleDockTipAutoHide();
+    else if (dockTipTimer) { clearTimeout(dockTipTimer); dockTipTimer = null; }
   }
 
   function setCittaExpanded(open) {
@@ -5254,12 +5330,18 @@
   function reviewDockNotice(e) {
     e.preventDefault();
     e.stopPropagation();
+    dismissDockTip();
     setCittaExpanded(true);
   }
   dockTipAct?.addEventListener('click', reviewDockNotice);
   dockTipAct?.addEventListener('keydown', (e) => {
     if (e.key !== 'Enter' && e.key !== ' ') return;
     reviewDockNotice(e);
+  });
+  $('dockTipDismiss')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dismissDockTip();
   });
 
   /** Drag Citta dock bubble; short click still expands/collapses the panel. */
@@ -5491,7 +5573,7 @@
 
     dock.addEventListener('pointerdown', (e) => {
       if (e.button != null && e.button !== 0) return;
-      if (e.target.closest('#dockSwitch, .sw, #dockTipAct, .dock-tip-act')) return;
+      if (e.target.closest('#dockSwitch, .sw, #dockTipAct, .dock-tip-act, #dockTipDismiss, .dock-tip-x')) return;
       if (!isDockHomeScreen() || cittaExpanded) return;
       // Don't preventDefault here — it can block pointerup in some embeds.
       e.stopPropagation();
@@ -5501,7 +5583,7 @@
     // Fallback when Pointer Events aren't delivered (some webviews).
     dock.addEventListener('mousedown', (e) => {
       if (e.button !== 0) return;
-      if (e.target.closest('#dockSwitch, .sw, #dockTipAct, .dock-tip-act')) return;
+      if (e.target.closest('#dockSwitch, .sw, #dockTipAct, .dock-tip-act, #dockTipDismiss, .dock-tip-x')) return;
       if (!isDockHomeScreen() || cittaExpanded) return;
       if (drag) return;
       e.stopPropagation();
@@ -5509,7 +5591,7 @@
     });
 
     dock.addEventListener('click', (e) => {
-      if (e.target.closest('#dockSwitch, .sw, #dockTipAct, .dock-tip-act')) return;
+      if (e.target.closest('#dockSwitch, .sw, #dockTipAct, .dock-tip-act, #dockTipDismiss, .dock-tip-x')) return;
       if (!isDockHomeScreen()) return;
       if (suppressClick || openedByPointer) {
         e.preventDefault();
