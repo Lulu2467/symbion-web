@@ -922,9 +922,11 @@
   .tpl small { font-size: 12px; color: var(--faint); display: block; min-height: 2.8em; width: 100%; }
   .tpl .use { margin-top: auto; align-self: stretch; text-align: center; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 12px; font-weight: 500; background: #fff; }
 
-  /* Dock + toast */
-  .dock { position: absolute; right: var(--page-gutter); top: 843px; width: 44px; height: 44px; border-radius: 22px; background: #fff; border: 1.5px solid var(--green); color: var(--green); font-size: 0; font-weight: 600; display: flex; align-items: center; justify-content: center; left: auto; padding: 0; box-sizing: border-box; overflow: visible; transition: transform .08s, box-shadow .12s; }
+  /* Dock + toast — Citta bubble can be dragged; click still toggles panel. */
+  .dock { position: absolute; right: var(--page-gutter); top: 843px; width: 44px; height: 44px; border-radius: 22px; background: #fff; border: 1.5px solid var(--green); color: var(--green); font-size: 0; font-weight: 600; display: flex; align-items: center; justify-content: center; left: auto; padding: 0; box-sizing: border-box; overflow: visible; transition: transform .08s, box-shadow .12s; z-index: 45; cursor: grab; touch-action: none; user-select: none; }
   .dock:active { transform: scale(.96); }
+  .dock.is-dragging { cursor: grabbing; transition: none; transform: none; box-shadow: 0 10px 28px rgba(28,31,29,.18); z-index: 60; }
+  .dock.is-placed { right: auto; bottom: auto; }
   .dock .dock-av { width: 32px; height: 32px; border-radius: 9px; object-fit: cover; display: block; flex: none; }
   .dock .count { position: absolute; left: 28.5px; top: -5.5px; width: 18px; height: 18px; border-radius: 9px; background: var(--green); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
   .dock .sw { position: absolute; left: 12.5px; top: 34.5px; width: 16px; height: 16px; border-radius: 8px; background: #fff; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; color: var(--muted); cursor: pointer; }
@@ -1962,8 +1964,9 @@
     height: auto;
     overflow: hidden;
   }
-  .fs-root:fullscreen .dock,
-  .fs-root:-webkit-full-screen .dock {
+  /* Default FS resting spot — skipped once the user has dragged (.is-placed). */
+  .fs-root:fullscreen .dock:not(.is-placed),
+  .fs-root:-webkit-full-screen .dock:not(.is-placed) {
     top: auto;
     bottom: 28px;
   }
@@ -5059,7 +5062,6 @@
     if (b.dataset.panel === 'expanded') setCittaExpanded(true);
     if (b.dataset.panel === 'dock') setCittaExpanded(false);
   }));
-  dock.addEventListener('click', () => setCittaExpanded(!cittaExpanded));
   const dockSwitch = $('dockSwitch');
   dockSwitch?.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -5071,6 +5073,143 @@
     e.stopPropagation();
     openCittaSwitcher();
   });
+
+  /** Drag Citta dock bubble; short click still expands/collapses the panel. */
+  (function initDockDrag() {
+    const POS_KEY = 'symbion-citta-dock-pos';
+    const DRAG_THRESHOLD = 5;
+    let drag = null; // { pointerId, startX, startY, origLeft, origTop, moved }
+
+    function frameRect() {
+      return frame.getBoundingClientRect();
+    }
+
+    function dockSize() {
+      return { w: dock.offsetWidth || 44, h: dock.offsetHeight || 44 };
+    }
+
+    function readStored() {
+      try {
+        const raw = localStorage.getItem(POS_KEY);
+        if (!raw) return null;
+        const p = JSON.parse(raw);
+        if (typeof p?.left !== 'number' || typeof p?.top !== 'number') return null;
+        return p;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function clamp(left, top) {
+      const fr = frameRect();
+      const { w, h } = dockSize();
+      // Positions are in .frame local CSS px (pre-scale); convert via scale.
+      const s = fr.width / Math.max(1, frame.offsetWidth);
+      const maxL = Math.max(0, frame.offsetWidth - w - 8);
+      const maxT = Math.max(0, frame.offsetHeight - h - 8);
+      return {
+        left: Math.min(maxL, Math.max(8, left)),
+        top: Math.min(maxT, Math.max(8, top)),
+        scale: s,
+      };
+    }
+
+    function applyPos(left, top, { persist = false } = {}) {
+      const c = clamp(left, top);
+      dock.style.left = `${c.left}px`;
+      dock.style.top = `${c.top}px`;
+      dock.style.right = 'auto';
+      dock.style.bottom = 'auto';
+      dock.classList.add('is-placed');
+      if (persist) {
+        try { localStorage.setItem(POS_KEY, JSON.stringify({ left: c.left, top: c.top })); } catch (_) { /* ignore */ }
+      }
+    }
+
+    function restorePos() {
+      const p = readStored();
+      if (!p) return;
+      applyPos(p.left, p.top, { persist: false });
+    }
+
+    function clientToFrame(clientX, clientY) {
+      const fr = frameRect();
+      const s = fr.width / Math.max(1, frame.offsetWidth);
+      return {
+        x: (clientX - fr.left) / s,
+        y: (clientY - fr.top) / s,
+        scale: s,
+      };
+    }
+
+    dock.addEventListener('pointerdown', (e) => {
+      if (e.button != null && e.button !== 0) return;
+      if (e.target.closest('#dockSwitch, .sw, .count')) return;
+      const frPos = clientToFrame(e.clientX, e.clientY);
+      const curLeft = dock.classList.contains('is-placed')
+        ? parseFloat(dock.style.left) || 0
+        : (dock.offsetLeft);
+      const curTop = dock.classList.contains('is-placed')
+        ? parseFloat(dock.style.top) || 0
+        : (dock.offsetTop);
+      // Materialize absolute left/top from default right/top before first drag.
+      if (!dock.classList.contains('is-placed')) {
+        applyPos(curLeft, curTop, { persist: false });
+      }
+      drag = {
+        pointerId: e.pointerId,
+        startX: frPos.x,
+        startY: frPos.y,
+        origLeft: parseFloat(dock.style.left) || curLeft,
+        origTop: parseFloat(dock.style.top) || curTop,
+        moved: false,
+      };
+      try { dock.setPointerCapture(e.pointerId); } catch (_) { /* ignore */ }
+    });
+
+    dock.addEventListener('pointermove', (e) => {
+      if (!drag || e.pointerId !== drag.pointerId) return;
+      const frPos = clientToFrame(e.clientX, e.clientY);
+      const dx = frPos.x - drag.startX;
+      const dy = frPos.y - drag.startY;
+      if (!drag.moved && (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD)) {
+        drag.moved = true;
+        dock.classList.add('is-dragging');
+      }
+      if (!drag.moved) return;
+      e.preventDefault();
+      applyPos(drag.origLeft + dx, drag.origTop + dy, { persist: false });
+    });
+
+    let suppressClick = false;
+    function endDrag(e) {
+      if (!drag || (e && e.pointerId !== drag.pointerId)) return;
+      const wasMoved = drag.moved;
+      if (wasMoved) {
+        applyPos(parseFloat(dock.style.left) || 0, parseFloat(dock.style.top) || 0, { persist: true });
+        suppressClick = true;
+      }
+      dock.classList.remove('is-dragging');
+      try { dock.releasePointerCapture(drag.pointerId); } catch (_) { /* ignore */ }
+      drag = null;
+      if (!wasMoved) setCittaExpanded(!cittaExpanded);
+    }
+
+    dock.addEventListener('pointerup', endDrag);
+    dock.addEventListener('pointercancel', endDrag);
+    dock.addEventListener('click', (e) => {
+      if (!suppressClick) return;
+      e.preventDefault();
+      e.stopPropagation();
+      suppressClick = false;
+    }, true);
+
+    restorePos();
+    window.addEventListener('resize', () => {
+      if (!dock.classList.contains('is-placed')) return;
+      applyPos(parseFloat(dock.style.left) || 0, parseFloat(dock.style.top) || 0, { persist: true });
+    }, { passive: true });
+  })();
   $('cittaPanelClose').addEventListener('click', () => setCittaExpanded(false));
   newTip.addEventListener('click', (e) => e.stopPropagation());
   $('newTipDismiss').addEventListener('click', (e) => {
