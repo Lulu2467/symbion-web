@@ -490,6 +490,12 @@
     width: calc(100% - 24px);
     max-width: 300px;
   }
+  /* Dock switch: menu lives on #frame, pinned beside the floating avatar. */
+  .frame > .menu.in-dock {
+    z-index: 90;
+    width: 300px;
+    max-width: min(300px, calc(100% - 16px));
+  }
   .menu .hd { padding: 4px 8px 6px; font-size: 10px; font-weight: 600; color: var(--faint); }
   .menu .item { display: flex; gap: 10px; align-items: center; padding: 8px; border-radius: 10px; text-align: left; width: 100%; line-height: 1.4; background: transparent; }
   .menu .item[aria-checked="false"]:hover { background: var(--green-wash); }
@@ -3110,19 +3116,29 @@
     return parseInt(v, 10) || 56;
   }
 
+  let switcherAnchor = null;
+
   function ensureSwitcherMenuHost(host) {
     const panel = $('cittaPanel');
     if (host === 'panel' && panel) {
       if (menu.parentElement !== panel) panel.appendChild(menu);
       menu.classList.add('in-panel');
+      menu.classList.remove('in-dock');
+      return;
+    }
+    if (host === 'dock' && frame) {
+      if (menu.parentElement !== frame) frame.appendChild(menu);
+      menu.classList.add('in-dock');
+      menu.classList.remove('in-panel');
+      menu.style.width = '';
       return;
     }
     if (menu.parentElement !== composer) composer.appendChild(menu);
-    menu.classList.remove('in-panel');
+    menu.classList.remove('in-panel', 'in-dock');
     menu.style.width = '';
   }
 
-  function positionSwitcherMenu(anchor) {
+  function positionSwitcherMenu(anchor = switcherAnchor) {
     if (menu.classList.contains('in-panel')) {
       const panel = $('cittaPanel');
       const sw = anchor || $('cittaPanelSwitch');
@@ -3132,6 +3148,30 @@
       const left = Math.max(12, Math.min(aRect.left - pRect.left, pRect.width - 312));
       menu.style.left = `${left}px`;
       menu.style.top = `${aRect.bottom - pRect.top + 6}px`;
+      menu.style.right = 'auto';
+      return;
+    }
+    if (menu.classList.contains('in-dock')) {
+      const sw = anchor || $('dockSwitch') || $('dock');
+      if (!frame || !sw) return;
+      const fRect = frame.getBoundingClientRect();
+      const aRect = sw.getBoundingClientRect();
+      const scale = fRect.width / Math.max(1, frame.offsetWidth);
+      const menuW = Math.min(300, frame.offsetWidth - 16);
+      const menuH = menu.offsetHeight || 340;
+      const dockEl = $('dock');
+      const onLeft = dockEl?.classList.contains('dock-side-left');
+      // Prefer above the avatar; flip below if not enough room.
+      let top = (aRect.top - fRect.top) / scale - menuH - 10;
+      if (top < 8) top = (aRect.bottom - fRect.top) / scale + 10;
+      // Right-docked → menu grows left; left-docked → grows right.
+      let left = onLeft
+        ? (aRect.left - fRect.left) / scale
+        : (aRect.right - fRect.left) / scale - menuW;
+      left = Math.max(8, Math.min(left, frame.offsetWidth - menuW - 8));
+      top = Math.max(8, Math.min(top, frame.offsetHeight - Math.min(menuH, frame.offsetHeight - 16)));
+      menu.style.left = `${left}px`;
+      menu.style.top = `${top}px`;
       menu.style.right = 'auto';
       return;
     }
@@ -3145,17 +3185,24 @@
   function setMenu(open, opts = {}) {
     const anchor = opts.anchor || null;
     const fromPanel = !!(anchor && (anchor.id === 'cittaPanelSwitch' || anchor.closest?.('.citta-panel')));
+    const fromDock = !!(anchor && (anchor.id === 'dockSwitch' || anchor.closest?.('#dock, .dock')));
     if (open) {
-      ensureSwitcherMenuHost(fromPanel ? 'panel' : 'composer');
+      switcherAnchor = anchor;
+      ensureSwitcherMenuHost(fromPanel ? 'panel' : fromDock ? 'dock' : 'composer');
       positionSwitcherMenu(anchor);
+      // Re-measure after open (menu height known) so dock popover sits correctly.
+      if (fromDock) requestAnimationFrame(() => positionSwitcherMenu(anchor));
     } else {
+      switcherAnchor = null;
       ensureSwitcherMenuHost('composer');
     }
     menu.classList.toggle('open', open);
-    composer.classList.toggle('is-menu-open', open && !fromPanel);
-    picker.setAttribute('aria-expanded', String(open && !fromPanel));
+    composer.classList.toggle('is-menu-open', open && !fromPanel && !fromDock);
+    picker.setAttribute('aria-expanded', String(open && !fromPanel && !fromDock));
     const panelSw = $('cittaPanelSwitch');
     if (panelSw) panelSw.setAttribute('aria-expanded', String(open && fromPanel));
+    const dockSw = $('dockSwitch');
+    if (dockSw) dockSw.setAttribute('aria-expanded', String(open && fromDock));
     if (!open && newTipSeen) frame.classList.remove('post-tip-on', 'dim-handoff');
   }
 
@@ -5183,13 +5230,25 @@
   const dockSwitch = $('dockSwitch');
   dockSwitch?.addEventListener('click', (e) => {
     e.stopPropagation();
-    openCittaSwitcher();
+    const btn = e.currentTarget;
+    if (menu.classList.contains('open') && menu.classList.contains('in-dock')) {
+      setMenu(false);
+      syncPresenter(current === 'citta' ? 'citta' : 'twin');
+      return;
+    }
+    openCittaSwitcher({ anchor: btn });
   });
   dockSwitch?.addEventListener('keydown', (e) => {
     if (e.key !== 'Enter' && e.key !== ' ') return;
     e.preventDefault();
     e.stopPropagation();
-    openCittaSwitcher();
+    const btn = e.currentTarget;
+    if (menu.classList.contains('open') && menu.classList.contains('in-dock')) {
+      setMenu(false);
+      syncPresenter(current === 'citta' ? 'citta' : 'twin');
+      return;
+    }
+    openCittaSwitcher({ anchor: btn });
   });
   const dockTipAct = $('dockTipAct');
   function reviewDockNotice(e) {
