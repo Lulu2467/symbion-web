@@ -923,13 +923,12 @@
   .tpl .use { margin-top: auto; align-self: stretch; text-align: center; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 12px; font-weight: 500; background: #fff; }
 
   /* Dock + toast — Citta bubble can be dragged; click still toggles panel. */
-  .dock { position: absolute; right: var(--page-gutter); top: 843px; width: 44px; height: 44px; border-radius: 22px; background: #fff; border: 1.5px solid var(--green); color: var(--green); font-size: 0; font-weight: 600; display: flex; align-items: center; justify-content: center; left: auto; padding: 0; box-sizing: border-box; overflow: visible; transition: transform .08s, box-shadow .12s; z-index: 45; cursor: grab; touch-action: none; user-select: none; }
-  .dock:active { transform: scale(.96); }
-  .dock.is-dragging { cursor: grabbing; transition: none; transform: none; box-shadow: 0 10px 28px rgba(28,31,29,.18); z-index: 60; }
-  .dock.is-placed { right: auto; bottom: auto; }
-  .dock .dock-av { width: 32px; height: 32px; border-radius: 9px; object-fit: cover; display: block; flex: none; }
-  .dock .count { position: absolute; left: 28.5px; top: -5.5px; width: 18px; height: 18px; border-radius: 9px; background: var(--green); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-  .dock .sw { position: absolute; left: 12.5px; top: 34.5px; width: 16px; height: 16px; border-radius: 8px; background: #fff; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; color: var(--muted); cursor: pointer; }
+  .dock { position: absolute; right: var(--page-gutter); top: 843px; width: 44px; height: 44px; border-radius: 22px; background: #fff; border: 1.5px solid var(--green); color: var(--green); font-size: 0; font-weight: 600; display: flex; align-items: center; justify-content: center; left: auto; padding: 0; box-sizing: border-box; overflow: visible; transition: box-shadow .12s; z-index: 45; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; }
+  .dock.is-dragging { cursor: grabbing; transition: none; box-shadow: 0 10px 28px rgba(28,31,29,.18); z-index: 80; }
+  .dock.is-placed { right: auto !important; bottom: auto !important; }
+  .dock .dock-av { width: 32px; height: 32px; border-radius: 9px; object-fit: cover; display: block; flex: none; pointer-events: none; -webkit-user-drag: none; user-select: none; }
+  .dock .count { position: absolute; left: 28.5px; top: -5.5px; width: 18px; height: 18px; border-radius: 9px; background: var(--green); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+  .dock .sw { position: absolute; left: 12.5px; top: 34.5px; width: 16px; height: 16px; border-radius: 8px; background: #fff; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; color: var(--muted); cursor: pointer; touch-action: manipulation; }
   .dock .sw:hover { border-color: var(--green); color: var(--green); }
   .toast { position: absolute; left: 50%; top: 1240px; transform: translate(-50%, 8px); background: var(--toast); color: #fff; font-size: 13px; padding: 10px 16px 10px 14px; border-radius: 12px; display: flex; gap: 10px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
   .toast.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
@@ -1851,8 +1850,8 @@
   .suggest-chips .chip { cursor: pointer; }
   .suggest-chips .chip:hover { border-color: var(--green); background: var(--green-wash); }
 
-  .dock { cursor: pointer; }
   .dock[aria-expanded="true"] { box-shadow: 0 0 0 4px rgba(0,139,104,.2); }
+  .dock.is-dragging[aria-expanded="true"] { box-shadow: 0 10px 28px rgba(28,31,29,.18); }
 
   /* Fullscreen toggle — fixed chrome; outside Figma frame so layout stays faithful */
   .fs-toggle {
@@ -2731,7 +2730,7 @@
         <div class="acts" id="coachActs"></div>
       </div>
 
-      <button type="button" class="dock" id="dock" aria-label="Citta dock" aria-expanded="false"><img class="dock-av" src="assets/citta-avatar.png" width="32" height="32" alt="">
+      <button type="button" class="dock" id="dock" aria-label="Citta dock" aria-expanded="false" title="Drag to move · click to open"><img class="dock-av" src="assets/citta-avatar.png" width="32" height="32" alt="" draggable="false">
         <span class="count">3</span>
         <span class="sw" id="dockSwitch" role="button" tabindex="0" aria-label="Switch who you’re working with"><svg class="switch-ico" width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M96 416h832c0.32 0 0.576-0.192 0.896-0.192a30.656 30.656 0 0 0 30.976-30.976c-0.064-0.256 0.128-0.512 0.128-0.832a31.424 31.424 0 0 0-14.912-26.368l-188.48-188.48a30.72 30.72 0 1 0-43.456 43.456L852.544 352H96a32 32 0 0 0 0 64z m832 192H96c-0.32 0-0.576 0.192-0.896 0.192a30.528 30.528 0 0 0-30.976 30.976c0.064 0.256-0.128 0.512-0.128 0.832 0 11.264 6.144 20.672 14.912 26.368l188.48 188.48a30.72 30.72 0 1 0 43.456-43.456L171.456 672H928a32 32 0 0 0 0-64z" fill="currentColor"/></svg></span>
       </button>
@@ -5077,40 +5076,29 @@
   /** Drag Citta dock bubble; short click still expands/collapses the panel. */
   (function initDockDrag() {
     const POS_KEY = 'symbion-citta-dock-pos';
-    const DRAG_THRESHOLD = 5;
-    let drag = null; // { pointerId, startX, startY, origLeft, origTop, moved }
+    const DRAG_THRESHOLD = 4;
+    let drag = null;
+    let suppressClick = false;
 
-    function frameRect() {
-      return frame.getBoundingClientRect();
+    function frameScale() {
+      const fr = frame.getBoundingClientRect();
+      return fr.width / Math.max(1, frame.offsetWidth);
     }
 
-    function dockSize() {
-      return { w: dock.offsetWidth || 44, h: dock.offsetHeight || 44 };
-    }
-
-    function readStored() {
-      try {
-        const raw = localStorage.getItem(POS_KEY);
-        if (!raw) return null;
-        const p = JSON.parse(raw);
-        if (typeof p?.left !== 'number' || typeof p?.top !== 'number') return null;
-        return p;
-      } catch (_) {
-        return null;
-      }
+    function clientToFrame(clientX, clientY) {
+      const fr = frame.getBoundingClientRect();
+      const s = frameScale();
+      return { x: (clientX - fr.left) / s, y: (clientY - fr.top) / s };
     }
 
     function clamp(left, top) {
-      const fr = frameRect();
-      const { w, h } = dockSize();
-      // Positions are in .frame local CSS px (pre-scale); convert via scale.
-      const s = fr.width / Math.max(1, frame.offsetWidth);
-      const maxL = Math.max(0, frame.offsetWidth - w - 8);
-      const maxT = Math.max(0, frame.offsetHeight - h - 8);
+      const w = dock.offsetWidth || 44;
+      const h = dock.offsetHeight || 44;
+      const maxL = Math.max(8, frame.offsetWidth - w - 8);
+      const maxT = Math.max(8, frame.offsetHeight - h - 8);
       return {
         left: Math.min(maxL, Math.max(8, left)),
         top: Math.min(maxT, Math.max(8, top)),
-        scale: s,
       };
     }
 
@@ -5124,79 +5112,90 @@
       if (persist) {
         try { localStorage.setItem(POS_KEY, JSON.stringify({ left: c.left, top: c.top })); } catch (_) { /* ignore */ }
       }
+      return c;
+    }
+
+    function currentPos() {
+      if (dock.classList.contains('is-placed')) {
+        return {
+          left: parseFloat(dock.style.left) || 0,
+          top: parseFloat(dock.style.top) || 0,
+        };
+      }
+      // Default CSS uses right/top — materialize from layout box relative to frame.
+      const fr = frame.getBoundingClientRect();
+      const dr = dock.getBoundingClientRect();
+      const s = frameScale();
+      return {
+        left: (dr.left - fr.left) / s,
+        top: (dr.top - fr.top) / s,
+      };
     }
 
     function restorePos() {
-      const p = readStored();
-      if (!p) return;
-      applyPos(p.left, p.top, { persist: false });
+      try {
+        const raw = localStorage.getItem(POS_KEY);
+        if (!raw) return;
+        const p = JSON.parse(raw);
+        if (typeof p?.left === 'number' && typeof p?.top === 'number') applyPos(p.left, p.top);
+      } catch (_) { /* ignore */ }
     }
 
-    function clientToFrame(clientX, clientY) {
-      const fr = frameRect();
-      const s = fr.width / Math.max(1, frame.offsetWidth);
-      return {
-        x: (clientX - fr.left) / s,
-        y: (clientY - fr.top) / s,
-        scale: s,
-      };
-    }
-
-    dock.addEventListener('pointerdown', (e) => {
-      if (e.button != null && e.button !== 0) return;
-      if (e.target.closest('#dockSwitch, .sw, .count')) return;
-      const frPos = clientToFrame(e.clientX, e.clientY);
-      const curLeft = dock.classList.contains('is-placed')
-        ? parseFloat(dock.style.left) || 0
-        : (dock.offsetLeft);
-      const curTop = dock.classList.contains('is-placed')
-        ? parseFloat(dock.style.top) || 0
-        : (dock.offsetTop);
-      // Materialize absolute left/top from default right/top before first drag.
-      if (!dock.classList.contains('is-placed')) {
-        applyPos(curLeft, curTop, { persist: false });
-      }
-      drag = {
-        pointerId: e.pointerId,
-        startX: frPos.x,
-        startY: frPos.y,
-        origLeft: parseFloat(dock.style.left) || curLeft,
-        origTop: parseFloat(dock.style.top) || curTop,
-        moved: false,
-      };
-      try { dock.setPointerCapture(e.pointerId); } catch (_) { /* ignore */ }
-    });
-
-    dock.addEventListener('pointermove', (e) => {
+    function onMove(e) {
       if (!drag || e.pointerId !== drag.pointerId) return;
-      const frPos = clientToFrame(e.clientX, e.clientY);
-      const dx = frPos.x - drag.startX;
-      const dy = frPos.y - drag.startY;
+      const pt = clientToFrame(e.clientX, e.clientY);
+      const dx = pt.x - drag.startX;
+      const dy = pt.y - drag.startY;
       if (!drag.moved && (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD)) {
         drag.moved = true;
         dock.classList.add('is-dragging');
       }
       if (!drag.moved) return;
       e.preventDefault();
-      applyPos(drag.origLeft + dx, drag.origTop + dy, { persist: false });
-    });
+      applyPos(drag.origLeft + dx, drag.origTop + dy);
+    }
 
-    let suppressClick = false;
-    function endDrag(e) {
+    function onUp(e) {
       if (!drag || (e && e.pointerId !== drag.pointerId)) return;
       const wasMoved = drag.moved;
+      const pid = drag.pointerId;
+      document.removeEventListener('pointermove', onMove, true);
+      document.removeEventListener('pointerup', onUp, true);
+      document.removeEventListener('pointercancel', onUp, true);
+      try { dock.releasePointerCapture(pid); } catch (_) { /* ignore */ }
+      dock.classList.remove('is-dragging');
       if (wasMoved) {
         applyPos(parseFloat(dock.style.left) || 0, parseFloat(dock.style.top) || 0, { persist: true });
         suppressClick = true;
       }
-      dock.classList.remove('is-dragging');
-      try { dock.releasePointerCapture(drag.pointerId); } catch (_) { /* ignore */ }
       drag = null;
       if (!wasMoved) setCittaExpanded(!cittaExpanded);
     }
 
-    dock.addEventListener('pointerup', endDrag);
-    dock.addEventListener('pointercancel', endDrag);
+    dock.addEventListener('dragstart', (e) => e.preventDefault());
+    dock.querySelector('.dock-av')?.addEventListener('dragstart', (e) => e.preventDefault());
+
+    dock.addEventListener('pointerdown', (e) => {
+      if (e.button != null && e.button !== 0) return;
+      if (e.target.closest('#dockSwitch, .sw')) return;
+      e.preventDefault();
+      const pt = clientToFrame(e.clientX, e.clientY);
+      const cur = currentPos();
+      applyPos(cur.left, cur.top);
+      drag = {
+        pointerId: e.pointerId,
+        startX: pt.x,
+        startY: pt.y,
+        origLeft: parseFloat(dock.style.left) || cur.left,
+        origTop: parseFloat(dock.style.top) || cur.top,
+        moved: false,
+      };
+      try { dock.setPointerCapture(e.pointerId); } catch (_) { /* ignore */ }
+      document.addEventListener('pointermove', onMove, true);
+      document.addEventListener('pointerup', onUp, true);
+      document.addEventListener('pointercancel', onUp, true);
+    });
+
     dock.addEventListener('click', (e) => {
       if (!suppressClick) return;
       e.preventDefault();
