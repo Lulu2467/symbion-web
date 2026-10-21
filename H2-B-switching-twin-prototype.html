@@ -923,9 +923,10 @@
   .tpl .use { margin-top: auto; align-self: stretch; text-align: center; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 12px; font-weight: 500; background: #fff; }
 
   /* Dock + toast — Citta bubble can be dragged; click still toggles panel. */
-  .dock { position: absolute; right: var(--page-gutter); top: 843px; width: 44px; height: 44px; border-radius: 22px; background: #fff; border: 1.5px solid var(--green); color: var(--green); font-size: 0; font-weight: 600; display: flex; align-items: center; justify-content: center; left: auto; padding: 0; box-sizing: border-box; overflow: visible; transition: box-shadow .12s; z-index: 45; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-user-drag: none; user-drag: none; }
+  .dock { position: absolute; right: var(--page-gutter); top: 843px; width: 44px; height: 44px; border-radius: 22px; background: #fff; border: 1.5px solid var(--green); color: var(--green); font-size: 0; font-weight: 600; display: flex; align-items: center; justify-content: center; left: auto; padding: 0; box-sizing: border-box; overflow: visible; transition: box-shadow .12s, left .2s ease, right .2s ease; z-index: 45; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-user-drag: none; user-drag: none; }
   .dock.is-dragging { cursor: grabbing; transition: none; box-shadow: 0 10px 28px rgba(28,31,29,.18); z-index: 80; }
   .dock.is-placed { right: auto !important; bottom: auto !important; }
+  /* Resting positions: left/right edges only (chat-widget style). */
   .dock .dock-av { width: 32px; height: 32px; border-radius: 9px; object-fit: cover; display: block; flex: none; pointer-events: none; -webkit-user-drag: none; user-drag: none; user-select: none; -webkit-user-select: none; }
   .dock .count { position: absolute; left: 28.5px; top: -5.5px; width: 18px; height: 18px; border-radius: 9px; background: var(--green); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; pointer-events: none; user-select: none; }
   .dock .count:empty,
@@ -936,6 +937,7 @@
   .dock .dock-tip {
     position: absolute;
     right: calc(100% + 10px);
+    left: auto;
     top: 50%;
     transform: translateY(-50%) translateX(6px);
     display: none;
@@ -958,9 +960,18 @@
     opacity: 0;
     transition: opacity .18s ease, transform .18s ease;
   }
+  /* Docked on the left → tip opens toward the content (right). */
+  .dock.dock-side-left .dock-tip {
+    left: calc(100% + 10px);
+    right: auto;
+    transform: translateY(-50%) translateX(-6px);
+  }
   .dock.has-tip .dock-tip {
     display: inline-flex;
     opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+  .dock.has-tip.dock-side-left .dock-tip {
     transform: translateY(-50%) translateX(0);
   }
   .dock.is-dragging .dock-tip { opacity: .92; }
@@ -2796,7 +2807,7 @@
         <div class="acts" id="coachActs"></div>
       </div>
 
-      <button type="button" class="dock has-tip" id="dock" aria-label="Citta dock" aria-expanded="false" title="Drag to move · click to open" draggable="false">
+      <button type="button" class="dock has-tip dock-side-right" id="dock" aria-label="Citta dock" aria-expanded="false" title="Drag to left or right edge · click to open" draggable="false">
         <span class="dock-tip" id="dockTip" role="status">
           <span class="dock-tip-dot" aria-hidden="true"></span>
           <span class="dock-tip-msg" id="dockTipMsg">Deck “Lecture 4 summary” is ready</span>
@@ -5228,35 +5239,64 @@
       return { x: (clientX - fr.left) / s, y: (clientY - fr.top) / s };
     }
 
-    function tipGutter() {
-      if (!dock.classList.contains('has-tip')) return 0;
-      const tip = dock.querySelector('.dock-tip');
-      return tip && !tip.hidden ? (tip.offsetWidth || 0) + 12 : 0;
-    }
-
-    function clamp(left, top) {
+    /** Like Intercom / floating assistive balls: only left or right edge, never mid-page. */
+    function edgeXs() {
       const w = dock.offsetWidth || 44;
-      const h = dock.offsetHeight || 44;
-      const minL = 8 + tipGutter();
-      const maxL = Math.max(minL, frame.offsetWidth - w - 8);
-      const maxT = Math.max(8, frame.offsetHeight - h - 8);
-      return {
-        left: Math.min(maxL, Math.max(minL, left)),
-        top: Math.min(maxT, Math.max(8, top)),
-      };
+      const rail = frame.querySelector('.rail');
+      const railW = rail ? rail.offsetWidth : 52;
+      const leftX = Math.max(16, railW + 12);
+      const rightX = Math.max(leftX, frame.offsetWidth - w - 24);
+      return { leftX, rightX };
     }
 
-    function applyPos(left, top, { persist = false } = {}) {
-      const c = clamp(left, top);
-      dock.style.left = `${c.left}px`;
-      dock.style.top = `${c.top}px`;
+    function clampTop(top) {
+      const h = dock.offsetHeight || 44;
+      const maxT = Math.max(8, frame.offsetHeight - h - 8);
+      return Math.min(maxT, Math.max(8, top));
+    }
+
+    function pickSide(left) {
+      const { leftX, rightX } = edgeXs();
+      const mid = (leftX + rightX) / 2;
+      return left < mid ? 'left' : 'right';
+    }
+
+    function applySide(side, top, { persist = false } = {}) {
+      const { leftX, rightX } = edgeXs();
+      const s = side === 'left' ? 'left' : 'right';
+      const left = s === 'left' ? leftX : rightX;
+      const t = clampTop(top);
+      dock.style.left = `${left}px`;
+      dock.style.top = `${t}px`;
       dock.style.right = 'auto';
       dock.style.bottom = 'auto';
       dock.classList.add('is-placed');
+      dock.classList.toggle('dock-side-left', s === 'left');
+      dock.classList.toggle('dock-side-right', s === 'right');
       if (persist) {
-        try { localStorage.setItem(POS_KEY, JSON.stringify({ left: c.left, top: c.top })); } catch (_) { /* ignore */ }
+        try { localStorage.setItem(POS_KEY, JSON.stringify({ side: s, top: t })); } catch (_) { /* ignore */ }
       }
-      return c;
+      return { side: s, left, top: t };
+    }
+
+    function applyPos(left, top, { persist = false, snap = true } = {}) {
+      // Free X only while actively dragging; resting always snaps to an edge.
+      if (!snap && drag) {
+        const { leftX, rightX } = edgeXs();
+        const t = clampTop(top);
+        const L = Math.min(rightX, Math.max(leftX, left));
+        dock.style.left = `${L}px`;
+        dock.style.top = `${t}px`;
+        dock.style.right = 'auto';
+        dock.style.bottom = 'auto';
+        dock.classList.add('is-placed');
+        // Preview which edge it will stick to.
+        const side = pickSide(L);
+        dock.classList.toggle('dock-side-left', side === 'left');
+        dock.classList.toggle('dock-side-right', side === 'right');
+        return { left: L, top: t, side };
+      }
+      return applySide(pickSide(left), top, { persist });
     }
 
     function currentPos() {
@@ -5280,7 +5320,14 @@
         const raw = localStorage.getItem(POS_KEY);
         if (!raw) return;
         const p = JSON.parse(raw);
-        if (typeof p?.left === 'number' && typeof p?.top === 'number') applyPos(p.left, p.top);
+        if (p?.side === 'left' || p?.side === 'right') {
+          applySide(p.side, typeof p.top === 'number' ? p.top : currentPos().top);
+          return;
+        }
+        // Migrate older free {left,top} — force to nearest edge.
+        if (typeof p?.left === 'number' && typeof p?.top === 'number') {
+          applySide(pickSide(p.left), p.top, { persist: true });
+        }
       } catch (_) { /* ignore */ }
     }
 
@@ -5304,7 +5351,8 @@
       }
       if (!drag.moved) return;
       e.preventDefault();
-      applyPos(drag.origLeft + dx, drag.origTop + dy);
+      // Drag freely in Y; X stays between the two edges, tip flips as you cross mid.
+      applyPos(drag.origLeft + dx, drag.origTop + dy, { snap: false });
     }
 
     function onMouseMove(e) {
@@ -5332,7 +5380,8 @@
       }
       dock.classList.remove('is-dragging');
       if (wasMoved) {
-        applyPos(parseFloat(dock.style.left) || 0, parseFloat(dock.style.top) || 0, { persist: true });
+        // Force stick to left or right — never rest in the middle.
+        applyPos(parseFloat(dock.style.left) || 0, parseFloat(dock.style.top) || 0, { persist: true, snap: true });
         suppressClick = true;
       } else {
         setCittaExpanded(!cittaExpanded);
@@ -5419,7 +5468,8 @@
     syncDockNotice();
     window.addEventListener('resize', () => {
       if (!dock.classList.contains('is-placed')) return;
-      applyPos(parseFloat(dock.style.left) || 0, parseFloat(dock.style.top) || 0, { persist: true });
+      const side = dock.classList.contains('dock-side-left') ? 'left' : 'right';
+      applySide(side, parseFloat(dock.style.top) || 0, { persist: true });
     }, { passive: true });
   })();
   $('cittaPanelClose').addEventListener('click', () => setCittaExpanded(false));
