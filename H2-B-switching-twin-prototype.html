@@ -5084,18 +5084,19 @@
       console.error('[dock-drag] missing dock or frame');
       return;
     }
-    dock.dataset.dockDrag = '1';
     const av = dock.querySelector('.dock-av');
     // Kill native <img> drag (ghost icon) — otherwise custom move never runs.
     dock.draggable = false;
     if (av) {
       av.draggable = false;
       av.setAttribute('draggable', 'false');
-      av.addEventListener('dragstart', (e) => e.preventDefault());
     }
-    dock.addEventListener('dragstart', (e) => e.preventDefault());
-    // Capture-phase: stop native drag even if it starts on a child.
-    dock.addEventListener('dragstart', (e) => e.preventDefault(), true);
+    function killNativeDrag(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    dock.addEventListener('dragstart', killNativeDrag, true);
+    av?.addEventListener('dragstart', killNativeDrag, true);
 
     function frameScale() {
       const fr = frame.getBoundingClientRect();
@@ -5185,8 +5186,20 @@
       onMove(e);
     }
 
+    function abortDrag() {
+      if (!drag) return;
+      const pid = drag.pointerId;
+      unbindDoc();
+      if (pid != null) {
+        try { dock.releasePointerCapture(pid); } catch (_) { /* ignore */ }
+      }
+      dock.classList.remove('is-dragging');
+      drag = null;
+    }
+
     function finish(wasMoved) {
-      const pid = drag?.pointerId;
+      if (!drag) return;
+      const pid = drag.pointerId;
       unbindDoc();
       if (pid != null) {
         try { dock.releasePointerCapture(pid); } catch (_) { /* ignore */ }
@@ -5201,6 +5214,11 @@
       }
       drag = null;
     }
+
+    dock.addEventListener('lostpointercapture', () => {
+      if (drag?.via === 'pointer') finish(!!drag.moved);
+    });
+    window.addEventListener('blur', abortDrag);
 
     function onUp(e) {
       if (!drag) return;
