@@ -928,8 +928,71 @@
   .dock.is-placed { right: auto !important; bottom: auto !important; }
   .dock .dock-av { width: 32px; height: 32px; border-radius: 9px; object-fit: cover; display: block; flex: none; pointer-events: none; -webkit-user-drag: none; user-drag: none; user-select: none; -webkit-user-select: none; }
   .dock .count { position: absolute; left: 28.5px; top: -5.5px; width: 18px; height: 18px; border-radius: 9px; background: var(--green); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; pointer-events: none; user-select: none; }
+  .dock .count:empty,
+  .dock .count[data-n="0"] { display: none; }
   .dock .sw { position: absolute; left: 12.5px; top: 34.5px; width: 16px; height: 16px; border-radius: 8px; background: #fff; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; color: var(--muted); cursor: pointer; touch-action: manipulation; }
   .dock .sw:hover { border-color: var(--green); color: var(--green); }
+  /* Message reminder pill — pops out to the left of the avatar when count > 0. */
+  .dock .dock-tip {
+    position: absolute;
+    right: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%) translateX(6px);
+    display: none;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 14px 0 12px;
+    box-sizing: border-box;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    white-space: nowrap;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--ink);
+    box-shadow: 0 4px 14px rgba(28, 31, 29, .08);
+    pointer-events: auto;
+    cursor: default;
+    opacity: 0;
+    transition: opacity .18s ease, transform .18s ease;
+  }
+  .dock.has-tip .dock-tip {
+    display: inline-flex;
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+  .dock.is-dragging .dock-tip { opacity: .92; }
+  .dock .dock-tip-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    flex: none;
+  }
+  .dock .dock-tip-msg {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink);
+    max-width: 260px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .dock .dock-tip-act {
+    flex: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background: none;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--green);
+    cursor: pointer;
+    line-height: 1.3;
+  }
+  .dock .dock-tip-act:hover { color: var(--green-dark); }
   .toast { position: absolute; left: 50%; top: 1240px; transform: translate(-50%, 8px); background: var(--toast); color: #fff; font-size: 13px; padding: 10px 16px 10px 14px; border-radius: 12px; display: flex; gap: 10px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; }
   .toast.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
   .toast button { color: var(--toast-link); font-weight: 600; }
@@ -2733,8 +2796,14 @@
         <div class="acts" id="coachActs"></div>
       </div>
 
-      <button type="button" class="dock" id="dock" aria-label="Citta dock" aria-expanded="false" title="Drag to move · click to open" draggable="false"><img class="dock-av" src="assets/citta-avatar.png" width="32" height="32" alt="" draggable="false">
-        <span class="count">3</span>
+      <button type="button" class="dock has-tip" id="dock" aria-label="Citta dock" aria-expanded="false" title="Drag to move · click to open" draggable="false">
+        <span class="dock-tip" id="dockTip" role="status">
+          <span class="dock-tip-dot" aria-hidden="true"></span>
+          <span class="dock-tip-msg" id="dockTipMsg">Deck “Lecture 4 summary” is ready</span>
+          <span class="dock-tip-act" id="dockTipAct" role="link" tabindex="0">Review →</span>
+        </span>
+        <img class="dock-av" src="assets/citta-avatar.png" width="32" height="32" alt="" draggable="false">
+        <span class="count" data-n="2">2</span>
         <span class="sw" id="dockSwitch" role="button" tabindex="0" aria-label="Switch who you’re working with"><svg class="switch-ico" width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M96 416h832c0.32 0 0.576-0.192 0.896-0.192a30.656 30.656 0 0 0 30.976-30.976c-0.064-0.256 0.128-0.512 0.128-0.832a31.424 31.424 0 0 0-14.912-26.368l-188.48-188.48a30.72 30.72 0 1 0-43.456 43.456L852.544 352H96a32 32 0 0 0 0 64z m832 192H96c-0.32 0-0.576 0.192-0.896 0.192a30.528 30.528 0 0 0-30.976 30.976c0.064 0.256-0.128 0.512-0.128 0.832 0 11.264 6.144 20.672 14.912 26.368l188.48 188.48a30.72 30.72 0 1 0 43.456-43.456L171.456 672H928a32 32 0 0 0 0-64z" fill="currentColor"/></svg></span>
       </button>
 
@@ -4933,8 +5002,7 @@
     // Seed Doc only while coaching the starter task — not after “I’ll explore myself”.
     if (next === 'tutorial' && !tutorialExploring) setComposerToolSelection('doc');
     else if (next === 'tutorial' && tutorialExploring) setComposerToolSelection(null);
-    const dockCount = dock.querySelector('.count');
-    if (dockCount) dockCount.textContent = next === 'welcome' ? '2' : '3';
+    syncDockNotice(next);
     if (next === 'welcome') {
       requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'auto' }));
     }
@@ -5041,6 +5109,29 @@
     else frame.removeAttribute('data-dock-home');
   }
 
+  /** Badge + left-side reminder pill when Citta has unread messages. */
+  const DOCK_NOTICES = {
+    welcome: { n: 2, msg: 'Deck “Lecture 4 summary” is ready' },
+    home: { n: 3, msg: 'Deck “Lecture 4 summary” is ready' },
+    handoff: { n: 2, msg: 'Deck “Lecture 4 summary” is ready' },
+  };
+
+  function syncDockNotice(forScreen = screen) {
+    const dockCount = dock.querySelector('.count');
+    const tip = $('dockTip');
+    const tipMsg = $('dockTipMsg');
+    const notice = DOCK_NOTICES[forScreen];
+    const n = notice?.n || 0;
+    if (dockCount) {
+      dockCount.textContent = n > 0 ? String(n) : '';
+      dockCount.dataset.n = String(n);
+    }
+    if (tipMsg && notice?.msg) tipMsg.textContent = notice.msg;
+    const showTip = n > 0 && isDockHomeScreen() && !cittaExpanded;
+    dock.classList.toggle('has-tip', showTip);
+    if (tip) tip.hidden = !showTip;
+  }
+
   function setCittaExpanded(open) {
     cittaExpanded = open;
     frame.classList.toggle('citta-open', open);
@@ -5049,6 +5140,7 @@
     // Avatar dock only while the side panel is closed.
     dock.hidden = !!open;
     if (open) dock.classList.remove('is-dragging');
+    syncDockNotice();
     document.querySelectorAll('[data-panel]').forEach((b) => {
       const on = (b.dataset.panel === 'expanded' && open) || (b.dataset.panel === 'dock' && !open);
       b.setAttribute('aria-pressed', String(on));
@@ -5088,6 +5180,17 @@
     e.stopPropagation();
     openCittaSwitcher();
   });
+  const dockTipAct = $('dockTipAct');
+  function reviewDockNotice(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    setCittaExpanded(true);
+  }
+  dockTipAct?.addEventListener('click', reviewDockNotice);
+  dockTipAct?.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    reviewDockNotice(e);
+  });
 
   /** Drag Citta dock bubble; short click still expands/collapses the panel. */
   (function initDockDrag() {
@@ -5125,13 +5228,20 @@
       return { x: (clientX - fr.left) / s, y: (clientY - fr.top) / s };
     }
 
+    function tipGutter() {
+      if (!dock.classList.contains('has-tip')) return 0;
+      const tip = dock.querySelector('.dock-tip');
+      return tip && !tip.hidden ? (tip.offsetWidth || 0) + 12 : 0;
+    }
+
     function clamp(left, top) {
       const w = dock.offsetWidth || 44;
       const h = dock.offsetHeight || 44;
-      const maxL = Math.max(8, frame.offsetWidth - w - 8);
+      const minL = 8 + tipGutter();
+      const maxL = Math.max(minL, frame.offsetWidth - w - 8);
       const maxT = Math.max(8, frame.offsetHeight - h - 8);
       return {
-        left: Math.min(maxL, Math.max(8, left)),
+        left: Math.min(maxL, Math.max(minL, left)),
         top: Math.min(maxT, Math.max(8, top)),
       };
     }
@@ -5273,7 +5383,7 @@
 
     dock.addEventListener('pointerdown', (e) => {
       if (e.button != null && e.button !== 0) return;
-      if (e.target.closest('#dockSwitch, .sw')) return;
+      if (e.target.closest('#dockSwitch, .sw, #dockTipAct, .dock-tip-act')) return;
       if (!isDockHomeScreen() || cittaExpanded) return;
       // Don't preventDefault here — it can block pointerup in some embeds.
       e.stopPropagation();
@@ -5283,7 +5393,7 @@
     // Fallback when Pointer Events aren't delivered (some webviews).
     dock.addEventListener('mousedown', (e) => {
       if (e.button !== 0) return;
-      if (e.target.closest('#dockSwitch, .sw')) return;
+      if (e.target.closest('#dockSwitch, .sw, #dockTipAct, .dock-tip-act')) return;
       if (!isDockHomeScreen() || cittaExpanded) return;
       if (drag) return;
       e.stopPropagation();
@@ -5291,7 +5401,7 @@
     });
 
     dock.addEventListener('click', (e) => {
-      if (e.target.closest('#dockSwitch, .sw')) return;
+      if (e.target.closest('#dockSwitch, .sw, #dockTipAct, .dock-tip-act')) return;
       if (!isDockHomeScreen()) return;
       if (suppressClick || openedByPointer) {
         e.preventDefault();
@@ -5306,6 +5416,7 @@
 
     restorePos();
     syncDockHomeAttr();
+    syncDockNotice();
     window.addEventListener('resize', () => {
       if (!dock.classList.contains('is-placed')) return;
       applyPos(parseFloat(dock.style.left) || 0, parseFloat(dock.style.top) || 0, { persist: true });
