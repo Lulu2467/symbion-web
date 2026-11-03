@@ -65,106 +65,52 @@
     /* Latin → Inter; CJK → Noto / system Chinese UI fonts (avoid ugly bitmap fallbacks). */
     --font: Inter, "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
   }
-  /* Blue theme, by prominence:
-     page and cards are gray / white; large chips and selected pills are blue-gray;
-     saturated blue stays on the send button, the dock, and links. */
+  /* Blue theme uses the same jobs as the green tokens: solid brand on buttons,
+     name, links and marks; pale brand on chips and strips; neutral page. */
   html[data-theme="blue"] {
-    --ink: #1a222d;
-    --ink-rgb: 26, 34, 45;
-    --info-em: #1a222d;
-    --muted: #5c6770;
-    --link-quiet: #5c6770;
-    --label: #8b949e;
-    --faint: #8b949e;
-    --placeholder: #8b949e;
-    --line: #e6e8eb;
-    --line-strong: #d5d9de;
-    --surface: #f3f4f6;
-    --surface-2: #e8ebef;
-    --canvas: #f2f3f5;
+    --ink: #1c2126;
+    --ink-rgb: 28, 33, 38;
+    --info-em: #0369a1;
+    --muted: #5e6b76;
+    --label: #5e6b76;
+    --link-quiet: #6d8ea3;
+    --quiet-bg: #f3f7fb;
+    --quiet-line: #c5d6e4;
+    --quiet-line-hover: #b7cce0;
+    --faint: #9aa3aa;
+    --placeholder: #7e8b94;
+    --line: #e2e6ea;
+    --line-strong: #cfd6dc;
+    --surface: #eef1f4;
+    --surface-2: #e8eef2;
+    --canvas: #f6f8fa;
     --frame-bg: #ffffff;
-    --rail-bg: #ffffff;
-    --presenter-bg: rgba(242, 243, 245, .94);
-    --quiet-bg: #f3f4f6;
-    --quiet-line: #e0e3e7;
-    --quiet-line-hover: #d0d5db;
+    --rail-bg: #fbfcfc;
+    --presenter-bg: rgba(246, 248, 250, .92);
     --green: #0a78b5;
     --green-dark: #0369a1;
-    --green-bubble: #e8edf2;
-    --green-mid: #9aa6b2;
-    --green-tint: #eef1f4;
-    --green-tint-hover: #e6eaee;
-    --green-tint-strong: #e4e8ed;
-    --green-soft: #e7ebef;
-    --green-soft-deep: #dde2e7;
-    --green-mist: #f5f6f8;
-    --green-line: #d5dbe2;
-    --green-wash: #f4f6f8;
-    --brand-rgb: 92, 103, 112;
-    --toast: #1a222d;
-    --toast-link: #9ec9e4;
-    --chat-frame: #e4e7eb;
-    --shadow-sage: rgba(26, 34, 45, .06);
-    --shadow-sage-deep: rgba(26, 34, 45, .10);
-    --shadow-card: rgba(26, 34, 45, .05);
-    --shadow-card-2: rgba(26, 34, 45, .06);
-    --sky: #8b97a3;
-    --sky-ink: #0a78b5;
+    --green-bubble: #2b88c4;
+    --green-mid: #7aa8c8;
+    --green-tint: #e7f5fc;
+    --green-tint-hover: #d9eef8;
+    --green-tint-strong: #d0e8f6;
+    --green-soft: #d4e9f6;
+    --green-soft-deep: #c9e3f4;
+    --green-mist: #f3f8fc;
+    --green-line: #b7d4ea;
+    --green-wash: #f5f9fc;
+    --brand-rgb: 10, 120, 181;
+    --toast: #1c2126;
+    --toast-link: #9fc4de;
+    --chat-frame: #c5d8e6;
+    --shadow-sage: rgba(70, 110, 140, .10);
+    --shadow-sage-deep: rgba(50, 90, 120, .14);
+    --shadow-card: rgba(28, 33, 38, .05);
+    --shadow-card-2: rgba(28, 33, 38, .06);
   }
-  html[data-theme="blue"] body { background: #f2f3f5; }
-  html[data-theme="blue"] .osbar { background: #fff; }
-  html[data-theme="blue"] .hello h2 span { color: var(--ink); }
-  html[data-theme="blue"] .link { color: var(--sky-ink); }
-  html[data-theme="blue"] .seg button[aria-pressed="true"],
-  html[data-theme="blue"] .presenter .tutorial-cta {
-    background: #e4e9ee;
-    color: var(--ink);
-    box-shadow: none;
-  }
-  html[data-theme="blue"] .presenter .tutorial-cta:hover { background: #d8dee4; }
-  html[data-theme="blue"] .pct,
-  html[data-theme="blue"] .pct.done { color: var(--ink); }
-  html[data-theme="blue"] .pct .bar span { background: var(--sky); }
-  html[data-theme="blue"] .chip .ic,
-  html[data-theme="blue"] .chip .ar { color: var(--muted); }
-  html[data-theme="blue"] .chip:hover { border-color: #c5ced6; }
-  html[data-theme="blue"] .interest.on { color: var(--ink); border-color: #c5ced6; }
-  html[data-theme="blue"] .picker:hover,
-  html[data-theme="blue"] .picker[aria-expanded="true"],
-  html[data-theme="blue"] .is-twin .picker[aria-expanded="true"] {
-    border-color: #c5ced6;
-    box-shadow: none;
-  }
-  html[data-theme="blue"] .rail .r.on,
-  html[data-theme="blue"] .rail.is-open .r.on { color: var(--ink); }
-  html[data-theme="blue"] .badge,
-  html[data-theme="blue"] .new-badge,
-  html[data-theme="blue"] .activity .row span,
-  html[data-theme="blue"] .rem .when.hot { color: var(--muted); }
-  html[data-theme="blue"] .btn-soft {
-    background: #e7f5fc;
-    color: #0a78b5;
-  }
-  html[data-theme="blue"] .btn-soft:hover { background: #d7eefb; }
-  html[data-theme="blue"] .btn-soft .spark-icon { color: #0a78b5; }
-  html[data-theme="blue"] .day .elapsed { background: #c5ced6; }
-  html[data-theme="blue"] .day .dot.fill { background: #8b97a3; }
-  html[data-theme="blue"] .day .dot.hollow { border-color: #8b97a3; }
-  html[data-theme="blue"] .day .tick.now-l { color: var(--muted); }
-  html[data-theme="blue"] .citta-panel .user-bubble {
-    background: #e8edf2;
-    border-color: #e8edf2;
-    color: var(--ink);
-  }
-  html[data-theme="blue"] .dock {
-    background: var(--green);
-    border-color: var(--green);
-    color: #fff;
-  }
-  html[data-theme="blue"] .dock .count { background: #1a222d; }
   html[data-theme="blue"] .course-banner {
-    background: #f4f6f8;
-    border-color: #e0e3e7;
+    background: #f2f7fb;
+    border-color: #e3ebf2;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; }
