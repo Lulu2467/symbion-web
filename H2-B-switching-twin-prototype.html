@@ -65,56 +65,56 @@
     /* Latin → Inter; CJK → Noto / system Chinese UI fonts (avoid ugly bitmap fallbacks). */
     --font: Inter, "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
   }
-  /* Blue theme. Saturated blue is the action color (buttons, name, selection).
-     Text steps down through blue-gray into gray: emphasis, body, labels, meta. */
+  /* Blue theme follows Feishu light UI.
+     Gray page, white cards, gray type. Blue only on buttons, links, and selection. */
   html[data-theme="blue"] {
-    --ink: #1a2330;
-    --ink-rgb: 26, 35, 48;
-    --info-em: #2f4458;
-    --muted: #4d5e6e;
-    --link-quiet: #62788c;
-    --label: #62707e;
-    --faint: #73808c;
-    --placeholder: #73808c;
-    --line: #d3e4ef;
-    --line-strong: #b9cfe0;
-    --surface: #eef1f4;
-    --surface-2: #e5e9ed;
-    --canvas: #d7e8f3;
-    --frame-bg: #e7f3fa;
-    --rail-bg: #f5fafd;
-    --presenter-bg: rgba(215, 232, 243, .94);
-    --quiet-bg: #eef2f5;
-    --quiet-line: #c5d0d8;
-    --quiet-line-hover: #b7c6d2;
-    --green: #1560a0;
-    --green-dark: #2f4458;
-    --green-bubble: #1b6cb8;
-    --green-mid: #8aa4b8;
-    --green-tint: #e7eef3;
-    --green-tint-hover: #dce6ee;
-    --green-tint-strong: #d3e0ea;
-    --green-soft: #d7e3ec;
-    --green-soft-deep: #cbd9e4;
-    --green-mist: #f3f6f8;
-    --green-line: #c5d1db;
-    --green-wash: #f6f8fa;
-    --brand-rgb: 21, 96, 160;
-    --toast: #1a2330;
-    --toast-link: #b7c9d8;
-    --chat-frame: #9ec0d6;
-    --shadow-sage: rgba(36, 52, 68, .10);
-    --shadow-sage-deep: rgba(28, 42, 56, .14);
-    --shadow-card: rgba(26, 35, 48, .05);
-    --shadow-card-2: rgba(26, 35, 48, .06);
+    --ink: #1f2329;
+    --ink-rgb: 31, 35, 41;
+    --info-em: #1f2329;
+    --muted: #646a73;
+    --link-quiet: #646a73;
+    --label: #8f959e;
+    --faint: #8f959e;
+    --placeholder: #8f959e;
+    --line: #dee0e3;
+    --line-strong: #d0d3d6;
+    --surface: #f5f6f7;
+    --surface-2: #eff0f1;
+    --canvas: #f2f3f5;
+    --frame-bg: #f5f6f7;
+    --rail-bg: #ffffff;
+    --presenter-bg: rgba(245, 246, 247, .94);
+    --quiet-bg: #f5f6f7;
+    --quiet-line: #dee0e3;
+    --quiet-line-hover: #d0d3d6;
+    --green: #1456f0;
+    --green-dark: #0442d2;
+    --green-bubble: #336df4;
+    --green-mid: #7aa2ff;
+    --green-tint: #f0f4ff;
+    --green-tint-hover: #e0e9ff;
+    --green-tint-strong: #e0e9ff;
+    --green-soft: #e0e9ff;
+    --green-soft-deep: #c2d4ff;
+    --green-mist: #f0f4ff;
+    --green-line: #c2d4ff;
+    --green-wash: #f5f6f7;
+    --brand-rgb: 20, 86, 240;
+    --toast: #1f2329;
+    --toast-link: #94b4ff;
+    --chat-frame: #dee0e3;
+    --shadow-sage: rgba(31, 35, 41, .06);
+    --shadow-sage-deep: rgba(31, 35, 41, .10);
+    --shadow-card: rgba(31, 35, 41, .05);
+    --shadow-card-2: rgba(31, 35, 41, .06);
   }
-  html[data-theme="blue"] .day .tick.now-l,
+  html[data-theme="blue"] .osbar { background: #fff; }
+  html[data-theme="blue"] .hello h2 span { color: var(--ink); }
+  html[data-theme="blue"] .link { color: #1c4cba; }
+  html[data-theme="blue"] .pct,
+  html[data-theme="blue"] .pct.done { color: var(--ink); }
   html[data-theme="blue"] .chip .ic,
-  html[data-theme="blue"] .chip .ar,
-  html[data-theme="blue"] .two-title-r .new-badge,
-  html[data-theme="blue"] .activity .row span {
-    color: var(--info-em);
-  }
+  html[data-theme="blue"] .chip .ar { color: var(--muted); }
   * { box-sizing: border-box; }
   html, body { margin: 0; }
   body { background: var(--canvas); font-family: var(--font); color: var(--ink); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
