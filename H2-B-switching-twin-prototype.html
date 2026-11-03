@@ -194,7 +194,7 @@
   /* Match open nav icon inset (row pad 10px) so avatars don’t slide sideways on expand. */
   .rail.is-open .p { align-self: flex-start; margin-left: 10px; }
 
-  .main { flex: 1; min-width: 0; position: relative; background: var(--frame-bg); }
+  .main { flex: 1; min-width: 0; position: relative; background: var(--canvas); }
   .logo-row { display: flex; align-items: center; padding: 26px var(--page-gutter); gap: 12px; }
   .logo { flex: none; display: inline-flex; align-items: center; gap: 12px; font-size: 18px; font-weight: 500; line-height: 1; color: var(--ink); }
   /* Figma symbion · 76:22 Union mark (spark + ribbon) */
@@ -237,21 +237,40 @@
   .day .tick { position: absolute; top: 58px; color: var(--faint); }
   .day .tick.now-l { left: 34px; color: var(--green); font-weight: 500; }
 
-  /* Composer (the hero) */
-  /* Chat shell: muted grey-green frame — not bright brand green. */
+  /* Composer: frosted panel, the way a macOS material sits above the page.
+     A light edge, a translucent fill, and a soft shadow — not a solid border. */
   .composer {
     position: relative;
     z-index: 2;
     isolation: isolate;
-    background: #fff;
-    border: 1.5px solid var(--chat-frame);
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.82);
     border-radius: 24px;
-    box-shadow: 0 1px 3px var(--shadow-sage), 0 6px 18px var(--shadow-sage-deep);
+    backdrop-filter: blur(22px) saturate(1.4);
+    -webkit-backdrop-filter: blur(22px) saturate(1.4);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.92),
+      0 0 0 1px rgba(20, 24, 28, 0.08),
+      0 14px 36px rgba(20, 24, 28, 0.10),
+      0 2px 8px rgba(20, 24, 28, 0.05);
+    transition: box-shadow .22s ease, transform .22s ease;
   }
-  /* Keep grey-green on focus — no brand-green ring. */
+  .composer:hover,
   .composer:focus-within {
-    border-color: var(--chat-frame);
-    box-shadow: 0 1px 3px var(--shadow-sage), 0 6px 18px var(--shadow-sage-deep);
+    transform: translateY(-2px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.96),
+      0 0 0 1px rgba(20, 24, 28, 0.10),
+      0 24px 52px rgba(20, 24, 28, 0.14),
+      0 6px 14px rgba(20, 24, 28, 0.06);
+  }
+  .composer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 32%);
   }
   /* Menu lives inside .composer; raise the whole composer so week-tool cards don’t paint over it. */
   .composer:has(.menu.open),
@@ -380,12 +399,13 @@
   /* Soft ask well: placeholder on top, + and send on the bottom row. */
   .composer .ask-row {
     --ask-inset: 14px;
-    background: #fafbfa;
+    background: rgba(255, 255, 255, 0.58);
     border-radius: 20px;
     padding: var(--ask-inset);
     margin: 0;
     display: block;
     box-sizing: border-box;
+    box-shadow: inset 0 0 0 1px rgba(20, 24, 28, 0.04), inset 0 1px 2px rgba(20, 24, 28, 0.03);
   }
   .ask-field { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
   /* Kimi-style: chips sit on the same line as typed text — no extra row that jumps the box.
@@ -521,7 +541,7 @@
     line-height: 1.2;
   }
   [hidden] { display: none !important; }
-  .composer .foot { background: #fff; border-top: 0; padding: 14px 28px 18px; display: flex; gap: 12px; align-items: center; border-radius: 0 0 22px 22px; }
+  .composer .foot { position: relative; z-index: 1; background: transparent; border-top: 0; padding: 14px 28px 18px; display: flex; gap: 12px; align-items: center; border-radius: 0 0 22px 22px; }
   .foot .k { padding-top: 0; font-size: 11px; font-weight: 600; letter-spacing: .88px; color: var(--label); white-space: nowrap; flex: none; }
   .foot .wrap { display: flex; flex-wrap: nowrap; gap: 12px; align-items: center; flex: 1; min-width: 0; }
   .foot #composerContinue { overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
