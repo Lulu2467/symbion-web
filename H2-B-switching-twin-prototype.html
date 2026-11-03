@@ -65,56 +65,70 @@
     /* Latin → Inter; CJK → Noto / system Chinese UI fonts (avoid ugly bitmap fallbacks). */
     --font: Inter, "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
   }
-  /* Blue theme follows Feishu light UI.
-     Gray page, white cards, gray type. Blue only on buttons, links, and selection. */
+  /* Blue theme follows the sky reference:
+     pale sky behind the page, white cards, black primary buttons.
+     Bright sky blue only on the floating button, links, and thin marks. */
   html[data-theme="blue"] {
-    --ink: #1f2329;
-    --ink-rgb: 31, 35, 41;
-    --info-em: #1f2329;
-    --muted: #646a73;
-    --link-quiet: #646a73;
-    --label: #8f959e;
-    --faint: #8f959e;
-    --placeholder: #8f959e;
-    --line: #dee0e3;
-    --line-strong: #d0d3d6;
-    --surface: #f5f6f7;
-    --surface-2: #eff0f1;
-    --canvas: #f2f3f5;
-    --frame-bg: #f5f6f7;
+    --ink: #121212;
+    --ink-rgb: 18, 18, 18;
+    --info-em: #121212;
+    --muted: #6b6b6b;
+    --link-quiet: #6b6b6b;
+    --label: #8a8a8a;
+    --faint: #8a8a8a;
+    --placeholder: #8a8a8a;
+    --line: #e6eef3;
+    --line-strong: #d5e0e8;
+    --surface: #f3f7fa;
+    --surface-2: #eaf1f6;
+    --canvas: #d4eefb;
+    --frame-bg: #ffffff;
     --rail-bg: #ffffff;
-    --presenter-bg: rgba(245, 246, 247, .94);
-    --quiet-bg: #f5f6f7;
-    --quiet-line: #dee0e3;
-    --quiet-line-hover: #d0d3d6;
-    --green: #1456f0;
-    --green-dark: #0442d2;
-    --green-bubble: #336df4;
-    --green-mid: #7aa2ff;
-    --green-tint: #f0f4ff;
-    --green-tint-hover: #e0e9ff;
-    --green-tint-strong: #e0e9ff;
-    --green-soft: #e0e9ff;
-    --green-soft-deep: #c2d4ff;
-    --green-mist: #f0f4ff;
-    --green-line: #c2d4ff;
-    --green-wash: #f5f6f7;
-    --brand-rgb: 20, 86, 240;
-    --toast: #1f2329;
-    --toast-link: #94b4ff;
-    --chat-frame: #dee0e3;
-    --shadow-sage: rgba(31, 35, 41, .06);
-    --shadow-sage-deep: rgba(31, 35, 41, .10);
-    --shadow-card: rgba(31, 35, 41, .05);
-    --shadow-card-2: rgba(31, 35, 41, .06);
+    --presenter-bg: rgba(255, 255, 255, .88);
+    --quiet-bg: #f4f8fb;
+    --quiet-line: #e6eef3;
+    --quiet-line-hover: #d5e0e8;
+    --green: #111111;
+    --green-dark: #000000;
+    --green-bubble: #1a1a1a;
+    --green-mid: #7ec8f0;
+    --green-tint: #e8f6fd;
+    --green-tint-hover: #d7eefb;
+    --green-tint-strong: #d7eefb;
+    --green-soft: #e3f3fc;
+    --green-soft-deep: #cde9f8;
+    --green-mist: #f4fafe;
+    --green-line: #c5e4f6;
+    --green-wash: #f4fafe;
+    --brand-rgb: 17, 17, 17;
+    --toast: #121212;
+    --toast-link: #8ecfff;
+    --chat-frame: #e4e9ee;
+    --shadow-sage: rgba(20, 60, 90, .08);
+    --shadow-sage-deep: rgba(20, 60, 90, .12);
+    --shadow-card: rgba(20, 60, 90, .06);
+    --shadow-card-2: rgba(20, 60, 90, .08);
+    --sky: #00a2ff;
+    --sky-ink: #0078d4;
+  }
+  html[data-theme="blue"] body {
+    background: linear-gradient(180deg, #c5e6f8 0%, #eef6fc 46%, #f7fbfe 100%);
   }
   html[data-theme="blue"] .osbar { background: #fff; }
   html[data-theme="blue"] .hello h2 span { color: var(--ink); }
-  html[data-theme="blue"] .link { color: #1c4cba; }
+  html[data-theme="blue"] .link { color: var(--sky-ink); }
   html[data-theme="blue"] .pct,
   html[data-theme="blue"] .pct.done { color: var(--ink); }
+  html[data-theme="blue"] .pct .bar span { background: var(--sky); }
   html[data-theme="blue"] .chip .ic,
   html[data-theme="blue"] .chip .ar { color: var(--muted); }
+  html[data-theme="blue"] .interest.on { color: var(--ink); border-color: var(--green-line); }
+  html[data-theme="blue"] .dock {
+    background: var(--sky);
+    border-color: var(--sky);
+    color: #fff;
+  }
+  html[data-theme="blue"] .dock .count { background: #111; }
   * { box-sizing: border-box; }
   html, body { margin: 0; }
   body { background: var(--canvas); font-family: var(--font); color: var(--ink); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
@@ -499,8 +513,8 @@
   .tool.sel[data-tool="doc"]:hover { background: #dbe4f4; }
   .tool.sel[data-tool="deck"] { background: var(--amber-tint); border-color: rgba(154,91,7,.45); }
   .tool.sel[data-tool="deck"]:hover { background: #f6e6c8; }
-  .tool.sel[data-tool="numbers"] { background: var(--green-tint); border-color: var(--green); }
-  .tool.sel[data-tool="numbers"]:hover { background: var(--green-soft); }
+  .tool.sel[data-tool="numbers"] { background: #e6f2eb; border-color: #008b68; }
+  .tool.sel[data-tool="numbers"]:hover { background: #d4ebe0; }
   .tool.sel[data-tool="symtex"] { background: var(--purple-tint); border-color: rgba(107,63,160,.45); }
   .tool.sel[data-tool="symtex"]:hover { background: #e8dff2; }
   .tool.sel[data-tool="code"] { background: var(--slate-tint); border-color: rgba(55,71,79,.45); }
@@ -3608,7 +3622,7 @@
   const COMPOSER_TOOL_META = {
     doc: { label: 'Doc', iconHtml: DOC_ICON_SVG, bg: 'var(--blue-tint)', color: 'var(--blue)' },
     deck: { label: 'Deck', iconHtml: DECK_ICON_SVG, bg: 'var(--amber-tint)', color: 'var(--amber)' },
-    numbers: { label: 'Numbers', iconHtml: NUMBERS_ICON_SVG, bg: 'var(--green-tint)', color: 'var(--green)' },
+    numbers: { label: 'Numbers', iconHtml: NUMBERS_ICON_SVG, bg: '#e6f2eb', color: '#008b68' },
     symtex: { label: 'SymTex', icon: 'Σ', bg: 'var(--purple-tint)', color: 'var(--purple)' },
     code: { label: 'Code', iconHtml: CODE_ICON_SVG, bg: 'var(--slate-tint)', color: 'var(--slate)' }
   };
@@ -5893,7 +5907,7 @@
     );
     paintToolGlyph(
       '.week-card[data-tool="numbers"] > .row > i, .tutorial-try-card[data-tool="numbers"] .trow > i, .try-card[data-tool="numbers"] .bot .row > i, #composerTools .tool[data-tool="numbers"] > i, .tpl[data-goal-tool="numbers"] .h > i',
-      NUMBERS_ICON_SVG, 'var(--green-tint)', 'var(--green)'
+      NUMBERS_ICON_SVG, '#e6f2eb', '#008b68'
     );
     paintToolGlyph(
       '.week-card[data-tool="code"] > .row > i, .tutorial-try-card[data-tool="code"] .trow > i, .try-card[data-tool="code"] .bot .row > i, #composerTools .tool[data-tool="code"] > i, .tpl[data-goal-tool="code"] .h > i',
