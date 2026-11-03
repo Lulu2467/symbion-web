@@ -55,6 +55,7 @@
     --toast: #1c1f1d;
     --toast-link: #9fd3bc;
     --canvas: #f7f8f6;
+    --frame-bg: #fff;
     --page-gutter: 56px;
     /* Chat shell / Citta ask capsule — sage grey-green from frame reference. */
     --chat-frame: #c4dad3;
@@ -75,13 +76,14 @@
     --label: #62707e;
     --faint: #73808c;
     --placeholder: #73808c;
-    --line: #e2e6ea;
-    --line-strong: #cfd5db;
+    --line: #d3e4ef;
+    --line-strong: #b9cfe0;
     --surface: #eef1f4;
     --surface-2: #e5e9ed;
-    --canvas: #f3f5f7;
-    --rail-bg: #f6f7f8;
-    --presenter-bg: rgba(243, 245, 247, .92);
+    --canvas: #d7e8f3;
+    --frame-bg: #e7f3fa;
+    --rail-bg: #f5fafd;
+    --presenter-bg: rgba(215, 232, 243, .94);
     --quiet-bg: #eef2f5;
     --quiet-line: #c5d0d8;
     --quiet-line-hover: #b7c6d2;
@@ -100,7 +102,7 @@
     --brand-rgb: 21, 96, 160;
     --toast: #1a2330;
     --toast-link: #b7c9d8;
-    --chat-frame: #c4ced6;
+    --chat-frame: #9ec0d6;
     --shadow-sage: rgba(36, 52, 68, .10);
     --shadow-sage-deep: rgba(28, 42, 56, .14);
     --shadow-card: rgba(26, 35, 48, .05);
@@ -126,7 +128,8 @@
 
   /* Presenter bar */
   .presenter { position: sticky; top: 0; z-index: 50; background: var(--presenter-bg); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); padding: 12px 52px 12px 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-  .presenter .theme-seg { margin-left: 4px; }
+  .presenter .theme-label { font-size: 12px; font-weight: 600; color: var(--ink); margin-left: 8px; }
+  .presenter .theme-seg { margin-left: 0; }
   .presenter h1 { font-size: 15px; font-weight: 600; margin: 0 12px 0 0; }
   .seg { display: inline-flex; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 3px; gap: 2px; }
   .seg button { font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 999px; color: var(--muted); }
@@ -140,9 +143,9 @@
   /* Stage that scales the 1440px frame to fit */
   .stage { padding: 24px 16px 48px; }
   .scaler { width: 1440px; transform-origin: top left; }
-  .frame { position: relative; width: 1440px; background: #fff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .frame { position: relative; width: 1440px; background: var(--frame-bg); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
 
-  .osbar { display: flex; gap: 16px; align-items: center; justify-content: flex-start; padding: 8px var(--page-gutter) 8px 16px; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .osbar { display: flex; gap: 16px; align-items: center; justify-content: flex-start; padding: 8px var(--page-gutter) 8px 16px; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--muted); line-height: 1.4; background: var(--frame-bg); }
   .osbar .sp { flex: 1; }
   /* One optical size for every osbar glyph (14×14), so the row reads neat. */
   .osbar-ico { width: 14px; height: 14px; display: block; flex: none; }
@@ -186,7 +189,7 @@
   /* Match open nav icon inset (row pad 10px) so avatars don’t slide sideways on expand. */
   .rail.is-open .p { align-self: flex-start; margin-left: 10px; }
 
-  .main { flex: 1; min-width: 0; position: relative; }
+  .main { flex: 1; min-width: 0; position: relative; background: var(--frame-bg); }
   .logo-row { display: flex; align-items: center; padding: 26px var(--page-gutter); gap: 12px; }
   .logo { flex: none; display: inline-flex; align-items: center; gap: 12px; font-size: 18px; font-weight: 500; line-height: 1; color: var(--ink); }
   /* Figma symbion · 76:22 Union mark (spark + ribbon) */
@@ -2190,6 +2193,7 @@
     <button type="button" data-screen="welcome" aria-pressed="true">过几天来</button>
     <button type="button" data-screen="home" aria-pressed="false">平时在用</button>
   </div>
+  <span class="theme-label">配色</span>
   <div class="seg theme-seg" role="group" aria-label="主题色">
     <button type="button" data-theme-pick="green" aria-pressed="true">绿色</button>
     <button type="button" data-theme-pick="blue" aria-pressed="false">蓝色</button>
@@ -2215,6 +2219,10 @@
         <button type="button" class="osbar-bm" aria-label="Open arXiv" data-osbar="arxiv"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7l-5-5Zm-1 0v5h5M8 13h8M8 17h6M8 9h2"/></svg><span>arXiv</span></button>
         <button type="button" class="osbar-bm" aria-label="Open Notion" data-osbar="notion"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3zM16 12h2M16 8h2M6 12h2M6 8h2"/></svg><span>Notion</span></button>
         <span class="sp"></span>
+        <div class="seg theme-seg" role="group" aria-label="主题色">
+          <button type="button" data-theme-pick="green" aria-pressed="true">绿色</button>
+          <button type="button" data-theme-pick="blue" aria-pressed="false">蓝色</button>
+        </div>
         <button type="button" class="osbar-app" aria-label="Desk" data-osbar="desk"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.8V20a1 1 0 0 0 1 1h4.5v-6h3v6H18a1 1 0 0 0 1-1V9.8"/></svg><span>Desk</span></button>
         <button type="button" class="osbar-app" aria-label="Symbion" data-osbar="symbion"><span class="av-s" aria-hidden="true">S</span><span>Symbion</span></button>
       </div>
