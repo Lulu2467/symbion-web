@@ -65,53 +65,61 @@
     /* Latin → Inter; CJK → Noto / system Chinese UI fonts (avoid ugly bitmap fallbacks). */
     --font: Inter, "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
   }
-  /* Blue theme uses the same jobs as the green tokens: solid brand on buttons,
-     name, links and marks; pale brand on chips and strips; neutral page. */
+  /* Blue theme follows the advisor card: black sentences, one gray for
+     secondary lines, steel blue only on a name, a keyword, and a status chip.
+     Page and cards stay neutral. Green tokens above are unchanged. */
   html[data-theme="blue"] {
-    --ink: #141418;
-    --ink-rgb: 20, 20, 24;
-    --info-em: #0369a1;
-    --muted: #6e7680;
-    --label: #686868;
-    --link-quiet: #5c6570;
-    --quiet-bg: #f3f7fb;
-    --quiet-line: #c5d6e4;
-    --quiet-line-hover: #b7cce0;
-    --faint: #78808c;
-    --placeholder: #88929c;
-    --line: #e2e6ea;
-    --line-strong: #cfd6dc;
-    --surface: #eef1f4;
-    --surface-2: #e8eef2;
-    --canvas: #f6f8fa;
+    --ink: #000000;
+    --ink-rgb: 0, 0, 0;
+    --info-em: #3c7a94;
+    --muted: #656d76;
+    --label: #71777d;
+    --link-quiet: #656d76;
+    --quiet-bg: #f0f2f4;
+    --quiet-line: #e2e4e7;
+    --quiet-line-hover: #d5d8dc;
+    --faint: #71777d;
+    --placeholder: #7b838d;
+    --line: #e6e8ec;
+    --line-strong: #d0d4d8;
+    --surface: #f1f2f4;
+    --surface-2: #f0f2f4;
+    --canvas: #f8f8f8;
     --frame-bg: #ffffff;
-    --rail-bg: #fbfcfc;
-    --presenter-bg: rgba(246, 248, 250, .92);
-    --green: #0a78b5;
-    --green-dark: #0369a1;
-    --green-bubble: #2b88c4;
-    --green-mid: #7aa8c8;
-    --green-tint: #e7f5fc;
-    --green-tint-hover: #d9eef8;
-    --green-tint-strong: #d0e8f6;
-    --green-soft: #d4e9f6;
-    --green-soft-deep: #c9e3f4;
-    --green-mist: #f3f8fc;
-    --green-line: #b7d4ea;
-    --green-wash: #f5f9fc;
-    --brand-rgb: 10, 120, 181;
-    --toast: #141418;
-    --toast-link: #9fc4de;
-    --chat-frame: #c5d8e6;
-    --shadow-sage: rgba(70, 110, 140, .10);
-    --shadow-sage-deep: rgba(50, 90, 120, .14);
-    --shadow-card: rgba(28, 33, 38, .05);
-    --shadow-card-2: rgba(28, 33, 38, .06);
+    --rail-bg: #f8f8f8;
+    --presenter-bg: rgba(248, 248, 248, .92);
+    --green: #3c7a94;
+    --green-dark: #316479;
+    --green-bubble: #3c7a94;
+    --green-mid: #8aa3b0;
+    --green-tint: #ebf5fa;
+    --green-tint-hover: #ddecf3;
+    --green-tint-strong: #d0e4ee;
+    --green-soft: #d7e8f0;
+    --green-soft-deep: #c9dfe9;
+    --green-mist: #f4f7f8;
+    --green-line: #c5d6e0;
+    --green-wash: #f4f8fa;
+    --brand-rgb: 60, 122, 148;
+    --toast: #000000;
+    --toast-link: #a9c7d4;
+    --chat-frame: #e2e4e7;
+    --shadow-sage: rgba(0, 0, 0, .06);
+    --shadow-sage-deep: rgba(0, 0, 0, .10);
+    --shadow-card: rgba(0, 0, 0, .05);
+    --shadow-card-2: rgba(0, 0, 0, .06);
   }
+  html[data-theme="blue"] .hello p,
+  html[data-theme="blue"] .day .evt { color: var(--ink); }
+  html[data-theme="blue"] .hello p .lead { color: var(--ink); }
+  html[data-theme="blue"] .hello p b,
+  html[data-theme="blue"] .day .evt b { color: var(--info-em); }
   html[data-theme="blue"] .course-banner {
-    background: #f2f7fb;
-    border-color: #e3ebf2;
+    background: #ebf5fa;
+    border-color: #d5e5ed;
   }
+  /* Theme tokens change instantly. A background transition would keep the previous tint. */
+  html.theme-swap, html.theme-swap * { transition: none !important; }
   * { box-sizing: border-box; }
   html, body { margin: 0; }
   body { background: var(--canvas); font-family: var(--font); color: var(--ink); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
@@ -5367,8 +5375,12 @@
   const dock = $('dock');
   function applyTheme(theme) {
     const next = theme === 'blue' ? 'blue' : 'green';
-    if (next === 'blue') document.documentElement.dataset.theme = 'blue';
-    else delete document.documentElement.dataset.theme;
+    const root = document.documentElement;
+    root.classList.add('theme-swap');
+    if (next === 'blue') root.dataset.theme = 'blue';
+    else delete root.dataset.theme;
+    void root.offsetWidth;
+    root.classList.remove('theme-swap');
     document.querySelectorAll('[data-theme-pick]').forEach((b) => {
       b.setAttribute('aria-pressed', String(b.dataset.themePick === next));
     });
