@@ -65,54 +65,56 @@
     /* Latin → Inter; CJK → Noto / system Chinese UI fonts (avoid ugly bitmap fallbacks). */
     --font: Inter, "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
   }
-  /* Blue theme follows the sky reference:
-     pale sky behind the page, white cards, black primary buttons.
-     Bright sky blue only on the floating button, links, and thin marks. */
+  /* Blue theme: milky page, white cards, sky-blue buttons.
+     The bright #62C5FE is only a thin mark. Button fill is the same hue, darkened so white text stays readable. */
   html[data-theme="blue"] {
-    --ink: #121212;
-    --ink-rgb: 18, 18, 18;
-    --info-em: #121212;
-    --muted: #6b6b6b;
-    --link-quiet: #6b6b6b;
-    --label: #8a8a8a;
-    --faint: #8a8a8a;
-    --placeholder: #8a8a8a;
+    --ink: #1a222d;
+    --ink-rgb: 26, 34, 45;
+    --info-em: #1a222d;
+    --muted: #5c6770;
+    --link-quiet: #5c6770;
+    --label: #8b949e;
+    --faint: #8b949e;
+    --placeholder: #8b949e;
     --line: #e6eef3;
     --line-strong: #d5e0e8;
-    --surface: #f3f7fa;
+    --surface: #f4f7fb;
     --surface-2: #eaf1f6;
-    --canvas: #d4eefb;
+    --canvas: #f5f7fb;
     --frame-bg: #ffffff;
     --rail-bg: #ffffff;
-    --presenter-bg: rgba(255, 255, 255, .88);
+    --presenter-bg: rgba(255, 255, 255, .9);
     --quiet-bg: #f4f8fb;
     --quiet-line: #e6eef3;
     --quiet-line-hover: #d5e0e8;
-    --green: #111111;
-    --green-dark: #000000;
-    --green-bubble: #1a1a1a;
+    --green: #0a78b5;
+    --green-dark: #0369a1;
+    --green-bubble: #0a78b5;
     --green-mid: #7ec8f0;
-    --green-tint: #e8f6fd;
+    --green-tint: #e7f5fc;
     --green-tint-hover: #d7eefb;
     --green-tint-strong: #d7eefb;
     --green-soft: #e3f3fc;
     --green-soft-deep: #cde9f8;
     --green-mist: #f4fafe;
-    --green-line: #c5e4f6;
+    --green-line: #c5e3f6;
     --green-wash: #f4fafe;
-    --brand-rgb: 17, 17, 17;
-    --toast: #121212;
+    --brand-rgb: 10, 120, 181;
+    --toast: #1a222d;
     --toast-link: #8ecfff;
     --chat-frame: #e4e9ee;
-    --shadow-sage: rgba(20, 60, 90, .08);
-    --shadow-sage-deep: rgba(20, 60, 90, .12);
-    --shadow-card: rgba(20, 60, 90, .06);
-    --shadow-card-2: rgba(20, 60, 90, .08);
-    --sky: #00a2ff;
-    --sky-ink: #0078d4;
+    --shadow-sage: rgba(26, 34, 45, .08);
+    --shadow-sage-deep: rgba(26, 34, 45, .12);
+    --shadow-card: rgba(26, 34, 45, .06);
+    --shadow-card-2: rgba(26, 34, 45, .08);
+    --sky: #62c5fe;
+    --sky-ink: #0a78b5;
   }
   html[data-theme="blue"] body {
-    background: linear-gradient(180deg, #c5e6f8 0%, #eef6fc 46%, #f7fbfe 100%);
+    background:
+      radial-gradient(1100px 560px at 78% -8%, #e6e9f8 0%, transparent 62%),
+      radial-gradient(900px 520px at 8% 100%, #d9eefb 0%, transparent 58%),
+      #f5f7fb;
   }
   html[data-theme="blue"] .osbar { background: #fff; }
   html[data-theme="blue"] .hello h2 span { color: var(--ink); }
@@ -122,13 +124,13 @@
   html[data-theme="blue"] .pct .bar span { background: var(--sky); }
   html[data-theme="blue"] .chip .ic,
   html[data-theme="blue"] .chip .ar { color: var(--muted); }
-  html[data-theme="blue"] .interest.on { color: var(--ink); border-color: var(--green-line); }
+  html[data-theme="blue"] .interest.on { color: var(--sky-ink); border-color: var(--green-line); }
   html[data-theme="blue"] .dock {
-    background: var(--sky);
-    border-color: var(--sky);
+    background: var(--green);
+    border-color: var(--green);
     color: #fff;
   }
-  html[data-theme="blue"] .dock .count { background: #111; }
+  html[data-theme="blue"] .dock .count { background: #1a222d; }
   * { box-sizing: border-box; }
   html, body { margin: 0; }
   body { background: var(--canvas); font-family: var(--font); color: var(--ink); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
