@@ -65,8 +65,9 @@
     /* Latin → Inter; CJK → Noto / system Chinese UI fonts (avoid ugly bitmap fallbacks). */
     --font: Inter, "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
   }
-  /* Blue theme: milky page, white cards, sky-blue buttons.
-     The bright #62C5FE is only a thin mark. Button fill is the same hue, darkened so white text stays readable. */
+  /* Blue theme, by prominence:
+     page and cards are gray / white; large chips and selected pills are blue-gray;
+     saturated blue stays on the send button, the dock, and links. */
   html[data-theme="blue"] {
     --ink: #1a222d;
     --ink-rgb: 26, 34, 45;
@@ -76,55 +77,79 @@
     --label: #8b949e;
     --faint: #8b949e;
     --placeholder: #8b949e;
-    --line: #e6eef3;
-    --line-strong: #d5e0e8;
-    --surface: #f4f7fb;
-    --surface-2: #eaf1f6;
-    --canvas: #f5f7fb;
+    --line: #e6e8eb;
+    --line-strong: #d5d9de;
+    --surface: #f3f4f6;
+    --surface-2: #e8ebef;
+    --canvas: #f2f3f5;
     --frame-bg: #ffffff;
     --rail-bg: #ffffff;
-    --presenter-bg: rgba(255, 255, 255, .9);
-    --quiet-bg: #f4f8fb;
-    --quiet-line: #e6eef3;
-    --quiet-line-hover: #d5e0e8;
+    --presenter-bg: rgba(242, 243, 245, .94);
+    --quiet-bg: #f3f4f6;
+    --quiet-line: #e0e3e7;
+    --quiet-line-hover: #d0d5db;
     --green: #0a78b5;
     --green-dark: #0369a1;
-    --green-bubble: #0a78b5;
-    --green-mid: #7ec8f0;
-    --green-tint: #e7f5fc;
-    --green-tint-hover: #d7eefb;
-    --green-tint-strong: #d7eefb;
-    --green-soft: #e3f3fc;
-    --green-soft-deep: #cde9f8;
-    --green-mist: #f4fafe;
-    --green-line: #c5e3f6;
-    --green-wash: #f4fafe;
-    --brand-rgb: 10, 120, 181;
+    --green-bubble: #e8edf2;
+    --green-mid: #9aa6b2;
+    --green-tint: #eef1f4;
+    --green-tint-hover: #e6eaee;
+    --green-tint-strong: #e4e8ed;
+    --green-soft: #e7ebef;
+    --green-soft-deep: #dde2e7;
+    --green-mist: #f5f6f8;
+    --green-line: #d5dbe2;
+    --green-wash: #f4f6f8;
+    --brand-rgb: 92, 103, 112;
     --toast: #1a222d;
-    --toast-link: #8ecfff;
-    --chat-frame: #e4e9ee;
-    --shadow-sage: rgba(26, 34, 45, .08);
-    --shadow-sage-deep: rgba(26, 34, 45, .12);
-    --shadow-card: rgba(26, 34, 45, .06);
-    --shadow-card-2: rgba(26, 34, 45, .08);
-    --sky: #62c5fe;
+    --toast-link: #9ec9e4;
+    --chat-frame: #e4e7eb;
+    --shadow-sage: rgba(26, 34, 45, .06);
+    --shadow-sage-deep: rgba(26, 34, 45, .10);
+    --shadow-card: rgba(26, 34, 45, .05);
+    --shadow-card-2: rgba(26, 34, 45, .06);
+    --sky: #8b97a3;
     --sky-ink: #0a78b5;
   }
-  html[data-theme="blue"] body {
-    background:
-      radial-gradient(1100px 560px at 78% -8%, #e6e9f8 0%, transparent 62%),
-      radial-gradient(900px 520px at 8% 100%, #d9eefb 0%, transparent 58%),
-      #f5f7fb;
-  }
+  html[data-theme="blue"] body { background: #f2f3f5; }
   html[data-theme="blue"] .osbar { background: #fff; }
   html[data-theme="blue"] .hello h2 span { color: var(--ink); }
   html[data-theme="blue"] .link { color: var(--sky-ink); }
+  html[data-theme="blue"] .seg button[aria-pressed="true"],
+  html[data-theme="blue"] .presenter .tutorial-cta {
+    background: #e4e9ee;
+    color: var(--ink);
+    box-shadow: none;
+  }
+  html[data-theme="blue"] .presenter .tutorial-cta:hover { background: #d8dee4; }
   html[data-theme="blue"] .pct,
   html[data-theme="blue"] .pct.done { color: var(--ink); }
   html[data-theme="blue"] .pct .bar span { background: var(--sky); }
   html[data-theme="blue"] .chip .ic,
   html[data-theme="blue"] .chip .ar { color: var(--muted); }
-  html[data-theme="blue"] .interest.on { color: var(--sky-ink); border-color: var(--green-line); }
+  html[data-theme="blue"] .chip:hover { border-color: #c5ced6; }
+  html[data-theme="blue"] .interest.on { color: var(--ink); border-color: #c5ced6; }
+  html[data-theme="blue"] .picker:hover,
+  html[data-theme="blue"] .picker[aria-expanded="true"],
+  html[data-theme="blue"] .is-twin .picker[aria-expanded="true"] {
+    border-color: #c5ced6;
+    box-shadow: none;
+  }
+  html[data-theme="blue"] .rail .r.on,
+  html[data-theme="blue"] .rail.is-open .r.on { color: var(--ink); }
+  html[data-theme="blue"] .badge,
+  html[data-theme="blue"] .new-badge,
+  html[data-theme="blue"] .activity .row span,
+  html[data-theme="blue"] .rem .when.hot { color: var(--muted); }
+  html[data-theme="blue"] .day .elapsed { background: #c5ced6; }
+  html[data-theme="blue"] .day .dot.fill { background: #8b97a3; }
+  html[data-theme="blue"] .day .dot.hollow { border-color: #8b97a3; }
+  html[data-theme="blue"] .day .tick.now-l { color: var(--muted); }
+  html[data-theme="blue"] .citta-panel .user-bubble {
+    background: #e8edf2;
+    border-color: #e8edf2;
+    color: var(--ink);
+  }
   html[data-theme="blue"] .dock {
     background: var(--green);
     border-color: var(--green);
