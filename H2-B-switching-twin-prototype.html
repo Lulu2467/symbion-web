@@ -651,11 +651,46 @@
     color: var(--muted);
   }
   html[data-theme="blue"] .tutorial-doc-citta.is-twin .learn-tip .k { color: var(--faint); }
-  html[data-theme="blue"] .tutorial-doc-citta.is-twin .ph .citta-av.twin-init {
-    background: #fff;
-    border: 1px solid var(--line);
-    color: var(--muted);
+  html[data-theme="blue"] .tutorial-doc-citta .ph {
+    width: 100%;
+    max-width: none;
+    justify-content: center;
   }
+  html[data-theme="blue"] .tutorial-doc-citta .doc-switch,
+  html[data-theme="blue"] .tutorial-doc-citta.is-twin .doc-switch,
+  html[data-theme="blue"] .tutorial-doc-citta .doc-switch.spot {
+    color: #8b919a;
+    background: #fff;
+    border-color: var(--line);
+  }
+  html[data-theme="blue"] .tutorial-doc-citta .doc-switch .switch-ico { display: none; }
+  html[data-theme="blue"] .tutorial-doc-citta .doc-switch .doc-switch-star {
+    display: inline-grid;
+    place-items: center;
+    width: 14px;
+    height: 14px;
+  }
+  html[data-theme="blue"] .tutorial-doc-citta .doc-switch .spark-h,
+  html[data-theme="blue"] .tutorial-doc-citta .doc-switch .spark-f {
+    grid-area: 1 / 1;
+    width: 14px;
+    height: 14px;
+  }
+  html[data-theme="blue"] .tutorial-doc-citta .doc-switch .spark-h svg,
+  html[data-theme="blue"] .tutorial-doc-citta .doc-switch .spark-f svg {
+    display: block;
+    width: 14px;
+    height: 14px;
+  }
+  html[data-theme="blue"] .tutorial-doc-citta .doc-switch .spark-f { opacity: 0; }
+  html[data-theme="blue"] .tutorial-doc-citta .doc-switch[aria-expanded="true"],
+  html[data-theme="blue"] .tutorial-doc-citta .doc-switch:active {
+    color: #3c4043;
+  }
+  html[data-theme="blue"] .tutorial-doc-citta .doc-switch[aria-expanded="true"] .spark-h,
+  html[data-theme="blue"] .tutorial-doc-citta .doc-switch:active .spark-h { opacity: 0; }
+  html[data-theme="blue"] .tutorial-doc-citta .doc-switch[aria-expanded="true"] .spark-f,
+  html[data-theme="blue"] .tutorial-doc-citta .doc-switch:active .spark-f { opacity: 1; }
   /* Reminder actions stay gray outline until hover or press. */
   html[data-theme="blue"] .btn-soft {
     background: #fff;
@@ -2504,6 +2539,7 @@
     background: var(--green-tint);
     border-color: rgba(var(--brand-rgb),.28);
   }
+  .doc-switch-star { display: none; }
   .tutorial-doc-citta.is-twin .doc-switch { color: var(--green); }
   /* Coach tip may still mark the control; never keep a ring after the menu opens. */
   .tutorial-doc-citta .doc-switch.spot {
@@ -6682,6 +6718,14 @@
     const back = $('backToCitta');
     if (back) {
       back.innerHTML = `<span class="spark-icon" aria-hidden="true">${SPARK_SOLID}</span>Back to Citta`;
+    }
+    const docSwitch = $('tutorialDocSwitch');
+    if (docSwitch && !docSwitch.querySelector('.doc-switch-star')) {
+      const star = document.createElement('span');
+      star.className = 'doc-switch-star';
+      star.setAttribute('aria-hidden', 'true');
+      star.innerHTML = `<span class="spark-h">${SPARK_HOLLOW}</span><span class="spark-f">${SPARK_SOLID}</span>`;
+      docSwitch.appendChild(star);
     }
     document.querySelectorAll('.pick-card .btn[data-spark-label]').forEach((el) => {
       const label = el.dataset.sparkLabel || '';
