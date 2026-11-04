@@ -138,7 +138,7 @@
   html[data-theme="blue"] .osbar-folder.is-open .osbar-folder-menu { display: flex; flex-direction: column; gap: 2px; }
   html[data-theme="blue"] .osbar-folder-menu .osbar-bm { gap: 8px; padding: 8px 10px; border-radius: 8px; justify-content: flex-start; }
   html[data-theme="blue"] .osbar-folder-menu .osbar-bm:hover { background: #ececee; }
-  html[data-theme="blue"] .osbar .sp { flex: 1 1 32px; min-width: 16px; }
+  html[data-theme="blue"] .osbar .sp { display: none; }
   html[data-theme="blue"] .osbar .osbar-ico { width: 16px; height: 16px; }
   html[data-theme="blue"] .osbar .osbar-bm,
   html[data-theme="blue"] .osbar .osbar-app,
@@ -146,8 +146,21 @@
   html[data-theme="blue"] .osbar .osbar-book-mgr { width: 24px; height: 24px; border-radius: 7px; }
   html[data-theme="blue"] .osbar .osbar-book-mgr .osbar-ico { width: 12px; height: 12px; }
   html[data-theme="blue"] .osbar .av-s { width: 24px; height: 24px; border-radius: 12px; font-size: 11px; }
-  html[data-theme="blue"] .osbar .search-wrap { margin-left: 8px; flex: 0 0 360px; min-width: 0; max-width: 360px; }
-  html[data-theme="blue"] .osbar .search { min-width: 0; width: 100%; box-sizing: border-box; height: 30px; padding: 0 14px; font-size: 13px; line-height: 30px; }
+  html[data-theme="blue"] .osbar .search-wrap { margin-left: 0; flex: 1 1 auto; min-width: 160px; max-width: none; width: auto; }
+  html[data-theme="blue"] .osbar .search {
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+    height: 30px;
+    padding: 0 14px 0 32px;
+    font-size: 13px;
+    line-height: 30px;
+    border-radius: 10px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235f6368' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='6'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 11px center;
+    background-size: 14px 14px;
+  }
   html[data-theme="blue"] .interest.add {
     color: transparent;
     font-size: 0;
@@ -2673,8 +2686,8 @@
               if (document.documentElement.dataset.theme === 'blue') {
                 var bar = document.querySelector('.osbar');
                 var search = document.querySelector('.search-wrap');
-                var desk = bar && bar.querySelector('[data-osbar="desk"]');
-                if (bar && search && desk) bar.insertBefore(search, desk);
+                var nav = bar && bar.querySelector('.osbar-nav');
+                if (bar && search && nav && search.previousElementSibling !== nav) nav.after(search);
               }
             } catch (e) {}
           </script>
@@ -5838,8 +5851,8 @@
     const row = document.querySelector('.logo-row');
     if (!search || !bar || !row) return;
     if (document.documentElement.dataset.theme === 'blue') {
-      const desk = bar.querySelector('[data-osbar="desk"]');
-      if (desk && search.nextElementSibling !== desk) bar.insertBefore(search, desk);
+      const nav = bar.querySelector('.osbar-nav');
+      if (nav && search.previousElementSibling !== nav) nav.after(search);
     } else if (search.parentElement !== row) {
       row.appendChild(search);
     }
