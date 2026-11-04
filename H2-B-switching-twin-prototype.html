@@ -549,9 +549,10 @@
     transform: none;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools {
-    justify-content: flex-start;
+    justify-content: center;
     gap: 10px;
   }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .sp { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool,
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.sel,
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.sel[data-tool="doc"],
