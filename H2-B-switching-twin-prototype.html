@@ -4137,15 +4137,19 @@
     setComposerPlaceholder(ai.placeholder);
 
     // Reminder actions run with whoever is in the picker.
-    // Citta suggestions use the spark star (same as “Use with Citta” / Try it), not the ≋ wave.
+    // On blue the labels stay as written. Other themes still swap in the twin line.
     document.querySelectorAll('.btn-soft').forEach((b) => {
-      const verb = (!isCitta && b.dataset.twinVerb) || b.dataset.verb;
-      if (isCitta) {
-        b.innerHTML = `<span class="spark-icon" aria-hidden="true">${SPARK_SOLID}</span>${verb}`;
+      const blue = document.documentElement.dataset.theme === 'blue';
+      const verb = (!blue && !isCitta && b.dataset.twinVerb) || b.dataset.verb;
+      if (blue || isCitta) {
+        if (!(blue && b.textContent.trim() === verb && b.querySelector('.spark-icon'))) {
+          b.innerHTML = `<span class="spark-icon" aria-hidden="true">${SPARK_SOLID}</span>${verb}`;
+        }
       } else {
         b.textContent = `${ai.prefix}  ${verb}`;
       }
-      if (announce) { b.classList.remove('flash'); void b.offsetWidth; b.classList.add('flash'); }
+      if (announce && !blue) { b.classList.remove('flash'); void b.offsetWidth; b.classList.add('flash'); }
+      else if (blue) b.classList.remove('flash');
     });
 
     menu.querySelectorAll('.item').forEach((i) => i.setAttribute('aria-checked', String(i.dataset.ai === key)));
