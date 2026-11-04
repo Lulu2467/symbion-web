@@ -3146,11 +3146,12 @@
                 var plus = bar && bar.querySelector('.osbar-plus');
                 var sp = bar && bar.querySelector(':scope > .sp');
                 if (bar && logo && bar.firstElementChild !== logo) bar.prepend(logo);
-                if (bar && search && nav && search.previousElementSibling !== nav) nav.after(search);
+                var folder = bar && bar.querySelector('.osbar-folder');
+                var folderInPlace = folder && search && nav && search.previousElementSibling === folder && folder.previousElementSibling === nav;
+                if (bar && search && nav && !folderInPlace) nav.after(search);
+                if (folder && search && search.previousElementSibling !== folder) search.before(folder);
                 if (plus && search && plus.previousElementSibling !== search) search.after(plus);
                 if (sp && plus && sp.previousElementSibling !== plus) plus.after(sp);
-                var folder = bar && bar.querySelector('.osbar-folder');
-                if (folder && folder !== bar.lastElementChild) bar.appendChild(folder);
               }
             } catch (e) {}
           </script>
@@ -6334,10 +6335,11 @@
     if (document.documentElement.dataset.theme === 'blue') {
       const nav = bar.querySelector('.osbar-nav');
       if (logo && bar.firstElementChild !== logo) bar.prepend(logo);
-      if (nav && search.previousElementSibling !== nav) nav.after(search);
+      const folderInPlace = folder && nav && search.previousElementSibling === folder && folder.previousElementSibling === nav;
+      if (nav && !folderInPlace) nav.after(search);
+      if (folder && search.previousElementSibling !== folder) search.before(folder);
       if (plus && plus.previousElementSibling !== search) search.after(plus);
       if (sp && plus && sp.previousElementSibling !== plus) plus.after(sp);
-      if (folder && folder !== bar.lastElementChild) bar.appendChild(folder);
     } else {
       if (logo && logo.parentElement !== row) row.prepend(logo);
       if (search.parentElement !== row) row.appendChild(search);
