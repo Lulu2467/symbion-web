@@ -537,17 +537,6 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) .is-twin .ask-bar .picker[aria-expanded="true"] .pname {
     color: var(--green);
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker:hover::after,
-  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker[aria-expanded="true"]::after,
-  html[data-theme="blue"] .hub:has(#screen-home.on) .is-twin .ask-bar .picker:hover::after,
-  html[data-theme="blue"] .hub:has(#screen-home.on) .is-twin .ask-bar .picker[aria-expanded="true"]::after {
-    border-right-color: var(--green);
-    border-bottom-color: var(--green);
-  }
-  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker[aria-expanded="true"]::after,
-  html[data-theme="blue"] .hub:has(#screen-home.on) .is-twin .ask-bar .picker[aria-expanded="true"]::after {
-    transform: rotate(225deg) translate(-1px, -1px);
-  }
   html[data-theme="blue"] .hub:has(#screen-home.on) .menu .item[data-ai="citta"][aria-checked="true"] { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker .pav,
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker .twin-badge { display: none; }
@@ -558,15 +547,7 @@
     white-space: nowrap;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker .switch-ico { display: none; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker::after {
-    content: "";
-    width: 6px;
-    height: 6px;
-    border-right: 1.5px solid #71777d;
-    border-bottom: 1.5px solid #71777d;
-    transform: rotate(45deg) translate(-1px, -1px);
-    flex: none;
-  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker::after { content: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .send {
     margin-left: 10px;
     width: 34px;
