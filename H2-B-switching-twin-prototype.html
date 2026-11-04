@@ -618,11 +618,44 @@
   html[data-theme="blue"] #composer .composer-tool-chip.on { display: none; }
   html[data-theme="blue"] #tail-home .week-tools-close,
   html[data-theme="blue"] #tail-home .week-tools-hd .badge { display: none; }
-  html[data-theme="blue"] .tutorial-doc-citta .twin-notice { background: var(--green); }
-  html[data-theme="blue"] .tutorial-doc-citta .twin-notice p { color: #d7e8f0; }
-  html[data-theme="blue"] .tutorial-doc-citta.is-twin .doc-prog span { background: var(--green); }
-  html[data-theme="blue"] .tutorial-doc-citta.is-twin .learn-tip,
-  html[data-theme="blue"] .tutorial-doc-citta.is-twin .learn-tip .k { color: var(--green-dark); }
+  html[data-theme="blue"] .tutorial-doc-citta,
+  html[data-theme="blue"] .tutorial-doc-citta.is-twin { background: #fff; }
+  html[data-theme="blue"] .tutorial-doc-citta .twin-notice {
+    background: #fff;
+    border: 1px solid var(--line);
+  }
+  html[data-theme="blue"] .tutorial-doc-citta .twin-notice b { color: var(--ink); }
+  html[data-theme="blue"] .tutorial-doc-citta .twin-notice p { color: var(--muted); }
+  html[data-theme="blue"] .tutorial-doc-citta .twin-notice .back-citta {
+    border-color: var(--line);
+    color: var(--ink);
+    background: #fff;
+  }
+  html[data-theme="blue"] .tutorial-doc-citta .twin-notice .back-citta:hover {
+    background: #fff;
+    border-color: #c5c9d0;
+  }
+  html[data-theme="blue"] .tutorial-doc-citta.is-twin .doc-prog {
+    height: 1px;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: inset 0 -1px 0 var(--line);
+  }
+  html[data-theme="blue"] .tutorial-doc-citta.is-twin .doc-prog span {
+    height: 1px;
+    background: var(--green);
+  }
+  html[data-theme="blue"] .tutorial-doc-citta.is-twin .learn-tip {
+    background: #fff;
+    border: 1px solid var(--line);
+    color: var(--muted);
+  }
+  html[data-theme="blue"] .tutorial-doc-citta.is-twin .learn-tip .k { color: var(--faint); }
+  html[data-theme="blue"] .tutorial-doc-citta.is-twin .ph .citta-av.twin-init {
+    background: #fff;
+    border: 1px solid var(--line);
+    color: var(--muted);
+  }
   /* Reminder actions stay gray outline until hover or press. */
   html[data-theme="blue"] .btn-soft {
     background: #fff;
