@@ -2619,7 +2619,8 @@
     bottom: 28px;
   }
   .fs-root:fullscreen .fs-toggle,
-  .fs-root:-webkit-full-screen .fs-toggle { position: fixed; top: 10px; right: 14px; z-index: 100; }
+  .fs-root:-webkit-full-screen .fs-toggle,
+  .fs-root.is-fs .fs-toggle { display: none; }
 
   /*
    * Fullscreen reads as a real web app — not a blown-up Figma artboard.
