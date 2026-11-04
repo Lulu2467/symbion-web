@@ -137,8 +137,10 @@
     border-radius: 8px;
     font-size: 12px;
   }
-  html[data-theme="blue"] #screen-home > .course-banner { display: none; }
-  html[data-theme="blue"] #greeting-home .course-banner ~ p[data-live="sub"] { display: none; }
+  html[data-theme="blue"] #screen-home > .course-banner,
+  html[data-theme="blue"] #screen-tutorial > .course-banner { display: none; }
+  html[data-theme="blue"] #greeting-home .course-banner ~ p[data-live="sub"],
+  html[data-theme="blue"] [data-greeting="tutorial"] .course-banner ~ p[data-live="sub"] { display: none; }
   /* Glass composer is blue-only. Green keeps the solid frame below. */
   html[data-theme="blue"] .composer {
     background: rgba(255, 255, 255, 0.72);
@@ -2527,6 +2529,17 @@
                 </div>
               </section>
             </div>
+            <script>
+              try {
+                if (document.documentElement.dataset.theme === 'blue') {
+                  var screen = document.getElementById('screen-tutorial');
+                  var hello = screen && screen.querySelector('.hello');
+                  var title = hello && hello.querySelector('h2');
+                  var banner = screen && screen.querySelector('.course-banner');
+                  if (hello && title && banner && banner.previousElementSibling !== title) hello.insertBefore(banner, title.nextSibling);
+                }
+              } catch (e) {}
+            </script>
 
             <!-- Figma 1:8554 · post-tutorial main home + Citta switch coachmark -->
             <div class="screen" id="screen-handoff" data-screen="handoff">
@@ -5601,17 +5614,22 @@
     }
   }
   function placeCourseBanner() {
-    const screen = document.getElementById('screen-home');
-    const banner = screen && screen.querySelector('.course-banner');
-    const hello = document.querySelector('#greeting-home .hello');
-    const title = hello && hello.querySelector('h2');
-    const greeting = document.getElementById('greeting-home');
-    if (!screen || !banner || !hello || !title || !greeting) return;
-    if (document.documentElement.dataset.theme === 'blue') {
-      if (banner.previousElementSibling !== title) hello.insertBefore(banner, title.nextSibling);
-    } else if (banner.parentElement !== screen) {
-      screen.insertBefore(banner, greeting);
-    }
+    [
+      ['screen-home', 'greeting-home'],
+      ['screen-tutorial', null],
+    ].forEach(([screenId, greetingId]) => {
+      const screen = document.getElementById(screenId);
+      const banner = screen && screen.querySelector('.course-banner');
+      const greeting = greetingId ? document.getElementById(greetingId) : screen && screen.querySelector('.greeting');
+      const hello = greeting && greeting.querySelector('.hello');
+      const title = hello && hello.querySelector('h2');
+      if (!screen || !banner || !hello || !title || !greeting) return;
+      if (document.documentElement.dataset.theme === 'blue') {
+        if (banner.previousElementSibling !== title) hello.insertBefore(banner, title.nextSibling);
+      } else if (banner.parentElement !== screen) {
+        screen.insertBefore(banner, greeting);
+      }
+    });
   }
   function applyTheme(theme) {
     const next = theme === 'blue' ? 'blue' : 'green';
