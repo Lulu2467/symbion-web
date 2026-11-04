@@ -157,7 +157,8 @@
   html[data-theme="blue"] .osbar-folder.is-open .osbar-folder-menu { display: flex; flex-direction: column; gap: 2px; }
   html[data-theme="blue"] .osbar-folder-menu .osbar-bm { gap: 8px; padding: 8px 10px; border-radius: 8px; justify-content: flex-start; }
   html[data-theme="blue"] .osbar-folder-menu .osbar-bm:hover { background: #ececee; }
-  html[data-theme="blue"] .osbar .sp { display: none; }
+  html[data-theme="blue"] .osbar .sp { flex: 1; min-width: 12px; }
+  .osbar-plus { display: none; }
   html[data-theme="blue"] .osbar .osbar-ico { width: 16px; height: 16px; }
   html[data-theme="blue"] .osbar .osbar-bm,
   html[data-theme="blue"] .osbar .osbar-app,
@@ -165,7 +166,7 @@
   html[data-theme="blue"] .osbar .osbar-book-mgr { width: 24px; height: 24px; border-radius: 7px; }
   html[data-theme="blue"] .osbar .osbar-book-mgr .osbar-ico { width: 12px; height: 12px; }
   html[data-theme="blue"] .osbar .av-s { width: 24px; height: 24px; border-radius: 12px; font-size: 11px; }
-  html[data-theme="blue"] .osbar .search-wrap { margin-left: 0; flex: 1 1 auto; min-width: 160px; max-width: none; width: auto; }
+  html[data-theme="blue"] .osbar .search-wrap { margin-left: 0; flex: none; width: 320px; max-width: 320px; min-width: 0; }
   html[data-theme="blue"] .osbar .search {
     min-width: 0;
     width: 100%;
@@ -2776,6 +2777,7 @@
           <button type="button" class="osbar-nav-btn" aria-label="Forward" data-osbar="forward"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
           <button type="button" class="osbar-nav-btn" aria-label="Home" data-osbar="home"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20H4z"/><path d="M9 20v-6h6v6"/></svg></button>
         </div>
+        <button type="button" class="osbar-nav-btn osbar-plus" aria-label="New" data-osbar="new"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
         <div class="osbar-cosmo">
           <button type="button" class="osbar-cosmo-btn" data-osbar="cosmo">Cosmo</button>
           <button type="button" class="osbar-book-mgr" aria-label="Manage bookmarks" data-osbar="bookmarks"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 6 4 14M12 6v14M8 8v12M4 4v16"/></svg></button>
@@ -2823,7 +2825,11 @@
                 var bar = document.querySelector('.osbar');
                 var search = document.querySelector('.search-wrap');
                 var nav = bar && bar.querySelector('.osbar-nav');
+                var plus = bar && bar.querySelector('.osbar-plus');
+                var sp = bar && bar.querySelector(':scope > .sp');
                 if (bar && search && nav && search.previousElementSibling !== nav) nav.after(search);
+                if (plus && search && plus.previousElementSibling !== search) search.after(plus);
+                if (sp && plus && sp.previousElementSibling !== plus) plus.after(sp);
               }
             } catch (e) {}
           </script>
@@ -5986,11 +5992,17 @@
     const bar = document.querySelector('.osbar');
     const row = document.querySelector('.logo-row');
     if (!search || !bar || !row) return;
+    const plus = bar.querySelector('.osbar-plus');
+    const sp = bar.querySelector(':scope > .sp');
+    const folder = bar.querySelector('.osbar-folder');
     if (document.documentElement.dataset.theme === 'blue') {
       const nav = bar.querySelector('.osbar-nav');
       if (nav && search.previousElementSibling !== nav) nav.after(search);
-    } else if (search.parentElement !== row) {
-      row.appendChild(search);
+      if (plus && plus.previousElementSibling !== search) search.after(plus);
+      if (sp && plus && sp.previousElementSibling !== plus) plus.after(sp);
+    } else {
+      if (search.parentElement !== row) row.appendChild(search);
+      if (sp && folder && sp.previousElementSibling !== folder) folder.after(sp);
     }
   }
   function placeCourseBanner() {
