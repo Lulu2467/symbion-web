@@ -438,17 +438,14 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker[aria-expanded="true"],
   html[data-theme="blue"] .hub:has(#screen-home.on) .is-twin .ask-bar .picker:hover,
   html[data-theme="blue"] .hub:has(#screen-home.on) .is-twin .ask-bar .picker[aria-expanded="true"] {
-    background: #f3f4f6;
+    background: transparent;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker .pav {
-    width: 18px;
-    height: 18px;
-    border-radius: 6px;
-    font-size: 9px;
-  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker .pav,
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker .twin-badge { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker .pname {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
+    color: #1f2328;
     white-space: nowrap;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker .switch-ico { display: none; }
@@ -461,14 +458,82 @@
     transform: rotate(45deg) translate(-1px, -1px);
     flex: none;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .send { margin-left: 4px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .send {
+    margin-left: 10px;
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    min-height: 34px;
+    background: #e6e8eb;
+    color: #6b7076;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .send:hover { background: #dadde1; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .send.is-ready { background: var(--green); color: #fff; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .send.is-ready:hover { background: var(--green-dark); color: #fff; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .plus {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    min-height: 28px;
+    background: transparent;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .plus:hover { background: transparent; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .plus::before,
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .plus::after { background: #3c4043; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .plus::before { width: 16px; height: 1.6px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .plus::after { width: 1.6px; height: 16px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-compose {
+    min-height: 48px;
+    align-items: flex-start;
+    padding: 6px 4px 0 8px;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .composer-input { font-size: 16px; font-weight: 400; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .composer-input::placeholder { color: #b0b4ba; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .composer .ask-row {
     background: #fff;
-    border-radius: 20px;
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.92),
-      0 0 0 1px rgba(20, 24, 28, 0.06),
-      0 10px 28px rgba(20, 24, 28, 0.06);
+    border-radius: 22px;
+    padding: 14px 16px 12px;
+    box-shadow: 0 1px 2px rgba(20, 24, 28, 0.04), 0 0 0 1px rgba(20, 24, 28, 0.06);
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools {
+    justify-content: center;
+    gap: 10px;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.sel,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.sel[data-tool="doc"],
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.sel[data-tool="deck"],
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.sel[data-tool="numbers"],
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.sel[data-tool="symtex"],
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.sel[data-tool="code"] {
+    border-radius: 999px;
+    border: 1px solid #e3e5e8;
+    background: #fff;
+    color: #5f6670;
+    padding: 6px 14px 6px 12px;
+    gap: 6px;
+    min-height: 34px;
+    font-size: 14px;
+    font-weight: 400;
+    box-shadow: none;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool:hover,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.sel:hover {
+    background: #f7f8f9;
+    border-color: #d5d8de;
+    color: #3c4248;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool i {
+    width: 16px;
+    height: 16px;
+    border-radius: 0;
+    background: transparent !important;
+    color: #8b919a !important;
+    font-size: 14px;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool i svg {
+    width: 15px;
+    height: 15px;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .week-tools-panel {
     background: transparent;
