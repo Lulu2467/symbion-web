@@ -418,7 +418,50 @@
     -webkit-backdrop-filter: none;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .composer::before { display: none; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) .composer .working { justify-content: center; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .composer .working { display: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker,
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker:hover,
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker[aria-expanded="true"],
+  html[data-theme="blue"] .hub:has(#screen-home.on) .is-twin .ask-bar .picker,
+  html[data-theme="blue"] .hub:has(#screen-home.on) .is-twin .ask-bar .picker:hover,
+  html[data-theme="blue"] .hub:has(#screen-home.on) .is-twin .ask-bar .picker[aria-expanded="true"] {
+    margin-left: auto;
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    padding: 4px 8px;
+    border-radius: 8px;
+    gap: 6px;
+    color: #1f1f1f;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker:hover,
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker[aria-expanded="true"],
+  html[data-theme="blue"] .hub:has(#screen-home.on) .is-twin .ask-bar .picker:hover,
+  html[data-theme="blue"] .hub:has(#screen-home.on) .is-twin .ask-bar .picker[aria-expanded="true"] {
+    background: #f3f4f6;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker .pav {
+    width: 18px;
+    height: 18px;
+    border-radius: 6px;
+    font-size: 9px;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker .pname {
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker .switch-ico { display: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker::after {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-right: 1.5px solid #71777d;
+    border-bottom: 1.5px solid #71777d;
+    transform: rotate(45deg) translate(-1px, -1px);
+    flex: none;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .send { margin-left: 4px; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .composer .ask-row {
     background: #fff;
     border-radius: 20px;
@@ -3890,6 +3933,16 @@
     }
     const cRect = composer.getBoundingClientRect();
     const pRect = (anchor || picker).getBoundingClientRect();
+    const inBar = (anchor || picker).closest('.ask-bar');
+    if (inBar) {
+      const menuW = Math.min(300, composer.clientWidth - 16);
+      let left = (pRect.right - cRect.left) - menuW;
+      left = Math.max(8, Math.min(left, composer.clientWidth - menuW - 8));
+      menu.style.left = `${left}px`;
+      menu.style.top = `${pRect.bottom - cRect.top + 8}px`;
+      menu.style.right = 'auto';
+      return;
+    }
     menu.style.left = `${pRect.left - cRect.left}px`;
     menu.style.top = `${pRect.bottom - cRect.top + 6}px`;
     menu.style.right = 'auto';
@@ -5815,6 +5868,7 @@
     syncTutorialNav();
     syncDockHomeAttr();
     syncHash();
+    placeCittaPicker();
     fit();
     if (wantTip) {
       // After tutorial chrome is cleared + layout fit, show Citta-switch tip with pill spotlight.
@@ -6014,6 +6068,19 @@
       if (e.key === 'Escape') setBookmarkFolder(false);
     });
   }
+  function placeCittaPicker() {
+    const bar = document.querySelector('#composer .ask-bar');
+    const send = bar && bar.querySelector('.send');
+    const working = document.querySelector('#composer .working');
+    const label = working && working.querySelector('.k');
+    if (!picker || !bar || !send || !working || !label) return;
+    const blueHome = document.documentElement.dataset.theme === 'blue' && document.getElementById('screen-home')?.classList.contains('on');
+    if (blueHome) {
+      if (picker.parentElement !== bar) send.before(picker);
+    } else if (picker.previousElementSibling !== label) {
+      label.after(picker);
+    }
+  }
   function applyTheme(theme) {
     setBookmarkFolder(false);
     const next = theme === 'blue' ? 'blue' : 'green';
@@ -6023,6 +6090,7 @@
     else delete root.dataset.theme;
     placeHeaderSearch();
     placeCourseBanner();
+    placeCittaPicker();
     void root.offsetWidth;
     root.classList.remove('theme-swap');
     document.querySelectorAll('[data-theme-pick]').forEach((b) => {
