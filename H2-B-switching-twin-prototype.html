@@ -237,22 +237,55 @@
     border-color: var(--green-line);
   }
   html[data-theme="blue"] .btn-citta .citta-mark { color: var(--green-dark); }
+  html[data-theme="blue"] .tutorial-try-card {
+    border-color: var(--green-line);
+    gap: 0;
+    padding: 16px;
+  }
+  html[data-theme="blue"] .tutorial-try-card .trow { margin-bottom: 14px; }
+  html[data-theme="blue"] .tutorial-try-card .trow b {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+  }
+  html[data-theme="blue"] .tutorial-try-card .trow i {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+  }
+  html[data-theme="blue"] .tutorial-try-card .lead {
+    margin: 0;
+    min-height: 0;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--ink);
+  }
+  html[data-theme="blue"] .tutorial-try-card .sub {
+    margin-top: 12px;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--muted);
+  }
   html[data-theme="blue"] .tutorial-try-card .try-it {
     align-self: stretch;
     width: auto;
-    margin-top: 12px;
-    padding: 8px 16px;
+    margin-top: 16px;
+    padding: 8px 14px;
     background: #fff;
-    color: var(--muted);
-    border-color: var(--line);
+    color: var(--ink);
+    border: 1px solid var(--green-line);
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
   }
-  html[data-theme="blue"] .tutorial-try-card .try-it .citta-mark { color: var(--muted); }
+  html[data-theme="blue"] .tutorial-try-card .try-it .citta-mark { color: var(--green); }
   html[data-theme="blue"] .tutorial-try-card .try-it .spark-h { opacity: 1; }
   html[data-theme="blue"] .tutorial-try-card .try-it .spark-f { opacity: 0; }
   html[data-theme="blue"] .tutorial-try-card .try-it:hover {
-    background: var(--green-tint);
+    background: var(--green-wash);
     color: var(--green-dark);
-    border-color: var(--green-line);
+    border-color: var(--green);
   }
   html[data-theme="blue"] .tutorial-try-card .try-it:hover .citta-mark { color: var(--green-dark); }
   html[data-theme="blue"] .tutorial-try-card .try-it:hover .spark-h { opacity: 0; }
