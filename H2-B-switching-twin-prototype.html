@@ -147,14 +147,24 @@
   html[data-theme="blue"] .composer .ask-bar .send:hover { background: #c8ccd1; }
   html[data-theme="blue"] .composer .ask-bar .send.is-ready { background: var(--green); }
   html[data-theme="blue"] .composer .ask-bar .send.is-ready:hover { background: var(--green-dark); }
-  html[data-theme="blue"] .btn-citta,
-  html[data-theme="blue"] .tutorial-try-card .try-it {
+  html[data-theme="blue"] .btn-citta {
     background: var(--green-tint);
     color: var(--green-dark);
     border-color: var(--green-line);
   }
-  html[data-theme="blue"] .btn-citta .citta-mark,
-  html[data-theme="blue"] .tutorial-try-card .try-it .citta-mark { color: var(--green-dark); }
+  html[data-theme="blue"] .btn-citta .citta-mark { color: var(--green-dark); }
+  html[data-theme="blue"] .tutorial-try-card .try-it {
+    background: #fff;
+    color: var(--muted);
+    border-color: var(--line);
+  }
+  html[data-theme="blue"] .tutorial-try-card .try-it .citta-mark { color: var(--muted); }
+  html[data-theme="blue"] .tutorial-try-card .try-it:hover {
+    background: var(--green-tint);
+    color: var(--green-dark);
+    border-color: var(--green-line);
+  }
+  html[data-theme="blue"] .tutorial-try-card .try-it:hover .citta-mark { color: var(--green-dark); }
   /* Theme tokens change instantly. A background transition would keep the previous tint. */
   html.theme-swap, html.theme-swap * { transition: none !important; }
   * { box-sizing: border-box; }
