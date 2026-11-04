@@ -763,6 +763,9 @@
     transform: translate(-50%, -50%) rotate(-45deg);
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home { margin-top: 16px; }
+  .tools-title-usual { display: none; }
+  html[data-theme="blue"] .tools-title-week { display: none; }
+  html[data-theme="blue"] .tools-title-usual { display: inline; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .week-tools-hd h3,
   html[data-theme="blue"] .hub:has(#screen-home.on) .two-title-l h3,
   html[data-theme="blue"] .hub:has(#screen-home.on) .two-title-r h3 {
@@ -3448,7 +3451,7 @@
             <div class="screen" id="tail-home" data-tail="home">
             <section class="week-tools-panel" id="sec-tools-week">
               <div class="week-tools-hd">
-                <h3>Your tools this week</h3>
+                <h3><span class="tools-title-week">Your tools this week</span><span class="tools-title-usual">Frequently used tools</span></h3>
                 <span class="badge">2 of 5 tried</span>
                 <span class="sp"></span>
                 <button type="button" class="week-tools-close" data-dismiss-week-tools aria-label="Dismiss"></button>
