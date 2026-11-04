@@ -649,18 +649,27 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip .chip-x { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover {
     height: 32px;
-    padding: 0 12px 0 8px;
+    padding: 0 12px 0 6px;
     border-radius: 999px;
     background: var(--green-tint);
-    gap: 8px;
+    border: 1px solid var(--green);
+    gap: 6px;
+    color: var(--green);
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-label {
+    color: var(--green);
+    font-size: 14px;
+    font-weight: 600;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-ico { display: none; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x {
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x,
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x:hover {
     display: inline-flex;
     order: -1;
     position: relative;
     width: 18px;
     height: 18px;
+    margin: 0;
     border-radius: 999px;
     border: 1.5px solid var(--green);
     background: transparent;
