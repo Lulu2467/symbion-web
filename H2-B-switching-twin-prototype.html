@@ -275,6 +275,18 @@
   }
   html[data-theme="blue"] .week-card .go-link .ico-ne { display: none; }
   html[data-theme="blue"] .week-card .go-link:hover { color: transparent; }
+  html[data-theme="blue"] .picker,
+  html[data-theme="blue"] .picker:hover,
+  html[data-theme="blue"] .picker[aria-expanded="true"],
+  html[data-theme="blue"] .is-twin .picker,
+  html[data-theme="blue"] .is-twin .picker:hover,
+  html[data-theme="blue"] .is-twin .picker[aria-expanded="true"] {
+    background: #fff;
+    box-shadow: none;
+  }
+  html[data-theme="blue"] .picker { border-color: var(--green); }
+  html[data-theme="blue"] .picker:hover,
+  html[data-theme="blue"] .picker[aria-expanded="true"] { border-color: var(--green-dark); }
   /* Theme tokens change instantly. A background transition would keep the previous tint. */
   html.theme-swap, html.theme-swap * { transition: none !important; }
   * { box-sizing: border-box; }
