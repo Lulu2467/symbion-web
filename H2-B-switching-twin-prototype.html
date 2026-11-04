@@ -118,104 +118,35 @@
     background: #ebf5fa;
     border-color: #d5e5ed;
   }
-  /* Blue home follows WorkBuddy: centered title, one white card, prompts under it. Green stays the solid card below. */
-  html[data-theme="blue"] .greeting {
-    flex-direction: column;
-    align-items: center;
-    gap: 22px;
-    text-align: center;
-    width: min(760px, 100%);
-    margin: 0 auto;
-    padding: 28px 0 0;
-  }
-  html[data-theme="blue"] .hello { flex: none; align-items: center; width: 100%; gap: 8px; }
-  html[data-theme="blue"] .hello h2 { font-size: 36px; font-weight: 600; letter-spacing: -.7px; }
-  html[data-theme="blue"] .hello p { max-width: 460px; font-size: 14px; line-height: 1.5; }
+  /* Glass composer is blue-only. Green keeps the solid frame below. */
   html[data-theme="blue"] .composer {
-    width: min(760px, 100%);
-    margin-left: auto;
-    margin-right: auto;
-    background: transparent;
-    border: 0;
-    border-radius: 0;
-    box-shadow: none;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(22px) saturate(1.4);
+    -webkit-backdrop-filter: blur(22px) saturate(1.4);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.92),
+      0 0 0 1px rgba(20, 24, 28, 0.08),
+      0 14px 36px rgba(20, 24, 28, 0.10),
+      0 2px 8px rgba(20, 24, 28, 0.05);
   }
-  html[data-theme="blue"] .composer::before { content: none; }
-  html[data-theme="blue"] .composer .top {
-    background: #fff;
-    border: 1px solid #e6e8ec;
-    border-radius: 20px;
-    box-shadow: 0 1px 2px rgba(20, 24, 28, .04), 0 12px 32px rgba(20, 24, 28, .06);
-    padding: 16px 18px 14px;
-    gap: 12px;
+  html[data-theme="blue"] .composer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 32%);
   }
-  html[data-theme="blue"] .composer:focus-within .top {
-    border-color: #d5d8dc;
-    box-shadow: 0 1px 2px rgba(20, 24, 28, .04), 0 14px 36px rgba(20, 24, 28, .08);
-  }
-  html[data-theme="blue"] .composer .working { order: 1; }
-  html[data-theme="blue"] .composer .tools { order: 2; justify-content: center; gap: 8px; min-height: 0; }
-  html[data-theme="blue"] .composer .tools .sp { display: none; }
-  html[data-theme="blue"] .composer .tools .attach { flex-basis: 100%; justify-content: center; }
-  html[data-theme="blue"] .composer .tool {
-    min-height: 32px;
-    padding: 3px 12px 3px 3px;
-    gap: 6px;
-    border-width: 1px;
-    border-radius: 999px;
-    font-size: 13px;
-  }
-  html[data-theme="blue"] .composer .tool:not(.sel) {
-    background: #f4f5f6;
-    border-color: transparent;
-  }
-  html[data-theme="blue"] .composer .tool:not(.sel):hover {
-    background: #eceef0;
-    border-color: transparent;
-  }
-  html[data-theme="blue"] .composer .tool i { width: 22px; height: 22px; border-radius: 999px; }
-  html[data-theme="blue"] .composer .tool i svg { width: 13px; height: 13px; }
   html[data-theme="blue"] .composer .ask-row {
-    order: 3;
-    background: transparent;
-    box-shadow: none;
-    padding: 2px 4px 0;
+    background: rgba(255, 255, 255, 0.58);
+    box-shadow: inset 0 0 0 1px rgba(20, 24, 28, 0.04), inset 0 1px 2px rgba(20, 24, 28, 0.03);
   }
-  html[data-theme="blue"] .composer .ask-field { min-height: 108px; justify-content: space-between; }
-  html[data-theme="blue"] .composer .composer-input { font-size: 15px; }
-  html[data-theme="blue"] .composer .ask-bar .send {
-    width: 32px;
-    height: 32px;
-    min-width: 32px;
-    min-height: 32px;
-    border-radius: 999px;
-    background: #1c1f1d;
-  }
-  html[data-theme="blue"] .composer .ask-bar .send:hover { background: #000; }
-  html[data-theme="blue"] .composer .foot {
-    position: relative;
-    z-index: 1;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    background: transparent;
-    padding: 16px 0 0;
-    border-radius: 0;
-  }
-  html[data-theme="blue"] .composer .foot .k { display: none; }
-  html[data-theme="blue"] .composer .foot .wrap {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    overflow: visible;
-  }
-  html[data-theme="blue"] .rail .r.on,
-  html[data-theme="blue"] .rail.is-open .r.on {
-    background: #f2f3f5;
-    color: #1a1a1a;
-  }
+  html[data-theme="blue"] .composer .foot { position: relative; z-index: 1; background: transparent; }
+  html[data-theme="blue"] .composer .ask-bar .send { background: #d5d8dc; }
+  html[data-theme="blue"] .composer .ask-bar .send:hover { background: #c8ccd1; }
+  html[data-theme="blue"] .composer .ask-bar .send.is-ready { background: var(--green); }
+  html[data-theme="blue"] .composer .ask-bar .send.is-ready:hover { background: var(--green-dark); }
   html[data-theme="blue"] .btn-citta,
   html[data-theme="blue"] .tutorial-try-card .try-it {
     background: var(--green-tint);
@@ -3132,6 +3063,17 @@
     if (!el) return;
     el.value = text;
     resizeTextarea(el);
+    syncComposerSendReady();
+  }
+  function syncComposerSendReady() {
+    const input = $('composerInput');
+    const send = document.querySelector('.composer .ask-bar .send');
+    if (!send) return;
+    const hasText = !!(input?.value || '').trim();
+    const hasAttach = composerAttachments.some((a) => a.target === 'composer');
+    const ready = hasText || hasAttach;
+    send.classList.toggle('is-ready', ready);
+    send.setAttribute('aria-disabled', ready ? 'false' : 'true');
   }
   function syncCittaSendReady() {
     const input = $('cittaInput');
@@ -3880,6 +3822,7 @@
     }
     syncComposerChipsVisibility();
     syncCittaSendReady();
+    syncComposerSendReady();
   }
 
   function removeAttachment(id) {
@@ -6316,7 +6259,11 @@
   decorateLectureBookIcons();
   initLiveGreeting();
   const composerInputEl = $('composerInput');
-  composerInputEl?.addEventListener('input', () => resizeTextarea(composerInputEl));
+  composerInputEl?.addEventListener('input', () => {
+    resizeTextarea(composerInputEl);
+    syncComposerSendReady();
+  });
+  syncComposerSendReady();
   const cittaInputEl = $('cittaInput');
   cittaInputEl?.addEventListener('input', () => {
     resizeTextarea(cittaInputEl);
