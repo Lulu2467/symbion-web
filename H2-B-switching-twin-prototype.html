@@ -153,7 +153,8 @@
     display: none;
     position: absolute;
     top: calc(100% + 8px);
-    left: 0;
+    right: 0;
+    left: auto;
     min-width: 168px;
     padding: 6px;
     background: #fff;
@@ -2790,6 +2791,8 @@
                 if (bar && search && nav && search.previousElementSibling !== nav) nav.after(search);
                 if (plus && search && plus.previousElementSibling !== search) search.after(plus);
                 if (sp && plus && sp.previousElementSibling !== plus) plus.after(sp);
+                var folder = bar && bar.querySelector('.osbar-folder');
+                if (folder && folder !== bar.lastElementChild) bar.appendChild(folder);
               }
             } catch (e) {}
           </script>
@@ -5960,8 +5963,11 @@
       if (nav && search.previousElementSibling !== nav) nav.after(search);
       if (plus && plus.previousElementSibling !== search) search.after(plus);
       if (sp && plus && sp.previousElementSibling !== plus) plus.after(sp);
+      if (folder && folder !== bar.lastElementChild) bar.appendChild(folder);
     } else {
       if (search.parentElement !== row) row.appendChild(search);
+      const cosmo = bar.querySelector('.osbar-cosmo');
+      if (folder && cosmo && folder.previousElementSibling !== cosmo) cosmo.after(folder);
       if (sp && folder && sp.previousElementSibling !== folder) folder.after(sp);
     }
   }
