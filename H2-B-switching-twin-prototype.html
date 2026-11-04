@@ -141,6 +141,8 @@
   html[data-theme="blue"] #screen-tutorial > .course-banner { display: none; }
   html[data-theme="blue"] #greeting-home .course-banner ~ p[data-live="sub"],
   html[data-theme="blue"] [data-greeting="tutorial"] .course-banner ~ p[data-live="sub"] { display: none; }
+  html[data-theme="blue"] #tail-home .goal-sec,
+  html[data-theme="blue"] #tail-welcome .goal-sec { display: none; }
   /* Glass composer is blue-only. Green keeps the solid frame below. */
   html[data-theme="blue"] .composer {
     background: rgba(255, 255, 255, 0.72);
@@ -2763,7 +2765,7 @@
               </div>
             </section>
 
-            <section>
+            <section class="goal-sec">
               <div class="sec" style="margin-bottom:16px"><h3>Start from a goal</h3><span class="sub">Templates with Citta built in</span><span class="sp"></span><button type="button" class="act" data-action="see-goals">See all</button></div>
               <div class="goals">
                 <button type="button" class="tpl" data-goal-tool="doc"><span class="h"><i>≡</i>Doc</span><b>Essay, start to finish</b><small>Topic → outline → draft → citations</small><span class="use">Use with Citta</span></button>
@@ -2840,7 +2842,7 @@
                 </div>
               </section>
 
-              <section>
+              <section class="goal-sec">
                 <div class="sec" style="margin-bottom:16px"><h3>Start from a goal</h3><span class="sub">Templates with Citta built in</span><span class="sp"></span><button type="button" class="act" data-action="see-goals">See all</button></div>
                 <div class="goals">
                   <button type="button" class="tpl" data-goal-tool="doc"><span class="h"><i>≡</i>Doc</span><b>Essay, start to finish</b><small>Topic → outline → draft → citations</small><span class="use">Use with Citta</span></button>
