@@ -580,9 +580,9 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.sel[data-tool="numbers"],
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.sel[data-tool="symtex"],
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.sel[data-tool="code"] {
-    background: #fff;
+    background: var(--green-tint);
     border-color: var(--green);
-    color: var(--green);
+    color: var(--green-dark);
     box-shadow: none;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool i {
@@ -595,7 +595,7 @@
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool:hover i,
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.sel i {
-    color: var(--green) !important;
+    color: var(--green-dark) !important;
     background: transparent !important;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool i svg {
@@ -639,6 +639,45 @@
     padding: 0;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip .chip-x { display: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover {
+    height: 32px;
+    padding: 0 12px 0 8px;
+    border-radius: 999px;
+    background: var(--green-tint);
+    gap: 8px;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-ico { display: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x {
+    display: inline-flex;
+    order: -1;
+    position: relative;
+    width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    border: 1.5px solid var(--green);
+    background: transparent;
+    color: transparent;
+    font-size: 0;
+    line-height: 0;
+    padding: 0;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x::before,
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 8px;
+    height: 1.5px;
+    border-radius: 1px;
+    background: var(--green);
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
   html[data-theme="blue"] .hub:has(#screen-home.on) .week-tools-panel {
     background: transparent;
     border: 0;
