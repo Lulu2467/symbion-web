@@ -122,6 +122,28 @@
   html[data-theme="blue"] .osbar .av-s { width: 26px; height: 26px; border-radius: 13px; font-size: 11px; }
   html[data-theme="blue"] .osbar .search-wrap { margin-left: 8px; flex: 0 0 360px; min-width: 0; max-width: 360px; }
   html[data-theme="blue"] .osbar .search { min-width: 0; width: 100%; box-sizing: border-box; height: 30px; padding: 0 14px; font-size: 13px; line-height: 30px; }
+  html[data-theme="blue"] .interest.add {
+    color: transparent;
+    font-size: 0;
+    line-height: 0;
+    position: relative;
+  }
+  html[data-theme="blue"] .interest.add::before,
+  html[data-theme="blue"] .interest.add::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background: var(--muted);
+    border-radius: 1px;
+    transform: translate(-50%, -50%);
+  }
+  html[data-theme="blue"] .interest.add::before { width: 12px; height: 2px; }
+  html[data-theme="blue"] .interest.add::after { width: 2px; height: 12px; }
+  html[data-theme="blue"] .interest.add:hover::before,
+  html[data-theme="blue"] .interest.add:hover::after,
+  html[data-theme="blue"] .interest.add[aria-expanded="true"]::before,
+  html[data-theme="blue"] .interest.add[aria-expanded="true"]::after { background: var(--green-dark); }
   html[data-theme="blue"] .main { display: flex; flex-direction: column; }
   html[data-theme="blue"] .content {
     flex: 1 0 auto;
