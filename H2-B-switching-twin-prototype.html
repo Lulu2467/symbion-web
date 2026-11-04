@@ -112,6 +112,10 @@
   html[data-theme="blue"] .logo { display: none; }
   html[data-theme="blue"] .logo-row:not(:has(.search-wrap)) { display: none; }
   html[data-theme="blue"] .osbar { gap: 22px; min-height: 48px; box-sizing: border-box; padding: 9px var(--page-gutter) 9px 20px; font-size: 13px; }
+  .osbar-nav { display: none; }
+  html[data-theme="blue"] .osbar-nav { display: inline-flex; align-items: center; gap: 2px; flex: none; }
+  html[data-theme="blue"] .osbar-nav-btn { width: 28px; height: 28px; padding: 0; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; color: #5f6368; }
+  html[data-theme="blue"] .osbar-nav-btn:hover { background: #ececee; color: #1f1f1f; }
   html[data-theme="blue"] .osbar .sp { flex: 1 1 32px; min-width: 16px; }
   html[data-theme="blue"] .osbar .osbar-ico { width: 16px; height: 16px; }
   html[data-theme="blue"] .osbar .osbar-bm,
@@ -2595,6 +2599,11 @@
     <div class="frame" id="frame">
 
       <div class="osbar" aria-label="Bookmarks and applications">
+        <div class="osbar-nav" aria-label="Browser">
+          <button type="button" class="osbar-nav-btn" aria-label="Back" data-osbar="back"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18 9 12l6-6"/></svg></button>
+          <button type="button" class="osbar-nav-btn" aria-label="Forward" data-osbar="forward"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+          <button type="button" class="osbar-nav-btn" aria-label="Home" data-osbar="home"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20H4z"/><path d="M9 20v-6h6v6"/></svg></button>
+        </div>
         <div class="osbar-cosmo">
           <button type="button" class="osbar-cosmo-btn" data-osbar="cosmo">Cosmo</button>
           <button type="button" class="osbar-book-mgr" aria-label="Manage bookmarks" data-osbar="bookmarks"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 6 4 14M12 6v14M8 8v12M4 4v16"/></svg></button>
