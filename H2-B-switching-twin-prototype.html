@@ -141,8 +141,55 @@
   html[data-theme="blue"] #screen-tutorial > .course-banner { display: none; }
   html[data-theme="blue"] #greeting-home .course-banner ~ p[data-live="sub"],
   html[data-theme="blue"] [data-greeting="tutorial"] .course-banner ~ p[data-live="sub"] { display: none; }
-  html[data-theme="blue"] #tail-home .goal-sec,
-  html[data-theme="blue"] #tail-welcome .goal-sec { display: none; }
+  html[data-theme="blue"] .tpl {
+    display: grid;
+    grid-template-columns: 36px minmax(0, 1fr);
+    column-gap: 12px;
+    row-gap: 2px;
+    align-items: center;
+    padding: 14px 14px 12px;
+    min-height: 0;
+    gap: 2px 12px;
+  }
+  html[data-theme="blue"] .tpl .h {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    width: 36px;
+    height: 36px;
+    min-height: 0;
+    gap: 0;
+    overflow: hidden;
+    font-size: 0;
+    align-self: center;
+  }
+  html[data-theme="blue"] .tpl .h i {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    font-size: 15px;
+  }
+  html[data-theme="blue"] .tpl b {
+    grid-column: 2;
+    grid-row: 1;
+    min-height: 0;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.25;
+    align-self: end;
+  }
+  html[data-theme="blue"] .tpl small {
+    grid-column: 2;
+    grid-row: 2;
+    min-height: 0;
+    font-size: 12px;
+    line-height: 1.35;
+    color: var(--muted);
+    align-self: start;
+  }
+  html[data-theme="blue"] .tpl .use {
+    grid-column: 1 / -1;
+    margin-top: 10px;
+  }
   /* Glass composer is blue-only. Green keeps the solid frame below. */
   html[data-theme="blue"] .composer {
     background: rgba(255, 255, 255, 0.72);
@@ -2768,11 +2815,11 @@
             <section class="goal-sec">
               <div class="sec" style="margin-bottom:16px"><h3>Start from a goal</h3><span class="sub">Templates with Citta built in</span><span class="sp"></span><button type="button" class="act" data-action="see-goals">See all</button></div>
               <div class="goals">
-                <button type="button" class="tpl" data-goal-tool="doc"><span class="h"><i>≡</i>Doc</span><b>Essay, start to finish</b><small>Topic → outline → draft → citations</small><span class="use">Use with Citta</span></button>
-                <button type="button" class="tpl" data-goal-tool="deck"><span class="h"><i>▧</i>Deck</span><b>Class presentation</b><small>Notes or lecture → slides → speaker notes</small><span class="use">Use with Citta</span></button>
-                <button type="button" class="tpl" data-goal-tool="numbers"><span class="h"><i>▦</i>Numbers</span><b>Data analysis</b><small>Upload CSV → trends → chart for your Deck</small><span class="use">Use with Citta</span></button>
-                <button type="button" class="tpl" data-goal-tool="symtex"><span class="h"><i>Σ</i>SymTex</span><b>Proof or problem set</b><small>Handwritten steps → typeset LaTeX</small><span class="use">Use with Citta</span></button>
-                <button type="button" class="tpl" data-goal-tool="code"><span class="h"><i style="font-size:10px">&lt;/&gt;</i>Code</span><b>Explain or fix my script</b><small>Paste code → explain → fix → test</small><span class="use">Use with Citta</span></button>
+                <button type="button" class="tpl" data-goal-tool="doc"><span class="h"><i>≡</i>Doc</span><b>Essay, start to finish</b><small>Topic, outline, citations</small><span class="use">Use with Citta</span></button>
+                <button type="button" class="tpl" data-goal-tool="deck"><span class="h"><i>▧</i>Deck</span><b>Class presentation</b><small>Slides and speaker notes</small><span class="use">Use with Citta</span></button>
+                <button type="button" class="tpl" data-goal-tool="numbers"><span class="h"><i>▦</i>Numbers</span><b>Data analysis</b><small>Trends and a chart</small><span class="use">Use with Citta</span></button>
+                <button type="button" class="tpl" data-goal-tool="symtex"><span class="h"><i>Σ</i>SymTex</span><b>Proof or problem set</b><small>Steps in LaTeX</small><span class="use">Use with Citta</span></button>
+                <button type="button" class="tpl" data-goal-tool="code"><span class="h"><i style="font-size:10px">&lt;/&gt;</i>Code</span><b>Explain or fix my script</b><small>Explain, fix, test</small><span class="use">Use with Citta</span></button>
               </div>
             </section>
             </div>
@@ -2845,11 +2892,11 @@
               <section class="goal-sec">
                 <div class="sec" style="margin-bottom:16px"><h3>Start from a goal</h3><span class="sub">Templates with Citta built in</span><span class="sp"></span><button type="button" class="act" data-action="see-goals">See all</button></div>
                 <div class="goals">
-                  <button type="button" class="tpl" data-goal-tool="doc"><span class="h"><i>≡</i>Doc</span><b>Essay, start to finish</b><small>Topic → outline → draft → citations</small><span class="use">Use with Citta</span></button>
-                  <button type="button" class="tpl" data-goal-tool="deck"><span class="h"><i>▧</i>Deck</span><b>Class presentation</b><small>Notes or lecture → slides → speaker notes</small><span class="use">Use with Citta</span></button>
-                  <button type="button" class="tpl" data-goal-tool="numbers"><span class="h"><i>▦</i>Numbers</span><b>Data analysis</b><small>Upload CSV → trends → chart for your Deck</small><span class="use">Use with Citta</span></button>
-                  <button type="button" class="tpl" data-goal-tool="symtex"><span class="h"><i>Σ</i>SymTex</span><b>Proof or problem set</b><small>Handwritten steps → typeset LaTeX</small><span class="use">Use with Citta</span></button>
-                  <button type="button" class="tpl" data-goal-tool="code"><span class="h"><i style="font-size:10px">&lt;/&gt;</i>Code</span><b>Explain or fix my script</b><small>Paste code → explain → fix → test</small><span class="use">Use with Citta</span></button>
+                  <button type="button" class="tpl" data-goal-tool="doc"><span class="h"><i>≡</i>Doc</span><b>Essay, start to finish</b><small>Topic, outline, citations</small><span class="use">Use with Citta</span></button>
+                  <button type="button" class="tpl" data-goal-tool="deck"><span class="h"><i>▧</i>Deck</span><b>Class presentation</b><small>Slides and speaker notes</small><span class="use">Use with Citta</span></button>
+                  <button type="button" class="tpl" data-goal-tool="numbers"><span class="h"><i>▦</i>Numbers</span><b>Data analysis</b><small>Trends and a chart</small><span class="use">Use with Citta</span></button>
+                  <button type="button" class="tpl" data-goal-tool="symtex"><span class="h"><i>Σ</i>SymTex</span><b>Proof or problem set</b><small>Steps in LaTeX</small><span class="use">Use with Citta</span></button>
+                  <button type="button" class="tpl" data-goal-tool="code"><span class="h"><i style="font-size:10px">&lt;/&gt;</i>Code</span><b>Explain or fix my script</b><small>Explain, fix, test</small><span class="use">Use with Citta</span></button>
                 </div>
               </section>
             </div>
