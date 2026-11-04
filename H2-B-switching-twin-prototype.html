@@ -2354,7 +2354,8 @@
               if (document.documentElement.dataset.theme === 'blue') {
                 var bar = document.querySelector('.osbar');
                 var search = document.querySelector('.search-wrap');
-                if (bar && search) bar.appendChild(search);
+                var desk = bar && bar.querySelector('[data-osbar="desk"]');
+                if (bar && search && desk) bar.insertBefore(search, desk);
               }
             } catch (e) {}
           </script>
@@ -5497,7 +5498,8 @@
     const row = document.querySelector('.logo-row');
     if (!search || !bar || !row) return;
     if (document.documentElement.dataset.theme === 'blue') {
-      if (search.parentElement !== bar) bar.appendChild(search);
+      const desk = bar.querySelector('[data-osbar="desk"]');
+      if (desk && search.nextElementSibling !== desk) bar.insertBefore(search, desk);
     } else if (search.parentElement !== row) {
       row.appendChild(search);
     }
