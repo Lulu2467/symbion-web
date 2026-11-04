@@ -614,23 +614,28 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on {
     display: inline-flex;
     align-items: center;
+    position: relative;
     gap: 6px;
     flex: none;
-    height: auto;
+    height: 32px;
     margin: 0;
-    padding: 0;
-    border: 0;
-    border-radius: 0;
+    padding: 0 12px 0 6px;
+    border: 1px solid transparent;
+    border-radius: 999px;
     background: transparent;
     color: var(--green);
     font-size: 15px;
     font-weight: 500;
     box-shadow: none;
+    box-sizing: border-box;
+    transition: background-color .12s, border-color .12s, color .12s;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip .chip-ico {
     display: inline-flex;
-    width: 16px;
-    height: 16px;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
     border-radius: 0;
     background: transparent !important;
     color: var(--green) !important;
@@ -648,25 +653,21 @@
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip .chip-x { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover {
-    height: 32px;
-    padding: 0 12px 0 6px;
-    border-radius: 999px;
     background: var(--green-tint);
-    border: 1px solid var(--green);
-    gap: 6px;
+    border-color: var(--green);
     color: var(--green);
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-label {
     color: var(--green);
-    font-size: 14px;
-    font-weight: 600;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-ico { display: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-ico { visibility: hidden; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x,
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x:hover {
     display: inline-flex;
-    order: -1;
-    position: relative;
+    position: absolute;
+    left: 6px;
+    top: 50%;
+    transform: translateY(-50%);
     width: 18px;
     height: 18px;
     margin: 0;
