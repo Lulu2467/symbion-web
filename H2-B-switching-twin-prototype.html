@@ -352,14 +352,13 @@
   /* Week tools: icon left, title and line stacked, whole card is the hit target. */
   html[data-theme="blue"] .week-cards { gap: 12px; }
   html[data-theme="blue"] .week-card {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
     column-gap: 12px;
     row-gap: 2px;
-    padding: 14px 16px;
-    border-radius: 14px;
+    align-items: center;
+    padding: 16px 16px;
+    border-radius: 16px;
     background: #fff;
     border-color: var(--line);
     cursor: pointer;
@@ -376,23 +375,34 @@
   html[data-theme="blue"] .week-card .done { display: none; }
   html[data-theme="blue"] .week-card .row { display: contents; }
   html[data-theme="blue"] .week-card i {
-    width: 36px;
-    height: 36px;
-    border-radius: 999px;
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 16px;
+    align-self: center;
   }
+  html[data-theme="blue"] .week-card i svg { width: 18px; height: 18px; }
   html[data-theme="blue"] .week-card b {
-    flex: 1;
+    grid-column: 2;
+    grid-row: 1;
     min-width: 0;
-    font-size: 14px;
+    margin: 0;
+    font-size: 15px;
     font-weight: 600;
-    line-height: 1.3;
+    line-height: 1.25;
+    align-self: end;
   }
   html[data-theme="blue"] .week-card small {
-    flex: 1 0 calc(100% - 48px);
-    margin-left: 48px;
-    font-size: 12px;
+    grid-column: 2;
+    grid-row: 2;
+    margin: 0;
+    min-width: 0;
+    font-size: 13px;
     color: var(--muted);
     line-height: 1.35;
+    align-self: start;
   }
   html[data-theme="blue"] .week-card[data-tool="doc"] i { background: var(--blue-tint) !important; color: var(--blue) !important; }
   html[data-theme="blue"] .week-card[data-tool="deck"] i { background: var(--amber-tint) !important; color: var(--amber) !important; }
