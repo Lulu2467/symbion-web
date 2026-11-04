@@ -397,14 +397,15 @@
     text-align: center;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #greeting-home .hello { align-items: center; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #greeting-home .eyebrow,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #greeting-home .course-banner,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #screen-home .course-banner,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #greeting-home .day,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerFoot { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) #greeting-home .hello h2 {
     font-size: 32px;
     font-weight: 600;
     letter-spacing: -0.4px;
-  }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #greeting-home .day {
-    transform: none;
-    width: min(480px, 100%);
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .composer {
     display: flex;
