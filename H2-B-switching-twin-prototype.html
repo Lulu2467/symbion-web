@@ -150,6 +150,32 @@
   html[data-theme="blue"] .course-banner:hover .sp,
   html[data-theme="blue"] .course-banner:hover .sp b,
   html[data-theme="blue"] .course-banner:hover .course-back { color: var(--green); }
+  html[data-theme="blue"] .rail {
+    background: #f6f6f7;
+    border-right-color: #eeeef0;
+  }
+  html[data-theme="blue"] .rail .r { color: #5f6368; }
+  html[data-theme="blue"] .rail .r.o {
+    background: transparent;
+    border-color: transparent;
+    color: #5f6368;
+  }
+  html[data-theme="blue"] .rail .r.on,
+  html[data-theme="blue"] .rail.is-open .r.on {
+    background: #ececee;
+    color: #1f1f1f;
+  }
+  html[data-theme="blue"] .rail .r:hover:not(.on),
+  html[data-theme="blue"] .rail .r[data-rail]:hover:not(.on) {
+    background: #ececee;
+    color: #1f1f1f;
+  }
+  html[data-theme="blue"] .rail .div { background: #e6e6e8; }
+  html[data-theme="blue"] .rail .p {
+    background: #fff;
+    border-color: #e6e6e8;
+    color: #5f6368;
+  }
   html[data-theme="blue"] #screen-home > .course-banner,
   html[data-theme="blue"] #screen-tutorial > .course-banner { display: none; }
   html[data-theme="blue"] #greeting-home .course-banner ~ p[data-live="sub"],
