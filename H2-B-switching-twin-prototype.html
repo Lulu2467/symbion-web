@@ -512,15 +512,19 @@
     background: #fff;
     border-radius: 22px;
     padding: 14px 16px 12px;
-    box-shadow: 0 1px 2px rgba(20, 24, 28, 0.04), 0 0 0 1px rgba(20, 24, 28, 0.06);
-    transition: box-shadow .16s ease, transform .16s ease;
+    box-shadow:
+      0 10px 28px rgba(20, 24, 28, 0.08),
+      0 2px 6px rgba(20, 24, 28, 0.04),
+      0 0 0 1px rgba(20, 24, 28, 0.08);
+    transform: none;
+    transition: none;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .composer .ask-row:hover {
     box-shadow:
       0 10px 28px rgba(20, 24, 28, 0.08),
       0 2px 6px rgba(20, 24, 28, 0.04),
       0 0 0 1px rgba(20, 24, 28, 0.08);
-    transform: translateY(-2px);
+    transform: none;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools {
     justify-content: flex-start;
