@@ -137,6 +137,8 @@
     border-radius: 8px;
     font-size: 12px;
   }
+  html[data-theme="blue"] #screen-home > .course-banner { display: none; }
+  html[data-theme="blue"] #greeting-home .course-banner ~ p[data-live="sub"] { display: none; }
   /* Glass composer is blue-only. Green keeps the solid frame below. */
   html[data-theme="blue"] .composer {
     background: rgba(255, 255, 255, 0.72);
@@ -2472,6 +2474,16 @@
               </div>
             </section>
             </div>
+            <script>
+              try {
+                if (document.documentElement.dataset.theme === 'blue') {
+                  var hello = document.querySelector('#greeting-home .hello');
+                  var title = hello && hello.querySelector('h2');
+                  var banner = document.querySelector('#screen-home .course-banner');
+                  if (hello && title && banner && banner.previousElementSibling !== title) hello.insertBefore(banner, title.nextSibling);
+                }
+              } catch (e) {}
+            </script>
 
             <div class="screen on" id="screen-welcome" data-screen="welcome">
               <section class="greeting quiet" data-greeting="welcome">
@@ -5586,6 +5598,19 @@
       row.appendChild(search);
     }
   }
+  function placeCourseBanner() {
+    const screen = document.getElementById('screen-home');
+    const banner = screen && screen.querySelector('.course-banner');
+    const hello = document.querySelector('#greeting-home .hello');
+    const title = hello && hello.querySelector('h2');
+    const greeting = document.getElementById('greeting-home');
+    if (!screen || !banner || !hello || !title || !greeting) return;
+    if (document.documentElement.dataset.theme === 'blue') {
+      if (banner.previousElementSibling !== title) hello.insertBefore(banner, title.nextSibling);
+    } else if (banner.parentElement !== screen) {
+      screen.insertBefore(banner, greeting);
+    }
+  }
   function applyTheme(theme) {
     const next = theme === 'blue' ? 'blue' : 'green';
     const root = document.documentElement;
@@ -5593,6 +5618,7 @@
     if (next === 'blue') root.dataset.theme = 'blue';
     else delete root.dataset.theme;
     placeHeaderSearch();
+    placeCourseBanner();
     void root.offsetWidth;
     root.classList.remove('theme-swap');
     document.querySelectorAll('[data-theme-pick]').forEach((b) => {
