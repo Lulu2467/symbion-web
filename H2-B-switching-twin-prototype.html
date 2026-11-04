@@ -110,6 +110,9 @@
     --shadow-card-2: rgba(0, 0, 0, .06);
   }
   html[data-theme="blue"] .logo { display: none; }
+  html[data-theme="blue"] .logo-row:not(:has(.search-wrap)) { display: none; }
+  html[data-theme="blue"] .osbar .search-wrap { margin-left: 0; min-width: 240px; }
+  html[data-theme="blue"] .osbar .search { min-width: 240px; padding: 6px 14px; font-size: 12px; }
   html[data-theme="blue"] .hello p .lead { color: var(--ink); }
   html[data-theme="blue"] .hello p b,
   html[data-theme="blue"] .day .evt b { color: var(--info-em); }
@@ -2299,6 +2302,15 @@
               <input type="search" class="search" id="headerSearch" placeholder="Search files, Cosmos, people…" autocomplete="off" spellcheck="false" aria-label="Search files, Cosmos, people">
             </label>
           </div>
+          <script>
+            try {
+              if (document.documentElement.dataset.theme === 'blue') {
+                var bar = document.querySelector('.osbar');
+                var search = document.querySelector('.search-wrap');
+                if (bar && search) bar.appendChild(search);
+              }
+            } catch (e) {}
+          </script>
 
           <div class="content hub">
             <div class="screen" id="screen-home" data-screen="home">
@@ -5432,12 +5444,24 @@
   }
 
   const dock = $('dock');
+  function placeHeaderSearch() {
+    const search = document.querySelector('.search-wrap');
+    const bar = document.querySelector('.osbar');
+    const row = document.querySelector('.logo-row');
+    if (!search || !bar || !row) return;
+    if (document.documentElement.dataset.theme === 'blue') {
+      if (search.parentElement !== bar) bar.appendChild(search);
+    } else if (search.parentElement !== row) {
+      row.appendChild(search);
+    }
+  }
   function applyTheme(theme) {
     const next = theme === 'blue' ? 'blue' : 'green';
     const root = document.documentElement;
     root.classList.add('theme-swap');
     if (next === 'blue') root.dataset.theme = 'blue';
     else delete root.dataset.theme;
+    placeHeaderSearch();
     void root.offsetWidth;
     root.classList.remove('theme-swap');
     document.querySelectorAll('[data-theme-pick]').forEach((b) => {
