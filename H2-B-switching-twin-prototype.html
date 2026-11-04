@@ -530,7 +530,7 @@
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools {
     justify-content: flex-start;
-    gap: 18px;
+    gap: 10px;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool,
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.sel,
@@ -539,11 +539,12 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.sel[data-tool="numbers"],
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.sel[data-tool="symtex"],
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.sel[data-tool="code"] {
-    border-radius: 8px;
-    border: 0;
-    background: transparent;
+    height: 36px;
+    border-radius: 999px;
+    border: 1px solid #e6e8ec;
+    background: #fff;
     color: #5f6670;
-    padding: 4px 2px;
+    padding: 0 14px;
     gap: 6px;
     min-height: 0;
     font-size: 14px;
@@ -558,8 +559,8 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.sel[data-tool="numbers"],
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.sel[data-tool="symtex"],
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.sel[data-tool="code"] {
-    background: transparent;
-    border-color: transparent;
+    background: #fff;
+    border-color: var(--green);
     color: var(--green);
     box-shadow: none;
   }
