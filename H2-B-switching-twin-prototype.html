@@ -376,7 +376,7 @@
     box-shadow: inset 0 0 0 1px rgba(20, 24, 28, 0.04), inset 0 1px 2px rgba(20, 24, 28, 0.03);
   }
   html[data-theme="blue"] .composer .foot { position: relative; z-index: 1; background: transparent; }
-  /* Blue home follows the WPS column: centered title, white ask card, editors as cards under it. */
+  /* Blue home column. The five editor chips stay the original row. */
   html[data-theme="blue"] .hub:has(#screen-home.on) {
     width: min(1040px, 100%);
     margin-inline: auto;
@@ -408,7 +408,6 @@
     -webkit-backdrop-filter: none;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .composer::before { display: none; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) .composer .top { display: contents; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .composer .working { justify-content: center; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .composer .ask-row {
     background: #fff;
@@ -417,44 +416,6 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.92),
       0 0 0 1px rgba(20, 24, 28, 0.06),
       0 10px 28px rgba(20, 24, 28, 0.06);
-  }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #composer .tools {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 12px;
-    align-items: stretch;
-    min-height: 0;
-  }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #composer .tools .tool {
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 10px;
-    min-height: 96px;
-    padding: 14px;
-    border-radius: 16px;
-    background: #fff;
-    border: 1px solid var(--line);
-    box-shadow: 0 1px 2px rgba(20, 24, 28, 0.04);
-  }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #composer .tools .tool:not(.sel):hover {
-    background: #fff;
-    border-color: #d0d4d9;
-    box-shadow: 0 8px 18px rgba(20, 24, 28, 0.06);
-  }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #composer .tools .tool i {
-    width: 32px;
-    height: 32px;
-    border-radius: 10px;
-  }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #composer .tools .tool[data-tool="numbers"] i {
-    background: #e6f2eb !important;
-    color: #008b68 !important;
-  }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #composer .tools .sp { display: none; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #composer .tools .attach {
-    grid-column: 1 / -1;
-    justify-content: flex-end;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .week-tools-panel {
     background: transparent;
@@ -537,15 +498,6 @@
   }
   html[data-theme="blue"] #composer .composer-tool-chip,
   html[data-theme="blue"] #composer .composer-tool-chip.on { display: none; }
-  html[data-theme="blue"] #composer .tools .tool:not(.sel) {
-    background: #f3f4f6;
-    border-color: transparent;
-    border-radius: 10px;
-  }
-  html[data-theme="blue"] #composer .tools .tool:not(.sel):hover {
-    background: #e8eaee;
-    border-color: transparent;
-  }
   html[data-theme="blue"] #tail-home .week-tools-close,
   html[data-theme="blue"] #tail-home .week-tools-hd .badge { display: none; }
   html[data-theme="blue"] .tutorial-doc-citta .twin-notice { background: var(--green); }
