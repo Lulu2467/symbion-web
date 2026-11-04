@@ -426,11 +426,7 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) .composer::before { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .composer .working { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker,
-  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker:hover,
-  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker[aria-expanded="true"],
-  html[data-theme="blue"] .hub:has(#screen-home.on) .is-twin .ask-bar .picker,
-  html[data-theme="blue"] .hub:has(#screen-home.on) .is-twin .ask-bar .picker:hover,
-  html[data-theme="blue"] .hub:has(#screen-home.on) .is-twin .ask-bar .picker[aria-expanded="true"] {
+  html[data-theme="blue"] .hub:has(#screen-home.on) .is-twin .ask-bar .picker {
     margin-left: auto;
     background: transparent;
     border-color: transparent;
@@ -444,8 +440,22 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker[aria-expanded="true"],
   html[data-theme="blue"] .hub:has(#screen-home.on) .is-twin .ask-bar .picker:hover,
   html[data-theme="blue"] .hub:has(#screen-home.on) .is-twin .ask-bar .picker[aria-expanded="true"] {
-    background: transparent;
+    background: var(--green-tint);
   }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker:hover .pname,
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker[aria-expanded="true"] .pname,
+  html[data-theme="blue"] .hub:has(#screen-home.on) .is-twin .ask-bar .picker:hover .pname,
+  html[data-theme="blue"] .hub:has(#screen-home.on) .is-twin .ask-bar .picker[aria-expanded="true"] .pname {
+    color: var(--green);
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker:hover::after,
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker[aria-expanded="true"]::after,
+  html[data-theme="blue"] .hub:has(#screen-home.on) .is-twin .ask-bar .picker:hover::after,
+  html[data-theme="blue"] .hub:has(#screen-home.on) .is-twin .ask-bar .picker[aria-expanded="true"]::after {
+    border-right-color: var(--green);
+    border-bottom-color: var(--green);
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .menu .item[data-ai="citta"][aria-checked="true"] { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker .pav,
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker .twin-badge { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker .pname {
