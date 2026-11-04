@@ -109,7 +109,10 @@
     --shadow-card: rgba(0, 0, 0, .05);
     --shadow-card-2: rgba(0, 0, 0, .06);
   }
-  html[data-theme="blue"] .logo { display: none; }
+  html[data-theme="blue"] .logo-row .logo { display: none; }
+  html[data-theme="blue"] .osbar .logo { display: inline-flex; gap: 8px; color: #1f1f1f; flex: none; }
+  html[data-theme="blue"] .osbar .logo .logo-mark { width: 24px; height: 16px; }
+  html[data-theme="blue"] .osbar .logo .logo-word { font-size: 14px; letter-spacing: 0.16em; }
   html[data-theme="blue"] .logo-row:not(:has(.search-wrap)) { display: none; }
   html[data-theme="blue"] .frame {
     background:
@@ -3020,8 +3023,10 @@
                 var bar = document.querySelector('.osbar');
                 var search = document.querySelector('.search-wrap');
                 var nav = bar && bar.querySelector('.osbar-nav');
+                var logo = document.querySelector('.logo');
                 var plus = bar && bar.querySelector('.osbar-plus');
                 var sp = bar && bar.querySelector(':scope > .sp');
+                if (bar && logo && bar.firstElementChild !== logo) bar.prepend(logo);
                 if (bar && search && nav && search.previousElementSibling !== nav) nav.after(search);
                 if (plus && search && plus.previousElementSibling !== search) search.after(plus);
                 if (sp && plus && sp.previousElementSibling !== plus) plus.after(sp);
@@ -6206,13 +6211,16 @@
     const plus = bar.querySelector('.osbar-plus');
     const sp = bar.querySelector(':scope > .sp');
     const folder = bar.querySelector('.osbar-folder');
+    const logo = document.querySelector('.logo');
     if (document.documentElement.dataset.theme === 'blue') {
       const nav = bar.querySelector('.osbar-nav');
+      if (logo && bar.firstElementChild !== logo) bar.prepend(logo);
       if (nav && search.previousElementSibling !== nav) nav.after(search);
       if (plus && plus.previousElementSibling !== search) search.after(plus);
       if (sp && plus && sp.previousElementSibling !== plus) plus.after(sp);
       if (folder && folder !== bar.lastElementChild) bar.appendChild(folder);
     } else {
+      if (logo && logo.parentElement !== row) row.prepend(logo);
       if (search.parentElement !== row) row.appendChild(search);
       const cosmo = bar.querySelector('.osbar-cosmo');
       if (folder && cosmo && folder.previousElementSibling !== cosmo) cosmo.after(folder);
