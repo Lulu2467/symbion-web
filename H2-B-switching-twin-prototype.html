@@ -390,6 +390,11 @@
   html[data-theme="blue"] .composer .foot { position: relative; z-index: 1; background: transparent; }
   /* Blue home column. The five editor chips stay the original row. */
   html[data-theme="blue"] .hub:has(#screen-home.on) {
+    width: 100%;
+    margin-inline: auto;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #greeting-home,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composer {
     width: min(1040px, 100%);
     margin-inline: auto;
   }
