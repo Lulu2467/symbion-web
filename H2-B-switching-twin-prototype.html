@@ -425,9 +425,16 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) #greeting-home {
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 0;
+    margin-bottom: 12px;
     text-align: center;
   }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #greeting-home h2 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #greeting-home h2 span { font-weight: 600; }
   html[data-theme="blue"] .hub:has(#screen-home.on) #greeting-home .hello { align-items: center; }
   html[data-theme="blue"] .hub:has(#screen-home.on) #greeting-home .eyebrow,
   html[data-theme="blue"] .hub:has(#screen-home.on) #greeting-home .course-banner,
@@ -437,7 +444,8 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) .composer {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 20px;
+    margin-bottom: 0;
     background: transparent;
     border: 0;
     box-shadow: none;
@@ -528,7 +536,7 @@
     align-items: flex-start;
     padding: 6px 4px 0 8px;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) .composer-input { font-size: 16px; font-weight: 400; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .composer-input { font-size: 14px; font-weight: 400; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .composer-input::placeholder { color: #b0b4ba; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .composer .ask-row {
     background: #fff;
@@ -550,7 +558,7 @@
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools {
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .sp { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool,
@@ -560,15 +568,15 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.sel[data-tool="numbers"],
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.sel[data-tool="symtex"],
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.sel[data-tool="code"] {
-    height: 36px;
+    height: 32px;
     border-radius: 999px;
     border: 1px solid #e6e8ec;
     background: #fff;
     color: #5f6670;
-    padding: 0 14px;
+    padding: 0 12px;
     gap: 6px;
     min-height: 0;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     box-shadow: none;
   }
@@ -678,6 +686,19 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x::after {
     transform: translate(-50%, -50%) rotate(-45deg);
   }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home { margin-top: 16px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .week-tools-hd h3,
+  html[data-theme="blue"] .hub:has(#screen-home.on) .two-title-l h3,
+  html[data-theme="blue"] .hub:has(#screen-home.on) .two-title-r h3 {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .week-tools-panel { gap: 16px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .week-card b { font-size: 14px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .week-card small { font-size: 12px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .rem .t { font-size: 13px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .sec .sub,
+  html[data-theme="blue"] .hub:has(#screen-home.on) .two-title-r .new-badge { font-size: 12px; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .week-tools-panel {
     background: transparent;
     border: 0;
