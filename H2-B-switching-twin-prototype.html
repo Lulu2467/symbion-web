@@ -193,6 +193,9 @@
   html[data-theme="blue"] .osbar .osbar-book-mgr { width: 24px; height: 24px; border-radius: 7px; }
   html[data-theme="blue"] .osbar .osbar-book-mgr .osbar-ico { width: 12px; height: 12px; }
   html[data-theme="blue"] .osbar .av-s { width: 24px; height: 24px; border-radius: 12px; font-size: 11px; }
+  .osbar-app[data-osbar="desk"] .av-s { display: none; }
+  html[data-theme="blue"] .osbar-app[data-osbar="desk"] .osbar-ico { display: none; }
+  html[data-theme="blue"] .osbar-app[data-osbar="desk"] .av-s { display: inline-flex; }
   html[data-theme="blue"] .osbar .search-wrap { margin-left: 0; flex: none; width: 320px; max-width: 320px; min-width: 0; }
   html[data-theme="blue"] .osbar .search {
     min-width: 0;
@@ -3039,7 +3042,7 @@
           <button type="button" data-theme-pick="green" aria-pressed="true">绿色</button>
           <button type="button" data-theme-pick="blue" aria-pressed="false">蓝色</button>
         </div>
-        <button type="button" class="osbar-app" aria-label="Desk" data-osbar="desk"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.8V20a1 1 0 0 0 1 1h4.5v-6h3v6H18a1 1 0 0 0 1-1V9.8"/></svg><span>Desk</span></button>
+        <button type="button" class="osbar-app" aria-label="Desk" data-osbar="desk"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.8V20a1 1 0 0 0 1 1h4.5v-6h3v6H18a1 1 0 0 0 1-1V9.8"/></svg><span class="av-s" aria-hidden="true">D</span><span>Desk</span></button>
         <button type="button" class="osbar-app" aria-label="Symbion" data-osbar="symbion"><span class="av-s" aria-hidden="true">S</span><span>Symbion</span></button>
       </div>
 
