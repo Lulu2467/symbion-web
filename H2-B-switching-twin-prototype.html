@@ -111,12 +111,33 @@
   }
   html[data-theme="blue"] .logo { display: none; }
   html[data-theme="blue"] .logo-row:not(:has(.search-wrap)) { display: none; }
-  html[data-theme="blue"] .osbar { gap: 12px; min-height: 48px; box-sizing: border-box; padding: 9px var(--page-gutter) 9px 20px; font-size: 13px; }
+  html[data-theme="blue"] .osbar { gap: 12px; min-height: 48px; box-sizing: border-box; padding: 9px var(--page-gutter) 9px 20px; font-size: 13px; position: relative; z-index: 40; }
   .osbar-nav { display: none; }
   html[data-theme="blue"] .osbar-nav { display: inline-flex; align-items: center; gap: 2px; flex: none; }
   html[data-theme="blue"] .osbar-cosmo { display: none; }
   html[data-theme="blue"] .osbar-nav-btn { width: 28px; height: 28px; padding: 0; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; color: #5f6368; }
   html[data-theme="blue"] .osbar-nav-btn:hover { background: #ececee; color: #1f1f1f; }
+  .osbar-folder { position: relative; display: inline-flex; align-items: center; gap: 16px; flex: none; }
+  .osbar-folder-btn { display: none; }
+  .osbar-folder-menu { display: contents; }
+  html[data-theme="blue"] .osbar-folder-btn { display: inline-flex; }
+  html[data-theme="blue"] .osbar-folder.is-open .osbar-folder-btn { background: #ececee; color: #1f1f1f; }
+  html[data-theme="blue"] .osbar-folder-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 168px;
+    padding: 6px;
+    background: #fff;
+    border: 1px solid #e6e6e8;
+    border-radius: 12px;
+    box-shadow: 0 10px 28px rgba(20, 24, 28, .12);
+    z-index: 5;
+  }
+  html[data-theme="blue"] .osbar-folder.is-open .osbar-folder-menu { display: flex; flex-direction: column; gap: 2px; }
+  html[data-theme="blue"] .osbar-folder-menu .osbar-bm { gap: 8px; padding: 8px 10px; border-radius: 8px; justify-content: flex-start; }
+  html[data-theme="blue"] .osbar-folder-menu .osbar-bm:hover { background: #ececee; }
   html[data-theme="blue"] .osbar .sp { flex: 1 1 32px; min-width: 16px; }
   html[data-theme="blue"] .osbar .osbar-ico { width: 16px; height: 16px; }
   html[data-theme="blue"] .osbar .osbar-bm,
@@ -2610,9 +2631,14 @@
           <button type="button" class="osbar-cosmo-btn" data-osbar="cosmo">Cosmo</button>
           <button type="button" class="osbar-book-mgr" aria-label="Manage bookmarks" data-osbar="bookmarks"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 6 4 14M12 6v14M8 8v12M4 4v16"/></svg></button>
         </div>
-        <button type="button" class="osbar-bm" aria-label="Open Scholar" data-osbar="scholar"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 9 12 4 2 9l10 5 10-5Zm-17 3v5c0 1.5 3 3 7 3s7-1.5 7-3v-5M22 9v6"/></svg><span>Scholar</span></button>
-        <button type="button" class="osbar-bm" aria-label="Open arXiv" data-osbar="arxiv"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7l-5-5Zm-1 0v5h5M8 13h8M8 17h6M8 9h2"/></svg><span>arXiv</span></button>
-        <button type="button" class="osbar-bm" aria-label="Open Notion" data-osbar="notion"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3zM16 12h2M16 8h2M6 12h2M6 8h2"/></svg><span>Notion</span></button>
+        <div class="osbar-folder">
+          <button type="button" class="osbar-nav-btn osbar-folder-btn" aria-label="Bookmarks" aria-haspopup="menu" aria-expanded="false"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7.5A1.5 1.5 0 0 1 5.5 6H9l2 2h7.5A1.5 1.5 0 0 1 20 9.5v8a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5v-10z"/></svg></button>
+          <div class="osbar-folder-menu" role="menu" aria-label="Bookmarks">
+            <button type="button" class="osbar-bm" role="menuitem" aria-label="Open Scholar" data-osbar="scholar"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 9 12 4 2 9l10 5 10-5Zm-17 3v5c0 1.5 3 3 7 3s7-1.5 7-3v-5M22 9v6"/></svg><span>Scholar</span></button>
+            <button type="button" class="osbar-bm" role="menuitem" aria-label="Open arXiv" data-osbar="arxiv"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7l-5-5Zm-1 0v5h5M8 13h8M8 17h6M8 9h2"/></svg><span>arXiv</span></button>
+            <button type="button" class="osbar-bm" role="menuitem" aria-label="Open Notion" data-osbar="notion"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3zM16 12h2M16 8h2M6 12h2M6 8h2"/></svg><span>Notion</span></button>
+          </div>
+        </div>
         <span class="sp"></span>
         <div class="seg theme-seg" role="group" aria-label="主题色">
           <button type="button" data-theme-pick="green" aria-pressed="true">绿色</button>
@@ -5836,7 +5862,32 @@
       }
     });
   }
+  function setBookmarkFolder(open) {
+    const folder = frame.querySelector('.osbar-folder');
+    const btn = folder && folder.querySelector('.osbar-folder-btn');
+    if (!folder || !btn) return;
+    folder.classList.toggle('is-open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  const bookmarkFolder = frame.querySelector('.osbar-folder');
+  const bookmarkFolderBtn = bookmarkFolder && bookmarkFolder.querySelector('.osbar-folder-btn');
+  if (bookmarkFolderBtn) {
+    bookmarkFolderBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setBookmarkFolder(!bookmarkFolder.classList.contains('is-open'));
+    });
+    bookmarkFolder.querySelectorAll('[data-osbar]').forEach((btn) => {
+      btn.addEventListener('click', () => setBookmarkFolder(false));
+    });
+    document.addEventListener('click', (e) => {
+      if (!bookmarkFolder.contains(e.target)) setBookmarkFolder(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setBookmarkFolder(false);
+    });
+  }
   function applyTheme(theme) {
+    setBookmarkFolder(false);
     const next = theme === 'blue' ? 'blue' : 'green';
     const root = document.documentElement;
     root.classList.add('theme-swap');
