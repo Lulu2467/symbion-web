@@ -186,6 +186,72 @@
   html[data-theme="blue"] .osbar-folder-menu .osbar-bm:hover { background: #ececee; }
   html[data-theme="blue"] .osbar .sp { flex: 1; min-width: 12px; }
   .osbar-plus { display: none; }
+  .osbar-tabs { display: none; }
+  html[data-theme="blue"] .osbar-tabs:not(:empty) {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex: none;
+    min-width: 0;
+  }
+  html[data-theme="blue"] .osbar-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 28px;
+    max-width: 148px;
+    margin: 0;
+    padding: 0 6px 0 10px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #5f6368;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+    cursor: pointer;
+  }
+  html[data-theme="blue"] .osbar-tab.on {
+    background: #fff;
+    color: #1f1f1f;
+    box-shadow: 0 0 0 1px rgba(20, 24, 28, .06);
+  }
+  html[data-theme="blue"] .osbar-tab.is-in { animation: osbar-tab-in .28s cubic-bezier(.2, .8, .2, 1); }
+  @keyframes osbar-tab-in {
+    from { opacity: 0; transform: translateX(12px); }
+    to { opacity: 1; transform: none; }
+  }
+  html[data-theme="blue"] .osbar-tab-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  html[data-theme="blue"] .osbar-tab-x {
+    width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #71777d;
+    font-size: 13px;
+    line-height: 1;
+  }
+  html[data-theme="blue"] .osbar-tab-x:hover { background: #ececee; color: #1f1f1f; }
+  html[data-theme="blue"] .main.is-new-tab::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #fff;
+    pointer-events: none;
+    z-index: 4;
+    animation: new-tab-veil .42s ease forwards;
+  }
+  @keyframes new-tab-veil {
+    0% { opacity: 1; }
+    45% { opacity: 1; }
+    100% { opacity: 0; }
+  }
   html[data-theme="blue"] .osbar .osbar-ico { width: 16px; height: 16px; }
   html[data-theme="blue"] .osbar .osbar-bm,
   html[data-theme="blue"] .osbar .osbar-app,
@@ -3095,7 +3161,8 @@
           <button type="button" class="osbar-nav-btn" aria-label="Home" data-osbar="home"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z"/></svg></button>
           <button type="button" class="osbar-nav-btn" aria-label="Reload" data-osbar="reload"><svg class="osbar-ico" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1022.767407 532.840296C1011.749926 805.850074 787.721481 1024 512 1024 229.224296 1024 0 794.775704 0 512S229.224296 0 512 0c177.322667 0 332.382815 91.022222 424.220444 228.02963L936.220444 48.943407c0-16.156444 13.084444-29.259852 29.259852-29.259852s29.259852 13.103407 29.259852 29.259852l0 243.617185c0 16.175407-13.084444 29.259852-29.259852 29.259852L721.863111 321.820444c-16.175407 0-29.259852-13.084444-29.259852-29.259852 0-16.156444 13.084444-29.259852 29.259852-29.259852l167.841185 0C808.63763 140.382815 670.283852 58.519704 512 58.519704 261.537185 58.519704 58.519704 261.537185 58.519704 512c0 250.443852 203.017481 453.480296 453.480296 453.480296 245.532444 0 444.946963-195.223704 452.759704-438.821926l0.758519 0c0.056889-16.118519 13.103407-29.165037 29.221926-29.165037 16.175407 0 29.259852 13.103407 29.259852 29.259852C1024 528.914963 1023.241481 530.811259 1022.767407 532.840296z" fill="currentColor"/></svg></button>
         </div>
-        <button type="button" class="osbar-nav-btn osbar-plus" aria-label="New" data-osbar="new"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="osbar-tabs" aria-label="Tabs"></div>
+        <button type="button" class="osbar-nav-btn osbar-plus" aria-label="New" data-osbar="new"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
         <div class="osbar-cosmo">
           <button type="button" class="osbar-cosmo-btn" data-osbar="cosmo">Cosmo</button>
           <button type="button" class="osbar-book-mgr" aria-label="Manage bookmarks" data-osbar="bookmarks"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 6 4 14M12 6v14M8 8v12M4 4v16"/></svg></button>
@@ -3145,13 +3212,15 @@
                 var nav = bar && bar.querySelector('.osbar-nav');
                 var logo = document.querySelector('.logo');
                 var plus = bar && bar.querySelector('.osbar-plus');
+                var tabs = bar && bar.querySelector('.osbar-tabs');
                 var sp = bar && bar.querySelector(':scope > .sp');
                 if (bar && logo && bar.firstElementChild !== logo) bar.prepend(logo);
                 var folder = bar && bar.querySelector('.osbar-folder');
                 var folderInPlace = folder && search && nav && search.previousElementSibling === folder && folder.previousElementSibling === nav;
                 if (bar && search && nav && !folderInPlace) nav.after(search);
                 if (folder && search && search.previousElementSibling !== folder) search.before(folder);
-                if (plus && search && plus.previousElementSibling !== search) search.after(plus);
+                if (tabs && search && tabs.previousElementSibling !== search) search.after(tabs);
+                if (plus && tabs && plus.previousElementSibling !== tabs) tabs.after(plus);
                 if (sp && plus && sp.previousElementSibling !== plus) plus.after(sp);
               }
             } catch (e) {}
@@ -5883,8 +5952,61 @@
       }
     });
 
+    function openNewTab() {
+      const tabs = document.querySelector('.osbar-tabs');
+      const search = document.getElementById('headerSearch');
+      const main = document.querySelector('.main');
+      if (!tabs) return;
+      const make = (label, active, animate) => {
+        const tab = document.createElement('button');
+        tab.type = 'button';
+        tab.className = 'osbar-tab' + (active ? ' on' : '') + (animate ? ' is-in' : '');
+        tab.innerHTML = `<span class="osbar-tab-label"></span><span class="osbar-tab-x" role="button" aria-label="Close tab">×</span>`;
+        tab.querySelector('.osbar-tab-label').textContent = label;
+        tab.addEventListener('click', (e) => {
+          if (e.target.closest('.osbar-tab-x')) {
+            const wasOn = tab.classList.contains('on');
+            tab.remove();
+            if (wasOn) {
+              const last = tabs.querySelector('.osbar-tab:last-child');
+              if (last) last.classList.add('on');
+            }
+            return;
+          }
+          tabs.querySelectorAll('.osbar-tab').forEach((t) => t.classList.remove('on'));
+          tab.classList.add('on');
+        });
+        tabs.appendChild(tab);
+        return tab;
+      };
+      if (!tabs.children.length) make('Home', false, false);
+      if (tabs.children.length >= 3) {
+        const last = tabs.querySelector('.osbar-tab:last-child');
+        tabs.querySelectorAll('.osbar-tab').forEach((t) => t.classList.remove('on'));
+        if (last) {
+          last.classList.add('on');
+          last.classList.remove('is-in');
+          void last.offsetWidth;
+          last.classList.add('is-in');
+        }
+      } else {
+        tabs.querySelectorAll('.osbar-tab').forEach((t) => t.classList.remove('on'));
+        make('New tab', true, true);
+      }
+      if (search) search.value = '';
+      if (main) {
+        main.classList.remove('is-new-tab');
+        void main.offsetWidth;
+        main.classList.add('is-new-tab');
+      }
+    }
+
     frame.querySelectorAll('.osbar button[data-osbar]').forEach((el) => {
       el.addEventListener('click', () => {
+        if (el.dataset.osbar === 'new' && document.documentElement.dataset.theme === 'blue') {
+          openNewTab();
+          return;
+        }
         flashEl(el);
         const label = el.getAttribute('aria-label') || el.textContent.trim();
         showToastMsg(`Chrome · ${label}`);
@@ -6334,6 +6456,7 @@
     const row = document.querySelector('.logo-row');
     if (!search || !bar || !row) return;
     const plus = bar.querySelector('.osbar-plus');
+    const tabs = bar.querySelector('.osbar-tabs');
     const sp = bar.querySelector(':scope > .sp');
     const folder = bar.querySelector('.osbar-folder');
     const logo = document.querySelector('.logo');
@@ -6343,7 +6466,8 @@
       const folderInPlace = folder && nav && search.previousElementSibling === folder && folder.previousElementSibling === nav;
       if (nav && !folderInPlace) nav.after(search);
       if (folder && search.previousElementSibling !== folder) search.before(folder);
-      if (plus && plus.previousElementSibling !== search) search.after(plus);
+      if (tabs && tabs.previousElementSibling !== search) search.after(tabs);
+      if (plus && tabs && plus.previousElementSibling !== tabs) tabs.after(plus);
       if (sp && plus && sp.previousElementSibling !== plus) plus.after(sp);
     } else {
       if (logo && logo.parentElement !== row) row.prepend(logo);
