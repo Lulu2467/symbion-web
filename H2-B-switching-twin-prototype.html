@@ -375,6 +375,92 @@
     box-shadow: inset 0 0 0 1px rgba(20, 24, 28, 0.04), inset 0 1px 2px rgba(20, 24, 28, 0.03);
   }
   html[data-theme="blue"] .composer .foot { position: relative; z-index: 1; background: transparent; }
+  /* Blue home follows the WPS column: centered title, white ask card, editors as cards under it. */
+  html[data-theme="blue"] .hub:has(#screen-home.on) {
+    width: min(1040px, 100%);
+    margin-inline: auto;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #greeting-home {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #greeting-home .hello { align-items: center; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #greeting-home .hello h2 {
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.4px;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #greeting-home .day {
+    transform: none;
+    width: min(480px, 100%);
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .composer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .composer::before { display: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .composer .top { display: contents; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .composer .working { justify-content: center; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .composer .ask-row {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.92),
+      0 0 0 1px rgba(20, 24, 28, 0.06),
+      0 10px 28px rgba(20, 24, 28, 0.06);
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composer .tools {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+    align-items: stretch;
+    min-height: 0;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composer .tools .tool {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
+    min-height: 96px;
+    padding: 14px;
+    border-radius: 16px;
+    background: #fff;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(20, 24, 28, 0.04);
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composer .tools .tool:not(.sel):hover {
+    background: #fff;
+    border-color: #d0d4d9;
+    box-shadow: 0 8px 18px rgba(20, 24, 28, 0.06);
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composer .tools .tool i {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composer .tools .tool[data-tool="numbers"] i {
+    background: #e6f2eb !important;
+    color: #008b68 !important;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composer .tools .sp { display: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composer .tools .attach {
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .week-tools-panel {
+    background: transparent;
+    border: 0;
+    padding: 4px 0 0;
+    box-shadow: none;
+  }
   html[data-theme="blue"] .composer .ask-bar .send { background: #d5d8dc; border-radius: 999px; }
   html[data-theme="blue"] .composer .ask-bar .send:hover { background: #c8ccd1; }
   html[data-theme="blue"] .composer .ask-bar .send.is-ready { background: var(--green); }
