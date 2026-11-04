@@ -168,6 +168,21 @@
     border-color: var(--green-line);
   }
   html[data-theme="blue"] .tutorial-try-card .try-it:hover .citta-mark { color: var(--green-dark); }
+  /* Reminder actions stay gray outline until hover or press. */
+  html[data-theme="blue"] .btn-soft {
+    background: #fff;
+    color: var(--muted);
+    border: 1px solid var(--line);
+  }
+  html[data-theme="blue"] .btn-soft .spark-icon { color: var(--muted); }
+  html[data-theme="blue"] .btn-soft:hover,
+  html[data-theme="blue"] .btn-soft:active {
+    background: var(--green-tint);
+    color: var(--green-dark);
+    border-color: var(--green-line);
+  }
+  html[data-theme="blue"] .btn-soft:hover .spark-icon,
+  html[data-theme="blue"] .btn-soft:active .spark-icon { color: var(--green-dark); }
   /* Theme tokens change instantly. A background transition would keep the previous tint. */
   html.theme-swap, html.theme-swap * { transition: none !important; }
   * { box-sizing: border-box; }
@@ -1431,11 +1446,11 @@
   .citta-panel[hidden] { display: none !important; }
   .frame.citta-open .citta-panel { transform: none; }
   .frame.citta-open .body .main { margin-right: 320px; }
-  .citta-panel .ph { padding: 14px 16px 12px; display: flex; gap: 6px; align-items: center; flex: none; border-bottom: 1px solid var(--line); }
+  .citta-panel .ph { padding: 14px 16px 12px; display: flex; gap: 6px; align-items: center; flex: none; min-width: 0; overflow: hidden; border-bottom: 1px solid var(--line); }
   .citta-panel .ph .citta-av { width: 28px; height: 28px; border-radius: 10px; background: transparent; color: var(--green-dark); font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex: none; overflow: hidden; padding: 0; }
   .citta-panel .ph .citta-av img { border-radius: 10px; }
   .citta-panel .ph .citta-av.twin-init { border-radius: 14px; background: var(--surface-2); color: var(--muted); font-size: 10px; }
-  .citta-panel .ph b { font-size: 16px; font-weight: 600; flex: none; line-height: 1; max-width: 148px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .citta-panel .ph b { font-size: 16px; font-weight: 600; flex: 0 1 auto; min-width: 0; line-height: 1; max-width: 148px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   /* Match task-pill height (~22px); resting small box so the control reads without hover. */
   .citta-panel .ph .sw-sm {
     color: var(--green);
