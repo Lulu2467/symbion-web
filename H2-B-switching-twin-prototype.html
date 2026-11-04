@@ -126,18 +126,21 @@
     padding: 0;
     border-radius: 0;
     font-size: 14px;
-    line-height: 1.4;
+    font-weight: 400;
+    line-height: 23px;
     cursor: pointer;
   }
   html[data-theme="blue"] .course-banner .av { display: none; }
-  html[data-theme="blue"] .course-banner .sp { flex: none; color: var(--ink); }
+  html[data-theme="blue"] .course-banner .sp,
+  html[data-theme="blue"] .course-banner .sp b { flex: none; color: var(--muted); font-size: 14px; font-weight: 500; }
+  html[data-theme="blue"] .course-banner .sp { font-weight: 400; }
   html[data-theme="blue"] .course-banner .course-back {
     background: none;
     border: 0;
     padding: 0;
     border-radius: 0;
     font-size: 0;
-    color: var(--ink);
+    color: var(--muted);
   }
   html[data-theme="blue"] .course-banner .course-back .ico-ne {
     width: 12px;
