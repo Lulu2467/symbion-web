@@ -118,25 +118,35 @@
   html[data-theme="blue"] .hello p b,
   html[data-theme="blue"] .day .evt b { color: var(--info-em); }
   html[data-theme="blue"] .course-banner {
-    background: linear-gradient(90deg, #ebf5fa 0%, #f4f8fa 34%, #ffffff 68%);
-    border-color: #e6eef2;
-    gap: 8px;
-    padding: 4px 8px 4px 8px;
-    border-radius: 10px;
-    font-size: 12px;
-    line-height: 1.3;
+    align-self: flex-start;
+    width: auto;
+    background: none;
+    border: 0;
+    gap: 4px;
+    padding: 0;
+    border-radius: 0;
+    font-size: 14px;
+    line-height: 1.4;
+    cursor: pointer;
   }
-  html[data-theme="blue"] .course-banner .av {
-    width: 22px;
-    height: 22px;
-    border-radius: 11px;
-    font-size: 9px;
-  }
+  html[data-theme="blue"] .course-banner .av { display: none; }
+  html[data-theme="blue"] .course-banner .sp { flex: none; color: var(--ink); }
   html[data-theme="blue"] .course-banner .course-back {
-    padding: 3px 10px;
-    border-radius: 8px;
-    font-size: 12px;
+    background: none;
+    border: 0;
+    padding: 0;
+    border-radius: 0;
+    font-size: 0;
+    color: var(--ink);
   }
+  html[data-theme="blue"] .course-banner .course-back .ico-ne {
+    width: 12px;
+    height: 12px;
+    margin-left: 2px;
+  }
+  html[data-theme="blue"] .course-banner:hover .sp,
+  html[data-theme="blue"] .course-banner:hover .sp b,
+  html[data-theme="blue"] .course-banner:hover .course-back { color: var(--green); }
   html[data-theme="blue"] #screen-home > .course-banner,
   html[data-theme="blue"] #screen-tutorial > .course-banner { display: none; }
   html[data-theme="blue"] #greeting-home .course-banner ~ p[data-live="sub"],
@@ -5147,7 +5157,7 @@
         return;
       }
 
-      const courseBack = e.target.closest('.course-back');
+      const courseBack = e.target.closest('.course-back') || (document.documentElement.dataset.theme === 'blue' && e.target.closest('.course-banner'));
       if (courseBack) {
         const backLabel = screen === 'tutorial' ? 'Back to Prof. Roland’s Cosmo' : 'Back to Prof. Roland’s course';
         showToastMsg(backLabel);
