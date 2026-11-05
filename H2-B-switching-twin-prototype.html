@@ -3498,6 +3498,7 @@
   .frame.desk-on .main { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
   #deskHost {
     display: none;
+    position: relative;
     flex: 1;
     min-width: 0;
     min-height: 0;
@@ -3653,6 +3654,72 @@
   .desk-folder b { display: block; font-size: 13px; }
   .desk-folder small { color: #71777d; font-size: 12px; }
   .desk-foot { display: flex; gap: 14px; color: #8b9198; font-size: 12px; margin-top: 12px; }
+  .kanban-modal {
+    position: absolute; inset: 0; z-index: 6;
+    display: flex; align-items: center; justify-content: center; padding: 24px;
+    background: rgba(28, 31, 29, .28);
+  }
+  .kanban-modal[hidden] { display: none !important; }
+  .kanban-sheet {
+    width: min(760px, 100%); max-height: 100%; overflow: auto;
+    background: #fff; border: 1px solid var(--line); border-radius: 16px;
+    box-shadow: 0 16px 40px var(--shadow-sage-deep); padding: 18px 22px 0;
+  }
+  .kanban-top { display: flex; align-items: center; justify-content: space-between; }
+  .kanban-kicker {
+    display: inline-flex; align-items: center; height: 22px; padding: 0 10px;
+    border-radius: 999px; background: var(--surface); color: var(--muted);
+    font-size: 11px; font-weight: 700; letter-spacing: .06em;
+  }
+  .kanban-x { border: 0; background: transparent; color: #656d76; width: 28px; height: 28px; padding: 0; }
+  #deskHost .kanban-x:hover { color: #1a1d21; }
+  .kanban-sheet h2 { margin: 14px 0 4px; font-size: 22px; font-weight: 650; letter-spacing: -0.02em; }
+  .kanban-lead { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.45; }
+  .kanban-tabs { display: grid; grid-template-columns: repeat(3, 1fr); margin: 16px 0 18px; border-bottom: 1px solid var(--line); }
+  .kanban-tabs button {
+    border: 0; border-bottom: 2px solid transparent; background: transparent;
+    margin-bottom: -1px; padding: 10px 8px; font-size: 14px; font-weight: 650; color: var(--label);
+  }
+  #deskHost .kanban-tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: #1f1f1f; }
+  .kanban-sheet h3 { margin: 0 0 4px; font-size: 16px; font-weight: 650; }
+  .kanban-sheet .hint { margin: 0 0 16px; color: var(--muted); font-size: 13px; line-height: 1.45; }
+  .kanban-when { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .kanban-when > b { display: block; margin-bottom: 8px; font-size: 14px; }
+  .kanban-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .kanban-field { display: block; }
+  .kanban-field span { display: block; margin-bottom: 6px; color: var(--label); font-size: 12px; font-weight: 600; }
+  .kanban-sheet input, .kanban-sheet textarea {
+    width: 100%; box-sizing: border-box; border: 1px solid var(--line); border-radius: 10px;
+    background: #fff; color: var(--ink); font: inherit; font-size: 14px; accent-color: var(--green);
+  }
+  .kanban-sheet input { height: 40px; padding: 0 10px; }
+  .kanban-sheet textarea { min-height: 88px; padding: 8px 10px; resize: vertical; }
+  .kanban-sheet input:focus, .kanban-sheet textarea:focus { outline: none; border-color: var(--green); }
+  .kanban-types, .kanban-lanes { display: grid; gap: 10px; margin-top: 8px; }
+  .kanban-types { grid-template-columns: repeat(4, 1fr); }
+  .kanban-types button, .kanban-lanes button {
+    height: 48px; border: 1px solid var(--line); border-radius: 12px; background: #fff;
+    font-size: 14px; font-weight: 600; color: var(--ink);
+  }
+  .kanban-lanes button { height: auto; padding: 12px 14px; text-align: left; }
+  #deskHost .kanban-types button[aria-pressed="true"],
+  #deskHost .kanban-lanes button[aria-pressed="true"] { background: #1f1f1f; border-color: #1f1f1f; color: #fff; }
+  .kanban-note { min-height: 18px; margin: 10px 0 0; color: var(--muted); font-size: 12px; }
+  .kanban-foot {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    margin: 18px -22px 0; padding: 14px 22px; border-top: 1px solid var(--line);
+  }
+  .kanban-foot > span { color: var(--muted); font-size: 13px; }
+  .kanban-foot div { display: flex; gap: 8px; }
+  .kanban-cancel, .kanban-next {
+    height: 36px; padding: 0 16px; border-radius: 10px; font-size: 14px; font-weight: 650;
+  }
+  .kanban-cancel { border: 1px solid var(--line); background: #fff; color: var(--ink); }
+  #deskHost .kanban-cancel:hover { background: #f3f5f7; }
+  #deskHost .kanban-next { border: 0; background: var(--green); color: #fff; }
+  #deskHost .kanban-next:hover { background: var(--green-dark); }
+  #deskHost .kanban-next:disabled { background: #e6e8eb; color: #6b7076; cursor: default; }
+  .kanban-block { margin-bottom: 8px; }
 
   .frame.set-on { display: flex; flex-direction: column; height: 900px; }
   .frame.set-on .body { flex: 1; min-height: 0; }
@@ -4339,7 +4406,7 @@
   .msg.mine .filechip small { color: rgba(255,255,255,.8); }
   .act { position: absolute; top: 0; right: 0; height: 22px; padding: 0 8px; border-radius: 999px; border: 1px solid var(--line); background: #fff; color: var(--muted); font-size: 12px; font-weight: 600; opacity: 0; }
   .msg.mine .act { right: auto; left: 0; }
-  .msg:hover .act, .msg:focus-within .act { opacity: 1; }
+  .msg:focus-within .act { opacity: 1; }
   .act:hover { color: var(--green-dark); border-color: var(--green-line); }
   mark { background: var(--amber-tint); color: inherit; border-radius: 2px; }
   .person:hover, .av:hover { box-shadow: 0 0 0 2px var(--green-line); }
@@ -9582,6 +9649,10 @@
     const start = deskMonday(deskFocus);
     return Array.from({ length: 7 }, (_, i) => deskAddDays(start, i));
   }
+  function deskCovers(item, iso) {
+    const end = item.end || item.date;
+    return iso >= item.date && iso <= end;
+  }
   function deskEsc(text) {
     return String(text).replace(/[&<>"]/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
   }
@@ -9600,12 +9671,9 @@
     if (label) label.textContent = deskRangeLabel();
     document.querySelectorAll('[data-desk-span]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.deskSpan === deskSpan)));
     document.querySelectorAll('[data-desk-canvas]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.deskCanvas === deskCanvas)));
-    const menu = document.getElementById('deskNewMenu');
-    if (menu) menu.hidden = !deskNewOpen;
     const days = deskDays();
-    const inSpan = (iso) => days.some((d) => deskIso(d) === iso);
     if (deskCanvas === 'list') {
-      const rows = deskItems.filter((item) => inSpan(item.date));
+      const rows = deskItems.filter((item) => days.some((d) => deskCovers(item, deskIso(d))));
       host.innerHTML = rows.length ? `<div class="desk-list">${rows.map((item) => {
         const lane = DESK_LANES.find((l) => l.id === item.lane);
         return `<button type="button"><span>${deskEsc(item.title)}<em style="display:block;font-style:normal;color:#71777d;font-weight:500">${deskEsc(lane ? lane.name : '')} · ${deskEsc(item.type)}</em></span><small>${deskEsc(item.date)}</small></button>`;
@@ -9620,7 +9688,7 @@
       for (let n = 1; n <= count; n += 1) {
         const d = new Date(first.getFullYear(), first.getMonth(), n);
         const iso = deskIso(d);
-        const hits = deskItems.filter((item) => item.date === iso);
+        const hits = deskItems.filter((item) => deskCovers(item, iso));
         cells.push(`<button type="button" class="${hits.length ? 'has' : ''}" data-desk-day="${iso}">${n}${hits.map((item) => `<em style="display:block;font-style:normal">${deskEsc(item.title)}</em>`).join('')}</button>`);
       }
       host.innerHTML = `<div class="desk-cal">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((d) => `<i>${d}</i>`).join('')}${cells.join('')}</div>`;
@@ -9631,7 +9699,7 @@
     const lanes = DESK_LANES.map((lane) => {
       const cells = days.map((d) => {
         const iso = deskIso(d);
-        const hits = deskItems.filter((item) => item.lane === lane.id && item.date === iso);
+        const hits = deskItems.filter((item) => item.lane === lane.id && deskCovers(item, iso));
         return `<div class="desk-cell">${hits.map((item) => `<button type="button" class="desk-task">${deskEsc(item.title)}<em>${deskEsc(item.type)}</em></button>`).join('')}</div>`;
       }).join('');
       return `<div class="desk-week lane"><div class="desk-lane-name">${deskEsc(lane.name)}</div>${cells}</div>`;
@@ -9695,12 +9763,6 @@
             </div>
             <div class="desk-new">
               <button type="button" data-desk-act="new">New item</button>
-              <div class="desk-menu" id="deskNewMenu" hidden>
-                <button type="button" data-desk-kind="Document">Document</button>
-                <button type="button" data-desk-kind="Task">Task</button>
-                <button type="button" data-desk-kind="Meeting">Meeting</button>
-                <button type="button" data-desk-kind="Pod">Pod</button>
-              </div>
             </div>
           </div>
           <div id="deskBoard"></div>
@@ -9737,14 +9799,176 @@
           <div id="deskDriveBody"></div>
         </section>
       </div>
+      <div class="kanban-modal" id="kanbanModal" hidden>
+        <div class="kanban-sheet" role="dialog" aria-modal="true" aria-labelledby="kanbanTitle">
+          <div class="kanban-top"><span class="kanban-kicker">CREATE</span><button type="button" class="kanban-x" data-kanban="close" aria-label="Close"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
+          <h2 id="kanbanTitle">New Kanban item</h2>
+          <p class="kanban-lead" id="kanbanLead">Create a scheduled Kanban item for Personal.</p>
+          <div class="kanban-tabs" role="tablist">
+            <button type="button" role="tab" data-kanban-step="1" aria-selected="true">Time &amp; type</button>
+            <button type="button" role="tab" data-kanban-step="2" aria-selected="false">Name &amp; details</button>
+            <button type="button" role="tab" data-kanban-step="3" aria-selected="false">Destination</button>
+          </div>
+          <div data-kanban-panel="1">
+            <h3>Time &amp; type</h3>
+            <p class="hint">Choose a start and end; cross-day ranges are supported.</p>
+            <div class="kanban-when">
+              <div><b>Start</b><div class="kanban-pair">
+                <label class="kanban-field"><span>Start date</span><input id="kanbanStart" type="date"></label>
+                <label class="kanban-field"><span>Start time</span><input id="kanbanStartTime" type="time"></label>
+              </div></div>
+              <div><b>End</b><div class="kanban-pair">
+                <label class="kanban-field"><span>End date</span><input id="kanbanEnd" type="date"></label>
+                <label class="kanban-field"><span>End time</span><input id="kanbanEndTime" type="time"></label>
+              </div></div>
+            </div>
+            <h3 style="margin-top:18px">Type</h3>
+            <div class="kanban-types">
+              <button type="button" data-kanban-type="Document" aria-pressed="false">Document</button>
+              <button type="button" data-kanban-type="Task" aria-pressed="false">Task</button>
+              <button type="button" data-kanban-type="Meeting" aria-pressed="true">Meeting</button>
+              <button type="button" data-kanban-type="Pod" aria-pressed="false">Pod</button>
+            </div>
+            <p class="kanban-note" id="kanbanNote"></p>
+          </div>
+          <div data-kanban-panel="2" hidden>
+            <h3>Name &amp; details</h3>
+            <p class="hint">Name the item. Details stay on this board.</p>
+            <label class="kanban-field kanban-block"><span>Name</span><input id="kanbanName" type="text" autocomplete="off"></label>
+            <label class="kanban-field"><span>Details</span><textarea id="kanbanDetails" rows="3"></textarea></label>
+          </div>
+          <div data-kanban-panel="3" hidden>
+            <h3>Destination</h3>
+            <p class="hint">Choose the track this item sits on.</p>
+            <div class="kanban-lanes">${DESK_LANES.map((lane) => `<button type="button" data-kanban-lane="${lane.id}" aria-pressed="${lane.id === 'personal'}">${deskEsc(lane.name)}</button>`).join('')}</div>
+          </div>
+          <div class="kanban-foot">
+            <span id="kanbanStepLabel">Step 1 of 3</span>
+            <div>
+              <button type="button" class="kanban-cancel" data-kanban="cancel">Cancel</button>
+              <button type="button" class="kanban-next" id="kanbanNext" data-kanban="next" disabled>Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>`;
     host.addEventListener('click', onDeskClick);
+    host.addEventListener('input', (e) => { if (e.target.closest('#kanbanModal')) paintKanban(); });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.getElementById('kanbanModal') && !document.getElementById('kanbanModal').hidden) closeKanban();
+    });
     host.querySelector('#deskSearch')?.addEventListener('input', (e) => {
       deskQuery = e.target.value;
       paintDeskDrive();
     });
   }
+  let kanbanStep = 1;
+  let kanbanType = 'Meeting';
+  let kanbanLane = 'personal';
+  function kanbanLaneName() {
+    return (DESK_LANES.find((lane) => lane.id === kanbanLane) || DESK_LANES[0]).name;
+  }
+  function kanbanRangeError() {
+    const start = document.getElementById('kanbanStart')?.value || '';
+    const end = document.getElementById('kanbanEnd')?.value || '';
+    if (start && end && end < start) return 'End date is before the start.';
+    return '';
+  }
+  function kanbanCanAdvance() {
+    if (kanbanRangeError()) return false;
+    if (kanbanStep === 1) return !!document.getElementById('kanbanStart')?.value;
+    if (kanbanStep === 2) return !!document.getElementById('kanbanName')?.value.trim();
+    return true;
+  }
+  function paintKanban() {
+    const modal = document.getElementById('kanbanModal');
+    if (!modal) return;
+    modal.querySelectorAll('[data-kanban-step]').forEach((btn) => {
+      btn.setAttribute('aria-selected', String(Number(btn.dataset.kanbanStep) === kanbanStep));
+    });
+    modal.querySelectorAll('[data-kanban-panel]').forEach((panel) => {
+      panel.hidden = Number(panel.dataset.kanbanPanel) !== kanbanStep;
+    });
+    modal.querySelectorAll('[data-kanban-type]').forEach((btn) => {
+      btn.setAttribute('aria-pressed', String(btn.dataset.kanbanType === kanbanType));
+    });
+    modal.querySelectorAll('[data-kanban-lane]').forEach((btn) => {
+      btn.setAttribute('aria-pressed', String(btn.dataset.kanbanLane === kanbanLane));
+    });
+    const lead = document.getElementById('kanbanLead');
+    if (lead) lead.textContent = `Create a scheduled Kanban item for ${kanbanLaneName()}.`;
+    const label = document.getElementById('kanbanStepLabel');
+    if (label) label.textContent = `Step ${kanbanStep} of 3`;
+    const note = document.getElementById('kanbanNote');
+    if (note) note.textContent = kanbanRangeError();
+    const next = document.getElementById('kanbanNext');
+    if (next) {
+      next.textContent = kanbanStep === 3 ? 'Create' : 'Next';
+      next.disabled = !kanbanCanAdvance();
+    }
+  }
+  function openKanban() {
+    kanbanStep = 1;
+    kanbanType = 'Meeting';
+    kanbanLane = 'personal';
+    const modal = document.getElementById('kanbanModal');
+    if (!modal) return;
+    modal.querySelectorAll('input, textarea').forEach((el) => { el.value = ''; });
+    modal.hidden = false;
+    paintKanban();
+    document.getElementById('kanbanStart')?.focus();
+  }
+  function closeKanban() {
+    const modal = document.getElementById('kanbanModal');
+    if (modal) modal.hidden = true;
+  }
+  function createKanbanItem() {
+    const start = document.getElementById('kanbanStart')?.value;
+    if (!start || kanbanRangeError()) return;
+    const end = document.getElementById('kanbanEnd')?.value || start;
+    const name = document.getElementById('kanbanName')?.value.trim();
+    const details = document.getElementById('kanbanDetails')?.value.trim() || '';
+    const startTime = document.getElementById('kanbanStartTime')?.value || '';
+    deskItems = deskItems.concat([{
+      id: `n${Date.now()}`,
+      lane: kanbanLane,
+      title: name,
+      type: startTime ? `${kanbanType} · ${startTime}` : kanbanType,
+      date: start,
+      end,
+      details,
+    }]);
+    closeKanban();
+    paintDeskBoard();
+  }
+  function onKanbanClick(e) {
+    const modal = document.getElementById('kanbanModal');
+    if (!modal || modal.hidden) return false;
+    if (!e.target.closest('#kanbanModal')) return false;
+    if (e.target === modal) { closeKanban(); return true; }
+    const stepBtn = e.target.closest('[data-kanban-step]');
+    if (stepBtn) {
+      const nextStep = Number(stepBtn.dataset.kanbanStep);
+      if (nextStep <= kanbanStep) kanbanStep = nextStep;
+      else if (nextStep === kanbanStep + 1 && kanbanCanAdvance()) kanbanStep = nextStep;
+      paintKanban();
+      return true;
+    }
+    const typeBtn = e.target.closest('[data-kanban-type]');
+    if (typeBtn) { kanbanType = typeBtn.dataset.kanbanType; paintKanban(); return true; }
+    const laneBtn = e.target.closest('[data-kanban-lane]');
+    if (laneBtn) { kanbanLane = laneBtn.dataset.kanbanLane; paintKanban(); return true; }
+    const act = e.target.closest('[data-kanban]')?.dataset.kanban;
+    if (act === 'close' || act === 'cancel') closeKanban();
+    else if (act === 'next' && kanbanCanAdvance()) {
+      if (kanbanStep < 3) kanbanStep += 1;
+      else createKanbanItem();
+      paintKanban();
+    }
+    return true;
+  }
   function onDeskClick(e) {
+    if (onKanbanClick(e)) return;
     const jump = e.target.closest('[data-desk-jump]');
     if (jump) {
       deskSection = jump.dataset.deskJump;
@@ -9757,13 +9981,6 @@
     if (span) { deskSpan = span.dataset.deskSpan; paintDeskBoard(); return; }
     const canvas = e.target.closest('[data-desk-canvas]');
     if (canvas) { deskCanvas = canvas.dataset.deskCanvas; paintDeskBoard(); return; }
-    const kind = e.target.closest('[data-desk-kind]');
-    if (kind) {
-      deskNewOpen = false;
-      deskItems = deskItems.concat([{ id: `n${Date.now()}`, lane: 'personal', title: `New ${kind.dataset.deskKind.toLowerCase()}`, type: kind.dataset.deskKind, date: deskIso(deskFocus) }]);
-      paintDeskBoard();
-      return;
-    }
     const drive = e.target.closest('[data-desk-drive]');
     if (drive) { deskDriveTab = drive.dataset.deskDrive; paintDeskDrive(); return; }
     const view = e.target.closest('[data-desk-drive-view]');
@@ -9786,7 +10003,7 @@
       return;
     }
     const act = e.target.closest('[data-desk-act]');
-    if (!act) { if (deskNewOpen) { deskNewOpen = false; paintDeskBoard(); } return; }
+    if (!act) return;
     const id = act.dataset.deskAct;
     if (id === 'hide-nav') { deskNavHidden = true; paintDeskChrome(); return; }
     if (id === 'show-nav') { deskNavHidden = false; paintDeskChrome(); return; }
@@ -9803,7 +10020,7 @@
       return;
     }
     if (id === 'today') { deskFocus = new Date(); paintDeskBoard(); return; }
-    if (id === 'new') { deskNewOpen = !deskNewOpen; paintDeskBoard(); return; }
+    if (id === 'new') { openKanban(); return; }
     if (id === 'mail') { showToastMsg('Mail setup waits for a connected mailbox.'); return; }
     if (id === 'entry') { showToastMsg('Entries appear only through an approved action.'); return; }
     if (id === 'connect' || id === 'upload') { showToastMsg('Google Drive isn’t connected yet.'); return; }
