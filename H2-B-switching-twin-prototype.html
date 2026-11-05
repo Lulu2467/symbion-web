@@ -1684,6 +1684,8 @@
   .menu .item .mav { width: 32px; height: 32px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: var(--muted); flex: none; }
   .menu .item .mav.citta { background: var(--green-tint); border-color: transparent; color: var(--green); }
   .menu .item .mav.citta .spark-icon { width: 14px; height: 14px; color: var(--green); }
+  .menu .item .mav.has-photo { overflow: hidden; background: #fff; padding: 0; }
+  .menu .item .mav.has-photo img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: inherit; }
   .tutorial-doc-switcher .si-row .av .spark-icon { width: 12px; height: 12px; color: var(--green); }
   .coach .coach-who .av .spark-icon { width: 12px; height: 12px; color: var(--green); }
   .menu .item .mav.agent { background: var(--amber-tint); color: var(--amber); border-radius: 8px; }
@@ -2154,6 +2156,10 @@
   }
   /* Resting positions: left/right edges only (chat-widget style). */
   .dock .dock-av { width: 32px; height: 32px; border-radius: 9px; object-fit: cover; display: block; flex: none; pointer-events: none; -webkit-user-drag: none; user-drag: none; user-select: none; -webkit-user-select: none; }
+  .dock .dock-init { width: 32px; height: 32px; border-radius: 9px; display: none; align-items: center; justify-content: center; font-size: 11px; font-weight: 650; line-height: 1; background: var(--surface); color: var(--muted); border: 1px solid var(--line); box-sizing: border-box; flex: none; pointer-events: none; }
+  .dock.is-initials .dock-av { display: none; }
+  .dock.is-initials .dock-init { display: flex; }
+  .dock.is-initials.is-agent .dock-init { background: var(--amber-tint); color: var(--amber); border-color: transparent; border-radius: 8px; }
   .dock .count { position: absolute; left: 28.5px; top: -5.5px; width: 18px; height: 18px; border-radius: 9px; background: var(--green); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; pointer-events: none; user-select: none; }
   .dock .count:empty,
   .dock .count[data-n="0"] { display: none; }
@@ -2527,6 +2533,7 @@
   .citta-panel .ph .citta-av { width: 28px; height: 28px; border-radius: 10px; background: transparent; color: var(--green-dark); font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex: none; overflow: hidden; padding: 0; }
   .citta-panel .ph .citta-av img { border-radius: 10px; }
   .citta-panel .ph .citta-av.twin-init { border-radius: 14px; background: var(--surface-2); color: var(--muted); font-size: 10px; }
+  .citta-panel .ph .citta-av.twin-init.agent { border-radius: 8px; background: var(--amber-tint); color: var(--amber); }
   .citta-panel .ph b { font-size: 16px; font-weight: 600; flex: 0 1 auto; min-width: 0; line-height: 1; max-width: 148px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   /* Match task-pill height (~22px); resting small box so the control reads without hover. */
   .citta-panel .ph .sw-sm {
@@ -4594,7 +4601,7 @@
           <span class="dock-tip-act" id="dockTipAct" role="link" tabindex="0">Review →</span>
           <span class="dock-tip-x" id="dockTipDismiss" role="button" tabindex="0" aria-label="Dismiss notification">×</span>
         </span>
-        <img class="dock-av" src="assets/citta-avatar.jpg" width="32" height="32" alt="" draggable="false">
+        <img class="dock-av" src="assets/citta-avatar.jpg" width="32" height="32" alt="" draggable="false"><span class="dock-init" aria-hidden="true"></span>
         <span class="count" data-n="2">2</span>
         <span class="sw" id="dockSwitch" role="button" tabindex="0" aria-label="Switch who you’re working with"><svg class="switch-ico" width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M96 416h832c0.32 0 0.576-0.192 0.896-0.192a30.656 30.656 0 0 0 30.976-30.976c-0.064-0.256 0.128-0.512 0.128-0.832a31.424 31.424 0 0 0-14.912-26.368l-188.48-188.48a30.72 30.72 0 1 0-43.456 43.456L852.544 352H96a32 32 0 0 0 0 64z m832 192H96c-0.32 0-0.576 0.192-0.896 0.192a30.528 30.528 0 0 0-30.976 30.976c0.064 0.256-0.128 0.512-0.128 0.832 0 11.264 6.144 20.672 14.912 26.368l188.48 188.48a30.72 30.72 0 1 0 43.456-43.456L171.456 672H928a32 32 0 0 0 0-64z" fill="currentColor"/></svg></span>
       </button>
@@ -4626,12 +4633,15 @@
     citta:  { name: 'Citta', initials: '★', twin: false, prefix: '★',
               placeholder: 'What do you want to work on?' },
     roland: { name: 'Prof. Roland’s twin', initials: 'GR', twin: true, prefix: 'GR',
+              photo: 'https://mio.neoschool.com/neo-bic/69987e1e-a67b-45df-9b29-fce5bb26d287.jpg',
               placeholder: 'Ask Prof. Roland’s twin — e.g. “Which lecture 5 topics are on the exam?”',
               toast: 'Now working with Prof. Roland’s twin · trained on Heavy-ion Physics lectures 1–5' },
     pajer:  { name: 'Prof. Pajer’s twin', initials: 'EP', twin: true, prefix: 'EP',
+              photo: 'https://mio.neoschool.com/neo-bic/e7048e8a-380b-4b63-8d5d-1c5340b31479.png',
               placeholder: 'Ask Prof. Pajer’s twin — e.g. “Why is the CMB so uniform?”',
               toast: 'Now working with Prof. Pajer’s twin · trained on Cosmology lectures' },
     xu:     { name: 'Prof. Xu’s twin', initials: 'HX', twin: true, prefix: 'HX',
+              photo: 'https://mio.neoschool.com/neo-bic/b4829ec5-b44b-410b-8ad5-46dd29480f60.jpg',
               placeholder: 'Ask Prof. Xu’s twin — e.g. “How should I price this dataset?”',
               toast: 'Now working with Prof. Xu’s twin · trained on AI & decisions lectures' },
     lr:     { name: 'Lab Report Coach', initials: 'LR', twin: false, agent: true, prefix: 'LR',
@@ -4645,13 +4655,41 @@
 
   const CITTA_AVATAR_SRC = 'assets/citta-avatar.jpg';
   const CITTA_PICKER_AVATAR = `<img src="${CITTA_AVATAR_SRC}" width="26" height="26" alt="">`;
+  AIS.citta.photo = CITTA_AVATAR_SRC;
+
+  function paintMenuAvatars() {
+    document.querySelectorAll('.menu .item').forEach((item) => {
+      const ai = AIS[item.dataset.ai];
+      const mav = item.querySelector('.mav');
+      if (!ai?.photo || !mav) return;
+      mav.classList.add('has-photo');
+      mav.innerHTML = `<img src="${ai.photo}" alt="" width="32" height="32">`;
+    });
+  }
+  paintMenuAvatars();
+
+  function setDockAvatar(ai) {
+    const dockEl = $('dock');
+    const img = dockEl?.querySelector('.dock-av');
+    const init = dockEl?.querySelector('.dock-init');
+    if (!dockEl || !img) return;
+    if (ai.photo) {
+      img.src = ai.photo;
+      dockEl.classList.remove('is-initials', 'is-agent');
+    } else {
+      dockEl.classList.add('is-initials');
+      dockEl.classList.toggle('is-agent', !!ai.agent);
+      if (init) init.textContent = ai.initials || '';
+    }
+    dockEl.setAttribute('aria-label', `${ai.name} dock`);
+  }
 
   function setPickerAvatar(isCitta, ai) {
     const el = $('pickerAv');
     if (!el) return;
-    if (isCitta) {
+    if (ai.photo) {
       el.className = 'pav citta-portrait';
-      el.innerHTML = CITTA_PICKER_AVATAR;
+      el.innerHTML = isCitta ? CITTA_PICKER_AVATAR : `<img src="${ai.photo}" width="26" height="26" alt="">`;
     } else {
       el.className = 'pav';
       el.textContent = ai.initials;
@@ -4668,11 +4706,11 @@
       panel.setAttribute('aria-label', `${ai.name} panel`);
     }
     if (!av) return;
-    if (isCitta) {
+    if (ai.photo) {
       av.className = 'citta-av citta-portrait';
-      av.innerHTML = `<img src="${CITTA_AVATAR_SRC}" width="28" height="28" alt="">`;
+      av.innerHTML = `<img src="${ai.photo}" width="28" height="28" alt="">`;
     } else {
-      av.className = 'citta-av twin-init';
+      av.className = ai.agent ? 'citta-av twin-init agent' : 'citta-av twin-init';
       av.textContent = ai.initials || '';
     }
   }
@@ -4892,6 +4930,7 @@
     composer.classList.toggle('is-twin', !isCitta);
     setPickerAvatar(isCitta, ai);
     setCittaPanelIdentity(isCitta, ai);
+    setDockAvatar(ai);
     $('pickerName').textContent = ai.name;
     $('pickerBadge').hidden = !ai.twin;
     $('whenCitta').style.display = isCitta ? 'contents' : 'none';
