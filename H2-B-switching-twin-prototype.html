@@ -170,8 +170,8 @@
     display: none;
     position: absolute;
     top: calc(100% + 8px);
-    right: 0;
-    left: auto;
+    left: 0;
+    right: auto;
     min-width: 168px;
     padding: 6px;
     background: #fff;
@@ -179,6 +179,14 @@
     border-radius: 12px;
     box-shadow: 0 10px 28px rgba(20, 24, 28, .12);
     z-index: 5;
+  }
+  html[data-theme="blue"] .osbar-folder-menu::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -8px;
+    height: 8px;
   }
   html[data-theme="blue"] .osbar-folder.is-open .osbar-folder-menu { display: flex; flex-direction: column; gap: 2px; }
   html[data-theme="blue"] .osbar-folder-menu .osbar-bm { gap: 8px; padding: 8px 10px; border-radius: 8px; justify-content: flex-start; }
@@ -6487,7 +6495,13 @@
   if (bookmarkFolderBtn) {
     bookmarkFolderBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      setBookmarkFolder(!bookmarkFolder.classList.contains('is-open'));
+      setBookmarkFolder(true);
+    });
+    bookmarkFolder.addEventListener('mouseenter', () => {
+      if (document.documentElement.dataset.theme === 'blue') setBookmarkFolder(true);
+    });
+    bookmarkFolder.addEventListener('mouseleave', () => {
+      if (document.documentElement.dataset.theme === 'blue') setBookmarkFolder(false);
     });
     bookmarkFolder.querySelectorAll('[data-osbar]').forEach((btn) => {
       btn.addEventListener('click', () => setBookmarkFolder(false));
