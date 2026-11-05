@@ -3957,8 +3957,37 @@
   .thread-head .icon-btn { border: 0; background: transparent; color: #5f6368; }
   .thread-head .icon-btn:hover, .thread-head .icon-btn[aria-expanded="true"], .thread-head .icon-btn[aria-pressed="true"] { border: 0; background: #d4e4ee; color: #1f1f1f; }
   .head-face .mosaic, .head-face .av { width: 36px; height: 36px; border-radius: 4px; border: 0; }
-  .chat-search { display: flex; gap: 8px; align-items: center; padding: 8px 16px; background: #fff; border-bottom: 1px solid var(--line); }
-  .chat-search input { flex: 1; border: 0; background: var(--surface); border-radius: 999px; padding: 8px 12px; font-size: 13px; outline: none; }
+  .thread.history-on .announce,
+  .thread.history-on .log,
+  .thread.history-on .composer,
+  .thread.history-on .mention,
+  .thread.history-on .emoji { display: none !important; }
+  .history { flex: 1; min-height: 0; display: flex; flex-direction: column; background: #fff; }
+  .history-top { position: relative; display: flex; align-items: center; justify-content: center; min-height: 48px; padding: 10px 40px; }
+  .history-top h3 { margin: 0; font-size: 15px; font-weight: 500; color: #1f1f1f; text-align: center; }
+  .history-x { position: absolute; right: 10px; top: 10px; width: 28px; height: 28px; border: 0; background: transparent; color: #656d76; font-size: 20px; line-height: 1; }
+  .history-x:hover { color: #1a1d21; }
+  .history-search { display: flex; align-items: center; gap: 8px; margin: 4px 20px 14px; height: 36px; padding: 0 12px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+  .history-search:focus-within { border-color: var(--green); }
+  .history-search svg { width: 16px; height: 16px; color: #8b919a; flex: none; }
+  .history-search input { flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font-size: 14px; }
+  .history-search input::placeholder { color: var(--placeholder); }
+  .history-cats { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 22px; padding: 2px 24px 14px; }
+  .history-cats button { border: 0; background: transparent; padding: 0; color: var(--green); font-size: 14px; font-weight: 500; }
+  .history-cats button:hover, .history-cats button[aria-pressed="true"] { color: var(--green-dark); }
+  .history-body { flex: 1; min-height: 0; overflow: auto; padding: 0 12px 16px; }
+  .history-hit { display: flex; width: 100%; align-items: center; gap: 10px; padding: 10px 8px; border: 0; border-top: 1px solid var(--line); background: transparent; text-align: left; }
+  .history-hit .av { width: 36px; height: 36px; border-radius: 4px; font-size: 11px; }
+  .history-hit b { display: block; font-size: 13px; font-weight: 500; color: var(--ink); }
+  .history-hit small { display: block; margin-top: 2px; font-size: 12px; color: var(--muted); }
+  .history-empty { margin: 28px 12px; font-size: 13px; line-height: 1.45; color: var(--muted); }
+  .history-people { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px 8px; padding: 8px 8px 12px; }
+  .history-people button { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 0; border: 0; background: transparent; padding: 0; }
+  .history-people .av { width: 44px; height: 44px; border-radius: 6px; font-size: 12px; }
+  .history-people button[aria-pressed="true"] .av { box-shadow: 0 0 0 2px var(--green); }
+  .history-people span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; color: var(--muted); }
+  .history-entry { display: flex; width: 100%; align-items: center; justify-content: space-between; padding: 14px 16px; border: 0; border-top: 1px solid var(--line); background: transparent; font-size: 14px; color: var(--ink); text-align: left; }
+  .history-entry i { font-style: normal; color: var(--label); }
   .announce { display: flex; flex-direction: column; align-items: stretch; gap: 2px; width: auto; margin: 0; padding: 8px 16px; border-radius: 0; background: var(--surface); border: 0; border-bottom: 1px solid var(--line); text-align: left; color: var(--ink); }
   .announce b { font-size: 12px; letter-spacing: 0; color: var(--green-dark); font-weight: 500; }
   .announce span { min-width: 0; font-size: 13px; line-height: 1.4; color: var(--ink); }
@@ -4230,7 +4259,7 @@
       <div class="osbar" aria-label="Bookmarks and applications">
         <div class="osbar-nav" aria-label="Browser">
           <button type="button" class="osbar-nav-btn" aria-label="Home" data-osbar="home"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7.4 12 4l8 3.4V20h-5.15v-6.3H9.15V20H4Z"/></svg></button>
-          <button type="button" class="osbar-nav-btn" aria-label="Reload" data-osbar="reload"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-3.41-6.55M15.4 4.8H20V9.2"/></svg></button>
+          <button type="button" class="osbar-nav-btn" aria-label="Reload" data-osbar="reload"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.2-5.8"/><path d="M21 3v6h-6"/></svg></button>
         </div>
         <div class="osbar-tabs" aria-label="Tabs"></div>
         <button type="button" class="osbar-nav-btn osbar-plus" aria-label="New" data-osbar="new"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
@@ -4960,8 +4989,17 @@
             <button type="button" class="icon-btn" id="infoBtn" aria-label="Group details" aria-pressed="false" aria-controls="panel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 11v5M12 8h.01"/></svg></button>
           </div>
         </header>
-        <div class="chat-search" id="chatSearch" hidden>
-          <input id="chatQ" type="search" placeholder="Search this chat" aria-label="Search this chat" autocomplete="off">
+        <div class="history" id="chatSearch" hidden>
+          <div class="history-top">
+            <h3 id="historyTitle"></h3>
+            <button type="button" class="history-x" id="historyClose" aria-label="Close">×</button>
+          </div>
+          <label class="history-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16.5 20 20.5" stroke-linecap="round"/></svg>
+            <input id="chatQ" type="search" placeholder="Search" aria-label="Search this chat" autocomplete="off">
+          </label>
+          <div class="history-cats" id="historyCats"></div>
+          <div class="history-body" id="historyBody"></div>
         </div>
         <button type="button" class="announce clip" id="announce" hidden></button>
         <div class="log" id="log"></div>
@@ -9905,7 +9943,7 @@ chats.forEach((c) => {
 const state = {
   id: 'hip', filter: 'all', query: '',
   finder: { query: '', slug: '' },
-  panel: false, panelMode: 'info', chatSearch: false, chatQuery: '',
+  panel: false, panelMode: 'info', chatSearch: false, chatQuery: '', historyKind: '', historyWho: '',
   quote: null, modal: null, modalBack: null,
   mention: null, mentionIndex: 0, mentionStart: null,
   memberQ: '', announceOpen: false, ctx: null, pendingRecord: null, pendingJoinId: null,
@@ -10153,6 +10191,7 @@ function renderChrome() {
   $('infoBtn').setAttribute('aria-pressed', state.panel ? 'true' : 'false');
   $('searchBtn').setAttribute('aria-pressed', state.chatSearch ? 'true' : 'false');
   $('chatSearch').hidden = !state.chatSearch;
+  teamRoot.querySelector('.thread').classList.toggle('history-on', state.chatSearch);
   $('compose').placeholder = 'Message';
   syncTeamSend();
   const q = state.quote && findMessage(c, state.quote);
@@ -10163,15 +10202,62 @@ function renderChrome() {
   }
 }
 
+function historyLinks(m) {
+  return (m.text || '').match(/https?:\/\/[^\s]+/g) || [];
+}
+function historyList(c) {
+  let list = shownMessages(c).filter((m) => !m.sys);
+  if (state.historyKind === 'files') list = list.filter((m) => m.file);
+  if (state.historyKind === 'links') list = list.filter((m) => historyLinks(m).length);
+  if (state.historyWho) list = list.filter((m) => m.who === state.historyWho);
+  const q = state.chatQuery.trim().toLowerCase();
+  if (q) list = list.filter((m) => {
+    const who = m.who ? person(m.who).name : '';
+    return `${m.text || ''} ${m.file?.name || ''} ${who}`.toLowerCase().includes(q);
+  });
+  return list;
+}
+function historyHit(m) {
+  const p = m.who ? person(m.who) : { name: '', short: '·', hue: 'slate' };
+  const preview = m.file ? `${m.file.name} · ${m.file.size}` : (historyLinks(m)[0] || m.text || '');
+  return `<button type="button" class="history-hit" data-jump="${m.id}"><span class="av hue-${p.hue}">${esc(p.short)}</span><span><b>${esc(p.name)}</b><small>${esc(preview)}</small></span></button>`;
+}
+function renderHistory() {
+  const c = current();
+  if (!c) return;
+  const count = c.kind === 'group' ? ` (${c.members.length})` : '';
+  $('historyTitle').textContent = `"${c.name}" chat history${count}`;
+  const cats = [['files', 'Files'], ['links', 'Links'], ['date', 'Date'], ['members', 'Members']];
+  $('historyCats').innerHTML = cats.map(([id, label]) => `<button type="button" data-history="${id}" aria-pressed="${state.historyKind === id ? 'true' : 'false'}">${label}</button>`).join('');
+  const q = state.chatQuery.trim();
+  const browsing = state.historyKind || state.historyWho || q;
+  if (!browsing) { $('historyBody').innerHTML = ''; return; }
+  if (state.historyKind === 'members' && !state.historyWho && !q) {
+    const ids = c.kind === 'group' ? c.members : [c.person, ME].filter(Boolean);
+    $('historyBody').innerHTML = `<div class="history-people">${ids.map((id) => {
+      const p = person(id);
+      return `<button type="button" data-history-who="${id}" aria-pressed="false"><span class="av hue-${p.hue}">${esc(p.short)}</span><span>${esc(id === ME ? 'You' : p.name.split(' ')[0])}</span></button>`;
+    }).join('')}</div>`;
+    return;
+  }
+  const list = historyList(c);
+  if (!list.length) {
+    const empty = state.historyKind === 'files' ? 'No files in this chat.' : state.historyKind === 'links' ? 'No links in this chat.' : 'Nothing in this chat matches.';
+    $('historyBody').innerHTML = `<p class="history-empty">${empty}</p>`;
+    return;
+  }
+  const head = state.historyKind === 'date' && c.time ? `<p class="stamp">${esc(c.time)}</p>` : '';
+  const people = state.historyKind === 'members' ? `<div class="history-people">${(c.kind === 'group' ? c.members : [c.person, ME].filter(Boolean)).map((id) => {
+    const p = person(id);
+    return `<button type="button" data-history-who="${id}" aria-pressed="${state.historyWho === id ? 'true' : 'false'}"><span class="av hue-${p.hue}">${esc(p.short)}</span><span>${esc(id === ME ? 'You' : p.name.split(' ')[0])}</span></button>`;
+  }).join('')}</div>` : '';
+  $('historyBody').innerHTML = people + head + list.map(historyHit).join('');
+}
 function renderLog(scroll) {
   const c = current();
-  const q = state.chatQuery.trim().toLowerCase();
-  const list = shownMessages(c).filter((m) => {
-    if (!q || !state.chatSearch) return true;
-    return `${m.text || ''} ${m.sys || ''} ${m.file?.name || ''}`.toLowerCase().includes(q);
-  });
+  const list = shownMessages(c);
   if (!list.length) {
-    $('log').innerHTML = `<p class="sys">${q ? 'Nothing in this chat matches.' : 'No messages yet'}</p>`;
+    $('log').innerHTML = `<p class="sys">No messages yet</p>`;
     return;
   }
   const stampAt = c.time ? [...list].reverse().find((m) => !m.sys) : null;
@@ -10255,7 +10341,7 @@ function renderPanel() {
   if (c.kind === 'dm') {
     const p = person(c.person);
     const from = chats.find((g) => g.id === c.from);
-    $('panel').innerHTML = `<h3>${esc(p.name)}</h3><p class="lead">${from ? `From ${esc(from.name)}.` : ''}</p>${switches(c)}
+    $('panel').innerHTML = `<h3>${esc(p.name)}</h3><p class="lead">${from ? `From ${esc(from.name)}.` : ''}</p><button type="button" class="history-entry" data-open-history><span>Search chat</span><i aria-hidden="true">›</i></button>${switches(c)}
       <button type="button" class="danger" data-close-chat>Delete conversation history</button>
       <p class="lead">This removes your conversation. It does not change a group.</p>`;
     return;
@@ -10290,6 +10376,7 @@ function renderPanel() {
     <div class="wx-field"><span class="k">Group slug</span><span class="v">${slugBtn}</span></div>
     ${manage ? '<div class="wx-field"><button type="button" class="text-btn" data-edit-details>Edit details</button></div>' : ''}
     <div class="wx-field"><span class="k">Files</span><span class="v">${files.length ? files.map((m) => `<button type="button" class="file-row" data-file="${esc(m.file.name)}"><i>${esc(m.file.name.split('.').pop().toUpperCase())}</i><span><b>${esc(m.file.name)}</b><small>${esc(m.file.size)} · ${esc(firstName(m.who))}</small></span></button>`).join('') : 'No files yet.'}</span></div>
+    <button type="button" class="history-entry" data-open-history><span>Search chat</span><i aria-hidden="true">›</i></button>
     ${switches(c)}
     <label class="nick">My name in this group<input id="nick" value="${esc(c.myName)}" maxlength="32"></label>
     ${manage ? `<div class="block"><h4>DIRECTORY AND JOINING</h4>
@@ -10323,13 +10410,22 @@ function render(scroll) {
   renderList();
   renderChrome();
   renderLog(scroll);
+  renderHistory();
   renderPanel();
 }
 
 function openChat(id) {
   const c = chats.find((x) => x.id === id);
   if (!c) return;
-  if (state.id !== id) c.unread = 0;
+  if (state.id !== id) {
+    c.unread = 0;
+    state.chatSearch = false;
+    state.chatQuery = '';
+    state.historyKind = '';
+    state.historyWho = '';
+    const box = $('chatQ');
+    if (box) box.value = '';
+  }
   c.hidden = false;
   state.id = id;
   state.quote = null;
@@ -10887,14 +10983,47 @@ $('headFace').addEventListener('click', () => {
   renderChrome();
   renderPanel();
 });
+function closeHistory() {
+  state.chatSearch = false;
+  state.chatQuery = '';
+  state.historyKind = '';
+  state.historyWho = '';
+  const box = $('chatQ');
+  if (box) box.value = '';
+}
 $('searchBtn').addEventListener('click', () => {
-  state.chatSearch = !state.chatSearch;
-  if (!state.chatSearch) state.chatQuery = '';
+  if (state.chatSearch) closeHistory();
+  else state.chatSearch = true;
   renderChrome();
-  renderLog(false);
+  renderHistory();
   if (state.chatSearch) $('chatQ').focus();
 });
-$('chatQ').addEventListener('input', () => { state.chatQuery = $('chatQ').value; renderLog(false); });
+$('historyClose').addEventListener('click', () => { closeHistory(); renderChrome(); renderHistory(); });
+$('chatQ').addEventListener('input', () => { state.chatQuery = $('chatQ').value; renderHistory(); });
+$('chatSearch').addEventListener('click', (e) => {
+  const cat = e.target.closest('[data-history]');
+  if (cat) {
+    state.historyKind = state.historyKind === cat.dataset.history ? '' : cat.dataset.history;
+    state.historyWho = '';
+    renderHistory();
+    return;
+  }
+  const who = e.target.closest('[data-history-who]');
+  if (who) {
+    state.historyKind = 'members';
+    state.historyWho = state.historyWho === who.dataset.historyWho ? '' : who.dataset.historyWho;
+    renderHistory();
+    return;
+  }
+  const jump = e.target.closest('[data-jump]');
+  if (jump) {
+    const id = jump.dataset.jump;
+    closeHistory();
+    renderChrome();
+    renderLog(false);
+    requestAnimationFrame(() => teamRoot.querySelector('#msg-' + id)?.scrollIntoView({ block: 'center' }));
+  }
+});
 $('announce').addEventListener('click', () => { state.announceOpen = !state.announceOpen; renderChrome(); });
 $('infoBtn').addEventListener('click', () => {
   if (state.panel && state.panelMode !== 'info') state.panelMode = 'info';
@@ -10923,6 +11052,15 @@ $('log').addEventListener('click', (e) => {
   if (e.target.closest('[data-file]')) toast('Files open with the tools on Home.');
 });
 $('panel').addEventListener('click', (e) => {
+  if (e.target.closest('[data-open-history]')) {
+    state.chatSearch = true;
+    state.historyKind = '';
+    state.historyWho = '';
+    renderChrome();
+    renderHistory();
+    $('chatQ').focus();
+    return;
+  }
   if (e.target.closest('[data-add-email]')) {
     syncEmailFrom($('panel'));
     state.emailRows.push('');
