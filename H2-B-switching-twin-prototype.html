@@ -1808,6 +1808,8 @@
   .dcard { display: flex; gap: 10px; align-items: center; padding: 6px 8px; border: 1px solid var(--line); border-radius: 12px; flex: none; scroll-snap-align: start; }
   .dcard[hidden] { display: none !important; }
   .dcard .dav { width: 28px; height: 28px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; color: var(--muted); }
+  html[data-theme="blue"] .discover .dcard .dav { overflow: hidden; }
+  html[data-theme="blue"] .discover .dcard .dav img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; display: block; }
   .dcard .dav.agent { background: var(--amber-tint); color: var(--amber); border-radius: 8px; }
   .dcard .nm { font-weight: 600; text-decoration: none; }
   .tag {
@@ -6386,7 +6388,7 @@
         .split(',')
         .map((s) => s.trim())
         .filter(Boolean);
-      const match = !topic || topics.length === 0 || topics.includes(topic);
+      const match = !topic || topic === 'All' || topics.length === 0 || topics.includes(topic);
       card.hidden = !match;
     });
     track.scrollLeft = 0;
@@ -6845,6 +6847,162 @@
       label.after(picker);
     }
   }
+  const LECTURE_PROFESSORS = [
+    ['Julia R. Greer', 'Materials', 'Caltech', 'neo-bic/5b0bec43-9d06-472c-836a-9c720a4b68f7.png'],
+    ['Cosimo Arnesano', 'Business analytics', 'USC', 'neo-bic/06463eb0-d0a2-4afd-bd30-fc1430d2c8f7.png'],
+    ['Susan Moeller', 'Communication', 'Maryland', 'neo-bic/9ef00f95-3149-4390-9d68-6d6fce21595a.png'],
+    ['Sarah Kavanagh', 'Education', 'Penn', 'neo-bic/3940409f-9156-46a3-a262-04345f12838e.jpg'],
+    ['Richard Payne', 'History', 'Chicago', 'neo-bic/a77b3446-cbe2-4f45-8ccd-654be7ca9721.jpg'],
+    ['Andrew Nevins', 'Linguistics', 'UCL', 'neo-bic/32118da2-df89-471b-8ea1-3e6f4fcd8a2a.png'],
+    ['Daniel Casasanto', 'Psychology', 'Cornell', 'neo-bic/6a97711a-1433-4478-bc3c-79dedf5c14d7.jpg'],
+    ['Vivian Zayas', 'Psychology', 'Cornell', 'neo-bic/7d4ca128-2062-4f02-aea1-5edfd1d434c5.jpg'],
+    ['Katherine F. Smith', 'Planetary health', 'Brown', 'neo-bic/09351c39-e58f-476f-8da5-dff7035a6bd5.jpeg'],
+    ['Samuel Kunes', 'Biology', 'Harvard', 'neo-bic/e233df0e-9d38-40c4-ba71-40d3b0ca729c.jpg'],
+    ['Alexander Ploss', 'Biology', 'Princeton', 'neo-bic/6e263bb7-7efd-479a-bbaf-bb0e5388636f.jpg'],
+    ['Osman Yagan', 'AI', 'Carnegie Mellon', 'neo-bic/0d928900-5fe5-467c-ac92-e1fe8f300e23.png'],
+    ['Gunther Roland', 'AI', 'MIT', 'neo-bic/69987e1e-a67b-45df-9b29-fce5bb26d287.jpg'],
+    ['Haifeng Xu', 'AI', 'Chicago', 'neo-bic/b4829ec5-b44b-410b-8ad5-46dd29480f60.jpg'],
+    ['Neal Bangerter', 'AI', 'Imperial', 'neo-bic/45fe0b5b-4b1d-431d-9f8d-750361257288.jpg'],
+    ['Patrick Houlihan', 'Data science', 'Columbia', 'neo-bic/e56ef277-64b5-45ba-b306-3980b77ab86f.png'],
+    ['Sen Wang', 'AI', 'Imperial', 'neo-bic/7664c6de-2a58-41e7-b234-49ecb1bb7007.jpg'],
+    ['James J. Choi', 'AI', 'Imperial', 'neo-bic/5fc70854-665a-4ede-80dd-ae14c2a68c8e.png'],
+    ['Anastasia Romanou', 'Applied math', 'Columbia', 'neo-bic/2e83f2cd-793c-4c7b-bcdf-85c51ba98c4c.png'],
+    ['Enrico Pajer', 'Physics', 'Cambridge', 'neo-bic/e7048e8a-380b-4b63-8d5d-1c5340b31479.png'],
+    ['Joe Moore', 'Environment', 'Carnegie Mellon', 'neo-bic/45c4aa28-5692-4e7b-aeb9-4f53e7586bd1.jpg'],
+    ['Diana Haidar', 'Mechanical', 'Carnegie Mellon', 'neo-bic/810d436e-dc74-4ed9-9970-aca1a5a2fbdd.png'],
+    ['Lorena Martin', 'Sports', 'USC', 'neo-bic/9fce4bf4-02b1-4281-8dd4-148119caa712.jpg'],
+    ['Matthew Grimes', 'Management', 'Cambridge', 'neo-bic/0b5eaa66-a566-4ee6-a274-5c91889e664c.jpg'],
+    ['Johannes Ruf', 'Finance', 'LSE', 'neo-bic/040f18a0-0d03-470a-b021-563ee3241064.jpg'],
+    ['Oliver Linton', 'Finance', 'Cambridge', 'neo-bic/556de2af-56d0-48c6-99f1-f1d6f3b96a46.png'],
+    ['Raghavendra Rau', 'Finance', 'Cambridge', 'neo-bic/2b668cef-88d7-4ba5-9f07-f4c02bdff933.jpg'],
+    ['Philip Allmendinger', 'Urban planning', 'Cambridge', 'neo-bic/5e8e127a-117e-421d-b32e-b3240e1d7c22.jpg'],
+    ['Donald Robertson', 'Economics', 'Cambridge', 'neo-bic/424b6980-9a34-46c7-b35c-76baf88d0d05.png']
+  ];
+  const discoverSnap = new WeakMap();
+  let discoverAddsiTemplate = null;
+
+  function lectureInitials(name) {
+    const parts = name.replace(/\./g, '').split(/\s+/).filter(Boolean);
+    if (!parts.length) return '';
+    if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  }
+
+  function lectureAddsi() {
+    if (!discoverAddsiTemplate) {
+      const src = document.querySelector('.discover .hscroll .addsi');
+      discoverAddsiTemplate = src ? src.cloneNode(true) : null;
+    }
+    if (discoverAddsiTemplate) return discoverAddsiTemplate.cloneNode(true);
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'addsi';
+    btn.textContent = 'Add SI';
+    return btn;
+  }
+
+  function fillLectureDiscover(sec) {
+    const scroll = sec.querySelector('.interest-scroll');
+    const track = sec.querySelector('.hscroll');
+    const pop = sec.querySelector('.interest-pop');
+    if (!scroll || !track) return;
+    const subjects = [];
+    LECTURE_PROFESSORS.forEach((row) => {
+      if (!subjects.includes(row[1])) subjects.push(row[1]);
+    });
+    scroll.replaceChildren();
+    [['All', true], ...subjects.map((s) => [s, false])].forEach(([label, on]) => {
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = on ? 'interest on' : 'interest';
+      chip.setAttribute('aria-pressed', String(on));
+      chip.textContent = label;
+      scroll.appendChild(chip);
+    });
+    if (pop) {
+      pop.replaceChildren();
+      const hd = document.createElement('div');
+      hd.className = 'interest-pop-hd';
+      hd.textContent = 'Add a topic';
+      pop.appendChild(hd);
+      subjects.forEach((label) => {
+        const opt = document.createElement('button');
+        opt.type = 'button';
+        opt.setAttribute('role', 'menuitem');
+        opt.dataset.addTopic = label;
+        opt.textContent = label;
+        pop.appendChild(opt);
+      });
+    }
+    const cards = LECTURE_PROFESSORS.map(([name, subject, school, photo]) => {
+      const card = document.createElement('div');
+      card.className = 'dcard';
+      card.dataset.topics = subject;
+      const dav = document.createElement('span');
+      dav.className = 'dav';
+      const img = document.createElement('img');
+      img.alt = '';
+      img.src = 'https://mio.neoschool.com/' + photo;
+      img.addEventListener('error', () => {
+        img.remove();
+        dav.textContent = lectureInitials(name);
+      });
+      dav.appendChild(img);
+      const body = document.createElement('div');
+      const nm = document.createElement('span');
+      nm.className = 'nm';
+      nm.textContent = name;
+      const tag = document.createElement('span');
+      tag.className = 'tag';
+      const spark = document.createElement('span');
+      spark.className = 'spark-icon';
+      spark.setAttribute('aria-hidden', 'true');
+      spark.innerHTML = SPARK_SOLID;
+      tag.append(spark, document.createTextNode('Twin'));
+      const small = document.createElement('small');
+      small.textContent = subject + ' · ' + school;
+      body.append(nm, tag, small);
+      card.append(dav, body, lectureAddsi());
+      return card;
+    });
+    track.replaceChildren(...cards);
+    filterDiscoverByTopic(sec);
+    syncInterestOverflow(scroll);
+    syncDiscoverOverflow(track, sec.querySelector('.discover-next'));
+  }
+
+  function syncLectureDiscover() {
+    const blue = document.documentElement.dataset.theme === 'blue';
+    document.querySelectorAll('.discover').forEach((sec) => {
+      if (sec.querySelector('.discover-topics .k')?.textContent.trim() !== 'Discover in') return;
+      const scroll = sec.querySelector('.interest-scroll');
+      const track = sec.querySelector('.hscroll');
+      const pop = sec.querySelector('.interest-pop');
+      if (!scroll || !track) return;
+      if (!discoverSnap.has(sec)) {
+        discoverSnap.set(sec, {
+          chips: scroll.innerHTML,
+          cards: track.innerHTML,
+          pop: pop ? pop.innerHTML : ''
+        });
+      }
+      if (blue) {
+        fillLectureDiscover(sec);
+        return;
+      }
+      const snap = discoverSnap.get(sec);
+      scroll.innerHTML = snap.chips;
+      track.innerHTML = snap.cards;
+      if (pop) pop.innerHTML = snap.pop;
+      track.querySelectorAll('.tag .spark-icon').forEach((el) => {
+        if (!el.querySelector('svg')) el.innerHTML = SPARK_SOLID;
+      });
+      filterDiscoverByTopic(sec);
+      syncInterestOverflow(scroll);
+      syncDiscoverOverflow(track, sec.querySelector('.discover-next'));
+    });
+  }
+
   function applyTheme(theme) {
     setBookmarkFolder(false);
     const next = theme === 'blue' ? 'blue' : 'green';
@@ -6857,6 +7015,7 @@
     placeCittaPicker();
     placeComposerToolChip();
     syncComposerCases();
+    syncLectureDiscover();
     void root.offsetWidth;
     root.classList.remove('theme-swap');
     document.querySelectorAll('[data-theme-pick]').forEach((b) => {
