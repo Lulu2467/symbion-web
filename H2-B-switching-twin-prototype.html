@@ -683,6 +683,36 @@
     opacity: 0;
     pointer-events: none;
   }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools.is-prompts {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools.is-prompts::-webkit-scrollbar { display: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools.is-prompts .tool { display: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool-prompt {
+    height: 36px;
+    margin: 0;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid #e6e8ec;
+    background: #fff;
+    color: #5f6670;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    flex: none;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool-prompt:hover {
+    background: var(--green-tint);
+    border-color: var(--green);
+    color: var(--green-dark);
+  }
   .tool-cases { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-cases {
     display: flex;
@@ -4793,29 +4823,29 @@
 
   const COMPOSER_CASES = {
     doc: [
-      ['Lecture 1 summary', 'Turn Prof. Roland’s Lecture 1 into a one-page summary', 'doc'],
-      ['Reading report', 'Start my reading report outline', 'doc'],
-      ['Plasma notes', 'Explain quark-gluon plasma for my notes', 'doc']
+      'Help me write a one-page summary of Lecture 1',
+      'Help me outline a reading report',
+      'Help me explain quark-gluon plasma for my notes'
     ],
     deck: [
-      ['6 study slides', 'Turn Lecture 1 into 6 study slides', 'deck'],
-      ['10-minute deck', 'Prep a 10-minute deck for lecture 5', 'deck'],
-      ['Phase diagram', 'Make one slide for the phase diagram', 'deck']
+      'Help me turn Lecture 1 into 6 slides',
+      'Help me prep a 10-minute lecture deck',
+      'Help me make a slide for the phase diagram'
     ],
     numbers: [
-      ['sPHENIX sample', 'Plot the sPHENIX sample data', 'numbers'],
-      ['Lab 3 chart', 'Chart my Lab 3 measurements', 'numbers'],
-      ['Compare two runs', 'Compare two runs side by side', 'numbers']
+      'Help me plot the sPHENIX sample data',
+      'Help me chart my Lab 3 measurements',
+      'Help me compare two runs side by side'
     ],
     symtex: [
-      ['Bjorken energy', 'Typeset the Bjorken energy formula', 'symtex'],
-      ['Phase diagram', 'Typeset the phase-diagram labels', 'symtex'],
-      ['One equation', 'Write one equation with a short note', 'symtex']
+      'Help me typeset the Bjorken energy formula',
+      'Help me typeset the phase-diagram labels',
+      'Help me write one equation with a short note'
     ],
     code: [
-      ['Particle simulation', 'Run a tiny particle simulation', 'code'],
-      ['Plot the sample', 'Plot the sample data in Python', 'code'],
-      ['Check the units', 'Check the units in a short script', 'code']
+      'Help me run a tiny particle simulation',
+      'Help me plot the sample data in Python',
+      'Help me check the units in a short script'
     ]
   };
 
@@ -4852,47 +4882,30 @@
     const panel = $('composerCases');
     const tools = $('composerTools');
     const composer = $('composer');
-    if (!panel || !tools || !composer) return;
+    if (!tools) return;
+    if (panel) {
+      panel.hidden = true;
+      panel.classList.remove('on');
+      panel.setAttribute('aria-hidden', 'true');
+    }
+    tools.classList.remove('is-replaced');
+    composer?.classList.remove('has-cases');
+    tools.querySelectorAll('.tool-prompt').forEach((node) => node.remove());
     const blueHome = document.documentElement.dataset.theme === 'blue' && document.getElementById('screen-home')?.classList.contains('on');
     const cases = blueHome && selectedComposerTool ? COMPOSER_CASES[selectedComposerTool] : null;
     const show = !!cases;
-    panel.hidden = !blueHome;
-    panel.setAttribute('aria-hidden', show ? 'false' : 'true');
-    panel.classList.toggle('on', show);
-    tools.classList.toggle('is-replaced', show);
-    composer.classList.toggle('has-cases', show);
+    tools.classList.toggle('is-prompts', show);
     if (!show) return;
-    const meta = COMPOSER_TOOL_META[selectedComposerTool];
-    $('composerCasesK').textContent = `Start with ${meta?.label || 'a tool'}`;
-    const row = $('composerCasesRow');
-    row.replaceChildren();
-    cases.forEach(([name, prompt, kind]) => {
+    cases.forEach((prompt) => {
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'tool-case';
-      btn.dataset.prompt = prompt;
-      const preview = document.createElement('span');
-      preview.className = 'tool-case-preview';
-      preview.dataset.kind = kind;
-      preview.dataset.var = String((row.childElementCount % 3) + 1);
-      preview.setAttribute('aria-hidden', 'true');
-      for (let i = 0; i < 3; i++) {
-        const line = document.createElement('span');
-        if (i === 2) line.className = 'short';
-        preview.appendChild(line);
-      }
-      const label = document.createElement('span');
-      label.className = 'tool-case-name';
-      label.textContent = name;
-      btn.append(preview, label);
+      btn.className = 'tool-prompt';
+      btn.textContent = prompt;
       btn.addEventListener('click', () => {
-        const input = $('composerInput');
-        if (!input) return;
-        input.value = prompt;
-        input.dispatchEvent(new Event('input', { bubbles: true }));
-        input.focus();
+        setComposerDraft(prompt);
+        $('composerInput')?.focus();
       });
-      row.appendChild(btn);
+      tools.appendChild(btn);
     });
   }
 
