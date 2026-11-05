@@ -2725,6 +2725,9 @@
   }
   .citta-panel .ask-row .plus::before { width: 12px; height: 1.5px; }
   .citta-panel .ask-row .plus::after { width: 1.5px; height: 12px; }
+  /* 1.5px strokes land between pixels and the cross looks off-center. Even 2px stays on the circle's center. */
+  html[data-theme="blue"] .citta-panel .ask-row .plus::before { height: 2px; }
+  html[data-theme="blue"] .citta-panel .ask-row .plus::after { width: 2px; }
   .citta-panel .ask-row .plus:hover { background: #e6e9e7; }
   .citta-panel .ask-row .plus:hover::before,
   .citta-panel .ask-row .plus:hover::after { background: var(--ink); }
