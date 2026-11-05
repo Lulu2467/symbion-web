@@ -3843,15 +3843,19 @@
   .filters { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 14px 12px; }
   .filters button { height: 28px; padding: 0 10px; border-radius: 999px; border: 1px solid var(--line); background: #fff; color: var(--muted); font-size: 12px; font-weight: 600; }
   .filters button[aria-pressed="true"] { background: var(--green); border-color: var(--green); color: #fff; }
-  .rows { flex: 1; overflow: auto; padding: 0 8px 12px; }
-  .row { position: relative; width: 100%; display: flex; align-items: center; border-radius: 12px; }
-  .row-hit { flex: 1; min-width: 0; display: flex; gap: 10px; align-items: center; text-align: left; padding: 10px 28px 10px 10px; border-radius: 12px; }
-  .row:hover { background: rgba(var(--ink-rgb), .04); }
-  .row.on { background: var(--green-tint); }
-  .row-more { position: absolute; right: 4px; top: 8px; width: 22px; height: 22px; border-radius: 6px; color: var(--muted); }
-  .row-more:hover { background: #fff; color: var(--ink); }
-  .face { width: 40px; height: 40px; flex: none; }
+  .rows { flex: 1; overflow: auto; padding: 0 0 12px; }
+  .dm-label { margin: 16px 16px 2px; font-size: 12px; font-weight: 500; color: #9a9a9a; }
+  .row { position: relative; width: 100%; display: flex; align-items: center; border-radius: 0; }
+  .row::after { content: ""; position: absolute; left: 72px; right: 0; bottom: 0; height: 1px; background: #ededed; pointer-events: none; }
+  .row:hover::after, .row.on::after { background: transparent; }
+  .row-hit { flex: 1; min-width: 0; display: flex; gap: 12px; align-items: center; text-align: left; padding: 12px 16px; border-radius: 0; }
+  .row:hover { background: #f4f4f4; }
+  .row.on { background: #e8e8e8; }
+  .face { position: relative; width: 44px; height: 44px; flex: none; }
   .mosaic { width: 40px; height: 40px; border-radius: 10px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 1px; overflow: hidden; background: var(--line); border: 1px solid var(--line); }
+  .list .mosaic, .list .av { width: 44px; height: 44px; border-radius: 6px; }
+  .list .mosaic { border: 0; background: #eee; }
+  .list .av { font-size: 13px; }
   .mosaic[data-n="1"] { grid-template-columns: 1fr; grid-template-rows: 1fr; }
   .mosaic[data-n="2"] { grid-template-rows: 1fr; }
   .mosaic[data-n="3"] i:first-child { grid-column: 1 / -1; }
@@ -3866,21 +3870,22 @@
   .hue-twin { background: var(--green); color: #fff; }
   .row-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
   .row-top, .row-bot { display: flex; align-items: center; gap: 6px; min-width: 0; }
-  .row-top strong { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; font-weight: 600; }
+  .row-top strong { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 15px; font-weight: 500; color: #191919; }
   .row-top time, .row-top .tag, .row-top .pin { flex: none; }
-  .row-top time, .row-bot em { font-style: normal; color: var(--faint); font-size: 11px; font-weight: 500; }
-  .row-bot em { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; color: var(--muted); font-weight: 400; }
+  .row-top time { margin-left: auto; font-style: normal; color: #b2b2b2; font-size: 12px; font-weight: 400; }
+  .row-bot em { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-style: normal; font-size: 13px; color: #9a9a9a; font-weight: 400; }
   .pin { width: 12px; height: 12px; color: var(--green); flex: none; }
   .badge { min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; background: var(--green); color: #fff; font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; }
-  .dot { width: 8px; height: 8px; border-radius: 4px; background: var(--green); flex: none; }
-  .dot.quiet { background: var(--line-strong); }
+  .row .dot { position: absolute; top: -3px; right: -3px; width: 10px; height: 10px; border-radius: 50%; background: #fa5151; border: 2px solid #fff; box-sizing: content-box; }
+  .row:hover .dot { border-color: #f4f4f4; }
+  .row.on .dot { border-color: #e8e8e8; }
   .slug-btn { flex: none; border: 0; background: var(--green-tint); color: var(--green-dark); border-radius: 999px; padding: 0 6px; font-size: 11px; font-weight: 650; line-height: 18px; }
   .slug-btn.on { background: var(--green); color: #fff; }
   .head-face { position: relative; width: 40px; height: 40px; flex: none; overflow: visible; background: none; }
   .req-badge { position: absolute; top: -5px; right: -5px; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px; background: var(--green); color: #fff; font-size: 10px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; border: 2px solid #fff; }
   .subline { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
   .num-btn { border: 0; color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: .04em; }
-  .mute { width: 13px; height: 13px; color: var(--faint); flex: none; }
+  .mute { width: 15px; height: 15px; color: #c4c4c4; flex: none; }
   .empty { margin: 18px 12px; font-size: 13px; line-height: 1.45; color: var(--muted); }
 
   .thread { flex: 1; min-width: 0; display: flex; flex-direction: column; min-height: 0; background: var(--canvas); }
@@ -9984,24 +9989,21 @@ function renderList() {
   const rowHTML = (c) => {
     const label = dotLabel(c);
     const dot = needsDot(c)
-      ? `<i class="dot${c.muted && !(c.kind === 'group' && canReview(c) && pending(c)) ? ' quiet' : ''}" title="${esc(label)}" aria-label="${esc(label)}"></i>`
+      ? `<i class="dot" title="${esc(label)}" aria-label="${esc(label)}"></i>`
       : '';
-    const pin = c.pinned ? '<svg class="pin" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 3 21 10l-4.2 1.2L15 18l-3-3-4 6-1.2-4.8L2 15l6-4-1.2-4.2L14 3z"/></svg>' : '';
-    const mute = c.muted ? '<svg class="mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 10v4h3l4 3V7L8 10H5zM16 9l5 6M21 9l-5 6"/></svg>' : '';
-    const slug = c.kind === 'group' && c.slug ? `<span class="slug-btn" data-slug-filter="${esc(c.slug)}" role="button">${esc(c.slug)}</span>` : '';
+    const mute = c.muted ? '<svg class="mute" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 22a2.1 2.1 0 0 0 2.05-1.6h-4.1A2.1 2.1 0 0 0 12 22Zm6.4-4.6c.5.4.2 1.1-.4 1.1H6c-.6 0-.9-.7-.4-1.1L7 15.8V11a5 5 0 0 1 3.2-4.7V5.2a1.8 1.8 0 1 1 3.6 0v1.1A5 5 0 0 1 17 11v4.8l1.4 1.6Z"/><path fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" d="M5 6.2 18.2 19"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M5 6.2 18.2 19"/></svg>' : '';
     return `<div class="row${c.id === state.id ? ' on' : ''}">
       <button type="button" class="row-hit" data-open="${c.id}"${c.id === state.id ? ' aria-current="true"' : ''}>
-        <span class="face">${face(c)}</span>
+        <span class="face">${face(c)}${dot}</span>
         <span class="row-body">
-          <span class="row-top"><strong>${esc(c.name)}</strong>${slug}${pin}<time>${esc(c.time)}</time></span>
-          <span class="row-bot"><em>${esc(preview(c))}</em>${mute}${dot}</span>
+          <span class="row-top"><strong>${esc(c.name)}</strong><time>${esc(c.time)}</time></span>
+          <span class="row-bot"><em>${esc(preview(c))}</em>${mute}</span>
         </span>
       </button>
-      <button type="button" class="row-more" data-more="${c.id}" aria-label="Conversation menu">⋯</button>
     </div>`;
   };
   const dmCount = chats.filter((c) => c.kind === 'dm' && !c.hidden).length;
-  $('rows').innerHTML = (rows.length ? `${groups.map(rowHTML).join('')}${qActive(state) ? '' : `<p class="lead" style="margin:10px 4px 4px">Direct messages · ${dmCount}</p>${dms.map(rowHTML).join('') || '<p class="empty">No direct messages yet.</p>'}`}` : `<p class="empty">${state.query ? 'No joined group matches that name, number, or slug.' : 'No conversations in this view.'}</p>`);
+  $('rows').innerHTML = (rows.length ? `${groups.map(rowHTML).join('')}${qActive(state) ? '' : `<p class="dm-label">Direct messages · ${dmCount}</p>${dms.map(rowHTML).join('') || '<p class="empty">No direct messages yet.</p>'}`}` : `<p class="empty">${state.query ? 'No joined group matches that name, number, or slug.' : 'No conversations in this view.'}</p>`);
   teamRoot.querySelectorAll('[data-filter]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.filter === state.filter ? 'true' : 'false'));
 }
 function qActive() { return state.query.trim().length > 0; }
