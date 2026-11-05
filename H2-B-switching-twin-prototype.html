@@ -513,7 +513,7 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) .composer {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 12px;
     margin-bottom: 0;
     background: transparent;
     border: 0;
@@ -661,6 +661,93 @@
     height: 16px;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .attach { display: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .composer .top { gap: 14px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .composer.has-cases .top { gap: 18px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools.is-replaced { display: none; }
+  .tool-cases { display: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-cases.on {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-cases-k {
+    margin: 0;
+    padding: 0 2px;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.3;
+    color: #656d76;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-cases-row {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-case {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    color: #1f1f1f;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-case-preview {
+    height: 96px;
+    border-radius: 14px;
+    background: #f3f5f7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 7px;
+    padding: 16px 18px;
+    box-sizing: border-box;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-case:hover .tool-case-preview { background: #eef1f4; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-case-preview span {
+    display: block;
+    height: 6px;
+    border-radius: 999px;
+    background: #fff;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-case-preview span.short { width: 58%; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-case-preview[data-kind="deck"] span:first-child { width: 42%; height: 8px; background: #e4e8ec; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-case-preview[data-kind="numbers"] {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 8px;
+    padding-bottom: 18px;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-case-preview[data-kind="numbers"] span {
+    width: 14px;
+    height: 28px;
+    border-radius: 4px;
+    background: #fff;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-case-preview[data-kind="numbers"] span:nth-child(2) { height: 44px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-case-preview[data-kind="numbers"] span:nth-child(3) { height: 18px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-case-preview[data-var="2"] span:nth-child(1) { width: 70%; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-case-preview[data-var="3"] span:nth-child(2) { width: 46%; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-case-preview[data-kind="numbers"][data-var="2"] span:nth-child(1) { width: 14px; height: 36px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-case-preview[data-kind="numbers"][data-var="2"] span:nth-child(2) { height: 22px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-case-preview[data-kind="numbers"][data-var="2"] span:nth-child(3) { height: 48px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-case-preview[data-kind="numbers"][data-var="3"] span:nth-child(1) { width: 14px; height: 16px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-case-preview[data-kind="numbers"][data-var="3"] span:nth-child(2) { width: 14px; height: 32px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-case-preview[data-kind="numbers"][data-var="3"] span:nth-child(3) { height: 40px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-case-name {
+    padding: 0 2px;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.3;
+    color: #1f1f1f;
+  }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on {
     display: inline-flex;
     align-items: center;
@@ -749,7 +836,7 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x::after {
     transform: translate(-50%, -50%) rotate(-45deg);
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home { margin-top: 16px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home { margin-top: 24px; }
   .tools-title-usual { display: none; }
   html[data-theme="blue"] .tools-title-week { display: none; }
   html[data-theme="blue"] .tools-title-usual { display: inline; }
@@ -3394,6 +3481,10 @@
                   <span class="sp"></span>
                   <span class="attach"><button type="button" class="attach-hit">From a Cosmo</button><span class="attach-sep" aria-hidden="true"> · </span><button type="button" class="attach-hit">From Library</button></span>
                 </div>
+                <div class="tool-cases" id="composerCases" hidden>
+                  <p class="tool-cases-k" id="composerCasesK"></p>
+                  <div class="tool-cases-row" id="composerCasesRow"></div>
+                </div>
               </div>
 
               <div class="foot" id="composerFoot">
@@ -4662,6 +4753,81 @@
     syncComposerChipsVisibility();
   }
 
+  const COMPOSER_CASES = {
+    doc: [
+      ['Lecture 1 summary', 'Turn Prof. Roland’s Lecture 1 into a one-page summary', 'doc'],
+      ['Reading report', 'Start my reading report outline', 'doc'],
+      ['Plasma notes', 'Explain quark-gluon plasma for my notes', 'doc']
+    ],
+    deck: [
+      ['6 study slides', 'Turn Lecture 1 into 6 study slides', 'deck'],
+      ['10-minute deck', 'Prep a 10-minute deck for lecture 5', 'deck'],
+      ['Phase diagram', 'Make one slide for the phase diagram', 'deck']
+    ],
+    numbers: [
+      ['sPHENIX sample', 'Plot the sPHENIX sample data', 'numbers'],
+      ['Lab 3 chart', 'Chart my Lab 3 measurements', 'numbers'],
+      ['Compare two runs', 'Compare two runs side by side', 'numbers']
+    ],
+    symtex: [
+      ['Bjorken energy', 'Typeset the Bjorken energy formula', 'symtex'],
+      ['Phase diagram', 'Typeset the phase-diagram labels', 'symtex'],
+      ['One equation', 'Write one equation with a short note', 'symtex']
+    ],
+    code: [
+      ['Particle simulation', 'Run a tiny particle simulation', 'code'],
+      ['Plot the sample', 'Plot the sample data in Python', 'code'],
+      ['Check the units', 'Check the units in a short script', 'code']
+    ]
+  };
+
+  function syncComposerCases() {
+    const panel = $('composerCases');
+    const tools = $('composerTools');
+    const composer = $('composer');
+    if (!panel || !tools || !composer) return;
+    const blueHome = document.documentElement.dataset.theme === 'blue' && document.getElementById('screen-home')?.classList.contains('on');
+    const cases = blueHome && selectedComposerTool ? COMPOSER_CASES[selectedComposerTool] : null;
+    const show = !!cases;
+    panel.hidden = !show;
+    panel.classList.toggle('on', show);
+    tools.classList.toggle('is-replaced', show);
+    composer.classList.toggle('has-cases', show);
+    if (!show) return;
+    const meta = COMPOSER_TOOL_META[selectedComposerTool];
+    $('composerCasesK').textContent = `${meta?.label || 'Tool'} examples`;
+    const row = $('composerCasesRow');
+    row.replaceChildren();
+    cases.forEach(([name, prompt, kind]) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'tool-case';
+      btn.dataset.prompt = prompt;
+      const preview = document.createElement('span');
+      preview.className = 'tool-case-preview';
+      preview.dataset.kind = kind;
+      preview.dataset.var = String((row.childElementCount % 3) + 1);
+      preview.setAttribute('aria-hidden', 'true');
+      for (let i = 0; i < 3; i++) {
+        const line = document.createElement('span');
+        if (i === 2) line.className = 'short';
+        preview.appendChild(line);
+      }
+      const label = document.createElement('span');
+      label.className = 'tool-case-name';
+      label.textContent = name;
+      btn.append(preview, label);
+      btn.addEventListener('click', () => {
+        const input = $('composerInput');
+        if (!input) return;
+        input.value = prompt;
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.focus();
+      });
+      row.appendChild(btn);
+    });
+  }
+
   function setComposerToolSelection(selected) {
     selectedComposerTool = selected || null;
     document.querySelectorAll('#composerTools .tool').forEach((tool) => {
@@ -4670,6 +4836,7 @@
       tool.setAttribute('aria-pressed', String(on));
     });
     syncComposerToolChip(selectedComposerTool);
+    syncComposerCases();
   }
 
   const IMAGE_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="1.75"/><circle cx="9" cy="10" r="1.6" fill="currentColor"/><path d="M5.5 16.5 9.2 12.8a1.2 1.2 0 0 1 1.7 0l2.1 2.1 2.4-2.9a1.2 1.2 0 0 1 1.9 0L18.5 16.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -4859,13 +5026,14 @@
       tool.addEventListener('click', (e) => {
         e.stopPropagation();
         const key = tool.dataset.tool;
-        const next = selectedComposerTool === key ? null : key;
+        const blueHome = document.documentElement.dataset.theme === 'blue' && document.getElementById('screen-home')?.classList.contains('on');
+        const next = blueHome ? key : (selectedComposerTool === key ? null : key);
         setComposerToolSelection(next);
-        if (next) {
+        if (next && !blueHome) {
           const meta = COMPOSER_TOOL_META[next];
           showToastMsg(`Working in ${meta?.label || key} — type what you want Citta to do`);
-          $('composerInput')?.focus();
         }
+        if (next) $('composerInput')?.focus();
       });
     });
     $('composerToolChipClear')?.addEventListener('click', (e) => {
@@ -6304,6 +6472,7 @@
     syncHash();
     placeCittaPicker();
     placeComposerToolChip();
+    syncComposerCases();
     fit();
     if (wantTip) {
       // After tutorial chrome is cleared + layout fit, show Citta-switch tip with pill spotlight.
@@ -6551,6 +6720,7 @@
     placeCourseBanner();
     placeCittaPicker();
     placeComposerToolChip();
+    syncComposerCases();
     void root.offsetWidth;
     root.classList.remove('theme-swap');
     document.querySelectorAll('[data-theme-pick]').forEach((b) => {
