@@ -6136,7 +6136,6 @@
         tabs.appendChild(tab);
         return tab;
       };
-      if (!tabs.children.length) make('Home', false, false);
       if (tabs.children.length >= 3) {
         const last = tabs.querySelector('.osbar-tab:last-child');
         tabs.querySelectorAll('.osbar-tab').forEach((t) => t.classList.remove('on'));
@@ -6160,8 +6159,13 @@
 
     frame.querySelectorAll('.osbar button[data-osbar]').forEach((el) => {
       el.addEventListener('click', () => {
-        if (el.dataset.osbar === 'new' && document.documentElement.dataset.theme === 'blue') {
+        if (document.documentElement.dataset.theme === 'blue' && el.dataset.osbar === 'new') {
           openNewTab();
+          return;
+        }
+        if (document.documentElement.dataset.theme === 'blue' && el.dataset.osbar === 'home') {
+          setScreen('home');
+          document.querySelector('.main')?.classList.remove('is-new-tab');
           return;
         }
         flashEl(el);
