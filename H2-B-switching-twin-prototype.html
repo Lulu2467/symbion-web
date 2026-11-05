@@ -552,6 +552,8 @@
     color: var(--green);
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .menu .item[data-ai="citta"][aria-checked="true"] { display: none; }
+  html[data-theme="blue"] .menu .hd.agents,
+  html[data-theme="blue"] .menu .item[data-ai="lr"] { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker .pav,
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker .twin-badge { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker .pname {
@@ -4248,7 +4250,7 @@
                 <button type="button" class="item" role="menuitemradio" data-ai="xu" aria-checked="false">
                   <span class="mav">HX</span><span class="tx"><b>Prof. Xu’s twin</b><small>✦ AI &amp; decisions · data, pricing</small></span><span class="ck">✓</span>
                 </button>
-                <div class="hd">AI AGENTS</div>
+                <div class="hd agents">AI AGENTS</div>
                 <button type="button" class="item" role="menuitemradio" data-ai="lr" aria-checked="false">
                   <span class="mav agent">LR</span><span class="tx"><b>Lab Report Coach</b><small>AI agent · drafts lab reports in Doc</small></span><span class="ck">✓</span>
                 </button>
@@ -4910,14 +4912,17 @@
               placeholder: 'What do you want to work on?' },
     roland: { name: 'Prof. Roland’s twin', initials: 'GR', twin: true, prefix: 'GR',
               photo: 'https://mio.neoschool.com/neo-bic/69987e1e-a67b-45df-9b29-fce5bb26d287.jpg',
+              illustration: 'assets/gunther-roland-illustrated.jpg',
               placeholder: 'Ask Prof. Roland’s twin — e.g. “Which lecture 5 topics are on the exam?”',
               toast: 'Now working with Prof. Roland’s twin · trained on Heavy-ion Physics lectures 1–5' },
     pajer:  { name: 'Prof. Pajer’s twin', initials: 'EP', twin: true, prefix: 'EP',
               photo: 'https://mio.neoschool.com/neo-bic/e7048e8a-380b-4b63-8d5d-1c5340b31479.png',
+              illustration: 'assets/enrico-pajer-illustrated.jpg',
               placeholder: 'Ask Prof. Pajer’s twin — e.g. “Why is the CMB so uniform?”',
               toast: 'Now working with Prof. Pajer’s twin · trained on Cosmology lectures' },
     xu:     { name: 'Prof. Xu’s twin', initials: 'HX', twin: true, prefix: 'HX',
               photo: 'https://mio.neoschool.com/neo-bic/b4829ec5-b44b-410b-8ad5-46dd29480f60.jpg',
+              illustration: 'assets/haifeng-xu-illustrated.jpg',
               placeholder: 'Ask Prof. Xu’s twin — e.g. “How should I price this dataset?”',
               toast: 'Now working with Prof. Xu’s twin · trained on AI & decisions lectures' },
     lr:     { name: 'Lab Report Coach', initials: 'LR', twin: false, agent: true, prefix: 'LR',
@@ -4933,13 +4938,20 @@
   const CITTA_PICKER_AVATAR = `<img src="${CITTA_AVATAR_SRC}" width="26" height="26" alt="">`;
   AIS.citta.photo = CITTA_AVATAR_SRC;
 
+  function faceSrc(ai) {
+    if (!ai) return '';
+    if (document.documentElement.dataset.theme === 'blue' && ai.illustration) return ai.illustration;
+    return ai.photo || '';
+  }
+
   function paintMenuAvatars() {
     document.querySelectorAll('.menu .item').forEach((item) => {
       const ai = AIS[item.dataset.ai];
       const mav = item.querySelector('.mav');
-      if (!ai?.photo || !mav) return;
+      const src = faceSrc(ai);
+      if (!src || !mav) return;
       mav.classList.add('has-photo');
-      mav.innerHTML = `<img src="${ai.photo}" alt="" width="32" height="32">`;
+      mav.innerHTML = `<img src="${src}" alt="" width="32" height="32">`;
     });
   }
   paintMenuAvatars();
@@ -4949,8 +4961,9 @@
     const img = dockEl?.querySelector('.dock-av');
     const init = dockEl?.querySelector('.dock-init');
     if (!dockEl || !img) return;
-    if (ai.photo) {
-      img.src = ai.photo;
+    const src = faceSrc(ai);
+    if (src) {
+      img.src = src;
       dockEl.classList.remove('is-initials', 'is-agent');
     } else {
       dockEl.classList.add('is-initials');
@@ -4963,9 +4976,10 @@
   function setPickerAvatar(isCitta, ai) {
     const el = $('pickerAv');
     if (!el) return;
-    if (ai.photo) {
+    const src = faceSrc(ai);
+    if (src) {
       el.className = 'pav citta-portrait';
-      el.innerHTML = isCitta ? CITTA_PICKER_AVATAR : `<img src="${ai.photo}" width="26" height="26" alt="">`;
+      el.innerHTML = isCitta ? CITTA_PICKER_AVATAR : `<img src="${src}" width="26" height="26" alt="">`;
     } else {
       el.className = 'pav';
       el.textContent = ai.initials;
@@ -4982,9 +4996,10 @@
       panel.setAttribute('aria-label', `${ai.name} panel`);
     }
     if (!av) return;
-    if (ai.photo) {
+    const src = faceSrc(ai);
+    if (src) {
       av.className = 'citta-av citta-portrait';
-      av.innerHTML = `<img src="${ai.photo}" width="28" height="28" alt="">`;
+      av.innerHTML = `<img src="${src}" width="28" height="28" alt="">`;
     } else {
       av.className = ai.agent ? 'citta-av twin-init agent' : 'citta-av twin-init';
       av.textContent = ai.initials || '';
@@ -7940,6 +7955,11 @@
       b.setAttribute('aria-pressed', String(b.dataset.themePick === next));
     });
     syncDocIcon();
+    if (next === 'blue' && current === 'lr') setAI('citta', { announce: false });
+    paintMenuAvatars();
+    setDockAvatar(AIS[current]);
+    setPickerAvatar(current === 'citta', AIS[current]);
+    setCittaPanelIdentity(current === 'citta', AIS[current]);
     syncToolCallPreview();
     try { localStorage.setItem('h2-theme', next); } catch (e) {}
   }
