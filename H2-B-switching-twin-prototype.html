@@ -712,16 +712,16 @@
     box-sizing: border-box;
     box-shadow: none;
     transform: none;
-    transition: transform .18s ease, box-shadow .18s ease, color .18s ease;
+    transition: box-shadow .18s ease;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool-prompt:hover,
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool-prompt:focus-visible {
     background: #fff;
-    border-color: transparent;
-    color: #1a1d21;
+    border-color: #e6e8ec;
+    color: #5f6670;
     outline: none;
     z-index: 1;
-    transform: translateY(-2px);
+    transform: none;
     box-shadow:
       0 8px 18px rgba(20, 24, 28, 0.10),
       0 1px 3px rgba(20, 24, 28, 0.06);
@@ -3656,19 +3656,20 @@
     padding: 22px 28px 40px;
     color: var(--ink);
   }
-  .frame.dir-on #dirHost { display: block; }
+  .frame.dir-on #dirHost { display: flex; flex-direction: column; overflow: hidden; padding: 0; }
   #dirHost[hidden],
   #dirHost [hidden] { display: none !important; }
   #dirHost button, #dirHost input { font: inherit; color: inherit; }
   #dirHost button { cursor: pointer; }
   .dir-top {
-    position: sticky;
-    top: 0;
+    position: relative;
     z-index: 2;
-    margin: -22px -28px 18px;
+    flex: none;
+    margin: 0;
     padding: 22px 28px 14px;
     background: #f6f7f8;
   }
+  .dir-body { flex: 1; min-height: 0; overflow: auto; padding: 0 28px 40px; }
   .dir-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
   .dir-row + .dir-row { margin-top: 14px; }
   .dir-tabs { display: flex; align-items: center; gap: 22px; }
@@ -4921,9 +4922,11 @@
                 </div>
               </div>
             </div>
-            <div class="dir-grid" id="dirGrid"></div>
-            <p class="dir-none" id="dirNone" hidden>No Cosmos match. Change the word or clear the filter.</p>
-            <p class="dir-empty" id="dirEmpty" hidden></p>
+            <div class="dir-body">
+              <div class="dir-grid" id="dirGrid"></div>
+              <p class="dir-none" id="dirNone" hidden>No Cosmos match. Change the word or clear the filter.</p>
+              <p class="dir-empty" id="dirEmpty" hidden></p>
+            </div>
           </section>
           <section id="teamHost" aria-label="Team">
     <div class="team">
