@@ -4714,7 +4714,18 @@
   #teamHost .composer:focus-within { border: 0; box-shadow: none; }
   #teamHost .toast { top: auto; bottom: 24px; opacity: 0; transform: translateX(-50%) translateY(6px); }
   #teamHost .toast.on { opacity: 1; transform: translateX(-50%); }
-  #teamHost .list-brand { display: none; }
+  #teamHost .list-brand,
+  #teamHost .list-title { display: none; }
+  #teamHost .list-top { display: flex; align-items: center; gap: 8px; padding: 12px 12px 8px; }
+  #teamHost .list-top .search { flex: 1; margin: 0; height: 36px; padding: 0 12px; border-radius: 8px; background: #f2f3f5; }
+  #teamHost .list-top .search input { font-size: 14px; }
+  #teamHost .list-top .search input::placeholder { color: #b0b4ba; }
+  #teamHost .list-top .icon-btn { width: 32px; height: 32px; border-radius: 16px; border: 1px solid #e6e8ec; background: #fff; color: #1f1f1f; }
+  #teamHost .list-top .icon-btn:hover { border-color: transparent; background: #d4e4ee; color: #1f1f1f; }
+  #teamHost .row:hover { background: #f6f7f8; }
+  #teamHost .row.on { background: #ebf5fa; }
+  #teamHost .row:hover .dot { border-color: #f6f7f8; }
+  #teamHost .row.on .dot { border-color: #ebf5fa; }
   #teamHost .acct { position: relative; }
   #teamHost .acct .p { width: 28px; height: 28px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); font-size: 9px; font-weight: 700; }
   #teamHost .bubble {
@@ -5883,7 +5894,7 @@
     <div class="team">
       <aside class="list" aria-label="Groups">
         <div class="list-brand">SYMBION</div>
-        <div class="list-title">
+        <div class="list-title" hidden>
           <h2>Team</h2>
           <span class="gcount" id="gcount"></span>
         <div class="acct">
@@ -5912,14 +5923,16 @@
             <button type="button" class="is-out" data-account="signout">Sign out</button>
           </div>
         </div>
+        </div>
+        <div class="list-top">
+          <label class="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16.5 20 20.5"/></svg>
+            <input id="q" type="search" placeholder="Search" autocomplete="off" aria-label="Search joined groups">
+          </label>
           <div class="plus-wrap">
             <button type="button" class="icon-btn" id="plus" aria-label="Find or create a group"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
           </div>
         </div>
-        <label class="search">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16.5 20 20.5"/></svg>
-          <input id="q" type="search" placeholder="Search joined groups" autocomplete="off" aria-label="Search joined groups">
-        </label>
         <div class="rows" id="rows"></div>
       </aside>
 
@@ -11876,8 +11889,7 @@ function renderList() {
       </button>
     </div>`;
   };
-  const dmCount = chats.filter((c) => c.kind === 'dm' && !c.hidden).length;
-  $('rows').innerHTML = (rows.length ? `${groups.map(rowHTML).join('')}${qActive(state) ? '' : `<p class="dm-label">Direct messages · ${dmCount}</p>${dms.map(rowHTML).join('') || '<p class="empty">No direct messages yet.</p>'}`}` : `<p class="empty">${state.query ? 'No joined group matches that name, number, or slug.' : 'No conversations in this view.'}</p>`);
+  $('rows').innerHTML = (rows.length ? `${groups.map(rowHTML).join('')}${qActive(state) ? '' : dms.map(rowHTML).join('')}` : `<p class="empty">${state.query ? 'No joined group matches that name, number, or slug.' : 'No conversations in this view.'}</p>`);
 }
 function qActive() { return state.query.trim().length > 0; }
 
