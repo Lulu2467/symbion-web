@@ -3911,9 +3911,6 @@
   .search svg { width: 14px; height: 14px; color: var(--faint); flex: none; }
   .search input { flex: 1; min-width: 0; border: 0; background: transparent; outline: none; font-size: 13px; }
   .search input::placeholder { color: var(--faint); }
-  .filters { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 14px 12px; }
-  .filters button { height: 28px; padding: 0 10px; border-radius: 999px; border: 1px solid var(--line); background: #fff; color: var(--muted); font-size: 12px; font-weight: 600; }
-  .filters button[aria-pressed="true"] { background: var(--green); border-color: var(--green); color: #fff; }
   .rows { flex: 1; overflow: auto; padding: 0 0 12px; }
   .dm-label { margin: 16px 16px 2px; font-size: 12px; font-weight: 500; color: #9a9a9a; }
   .row { position: relative; width: 100%; display: flex; align-items: center; border-radius: 0; }
@@ -4979,12 +4976,6 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16.5 20 20.5"/></svg>
           <input id="q" type="search" placeholder="Search joined groups" autocomplete="off" aria-label="Search joined groups">
         </label>
-        <div class="filters" role="group" aria-label="Filter">
-          <button type="button" data-filter="all" aria-pressed="true">All</button>
-          <button type="button" data-filter="unread" aria-pressed="false">Unread</button>
-          <button type="button" data-filter="pinned" aria-pressed="false">Pinned</button>
-          <button type="button" data-filter="hidden" aria-pressed="false">Hidden</button>
-        </div>
         <div class="rows" id="rows"></div>
       </aside>
 
@@ -10159,7 +10150,6 @@ function renderList() {
   };
   const dmCount = chats.filter((c) => c.kind === 'dm' && !c.hidden).length;
   $('rows').innerHTML = (rows.length ? `${groups.map(rowHTML).join('')}${qActive(state) ? '' : `<p class="dm-label">Direct messages · ${dmCount}</p>${dms.map(rowHTML).join('') || '<p class="empty">No direct messages yet.</p>'}`}` : `<p class="empty">${state.query ? 'No joined group matches that name, number, or slug.' : 'No conversations in this view.'}</p>`);
-  teamRoot.querySelectorAll('[data-filter]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.filter === state.filter ? 'true' : 'false'));
 }
 function qActive() { return state.query.trim().length > 0; }
 
@@ -10929,12 +10919,6 @@ $('plus').addEventListener('click', (e) => {
 });
 teamRoot.querySelectorAll('[data-open-modal]').forEach((b) => b.addEventListener('click', () => openModal(b.dataset.openModal)));
 $('q').addEventListener('input', () => { state.query = $('q').value; renderList(); });
-teamRoot.querySelector('.filters').addEventListener('click', (e) => {
-  const b = e.target.closest('[data-filter]');
-  if (!b) return;
-  state.filter = b.dataset.filter;
-  render(false);
-});
 $('rows').addEventListener('click', (e) => {
   const more = e.target.closest('[data-more]');
   if (more) {
