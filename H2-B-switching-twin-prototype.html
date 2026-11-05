@@ -2726,9 +2726,19 @@
     color: #8d97a3;
     font-weight: 400;
   }
+  html[data-theme="blue"] .think-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #8d97a3;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 20px;
+  }
   html[data-theme="blue"] .think-dots {
     display: grid;
     grid-template-columns: repeat(3, 4px);
+    grid-template-rows: repeat(3, 4px);
     gap: 2px;
     width: 16px;
     height: 16px;
@@ -5476,6 +5486,19 @@
 <path d="M11.46 6.5C11.46 9.23933 9.23933 11.46 6.5 11.46C3.76067 11.46 1.54 9.23933 1.54 6.5C1.54 3.76067 3.76067 1.54 6.5 1.54C9.23933 1.54 11.46 3.76067 11.46 6.5Z" stroke-width="1.08" stroke="black"/>
 </svg>` }
   ];
+  function buildThinkRow() {
+    const row = document.createElement('div');
+    row.className = 'think-row';
+    const dots = document.createElement('span');
+    dots.className = 'think-dots';
+    dots.setAttribute('aria-hidden', 'true');
+    for (let i = 0; i < 9; i += 1) dots.appendChild(document.createElement('span'));
+    const label = document.createElement('span');
+    label.className = 'lbl';
+    label.textContent = 'Thinking';
+    row.append(dots, label);
+    return row;
+  }
   function buildToolCalls() {
     const wrap = document.createElement('div');
     wrap.className = 'tool-calls';
@@ -5501,6 +5524,7 @@
     if (!host) return;
     const blue = document.documentElement.dataset.theme === 'blue';
     host.hidden = !blue;
+    if (blue && !host.querySelector('.think-row')) host.prepend(buildThinkRow());
     if (blue && !host.querySelector('.tool-calls')) host.appendChild(buildToolCalls());
   }
 
