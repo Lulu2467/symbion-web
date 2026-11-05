@@ -3823,23 +3823,35 @@
     font-size: 13px;
     line-height: 1.35;
   }
-  .dir-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .dir-tags { display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
   .dir-tags i {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
     font-style: normal;
-    padding: 2px 8px;
+    padding: 0 8px;
     border-radius: 999px;
     background: #f1f2f4;
     color: #656d76;
     font-size: 12px;
-    line-height: 18px;
+    line-height: 1;
   }
-  .dir-foot {
+  .dir-meta {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
+    min-width: 0;
     margin-top: auto;
+  }
+  .dir-foot {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+    flex: none;
     color: #8b919a;
     font-size: 12px;
+    font-weight: 500;
   }
   .dir-foot .spark-icon { width: 12px; height: 12px; display: inline-flex; color: #3c7a94; }
   .dir-foot .spark-icon svg { width: 12px; height: 12px; display: block; }
@@ -8719,7 +8731,10 @@
       spark.setAttribute('aria-hidden', 'true');
       spark.innerHTML = SPARK_SOLID;
       foot.append(spark, document.createTextNode(p.foot));
-      card.append(head, tags, foot);
+      const meta = document.createElement('span');
+      meta.className = 'dir-meta';
+      meta.append(tags, foot);
+      card.append(head, meta);
       return card;
     }));
   }
