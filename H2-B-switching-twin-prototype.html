@@ -3677,26 +3677,17 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 2px 0 8px;
+    padding: 0;
     border: 0;
     background: none;
-    color: #8b919a;
+    color: #9aa0a6;
     font-size: 16px;
     font-weight: 500;
     line-height: 1;
   }
-  .dir-tab.on { color: #1f1f1f; font-weight: 650; }
-  .dir-tab.on::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 2px;
-    border-radius: 2px;
-    background: #1f1f1f;
-  }
-  .dir-tab .spark-icon { width: 16px; height: 16px; display: inline-flex; }
+  #dirHost .dir-tab { color: #9aa0a6; font-weight: 500; }
+  #dirHost .dir-tab.on { color: #000; font-weight: 650; }
+    .dir-tab .spark-icon { width: 16px; height: 16px; display: inline-flex; }
   .dir-tab .spark-icon svg { width: 16px; height: 16px; display: block; }
   .dir-side { display: flex; align-items: center; gap: 10px; margin-left: auto; }
   .dir-search {
