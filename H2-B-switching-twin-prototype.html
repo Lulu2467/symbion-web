@@ -3923,7 +3923,8 @@
   .msg:hover .act, .msg:focus-within .act { opacity: 1; }
   .act:hover { color: var(--green-dark); border-color: var(--green-line); }
   mark { background: var(--amber-tint); color: inherit; border-radius: 2px; }
-  .person:hover, .av:hover, .mosaic:hover { box-shadow: 0 0 0 2px var(--green-line); }
+  .person:hover, .av:hover { box-shadow: 0 0 0 2px var(--green-line); }
+  .row:hover .mosaic, .row.on .mosaic, .mosaic:hover { box-shadow: none; border-color: var(--line); }
   .log .av { cursor: pointer; }
 
   .composer { flex: none; padding: 8px 16px 16px; }
