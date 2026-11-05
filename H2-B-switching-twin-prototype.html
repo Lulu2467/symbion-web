@@ -317,6 +317,11 @@
     padding-bottom: 20px;
     gap: 20px;
   }
+  html[data-theme="blue"] .content.is-home-pinned:has(#screen-home.on) {
+    justify-content: flex-start;
+    padding-top: calc(var(--page-gutter) + var(--home-pin, 0px));
+  }
+  html[data-theme="blue"] .main:has(.content.is-home-pinned) { overflow-anchor: none; }
   html[data-theme="blue"] .screen { gap: 20px; }
   html[data-theme="blue"] .greeting { padding: 0; }
   html[data-theme="blue"] .greeting .day { transform: translateY(-14px); }
@@ -607,6 +612,10 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools {
     justify-content: center;
     gap: 10px;
+    margin-top: 14px;
+    max-height: 48px;
+    overflow: hidden;
+    transition: max-height .26s ease, opacity .2s ease, margin-top .26s ease;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .sp { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool,
@@ -659,15 +668,37 @@
     height: 16px;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .attach { display: none; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) .composer .top { gap: 14px; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) .composer.has-cases .top { gap: 18px; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools.is-replaced { display: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .composer .top,
+  html[data-theme="blue"] .hub:has(#screen-home.on) .composer.has-cases .top { gap: 0; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools.is-replaced {
+    min-height: 0;
+    max-height: 0;
+    margin-top: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
   .tool-cases { display: none; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-cases.on {
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-cases {
     display: flex;
     flex-direction: column;
     gap: 10px;
     width: 100%;
+    max-height: 0;
+    margin-top: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transition: max-height .28s ease, opacity .22s ease, margin-top .28s ease;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-cases.on {
+    max-height: 200px;
+    margin-top: 18px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools,
+    html[data-theme="blue"] .hub:has(#screen-home.on) .tool-cases { transition: none; }
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-cases-k {
     margin: 0;
@@ -4781,7 +4812,36 @@
     ]
   };
 
+  function pinBlueHome() {
+    const content = document.querySelector('.content');
+    if (!content) return;
+    const blueHome = document.documentElement.dataset.theme === 'blue' && document.getElementById('screen-home')?.classList.contains('on');
+    if (!blueHome) {
+      content.classList.remove('is-home-pinned');
+      content.style.removeProperty('--home-pin');
+      delete content.dataset.pinKey;
+      return;
+    }
+    const key = `${window.innerWidth}x${window.innerHeight}`;
+    if (document.getElementById('composer')?.classList.contains('has-cases')) return;
+    if (content.classList.contains('is-home-pinned') && content.dataset.pinKey === key) return;
+    if (content.classList.contains('is-home-pinned')) {
+      content.classList.remove('is-home-pinned');
+      content.style.removeProperty('--home-pin');
+      void content.offsetHeight;
+    }
+    const screen = document.getElementById('screen-home');
+    if (!screen || !content.offsetHeight) return;
+    const scale = content.getBoundingClientRect().height / content.offsetHeight || 1;
+    const pad = parseFloat(getComputedStyle(content).paddingTop) || 0;
+    const extra = (screen.getBoundingClientRect().top - content.getBoundingClientRect().top) / scale - pad;
+    content.style.setProperty('--home-pin', `${Math.max(0, Math.round(extra))}px`);
+    content.dataset.pinKey = key;
+    content.classList.add('is-home-pinned');
+  }
+
   function syncComposerCases() {
+    pinBlueHome();
     const panel = $('composerCases');
     const tools = $('composerTools');
     const composer = $('composer');
@@ -4789,7 +4849,8 @@
     const blueHome = document.documentElement.dataset.theme === 'blue' && document.getElementById('screen-home')?.classList.contains('on');
     const cases = blueHome && selectedComposerTool ? COMPOSER_CASES[selectedComposerTool] : null;
     const show = !!cases;
-    panel.hidden = !show;
+    panel.hidden = !blueHome;
+    panel.setAttribute('aria-hidden', show ? 'false' : 'true');
     panel.classList.toggle('on', show);
     tools.classList.toggle('is-replaced', show);
     composer.classList.toggle('has-cases', show);
@@ -7189,6 +7250,7 @@
       );
     }
     syncCosmosScrollFade();
+    pinBlueHome();
   }
 
   // Spotlight + coach are absolute on .frame; .main (FS) or the window can scroll underneath — re-glue every scroll.
