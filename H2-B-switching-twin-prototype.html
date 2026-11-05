@@ -1856,7 +1856,7 @@
     vertical-align: middle;
   }
   .tag .spark-icon { width: 8px; height: 8px; color: currentColor; }
-  html[data-theme="blue"] .discover .dcard .tag {
+  .discover .dcard .tag {
     font-size: 0;
     gap: 0;
     width: 16px;
@@ -1866,7 +1866,7 @@
     line-height: 0;
     box-sizing: border-box;
   }
-  html[data-theme="blue"] .discover .dcard .tag .spark-icon { width: 9px; height: 9px; }
+  .discover .dcard .tag .spark-icon { width: 9px; height: 9px; }
   .tag.agent { background: var(--amber-tint); color: var(--amber); }
   .dcard small { display: block; font-size: 11px; color: var(--faint); }
   .addsi {
@@ -7084,13 +7084,7 @@
   }
 
   function syncDiscoverTagStars() {
-    const blue = document.documentElement.dataset.theme === 'blue';
     document.querySelectorAll('.discover .dcard .tag').forEach((tag) => {
-      const added = tag.querySelector('.spark-icon[data-added-star]');
-      if (!blue) {
-        added?.remove();
-        return;
-      }
       if (tag.querySelector('.spark-icon')) return;
       const spark = document.createElement('span');
       spark.className = 'spark-icon';
