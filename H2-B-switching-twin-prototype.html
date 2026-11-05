@@ -2670,20 +2670,28 @@
   .citta-panel .asst-card a:hover,
   .citta-panel .asst-card .act-link:hover { color: var(--green); text-decoration: none; }
   .citta-panel .asst-card .act-link .ico-ne { color: inherit; }
+  html[data-theme="blue"] .asst-card.is-thinking {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #8d97a3;
+    font-weight: 400;
+  }
   html[data-theme="blue"] .think-dots {
-    align-self: flex-start;
     display: grid;
-    grid-template-columns: repeat(5, 5px);
-    gap: 4px;
-    width: max-content;
-    margin: 2px 0;
+    grid-template-columns: repeat(5, 2px);
+    gap: 1px;
+    width: 14px;
+    height: 14px;
+    flex: none;
+    margin: 0;
     padding: 0;
   }
   html[data-theme="blue"] .think-dots span {
-    width: 5px;
-    height: 5px;
+    width: 2px;
+    height: 2px;
     border-radius: 50%;
-    background: var(--green);
+    background: #8d97a3;
     animation: think-drift 1.36s linear infinite;
   }
   @keyframes think-drift {
@@ -4399,34 +4407,39 @@
 
     const reply = cittaReplyFor(text);
     if (reply.reminder) addReminderFromCitta(reply.reminder);
+    const blue = document.documentElement.dataset.theme === 'blue';
     const asst = document.createElement('div');
     asst.className = 'asst-card';
-    asst.textContent = reply.html;
-    if (reply.link) {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'act-link';
-      btn.innerHTML = `${reply.link}<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span>`;
-      asst.appendChild(btn);
-    }
-    const blue = document.documentElement.dataset.theme === 'blue';
-    const thinkDelays = [0.136, 0.784, 0.068, 0.716, 0, 0.852, 0.136, 0.784, 0.068, 0.716, 0.205, 0.852, 0.136, 0.784, 0.068, 0.92, 0.205, 0.852, 0.136, 0.784, 0.273, 0.92, 0.205, 0.852, 0.136];
-    let think = null;
+    const fillReply = () => {
+      asst.classList.remove('is-thinking');
+      asst.textContent = reply.html;
+      if (reply.link) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'act-link';
+        btn.innerHTML = `${reply.link}<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span>`;
+        asst.appendChild(btn);
+      }
+    };
     if (blue) {
-      think = document.createElement('div');
+      asst.classList.add('is-thinking');
+      const think = document.createElement('span');
       think.className = 'think-dots';
       think.setAttribute('role', 'status');
       think.setAttribute('aria-label', 'Citta is thinking');
-      thinkDelays.forEach((delay) => {
+      [0.136, 0.784, 0.068, 0.716, 0, 0.852, 0.136, 0.784, 0.068, 0.716, 0.205, 0.852, 0.136, 0.784, 0.068, 0.92, 0.205, 0.852, 0.136, 0.784, 0.273, 0.92, 0.205, 0.852, 0.136].forEach((delay) => {
         const dot = document.createElement('span');
         dot.style.animationDelay = `${delay}s`;
         think.appendChild(dot);
       });
-      scroll.appendChild(think);
+      const label = document.createElement('span');
+      label.textContent = 'Thinking';
+      asst.append(think, label);
+      scroll.appendChild(asst);
     }
     setTimeout(() => {
-      think?.remove();
-      scroll.appendChild(asst);
+      fillReply();
+      if (!blue) scroll.appendChild(asst);
       scroll.scrollTop = scroll.scrollHeight;
       syncCittaScrollFade();
     }, blue ? 1500 : 220);
