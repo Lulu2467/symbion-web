@@ -2618,6 +2618,30 @@
   .citta-panel .asst-card a:hover,
   .citta-panel .asst-card .act-link:hover { color: var(--green); text-decoration: none; }
   .citta-panel .asst-card .act-link .ico-ne { color: inherit; }
+  html[data-theme="blue"] .think-dots {
+    align-self: flex-start;
+    display: grid;
+    grid-template-columns: repeat(5, 5px);
+    gap: 4px;
+    width: max-content;
+    margin: 2px 0;
+    padding: 0;
+  }
+  html[data-theme="blue"] .think-dots span {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: think-drift 1.36s linear infinite;
+  }
+  @keyframes think-drift {
+    0%, 100% { opacity: 0.16; }
+    14% { opacity: 1; }
+    30% { opacity: 0.28; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html[data-theme="blue"] .think-dots span { animation: none; opacity: 0.45; }
+  }
   .citta-panel .run-hd { font-size: 10px; font-weight: 700; letter-spacing: .08em; color: var(--faint); margin: 4px 0 2px; }
   .citta-panel .run-list { display: flex; flex-direction: column; gap: 8px; }
   .citta-run { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; background: #fff; }
@@ -4333,12 +4357,27 @@
       btn.innerHTML = `${reply.link}<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span>`;
       asst.appendChild(btn);
     }
-    // Brief beat so send feels like a turn, not instant paint.
+    const blue = document.documentElement.dataset.theme === 'blue';
+    const thinkDelays = [0.136, 0.784, 0.068, 0.716, 0, 0.852, 0.136, 0.784, 0.068, 0.716, 0.205, 0.852, 0.136, 0.784, 0.068, 0.92, 0.205, 0.852, 0.136, 0.784, 0.273, 0.92, 0.205, 0.852, 0.136];
+    let think = null;
+    if (blue) {
+      think = document.createElement('div');
+      think.className = 'think-dots';
+      think.setAttribute('role', 'status');
+      think.setAttribute('aria-label', 'Citta is thinking');
+      thinkDelays.forEach((delay) => {
+        const dot = document.createElement('span');
+        dot.style.animationDelay = `${delay}s`;
+        think.appendChild(dot);
+      });
+      scroll.appendChild(think);
+    }
     setTimeout(() => {
+      think?.remove();
       scroll.appendChild(asst);
       scroll.scrollTop = scroll.scrollHeight;
       syncCittaScrollFade();
-    }, 220);
+    }, blue ? 1500 : 220);
 
     scroll.scrollTop = scroll.scrollHeight;
     syncCittaScrollFade();
