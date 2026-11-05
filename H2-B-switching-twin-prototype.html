@@ -3560,7 +3560,7 @@
             <div class="screen" id="tail-home" data-tail="home">
             <section class="week-tools-panel" id="sec-tools-week">
               <div class="week-tools-hd">
-                <h3><span class="tools-title-week">Your tools this week</span><span class="tools-title-usual">Most used tools</span></h3>
+                <h3><span class="tools-title-week">Your tools this week</span><span class="tools-title-usual">Quick start</span></h3>
                 <span class="badge">2 of 5 tried</span>
                 <span class="sp"></span>
                 <button type="button" class="week-tools-close" data-dismiss-week-tools aria-label="Dismiss"></button>
@@ -4856,7 +4856,7 @@
     composer.classList.toggle('has-cases', show);
     if (!show) return;
     const meta = COMPOSER_TOOL_META[selectedComposerTool];
-    $('composerCasesK').textContent = `${meta?.label || 'Tool'} examples`;
+    $('composerCasesK').textContent = `Start with ${meta?.label || 'a tool'}`;
     const row = $('composerCasesRow');
     row.replaceChildren();
     cases.forEach(([name, prompt, kind]) => {
