@@ -2082,6 +2082,7 @@
   .dock.is-dragging { cursor: grabbing; transition: none; box-shadow: 0 10px 28px rgba(var(--ink-rgb),.18); z-index: 80; }
   .dock.is-placed { right: auto !important; bottom: auto !important; }
   html[data-theme="blue"] .dock:not(.is-placed) { top: auto; bottom: 24px; }
+  html[data-theme="blue"] .dock .count { display: none; }
   /* Resting positions: left/right edges only (chat-widget style). */
   .dock .dock-av { width: 32px; height: 32px; border-radius: 9px; object-fit: cover; display: block; flex: none; pointer-events: none; -webkit-user-drag: none; user-drag: none; user-select: none; -webkit-user-select: none; }
   .dock .count { position: absolute; left: 28.5px; top: -5.5px; width: 18px; height: 18px; border-radius: 9px; background: var(--green); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; pointer-events: none; user-select: none; }
