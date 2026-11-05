@@ -3767,6 +3767,22 @@
     text-align: left;
   }
   .dir-card:hover { border-color: #d5d8dc; box-shadow: 0 4px 14px rgba(0, 0, 0, .06); }
+  .dir-summon {
+    display: none;
+    flex: none;
+    margin-left: auto;
+    height: 24px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: #1a1d21;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+    align-items: center;
+  }
+  .dir-card:hover .dir-summon,
+  .dir-card:focus-visible .dir-summon { display: inline-flex; }
   .dir-head { display: flex; gap: 12px; align-items: flex-start; min-width: 0; }
   .dir-av {
     width: 48px;
@@ -3782,7 +3798,13 @@
     place-items: center;
   }
   .dir-av img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .dir-copy { min-width: 0; }
+  .dir-copy { flex: 1; min-width: 0; }
+  .dir-card:hover .dir-copy b,
+  .dir-card:focus-visible .dir-copy b {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   .dir-copy b {
     display: block;
     font-size: 15px;
@@ -8642,7 +8664,10 @@
       const small = document.createElement('small');
       small.textContent = p.blurb;
       copy.append(nm, small);
-      head.append(av, copy);
+      const summon = document.createElement('span');
+      summon.className = 'dir-summon';
+      summon.textContent = '召唤';
+      head.append(av, copy, summon);
       const tags = document.createElement('span');
       tags.className = 'dir-tags';
       p.tags.forEach((tag) => {
@@ -8712,6 +8737,11 @@
     if (sort) {
       dirSort = sort.dataset.dirSort;
       renderDir();
+      return;
+    }
+    const summon = e.target.closest('.dir-summon');
+    if (summon) {
+      showToastMsg('召唤 · ' + summon.closest('.dir-card').dataset.dirName);
       return;
     }
     const card = e.target.closest('.dir-card');
