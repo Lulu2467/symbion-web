@@ -157,11 +157,12 @@
   }
   html[data-theme="blue"] .frame.citta-open .citta-panel { transform: none; }
   .osbar-nav { display: none; }
-  html[data-theme="blue"] .osbar-nav { display: inline-flex; align-items: center; gap: 2px; flex: none; }
+  html[data-theme="blue"] .osbar-nav { display: inline-flex; align-items: center; gap: 4px; flex: none; }
   html[data-theme="blue"] .osbar-cosmo { display: none; }
   html[data-theme="blue"] .osbar-nav-btn { width: 28px; height: 28px; padding: 0; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; color: #5f6368; }
   html[data-theme="blue"] .osbar-nav-btn:hover { background: #ececee; color: #1f1f1f; }
   .osbar-folder { position: relative; display: inline-flex; align-items: center; gap: 16px; flex: none; }
+  html[data-theme="blue"] .osbar-folder { margin-left: -8px; }
   .osbar-folder-btn { display: none; }
   .osbar-folder-menu { display: contents; }
   html[data-theme="blue"] .osbar-folder-btn { display: inline-flex; }
@@ -260,8 +261,6 @@
     100% { opacity: 0; }
   }
   html[data-theme="blue"] .osbar .osbar-ico { width: 16px; height: 16px; }
-  html[data-theme="blue"] .osbar-nav-btn[data-osbar="reload"] .osbar-ico { width: 17px; height: 17px; }
-  html[data-theme="blue"] .osbar-folder-btn .osbar-ico { width: 17px; height: 17px; }
   html[data-theme="blue"] .osbar .osbar-bm,
   html[data-theme="blue"] .osbar .osbar-app,
   html[data-theme="blue"] .osbar .osbar-cosmo-btn { font-size: 13px; }
@@ -3235,8 +3234,8 @@
 
       <div class="osbar" aria-label="Bookmarks and applications">
         <div class="osbar-nav" aria-label="Browser">
-          <button type="button" class="osbar-nav-btn" aria-label="Home" data-osbar="home"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z"/></svg></button>
-          <button type="button" class="osbar-nav-btn" aria-label="Reload" data-osbar="reload"><svg class="osbar-ico" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M864 480c-17.6 0-32 14.4-32 32 0 85.44-33.28 165.76-93.76 226.24C677.76 798.72 597.44 832 512 832s-165.76-33.28-226.24-93.76C225.28 677.76 192 597.44 192 512s33.28-165.76 93.76-226.24A317.824 317.824 0 0 1 512 192c70.08 0 136.32 22.72 191.36 64h-52.16c-17.6 0-32 14.4-32 32s14.4 32 32 32h128c17.6 0 32-14.4 32-32V160c0-17.6-14.4-32-32-32s-32 14.4-32 32v48.96C680 156.48 598.4 128 512 128c-102.4 0-199.04 40-271.68 112.32C168 312.96 128 409.28 128 512s40 199.04 112.32 271.68C312.96 856 409.6 896 512 896s199.04-40 271.68-112.32C856 711.04 896 614.72 896 512c0-17.6-14.4-32-32-32z"/></svg></button>
+          <button type="button" class="osbar-nav-btn" aria-label="Home" data-osbar="home"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.25 12 4l8 6.25V19.25a.75.75 0 0 1-.75.75H15.5v-5.5h-7V20H4.75A.75.75 0 0 1 4 19.25V10.25z"/></svg></button>
+          <button type="button" class="osbar-nav-btn" aria-label="Reload" data-osbar="reload"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.2-5.6M20 4v5h-5"/></svg></button>
         </div>
         <div class="osbar-tabs" aria-label="Tabs"></div>
         <button type="button" class="osbar-nav-btn osbar-plus" aria-label="New" data-osbar="new"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
@@ -3245,7 +3244,7 @@
           <button type="button" class="osbar-book-mgr" aria-label="Manage bookmarks" data-osbar="bookmarks"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 6 4 14M12 6v14M8 8v12M4 4v16"/></svg></button>
         </div>
         <div class="osbar-folder">
-          <button type="button" class="osbar-nav-btn osbar-folder-btn" aria-label="Bookmarks" aria-haspopup="menu" aria-expanded="false"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7.5A1.5 1.5 0 0 1 5.5 6H9l2 2h7.5A1.5 1.5 0 0 1 20 9.5v8a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5v-10z"/></svg></button>
+          <button type="button" class="osbar-nav-btn osbar-folder-btn" aria-label="Bookmarks" aria-haspopup="menu" aria-expanded="false"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h5l2 2.2h9v12.05a1.25 1.25 0 0 1-1.25 1.25H5.25A1.25 1.25 0 0 1 4 18.25V4z"/></svg></button>
           <div class="osbar-folder-menu" role="menu" aria-label="Bookmarks">
             <button type="button" class="osbar-bm" role="menuitem" aria-label="Open Scholar" data-osbar="scholar"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 9 12 4 2 9l10 5 10-5Zm-17 3v5c0 1.5 3 3 7 3s7-1.5 7-3v-5M22 9v6"/></svg><span>Scholar</span></button>
             <button type="button" class="osbar-bm" role="menuitem" aria-label="Open arXiv" data-osbar="arxiv"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7l-5-5Zm-1 0v5h5M8 13h8M8 17h6M8 9h2"/></svg><span>arXiv</span></button>
