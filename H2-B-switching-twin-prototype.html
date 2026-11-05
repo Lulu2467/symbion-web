@@ -3929,7 +3929,7 @@
   .row.on .dot { border-color: #e8e8e8; }
   .slug-btn { flex: none; border: 0; background: var(--green-tint); color: var(--green-dark); border-radius: 999px; padding: 0 6px; font-size: 11px; font-weight: 650; line-height: 18px; }
   .slug-btn.on { background: var(--green); color: #fff; }
-  .head-face { position: relative; width: 40px; height: 40px; flex: none; overflow: visible; background: none; }
+  .head-face { position: relative; width: 36px; height: 36px; flex: none; overflow: visible; background: none; }
   .req-badge { position: absolute; top: -5px; right: -5px; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px; background: var(--green); color: #fff; font-size: 10px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; border: 2px solid #fff; }
   .subline { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
   .num-btn { border: 0; color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: .04em; }
@@ -3937,24 +3937,29 @@
   .empty { margin: 18px 12px; font-size: 13px; line-height: 1.45; color: var(--muted); }
 
   .thread { flex: 1; min-width: 0; display: flex; flex-direction: column; min-height: 0; background: var(--canvas); }
-  .thread-head { flex: none; display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: #fff; border-bottom: 1px solid var(--line); }
-  .thread-head h2 { margin: 0; font-size: 16px; font-weight: 600; }
+  .thread-head { flex: none; display: flex; align-items: center; gap: 10px; padding: 10px 12px 10px 16px; background: #fff; border-bottom: 1px solid var(--line); }
+  .thread-head h2 { margin: 0; font-size: 16px; font-weight: 500; color: #1f1f1f; }
   .thread-head p, .from { margin: 2px 0 0; font-size: 12px; color: var(--muted); }
-  .from { color: var(--green-dark); font-weight: 600; }
-  .head-actions { margin-left: auto; display: flex; gap: 6px; }
+  .from { color: var(--green-dark); font-weight: 500; }
+  .head-actions { margin-left: auto; display: flex; gap: 2px; }
+  .thread-head .icon-btn { border: 0; background: transparent; color: #5f6368; }
+  .thread-head .icon-btn:hover, .thread-head .icon-btn[aria-expanded="true"], .thread-head .icon-btn[aria-pressed="true"] { border: 0; background: #d4e4ee; color: #1f1f1f; }
+  .head-face .mosaic, .head-face .av { width: 36px; height: 36px; border-radius: 4px; border: 0; }
   .chat-search { display: flex; gap: 8px; align-items: center; padding: 8px 16px; background: #fff; border-bottom: 1px solid var(--line); }
   .chat-search input { flex: 1; border: 0; background: var(--surface); border-radius: 999px; padding: 8px 12px; font-size: 13px; outline: none; }
-  .announce { display: flex; flex-direction: column; align-items: stretch; gap: 2px; width: calc(100% - 32px); margin: 12px 16px 0; padding: 10px 12px; border-radius: 12px; background: var(--green-mist); border: 1px solid var(--green-line); text-align: left; color: var(--ink); }
-  .announce b { font-size: 11px; letter-spacing: .04em; color: var(--green-dark); font-weight: 650; }
+  .announce { display: flex; flex-direction: column; align-items: stretch; gap: 2px; width: auto; margin: 0; padding: 8px 16px; border-radius: 0; background: var(--surface); border: 0; border-bottom: 1px solid var(--line); text-align: left; color: var(--ink); }
+  .announce b { font-size: 12px; letter-spacing: 0; color: var(--green-dark); font-weight: 500; }
   .announce span { min-width: 0; font-size: 13px; line-height: 1.4; color: var(--ink); }
   .announce.clip span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .log { flex: 1; overflow: auto; padding: 16px 20px 8px; display: flex; flex-direction: column; gap: 14px; }
-  .sys { align-self: center; max-width: 440px; margin: 0; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,.7); color: var(--muted); font-size: 12px; line-height: 1.4; text-align: center; }
-  .msg { display: flex; gap: 8px; align-items: flex-start; max-width: 100%; }
+  .log { flex: 1; overflow: auto; padding: 16px 16px 8px; display: flex; flex-direction: column; gap: 16px; background: #fff; }
+  .stamp { align-self: center; margin: 2px 0; font-size: 12px; font-weight: 400; color: var(--label); }
+  .sys { align-self: center; max-width: 440px; margin: 0; padding: 2px 8px; border-radius: 0; background: transparent; color: var(--label); font-size: 12px; line-height: 1.4; text-align: center; }
+  .msg { display: flex; gap: 10px; align-items: flex-start; max-width: 100%; }
   .msg.mine { flex-direction: row-reverse; }
   .msg-col { display: flex; flex-direction: column; gap: 4px; max-width: min(68%, 460px); position: relative; }
   .msg.mine .msg-col { align-items: flex-end; }
-  .msg-name { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--muted); }
+  .msg-name { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 400; color: var(--label); }
+  .log .av { width: 36px; height: 36px; border-radius: 4px; font-size: 11px; }
   .tag { font-size: 10px; font-weight: 650; letter-spacing: .02em; padding: 1px 6px; border-radius: 999px; background: var(--green-tint); color: var(--green-dark); }
   .tag.admin { background: var(--amber-tint); color: var(--amber); }
   .tag.owner { background: var(--blue-tint); color: var(--blue); }
@@ -3977,7 +3982,7 @@
   .act:hover { color: var(--green-dark); border-color: var(--green-line); }
   mark { background: var(--amber-tint); color: inherit; border-radius: 2px; }
   .person:hover, .av:hover { box-shadow: 0 0 0 2px var(--green-line); }
-  .row:hover .mosaic, .row.on .mosaic, .mosaic:hover { box-shadow: none; border-color: var(--line); }
+  .row:hover .mosaic, .row.on .mosaic, .mosaic:hover, .log .av:hover, .panel .av:hover { box-shadow: none; border-color: var(--line); }
   .log .av { cursor: pointer; }
 
   .composer { flex: none; padding: 8px 16px 16px; }
@@ -4001,32 +4006,44 @@
   .emoji button:hover { background: var(--green-mist); }
   .thread { position: relative; }
 
-  .panel { width: 300px; flex: none; border-left: 1px solid var(--line); background: #fff; overflow: auto; padding: 16px 16px 28px; }
-  .panel h3 { margin: 0 0 4px; font-size: 15px; font-weight: 600; }
-  .panel .lead { margin: 0 0 12px; font-size: 12px; line-height: 1.45; color: var(--muted); }
-  .members { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px 6px; margin: 8px 0 16px; }
-  .member { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; }
-  .member span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; color: var(--muted); }
-  .block { padding: 12px 0; border-top: 1px solid var(--line); }
+  .panel { width: 280px; flex: none; border-left: 1px solid var(--line); background: #fff; overflow: auto; padding: 0 0 20px; }
+  .panel h3 { margin: 0; font-size: 15px; font-weight: 500; }
+  .panel .lead { margin: 4px 0 0; font-size: 12px; line-height: 1.45; color: var(--muted); }
+  .panel .search { margin: 12px 16px 4px; border-radius: 6px; background: var(--surface); }
+  .members { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px 6px; margin: 8px 0 4px; padding: 4px 12px 12px; }
+  .member { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 0; background: transparent; border: 0; padding: 0; }
+  .members .av { width: 46px; height: 46px; border-radius: 6px; font-size: 13px; }
+  .member span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; font-weight: 400; color: var(--muted); }
+  .wx-field { display: block; padding: 12px 16px; border-top: 1px solid var(--line); }
+  .wx-field .k { display: block; font-size: 14px; font-weight: 400; color: var(--ink); }
+  .wx-field .v { display: block; margin-top: 4px; font-size: 13px; line-height: 1.45; color: var(--muted); }
+  .wx-field .v p { margin: 0; }
+  .manage-list { padding: 0 8px 8px; }
+  .panel-note { margin: 0; padding: 0 16px 12px; font-size: 12px; line-height: 1.45; color: var(--label); }
+  .block { padding: 12px 16px; border-top: 1px solid var(--line); }
+  .panel > h3, .panel .mhead { padding: 16px 16px 0; }
+  .panel > .lead { padding: 0 16px 8px; }
   .block h4 { margin: 0 0 6px; font-size: 12px; font-weight: 650; letter-spacing: .04em; color: var(--faint); }
   .block p { margin: 0; font-size: 13px; line-height: 1.45; }
   .file-row { width: 100%; display: flex; gap: 8px; align-items: center; text-align: left; padding: 8px 0; }
   .file-row i { width: 32px; height: 32px; border-radius: 8px; background: var(--blue-tint); color: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; font-style: normal; flex: none; }
   .file-row b { display: block; font-size: 13px; font-weight: 600; }
   .file-row small { color: var(--muted); font-size: 12px; }
-  .rowline { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); font-size: 14px; }
+  .rowline { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-top: 1px solid var(--line); font-size: 14px; color: var(--ink); }
   .switch { width: 36px; height: 22px; border-radius: 999px; background: var(--line-strong); position: relative; flex: none; }
   .switch[aria-pressed="true"] { background: var(--green); }
   .switch i { position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: #fff; transition: transform .15s; }
   .switch[aria-pressed="true"] i { transform: translateX(14px); }
-  .nick { display: flex; flex-direction: column; gap: 6px; padding: 10px 0; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
-  .nick input, .field input { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; font-size: 14px; outline: none; background: #fff; }
+  .nick { display: flex; flex-direction: column; gap: 4px; padding: 12px 16px; border-top: 1px solid var(--line); font-size: 14px; font-weight: 400; color: var(--ink); }
+  .nick input { border: 0; border-radius: 0; padding: 0; font-size: 13px; color: var(--muted); outline: none; background: transparent; }
+  .nick input:focus { color: var(--ink); }
+  .field input { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; font-size: 14px; outline: none; background: #fff; }
   .nick input:focus, .field input:focus { border-color: var(--green-line); }
   .code { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
   .code b { letter-spacing: .08em; font-size: 14px; }
   .text-btn { font-size: 13px; font-weight: 600; color: var(--green-dark); }
-  .danger { margin-top: 8px; font-size: 13px; font-weight: 600; color: var(--muted); }
-  .danger:hover { color: var(--ink); }
+  .panel .danger { display: block; width: 100%; margin: 0; padding: 14px 16px; border-top: 1px solid var(--line); text-align: center; font-size: 14px; font-weight: 400; color: var(--muted); }
+  .panel .danger:hover { color: var(--ink); }
   .who-card .av { width: 56px; height: 56px; border-radius: 28px; font-size: 16px; }
 
   .modal { position: absolute; inset: 0; z-index: 20; background: rgba(28, 31, 29, .28); display: flex; align-items: center; justify-content: center; padding: 24px; }
@@ -4114,32 +4131,50 @@
   #teamHost .acct { position: relative; }
   #teamHost .acct .p { width: 28px; height: 28px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); font-size: 9px; font-weight: 700; }
   #teamHost .bubble {
-    padding: 12px 14px;
+    padding: 8px 10px;
     border: 1px solid transparent;
-    border-radius: 14px 14px 14px 4px;
+    border-radius: 4px;
     background: #eef1ef;
     border-color: #eef1ef;
     color: var(--ink);
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.45;
   }
   #teamHost .msg.mine .bubble {
-    border-radius: 14px 14px 4px 14px;
+    border-radius: 4px;
     background: var(--green-bubble);
     border-color: var(--green-bubble);
     color: #fff;
   }
-  #teamHost .box { align-items: center; }
+  #teamHost .composer { padding: 0; }
+  #teamHost .box {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    padding: 8px 12px 8px;
+    border: 0;
+    border-radius: 0;
+    border-top: 1px solid var(--line);
+    box-shadow: none;
+    background: #fff;
+  }
+  #teamHost .box-bar { display: flex; align-items: center; gap: 2px; }
+  #teamHost .box-bar .icon-btn { border: 0; background: transparent; color: #5f6368; }
+  #teamHost .box-bar .icon-btn:hover, #teamHost .box-bar .icon-btn[aria-expanded="true"] { border: 0; background: #d4e4ee; color: #1f1f1f; }
+  #teamHost .box-bar .send { margin-left: auto; width: 32px; height: 28px; border-radius: 4px; background: #e6e8eb; color: #6b7076; }
+  #teamHost .box-bar .send:hover { background: #dadde1; }
+  #teamHost .box-bar .send.is-ready { background: var(--green); color: #fff; }
+  #teamHost .box-bar .send.is-ready:hover { background: var(--green-dark); }
   #teamHost .box textarea {
     display: block;
-    flex: 1;
-    width: auto;
+    flex: none;
+    width: 100%;
     margin: 0;
-    padding: 0;
+    padding: 6px 2px;
     border: 0;
-    height: 22px;
-    min-height: 22px;
-    max-height: 120px;
+    height: 36px;
+    min-height: 36px;
+    max-height: 96px;
     line-height: 22px;
     font-size: 14px;
     font-family: inherit;
@@ -4926,11 +4961,13 @@
             <button type="button" class="icon-btn" id="quoteClear" aria-label="Cancel reply">×</button>
           </div>
           <div class="box">
-            <button type="button" class="icon-btn" id="emojiBtn" aria-label="Emoji" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M8.5 13.5s1.2 2 3.5 2 3.5-2 3.5-2M9 9.5h.01M15 9.5h.01"/></svg></button>
-            <button type="button" class="icon-btn" id="atBtn" aria-label="Mention"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M16 12v1.2a2 2 0 0 0 4 0V12a8 8 0 1 0-3.2 6.4"/></svg></button>
-            <button type="button" class="icon-btn" id="fileBtn" aria-label="Send a file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H7.5A1.5 1.5 0 0 0 6 4.5v15A1.5 1.5 0 0 0 7.5 21h9a1.5 1.5 0 0 0 1.5-1.5V8L14 3z"/><path d="M14 3v5h5"/></svg></button>
-            <textarea id="compose" rows="1" placeholder="Message the group" aria-label="Message"></textarea>
-            <button type="submit" class="send" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+            <textarea id="compose" rows="1" placeholder="Message" aria-label="Message"></textarea>
+            <div class="box-bar">
+              <button type="button" class="icon-btn" id="emojiBtn" aria-label="Emoji" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M8.5 13.5s1.2 2 3.5 2 3.5-2 3.5-2M9 9.5h.01M15 9.5h.01"/></svg></button>
+              <button type="button" class="icon-btn" id="atBtn" aria-label="Mention"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M16 12v1.2a2 2 0 0 0 4 0V12a8 8 0 1 0-3.2 6.4"/></svg></button>
+              <button type="button" class="icon-btn" id="fileBtn" aria-label="Send a file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H7.5A1.5 1.5 0 0 0 6 4.5v15A1.5 1.5 0 0 0 7.5 21h9a1.5 1.5 0 0 0 1.5-1.5V8L14 3z"/><path d="M14 3v5h5"/></svg></button>
+              <button type="submit" class="send" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+            </div>
           </div>
         </form>
         <input id="file" type="file" hidden>
@@ -10064,9 +10101,14 @@ function renderList() {
 }
 function qActive() { return state.query.trim().length > 0; }
 
+function syncTeamSend() {
+  const btn = teamRoot.querySelector('#composer .send');
+  if (!btn) return;
+  btn.classList.toggle('is-ready', $('compose').value.trim().length > 0);
+}
 function renderChrome() {
   const c = current();
-  $('title').textContent = c.name;
+  $('title').textContent = c.kind === 'group' ? `${c.name} (${c.members.length})` : c.name;
   const faceEl = $('headFace');
   faceEl.hidden = false;
   if (c.kind === 'group') {
@@ -10075,7 +10117,7 @@ function renderChrome() {
     faceEl.setAttribute('aria-label', n ? `${n} ${n === 1 ? 'request' : 'requests'} to review` : 'Group details');
     const slug = c.slug ? `<button type="button" class="slug-btn" data-slug-filter="${esc(c.slug)}">${esc(c.slug)}</button>` : '';
     $('sub').hidden = false;
-    $('sub').innerHTML = `<span>${c.members.length} people</span><button type="button" class="num-btn" data-copy-number="${esc(c.number)}">${esc(c.number)}</button>${slug}`;
+    $('sub').innerHTML = `<button type="button" class="num-btn" data-copy-number="${esc(c.number)}">${esc(c.number)}</button>${slug}`;
     $('back').hidden = true;
     $('announce').hidden = !c.announce;
     $('announce').classList.toggle('clip', !state.announceOpen);
@@ -10096,7 +10138,8 @@ function renderChrome() {
   $('infoBtn').setAttribute('aria-pressed', state.panel ? 'true' : 'false');
   $('searchBtn').setAttribute('aria-pressed', state.chatSearch ? 'true' : 'false');
   $('chatSearch').hidden = !state.chatSearch;
-  $('compose').placeholder = `Message ${c.name}`;
+  $('compose').placeholder = 'Message';
+  syncTeamSend();
   const q = state.quote && findMessage(c, state.quote);
   $('quoteBar').hidden = !q;
   if (q) {
@@ -10116,6 +10159,7 @@ function renderLog(scroll) {
     $('log').innerHTML = `<p class="sys">${q ? 'Nothing in this chat matches.' : 'No messages yet'}</p>`;
     return;
   }
+  const stampAt = c.time ? [...list].reverse().find((m) => !m.sys) : null;
   $('log').innerHTML = list.map((m) => {
     if (m.sys) return `<p class="sys" id="msg-${m.id}">${esc(m.sys)}</p>`;
     const mine = m.who === ME;
@@ -10127,8 +10171,9 @@ function renderLog(scroll) {
     const quote = ref ? `<button type="button" class="qref" data-jump="${ref.id}"><b>${esc(ref.who ? person(ref.who).name : '')}</b><span>${esc(ref.file ? ref.file.name : (ref.text || ''))}</span></button>` : '';
     const file = m.file ? `<button type="button" class="filechip" data-file="${esc(m.file.name)}"><i>${esc(m.file.name.split('.').pop().toUpperCase())}</i><span><b>${esc(m.file.name)}</b><small>${esc(m.file.size)}</small></span></button>` : '';
     const text = m.text ? `<div>${linkMentions(m.text)}</div>` : '';
-    return `<div class="msg${mine ? ' mine' : ''}" id="msg-${m.id}">
-      <button type="button" class="av sm hue-${p.hue}" data-person="${m.who}" aria-label="${esc(p.name)}">${esc(p.short)}</button>
+    const stamp = m === stampAt ? `<p class="stamp">${esc(c.time)}</p>` : '';
+    return `${stamp}<div class="msg${mine ? ' mine' : ''}" id="msg-${m.id}">
+      <button type="button" class="av hue-${p.hue}" data-person="${m.who}" aria-label="${esc(p.name)}">${esc(p.short)}</button>
       <div class="msg-col">${name}<div class="bubble">${quote}${file}${text}</div><button type="button" class="act" data-reply="${m.id}">Reply</button></div>
     </div>`;
   }).join('');
@@ -10137,6 +10182,29 @@ function renderLog(scroll) {
 
 function nameInitials(name) {
   return String(name || '').split(/\s+/).map((w) => w[0] || '').join('').toLowerCase();
+}
+function filteredMembers(c) {
+  const q = state.memberQ.trim().toLowerCase();
+  return c.members.filter((id) => {
+    if (!q) return true;
+    const p = people[id];
+    return p.name.toLowerCase().includes(q) || nameInitials(p.name).includes(q);
+  });
+}
+function memberPane(c) {
+  const ids = filteredMembers(c);
+  if (!ids.length) return `<p class="lead">No matching members.</p>`;
+  const open = c.membersOpen !== false;
+  const shown = open ? ids : ids.slice(0, 8);
+  const cells = shown.map((id) => {
+    const p = people[id];
+    const self = id === ME;
+    const attrs = self || p.agent ? 'disabled' : `data-person="${id}"`;
+    return `<button type="button" class="member" ${attrs}><span class="av hue-${p.hue}">${esc(p.short)}</span><span>${esc(self ? 'You' : p.name.split(' ')[0])}</span></button>`;
+  }).join('');
+  const more = !open && ids.length > 8 ? `<button type="button" class="member" data-toggle-members><span class="av hue-slate">+</span><span>More</span></button>` : '';
+  const manage = canManage(c) && open ? `<div class="manage-list">${memberItems(c)}</div>` : '';
+  return `<div class="members">${cells}${more}</div>${manage}`;
 }
 function memberItems(c) {
   const q = state.memberQ.trim().toLowerCase();
@@ -10197,18 +10265,16 @@ function renderPanel() {
   const linkRows = (c.links || []).map((ln) => `<div class="invite"><b>Link</b><small>${ln.status === 'revoked' ? 'Revoked' : 'Active'}</small>
     <div class="rowline">${ln.status !== 'revoked' ? `<button type="button" class="mini" data-preview-link="${ln.id}">Preview</button><button type="button" class="mini" data-copy-invite="${ln.id}">Copy invitation</button><button type="button" class="mini" data-revoke-link="${ln.id}">Revoke</button>` : `<button type="button" class="mini" data-delete-record="${ln.id}">Delete record</button>`}</div></div>`).join('');
   $('panel').innerHTML = `
-    <h3>${esc(c.name)}</h3>
-    <p class="lead">${esc(c.description || 'No description yet.')}</p>
-    <div class="block code"><div><h4>GROUP NUMBER</h4><b>${esc(c.number)}</b></div><button type="button" class="text-btn" data-copy-number="${esc(c.number)}">Copy</button></div>
-    <p class="lead">This number stays fixed if the name, slug, or invites change.</p>
-    <div class="block"><h4>GROUP SLUG</h4><p>${slugBtn}</p></div>
-    ${manage ? '<button type="button" class="mini" data-edit-details>Edit details</button>' : ''}
-    <div class="block">
-      <div class="mhead">${manage ? `<button type="button" class="text-btn" data-toggle-members aria-expanded="${c.membersOpen !== false}">${c.membersOpen === false ? 'Expand' : 'Collapse'} · Members ${c.members.length}</button>` : `<h4>MEMBERS · ${c.members.length}</h4>`}</div>
-      ${!manage || c.membersOpen !== false ? `<label class="search"><input id="memberQ" type="search" placeholder="Search members" value="${esc(state.memberQ)}" aria-label="Search members"></label><div id="memberList">${memberItems(c)}</div>` : ''}
-    </div>
-    <div class="block"><h4>ANNOUNCEMENT</h4><p>${c.announce ? esc(c.announce) : 'No announcement yet.'}</p></div>
-    <div class="block"><h4>FILES</h4>${files.length ? files.map((m) => `<button type="button" class="file-row" data-file="${esc(m.file.name)}"><i>${esc(m.file.name.split('.').pop().toUpperCase())}</i><span><b>${esc(m.file.name)}</b><small>${esc(m.file.size)} · ${esc(firstName(m.who))}</small></span></button>`).join('') : '<p>No files yet.</p>'}</div>
+    <label class="search"><input id="memberQ" type="search" placeholder="Search members" value="${esc(state.memberQ)}" aria-label="Search members"></label>
+    <div id="memberList">${memberPane(c)}</div>
+    <div class="wx-field"><span class="k">Group name</span><span class="v">${esc(c.name)}</span></div>
+    <div class="wx-field"><span class="k">Announcement</span><span class="v">${c.announce ? esc(c.announce) : 'No announcement yet.'}</span></div>
+    <div class="wx-field"><span class="k">Description</span><span class="v">${esc(c.description || 'No description yet.')}</span></div>
+    <div class="wx-field"><span class="k">Group number</span><span class="v"><button type="button" class="num-btn" data-copy-number="${esc(c.number)}">${esc(c.number)}</button></span></div>
+    <p class="panel-note">This number stays fixed if the name, slug, or invites change.</p>
+    <div class="wx-field"><span class="k">Group slug</span><span class="v">${slugBtn}</span></div>
+    ${manage ? '<div class="wx-field"><button type="button" class="text-btn" data-edit-details>Edit details</button></div>' : ''}
+    <div class="wx-field"><span class="k">Files</span><span class="v">${files.length ? files.map((m) => `<button type="button" class="file-row" data-file="${esc(m.file.name)}"><i>${esc(m.file.name.split('.').pop().toUpperCase())}</i><span><b>${esc(m.file.name)}</b><small>${esc(m.file.size)} · ${esc(firstName(m.who))}</small></span></button>`).join('') : 'No files yet.'}</span></div>
     ${switches(c)}
     <label class="nick">My name in this group<input id="nick" value="${esc(c.myName)}" maxlength="32"></label>
     ${manage ? `<div class="block"><h4>DIRECTORY AND JOINING</h4>
@@ -10952,7 +11018,7 @@ $('panel').addEventListener('input', (e) => {
   if (e.target.id === 'memberQ') {
     state.memberQ = e.target.value;
     const box = $('memberList');
-    if (box) box.innerHTML = memberItems(current());
+    if (box) box.innerHTML = memberPane(current());
   }
   if (e.target.classList.contains('email-input') && e.target.closest('#panel')) {
     const i = Number(e.target.dataset.emailIndex);
@@ -11017,7 +11083,7 @@ $('file').addEventListener('change', () => {
 });
 $('quoteClear').addEventListener('click', () => { state.quote = null; renderChrome(); });
 $('composer').addEventListener('submit', (e) => { e.preventDefault(); sendText($('compose').value); });
-$('compose').addEventListener('input', syncMention);
+$('compose').addEventListener('input', () => { syncMention(); syncTeamSend(); });
 $('compose').addEventListener('click', syncMention);
 $('compose').addEventListener('keydown', (e) => {
   if (state.mention !== null && !$('mention').hidden) {
