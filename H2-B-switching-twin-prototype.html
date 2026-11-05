@@ -3396,6 +3396,93 @@
   .fs-root:fullscreen .logo .logo-word,
   .fs-root:-webkit-full-screen .logo .logo-word,
   .fs-root.is-fs .logo .logo-word { font-size: 16px; }
+
+  /* Team lives in this frame. Bubbles match the Citta panel. */
+  .team-app { display: none; }
+  .frame.team-on { display: flex; flex-direction: column; height: 900px; }
+  .frame.team-on .body { flex: 1; min-height: 0; }
+  .frame.team-on .content.hub,
+  .frame.team-on .logo-row,
+  .frame.team-on .proto-rule { display: none !important; }
+  .frame.team-on .main { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+  .frame.team-on .team-app { display: flex; flex: 1; min-height: 0; background: #fff; }
+  .team-top { gap: 10px; }
+  .team-top .who { min-width: 0; }
+  .team-top .who b { display: block; font-size: 16px; font-weight: 600; }
+  .team-top .who small { display: block; margin-top: 2px; font-size: 12px; font-weight: 400; color: var(--muted); }
+  .team-members { margin-left: auto; display: flex; gap: 6px; }
+  .team-members button { width: 28px; height: 28px; border-radius: 999px; border: 1px solid var(--line); background: var(--green-tint); color: var(--green-dark); font-size: 9px; font-weight: 700; cursor: pointer; }
+  .team-empty { margin: auto; color: var(--muted); font-size: 13px; }
+  .team-side { width: 280px; flex: none; border-right: 1px solid var(--line); display: flex; flex-direction: column; min-height: 0; padding: 16px 12px 12px; }
+  .team-side h2 { margin: 0 6px 10px; font-size: 22px; font-weight: 500; letter-spacing: -.3px; }
+  .team-search { display: flex; align-items: center; gap: 8px; margin: 0 4px 10px; background: var(--surface); border-radius: 999px; padding: 8px 12px; }
+  .team-search input { flex: 1; min-width: 0; border: 0; background: transparent; outline: none; font: inherit; font-size: 13px; }
+  .team-rows { flex: 1; min-height: 0; overflow: auto; }
+  .team-row { width: 100%; display: flex; gap: 10px; align-items: center; text-align: left; padding: 8px; border: 0; border-radius: 12px; background: transparent; color: inherit; cursor: pointer; }
+  .team-row:hover { background: rgba(var(--ink-rgb), .04); }
+  .team-row.on { background: var(--green-tint); }
+  .team-row b { display: block; font-size: 14px; font-weight: 600; }
+  .team-row > span:last-child { min-width: 0; flex: 1; }
+  .team-row small { display: block; margin-top: 2px; font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .team-mosaic { width: 36px; height: 36px; border-radius: 10px; display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; background: var(--line); flex: none; }
+  .team-mosaic i { display: flex; align-items: center; justify-content: center; font-style: normal; font-size: 8px; font-weight: 650; background: var(--green-tint); color: var(--green-dark); }
+  .team-mosaic i:only-child { grid-column: 1 / -1; }
+  .team-thread { flex: 1; min-width: 0; display: flex; flex-direction: column; min-height: 0; }
+  .team-top { height: 56px; flex: none; display: flex; align-items: center; padding: 0 16px; border-bottom: 1px solid var(--line); font-size: 16px; font-weight: 600; }
+  .team-scroll { flex: 1; min-height: 0; overflow: auto; padding: 14px 16px 12px; display: flex; flex-direction: column; gap: 12px; }
+  .team-app .user-bubble,
+  .team-app .asst-card {
+    max-width: 92%;
+    font-size: 13px;
+    line-height: 1.45;
+    padding: 12px 14px;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+  }
+  .team-app .user-bubble {
+    align-self: flex-end;
+    background: var(--green-bubble);
+    border-color: var(--green-bubble);
+    color: #fff;
+    border-radius: 14px 14px 4px 14px;
+  }
+  .team-app .asst-card {
+    align-self: flex-start;
+    background: #eef1ef;
+    border-color: #eef1ef;
+    color: var(--ink);
+    border-radius: 14px 14px 14px 4px;
+  }
+  .team-app .asst-card .act-link {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    width: fit-content;
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--link-quiet);
+    text-decoration: none;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+  .team-app .asst-card .act-link .ico-ne { width: 11px; height: 11px; color: inherit; }
+  .team-app .asst-card .act-link:hover { color: var(--green); }
+  .team-compose { flex: none; padding: 10px 14px 14px; }
+  .team-ask {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    border: 1.5px solid var(--chat-frame, #e2e4e7);
+    border-radius: 18px;
+    padding: 10px 10px 10px 14px;
+    background: #fff;
+  }
+  .team-ask textarea { flex: 1; border: 0; resize: none; outline: none; font: inherit; font-size: 14px; line-height: 1.45; min-height: 24px; max-height: 96px; background: transparent; }
+  .team-ask .send { width: 32px; height: 32px; border: 0; border-radius: 999px; background: #d5d8dc; color: #fff; cursor: pointer; flex: none; }
+  .team-ask .send.is-ready { background: var(--green); }
 </style>
 </head>
 <body>
@@ -3459,7 +3546,7 @@
           </div>
           <button type="button" class="r" data-rail="cosmo" aria-label="Cosmo"><svg class="rail-ico rail-ico-spark" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg><span class="rail-lab">Cosmo</span></button>
           <button type="button" class="r" data-rail="post" aria-label="Post"><svg class="rail-ico" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M800 960H224c-52.928 0-96-43.072-96-96V224c0-52.928 43.072-96 96-96h448c17.696 0 32 14.336 32 32s-14.304 32-32 32H224c-17.632 0-32 14.368-32 32v640c0 17.664 14.368 32 32 32h576c17.664 0 32-14.336 32-32V352c0-17.664 14.304-32 32-32s32 14.336 32 32v512c0 52.928-43.072 96-96 96zM511.68 542.72c-8.256 0-16.512-3.168-22.752-9.504-12.416-12.576-12.32-32.832 0.256-45.248L907.488 74.24c12.608-12.448 32.832-12.288 45.248 0.256 12.448 12.576 12.32 32.832-0.256 45.248L534.176 533.472c-6.24 6.176-14.368 9.248-22.496 9.248z" fill="currentColor"/></svg><span class="rail-lab">Post</span></button>
-          <button type="button" class="r" data-rail="community" aria-label="Community"><svg class="rail-ico" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M704 732.8c51.2 0 96-41.6 96-96V224c0-51.2-41.6-96-96-96H156.8c-51.2 0-96 41.6-96 96v412.8c0 51.2 41.6 96 96 96H192v160c0 12.8 9.6 25.6 22.4 32H224c9.6 0 19.2-3.2 25.6-12.8l131.2-179.2H704zM233.6 672c-3.2-3.2-9.6-3.2-12.8-3.2h-64c-16 0-32-12.8-32-32V224c0-16 12.8-32 32-32H704c16 0 32 12.8 32 32v412.8c0 16-12.8 32-32 32H364.8 355.2c-3.2 3.2-3.2 3.2-6.4 3.2s-3.2 3.2-6.4 3.2l-3.2 3.2s-3.2 0-3.2 3.2L256 796.8V704c0-16-9.6-25.6-22.4-32z" fill="currentColor"/><path d="M864 252.8c-19.2 0-32 12.8-32 32s16 32 32 32 32 12.8 32 32v348.8c0 19.2-16 25.6-32 25.6h-32c-19.2 0-32 12.8-32 32v3.2c0 3.2-3.2 6.4-3.2 9.6v60.8l-73.6-57.6c-3.2-3.2-9.6-3.2-16-3.2H544c-19.2 0-32 12.8-32 32s12.8 32 32 32h153.6l115.2 89.6c6.4 3.2 12.8 6.4 19.2 6.4 3.2 0 9.6 0 12.8-3.2 9.6-6.4 19.2-16 19.2-28.8v-108.8c54.4 0 96-38.4 96-89.6V348.8c0-51.2-44.8-96-96-96z" fill="currentColor"/></svg><span class="rail-lab">Community</span></button>
+          <button type="button" class="r" data-rail="community" aria-label="Team"><svg class="rail-ico" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M704 732.8c51.2 0 96-41.6 96-96V224c0-51.2-41.6-96-96-96H156.8c-51.2 0-96 41.6-96 96v412.8c0 51.2 41.6 96 96 96H192v160c0 12.8 9.6 25.6 22.4 32H224c9.6 0 19.2-3.2 25.6-12.8l131.2-179.2H704zM233.6 672c-3.2-3.2-9.6-3.2-12.8-3.2h-64c-16 0-32-12.8-32-32V224c0-16 12.8-32 32-32H704c16 0 32 12.8 32 32v412.8c0 16-12.8 32-32 32H364.8 355.2c-3.2 3.2-3.2 3.2-6.4 3.2s-3.2 3.2-6.4 3.2l-3.2 3.2s-3.2 0-3.2 3.2L256 796.8V704c0-16-9.6-25.6-22.4-32z" fill="currentColor"/><path d="M864 252.8c-19.2 0-32 12.8-32 32s16 32 32 32 32 12.8 32 32v348.8c0 19.2-16 25.6-32 25.6h-32c-19.2 0-32 12.8-32 32v3.2c0 3.2-3.2 6.4-3.2 9.6v60.8l-73.6-57.6c-3.2-3.2-9.6-3.2-16-3.2H544c-19.2 0-32 12.8-32 32s12.8 32 32 32h153.6l115.2 89.6c6.4 3.2 12.8 6.4 19.2 6.4 3.2 0 9.6 0 12.8-3.2 9.6-6.4 19.2-16 19.2-28.8v-108.8c54.4 0 96-38.4 96-89.6V348.8c0-51.2-44.8-96-96-96z" fill="currentColor"/></svg><span class="rail-lab">Team</span></button>
           <button type="button" class="r" data-rail="settings" aria-label="Settings"><svg class="rail-ico" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M512.25928 704c-108.8 0-192-83.2-192-192s83.2-192 192-192 192 83.2 192 192-83.2 192-192 192z m0-320c-70.4 0-128 57.6-128 128s57.6 128 128 128 128-57.6 128-128-57.6-128-128-128z" fill="currentColor"/><path d="M640.25928 1024H384.25928c-19.2 0-32-12.8-32-32v-121.6c-25.6-12.8-51.2-25.6-70.4-38.4l-102.4 64c-12.8 6.4-32 6.4-44.8-12.8l-128-224C-6.14072 640 0.25928 620.8 19.45928 614.4l102.4-64v-76.8l-102.4-64C0.25928 403.2-6.14072 384 6.65928 364.8l128-224c6.4-12.8 25.6-19.2 44.8-6.4l102.4 64c19.2-12.8 44.8-32 70.4-38.4V32c0-19.2 12.8-32 32-32h256c19.2 0 32 12.8 32 32v121.6c25.6 12.8 51.2 25.6 70.4 38.4l102.4-64c12.8-6.4 32-6.4 44.8 12.8l128 224c12.8 19.2 6.4 38.4-12.8 44.8l-102.4 64v76.8l102.4 64c12.8 6.4 19.2 25.6 12.8 44.8l-128 224c-6.4 12.8-25.6 19.2-44.8 12.8l-102.4-64c-19.2 12.8-44.8 32-70.4 38.4V992c0 19.2-12.8 32-32 32z m-224-64h192v-108.8c0-12.8 6.4-25.6 19.2-32 32-12.8 64-32 89.6-51.2 12.8-6.4 25.6-6.4 38.4 0l96 57.6 96-166.4-96-57.6c-12.8-12.8-19.2-25.6-12.8-38.4 0-19.2 6.4-32 6.4-51.2s0-32-6.4-51.2c0-12.8 6.4-25.6 12.8-32l96-57.6-96-166.4-96 57.6c-12.8 6.4-25.6 6.4-38.4 0-25.6-19.2-57.6-38.4-89.6-51.2-12.8-12.8-19.2-25.6-19.2-38.4V64H416.25928v108.8c0 12.8-6.4 25.6-19.2 32-32 12.8-64 32-89.6 51.2-12.8 6.4-25.6 6.4-38.4 0l-96-51.2-96 166.4 96 57.6c12.8 6.4 19.2 19.2 12.8 32 0 19.2-6.4 32-6.4 51.2 0 19.2 0 32 6.4 51.2 6.4 12.8 0 25.6-12.8 32l-96 57.6 96 166.4 96-57.6c12.8-6.4 25.6-6.4 38.4 0 25.6 19.2 57.6 38.4 89.6 51.2 12.8 6.4 19.2 19.2 19.2 32V960z" fill="currentColor"/></svg><span class="rail-lab">Settings</span></button>
           <div class="div" role="presentation"></div>
           <button type="button" class="p" aria-label="Prof. Roland">GR</button><button type="button" class="p" aria-label="王">王</button><button type="button" class="p" aria-label="Prof. Pajer">EP</button><button type="button" class="p" aria-label="Prof. Xu">HX</button>
@@ -4058,6 +4145,23 @@
               </section>
             </div>
           </div>
+          <section class="team-app" id="teamApp" aria-label="Team">
+            <aside class="team-side">
+              <h2>Team</h2>
+              <label class="team-search"><input id="teamSearch" type="search" placeholder="Search" aria-label="Search your groups"></label>
+              <div class="team-rows" id="teamRows"></div>
+            </aside>
+            <section class="team-thread">
+              <header class="team-top" id="teamTop"></header>
+              <div class="team-scroll" id="teamScroll"></div>
+              <form class="team-compose" id="teamCompose">
+                <div class="team-ask">
+                  <textarea id="teamInput" rows="1" placeholder="Message" aria-label="Message"></textarea>
+                  <button type="submit" class="send" id="teamSend" aria-label="Send" disabled>↑</button>
+                </div>
+              </form>
+            </section>
+          </section>
         </div>
 
         <div class="tutorial-doc-view" id="tutorialDocView" hidden aria-hidden="true">
@@ -4774,7 +4878,7 @@
     syncPresenter(s);
   }));
 
-  let screen = 'home', tutorialStep = 1, tutorialDocPhase = null, cittaExpanded = false, newTipSeen = false, postTutorialTipPending = false;
+  let screen = 'home', tutorialStep = 1, tutorialDocPhase = null, cittaExpanded = false, newTipSeen = false, postTutorialTipPending = false, teamOpen = false;
   /** H0 free-browse: coach/spotlight off, stay on tutorial tail so Reminders → Goals remain scrollable. */
   let tutorialExploring = false;
   const frame = $('frame');
@@ -6433,6 +6537,11 @@
     frame.querySelectorAll('.rail .r[data-rail]').forEach((el) => {
       el.addEventListener('click', () => {
         flashEl(el);
+        if (el.dataset.rail === 'community') {
+          openTeam();
+          return;
+        }
+        if (teamOpen) setScreen('home');
         selectRailItem(el.dataset.rail);
       });
     });
@@ -6645,6 +6754,7 @@
   }
 
   function setScreen(next, { step, afterTutorial = false, showTip = false } = {}) {
+    if (teamOpen && next !== 'team') closeTeam();
     screen = next;
     if (next !== 'tutorial') tutorialExploring = false;
     if (next === 'tutorial') {
@@ -7535,6 +7645,150 @@
     openCittaSwitcher();
   });
 
+  const TEAM_ME = 'jess';
+  const teamPeople = {
+    jess: { name: 'Jess', init: 'JE' },
+    maya: { name: 'Maya Chen', init: 'MC' },
+    chris: { name: 'Chris Park', init: 'CP' }
+  };
+  let teamActive = 'hip';
+  let teamQuery = '';
+  const teamChats = [
+    {
+      id: 'hip', kind: 'group', name: 'Heavy-ion Physics', number: '63232877',
+      members: ['jess', 'maya', 'chris'],
+      messages: [
+        { from: 'jess', text: 'Can you also pull quiz answers from the reading?' },
+        { from: 'maya', text: 'Yes — I lined up 3 quiz prompts with short answer keys from the QGP reading notes.', link: 'Open in Deck' },
+        { from: 'jess', text: '创建文件' },
+        { from: 'maya', text: 'Got it — working on “创建文件”. I’ll keep the file open so you can edit as I go.' },
+        { from: 'jess', text: '1212' }
+      ]
+    },
+    { id: 'notes', kind: 'group', name: 'Section notes', number: '63232878', members: ['jess', 'maya'], messages: [] }
+  ];
+
+  function teamEsc(s) {
+    return String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  }
+  function teamPreview(chat) {
+    const last = chat.messages[chat.messages.length - 1];
+    return last ? last.text : 'No messages yet';
+  }
+  function renderTeamList() {
+    const q = teamQuery.trim().toLowerCase();
+    const rows = teamChats.filter((c) => !q || c.name.toLowerCase().includes(q) || (c.number || '').includes(q));
+    const host = $('teamRows');
+    if (!host) return;
+    host.innerHTML = rows.map((c) => {
+      const initials = (c.kind === 'dm' ? [c.with] : c.members.filter((id) => id !== TEAM_ME).slice(0, 4))
+        .map((id) => `<i>${teamEsc(teamPeople[id].init.slice(0, 1))}</i>`).join('');
+      return `<button type="button" class="team-row${c.id === teamActive ? ' on' : ''}" data-team="${c.id}"><span class="team-mosaic">${initials}</span><span><b>${teamEsc(c.name)}</b><small>${teamEsc(teamPreview(c))}</small></span></button>`;
+    }).join('') || '<p class="team-empty">No matching groups</p>';
+  }
+  function renderTeamThread() {
+    const chat = teamChats.find((c) => c.id === teamActive) || teamChats[0];
+    const top = $('teamTop');
+    const scroll = $('teamScroll');
+    if (!chat || !top || !scroll) return;
+    const members = chat.members.filter((id) => id !== TEAM_ME).map((id) => `<button type="button" data-member="${id}" title="Message ${teamEsc(teamPeople[id].name)}">${teamEsc(teamPeople[id].init)}</button>`).join('');
+    top.innerHTML = `<div class="who"><b>${teamEsc(chat.name)}</b><small>${chat.kind === 'group' ? teamEsc(chat.number) : 'Direct message'}</small></div>${chat.kind === 'group' ? `<div class="team-members">${members}</div>` : ''}`;
+    scroll.innerHTML = chat.messages.length ? chat.messages.map((m) => {
+      const mine = m.from === TEAM_ME;
+      const link = m.link ? `<button type="button" class="act-link">${teamEsc(m.link)}<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>` : '';
+      return `<div class="${mine ? 'user-bubble' : 'asst-card'}">${teamEsc(m.text)}${link}</div>`;
+    }).join('') : '<p class="team-empty">No messages yet</p>';
+    scroll.scrollTop = scroll.scrollHeight;
+  }
+  function renderTeam() {
+    renderTeamList();
+    renderTeamThread();
+  }
+  function openDm(pid) {
+    if (!teamPeople[pid] || pid === TEAM_ME) return;
+    let chat = teamChats.find((c) => c.kind === 'dm' && c.with === pid);
+    if (!chat) {
+      chat = { id: `dm-${pid}`, kind: 'dm', with: pid, name: teamPeople[pid].name, members: [TEAM_ME, pid], messages: [] };
+      teamChats.unshift(chat);
+    }
+    teamActive = chat.id;
+    renderTeam();
+  }
+  function markTeamRail() {
+    frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
+      const on = r.dataset.rail === 'community';
+      r.classList.toggle('on', on);
+      if (on) r.setAttribute('aria-current', 'page');
+      else r.removeAttribute('aria-current');
+    });
+  }
+  function openTeam() {
+    teamOpen = true;
+    screen = 'team';
+    applyTheme('blue');
+    frame.classList.add('team-on');
+    markTeamRail();
+    document.querySelectorAll('.presenter [data-screen]').forEach((b) => {
+      b.setAttribute('aria-pressed', String(b.dataset.screen === 'home'));
+    });
+    renderTeam();
+    syncHash();
+    fit();
+  }
+  function closeTeam() {
+    if (!teamOpen) return;
+    teamOpen = false;
+    frame.classList.remove('team-on');
+    frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
+      r.classList.remove('on');
+      r.removeAttribute('aria-current');
+    });
+  }
+  function bindTeam() {
+    $('teamSearch')?.addEventListener('input', (e) => {
+      teamQuery = e.target.value;
+      renderTeamList();
+    });
+    $('teamRows')?.addEventListener('click', (e) => {
+      const row = e.target.closest('[data-team]');
+      if (!row) return;
+      teamActive = row.dataset.team;
+      renderTeam();
+    });
+    $('teamTop')?.addEventListener('click', (e) => {
+      const member = e.target.closest('[data-member]');
+      if (member) openDm(member.dataset.member);
+    });
+    const input = $('teamInput');
+    const send = $('teamSend');
+    input?.addEventListener('input', () => {
+      const ready = input.value.trim().length > 0;
+      send.disabled = !ready;
+      send.classList.toggle('is-ready', ready);
+    });
+    input?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        $('teamCompose')?.requestSubmit();
+      }
+    });
+    $('teamCompose')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const text = input.value.trim();
+      const chat = teamChats.find((c) => c.id === teamActive);
+      if (!text || !chat) return;
+      chat.messages.push({ from: TEAM_ME, text });
+      input.value = '';
+      send.disabled = true;
+      send.classList.remove('is-ready');
+      renderTeam();
+    });
+    $('teamScroll')?.addEventListener('click', (e) => {
+      if (e.target.closest('.act-link')) showToastMsg('Opening in Deck');
+    });
+  }
+  bindTeam();
+
   function readHash() {
     const q = new URLSearchParams((location.hash || '').replace(/^#/, ''));
     const s = q.get('screen') || 'home';
@@ -7542,7 +7796,8 @@
     const showTip = q.get('tip') === '1';
     if (showTip) postTutorialTipPending = true;
     const step = Number.isFinite(t) ? t : 1;
-    if (s === 'tutorial') {
+    if (s === 'team') openTeam();
+    else if (s === 'tutorial') {
       const raw = q.get('tutorial') || '1';
       if (raw === '1b') startTutorial({ step: 1, docPhase: true });
       else if (raw === '1d') {
