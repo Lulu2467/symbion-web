@@ -398,8 +398,8 @@
   html[data-theme="blue"] .rail .r.o .rail-ico-panel { display: block; width: 18px; height: 18px; }
   html[data-theme="blue"] .rail .r.on,
   html[data-theme="blue"] .rail.is-open .r.on {
-    background: #ebf5fa;
-    color: #3c7a94;
+    background: #d4e4ee;
+    color: #1f1f1f;
   }
   html[data-theme="blue"] .rail .r:hover:not(.on),
   html[data-theme="blue"] .rail .r[data-rail]:hover:not(.on) {
@@ -3574,7 +3574,6 @@
   }
   .desk-card h2 { margin: 0; font-size: 18px; font-weight: 680; letter-spacing: -0.02em; }
   .desk-card .sub { margin: 2px 0 12px; color: #71777d; font-size: 12px; }
-  .desk-info p { margin: 6px 0 12px; color: #3c434a; font-size: 13px; line-height: 1.5; max-width: 62ch; }
   .desk-tools, .desk-views { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
   .desk-tools { margin-bottom: 12px; }
   .desk-tools button, .desk-views button, .desk-menu button, .desk-drive-bar button {
@@ -9676,12 +9675,6 @@
     host.dataset.ready = '1';
     host.innerHTML = `<div class="desk-shell">
       <div class="desk-scroll" id="deskScroll">
-        <section class="desk-card desk-info" id="desk-info">
-          <h2>Super Desk</h2>
-          <p class="sub">Info · Citta summary</p>
-          <p>Open Citta for Profile, Skill, and Loop. A saved twin gets the same three tabs.</p>
-          <button type="button" class="desk-primary" data-desk-act="citta">Open Citta</button>
-        </section>
         <section class="desk-card" id="desk-kanban">
           <h2>Kanban</h2>
           <p class="sub">Your schedule</p>
