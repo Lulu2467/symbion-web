@@ -3471,6 +3471,176 @@
   .fs-root.is-fs .logo .logo-word { font-size: 16px; }
 
 
+  .frame.dir-on { display: flex; flex-direction: column; height: 900px; }
+  .frame.dir-on .body { flex: 1; min-height: 0; }
+  .frame.dir-on .content.hub,
+  .frame.dir-on .logo-row,
+  .frame.dir-on .proto-rule { display: none !important; }
+  .frame.dir-on .main { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+  #dirHost {
+    display: none;
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    overflow: auto;
+    background: #f6f7f8;
+    padding: 22px 28px 40px;
+    color: var(--ink);
+  }
+  .frame.dir-on #dirHost { display: block; }
+  #dirHost[hidden],
+  #dirHost [hidden] { display: none !important; }
+  #dirHost button, #dirHost input { font: inherit; color: inherit; }
+  #dirHost button { cursor: pointer; }
+  .dir-top {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    margin: -22px -28px 18px;
+    padding: 22px 28px 14px;
+    background: #f6f7f8;
+  }
+  .dir-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .dir-row + .dir-row { margin-top: 14px; }
+  .dir-tabs { display: flex; align-items: center; gap: 22px; }
+  .dir-tab {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 0 8px;
+    border: 0;
+    background: none;
+    color: #8b919a;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1;
+  }
+  .dir-tab.on { color: #1f1f1f; font-weight: 650; }
+  .dir-tab.on::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: #1f1f1f;
+  }
+  .dir-tab .spark-icon { width: 16px; height: 16px; display: inline-flex; }
+  .dir-tab .spark-icon svg { width: 16px; height: 16px; display: block; }
+  .dir-side { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+  .dir-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 220px;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: #fff;
+    color: #8b919a;
+  }
+  .dir-search svg { width: 16px; height: 16px; flex: none; }
+  .dir-search input {
+    width: 100%;
+    border: 0;
+    outline: none;
+    background: none;
+    font-size: 14px;
+    color: var(--ink);
+  }
+  .dir-search input::placeholder { color: var(--placeholder); }
+  .dir-chips { display: flex; flex-wrap: wrap; gap: 8px; min-width: 0; }
+  .dir-chips button, .dir-sorts button {
+    height: 32px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #4b5158;
+    font-size: 13px;
+  }
+  .dir-chips button[aria-pressed="true"] { background: #eceef1; color: #1f1f1f; font-weight: 600; }
+  .dir-sorts { display: flex; gap: 4px; flex: none; }
+  .dir-sorts button[aria-pressed="true"] { background: #1f1f1f; color: #fff; }
+  .dir-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+  .frame.citta-open #dirHost .dir-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .dir-card {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    min-height: 148px;
+    padding: 16px;
+    border: 1px solid #e7e9ec;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
+    text-align: left;
+  }
+  .dir-card:hover { border-color: #d5d8dc; box-shadow: 0 4px 14px rgba(0, 0, 0, .06); }
+  .dir-head { display: flex; gap: 12px; align-items: flex-start; min-width: 0; }
+  .dir-av {
+    width: 48px;
+    height: 48px;
+    flex: none;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #e8eef2;
+    color: #3c7a94;
+    font-size: 13px;
+    font-weight: 650;
+    display: grid;
+    place-items: center;
+  }
+  .dir-av img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .dir-copy { min-width: 0; }
+  .dir-copy b {
+    display: block;
+    font-size: 15px;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    color: #1f1f1f;
+  }
+  .dir-copy small {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-top: 3px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.35;
+  }
+  .dir-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .dir-tags i {
+    font-style: normal;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #f1f2f4;
+    color: #656d76;
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .dir-foot {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: auto;
+    color: #8b919a;
+    font-size: 12px;
+  }
+  .dir-foot .spark-icon { width: 12px; height: 12px; display: inline-flex; color: #3c7a94; }
+  .dir-foot .spark-icon svg { width: 12px; height: 12px; display: block; }
+  .dir-none, .dir-empty {
+    margin: 64px auto;
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+  }
   .frame.team-on { display: flex; flex-direction: column; height: 900px; }
   .frame.team-on .body { flex: 1; min-height: 0; }
   .frame.team-on .content.hub,
@@ -4430,6 +4600,41 @@
               </section>
             </div>
           </div>
+          <section id="dirHost" aria-label="Cosmo">
+            <div class="dir-top">
+              <div class="dir-row">
+                <div class="dir-tabs" role="tablist" aria-label="Directory">
+                  <button type="button" class="dir-tab on" data-dir-tab="cosmo" role="tab" aria-selected="true"><span class="spark-icon" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg></span>Cosmo</button>
+                  <button type="button" class="dir-tab" data-dir-tab="post" role="tab" aria-selected="false">Post</button>
+                  <button type="button" class="dir-tab" data-dir-tab="community" role="tab" aria-selected="false">Community</button>
+                </div>
+                <div class="dir-side" id="dirSide">
+                  <div class="dir-sorts" role="group" aria-label="Sort">
+                    <button type="button" data-dir-sort="all" aria-pressed="true">Recommended</button>
+                    <button type="button" data-dir-sort="popular" aria-pressed="false">Popular</button>
+                    <button type="button" data-dir-sort="new" aria-pressed="false">New</button>
+                  </div>
+                  <label class="dir-search" id="dirSearchWrap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6.25"/><path d="M16 16.5 20 20.5" stroke-linecap="round"/></svg>
+                    <input id="dirSearch" type="search" placeholder="Search Cosmos" autocomplete="off" aria-label="Search Cosmos">
+                  </label>
+                </div>
+              </div>
+              <div class="dir-row" id="dirTools">
+                <div class="dir-chips">
+                  <button type="button" data-dir-group="All" aria-pressed="true">All</button>
+                  <button type="button" data-dir-group="Science" aria-pressed="false">Science</button>
+                  <button type="button" data-dir-group="AI &amp; Data" aria-pressed="false">AI &amp; Data</button>
+                  <button type="button" data-dir-group="Business" aria-pressed="false">Business</button>
+                  <button type="button" data-dir-group="Society" aria-pressed="false">Society</button>
+                  <button type="button" data-dir-group="Skincare" aria-pressed="false">Skincare</button>
+                </div>
+              </div>
+            </div>
+            <div class="dir-grid" id="dirGrid"></div>
+            <p class="dir-none" id="dirNone" hidden>No Cosmos match. Change the word or clear the filter.</p>
+            <p class="dir-empty" id="dirEmpty" hidden></p>
+          </section>
           <section id="teamHost" aria-label="Team">
     <div class="team">
       <aside class="list" aria-label="Groups">
@@ -5347,7 +5552,7 @@
     syncPresenter(s);
   }));
 
-  let screen = 'home', tutorialStep = 1, tutorialDocPhase = null, cittaExpanded = false, newTipSeen = false, postTutorialTipPending = false, teamOpen = false;
+  let screen = 'home', tutorialStep = 1, tutorialDocPhase = null, cittaExpanded = false, newTipSeen = false, postTutorialTipPending = false, teamOpen = false, dirOpen = false, dirTab = 'cosmo', dirQuery = '', dirGroup = 'All', dirSort = 'all';
   /** H0 free-browse: coach/spotlight off, stay on tutorial tail so Reminders → Goals remain scrollable. */
   let tutorialExploring = false;
   const frame = $('frame');
@@ -5403,6 +5608,7 @@
   function syncHash() {
     const q = new URLSearchParams();
     if (screen !== 'home') q.set('screen', screen);
+    if (screen === 'dir') q.set('dir', dirTab);
     if (screen === 'tutorial' && tutorialDocPhase === 'twin-finish') q.set('tutorial', '1d');
     else if (screen === 'tutorial' && tutorialDocPhase === 'doc-done') q.set('tutorial', '1e');
     else if (screen === 'tutorial' && tutorialDocPhase) q.set('tutorial', '1b');
@@ -7010,7 +7216,11 @@
           openTeam();
           return;
         }
-        if (teamOpen) setScreen('home');
+        if (el.dataset.rail === 'cosmo' || el.dataset.rail === 'post') {
+          openDir(el.dataset.rail);
+          return;
+        }
+        if (teamOpen || dirOpen) setScreen('home');
         selectRailItem(el.dataset.rail);
       });
     });
@@ -7224,6 +7434,7 @@
 
   function setScreen(next, { step, afterTutorial = false, showTip = false } = {}) {
     if (teamOpen && next !== 'team') closeTeam();
+    if (dirOpen && next !== 'dir') closeDir();
     screen = next;
     if (next !== 'tutorial') tutorialExploring = false;
     if (next === 'tutorial') {
@@ -8115,6 +8326,180 @@
     openCittaSwitcher();
   });
 
+  function dirPeople() {
+    const people = LECTURE_PROFESSORS.map(([name, field, school, photo]) => ({
+      name,
+      field,
+      school,
+      group: LECTURE_GROUP[field] || field,
+      blurb: field + ' · ' + school,
+      tags: [field],
+      photo: 'https://mio.neoschool.com/' + photo,
+      foot: school
+    }));
+    people.push({
+      name: '骆王宇',
+      field: 'Skincare',
+      school: 'Creator',
+      group: 'Skincare',
+      blurb: '护肤博主',
+      tags: ['Skincare', 'Creator'],
+      photo: 'assets/luo-wangyu.png',
+      foot: 'Creator'
+    });
+    if (dirSort === 'popular') {
+      people.unshift(people.pop());
+    } else if (dirSort === 'new') {
+      people.reverse();
+    }
+    return people;
+  }
+
+  function renderDir() {
+    const host = document.getElementById('dirHost');
+    if (!host) return;
+    host.querySelectorAll('[data-dir-tab]').forEach((btn) => {
+      const on = btn.dataset.dirTab === dirTab;
+      btn.classList.toggle('on', on);
+      btn.setAttribute('aria-selected', String(on));
+    });
+    const cosmo = dirTab === 'cosmo';
+    const tools = document.getElementById('dirTools');
+    const searchWrap = document.getElementById('dirSide');
+    const grid = document.getElementById('dirGrid');
+    const none = document.getElementById('dirNone');
+    const empty = document.getElementById('dirEmpty');
+    if (tools) tools.hidden = !cosmo;
+    if (searchWrap) searchWrap.hidden = !cosmo;
+    const search = document.getElementById('dirSearch');
+    if (search && search.value !== dirQuery) search.value = dirQuery;
+    host.querySelectorAll('[data-dir-group]').forEach((btn) => {
+      btn.setAttribute('aria-pressed', String(btn.dataset.dirGroup === dirGroup));
+    });
+    host.querySelectorAll('[data-dir-sort]').forEach((btn) => {
+      btn.setAttribute('aria-pressed', String(btn.dataset.dirSort === dirSort));
+    });
+    if (!cosmo) {
+      if (grid) grid.replaceChildren();
+      if (none) none.hidden = true;
+      if (empty) {
+        empty.hidden = false;
+        empty.textContent = dirTab === 'post' ? 'Posts will show up here.' : 'Community will show up here.';
+      }
+      return;
+    }
+    if (empty) empty.hidden = true;
+    const q = dirQuery.trim().toLowerCase();
+    const rows = dirPeople().filter((p) => {
+      if (dirGroup !== 'All' && p.group !== dirGroup) return false;
+      if (!q) return true;
+      return (p.name + ' ' + p.field + ' ' + p.school + ' ' + p.blurb).toLowerCase().includes(q);
+    });
+    if (none) none.hidden = rows.length > 0;
+    if (!grid) return;
+    grid.replaceChildren(...rows.map((p) => {
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className = 'dir-card';
+      card.dataset.dirName = p.name;
+      const head = document.createElement('span');
+      head.className = 'dir-head';
+      const av = document.createElement('span');
+      av.className = 'dir-av';
+      const img = document.createElement('img');
+      img.alt = '';
+      img.src = p.photo;
+      img.addEventListener('error', () => {
+        img.remove();
+        av.textContent = lectureInitials(p.name);
+      });
+      av.appendChild(img);
+      const copy = document.createElement('span');
+      copy.className = 'dir-copy';
+      const nm = document.createElement('b');
+      nm.textContent = p.name;
+      const small = document.createElement('small');
+      small.textContent = p.blurb;
+      copy.append(nm, small);
+      head.append(av, copy);
+      const tags = document.createElement('span');
+      tags.className = 'dir-tags';
+      p.tags.forEach((tag) => {
+        const chip = document.createElement('i');
+        chip.textContent = tag;
+        tags.appendChild(chip);
+      });
+      const foot = document.createElement('span');
+      foot.className = 'dir-foot';
+      const spark = document.createElement('span');
+      spark.className = 'spark-icon';
+      spark.setAttribute('aria-hidden', 'true');
+      spark.innerHTML = SPARK_SOLID;
+      foot.append(spark, document.createTextNode(p.foot));
+      card.append(head, tags, foot);
+      return card;
+    }));
+  }
+
+  function markDirRail() {
+    const key = dirTab === 'post' ? 'post' : dirTab === 'cosmo' ? 'cosmo' : '';
+    frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
+      const on = !!(key && r.dataset.rail === key);
+      r.classList.toggle('on', on);
+      if (on) r.setAttribute('aria-current', 'page');
+      else r.removeAttribute('aria-current');
+    });
+  }
+  function openDir(tab) {
+    if (teamOpen) closeTeam();
+    dirOpen = true;
+    dirTab = tab === 'post' || tab === 'community' ? tab : 'cosmo';
+    screen = 'dir';
+    applyTheme('blue');
+    frame.classList.add('dir-on');
+    markDirRail();
+    document.querySelectorAll('.presenter [data-screen]').forEach((b) => {
+      b.setAttribute('aria-pressed', String(b.dataset.screen === 'home'));
+    });
+    renderDir();
+    syncHash();
+    fit();
+  }
+  function closeDir() {
+    if (!dirOpen) return;
+    dirOpen = false;
+    frame.classList.remove('dir-on');
+    frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
+      r.classList.remove('on');
+      r.removeAttribute('aria-current');
+    });
+  }
+  document.getElementById('dirHost')?.addEventListener('click', (e) => {
+    const tab = e.target.closest('[data-dir-tab]');
+    if (tab) {
+      openDir(tab.dataset.dirTab);
+      return;
+    }
+    const group = e.target.closest('[data-dir-group]');
+    if (group) {
+      dirGroup = group.dataset.dirGroup;
+      renderDir();
+      return;
+    }
+    const sort = e.target.closest('[data-dir-sort]');
+    if (sort) {
+      dirSort = sort.dataset.dirSort;
+      renderDir();
+      return;
+    }
+    const card = e.target.closest('.dir-card');
+    if (card) showToastMsg('Cosmo · ' + card.dataset.dirName);
+  });
+  document.getElementById('dirSearch')?.addEventListener('input', (e) => {
+    dirQuery = e.target.value;
+    renderDir();
+  });
+
   function markTeamRail() {
     frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
       const on = r.dataset.rail === 'community';
@@ -8124,6 +8509,7 @@
     });
   }
   function openTeam() {
+    if (dirOpen) closeDir();
     teamOpen = true;
     screen = 'team';
     applyTheme('blue');
@@ -8154,6 +8540,7 @@
     if (showTip) postTutorialTipPending = true;
     const step = Number.isFinite(t) ? t : 1;
     if (s === 'team') openTeam();
+    else if (s === 'dir') openDir(q.get('dir') || 'cosmo');
     else if (s === 'tutorial') {
       const raw = q.get('tutorial') || '1';
       if (raw === '1b') startTutorial({ step: 1, docPhase: true });
