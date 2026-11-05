@@ -1845,20 +1845,23 @@
   .dcard .dav { width: 28px; height: 28px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; color: var(--muted); }
   html[data-theme="blue"] .discover .dcard .dav { position: relative; overflow: visible; }
   html[data-theme="blue"] .discover .dcard .dav img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; display: block; }
-  html[data-theme="blue"] .discover .dcard .dav .tag {
-    position: absolute;
-    top: -2px;
-    right: -1px;
-    z-index: 1;
-    width: 12px;
-    height: 12px;
-    margin: 0;
+  html[data-theme="blue"] .discover .dcard .tag {
+    position: static;
+    width: auto;
+    height: auto;
+    margin-left: 4px;
+    padding: 0;
+    gap: 2px;
     border-radius: 0;
     background: transparent;
-    color: var(--green);
     box-shadow: none;
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+    vertical-align: middle;
   }
-  html[data-theme="blue"] .discover .dcard .dav .tag .spark-icon { width: 9px; height: 9px; }
+  html[data-theme="blue"] .discover .dcard .tag .spark-icon { width: 12px; height: 12px; }
   .dcard .dav.agent { background: var(--amber-tint); color: var(--amber); border-radius: 8px; }
   .dcard .nm { font-weight: 600; text-decoration: none; }
   .tag {
@@ -8049,15 +8052,14 @@
       spark.className = 'spark-icon';
       spark.setAttribute('aria-hidden', 'true');
       spark.innerHTML = SPARK_SOLID;
-      tag.append(spark, document.createTextNode('Twin'));
-      dav.appendChild(tag);
+      tag.append(spark, document.createTextNode('twin'));
       const body = document.createElement('div');
       const nm = document.createElement('span');
       nm.className = 'nm';
       nm.textContent = name;
       const small = document.createElement('small');
       small.textContent = subject + ' · ' + school;
-      body.append(nm, small);
+      body.append(nm, tag, small);
       card.append(dav, body, lectureAddsi());
       return card;
     });
