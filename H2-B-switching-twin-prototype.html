@@ -3470,6 +3470,166 @@
   .fs-root.is-fs .logo .logo-word { font-size: 16px; }
 
 
+  .frame.desk-on { display: flex; flex-direction: column; height: 900px; }
+  .frame.desk-on .body { flex: 1; min-height: 0; }
+  .frame.desk-on .content.hub,
+  .frame.desk-on .logo-row,
+  .frame.desk-on .proto-rule { display: none !important; }
+  .frame.desk-on .main { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+  #deskHost {
+    display: none;
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    background: #f4f6f8;
+    color: #1c1f1d;
+  }
+  .frame.desk-on #deskHost { display: flex; }
+  #deskHost[hidden] { display: none !important; }
+  #deskHost button, #deskHost input { font: inherit; color: inherit; }
+  #deskHost button { cursor: pointer; }
+  .desk-shell { display: flex; flex: 1; min-width: 0; min-height: 0; }
+  .desk-nav {
+    width: 228px;
+    flex: none;
+    background: #fff;
+    border-right: 1px solid #e6e8ec;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .desk-shell.is-nav-hidden .desk-nav { display: none; }
+  .desk-nav-top { display: flex; align-items: center; gap: 8px; padding: 14px 14px 8px; }
+  .desk-hide, .desk-show {
+    margin-left: auto;
+    border: 0;
+    background: transparent;
+    color: #71777d;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 6px;
+    border-radius: 6px;
+  }
+  .desk-hide:hover, .desk-show:hover { background: #f3f5f7; color: #1c1f1d; }
+  .desk-show { display: none; margin: 0; }
+  .desk-shell.is-nav-hidden .desk-show { display: inline-flex; }
+  .desk-who {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: calc(100% - 28px);
+    margin: 0 14px 12px;
+    padding: 8px;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    text-align: left;
+  }
+  .desk-who:hover, .desk-who.on { background: #f3f5f7; }
+  .desk-av {
+    width: 32px; height: 32px; border-radius: 16px; flex: none;
+    background: #d7ece4; color: #0f7a56; display: grid; place-items: center;
+    font-size: 12px; font-weight: 700;
+  }
+  .desk-who b { display: block; font-size: 13px; font-weight: 650; }
+  .desk-who small, .desk-sec { display: block; color: #71777d; font-size: 11px; letter-spacing: .04em; }
+  .desk-sec { padding: 8px 18px 4px; font-weight: 700; }
+  .desk-nav nav { display: flex; flex-direction: column; gap: 2px; padding: 0 10px; }
+  .desk-nav nav > button, .desk-team-toggle, .desk-team-list button, .desk-dm {
+    display: flex; align-items: center; gap: 8px;
+    width: 100%; border: 0; background: transparent; text-align: left;
+    border-radius: 10px; padding: 8px 10px; font-size: 13px; font-weight: 550; color: #1c1f1d;
+  }
+  .desk-nav nav > button[aria-current="true"] { background: #e7f6ee; color: #0d7a52; }
+  .desk-nav nav > button:hover, .desk-team-toggle:hover, .desk-team-list button:hover, .desk-dm:hover { background: #f3f5f7; }
+  .desk-team-list { display: none; padding: 0 8px 8px 18px; }
+  .desk-team.is-open .desk-team-list { display: flex; flex-direction: column; gap: 2px; }
+  .desk-team-list button { font-weight: 500; font-size: 12px; color: #3c434a; }
+  .desk-team-list button small { display: block; color: #8b9198; font-size: 11px; font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 168px; }
+  .desk-team-list button.on { background: #e7f6ee; color: #0d7a52; }
+  .desk-scroll { flex: 1; min-width: 0; overflow: auto; padding: 18px 22px 48px; }
+  .desk-card {
+    background: #fff; border: 1px solid #e6e8ec; border-radius: 16px;
+    padding: 16px 16px 18px; margin-bottom: 14px;
+  }
+  .desk-card h2 { margin: 0; font-size: 18px; font-weight: 680; letter-spacing: -0.02em; }
+  .desk-card .sub { margin: 2px 0 12px; color: #71777d; font-size: 12px; }
+  .desk-info p { margin: 6px 0 12px; color: #3c434a; font-size: 13px; line-height: 1.5; max-width: 62ch; }
+  .desk-tools, .desk-views { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .desk-tools { margin-bottom: 12px; }
+  .desk-tools button, .desk-views button, .desk-menu button, .desk-drive-bar button {
+    border: 0; background: transparent; border-radius: 8px; padding: 5px 9px;
+    font-size: 12px; font-weight: 600; color: #3c434a;
+  }
+  .desk-tools button[aria-pressed="true"], .desk-views button[aria-pressed="true"], .desk-drive-bar button[aria-pressed="true"] {
+    background: #e7f6ee; color: #0d7a52;
+  }
+  .desk-range { font-size: 13px; font-weight: 650; min-width: 148px; text-align: center; }
+  .desk-new { position: relative; margin-left: auto; }
+  .desk-new > button { background: #0d7a52; color: #fff !important; }
+  .desk-menu {
+    position: absolute; right: 0; top: calc(100% + 6px); z-index: 3;
+    background: #fff; border: 1px solid #e6e8ec; border-radius: 12px;
+    box-shadow: 0 10px 28px rgba(20,24,28,.12); padding: 6px; min-width: 148px;
+  }
+  .desk-menu button { display: block; width: 100%; text-align: left; }
+  .desk-menu button:hover { background: #f3f5f7; }
+  .desk-board { width: 100%; border: 1px solid #eef0f2; border-radius: 12px; overflow: auto; }
+  .desk-week { display: grid; min-width: 720px; }
+  .desk-week.head, .desk-week.lane { grid-template-columns: 168px repeat(var(--cols), minmax(72px, 1fr)); }
+  .desk-week.head span, .desk-lane-name, .desk-cell {
+    border-bottom: 1px solid #eef0f2; border-right: 1px solid #eef0f2;
+    min-height: 36px; padding: 8px; font-size: 12px;
+  }
+  .desk-week.head span { color: #71777d; font-weight: 650; background: #fafbfc; }
+  .desk-lane-name { font-weight: 650; background: #fff; }
+  .desk-lane-name small { display: block; font-weight: 450; color: #8b9198; }
+  .desk-cell { background: #fff; min-height: 72px; }
+  .desk-task {
+    display: block; width: 100%; text-align: left; border: 0; border-radius: 8px;
+    background: #e7f6ee; color: #0d7a52; padding: 6px 8px; font-size: 12px; font-weight: 650;
+  }
+  .desk-task em { display: block; font-style: normal; font-weight: 500; color: #3c434a; font-size: 11px; }
+  .desk-cal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+  .desk-cal i, .desk-cal button {
+    min-height: 64px; border-radius: 8px; background: #fafbfc; padding: 6px;
+    font-size: 11px; font-weight: 650; color: #71777d; border: 0; text-align: left;
+  }
+  .desk-cal button.has { background: #e7f6ee; color: #0d7a52; }
+  .desk-list { display: flex; flex-direction: column; gap: 6px; }
+  .desk-list button {
+    display: flex; justify-content: space-between; gap: 12px; width: 100%;
+    border: 1px solid #eef0f2; background: #fff; border-radius: 10px; padding: 10px 12px; text-align: left;
+  }
+  .desk-empty { color: #71777d; font-size: 13px; line-height: 1.5; margin: 8px 0; }
+  .desk-status {
+    display: flex; justify-content: space-between; gap: 12px; align-items: center;
+    border: 1px solid #f0e2c8; background: #fffaf3; border-radius: 10px; padding: 10px 12px; margin-top: 8px;
+  }
+  .desk-status b { font-size: 11px; letter-spacing: .04em; color: #8a5a12; }
+  .desk-status span { color: #3c434a; font-size: 13px; }
+  .desk-status.ok { border-color: #d7ece4; background: #f4fbf7; }
+  .desk-status.ok b { color: #0d7a52; }
+  .desk-primary, .desk-quiet {
+    border-radius: 8px; padding: 7px 12px; font-size: 12px; font-weight: 700; border: 0;
+  }
+  .desk-primary { background: #0d7a52; color: #fff !important; }
+  .desk-quiet { background: #f3f5f7; color: #1c1f1d; }
+  .desk-drive-bar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 12px; }
+  .desk-drive-bar input {
+    margin-left: auto; width: 180px; border: 1px solid #e6e8ec; border-radius: 8px;
+    padding: 6px 10px; font-size: 12px; background: #fff;
+  }
+  .desk-folders { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+  .desk-folders.is-list { grid-template-columns: 1fr; }
+  .desk-folder {
+    border: 1px solid #eef0f2; background: #fff; border-radius: 12px; padding: 12px; text-align: left;
+  }
+  .desk-folder.on { outline: 2px solid #0d7a52; }
+  .desk-folder b { display: block; font-size: 13px; }
+  .desk-folder small { color: #71777d; font-size: 12px; }
+  .desk-foot { display: flex; gap: 14px; color: #8b9198; font-size: 12px; margin-top: 12px; }
+
   .frame.dir-on { display: flex; flex-direction: column; height: 900px; }
   .frame.dir-on .body { flex: 1; min-height: 0; }
   .frame.dir-on .content.hub,
@@ -4599,6 +4759,7 @@
               </section>
             </div>
           </div>
+          <section id="deskHost" aria-label="Desk" hidden></section>
           <section id="dirHost" aria-label="Cosmo">
             <div class="dir-top">
               <div class="dir-row">
@@ -5564,7 +5725,7 @@
     syncPresenter(s);
   }));
 
-  let screen = 'home', tutorialStep = 1, tutorialDocPhase = null, cittaExpanded = false, newTipSeen = false, postTutorialTipPending = false, teamOpen = false, dirOpen = false, dirTab = 'cosmo', dirQuery = '', dirGroup = 'All', dirSort = 'all';
+  let screen = 'home', tutorialStep = 1, tutorialDocPhase = null, cittaExpanded = false, newTipSeen = false, postTutorialTipPending = false, teamOpen = false, dirOpen = false, dirTab = 'cosmo', dirQuery = '', dirGroup = 'All', dirSort = 'all', deskOpen = false;
   /** H0 free-browse: coach/spotlight off, stay on tutorial tail so Reminders → Goals remain scrollable. */
   let tutorialExploring = false;
   const frame = $('frame');
@@ -5621,6 +5782,7 @@
     const q = new URLSearchParams();
     if (screen !== 'home') q.set('screen', screen);
     if (screen === 'dir') q.set('dir', dirTab);
+    if (screen === 'desk') q.set('desk', deskSection);
     if (screen === 'tutorial' && tutorialDocPhase === 'twin-finish') q.set('tutorial', '1d');
     else if (screen === 'tutorial' && tutorialDocPhase === 'doc-done') q.set('tutorial', '1e');
     else if (screen === 'tutorial' && tutorialDocPhase) q.set('tutorial', '1b');
@@ -7236,7 +7398,11 @@
           openDir(el.dataset.rail);
           return;
         }
-        if (teamOpen || dirOpen) setScreen('home');
+        if (el.dataset.rail === 'desk') {
+          openDesk();
+          return;
+        }
+        if (teamOpen || dirOpen || deskOpen) setScreen('home');
         selectRailItem(el.dataset.rail);
       });
     });
@@ -7451,6 +7617,7 @@
   function setScreen(next, { step, afterTutorial = false, showTip = false } = {}) {
     if (teamOpen && next !== 'team') closeTeam();
     if (dirOpen && next !== 'dir') closeDir();
+    if (deskOpen && next !== 'desk') closeDesk();
     screen = next;
     if (next !== 'tutorial') tutorialExploring = false;
     if (next === 'tutorial') {
@@ -8474,6 +8641,7 @@
   }
   function openDir(tab) {
     if (teamOpen) closeTeam();
+    if (deskOpen) closeDesk();
     dirOpen = true;
     dirTab = tab === 'post' || tab === 'community' ? tab : 'cosmo';
     screen = 'dir';
@@ -8532,6 +8700,7 @@
   }
   function openTeam() {
     if (dirOpen) closeDir();
+    if (deskOpen) closeDesk();
     teamOpen = true;
     screen = 'team';
     applyTheme('blue');
@@ -8554,6 +8723,368 @@
     });
   }
 
+  const DESK_LANES = [
+    { id: 'personal', name: 'Personal' },
+    { id: 'wuhan', name: 'Wuhan Branch Team' },
+    { id: 'research', name: 'Research_Test' },
+    { id: 'course', name: 'CO006017 · Data Analysis and Machine Learning' },
+  ];
+  const DESK_GROUPS = [
+    { id: 'team4', name: 'Team 4', preview: 'Group' },
+    { id: 'wuhan', name: 'Wuhan Branch Team', preview: 'Oct 19 · Hao Zou · 补充 1014.docx 的请假审批入口改进' },
+    { id: 'research', name: 'Research_Test', preview: 'Sep 20 · Hao Zou · 已完成梳理：现有 Research 将升级为 Roland 的独立 Research Hub' },
+    { id: 'course', name: 'CO006017 · Data Analysis and Machine Learning', preview: '#general' },
+    { id: 'ai', name: '1105 AI', preview: '#general' },
+  ];
+  let deskSection = 'kanban';
+  let deskSpan = 'week';
+  let deskCanvas = 'timeline';
+  let deskFocus = new Date(2026, 10, 5);
+  let deskNavHidden = false;
+  let deskTeamOpen = true;
+  let deskGroup = 'wuhan';
+  let deskDriveTab = 'files';
+  let deskDriveView = 'grid';
+  let deskQuery = '';
+  let deskSelectOn = false;
+  let deskSelected = '';
+  let deskNewOpen = false;
+  let deskItems = [{ id: 'ns', lane: 'personal', title: 'New schedule', type: 'Task', date: '2026-11-02' }];
+  let deskFolders = [{ id: 'shared', name: 'Shared', meta: '13 files · Connected' }];
+
+  function deskMonday(date) {
+    const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    d.setDate(d.getDate() - ((d.getDay() + 6) % 7));
+    return d;
+  }
+  function deskAddDays(date, n) {
+    const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    d.setDate(d.getDate() + n);
+    return d;
+  }
+  function deskIso(date) {
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${date.getFullYear()}-${m}-${day}`;
+  }
+  function deskFmt(date) {
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  }
+  function deskRangeLabel() {
+    if (deskSpan === 'day') return deskFocus.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
+    if (deskSpan === 'month') return deskFocus.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    const start = deskMonday(deskFocus);
+    const end = deskAddDays(start, 6);
+    return `${deskFmt(start)} – ${deskFmt(end)}, ${end.getFullYear()}`;
+  }
+  function deskDays() {
+    if (deskSpan === 'day') return [new Date(deskFocus.getFullYear(), deskFocus.getMonth(), deskFocus.getDate())];
+    if (deskSpan === 'month') {
+      const start = new Date(deskFocus.getFullYear(), deskFocus.getMonth(), 1);
+      const count = new Date(deskFocus.getFullYear(), deskFocus.getMonth() + 1, 0).getDate();
+      return Array.from({ length: count }, (_, i) => deskAddDays(start, i));
+    }
+    const start = deskMonday(deskFocus);
+    return Array.from({ length: 7 }, (_, i) => deskAddDays(start, i));
+  }
+  function deskEsc(text) {
+    return String(text).replace(/[&<>"]/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
+  }
+
+  function paintDeskWho() {
+    const name = userName();
+    const av = document.getElementById('deskAv');
+    const nm = document.getElementById('deskName');
+    if (av) av.textContent = userInitials(name);
+    if (nm) nm.textContent = name;
+  }
+  function paintDeskBoard() {
+    const host = document.getElementById('deskBoard');
+    const label = document.getElementById('deskRange');
+    if (!host) return;
+    if (label) label.textContent = deskRangeLabel();
+    document.querySelectorAll('[data-desk-span]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.deskSpan === deskSpan)));
+    document.querySelectorAll('[data-desk-canvas]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.deskCanvas === deskCanvas)));
+    const menu = document.getElementById('deskNewMenu');
+    if (menu) menu.hidden = !deskNewOpen;
+    const days = deskDays();
+    const inSpan = (iso) => days.some((d) => deskIso(d) === iso);
+    if (deskCanvas === 'list') {
+      const rows = deskItems.filter((item) => inSpan(item.date));
+      host.innerHTML = rows.length ? `<div class="desk-list">${rows.map((item) => {
+        const lane = DESK_LANES.find((l) => l.id === item.lane);
+        return `<button type="button"><span>${deskEsc(item.title)}<em style="display:block;font-style:normal;color:#71777d;font-weight:500">${deskEsc(lane ? lane.name : '')} · ${deskEsc(item.type)}</em></span><small>${deskEsc(item.date)}</small></button>`;
+      }).join('')}</div>` : '<p class="desk-empty">Nothing in this range.</p>';
+      return;
+    }
+    if (deskCanvas === 'calendar') {
+      const first = new Date(deskFocus.getFullYear(), deskFocus.getMonth(), 1);
+      const count = new Date(deskFocus.getFullYear(), deskFocus.getMonth() + 1, 0).getDate();
+      const lead = (first.getDay() + 6) % 7;
+      const cells = Array.from({ length: lead }, () => '<i></i>');
+      for (let n = 1; n <= count; n += 1) {
+        const d = new Date(first.getFullYear(), first.getMonth(), n);
+        const iso = deskIso(d);
+        const hits = deskItems.filter((item) => item.date === iso);
+        cells.push(`<button type="button" class="${hits.length ? 'has' : ''}" data-desk-day="${iso}">${n}${hits.map((item) => `<em style="display:block;font-style:normal">${deskEsc(item.title)}</em>`).join('')}</button>`);
+      }
+      host.innerHTML = `<div class="desk-cal">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((d) => `<i>${d}</i>`).join('')}${cells.join('')}</div>`;
+      return;
+    }
+    const cols = days.length;
+    const head = days.map((d) => `<span>${d.getDate()} ${d.toLocaleDateString('en-US', { weekday: 'short' })}</span>`).join('');
+    const lanes = DESK_LANES.map((lane) => {
+      const cells = days.map((d) => {
+        const iso = deskIso(d);
+        const hits = deskItems.filter((item) => item.lane === lane.id && item.date === iso);
+        return `<div class="desk-cell">${hits.map((item) => `<button type="button" class="desk-task">${deskEsc(item.title)}<em>${deskEsc(item.type)}</em></button>`).join('')}</div>`;
+      }).join('');
+      return `<div class="desk-week lane"><div class="desk-lane-name">${deskEsc(lane.name)}</div>${cells}</div>`;
+    }).join('');
+    host.innerHTML = `<div class="desk-board"><div class="desk-week head" style="--cols:${cols}"><span>Track</span>${head}</div>${lanes.replaceAll('class="desk-week lane"', `class="desk-week lane" style="--cols:${cols}"`)}</div>`;
+  }
+  function paintDeskDrive() {
+    const host = document.getElementById('deskDriveBody');
+    if (!host) return;
+    document.querySelectorAll('[data-desk-drive]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.deskDrive === deskDriveTab)));
+    document.querySelectorAll('[data-desk-drive-view]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.deskDriveView === deskDriveView)));
+    if (deskDriveTab === 'courses') {
+      host.innerHTML = '<p class="desk-empty">Course folders shared with you show up here. Google Shared drives aren’t available yet.</p>';
+      return;
+    }
+    if (deskDriveTab === 'drive') {
+      host.innerHTML = '<p class="desk-empty">Google Drive is not connected.</p><button type="button" class="desk-quiet" data-desk-act="connect">Connect account</button>';
+      return;
+    }
+    const q = deskQuery.trim().toLowerCase();
+    const folders = deskFolders.filter((folder) => !q || folder.name.toLowerCase().includes(q));
+    host.innerHTML = `<div class="desk-folders ${deskDriveView === 'list' ? 'is-list' : ''}">${folders.map((folder) => `<button type="button" class="desk-folder${deskSelectOn && deskSelected === folder.id ? ' on' : ''}" data-desk-folder="${folder.id}"><b>${deskEsc(folder.name)}</b><small>${deskEsc(folder.meta)}</small></button>`).join('') || '<p class="desk-empty">No folders match.</p>'}</div><div class="desk-foot"><span>${folders.length} item${folders.length === 1 ? '' : 's'} in this folder</span><span>0 B of 50 GB used</span><span>Healthy</span></div>`;
+  }
+  function paintDeskChrome() {
+    const shell = document.querySelector('.desk-shell');
+    if (shell) shell.classList.toggle('is-nav-hidden', deskNavHidden);
+    document.querySelectorAll('[data-desk-jump]').forEach((b) => {
+      if (b.dataset.deskJump === deskSection) b.setAttribute('aria-current', 'true');
+      else b.removeAttribute('aria-current');
+    });
+    const team = document.querySelector('.desk-team');
+    if (team) team.classList.toggle('is-open', deskTeamOpen);
+    document.querySelectorAll('[data-desk-group]').forEach((b) => b.classList.toggle('on', b.dataset.deskGroup === deskGroup));
+    paintDeskWho();
+    paintDeskBoard();
+    paintDeskDrive();
+  }
+  function ensureDesk() {
+    const host = document.getElementById('deskHost');
+    if (!host || host.dataset.ready) return;
+    host.dataset.ready = '1';
+    const groups = DESK_GROUPS.map((g) => `<button type="button" data-desk-group="${g.id}"><b>${deskEsc(g.name)}</b><small>${deskEsc(g.preview)}</small></button>`).join('');
+    host.innerHTML = `<div class="desk-shell">
+      <aside class="desk-nav" aria-label="Desk">
+        <div class="desk-nav-top"><span class="desk-sec" style="padding:0">Desk</span><button type="button" class="desk-hide" data-desk-act="hide-nav">Hide</button></div>
+        <button type="button" class="desk-who" data-desk-act="profile"><span class="desk-av" id="deskAv"></span><span><b id="deskName"></b><small>jess@symbion.test</small></span></button>
+        <div class="desk-sec">MY DESK</div>
+        <nav>
+          <button type="button" data-desk-jump="kanban">Kanban</button>
+          <button type="button" data-desk-jump="email">Email</button>
+          <button type="button" data-desk-jump="ledger">Ledger</button>
+          <button type="button" data-desk-jump="drive">Super Drive</button>
+          <button type="button" data-desk-act="cosmo">My Cosmo</button>
+        </nav>
+        <div class="desk-team is-open">
+          <button type="button" class="desk-team-toggle" data-desk-act="team-toggle">My Team</button>
+          <div class="desk-team-list">${groups}<button type="button" class="desk-dm" data-desk-act="dm"><b>Direct messages</b><small>1 · Direct message</small></button></div>
+        </div>
+      </aside>
+      <div class="desk-scroll" id="deskScroll">
+        <button type="button" class="desk-show" data-desk-act="show-nav">Show</button>
+        <section class="desk-card desk-info" id="desk-info">
+          <h2>Super Desk</h2>
+          <p class="sub">Info · Citta summary</p>
+          <p>Open Citta for Profile, Skill, and Loop. A saved twin gets the same three tabs.</p>
+          <button type="button" class="desk-primary" data-desk-act="citta">Open Citta</button>
+        </section>
+        <section class="desk-card" id="desk-kanban">
+          <h2>Kanban</h2>
+          <p class="sub">Your schedule</p>
+          <div class="desk-tools">
+            <button type="button" data-desk-act="prev" aria-label="Previous">‹</button>
+            <button type="button" data-desk-act="next" aria-label="Next">›</button>
+            <span class="desk-range" id="deskRange"></span>
+            <button type="button" data-desk-act="today">Today</button>
+            <div class="desk-views" role="group" aria-label="Range">
+              <button type="button" data-desk-span="day">Day</button>
+              <button type="button" data-desk-span="week">Week</button>
+              <button type="button" data-desk-span="month">Month</button>
+            </div>
+            <div class="desk-views" role="group" aria-label="Canvas">
+              <button type="button" data-desk-canvas="timeline">Timeline</button>
+              <button type="button" data-desk-canvas="calendar">Calendar</button>
+              <button type="button" data-desk-canvas="list">List</button>
+            </div>
+            <div class="desk-new">
+              <button type="button" data-desk-act="new">New item</button>
+              <div class="desk-menu" id="deskNewMenu" hidden>
+                <button type="button" data-desk-kind="Document">Document</button>
+                <button type="button" data-desk-kind="Task">Task</button>
+                <button type="button" data-desk-kind="Meeting">Meeting</button>
+                <button type="button" data-desk-kind="Pod">Pod</button>
+              </div>
+            </div>
+          </div>
+          <div id="deskBoard"></div>
+        </section>
+        <section class="desk-card" id="desk-email">
+          <h2>Email</h2>
+          <p class="sub">0 unread</p>
+          <p class="desk-empty">No mailbox connected yet — connect one below to see your threads here.</p>
+          <div class="desk-status"><b>NEEDS CONNECTION</b><span>No mailbox is connected.</span><button type="button" class="desk-primary" data-desk-act="mail">Set up mail</button></div>
+        </section>
+        <section class="desk-card" id="desk-ledger">
+          <h2>Ledger</h2>
+          <p class="sub">November 2026</p>
+          <p class="desk-empty">No ledger rows yet. Entries appear only through approved actions; receipts surface from your connected mail.</p>
+          <div class="desk-status ok"><b>CONNECTED</b><span>Approved entries: 0</span></div>
+          <div class="desk-status ok"><b>CONNECTED</b><span>Mail receipts: 0</span></div>
+          <div style="margin-top:10px"><button type="button" class="desk-quiet" data-desk-act="entry">Add entry</button></div>
+        </section>
+        <section class="desk-card" id="desk-drive">
+          <h2>Super Drive</h2>
+          <p class="sub">Current folder</p>
+          <div class="desk-drive-bar">
+            <button type="button" data-desk-drive="files">Files</button>
+            <button type="button" data-desk-drive="courses">Courses</button>
+            <button type="button" data-desk-drive="drive">Super Drive</button>
+            <button type="button" data-desk-drive-view="grid">Grid</button>
+            <button type="button" data-desk-drive-view="list">List</button>
+            <button type="button" data-desk-act="folder">New folder</button>
+            <button type="button" data-desk-act="upload">Upload</button>
+            <button type="button" data-desk-act="select">Select</button>
+            <input id="deskSearch" type="search" placeholder="Search" aria-label="Search files and folders by name">
+          </div>
+          <p class="desk-empty">Google Drive is not connected. Shared drives aren’t available yet.</p>
+          <div id="deskDriveBody"></div>
+        </section>
+      </div>
+    </div>`;
+    host.addEventListener('click', onDeskClick);
+    host.querySelector('#deskSearch')?.addEventListener('input', (e) => {
+      deskQuery = e.target.value;
+      paintDeskDrive();
+    });
+  }
+  function onDeskClick(e) {
+    const jump = e.target.closest('[data-desk-jump]');
+    if (jump) {
+      deskSection = jump.dataset.deskJump;
+      paintDeskChrome();
+      document.getElementById(`desk-${deskSection}`)?.scrollIntoView({ block: 'start' });
+      syncHash();
+      return;
+    }
+    const span = e.target.closest('[data-desk-span]');
+    if (span) { deskSpan = span.dataset.deskSpan; paintDeskBoard(); return; }
+    const canvas = e.target.closest('[data-desk-canvas]');
+    if (canvas) { deskCanvas = canvas.dataset.deskCanvas; paintDeskBoard(); return; }
+    const kind = e.target.closest('[data-desk-kind]');
+    if (kind) {
+      deskNewOpen = false;
+      deskItems = deskItems.concat([{ id: `n${Date.now()}`, lane: 'personal', title: `New ${kind.dataset.deskKind.toLowerCase()}`, type: kind.dataset.deskKind, date: deskIso(deskFocus) }]);
+      paintDeskBoard();
+      return;
+    }
+    const drive = e.target.closest('[data-desk-drive]');
+    if (drive) { deskDriveTab = drive.dataset.deskDrive; paintDeskDrive(); return; }
+    const view = e.target.closest('[data-desk-drive-view]');
+    if (view) { deskDriveView = view.dataset.deskDriveView; paintDeskDrive(); return; }
+    const folder = e.target.closest('[data-desk-folder]');
+    if (folder) {
+      if (deskSelectOn) { deskSelected = folder.dataset.deskFolder; paintDeskDrive(); return; }
+      showToastMsg('File names stay on the connected drive.');
+      return;
+    }
+    const group = e.target.closest('[data-desk-group]');
+    if (group) { deskGroup = group.dataset.deskGroup; paintDeskChrome(); return; }
+    const day = e.target.closest('[data-desk-day]');
+    if (day) {
+      const [y, m, d] = day.dataset.deskDay.split('-').map(Number);
+      deskFocus = new Date(y, m - 1, d);
+      deskSpan = 'day';
+      deskCanvas = 'timeline';
+      paintDeskBoard();
+      return;
+    }
+    const act = e.target.closest('[data-desk-act]');
+    if (!act) { if (deskNewOpen) { deskNewOpen = false; paintDeskBoard(); } return; }
+    const id = act.dataset.deskAct;
+    if (id === 'hide-nav') { deskNavHidden = true; paintDeskChrome(); return; }
+    if (id === 'show-nav') { deskNavHidden = false; paintDeskChrome(); return; }
+    if (id === 'profile') { showToastMsg(`${userName()} · account name follows you here.`); return; }
+    if (id === 'cosmo') { openDir('cosmo'); return; }
+    if (id === 'team-toggle') { deskTeamOpen = !deskTeamOpen; paintDeskChrome(); return; }
+    if (id === 'dm') { showToastMsg('Direct messages · 1'); return; }
+    if (id === 'citta') { setCittaExpanded(true); return; }
+    if (id === 'prev' || id === 'next') {
+      const step = deskSpan === 'month' ? 0 : (deskSpan === 'day' ? 1 : 7);
+      if (deskSpan === 'month') deskFocus = new Date(deskFocus.getFullYear(), deskFocus.getMonth() + (id === 'next' ? 1 : -1), 1);
+      else deskFocus = deskAddDays(deskFocus, id === 'next' ? step : -step);
+      paintDeskBoard();
+      return;
+    }
+    if (id === 'today') { deskFocus = new Date(); paintDeskBoard(); return; }
+    if (id === 'new') { deskNewOpen = !deskNewOpen; paintDeskBoard(); return; }
+    if (id === 'mail') { showToastMsg('Mail setup waits for a connected mailbox.'); return; }
+    if (id === 'entry') { showToastMsg('Entries appear only through an approved action.'); return; }
+    if (id === 'connect' || id === 'upload') { showToastMsg('Google Drive isn’t connected yet.'); return; }
+    if (id === 'folder') {
+      const count = deskFolders.filter((folder) => folder.name.startsWith('New folder')).length;
+      deskFolders = deskFolders.concat([{ id: `f${Date.now()}`, name: count ? `New folder ${count + 1}` : 'New folder', meta: '0 files' }]);
+      deskDriveTab = 'files';
+      paintDeskDrive();
+      return;
+    }
+    if (id === 'select') { deskSelectOn = !deskSelectOn; deskSelected = ''; paintDeskDrive(); }
+  }
+  function markDeskRail() {
+    frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
+      const on = r.dataset.rail === 'desk';
+      r.classList.toggle('on', on);
+      if (on) r.setAttribute('aria-current', 'page');
+      else r.removeAttribute('aria-current');
+    });
+  }
+  function openDesk(section) {
+    if (teamOpen) closeTeam();
+    if (dirOpen) closeDir();
+    deskOpen = true;
+    if (section) deskSection = section;
+    screen = 'desk';
+    applyTheme('blue');
+    frame.classList.add('desk-on');
+    const host = document.getElementById('deskHost');
+    if (host) host.hidden = false;
+    ensureDesk();
+    markDeskRail();
+    document.querySelectorAll('.presenter [data-screen]').forEach((b) => {
+      b.setAttribute('aria-pressed', String(b.dataset.screen === 'home'));
+    });
+    paintDeskChrome();
+    if (deskSection !== 'kanban') document.getElementById(`desk-${deskSection}`)?.scrollIntoView({ block: 'start' });
+    syncHash();
+    fit();
+  }
+  function closeDesk() {
+    if (!deskOpen) return;
+    deskOpen = false;
+    frame.classList.remove('desk-on');
+    const host = document.getElementById('deskHost');
+    if (host) host.hidden = true;
+    frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
+      r.classList.remove('on');
+      r.removeAttribute('aria-current');
+    });
+  }
+
   function readHash() {
     const q = new URLSearchParams((location.hash || '').replace(/^#/, ''));
     const s = q.get('screen') || 'home';
@@ -8563,6 +9094,7 @@
     const step = Number.isFinite(t) ? t : 1;
     if (s === 'team') openTeam();
     else if (s === 'dir') openDir(q.get('dir') || 'cosmo');
+    else if (s === 'desk') openDesk(q.get('desk') || 'kanban');
     else if (s === 'tutorial') {
       const raw = q.get('tutorial') || '1';
       if (raw === '1b') startTutorial({ step: 1, docPhase: true });
