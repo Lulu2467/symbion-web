@@ -688,8 +688,8 @@
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools.is-prompts {
     flex-wrap: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: visible;
+    max-height: none;
     scrollbar-width: none;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools.is-prompts::-webkit-scrollbar { display: none; }
@@ -708,13 +708,24 @@
     line-height: 1;
     white-space: nowrap;
     flex: none;
+    position: relative;
     cursor: pointer;
     box-sizing: border-box;
+    box-shadow: none;
+    transform: none;
+    transition: transform .18s ease, box-shadow .18s ease, color .18s ease;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool-prompt:hover {
-    background: var(--green-tint);
-    border-color: var(--green);
-    color: var(--green-dark);
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool-prompt:hover,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool-prompt:focus-visible {
+    background: #fff;
+    border-color: transparent;
+    color: #1a1d21;
+    outline: none;
+    z-index: 1;
+    transform: translateY(-2px);
+    box-shadow:
+      0 8px 18px rgba(20, 24, 28, 0.10),
+      0 1px 3px rgba(20, 24, 28, 0.06);
   }
   .tool-cases { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-cases {
@@ -737,7 +748,10 @@
   }
   @media (prefers-reduced-motion: reduce) {
     html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools,
-    html[data-theme="blue"] .hub:has(#screen-home.on) .tool-cases { transition: none; }
+    html[data-theme="blue"] .hub:has(#screen-home.on) .tool-cases,
+    html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool-prompt { transition: none; }
+    html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool-prompt:hover,
+    html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool-prompt:focus-visible { transform: none; }
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-cases-k {
     margin: 0;
