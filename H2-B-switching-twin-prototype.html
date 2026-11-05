@@ -6958,6 +6958,29 @@
     ['Philip Allmendinger', 'Urban planning', 'Cambridge', 'neo-bic/5e8e127a-117e-421d-b32e-b3240e1d7c22.jpg'],
     ['Donald Robertson', 'Economics', 'Cambridge', 'neo-bic/424b6980-9a34-46c7-b35c-76baf88d0d05.png']
   ];
+  const LECTURE_GROUPS = ['Science', 'AI & Data', 'Business', 'Society'];
+  const LECTURE_GROUP = {
+    Materials: 'Science',
+    Biology: 'Science',
+    'Planetary health': 'Science',
+    Physics: 'Science',
+    'Applied math': 'Science',
+    Environment: 'Science',
+    Mechanical: 'Science',
+    AI: 'AI & Data',
+    'Data science': 'AI & Data',
+    'Business analytics': 'Business',
+    Management: 'Business',
+    Finance: 'Business',
+    Economics: 'Business',
+    Sports: 'Business',
+    Communication: 'Society',
+    Education: 'Society',
+    History: 'Society',
+    Linguistics: 'Society',
+    Psychology: 'Society',
+    'Urban planning': 'Society'
+  };
   const discoverSnap = new WeakMap();
   let discoverAddsiTemplate = null;
 
@@ -6986,12 +7009,8 @@
     const track = sec.querySelector('.hscroll');
     const pop = sec.querySelector('.interest-pop');
     if (!scroll || !track) return;
-    const subjects = [];
-    LECTURE_PROFESSORS.forEach((row) => {
-      if (!subjects.includes(row[1])) subjects.push(row[1]);
-    });
     scroll.replaceChildren();
-    [['All', true], ...subjects.map((s) => [s, false])].forEach(([label, on]) => {
+    [['All', true], ...LECTURE_GROUPS.map((s) => [s, false])].forEach(([label, on]) => {
       const chip = document.createElement('button');
       chip.type = 'button';
       chip.className = on ? 'interest on' : 'interest';
@@ -7005,7 +7024,7 @@
       hd.className = 'interest-pop-hd';
       hd.textContent = 'Add a topic';
       pop.appendChild(hd);
-      subjects.forEach((label) => {
+      LECTURE_GROUPS.forEach((label) => {
         const opt = document.createElement('button');
         opt.type = 'button';
         opt.setAttribute('role', 'menuitem');
@@ -7017,7 +7036,7 @@
     const cards = LECTURE_PROFESSORS.map(([name, subject, school, photo]) => {
       const card = document.createElement('div');
       card.className = 'dcard';
-      card.dataset.topics = subject;
+      card.dataset.topics = LECTURE_GROUP[subject] || subject;
       const dav = document.createElement('span');
       dav.className = 'dav';
       const img = document.createElement('img');
