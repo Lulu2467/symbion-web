@@ -3723,8 +3723,33 @@
     font-size: 13px;
   }
   .dir-chips button[aria-pressed="true"] { background: #eceef1; color: #1f1f1f; font-weight: 600; }
-  .dir-sorts { display: flex; gap: 4px; flex: none; }
-  .dir-sorts button[aria-pressed="true"] { background: #1f1f1f; color: #fff; }
+  #dirHost .dir-sorts {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    flex: none;
+    height: 36px;
+    padding: 3px;
+    border-radius: 10px;
+    background: #f2f3f5;
+  }
+  #dirHost .dir-sorts button {
+    height: 30px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #8b919a;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+  }
+  #dirHost .dir-sorts button[aria-pressed="true"] {
+    background: #fff;
+    color: #1a1d21;
+    font-weight: 600;
+    box-shadow: 0 1px 2px rgba(20, 24, 28, .08);
+  }
   .dir-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
   .frame.citta-open #dirHost .dir-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .dir-card {
