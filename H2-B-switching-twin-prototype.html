@@ -162,7 +162,6 @@
   html[data-theme="blue"] .osbar-nav-btn { width: 28px; height: 28px; padding: 0; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; color: #5f6368; }
   html[data-theme="blue"] .osbar-nav-btn:hover { background: #d4e4ee; color: #1f1f1f; }
   .osbar-folder { position: relative; display: inline-flex; align-items: center; gap: 16px; flex: none; }
-  html[data-theme="blue"] .osbar-folder { margin-left: -8px; }
   .osbar-folder-btn { display: none; }
   .osbar-folder-menu { display: contents; }
   html[data-theme="blue"] .osbar-folder-btn { display: inline-flex; }
@@ -3292,9 +3291,11 @@
                 var sp = bar && bar.querySelector(':scope > .sp');
                 if (bar && logo && bar.firstElementChild !== logo) bar.prepend(logo);
                 var folder = bar && bar.querySelector('.osbar-folder');
-                var folderInPlace = folder && search && nav && search.previousElementSibling === folder && folder.previousElementSibling === nav;
-                if (bar && search && nav && !folderInPlace) nav.after(search);
-                if (folder && search && search.previousElementSibling !== folder) search.before(folder);
+                var homeBtn = nav && nav.querySelector('[data-osbar="home"]');
+                var reloadBtn = nav && nav.querySelector('[data-osbar="reload"]');
+                if (folder && homeBtn && folder.previousElementSibling !== homeBtn) homeBtn.after(folder);
+                if (reloadBtn && folder && reloadBtn.previousElementSibling !== folder) folder.after(reloadBtn);
+                if (bar && search && nav && search.previousElementSibling !== nav) nav.after(search);
                 if (tabs && search && tabs.previousElementSibling !== search) search.after(tabs);
                 if (plus && tabs && plus.previousElementSibling !== tabs) tabs.after(plus);
                 if (sp && plus && sp.previousElementSibling !== plus) plus.after(sp);
@@ -6624,10 +6625,12 @@
     const logo = document.querySelector('.logo');
     if (document.documentElement.dataset.theme === 'blue') {
       const nav = bar.querySelector('.osbar-nav');
+      const homeBtn = nav && nav.querySelector('[data-osbar="home"]');
+      const reloadBtn = nav && nav.querySelector('[data-osbar="reload"]');
       if (logo && bar.firstElementChild !== logo) bar.prepend(logo);
-      const folderInPlace = folder && nav && search.previousElementSibling === folder && folder.previousElementSibling === nav;
-      if (nav && !folderInPlace) nav.after(search);
-      if (folder && search.previousElementSibling !== folder) search.before(folder);
+      if (folder && homeBtn && folder.previousElementSibling !== homeBtn) homeBtn.after(folder);
+      if (reloadBtn && folder && reloadBtn.previousElementSibling !== folder) folder.after(reloadBtn);
+      if (nav && search.previousElementSibling !== nav) nav.after(search);
       if (tabs && tabs.previousElementSibling !== search) search.after(tabs);
       if (plus && tabs && plus.previousElementSibling !== tabs) tabs.after(plus);
       if (sp && plus && sp.previousElementSibling !== plus) plus.after(sp);
