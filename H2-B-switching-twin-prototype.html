@@ -668,14 +668,14 @@
     color: var(--green-dark) !important;
     background: transparent !important;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool i svg {
-    width: 16px;
-    height: 16px;
+  .tool i svg.line-ico { display: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool i > svg:not(.line-ico) { display: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool i svg.line-ico {
+    display: block;
+    width: 18px;
+    height: 18px;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool[data-tool="doc"] i svg,
-  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool[data-tool="code"] i svg { width: 14px; height: 14px; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool[data-tool="deck"] i svg { width: 17.4px; height: 17.4px; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool[data-tool="symtex"] i { font-size: 19px; line-height: 1; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool[data-tool="symtex"] i { font-size: 0; line-height: 0; }
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .attach { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .composer .top,
   html[data-theme="blue"] .hub:has(#screen-home.on) .composer.has-cases .top { gap: 0; }
@@ -1827,6 +1827,17 @@
     vertical-align: middle;
   }
   .tag .spark-icon { width: 8px; height: 8px; color: currentColor; }
+  html[data-theme="blue"] .discover .dcard .tag {
+    font-size: 0;
+    gap: 0;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    justify-content: center;
+    line-height: 0;
+    box-sizing: border-box;
+  }
+  html[data-theme="blue"] .discover .dcard .tag .spark-icon { width: 9px; height: 9px; }
   .tag.agent { background: var(--amber-tint); color: var(--amber); }
   .dcard small { display: block; font-size: 11px; color: var(--faint); }
   .addsi {
@@ -3577,11 +3588,11 @@
                 </div>
 
                 <div class="tools" id="composerTools">
-                  <button type="button" class="tool" data-tool="doc"><i style="background:var(--blue-tint);color:var(--blue)" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M210.377143 1024h391.314286c83.401143 0 122.898286-42.313143 122.898285-126.537143v-74.550857h78.592c83.017143 0 124.525714-42.313143 124.525715-126.537143V359.058286c0-49.554286-9.691429-81.005714-39.899429-112.018286L684.288 39.899429C655.286857 10.477714 621.824 0 578.706286 0h-164.827429c-83.017143 0-124.928 42.313143-124.928 126.537143v74.550857h-78.573714c-83.017143 0-124.928 42.313143-124.928 126.537143V897.462857c0 84.626286 41.910857 126.537143 124.928 126.537143z m514.212571-451.346286c0-51.584-6.034286-74.148571-38.272-107.209143L464.256 239.378286c-30.628571-31.451429-56.009143-38.290286-101.540571-38.290286h-8.868572V127.341714c0-39.497143 21.76-62.464 63.268572-62.464h170.057142v210.761143c0 46.354286 22.966857 68.918857 68.918858 68.918857h206.738285v350.994286c0 39.899429-21.376 62.482286-63.268571 62.482286h-74.971429z m-58.825143-286.537143c-14.518857 0-20.150857-6.034286-20.150857-20.132571V77.769143l204.708572 208.347428zM213.577143 959.122286c-41.508571 0-63.268571-22.564571-63.268572-62.866286V328.411429c0-39.497143 21.76-62.445714 63.670858-62.445715h139.849142v233.728c0 50.779429 25.782857 75.757714 75.757715 75.757715h230.107428v320.786285c0 40.301714-21.76 62.866286-63.670857 62.866286z m223.670857-444.507429c-16.128 0-22.564571-6.436571-22.564571-22.162286V278.491429l232.521142 236.141714z" fill="currentColor"/></svg></i>Doc</button>
-                  <button type="button" class="tool" data-tool="deck"><i style="background:var(--amber-tint);color:var(--amber)" aria-hidden="true"><svg viewBox="0 0 1066 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M853.333333 128H256a128 128 0 0 0-128 128v341.333333a128 128 0 0 0 128 128h256v85.333334H341.333333a42.666667 42.666667 0 0 0 0 85.333333h426.666667a42.666667 42.666667 0 1 0 0-85.333333h-170.666667v-85.333334h256a128 128 0 0 0 128-128V256a128 128 0 0 0-128-128z m42.666667 469.333333a42.666667 42.666667 0 0 1-42.666667 42.666667H256a42.666667 42.666667 0 0 1-42.666667-42.666667V256a42.666667 42.666667 0 0 1 42.666667-42.666667h597.333333a42.666667 42.666667 0 0 1 42.666667 42.666667v341.333333z" fill="currentColor"/></svg></i>Deck</button>
-                  <button type="button" class="tool" data-tool="numbers"><i style="background:var(--green-tint);color:var(--green)" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M960 591.424V368.96c0-0.288 0.16-0.512 0.16-0.768S960 367.68 960 367.424V192a32 32 0 0 0-32-32H96a32 32 0 0 0-32 32v175.424c0 0.288-0.16 0.512-0.16 0.768s0.16 0.48 0.16 0.768v222.464c0 0.288-0.16 0.512-0.16 0.768s0.16 0.48 0.16 0.768V864a32 32 0 0 0 32 32h832a32 32 0 0 0 32-32v-271.04c0-0.288 0.16-0.512 0.16-0.768S960 591.68 960 591.424z m-560-31.232v-160H608v160h-208z m208 64V832h-208v-207.808H608z m-480-224h208v160H128v-160z m544 0h224v160h-224v-160zM896 224v112.192H128V224h768zM128 624.192h208V832H128v-207.808zM672 832v-207.808h224V832h-224z" fill="currentColor"/></svg></i>Numbers</button>
-                  <button type="button" class="tool" data-tool="symtex"><i style="background:var(--purple-tint);color:var(--purple)">Σ</i>SymTex</button>
-                  <button type="button" class="tool" data-tool="code"><i style="background:var(--slate-tint);color:var(--slate)" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M240.496 272c-13.504 0-25.664 5.632-34.384 14.608l-0.048-0.048L16.848 475.76A47.664 47.664 0 0 0 0 512c0 13.504 5.616 25.664 14.592 34.368l-0.032 0.064 192 192 0.048-0.064A47.68 47.68 0 0 0 240 752a48 48 0 0 0 48-48c0-12.992-5.216-24.752-13.616-33.392l0.048-0.048-158.304-158.32 157.808-157.808-0.048-0.048A47.808 47.808 0 0 0 288.496 320a48 48 0 0 0-48-48z m784 240c0-14.56-6.608-27.44-16.848-36.24L818.432 286.56l-0.032 0.048A47.872 47.872 0 0 0 784 272a48 48 0 0 0-48 48c0 13.504 5.632 25.664 14.608 34.384l-0.048 0.048 157.808 157.808-158.32 158.32 0.048 0.048A47.808 47.808 0 0 0 736.48 704a48 48 0 0 0 48 48c12.992 0 24.752-5.216 33.408-13.632l0.048 0.064 192-192-0.048-0.064A47.68 47.68 0 0 0 1024.496 512zM640 128c-20.8 0-38.496 13.232-45.168 31.712L339.2 830.784a48 48 0 0 0 89.968 33.504L684.8 193.216A48 48 0 0 0 640 128z" fill="currentColor"/></svg></i>Code</button>
+                  <button type="button" class="tool" data-tool="doc"><i style="background:var(--blue-tint);color:var(--blue)" aria-hidden="true"><svg class="line-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 3.9h8.35L19.85 9.55V18.75a1.35 1.35 0 0 1-1.35 1.35H5.5a1.35 1.35 0 0 1-1.35-1.35V5.25A1.35 1.35 0 0 1 5.5 3.9z"/><path d="M13.65 3.95V9.4h6.05"/><path d="M7.35 12.9h7.5M7.35 16.15h4.9"/></svg><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M210.377143 1024h391.314286c83.401143 0 122.898286-42.313143 122.898285-126.537143v-74.550857h78.592c83.017143 0 124.525714-42.313143 124.525715-126.537143V359.058286c0-49.554286-9.691429-81.005714-39.899429-112.018286L684.288 39.899429C655.286857 10.477714 621.824 0 578.706286 0h-164.827429c-83.017143 0-124.928 42.313143-124.928 126.537143v74.550857h-78.573714c-83.017143 0-124.928 42.313143-124.928 126.537143V897.462857c0 84.626286 41.910857 126.537143 124.928 126.537143z m514.212571-451.346286c0-51.584-6.034286-74.148571-38.272-107.209143L464.256 239.378286c-30.628571-31.451429-56.009143-38.290286-101.540571-38.290286h-8.868572V127.341714c0-39.497143 21.76-62.464 63.268572-62.464h170.057142v210.761143c0 46.354286 22.966857 68.918857 68.918858 68.918857h206.738285v350.994286c0 39.899429-21.376 62.482286-63.268571 62.482286h-74.971429z m-58.825143-286.537143c-14.518857 0-20.150857-6.034286-20.150857-20.132571V77.769143l204.708572 208.347428zM213.577143 959.122286c-41.508571 0-63.268571-22.564571-63.268572-62.866286V328.411429c0-39.497143 21.76-62.445714 63.670858-62.445715h139.849142v233.728c0 50.779429 25.782857 75.757714 75.757715 75.757715h230.107428v320.786285c0 40.301714-21.76 62.866286-63.670857 62.866286z m223.670857-444.507429c-16.128 0-22.564571-6.436571-22.564571-22.162286V278.491429l232.521142 236.141714z" fill="currentColor"/></svg></i>Doc</button>
+                  <button type="button" class="tool" data-tool="deck"><i style="background:var(--amber-tint);color:var(--amber)" aria-hidden="true"><svg class="line-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.15" y="3.9" width="15.7" height="11.4" rx="1.45"/><path d="M12 15.3v4.8M8.15 20.1h7.7"/></svg><svg viewBox="0 0 1066 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M853.333333 128H256a128 128 0 0 0-128 128v341.333333a128 128 0 0 0 128 128h256v85.333334H341.333333a42.666667 42.666667 0 0 0 0 85.333333h426.666667a42.666667 42.666667 0 1 0 0-85.333333h-170.666667v-85.333334h256a128 128 0 0 0 128-128V256a128 128 0 0 0-128-128z m42.666667 469.333333a42.666667 42.666667 0 0 1-42.666667 42.666667H256a42.666667 42.666667 0 0 1-42.666667-42.666667V256a42.666667 42.666667 0 0 1 42.666667-42.666667h597.333333a42.666667 42.666667 0 0 1 42.666667 42.666667v341.333333z" fill="currentColor"/></svg></i>Deck</button>
+                  <button type="button" class="tool" data-tool="numbers"><i style="background:var(--green-tint);color:var(--green)" aria-hidden="true"><svg class="line-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.15" y="3.9" width="15.7" height="16.2" rx="1.45"/><path d="M4.15 9.35h15.7M4.15 14.55h15.7M9.55 3.9v16.2M14.6 3.9v16.2"/></svg><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M960 591.424V368.96c0-0.288 0.16-0.512 0.16-0.768S960 367.68 960 367.424V192a32 32 0 0 0-32-32H96a32 32 0 0 0-32 32v175.424c0 0.288-0.16 0.512-0.16 0.768s0.16 0.48 0.16 0.768v222.464c0 0.288-0.16 0.512-0.16 0.768s0.16 0.48 0.16 0.768V864a32 32 0 0 0 32 32h832a32 32 0 0 0 32-32v-271.04c0-0.288 0.16-0.512 0.16-0.768S960 591.68 960 591.424z m-560-31.232v-160H608v160h-208z m208 64V832h-208v-207.808H608z m-480-224h208v160H128v-160z m544 0h224v160h-224v-160zM896 224v112.192H128V224h768zM128 624.192h208V832H128v-207.808zM672 832v-207.808h224V832h-224z" fill="currentColor"/></svg></i>Numbers</button>
+                  <button type="button" class="tool" data-tool="symtex"><i style="background:var(--purple-tint);color:var(--purple)"><svg class="line-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.85 3.75H4.15L12.2 12 4.15 20.25H19.85"/></svg>Σ</i>SymTex</button>
+                  <button type="button" class="tool" data-tool="code"><i style="background:var(--slate-tint);color:var(--slate)" aria-hidden="true"><svg class="line-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.25 4.15 4.15 12l5.1 7.85M14.75 4.15 19.85 12l-5.1 7.85M13.55 3.9l-3.1 16.2"/></svg><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M240.496 272c-13.504 0-25.664 5.632-34.384 14.608l-0.048-0.048L16.848 475.76A47.664 47.664 0 0 0 0 512c0 13.504 5.616 25.664 14.592 34.368l-0.032 0.064 192 192 0.048-0.064A47.68 47.68 0 0 0 240 752a48 48 0 0 0 48-48c0-12.992-5.216-24.752-13.616-33.392l0.048-0.048-158.304-158.32 157.808-157.808-0.048-0.048A47.808 47.808 0 0 0 288.496 320a48 48 0 0 0-48-48z m784 240c0-14.56-6.608-27.44-16.848-36.24L818.432 286.56l-0.032 0.048A47.872 47.872 0 0 0 784 272a48 48 0 0 0-48 48c0 13.504 5.632 25.664 14.608 34.384l-0.048 0.048 157.808 157.808-158.32 158.32 0.048 0.048A47.808 47.808 0 0 0 736.48 704a48 48 0 0 0 48 48c12.992 0 24.752-5.216 33.408-13.632l0.048 0.064 192-192-0.048-0.064A47.68 47.68 0 0 0 1024.496 512zM640 128c-20.8 0-38.496 13.232-45.168 31.712L339.2 830.784a48 48 0 0 0 89.968 33.504L684.8 193.216A48 48 0 0 0 640 128z" fill="currentColor"/></svg></i>Code</button>
                   <span class="sp"></span>
                   <span class="attach"><button type="button" class="attach-hit">From a Cosmo</button><span class="attach-sep" aria-hidden="true"> · </span><button type="button" class="attach-hit">From Library</button></span>
                 </div>
@@ -7003,6 +7014,24 @@
     });
   }
 
+  function syncDiscoverTagStars() {
+    const blue = document.documentElement.dataset.theme === 'blue';
+    document.querySelectorAll('.discover .dcard .tag').forEach((tag) => {
+      const added = tag.querySelector('.spark-icon[data-added-star]');
+      if (!blue) {
+        added?.remove();
+        return;
+      }
+      if (tag.querySelector('.spark-icon')) return;
+      const spark = document.createElement('span');
+      spark.className = 'spark-icon';
+      spark.dataset.addedStar = '1';
+      spark.setAttribute('aria-hidden', 'true');
+      spark.innerHTML = SPARK_SOLID;
+      tag.prepend(spark);
+    });
+  }
+
   function applyTheme(theme) {
     setBookmarkFolder(false);
     const next = theme === 'blue' ? 'blue' : 'green';
@@ -7016,6 +7045,7 @@
     placeComposerToolChip();
     syncComposerCases();
     syncLectureDiscover();
+    syncDiscoverTagStars();
     void root.offsetWidth;
     root.classList.remove('theme-swap');
     document.querySelectorAll('[data-theme-pick]').forEach((b) => {
@@ -7567,22 +7597,22 @@
 
   function decorateLectureBookIcons() {
     paintToolGlyph(
-      '.week-card[data-tool="doc"] > .row > i, .tutorial-try-card[data-tool="doc"] .trow > i, .try-card[data-tool="doc"] .bot .row > i, #composerTools .tool[data-tool="doc"] > i, .tpl[data-goal-tool="doc"] .h > i',
+      '.week-card[data-tool="doc"] > .row > i, .tutorial-try-card[data-tool="doc"] .trow > i, .try-card[data-tool="doc"] .bot .row > i, .tpl[data-goal-tool="doc"] .h > i',
       DOC_ICON_SVG, 'var(--blue-tint)', 'var(--blue)'
     );
     paintToolGlyph(
-      '.week-card[data-tool="deck"] > .row > i, .tutorial-try-card[data-tool="deck"] .trow > i, .try-card[data-tool="deck"] .bot .row > i, #composerTools .tool[data-tool="deck"] > i, .tpl[data-goal-tool="deck"] .h > i',
+      '.week-card[data-tool="deck"] > .row > i, .tutorial-try-card[data-tool="deck"] .trow > i, .try-card[data-tool="deck"] .bot .row > i, .tpl[data-goal-tool="deck"] .h > i',
       DECK_ICON_SVG, 'var(--amber-tint)', 'var(--amber)'
     );
     paintToolGlyph(
-      '.week-card[data-tool="numbers"] > .row > i, .tutorial-try-card[data-tool="numbers"] .trow > i, .try-card[data-tool="numbers"] .bot .row > i, #composerTools .tool[data-tool="numbers"] > i, .tpl[data-goal-tool="numbers"] .h > i',
+      '.week-card[data-tool="numbers"] > .row > i, .tutorial-try-card[data-tool="numbers"] .trow > i, .try-card[data-tool="numbers"] .bot .row > i, .tpl[data-goal-tool="numbers"] .h > i',
       NUMBERS_ICON_SVG, '#e6f2eb', '#008b68'
     );
     paintToolGlyph(
-      '.week-card[data-tool="code"] > .row > i, .tutorial-try-card[data-tool="code"] .trow > i, .try-card[data-tool="code"] .bot .row > i, #composerTools .tool[data-tool="code"] > i, .tpl[data-goal-tool="code"] .h > i',
+      '.week-card[data-tool="code"] > .row > i, .tutorial-try-card[data-tool="code"] .trow > i, .try-card[data-tool="code"] .bot .row > i, .tpl[data-goal-tool="code"] .h > i',
       CODE_ICON_SVG, 'var(--slate-tint)', 'var(--slate)'
     );
-    document.querySelectorAll('.tpl[data-goal-tool="symtex"] .h > i, .week-card[data-tool="symtex"] > .row > i, .tutorial-try-card[data-tool="symtex"] .trow > i, .try-card[data-tool="symtex"] .bot .row > i, #composerTools .tool[data-tool="symtex"] > i').forEach((el) => {
+    document.querySelectorAll('.tpl[data-goal-tool="symtex"] .h > i, .week-card[data-tool="symtex"] > .row > i, .tutorial-try-card[data-tool="symtex"] .trow > i, .try-card[data-tool="symtex"] .bot .row > i').forEach((el) => {
       el.style.background = 'var(--purple-tint)';
       el.style.color = 'var(--purple)';
       el.style.fontSize = '';
