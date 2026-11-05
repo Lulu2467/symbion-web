@@ -569,8 +569,8 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .plus:hover { background: transparent; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .plus::before,
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .plus::after { background: #3c4043; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .plus::before { width: 16px; height: 1.6px; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .plus::after { width: 1.6px; height: 16px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .plus::before { width: 16px; height: 2px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .plus::after { width: 2px; height: 16px; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-compose {
     min-height: 48px;
     align-items: flex-start;
@@ -655,11 +655,11 @@
     display: inline-flex;
     align-items: center;
     position: relative;
-    gap: 8px;
+    gap: 6px;
     flex: none;
-    height: 40px;
-    margin: 0 0 0 -4px;
-    padding: 0 14px 0 0;
+    height: 32px;
+    margin: 0;
+    padding: 0 10px 0 6px;
     border: 1px solid transparent;
     border-radius: 999px;
     background: transparent;
@@ -674,8 +674,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     border-radius: 0;
     background: transparent !important;
     color: var(--green) !important;
@@ -704,12 +704,15 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x,
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x:hover {
     display: inline-flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
-    left: 0;
+    left: 6px;
     top: 50%;
     transform: translateY(-50%);
-    width: 18px;
-    height: 18px;
+    box-sizing: border-box;
+    width: 16px;
+    height: 16px;
     margin: 0;
     border-radius: 999px;
     border: 1.5px solid var(--green);
