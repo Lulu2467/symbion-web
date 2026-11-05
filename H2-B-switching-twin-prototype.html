@@ -2707,25 +2707,25 @@
   }
   html[data-theme="blue"] .think-dots {
     display: grid;
-    grid-template-columns: repeat(5, 2px);
-    gap: 1px;
-    width: 14px;
-    height: 14px;
+    grid-template-columns: repeat(3, 4px);
+    gap: 2px;
+    width: 16px;
+    height: 16px;
     flex: none;
     margin: 0;
     padding: 0;
   }
   html[data-theme="blue"] .think-dots span {
-    width: 2px;
-    height: 2px;
+    width: 4px;
+    height: 4px;
     border-radius: 50%;
     background: #8d97a3;
     animation: think-drift 1.36s linear infinite;
   }
   @keyframes think-drift {
-    0%, 100% { opacity: 0.16; }
-    14% { opacity: 1; }
-    30% { opacity: 0.28; }
+    0%, 100% { opacity: 0.34; }
+    18% { opacity: 1; }
+    42% { opacity: 0.48; }
   }
   @media (prefers-reduced-motion: reduce) {
     html[data-theme="blue"] .think-dots span { animation: none; opacity: 0.45; }
@@ -4559,7 +4559,7 @@
       think.className = 'think-dots';
       think.setAttribute('role', 'status');
       think.setAttribute('aria-label', 'Citta is thinking');
-      [0.136, 0.784, 0.068, 0.716, 0, 0.852, 0.136, 0.784, 0.068, 0.716, 0.205, 0.852, 0.136, 0.784, 0.068, 0.92, 0.205, 0.852, 0.136, 0.784, 0.273, 0.92, 0.205, 0.852, 0.136].forEach((delay) => {
+      [0, 0.16, 0.32, 0.16, 0.32, 0.48, 0.32, 0.48, 0.64].forEach((delay) => {
         const dot = document.createElement('span');
         dot.style.animationDelay = `${delay}s`;
         think.appendChild(dot);
