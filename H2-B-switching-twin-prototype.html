@@ -3645,6 +3645,7 @@
     margin-left: auto; width: 180px; border: 1px solid #e6e8ec; border-radius: 8px;
     padding: 6px 10px; font-size: 12px; background: #fff;
   }
+  #deskDriveTools input { margin-left: 0; }
   .desk-folders { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
   .desk-folders.is-list { grid-template-columns: 1fr; }
   .desk-folder {
@@ -3653,7 +3654,60 @@
   .desk-folder.on { outline: 2px solid var(--green); }
   .desk-folder b { display: block; font-size: 13px; }
   .desk-folder small { color: #71777d; font-size: 12px; }
-  .desk-foot { display: flex; gap: 14px; color: #8b9198; font-size: 12px; margin-top: 12px; }
+  .desk-foot { display: flex; gap: 14px; align-items: center; color: #8b9198; font-size: 12px; margin-top: 12px; }
+  .drive-head { display: flex; align-items: baseline; gap: 10px; }
+  .drive-head .sub { margin: 0; }
+  .drive-crumb { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin: 0 0 10px; font-size: 13px; }
+  .drive-crumb button { border: 0; background: transparent; padding: 0; font-weight: 650; color: var(--green); }
+  #deskHost .drive-crumb span { color: var(--ink); font-weight: 650; }
+  .drive-tools { position: relative; }
+  #deskHost .drive-soon[disabled] { color: var(--label); cursor: default; }
+  .drive-pop {
+    position: absolute; z-index: 4; top: calc(100% + 4px); min-width: 180px;
+    background: #fff; border: 1px solid var(--line); border-radius: 12px;
+    box-shadow: 0 10px 28px rgba(20,24,28,.12); padding: 6px;
+  }
+  .drive-pop button, .drive-menu button {
+    display: block; width: 100%; text-align: left; border: 0; background: transparent;
+    border-radius: 8px; padding: 7px 10px; font-size: 13px; font-weight: 550; color: var(--ink);
+  }
+  #deskHost .drive-pop button:hover, #deskHost .drive-menu button:hover { background: #f3f5f7; }
+  #deskHost .drive-pop button:disabled, #deskHost .drive-menu button:disabled { color: var(--label); background: transparent; cursor: default; }
+  .drive-note { margin: 0 0 10px; color: var(--muted); font-size: 13px; line-height: 1.45; }
+  #deskHost .drive-link { border: 0; background: transparent; padding: 0; color: var(--green); font-weight: 650; }
+  .drive-drop {
+    width: 100%; margin: 0 0 12px; border: 1px dashed var(--line-strong); border-radius: 12px;
+    background: #fff; color: var(--muted); padding: 14px; font-size: 13px;
+  }
+  #deskHost .drive-drop:hover, #deskHost .drive-drop.is-over { border-color: var(--green); color: var(--green-dark); }
+  .drive-name {
+    display: flex; gap: 8px; align-items: center; margin: 0 0 10px;
+  }
+  .drive-name input {
+    flex: 1; height: 36px; border: 1px solid var(--line); border-radius: 8px; padding: 0 10px; font-size: 13px;
+  }
+  .drive-name input:focus { outline: none; border-color: var(--green); }
+  #deskHost .drive-go { background: var(--green); color: #fff !important; border: 0; border-radius: 8px; padding: 7px 12px; font-weight: 700; }
+  #deskHost .drive-go:hover { background: var(--green-dark); }
+  #deskHost .drive-go:disabled { background: #e6e8eb; color: #6b7076 !important; }
+  .drive-item { position: relative; display: flex; gap: 8px; align-items: center; }
+  .desk-folders.is-list .drive-item { width: 100%; }
+  .drive-main { flex: 1; min-width: 0; display: flex; gap: 8px; align-items: center; text-align: left; }
+  .desk-folders:not(.is-list) .drive-item { align-items: stretch; }
+  .desk-folders:not(.is-list) .drive-main { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .drive-ico { color: var(--green); flex: none; }
+  .drive-main b { display: block; font-size: 13px; }
+  .drive-main small { color: var(--label); font-size: 12px; }
+  #deskHost .drive-main { border: 0; background: transparent; color: inherit; padding: 0; }
+  .drive-pick { width: 16px; height: 16px; border: 1.5px solid var(--line-strong); border-radius: 4px; background: #fff; padding: 0; flex: none; }
+  #deskHost .drive-pick[aria-pressed="true"] { background: var(--green); border-color: var(--green); }
+  .drive-more { border: 0; background: transparent; color: var(--label); width: 28px; height: 28px; border-radius: 8px; }
+  #deskHost .drive-more:hover, #deskHost .drive-more[aria-expanded="true"] { background: #f3f5f7; color: #1f1f1f; }
+  .drive-menu { right: 0; top: 32px; }
+  .drive-rename { width: 100%; height: 32px; border: 1px solid var(--green); border-radius: 8px; padding: 0 8px; font-size: 13px; }
+  #deskHost .drive-del { border: 1px solid var(--line); background: #fff; color: #1f1f1f; border-radius: 8px; padding: 5px 9px; font-weight: 650; }
+  #deskHost .drive-del:disabled { background: #e6e8eb; color: #6b7076; border-color: transparent; }
+  #deskHost .drive-status { border: 0; background: transparent; padding: 0; }
   .kanban-modal {
     position: absolute; inset: 0; z-index: 6;
     display: flex; align-items: center; justify-content: center; padding: 24px;
@@ -3875,6 +3929,111 @@
   .set-line:first-of-type { border-top: 0; }
   .set-line b { font-weight: 650; }
   .set-line span { color: var(--muted); }
+  #setHost [hidden] { display: none !important; }
+  #setHost .set-primary { color: #fff; }
+  #setHost .set-nav button[data-set][aria-current="page"] { background: var(--green-tint); color: var(--green); }
+  .set-badge {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    margin-top: 8px;
+    padding: 0 8px;
+    border-radius: 999px;
+    background: var(--green-tint);
+    color: var(--green-dark);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .set-nav button[data-set] em {
+    margin-left: 6px;
+    padding: 1px 5px;
+    border-radius: 999px;
+    background: #f0f2f4;
+    color: #8b919a;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 650;
+    letter-spacing: 0;
+  }
+  .set-pic-layout { display: flex; gap: 16px; align-items: flex-start; }
+  .set-preview {
+    width: 112px;
+    height: 112px;
+    flex: none;
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    background: var(--green-wash);
+    color: var(--green);
+    font-size: 32px;
+    font-weight: 650;
+    overflow: hidden;
+  }
+  .set-preview img { width: 100%; height: 100%; object-fit: cover; }
+  .set-preview svg { width: 72px; height: 72px; }
+  .set-pics { display: grid; grid-template-columns: repeat(4, 64px); }
+  .set-pic svg { display: block; width: 40px; height: 40px; margin: 0 auto 4px; border-radius: 10px; }
+  .set-file { display: inline-flex; align-items: center; }
+  .set-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  #setHost .set-tabs button {
+    height: 28px;
+    padding: 0 10px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: #fff;
+    color: #8b919a;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  #setHost .set-tabs button[aria-pressed="true"] { background: var(--green-tint); border-color: var(--green-line); color: var(--green-dark); }
+  #setHost .set-tabs button:disabled { color: #b0b4ba; }
+  .set-check { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 13px; color: #1a1d21; }
+  #setHost .set-check input { width: 16px; height: 16px; margin: 0; }
+  .set-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 14px 0; }
+  .set-stats div { padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; }
+  .set-stats span { display: block; color: var(--label); font-size: 11px; font-weight: 700; letter-spacing: .04em; }
+  .set-stats b { display: block; margin-top: 4px; font-size: 14px; }
+  .set-status {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .set-status div { padding: 10px 12px; border: 1px solid var(--green-line); border-radius: 12px; background: var(--green-wash); }
+  .set-status b { display: block; font-size: 13px; }
+  .set-status small { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; line-height: 1.4; }
+  .set-plans { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+  .set-plan {
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #fff;
+    text-align: left;
+  }
+  .set-plan[aria-pressed="true"] { border-color: var(--green); background: var(--green-wash); }
+  .set-plan b { display: block; font-size: 16px; }
+  .set-plan small { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; line-height: 1.4; }
+  .set-flow { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 14px; }
+  .set-flow span { padding: 6px 10px; border-radius: 999px; background: #f0f2f4; color: #1a1d21; font-size: 12px; font-weight: 600; }
+  .set-hire { display: grid; grid-template-columns: 180px 1fr 220px; gap: 12px; align-items: start; }
+  .set-roster { display: flex; flex-direction: column; gap: 6px; max-height: 420px; overflow: auto; }
+  #setHost .set-role {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #fff;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 650;
+  }
+  #setHost .set-role[aria-pressed="true"] { border-color: var(--green-line); background: var(--green-wash); }
+  #setHost .set-role i { width: 8px; height: 8px; border-radius: 2px; background: var(--green); flex: none; }
+  #setHost .set-role em { margin-left: auto; color: #8b919a; font-size: 11px; font-style: normal; font-weight: 650; }
+  #setHost .set-role small { display: block; color: var(--muted); font-size: 11px; font-weight: 500; }
 
   .frame.symbion-on { display: flex; flex-direction: column; height: 900px; }
   .frame.symbion-on .body { flex: 1; min-height: 0; }
@@ -5293,7 +5452,7 @@
                 <p class="set-kicker">SECURITY</p>
                 <button type="button" data-set="security">Security</button>
                 <p class="set-kicker">ADVANCED</p>
-                <button type="button" data-set="bugs">Bug Report mode</button>
+                <button type="button" data-set="bugs">Bug Report mode <em>Product test</em></button>
                 <p class="set-kicker">RELATED</p>
                 <button type="button" data-set="tokens">Tokens &amp; plan</button>
                 <button type="button" data-set="agents">Agents</button>
@@ -5328,7 +5487,7 @@
                     </label>
                   </div>
                   <label><span>EMAIL</span><input value="jess@symbion.test" readonly aria-label="Email"></label>
-                  <p class="set-note">This address stays on the account.</p>
+                  <p class="set-badge">Email confirmed</p>
                   <div class="set-actions">
                     <button type="button" class="set-primary" data-set-act="save-profile">Save profile</button>
                     <button type="button" class="set-quiet" data-set-act="reset">Reset onboarding</button>
@@ -5346,50 +5505,106 @@
                         <option>Europe/London</option>
                       </select>
                     </label>
+                    <p class="set-note" id="setDeviceZone"></p>
                     <div class="set-actions"><button type="button" class="set-quiet" id="setZoneSave" data-set-act="zone" disabled>Save time zone</button></div>
                 </div>
                 <div class="set-card" data-set-panel="picture" hidden>
                   <h3>Profile picture</h3>
-                  <p class="sub">Choose the picture people see across Symbion. Upload waits for the account service.</p>
-                  <div class="set-pics" id="setPics">
-                    <button type="button" class="set-pic" data-pic="initials" aria-pressed="true"><i class="hue-green" id="setInitials">LU</i>Initials</button>
-                    <button type="button" class="set-pic" data-pic="sage" aria-pressed="false"><i class="hue-green">SP</i>Sage</button>
-                    <button type="button" class="set-pic" data-pic="navy" aria-pressed="false"><i class="hue-blue">NP</i>Navy</button>
-                    <button type="button" class="set-pic" data-pic="sunny" aria-pressed="false"><i class="hue-amber">SS</i>Sunny</button>
-                    <button type="button" class="set-pic" data-pic="coral" aria-pressed="false"><i class="hue-purple">CC</i>Coral</button>
-                    <button type="button" class="set-pic" data-pic="slate" aria-pressed="false"><i class="hue-slate">SL</i>Slate</button>
+                  <p class="sub">Choose the picture people see across Symbion.</p>
+                  <div class="set-pic-layout">
+                    <div class="set-preview" id="setPreview"><span id="setInitials">LU</span></div>
+                    <div>
+                      <div class="set-pics" id="setPics">
+                        <button type="button" class="set-pic" data-pic="initials" aria-pressed="true">Initials</button>
+                        <button type="button" class="set-pic" data-pic="sage" aria-pressed="false"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#ebf5fa"/><circle cx="20" cy="16" r="6" fill="#3c7a94"/><path d="M10 32c1.5-6 5-8 10-8s8.5 2 10 8" fill="#3c7a94"/></svg>Sage</button>
+                        <button type="button" class="set-pic" data-pic="navy" aria-pressed="false"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#e8eef6"/><circle cx="20" cy="15" r="6" fill="#316479"/><rect x="12" y="24" width="16" height="10" rx="5" fill="#316479"/></svg>Navy</button>
+                        <button type="button" class="set-pic" data-pic="sunny" aria-pressed="false"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#f4f8fa"/><circle cx="20" cy="16" r="7" fill="#c5d6e0"/><circle cx="17" cy="15" r="1" fill="#1a1d21"/><circle cx="23" cy="15" r="1" fill="#1a1d21"/><path d="M16 19c1.2 1.4 6.8 1.4 8 0" stroke="#1a1d21" stroke-width="1.2" fill="none"/></svg>Sunny</button>
+                        <button type="button" class="set-pic" data-pic="coral" aria-pressed="false"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#f6f7f8"/><circle cx="20" cy="18" r="8" fill="#d4e4ee"/><path d="M12 14c2-4 14-4 16 0" stroke="#3c7a94" stroke-width="2" fill="none"/></svg>Coral</button>
+                        <button type="button" class="set-pic" data-pic="slate" aria-pressed="false"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#f0f2f4"/><circle cx="20" cy="16" r="6" fill="#8b919a"/><path d="M11 33c2-7 16-7 18 0" fill="#8b919a"/></svg>Slate</button>
+                        <button type="button" class="set-pic" data-pic="owl" aria-pressed="false"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#ebf5fa"/><circle cx="16" cy="18" r="4" fill="#fff"/><circle cx="24" cy="18" r="4" fill="#fff"/><circle cx="16" cy="18" r="1.5" fill="#1a1d21"/><circle cx="24" cy="18" r="1.5" fill="#1a1d21"/></svg>Owl</button>
+                        <button type="button" class="set-pic" data-pic="sprout" aria-pressed="false"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#f4f8fa"/><path d="M20 28c0-8 6-12 10-12-1 6-5 10-10 12z" fill="#3c7a94"/><path d="M20 28c0-8-6-12-10-12 1 6 5 10 10 12z" fill="#316479"/></svg>Sprout</button>
+                      </div>
+                      <div class="set-actions">
+                        <label class="set-quiet set-file">Choose file<input id="setPicFile" type="file" accept="image/*" hidden></label>
+                        <button type="button" class="set-quiet" id="setPicUpload" data-set-act="upload" disabled>Upload</button>
+                      </div>
+                    </div>
                   </div>
-                  <div class="set-actions"><button type="button" class="set-quiet" disabled>Upload</button></div>
                 </div>
                 <div class="set-card" data-set-panel="apps" hidden>
                   <h3>Connected apps</h3>
-                  <p class="sub">Mail uses this account. Calendar and Drive are not connected.</p>
-                  <div class="set-line"><b>Mail</b><span>jess@symbion.test</span></div>
-                  <div class="set-line"><b>Calendar</b><span>Not connected</span></div>
-                  <div class="set-line"><b>Drive</b><span>Not connected</span></div>
-                  <h3 style="margin-top:18px">Files you let agents read</h3>
-                  <p class="sub">Only files you pick are indexed. Raw Drive file bytes are not stored. There is no all-Drive crawl.</p>
-                  <p class="set-note">Connect Google Workspace first to index Drive files.</p>
-                  <div class="set-actions"><button type="button" class="set-quiet" data-set-act="connect">Connect</button></div>
+                  <p class="sub">Review connection health, permissions, and repair actions.</p>
+                  <div class="set-tabs" role="group" aria-label="Connection">
+                    <button type="button" data-app="drive" aria-pressed="true">Drive · required</button>
+                    <button type="button" data-app="email" aria-pressed="false">Email · optional</button>
+                    <button type="button" data-app="calendar" aria-pressed="false">Calendar · optional</button>
+                    <button type="button" data-app="lms" aria-pressed="false">LMS · optional</button>
+                    <button type="button" data-app="ledger" aria-pressed="false" disabled>Ledger · soon</button>
+                  </div>
+                  <div data-app-panel="drive">
+                    <h3>Files you let agents read</h3>
+                    <p class="sub">Only files you pick are indexed. Raw Drive file bytes are not stored. There is no all-Drive crawl.</p>
+                    <p class="set-note">Connect Google Workspace first to index Drive files.</p>
+                    <div class="set-actions"><button type="button" class="set-quiet" data-set-act="connect">Connect Google Workspace</button></div>
+                  </div>
+                  <div data-app-panel="email" hidden>
+                    <h3>Mail</h3>
+                    <p class="sub">Mail can use this account. It is optional, and nothing is marked connected.</p>
+                    <div class="set-line"><b>Account</b><span>jess@symbion.test</span></div>
+                  </div>
+                  <div data-app-panel="calendar" hidden>
+                    <h3>Calendar</h3>
+                    <p class="sub">Calendar stays optional. Events are not read until you connect it.</p>
+                  </div>
+                  <div data-app-panel="lms" hidden>
+                    <h3>LMS</h3>
+                    <p class="sub">Course tools stay optional. NeoSchool roles are not changed from here.</p>
+                  </div>
                   <h3 style="margin-top:18px">Your connectors</h3>
-                  <p class="sub">No connectors yet. A connector that has not synced stays pending.</p>
+                  <p class="sub">A connector that has not synced stays pending. Refresh does not mark one synced.</p>
+                  <div class="set-actions"><button type="button" class="set-quiet" data-set-act="refresh-connectors">Refresh</button></div>
+                  <p class="set-note">No connectors yet.</p>
                 </div>
                 <div class="set-card" data-set-panel="runtime" hidden>
-                  <h3>Local runtime</h3>
-                  <p class="sub">Desktop and extension browser work stay first in line for authenticated tasks.</p>
+                  <h3>Runtime</h3>
+                  <p class="sub">Choose how local and cloud browser work is handled.</p>
+                  <div class="set-line"><b>Browser operation</b><span id="setRuntimeSaved">Not saved</span></div>
+                  <label class="set-check"><input type="checkbox" id="setPreferLocal" checked>Prefer local first</label>
+                  <p class="set-note">Desktop and extension browser work stay first in line for authenticated tasks.</p>
+                  <h3 style="margin-top:16px">Per-turn preference</h3>
                   <button type="button" class="set-choice" data-runtime="local" aria-pressed="true"><span><b>Local first</b><small>Use the Symbion Desktop browser session when browser work is needed.</small></span></button>
                   <button type="button" class="set-choice" data-runtime="ask" aria-pressed="false"><span><b>Ask each turn</b><small>Show an explicit choice when multiple safe runtimes are available.</small></span></button>
+                  <h3 style="margin-top:16px">Per-turn override choices</h3>
+                  <div class="set-status">
+                    <div><b>Current tab</b><small>Attach to the visible local browser surface. Available.</small></div>
+                    <div><b>Background session</b><small>Run in an owned local session with compact status. Available.</small></div>
+                    <div><b>Manual export</b><small>Use a file or paste handoff when automation is unsafe. Available.</small></div>
+                  </div>
+                  <div class="set-actions"><button type="button" class="set-primary" data-set-act="save-runtime">Save runtime settings</button></div>
                 </div>
                 <div class="set-card" data-set-panel="translate" hidden>
                   <h3>English ↔ Simplified Chinese</h3>
+                  <p class="set-badge">Private · local</p>
                   <p class="sub">Optional on-device translation. Message text is not sent to a cloud model.</p>
                   <label><span>PREFERRED LANGUAGE</span>
-                    <select aria-label="Preferred language"><option>English</option><option>Simplified Chinese</option></select>
+                    <select id="setLang" aria-label="Preferred language"><option>English</option><option>Simplified Chinese</option></select>
                   </label>
-                  <label class="set-note"><input type="checkbox" disabled style="width:auto;height:auto;margin-right:8px">Automatically translate messages into my preferred language</label>
-                  <p class="set-note">Language packs are available in the Symbion desktop app. On the web, translation still starts only when you choose Translate.</p>
+                  <label class="set-check"><input type="checkbox" id="setAutoTranslate">Automatically translate messages into my preferred language</label>
+                  <label><span>MESSAGE DISPLAY</span>
+                    <select id="setLangDisplay" aria-label="Message display"><option>Original and translation</option><option>Translation only</option><option>Original only</option></select>
+                  </label>
+                  <p class="set-note">Automatic translation runs only in the desktop app when the local pack is ready. On the web, translation still starts only when you choose Translate.</p>
+                  <div class="set-stats">
+                    <div><span>STATUS</span><b id="setPackStatus">Not installed</b></div>
+                    <div><span>DOWNLOAD</span><b>87 MB</b></div>
+                    <div><span>INSTALLED SIZE</span><b>114 MB</b></div>
+                  </div>
+                  <div class="set-actions"><button type="button" class="set-quiet" data-set-act="install-pack">Install language pack</button></div>
+                  <p class="set-note">Language packs install, update, and remove on their own. No desktop-app download is required from this page. Source: Mozilla Translations, MPL-2.0.</p>
                 </div>
                 <div class="set-card" data-set-panel="chat" hidden>
+                  <h3>Chat display</h3>
+                  <p class="sub">Review how chat messages and agent attribution are presented.</p>
                   <h3>Agent message attribution</h3>
                   <p class="sub">When Citta sends for a human account, Symbion shows the represented account followed by “(by Citta)”. This label cannot be hidden.</p>
                 </div>
@@ -5400,27 +5615,80 @@
                   <button type="button" class="set-choice" data-neo="avatar" aria-pressed="false"><span><b>Avatar only</b><small>Show the idle avatar. Select it to open Citta.</small></span></button>
                   <button type="button" class="set-choice" data-neo="hide" aria-pressed="false"><span><b>Hide floating Citta</b><small>Hide the idle floating controls. Show Citta remains in the top navigation.</small></span></button>
                   <button type="button" class="set-choice" data-neo="existing" aria-pressed="true"><span><b>Use existing layout</b><small>Keep this device’s current Citta layout.</small></span></button>
-                  <p class="set-note" id="setNeoNote">On this device: Use existing layout.</p>
+                  <div class="set-actions"><button type="button" class="set-primary" data-set-act="save-neo">Save Citta preference</button></div>
+                  <p class="set-note" id="setNeoNote">Saved preference: Use existing layout.</p>
                 </div>
                 <div class="set-card" data-set-panel="security" hidden>
+                  <h3>Security</h3>
+                  <p class="sub">Review this session and account-wide sign-out controls.</p>
                   <h3>Where you’re signed in</h3>
-                  <p class="sub">Sign out everywhere ends this browser, the desktop app, the browser extension, and any cloud sandbox. That action waits for the account service.</p>
-                  <div class="set-actions"><button type="button" class="set-quiet" data-set-act="signout-all">Sign out everywhere</button></div>
+                  <div class="set-line"><b>This device</b><span>sid_9f527aee…</span></div>
+                  <div class="set-actions"><button type="button" class="set-quiet" data-set-act="signout-all">Sign out of all devices</button></div>
+                  <p class="set-note">Ends every session — this browser, the desktop app, the browser extension, and any cloud sandbox. That action waits for the account service.</p>
                   <h3 style="margin-top:18px">Pause sign-in</h3>
-                  <p class="sub">Pause keeps your files and leaves other linked accounts alone. It isn’t available from this prototype, and it does not delete anything.</p>
+                  <p class="sub">Account: jess@symbion.test. Pause keeps your files. Work already running continues. Other linked accounts stay as they are.</p>
+                  <label><span>ACCOUNT PASSWORD</span><input id="setPausePass" type="password" autocomplete="current-password" aria-label="Account password"></label>
+                  <div class="set-actions">
+                    <button type="button" class="set-quiet" data-set-act="pause">Pause this account</button>
+                    <button type="button" class="set-quiet" data-set-act="cancel-ready">View cancellation readiness</button>
+                  </div>
+                  <p class="set-note">Permanent cancellation cannot be undone. It does not delete files. Use a sign-in code or Google again before that step. Neither action runs from this prototype.</p>
                 </div>
                 <div class="set-card" data-set-panel="bugs" hidden>
                   <h3>Bug Report mode</h3>
+                  <p class="set-badge">Product test</p>
                   <p class="sub">Show “Report bug or request a feature” in right-click menus. This is on by default.</p>
                   <button type="button" class="set-choice" id="setBug" data-set-act="bug" aria-pressed="true"><span><b>On</b><small>Right-click reporting is available.</small></span></button>
                 </div>
                 <div class="set-card" data-set-panel="tokens" hidden>
                   <h3>Tokens &amp; plan</h3>
-                  <p class="sub">Token balance and plan changes open with the account service. This prototype does not show a balance.</p>
+                  <p class="sub">Smart routing keeps token use down on each task. The names below are examples. Live routing stays dynamic.</p>
+                  <div class="set-flow" aria-hidden="true">
+                    <span>Your task</span><span>Citta</span><span>Teaching</span><span>Research</span><span>Study</span><span>Writing</span><span>Coding</span><span>Design</span>
+                  </div>
+                  <div class="set-line"><b>Available</b><span>8 tokens</span></div>
+                  <div class="set-line"><b>Pending</b><span>980,000 tokens</span></div>
+                  <div class="set-actions"><button type="button" class="set-quiet" data-set-act="balance">Check balance</button></div>
+                  <div class="set-plans">
+                    <button type="button" class="set-plan" data-plan="starter" aria-pressed="false"><b>Starter</b><small>100K tokens · $9/month · 240K effective</small></button>
+                    <button type="button" class="set-plan" data-plan="plus" aria-pressed="true"><b>Plus</b><small>500K tokens · $39/month · 1.2M effective</small></button>
+                    <button type="button" class="set-plan" data-plan="pro" aria-pressed="false"><b>Pro</b><small>2M tokens · $129/month · 4.8M effective</small></button>
+                    <button type="button" class="set-plan" data-plan="purchase" aria-pressed="false"><b>Purchase</b><small>$39/month on the Plus plan. Checkout waits for the account service.</small></button>
+                  </div>
                 </div>
                 <div class="set-card" data-set-panel="agents" hidden>
-                  <h3>Agents</h3>
-                  <p class="sub">Agent setup opens with the account service. Nothing here is marked connected.</p>
+                  <h3>Hire a course tutor</h3>
+                  <p class="sub">Pick a course, then a role. Hiring waits for the account service.</p>
+                  <div class="set-hire">
+                    <div>
+                      <label><span>HIRE INTO</span>
+                        <select id="setCourse" aria-label="Hire into">
+                          <option value="">Select a course</option>
+                          <option>C0006017 · Data Analysis</option>
+                          <option>Heavy-ion Physics</option>
+                        </select>
+                      </label>
+                    </div>
+                    <div class="set-roster" id="setRoster">
+                      <button type="button" class="set-role" data-role="research" aria-pressed="true"><i></i><span>Research<small>Research manager</small></span></button>
+                      <button type="button" class="set-role" data-role="teaching" aria-pressed="false"><i></i><span>Teaching<small>Teaching manager</small></span></button>
+                      <button type="button" class="set-role" data-role="work" aria-pressed="false"><i></i><span>Work<small>Work manager</small></span></button>
+                      <button type="button" class="set-role" data-role="archivist" aria-pressed="false"><i></i><span>Archivist<small>Knowledge expert</small></span></button>
+                      <button type="button" class="set-role" data-role="verifier" aria-pressed="false"><i></i><span>Verifier<small>Verification expert</small></span></button>
+                      <button type="button" class="set-role" data-role="researcher" aria-pressed="false"><i></i><span>Researcher<small>Research expert</small></span></button>
+                      <button type="button" class="set-role" data-role="editor" aria-pressed="false"><i></i><span>Editor<small>Editing expert</small></span></button>
+                      <button type="button" class="set-role" data-role="coder" aria-pressed="false"><i></i><span>Coder<small>Coding expert</small></span></button>
+                      <button type="button" class="set-role" data-role="analyst" aria-pressed="false"><i></i><span>Analyst<small>Data analysis expert</small></span></button>
+                      <button type="button" class="set-role" data-role="designer" data-gated="1" aria-pressed="false"><i></i><span>Designer<small>Design expert</small></span><em>Gated</em></button>
+                      <button type="button" class="set-role" data-role="tutor" data-gated="1" aria-pressed="false"><i></i><span>Tutor<small>Tutoring expert</small></span><em>Gated</em></button>
+                    </div>
+                    <div>
+                      <h3 id="setHireName">Research</h3>
+                      <p class="sub" id="setHireCopy">Lit radar surfaced 3 papers relevant to your method. Two project milestones updated. Two funding calls match your profile.</p>
+                      <p class="set-note" id="setHireCourse">No course selected.</p>
+                      <div class="set-actions"><button type="button" class="set-primary" id="setHire" data-set-act="hire">Hire</button></div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -9608,11 +9876,27 @@
   let deskDriveTab = 'files';
   let deskDriveView = 'grid';
   let deskQuery = '';
+  let deskPath = [];
   let deskSelectOn = false;
-  let deskSelected = '';
+  let deskSelectedIds = [];
+  let deskMenuId = '';
+  let deskMoveId = '';
+  let deskNaming = false;
+  let deskRenameId = '';
+  let deskSourceOpen = false;
   let deskNewOpen = false;
   let deskItems = [{ id: 'ns', lane: 'personal', title: 'New schedule', type: 'Task', date: '2026-11-02' }];
-  let deskFolders = [{ id: 'shared', name: 'Shared', meta: '13 files · Connected' }];
+  let deskNodes = [
+    { id: 'editors', parent: '', kind: 'folder', name: 'Symbion Editors' },
+    { id: 'code', parent: 'editors', kind: 'folder', name: 'Code' },
+    { id: 'decks', parent: 'editors', kind: 'folder', name: 'Decks' },
+    { id: 'docs', parent: 'editors', kind: 'folder', name: 'Docs' },
+    { id: 'numbers', parent: 'editors', kind: 'folder', name: 'Numbers' },
+    { id: 'symtex', parent: 'editors', kind: 'folder', name: 'SymTex' },
+    { id: 'lec1', parent: 'docs', kind: 'file', name: 'Lecture 1 summary', meta: 'Document' },
+    { id: 'shared', parent: '', kind: 'folder', name: 'Shared', protect: true },
+  ];
+  const deskFileBlobs = new Map();
 
   function deskMonday(date) {
     const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
@@ -9706,22 +9990,151 @@
     }).join('');
     host.innerHTML = `<div class="desk-board"><div class="desk-week head" style="--cols:${cols}"><span>Track</span>${head}</div>${lanes.replaceAll('class="desk-week lane"', `class="desk-week lane" style="--cols:${cols}"`)}</div>`;
   }
+  function deskHere() { return deskPath[deskPath.length - 1] || ''; }
+  function deskKids(parent) { return deskNodes.filter((node) => node.parent === parent); }
+  function deskNode(id) { return deskNodes.find((node) => node.id === id); }
+  function deskMeta(node) {
+    if (node.kind === 'file') return node.meta || 'File';
+    if (node.protect) return 'Shared with you';
+    const kids = deskKids(node.id);
+    const folders = kids.filter((kid) => kid.kind === 'folder').length;
+    const files = kids.length - folders;
+    if (!kids.length) return 'Empty';
+    if (!files) return `${folders} folder${folders === 1 ? '' : 's'}`;
+    if (!folders) return `${files} file${files === 1 ? '' : 's'}`;
+    return `${folders} folders · ${files} files`;
+  }
+  function deskBytes(n) {
+    if (!n) return '0 B';
+    if (n < 1024) return `${n} B`;
+    if (n < 1048576) return `${(n / 1024).toFixed(1)} KB`;
+    return `${(n / 1048576).toFixed(1)} MB`;
+  }
+  function deskDescendants(id) {
+    return deskKids(id).flatMap((kid) => [kid.id, ...deskDescendants(kid.id)]);
+  }
+  function deskFolderChoices(skipId) {
+    const blocked = new Set(skipId ? [skipId, ...deskDescendants(skipId)] : []);
+    const rows = [{ id: '', name: 'Super Drive' }];
+    const walk = (parent, depth) => {
+      deskKids(parent).filter((node) => node.kind === 'folder' && !blocked.has(node.id)).forEach((node) => {
+        rows.push({ id: node.id, name: `${'· '.repeat(depth)}${node.name}` });
+        walk(node.id, depth + 1);
+      });
+    };
+    walk('', 0);
+    return rows;
+  }
+  function addDeskFiles(list) {
+    const parent = deskHere();
+    [...list].forEach((file) => {
+      let folderId = parent;
+      const rel = file.webkitRelativePath || '';
+      if (rel.includes('/')) {
+        const top = rel.split('/')[0];
+        let folder = deskKids(parent).find((node) => node.kind === 'folder' && node.name === top);
+        if (!folder) {
+          folder = { id: `d${Date.now()}${Math.random().toString(36).slice(2, 6)}`, parent, kind: 'folder', name: top };
+          deskNodes = deskNodes.concat(folder);
+        }
+        folderId = folder.id;
+        if (rel.endsWith('/')) return;
+      }
+      const id = `d${Date.now()}${Math.random().toString(36).slice(2, 6)}`;
+      deskNodes = deskNodes.concat({ id, parent: folderId, kind: 'file', name: file.name, meta: 'File', size: file.size || 0 });
+      deskFileBlobs.set(id, file);
+    });
+    deskMenuId = '';
+    paintDeskDrive();
+  }
   function paintDeskDrive() {
     const host = document.getElementById('deskDriveBody');
     if (!host) return;
+    const searchFocused = document.activeElement && document.activeElement.id === 'deskSearch';
+    const caret = searchFocused ? document.activeElement.selectionStart : 0;
     document.querySelectorAll('[data-desk-drive]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.deskDrive === deskDriveTab)));
     document.querySelectorAll('[data-desk-drive-view]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.deskDriveView === deskDriveView)));
-    if (deskDriveTab === 'courses') {
-      host.innerHTML = '<p class="desk-empty">Course folders shared with you show up here. Google Shared drives aren’t available yet.</p>';
-      return;
+    const tools = document.getElementById('deskDriveTools');
+    if (tools) tools.hidden = deskDriveTab !== 'files';
+    const count = document.getElementById('deskDriveCount');
+    const here = deskHere();
+    const kids = deskKids(here);
+    const folders = kids.filter((node) => node.kind === 'folder').length;
+    const files = kids.length - folders;
+    if (count) count.textContent = deskDriveTab === 'courses' ? 'Courses' : `Current folder: ${folders} folder${folders === 1 ? '' : 's'} · ${files} file${files === 1 ? '' : 's'}`;
+    const crumb = document.getElementById('deskDriveCrumb');
+    if (crumb) {
+      if (deskDriveTab === 'courses') {
+        crumb.innerHTML = '<button type="button" data-drive-do="root">Super Drive</button><span aria-hidden="true">/</span><span>Courses</span>';
+      } else {
+        const bits = ['<button type="button" data-drive-do="root">Super Drive</button>'];
+        deskPath.forEach((id, index) => {
+          const node = deskNode(id);
+          if (!node) return;
+          bits.push('<span aria-hidden="true">/</span>');
+          bits.push(index === deskPath.length - 1 ? `<span>${deskEsc(node.name)}</span>` : `<button type="button" data-drive-crumb="${deskEsc(id)}">${deskEsc(node.name)}</button>`);
+        });
+        crumb.innerHTML = bits.join('');
+      }
     }
-    if (deskDriveTab === 'drive') {
-      host.innerHTML = '<p class="desk-empty">Google Drive is not connected.</p><button type="button" class="desk-quiet" data-desk-act="connect">Connect account</button>';
+    const uploadPop = document.getElementById('deskUploadPop');
+    if (uploadPop) uploadPop.hidden = deskMenuId !== 'upload';
+    const nameBtn = document.getElementById('deskNameBtn');
+    if (nameBtn) nameBtn.setAttribute('aria-expanded', String(deskNaming));
+    const uploadBtn = document.getElementById('deskUploadBtn');
+    if (uploadBtn) uploadBtn.setAttribute('aria-expanded', String(deskMenuId === 'upload'));
+    const slot = document.getElementById('deskSelectSlot');
+    if (slot) {
+      const n = deskSelectedIds.length;
+      slot.innerHTML = deskSelectOn
+        ? `<button type="button" class="drive-del" data-drive-do="delete-selected"${n ? '' : ' disabled'}>Delete (${n})</button><button type="button" data-drive-do="select-cancel">Cancel</button>`
+        : '<button type="button" data-drive-do="select">Select</button>';
+    }
+    const search = document.getElementById('deskSearch');
+    if (search && search.value !== deskQuery) search.value = deskQuery;
+    if (deskDriveTab === 'courses') {
+      host.innerHTML = '<p class="desk-empty">No organized course materials yet.</p>';
       return;
     }
     const q = deskQuery.trim().toLowerCase();
-    const folders = deskFolders.filter((folder) => !q || folder.name.toLowerCase().includes(q));
-    host.innerHTML = `<div class="desk-folders ${deskDriveView === 'list' ? 'is-list' : ''}">${folders.map((folder) => `<button type="button" class="desk-folder${deskSelectOn && deskSelected === folder.id ? ' on' : ''}" data-desk-folder="${folder.id}"><b>${deskEsc(folder.name)}</b><small>${deskEsc(folder.meta)}</small></button>`).join('') || '<p class="desk-empty">No folders match.</p>'}</div><div class="desk-foot"><span>${folders.length} item${folders.length === 1 ? '' : 's'} in this folder</span><span>0 B of 50 GB used</span><span>Healthy</span></div>`;
+    const shown = kids.filter((node) => !q || node.name.toLowerCase().includes(q));
+    const google = here ? '' : `<p class="drive-note">Google Drive is not connected. <button type="button" class="drive-link" data-drive-do="connect">Connect account</button><br>Google Shared drives aren’t available yet. Course folders shared with you appear in the Courses tab.</p>`;
+    const naming = deskNaming ? `<form class="drive-name" id="deskNameForm"><input id="deskNewFolder" type="text" placeholder="Folder name" aria-label="Folder name" autocomplete="off"><button type="submit" class="drive-go" id="deskCreateFolder" disabled>Create</button></form>` : '';
+    const empty = !shown.length
+      ? `<p class="desk-empty">${q ? 'No folders match.' : (here === 'shared' ? 'Files shared with you stay with the account. None are listed on this device.' : 'This folder is empty.')}</p>`
+      : '';
+    const cards = shown.map((node) => {
+      const menuOpen = deskMenuId === node.id;
+      const moving = deskMoveId === node.id;
+      const renaming = deskRenameId === node.id;
+      const picked = deskSelectedIds.includes(node.id);
+      const pick = deskSelectOn && !node.protect
+        ? `<button type="button" class="drive-pick" data-drive-pick="${node.id}" aria-pressed="${picked}" aria-label="Select ${deskEsc(node.name)}"></button>`
+        : '';
+      const icon = `<svg class="drive-ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">${node.kind === 'folder' ? '<path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H10l2 2h6.5A2.5 2.5 0 0 1 21 9.5v7A2.5 2.5 0 0 1 18.5 19h-13A2.5 2.5 0 0 1 3 16.5v-9Z" fill="none" stroke="currentColor" stroke-width="1.6"/>' : '<path d="M7 3.5h7l5 5V20.5H7V3.5Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M14 3.5V9h5.5" fill="none" stroke="currentColor" stroke-width="1.6"/>'}</svg>`;
+      const title = renaming
+        ? `<input class="drive-rename" data-drive-rename="${node.id}" value="${deskEsc(node.name)}" aria-label="Rename ${deskEsc(node.name)}">`
+        : `<b>${deskEsc(node.name)}</b><small>${deskEsc(deskMeta(node))}</small>`;
+      const main = renaming
+        ? `<div class="drive-main">${icon}${title}</div>`
+        : `<button type="button" class="drive-main" data-drive-open="${node.id}"${deskSelectOn && node.protect ? ' disabled' : ''}>${icon}${title}</button>`;
+      const fileMenu = node.kind === 'file';
+      const canBlob = deskFileBlobs.has(node.id);
+      const menu = menuOpen ? `<div class="drive-pop drive-menu" role="menu">${fileMenu
+        ? `<button type="button" data-drive-do="download" data-drive-id="${node.id}"${canBlob ? '' : ' disabled'} title="${canBlob ? '' : 'File bytes stay with the account.'}">Download</button><button type="button" data-drive-do="rename" data-drive-id="${node.id}">Rename</button><button type="button" data-drive-do="copy" data-drive-id="${node.id}">Copy</button>`
+        : `<button type="button" disabled title="Sharing waits for the account service.">Share folder…</button><button type="button" disabled title="Access waits for the account service.">Manage access…</button>${node.protect ? '' : `<button type="button" data-drive-do="rename" data-drive-id="${node.id}">Rename</button>`}`}${node.protect ? '' : `<button type="button" data-drive-do="move" data-drive-id="${node.id}">Move…</button><button type="button" data-drive-do="delete" data-drive-id="${node.id}">Delete permanently</button>`}</div>` : '';
+      const moves = moving ? `<div class="drive-pop drive-menu" role="menu">${deskFolderChoices(node.id).map((choice) => `<button type="button" data-drive-go="${choice.id}" data-drive-id="${node.id}">${deskEsc(choice.name)}</button>`).join('')}</div>` : '';
+      return `<div class="desk-folder drive-item${picked ? ' on' : ''}">${pick}${main}<button type="button" class="drive-more" data-drive-menu="${node.id}" aria-label="Actions for ${deskEsc(node.name)}" aria-expanded="${menuOpen}">···</button>${menu}${moves}</div>`;
+    }).join('');
+    const used = deskNodes.reduce((sum, node) => sum + (node.size || 0), 0);
+    const shownCount = shown.length;
+    host.innerHTML = `${google}<button type="button" class="drive-drop" id="deskDrop">${here ? 'Drop more files here or choose Upload' : 'Drop files here or choose Upload'}</button>${naming}${empty}<div class="desk-folders ${deskDriveView === 'list' ? 'is-list' : ''}">${cards}</div><div class="desk-foot"><button type="button" class="drive-status" data-drive-do="source" aria-expanded="${deskSourceOpen}"><span class="desk-status ok" style="margin:0;padding:4px 8px"><b>CONNECTED</b></span></button><span>${shownCount} item${shownCount === 1 ? '' : 's'} shown in this folder</span><span>${deskBytes(used)} of 50 GB used</span><span>Healthy</span></div>${deskSourceOpen ? '<p class="drive-note">Symbion files on this device are available. Google Drive is not connected.</p>' : ''}`;
+    if (searchFocused) {
+      const field = document.getElementById('deskSearch');
+      if (field) { field.focus(); field.setSelectionRange(caret, caret); }
+    }
+    if (deskNaming) document.getElementById('deskNewFolder')?.focus();
+    if (deskRenameId) document.querySelector(`[data-drive-rename="${deskRenameId}"]`)?.focus();
   }
   function paintDeskChrome() {
     const shell = document.querySelector('.desk-shell');
@@ -9782,20 +10195,27 @@
           <div style="margin-top:10px"><button type="button" class="desk-quiet" data-desk-act="entry">Add entry</button></div>
         </section>
         <section class="desk-card" id="desk-drive">
-          <h2>Super Drive</h2>
-          <p class="sub">Current folder</p>
-          <div class="desk-drive-bar">
+          <div class="drive-head"><h2>Super Drive</h2><p class="sub" id="deskDriveCount">Current folder</p></div>
+          <div class="desk-drive-bar" role="tablist" aria-label="Drive sources">
             <button type="button" data-desk-drive="files">Files</button>
             <button type="button" data-desk-drive="courses">Courses</button>
-            <button type="button" data-desk-drive="drive">Super Drive</button>
-            <button type="button" data-desk-drive-view="grid">Grid</button>
-            <button type="button" data-desk-drive-view="list">List</button>
-            <button type="button" data-desk-act="folder">New folder</button>
-            <button type="button" data-desk-act="upload">Upload</button>
-            <button type="button" data-desk-act="select">Select</button>
-            <input id="deskSearch" type="search" placeholder="Search" aria-label="Search files and folders by name">
+            <button type="button" class="drive-soon" disabled title="Google shared drives aren’t available yet.">Super Drive</button>
           </div>
-          <p class="desk-empty">Google Drive is not connected. Shared drives aren’t available yet.</p>
+          <nav class="drive-crumb" id="deskDriveCrumb" aria-label="Folder path"></nav>
+          <div class="desk-drive-bar drive-tools" id="deskDriveTools">
+            <input id="deskSearch" type="search" placeholder="Search" aria-label="Search files and folders by name">
+            <button type="button" data-desk-drive-view="grid" aria-pressed="true">Grid</button>
+            <button type="button" data-desk-drive-view="list" aria-pressed="false">List</button>
+            <button type="button" id="deskNameBtn" data-drive-do="name" aria-expanded="false">New folder</button>
+            <button type="button" id="deskUploadBtn" data-drive-do="upload-menu" aria-expanded="false">Upload</button>
+            <div class="drive-pop" id="deskUploadPop" hidden role="menu">
+              <button type="button" data-drive-do="pick-files">Files</button>
+              <button type="button" data-drive-do="pick-folder">Folder</button>
+            </div>
+            <span id="deskSelectSlot"></span>
+          </div>
+          <input id="deskFilePick" type="file" multiple hidden>
+          <input id="deskFolderPick" type="file" webkitdirectory multiple hidden>
           <div id="deskDriveBody"></div>
         </section>
       </div>
@@ -9853,13 +10273,70 @@
       </div>
     </div>`;
     host.addEventListener('click', onDeskClick);
-    host.addEventListener('input', (e) => { if (e.target.closest('#kanbanModal')) paintKanban(); });
+    host.addEventListener('input', (e) => {
+      if (e.target.closest('#kanbanModal')) paintKanban();
+      if (e.target.id === 'deskSearch') {
+        deskQuery = e.target.value;
+        paintDeskDrive();
+      }
+      if (e.target.id === 'deskNewFolder') {
+        const btn = document.getElementById('deskCreateFolder');
+        if (btn) btn.disabled = !e.target.value.trim();
+      }
+    });
+    host.addEventListener('change', (e) => {
+      if (e.target.id === 'deskFilePick' || e.target.id === 'deskFolderPick') {
+        addDeskFiles(e.target.files || []);
+        e.target.value = '';
+      }
+    });
+    host.addEventListener('focusout', (e) => {
+      if (!e.target.matches?.('[data-drive-rename]')) return;
+      commitDeskRename(e.target);
+      paintDeskDrive();
+    });
+    host.addEventListener('submit', (e) => {
+      if (e.target.id !== 'deskNameForm') return;
+      e.preventDefault();
+      const name = document.getElementById('deskNewFolder')?.value.trim();
+      if (!name) return;
+      deskNodes = deskNodes.concat({ id: `d${Date.now()}`, parent: deskHere(), kind: 'folder', name });
+      deskNaming = false;
+      paintDeskDrive();
+    });
+    host.addEventListener('dragover', (e) => {
+      if (!e.target.closest('#deskDrop')) return;
+      e.preventDefault();
+      e.target.closest('#deskDrop').classList.add('is-over');
+    });
+    host.addEventListener('dragleave', (e) => {
+      e.target.closest?.('#deskDrop')?.classList.remove('is-over');
+    });
+    host.addEventListener('drop', (e) => {
+      const zone = e.target.closest('#deskDrop');
+      if (!zone) return;
+      e.preventDefault();
+      zone.classList.remove('is-over');
+      if (e.dataTransfer?.files?.length) addDeskFiles(e.dataTransfer.files);
+    });
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && document.getElementById('kanbanModal') && !document.getElementById('kanbanModal').hidden) closeKanban();
-    });
-    host.querySelector('#deskSearch')?.addEventListener('input', (e) => {
-      deskQuery = e.target.value;
-      paintDeskDrive();
+      if (e.key === 'Escape' && (deskMenuId || deskNaming || deskMoveId || deskRenameId || deskSelectOn)) {
+        deskMenuId = '';
+        deskNaming = false;
+        deskMoveId = '';
+        deskRenameId = '';
+        deskSelectOn = false;
+        deskSelectedIds = [];
+        paintDeskDrive();
+      }
+      if (e.key === 'Enter' && e.target.matches?.('[data-drive-rename]')) {
+        const node = deskNode(e.target.dataset.driveRename);
+        const name = e.target.value.trim();
+        if (node && name) node.name = name;
+        deskRenameId = '';
+        paintDeskDrive();
+      }
     });
   }
   let kanbanStep = 1;
@@ -9967,8 +10444,133 @@
     }
     return true;
   }
+  function commitDeskRename(input) {
+    const node = deskNode(input.dataset.driveRename);
+    const name = input.value.trim();
+    if (node && name) node.name = name;
+    deskRenameId = '';
+  }
+  function onDriveClick(e) {
+    const inDrive = e.target.closest('#desk-drive');
+    const menuBtn = e.target.closest('[data-drive-menu]');
+    const driveDo = e.target.closest('[data-drive-do]');
+    const open = e.target.closest('[data-drive-open]');
+    const pick = e.target.closest('[data-drive-pick]');
+    const crumb = e.target.closest('[data-drive-crumb]');
+    const go = e.target.closest('[data-drive-go]');
+    if (!inDrive && !menuBtn) {
+      if (deskMenuId || deskMoveId) { deskMenuId = ''; deskMoveId = ''; paintDeskDrive(); }
+      return false;
+    }
+    if (!inDrive) return false;
+    if (e.target.closest('[data-desk-drive], [data-desk-drive-view], #deskSearch')) {
+      const close = deskMenuId || deskMoveId;
+      deskMenuId = '';
+      deskMoveId = '';
+      if (close) paintDeskDrive();
+      return false;
+    }
+    if (e.target.matches?.('[data-drive-rename]')) return true;
+    if (menuBtn) {
+      deskMenuId = deskMenuId === menuBtn.dataset.driveMenu ? '' : menuBtn.dataset.driveMenu;
+      deskMoveId = '';
+      paintDeskDrive();
+      return true;
+    }
+    if (crumb) {
+      const index = deskPath.indexOf(crumb.dataset.driveCrumb);
+      if (index >= 0) deskPath = deskPath.slice(0, index + 1);
+      deskQuery = '';
+      deskMenuId = '';
+      paintDeskDrive();
+      return true;
+    }
+    if (pick) {
+      const id = pick.dataset.drivePick;
+      deskSelectedIds = deskSelectedIds.includes(id) ? deskSelectedIds.filter((item) => item !== id) : deskSelectedIds.concat(id);
+      paintDeskDrive();
+      return true;
+    }
+    if (go) {
+      const node = deskNode(go.dataset.driveId);
+      if (node) node.parent = go.dataset.driveGo || '';
+      deskMoveId = '';
+      deskMenuId = '';
+      paintDeskDrive();
+      return true;
+    }
+    if (open) {
+      const node = deskNode(open.dataset.driveOpen);
+      if (!node) return true;
+      if (deskSelectOn) {
+        if (!node.protect) deskSelectedIds = deskSelectedIds.includes(node.id) ? deskSelectedIds.filter((item) => item !== node.id) : deskSelectedIds.concat(node.id);
+        paintDeskDrive();
+        return true;
+      }
+      if (node.kind === 'folder') {
+        deskPath = deskPath.concat(node.id);
+        deskQuery = '';
+        deskMenuId = '';
+        deskSelectOn = false;
+        deskSelectedIds = [];
+        paintDeskDrive();
+      }
+      return true;
+    }
+    if (driveDo) {
+      const act = driveDo.dataset.driveDo;
+      const id = driveDo.dataset.driveId;
+      const node = id ? deskNode(id) : null;
+      if (act === 'root') { deskDriveTab = 'files'; deskPath = []; deskQuery = ''; }
+      else if (act === 'name') { deskNaming = !deskNaming; deskMenuId = ''; }
+      else if (act === 'upload-menu') { deskMenuId = deskMenuId === 'upload' ? '' : 'upload'; }
+      else if (act === 'pick-files') document.getElementById('deskFilePick')?.click();
+      else if (act === 'pick-folder') document.getElementById('deskFolderPick')?.click();
+      else if (act === 'select') { deskSelectOn = true; deskSelectedIds = []; deskMenuId = ''; }
+      else if (act === 'select-cancel') { deskSelectOn = false; deskSelectedIds = []; }
+      else if (act === 'delete-selected') {
+        const gone = new Set(deskSelectedIds.flatMap((item) => [item, ...deskDescendants(item)]));
+        deskNodes = deskNodes.filter((item) => item.protect || !gone.has(item.id));
+        deskSelectedIds = [];
+        deskSelectOn = false;
+      }
+      else if (act === 'connect') { openSettings('apps'); return true; }
+      else if (act === 'source') deskSourceOpen = !deskSourceOpen;
+      else if (act === 'rename' && node) { deskRenameId = node.id; deskMenuId = ''; }
+      else if (act === 'move' && node) { deskMoveId = node.id; deskMenuId = ''; }
+      else if (act === 'copy' && node) {
+        const copyId = `d${Date.now()}`;
+        deskNodes = deskNodes.concat({ ...node, id: copyId, name: `${node.name} copy` });
+        const blob = deskFileBlobs.get(node.id);
+        if (blob) deskFileBlobs.set(copyId, blob);
+        deskMenuId = '';
+      }
+      else if (act === 'download' && node) {
+        const blob = deskFileBlobs.get(node.id);
+        if (blob) {
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = node.name;
+          link.click();
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
+        }
+      }
+      else if (act === 'delete' && node && !node.protect) {
+        const gone = new Set([node.id, ...deskDescendants(node.id)]);
+        deskNodes = deskNodes.filter((item) => !gone.has(item.id));
+        if (deskPath.includes(node.id)) deskPath = deskPath.slice(0, deskPath.indexOf(node.id));
+        deskMenuId = '';
+      }
+      paintDeskDrive();
+      return true;
+    }
+    if (deskMenuId || deskMoveId) { deskMenuId = ''; deskMoveId = ''; paintDeskDrive(); }
+    return true;
+  }
   function onDeskClick(e) {
     if (onKanbanClick(e)) return;
+    if (onDriveClick(e)) return;
     const jump = e.target.closest('[data-desk-jump]');
     if (jump) {
       deskSection = jump.dataset.deskJump;
@@ -9985,12 +10587,6 @@
     if (drive) { deskDriveTab = drive.dataset.deskDrive; paintDeskDrive(); return; }
     const view = e.target.closest('[data-desk-drive-view]');
     if (view) { deskDriveView = view.dataset.deskDriveView; paintDeskDrive(); return; }
-    const folder = e.target.closest('[data-desk-folder]');
-    if (folder) {
-      if (deskSelectOn) { deskSelected = folder.dataset.deskFolder; paintDeskDrive(); return; }
-      showToastMsg('File names stay on the connected drive.');
-      return;
-    }
     const group = e.target.closest('[data-desk-group]');
     if (group) { deskGroup = group.dataset.deskGroup; paintDeskChrome(); return; }
     const day = e.target.closest('[data-desk-day]');
@@ -10023,15 +10619,7 @@
     if (id === 'new') { openKanban(); return; }
     if (id === 'mail') { showToastMsg('Mail setup waits for a connected mailbox.'); return; }
     if (id === 'entry') { showToastMsg('Entries appear only through an approved action.'); return; }
-    if (id === 'connect' || id === 'upload') { showToastMsg('Google Drive isn’t connected yet.'); return; }
-    if (id === 'folder') {
-      const count = deskFolders.filter((folder) => folder.name.startsWith('New folder')).length;
-      deskFolders = deskFolders.concat([{ id: `f${Date.now()}`, name: count ? `New folder ${count + 1}` : 'New folder', meta: '0 files' }]);
-      deskDriveTab = 'files';
-      paintDeskDrive();
-      return;
-    }
-    if (id === 'select') { deskSelectOn = !deskSelectOn; deskSelected = ''; paintDeskDrive(); }
+    if (id === 'connect') { openSettings('apps'); return; }
   }
   function markDeskRail() {
     frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
@@ -10096,6 +10684,7 @@
     host.querySelectorAll('[data-set-panel]').forEach((panel) => {
       panel.hidden = panel.dataset.setPanel !== settingsSection;
     });
+    host.querySelector('.set-main')?.scrollTo({ top: 0 });
   }
   function fillSettingsName() {
     const name = document.getElementById('setName');
@@ -10103,6 +10692,12 @@
     if (name) name.value = current;
     const initials = document.getElementById('setInitials');
     if (initials) initials.textContent = userInitials(current) || 'LU';
+    const zone = document.getElementById('setDeviceZone');
+    if (zone && !zone.textContent) {
+      let tz = 'this device';
+      try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || tz; } catch (_) {}
+      zone.textContent = `Device time zone: ${tz}`;
+    }
   }
   function bindSettings() {
     const host = document.getElementById('setHost');
@@ -10120,7 +10715,65 @@
         host.querySelectorAll('button[data-pic]').forEach((btn) => {
           btn.setAttribute('aria-pressed', String(btn === pic));
         });
+        const preview = document.getElementById('setPreview');
+        if (preview) {
+          preview.replaceChildren();
+          if (pic.dataset.pic === 'initials') {
+            const span = document.createElement('span');
+            span.id = 'setInitials';
+            span.textContent = userInitials(document.getElementById('setName')?.value || '') || 'LU';
+            preview.append(span);
+          } else {
+            const svg = pic.querySelector('svg');
+            if (svg) preview.append(svg.cloneNode(true));
+          }
+        }
         showToastMsg('Picture stays on this account.');
+        return;
+      }
+      const app = event.target.closest('button[data-app]');
+      if (app && !app.disabled) {
+        host.querySelectorAll('button[data-app]').forEach((btn) => {
+          btn.setAttribute('aria-pressed', String(btn === app));
+        });
+        host.querySelectorAll('[data-app-panel]').forEach((panel) => {
+          panel.hidden = panel.dataset.appPanel !== app.dataset.app;
+        });
+        return;
+      }
+      const role = event.target.closest('button[data-role]');
+      if (role) {
+        host.querySelectorAll('button[data-role]').forEach((btn) => {
+          btn.setAttribute('aria-pressed', String(btn === role));
+        });
+        const hireCopy = {
+          research: 'Lit radar surfaced 3 papers relevant to your method. Two project milestones updated. Two funding calls match your profile.',
+          teaching: 'Lecture prep and office-hour notes stay with the teaching manager.',
+          work: 'Schedule and task handoffs stay with the work manager.',
+          archivist: 'Files and citations stay with the knowledge expert.',
+          verifier: 'Checks stay with the verification expert.',
+          researcher: 'Reading and source notes stay with the research expert.',
+          editor: 'Draft revisions stay with the editing expert.',
+          coder: 'Notebooks and scripts stay with the coding expert.',
+          analyst: 'Sheets and charts stay with the data analysis expert.',
+          designer: 'This design role is gated.',
+          tutor: 'This tutoring role is gated.'
+        };
+        const name = document.getElementById('setHireName');
+        const copy = document.getElementById('setHireCopy');
+        const hire = document.getElementById('setHire');
+        const label = role.querySelector('span')?.firstChild?.textContent?.trim() || 'Research';
+        if (name) name.textContent = label;
+        if (copy) copy.textContent = hireCopy[role.dataset.role] || '';
+        if (hire) hire.disabled = role.dataset.gated === '1';
+        return;
+      }
+      const plan = event.target.closest('button[data-plan]');
+      if (plan) {
+        host.querySelectorAll('button[data-plan]').forEach((btn) => {
+          btn.setAttribute('aria-pressed', String(btn === plan));
+        });
+        if (plan.dataset.plan === 'purchase') showToastMsg('Checkout waits for the account service.');
         return;
       }
       const runtime = event.target.closest('button[data-runtime]');
@@ -10165,6 +10818,22 @@
       else if (act === 'logout') showToastMsg('Sign out waits for the account service.');
       else if (act === 'signout-all') showToastMsg('Sign out everywhere waits for the account service.');
       else if (act === 'connect') showToastMsg('Google Workspace isn’t connected yet.');
+      else if (act === 'refresh-connectors') showToastMsg('No connectors yet.');
+      else if (act === 'save-runtime') {
+        const saved = document.getElementById('setRuntimeSaved');
+        if (saved) saved.textContent = 'Saved';
+        showToastMsg('Runtime preference stays on this device.');
+      } else if (act === 'install-pack') showToastMsg('The language pack stays not installed.');
+      else if (act === 'save-neo') {
+        const on = host.querySelector('button[data-neo][aria-pressed="true"] b');
+        const note = document.getElementById('setNeoNote');
+        if (note) note.textContent = `Saved preference: ${on?.textContent || 'Use existing layout'}.`;
+        showToastMsg('Citta preference stays on this device.');
+      } else if (act === 'pause') showToastMsg('Pause waits for the account service.');
+      else if (act === 'cancel-ready') showToastMsg('Cancellation readiness waits for the account service.');
+      else if (act === 'balance') showToastMsg('Balance waits for the account service.');
+      else if (act === 'hire') showToastMsg('Hiring waits for the account service.');
+      else if (act === 'upload') showToastMsg('Picture stays on this account.');
       else if (act === 'bug') {
         const bug = document.getElementById('setBug');
         if (!bug) return;
@@ -10179,6 +10848,30 @@
     document.getElementById('setZone')?.addEventListener('change', (event) => {
       const save = document.getElementById('setZoneSave');
       if (save) save.disabled = event.target.value === settingsZoneSaved;
+    });
+    document.getElementById('setPicFile')?.addEventListener('change', (event) => {
+      const file = event.target.files && event.target.files[0];
+      const upload = document.getElementById('setPicUpload');
+      if (!file) {
+        if (upload) upload.disabled = true;
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        const preview = document.getElementById('setPreview');
+        if (!preview) return;
+        preview.replaceChildren();
+        const img = document.createElement('img');
+        img.alt = '';
+        img.src = String(reader.result || '');
+        preview.append(img);
+        if (upload) upload.disabled = false;
+      };
+      reader.readAsDataURL(file);
+    });
+    document.getElementById('setCourse')?.addEventListener('change', (event) => {
+      const note = document.getElementById('setHireCourse');
+      if (note) note.textContent = event.target.value ? `Hire into ${event.target.value}.` : 'No course selected.';
     });
   }
   function openSettings(section) {
