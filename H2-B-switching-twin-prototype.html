@@ -3650,6 +3650,314 @@
   .desk-folder small { color: #71777d; font-size: 12px; }
   .desk-foot { display: flex; gap: 14px; color: #8b9198; font-size: 12px; margin-top: 12px; }
 
+  .frame.set-on { display: flex; flex-direction: column; height: 900px; }
+  .frame.set-on .body { flex: 1; min-height: 0; }
+  .frame.set-on .content.hub,
+  .frame.set-on .logo-row,
+  .frame.set-on .proto-rule { display: none !important; }
+  .frame.set-on .main { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+  #setHost {
+    display: none;
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    background: #f6f7f8;
+    color: var(--ink);
+  }
+  .frame.set-on #setHost { display: flex; }
+  #setHost[hidden] { display: none !important; }
+  #setHost button, #setHost input, #setHost select { font: inherit; color: inherit; }
+  #setHost button { cursor: pointer; }
+  .set-shell { display: flex; flex: 1; min-width: 0; min-height: 0; }
+  .set-nav {
+    width: 220px;
+    flex: none;
+    background: #fff;
+    border-right: 1px solid var(--line);
+    overflow: auto;
+    padding: 18px 12px 28px;
+  }
+  .set-nav h2 { margin: 0 8px 14px; font-size: 18px; font-weight: 650; letter-spacing: -0.02em; }
+  .set-kicker {
+    margin: 14px 8px 4px;
+    color: var(--label);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .06em;
+  }
+  .set-nav button[data-set] {
+    display: block;
+    width: 100%;
+    text-align: left;
+    border: 0;
+    background: transparent;
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #1f1f1f;
+  }
+  .set-nav button[data-set]:hover { background: #f3f5f7; }
+  .set-nav button[data-set][aria-current="page"] { background: var(--green-tint); color: var(--green); }
+  .set-main { flex: 1; min-width: 0; overflow: auto; padding: 22px 28px 40px; }
+  .set-top { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .set-top p { margin: 0 0 0 auto; color: var(--label); font-size: 11px; font-weight: 700; letter-spacing: .08em; }
+  .set-back {
+    border: 0;
+    background: transparent;
+    color: var(--green);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 4px 2px;
+  }
+  .set-back:hover { color: var(--green-dark); }
+  .set-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 18px 18px 20px;
+    margin-bottom: 14px;
+  }
+  .set-card h3 { margin: 0; font-size: 18px; font-weight: 650; letter-spacing: -0.02em; }
+  .set-card .sub { margin: 4px 0 14px; color: var(--muted); font-size: 13px; line-height: 1.45; }
+  .set-card label { display: block; margin: 12px 0 0; }
+  .set-card label span, .set-field-label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--label);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .04em;
+  }
+  .set-card input, .set-card select {
+    width: 100%;
+    box-sizing: border-box;
+    height: 36px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    padding: 0 10px;
+    font-size: 13px;
+  }
+  .set-card input:focus, .set-card select:focus { outline: none; border-color: var(--green); }
+  .set-card input[readonly] { background: var(--surface); color: var(--muted); }
+  .set-note { margin: 6px 0 0; color: var(--label); font-size: 12px; line-height: 1.45; }
+  .set-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .set-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .set-primary, .set-quiet, .set-muted {
+    border: 0;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 650;
+  }
+  .set-primary { background: var(--green); color: #fff; }
+  .set-primary:hover { background: var(--green-dark); }
+  .set-quiet { background: var(--surface); color: #1f1f1f; }
+  .set-quiet:hover { background: #e6e8eb; }
+  .set-muted { background: transparent; color: var(--muted); }
+  .set-muted:hover { color: var(--ink); }
+  .set-primary:disabled, .set-quiet:disabled {
+    background: #e6e8eb;
+    color: #6b7076;
+    cursor: default;
+  }
+  .set-choice {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #fff;
+    text-align: left;
+  }
+  .set-choice[aria-pressed="true"] { border-color: var(--green-line); background: var(--green-wash); }
+  .set-choice b { display: block; font-size: 13px; font-weight: 650; }
+  .set-choice small { display: block; margin-top: 2px; color: var(--muted); font-size: 12px; font-weight: 400; line-height: 1.4; }
+  .set-pics { display: flex; flex-wrap: wrap; gap: 10px; }
+  .set-pic {
+    width: 72px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #fff;
+    padding: 8px 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #1f1f1f;
+  }
+  .set-pic i {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    margin: 0 auto 6px;
+    border-radius: 18px;
+    font-style: normal;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .set-pic[aria-pressed="true"] { border-color: var(--green); box-shadow: 0 0 0 1px var(--green); }
+  .set-line { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); font-size: 13px; }
+  .set-line:first-of-type { border-top: 0; }
+  .set-line b { font-weight: 650; }
+  .set-line span { color: var(--muted); }
+
+  .frame.symbion-on { display: flex; flex-direction: column; height: 900px; }
+  .frame.symbion-on .body { flex: 1; min-height: 0; }
+  .frame.symbion-on .content.hub,
+  .frame.symbion-on .logo-row,
+  .frame.symbion-on .proto-rule { display: none !important; }
+  .frame.symbion-on .main { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+  #symbionHost {
+    display: none;
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    flex-direction: column;
+    background: #f6f7f8;
+    color: #000;
+  }
+  .frame.symbion-on #symbionHost { display: flex; }
+  #symbionHost[hidden],
+  #symbionHost [hidden] { display: none !important; }
+  #symbionHost button { font: inherit; cursor: pointer; }
+  .me-tabs {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex: none;
+    padding: 18px 28px 0;
+  }
+  #symbionHost .me-tab {
+    border: 0;
+    background: none;
+    padding: 0 0 12px;
+    color: #9aa0a6;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1;
+  }
+  #symbionHost .me-tab.on { color: #000; font-weight: 650; }
+  .me-scroll { flex: 1; min-height: 0; overflow: auto; padding: 16px 28px 36px; }
+  .me-stack { display: flex; flex-direction: column; gap: 12px; }
+  .me-card {
+    background: #fff;
+    border: 1px solid #e6e8ec;
+    border-radius: 16px;
+    padding: 16px 18px;
+  }
+  .me-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .me-badge {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    padding: 0 8px;
+    border-radius: 999px;
+    background: #f0f2f4;
+    color: #71777d;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+  }
+  .me-card h3 { margin: 0 0 6px; font-size: 15px; font-weight: 650; letter-spacing: -0.01em; color: #000; }
+  .me-card p { margin: 0; font-size: 14px; line-height: 1.45; color: #1a1d21; }
+  .me-meta { margin: 8px 0 0; font-size: 12px; line-height: 1.4; color: #8b919a; }
+  .me-h {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 18px 0 10px;
+  }
+  .me-h h2 { margin: 0; font-size: 18px; font-weight: 650; letter-spacing: -0.02em; }
+  .me-h span { font-size: 12px; color: #8b919a; }
+  .me-intro {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: #f4f6f8;
+  }
+  .me-intro p { margin: 0; font-size: 13px; line-height: 1.45; color: #1a1d21; }
+  .me-intro b { font-weight: 650; }
+  .me-chips { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; flex: none; max-width: 280px; }
+  #symbionHost .me-chip {
+    height: 28px;
+    padding: 0 12px;
+    border-radius: 999px;
+    border: 1px solid #e6e8ec;
+    background: #f0f2f4;
+    color: #8b919a;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  #symbionHost .me-chip.brand {
+    border-color: #c5d6e0;
+    background: #fff;
+    color: #3c7a94;
+  }
+  #symbionHost .me-chip.brand:hover { background: #ebf5fa; }
+  .me-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 14px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: #f4f8fa;
+  }
+  .me-foot p { margin: 0; font-size: 13px; line-height: 1.45; color: #656d76; }
+  .me-kicker { margin: 0 0 4px; font-size: 12px; color: #8b919a; }
+  .me-page-kicker { margin: 0; font-size: 12px; color: #8b919a; }
+  .me-page h2 { margin: 4px 0 6px; font-size: 28px; font-weight: 650; letter-spacing: -0.03em; }
+  .me-page .lead { margin: 0 0 16px; font-size: 14px; color: #656d76; }
+  .me-rule { height: 1px; background: #e6e8ec; margin: 0 0 16px; }
+  .me-actions { display: flex; gap: 8px; margin-bottom: 14px; }
+  #symbionHost .me-btn {
+    height: 32px;
+    padding: 0 12px;
+    border: 1px solid #e6e8ec;
+    border-radius: 8px;
+    background: #fff;
+    color: #1a1d21;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  #symbionHost .me-btn:hover { background: #f6f7f8; }
+  #symbionHost .me-btn:disabled { color: #b0b4ba; background: #fff; }
+  .me-note {
+    margin: 0 0 14px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    background: #f0f2f4;
+    color: #656d76;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .me-split { display: grid; grid-template-columns: 1.35fr .85fr; gap: 14px; align-items: start; }
+  .me-grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .me-panel-hd { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .me-panel-hd h3 { margin: 0; font-size: 16px; }
+  .me-panel-hd p { margin: 4px 0 0; font-size: 13px; color: #656d76; }
+  .me-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    border-top: 1px solid #e6e8ec;
+  }
+  .me-row b { display: block; font-size: 14px; font-weight: 650; }
+  .me-row small { display: block; margin-top: 2px; color: #8b919a; font-size: 12px; }
+  .me-row em { font-style: normal; color: #656d76; font-size: 13px; }
+  .me-empty { margin: 8px 0 0; font-size: 14px; color: #656d76; }
+
   .frame.dir-on { display: flex; flex-direction: column; height: 900px; }
   .frame.dir-on .body { flex: 1; min-height: 0; }
   .frame.dir-on .content.hub,
@@ -4897,7 +5205,304 @@
               </section>
             </div>
           </div>
+          <section id="setHost" aria-label="Settings" hidden>
+            <div class="set-shell">
+              <nav class="set-nav" aria-label="Account settings">
+                <h2>Account Hub</h2>
+                <p class="set-kicker">GENERAL</p>
+                <button type="button" data-set="profile" aria-current="page">Profile</button>
+                <button type="button" data-set="picture">Profile picture</button>
+                <p class="set-kicker">CONNECTIONS</p>
+                <button type="button" data-set="apps">Connected apps</button>
+                <p class="set-kicker">PREFERENCES</p>
+                <button type="button" data-set="runtime">Runtime</button>
+                <button type="button" data-set="translate">Local translation</button>
+                <button type="button" data-set="chat">Chat display</button>
+                <button type="button" data-set="neo">Citta in NeoSchool</button>
+                <p class="set-kicker">SECURITY</p>
+                <button type="button" data-set="security">Security</button>
+                <p class="set-kicker">ADVANCED</p>
+                <button type="button" data-set="bugs">Bug Report mode</button>
+                <p class="set-kicker">RELATED</p>
+                <button type="button" data-set="tokens">Tokens &amp; plan</button>
+                <button type="button" data-set="agents">Agents</button>
+              </nav>
+              <div class="set-main">
+                <div class="set-top"><button type="button" class="set-back" data-set-act="back">Back</button><p>SETTINGS</p></div>
+                <div class="set-card" data-set-panel="profile">
+                  <h3>Profile</h3>
+                  <p class="sub">Manage your identity and basic account information.</p>
+                  <label><span>IDENTITY (OPTIONAL)</span>
+                    <select id="setIdentity" aria-label="Identity (optional)">
+                      <option value="">Select…</option>
+                      <option>Student</option>
+                      <option>Professor</option>
+                      <option>Other</option>
+                    </select>
+                  </label>
+                  <p class="set-note">This describes you. It does not change your course roles or permissions.</p>
+                  <label><span>DISPLAY NAME</span><input id="setName" autocomplete="name"></label>
+                  <label><span>INSTITUTION / SCHOOL</span><input id="setSchool" autocomplete="organization"></label>
+                  <label><span>FIELD OR DEPARTMENT</span><input id="setField"></label>
+                  <div class="set-row">
+                    <label><span>BIRTHDAY</span><input id="setBirthday" type="date"></label>
+                    <label><span>GENDER</span>
+                      <select id="setGender" aria-label="Gender">
+                        <option value="">Select…</option>
+                        <option>Female</option>
+                        <option>Male</option>
+                        <option>Non-binary</option>
+                        <option>Prefer not to say</option>
+                      </select>
+                    </label>
+                  </div>
+                  <label><span>EMAIL</span><input value="jess@symbion.test" readonly aria-label="Email"></label>
+                  <p class="set-note">This address stays on the account.</p>
+                  <div class="set-actions">
+                    <button type="button" class="set-primary" data-set-act="save-profile">Save profile</button>
+                    <button type="button" class="set-quiet" data-set-act="reset">Reset onboarding</button>
+                    <button type="button" class="set-muted" data-set-act="logout">Log out</button>
+                  </div>
+                </div>
+                <div class="set-card" data-set-panel="profile">
+                    <h3>Time zone</h3>
+                    <p class="sub">Used to enter and display NeoSchool announcement times. Without a saved preference, announcement times follow this device.</p>
+                    <label><span>ACCOUNT TIME ZONE</span>
+                      <select id="setZone" aria-label="Account time zone">
+                        <option value="device">Use device time zone</option>
+                        <option>Asia/Shanghai</option>
+                        <option>America/New_York</option>
+                        <option>Europe/London</option>
+                      </select>
+                    </label>
+                    <div class="set-actions"><button type="button" class="set-quiet" id="setZoneSave" data-set-act="zone" disabled>Save time zone</button></div>
+                </div>
+                <div class="set-card" data-set-panel="picture" hidden>
+                  <h3>Profile picture</h3>
+                  <p class="sub">Choose the picture people see across Symbion. Upload waits for the account service.</p>
+                  <div class="set-pics" id="setPics">
+                    <button type="button" class="set-pic" data-pic="initials" aria-pressed="true"><i class="hue-green" id="setInitials">LU</i>Initials</button>
+                    <button type="button" class="set-pic" data-pic="sage" aria-pressed="false"><i class="hue-green">SP</i>Sage</button>
+                    <button type="button" class="set-pic" data-pic="navy" aria-pressed="false"><i class="hue-blue">NP</i>Navy</button>
+                    <button type="button" class="set-pic" data-pic="sunny" aria-pressed="false"><i class="hue-amber">SS</i>Sunny</button>
+                    <button type="button" class="set-pic" data-pic="coral" aria-pressed="false"><i class="hue-purple">CC</i>Coral</button>
+                    <button type="button" class="set-pic" data-pic="slate" aria-pressed="false"><i class="hue-slate">SL</i>Slate</button>
+                  </div>
+                  <div class="set-actions"><button type="button" class="set-quiet" disabled>Upload</button></div>
+                </div>
+                <div class="set-card" data-set-panel="apps" hidden>
+                  <h3>Connected apps</h3>
+                  <p class="sub">Mail uses this account. Calendar and Drive are not connected.</p>
+                  <div class="set-line"><b>Mail</b><span>jess@symbion.test</span></div>
+                  <div class="set-line"><b>Calendar</b><span>Not connected</span></div>
+                  <div class="set-line"><b>Drive</b><span>Not connected</span></div>
+                  <h3 style="margin-top:18px">Files you let agents read</h3>
+                  <p class="sub">Only files you pick are indexed. Raw Drive file bytes are not stored. There is no all-Drive crawl.</p>
+                  <p class="set-note">Connect Google Workspace first to index Drive files.</p>
+                  <div class="set-actions"><button type="button" class="set-quiet" data-set-act="connect">Connect</button></div>
+                  <h3 style="margin-top:18px">Your connectors</h3>
+                  <p class="sub">No connectors yet. A connector that has not synced stays pending.</p>
+                </div>
+                <div class="set-card" data-set-panel="runtime" hidden>
+                  <h3>Local runtime</h3>
+                  <p class="sub">Desktop and extension browser work stay first in line for authenticated tasks.</p>
+                  <button type="button" class="set-choice" data-runtime="local" aria-pressed="true"><span><b>Local first</b><small>Use the Symbion Desktop browser session when browser work is needed.</small></span></button>
+                  <button type="button" class="set-choice" data-runtime="ask" aria-pressed="false"><span><b>Ask each turn</b><small>Show an explicit choice when multiple safe runtimes are available.</small></span></button>
+                </div>
+                <div class="set-card" data-set-panel="translate" hidden>
+                  <h3>English ↔ Simplified Chinese</h3>
+                  <p class="sub">Optional on-device translation. Message text is not sent to a cloud model.</p>
+                  <label><span>PREFERRED LANGUAGE</span>
+                    <select aria-label="Preferred language"><option>English</option><option>Simplified Chinese</option></select>
+                  </label>
+                  <label class="set-note"><input type="checkbox" disabled style="width:auto;height:auto;margin-right:8px">Automatically translate messages into my preferred language</label>
+                  <p class="set-note">Language packs are available in the Symbion desktop app. On the web, translation still starts only when you choose Translate.</p>
+                </div>
+                <div class="set-card" data-set-panel="chat" hidden>
+                  <h3>Agent message attribution</h3>
+                  <p class="sub">When Citta sends for a human account, Symbion shows the represented account followed by “(by Citta)”. This label cannot be hidden.</p>
+                </div>
+                <div class="set-card" data-set-panel="neo" hidden>
+                  <h3>Citta in NeoSchool</h3>
+                  <p class="sub">Choose how Citta rests while you work in a NeoSchool course. Asking Citta or opening an active task still reveals the full panel.</p>
+                  <button type="button" class="set-choice" data-neo="bar" aria-pressed="false"><span><b>Show input bar</b><small>Show the idle input bar and avatar.</small></span></button>
+                  <button type="button" class="set-choice" data-neo="avatar" aria-pressed="false"><span><b>Avatar only</b><small>Show the idle avatar. Select it to open Citta.</small></span></button>
+                  <button type="button" class="set-choice" data-neo="hide" aria-pressed="false"><span><b>Hide floating Citta</b><small>Hide the idle floating controls. Show Citta remains in the top navigation.</small></span></button>
+                  <button type="button" class="set-choice" data-neo="existing" aria-pressed="true"><span><b>Use existing layout</b><small>Keep this device’s current Citta layout.</small></span></button>
+                  <p class="set-note" id="setNeoNote">On this device: Use existing layout.</p>
+                </div>
+                <div class="set-card" data-set-panel="security" hidden>
+                  <h3>Where you’re signed in</h3>
+                  <p class="sub">Sign out everywhere ends this browser, the desktop app, the browser extension, and any cloud sandbox. That action waits for the account service.</p>
+                  <div class="set-actions"><button type="button" class="set-quiet" data-set-act="signout-all">Sign out everywhere</button></div>
+                  <h3 style="margin-top:18px">Pause sign-in</h3>
+                  <p class="sub">Pause keeps your files and leaves other linked accounts alone. It isn’t available from this prototype, and it does not delete anything.</p>
+                </div>
+                <div class="set-card" data-set-panel="bugs" hidden>
+                  <h3>Bug Report mode</h3>
+                  <p class="sub">Show “Report bug or request a feature” in right-click menus. This is on by default.</p>
+                  <button type="button" class="set-choice" id="setBug" data-set-act="bug" aria-pressed="true"><span><b>On</b><small>Right-click reporting is available.</small></span></button>
+                </div>
+                <div class="set-card" data-set-panel="tokens" hidden>
+                  <h3>Tokens &amp; plan</h3>
+                  <p class="sub">Token balance and plan changes open with the account service. This prototype does not show a balance.</p>
+                </div>
+                <div class="set-card" data-set-panel="agents" hidden>
+                  <h3>Agents</h3>
+                  <p class="sub">Agent setup opens with the account service. Nothing here is marked connected.</p>
+                </div>
+              </div>
+            </div>
+          </section>
           <section id="deskHost" aria-label="Desk" hidden></section>
+          <section id="symbionHost" aria-label="My Symbion" hidden>
+            <div class="me-tabs" role="tablist" aria-label="My Symbion">
+              <button type="button" class="me-tab on" data-me-tab="know" role="tab" aria-selected="true">Know me</button>
+              <button type="button" class="me-tab" data-me-tab="skill" role="tab" aria-selected="false">Skill</button>
+              <button type="button" class="me-tab" data-me-tab="loop" role="tab" aria-selected="false">Loop</button>
+            </div>
+            <div class="me-scroll">
+              <div class="me-panel" data-me-panel="know">
+                <div class="me-stack">
+                  <article class="me-card">
+                    <div class="me-badges"><span class="me-badge">Unverified</span><span class="me-badge">Path C · Style</span></div>
+                    <h3>How these materials are built</h3>
+                    <p>Chapters open with the claim, then the figure, then the caveat. Comments are short and directional. Drawn only from files you included.</p>
+                    <p class="me-meta">Pending evidence · expected From 34 of 36 files read · confirmed in onboarding</p>
+                  </article>
+                  <article class="me-card">
+                    <div class="me-badges"><span class="me-badge">Unverified</span><span class="me-badge">Not used yet</span></div>
+                    <h3>Tone &amp; length cues from recent drafts</h3>
+                    <p>Symbion noticed shorter subject lines in the last week. Confirm before this enters email drafts.</p>
+                    <p class="me-meta">No authenticated matching suggestion. Not used.</p>
+                  </article>
+                </div>
+                <div class="me-h"><h2>Working Style</h2></div>
+                <div class="me-intro">
+                  <p>How you schedule, decide, and organize work. Preference cards from Path A / B / C land here after confirmation. <b>Recent cards stay on Desk only.</b></p>
+                  <div class="me-chips">
+                    <button type="button" class="me-chip" data-me-act="Gmail history">Gmail history · empty</button>
+                    <button type="button" class="me-chip brand" data-me-act="Group conversations">Group conversations</button>
+                    <button type="button" class="me-chip brand" data-me-act="Internal files">Internal files</button>
+                  </div>
+                </div>
+                <div class="me-stack" style="margin-top:12px">
+                  <article class="me-card">
+                    <div class="me-badges"><span class="me-badge">Unverified</span><span class="me-badge">Path A · Preference</span></div>
+                    <h3>Your week, normally</h3>
+                    <p>Group meeting Monday. Teaching Tuesday and Thursday mornings. Afternoons stay open. That looks like time you keep for writing.</p>
+                    <p class="me-meta">Pending evidence · expected From 4 weeks of past events · confirmed in onboarding</p>
+                  </article>
+                  <article class="me-card">
+                    <div class="me-badges"><span class="me-badge">Unverified</span><span class="me-badge">Path B · Preference</span></div>
+                    <h3>What you decide</h3>
+                    <p>Methods and figures sit with you. Budget language goes through Priya. That is a preference about who decides, not only a job title.</p>
+                    <p class="me-meta">Pending evidence · expected From thread roles · confirmed in onboarding</p>
+                  </article>
+                  <article class="me-card">
+                    <div class="me-badges"><span class="me-badge">Unverified</span><span class="me-badge">Path C · Preference</span></div>
+                    <h3>What you keep at hand</h3>
+                    <p>Outlines live beside the current draft, not in a separate archive. Figures stay in their own folder until they are locked.</p>
+                    <p class="me-meta">Pending evidence · expected Folder structure you kept · confirmed in onboarding</p>
+                  </article>
+                </div>
+                <div class="me-h"><h2>Research context</h2><span>Recurring topics &amp; methods</span></div>
+                <div class="me-grid3">
+                  <article class="me-card">
+                    <div class="me-badges"><span class="me-badge">Unverified</span></div>
+                    <p class="me-kicker">Research</p>
+                    <h3>Structured research workflows</h3>
+                    <p>Repeated references to researcher flows and linear research chains</p>
+                    <p class="me-meta">No authenticated matching evidence.</p>
+                  </article>
+                  <article class="me-card">
+                    <div class="me-badges"><span class="me-badge">Unverified</span></div>
+                    <p class="me-kicker">Documentation</p>
+                    <h3>Output structure</h3>
+                    <p>Attention to how product and research outputs are organized</p>
+                    <p class="me-meta">No authenticated matching evidence.</p>
+                  </article>
+                  <article class="me-card">
+                    <div class="me-badges"><span class="me-badge">Unverified</span></div>
+                    <p class="me-kicker">Product</p>
+                    <h3>Digital people &amp; agents</h3>
+                    <p>Ongoing work around Citta, Desk, Cosmo, skills, and memory</p>
+                    <p class="me-meta">No authenticated matching evidence.</p>
+                  </article>
+                </div>
+                <article class="me-card" style="margin-top:12px">
+                  <div class="me-badges"><span class="me-badge">Unverified</span><span class="me-badge">Not used yet</span></div>
+                  <h3>Recurring file topics</h3>
+                  <p>Internal files reference "researcher", "线性研究链路", "输出结构设计文档" · 2026/8/12</p>
+                  <p class="me-meta">No authenticated matching suggestion. Not used.</p>
+                </article>
+                <div class="me-foot">
+                  <p>Profile synthesizes About you, Understand overview, people cards, and confirmed Style / Preference modules. AI history migration stays in work history, not here.</p>
+                  <div class="me-chips">
+                    <button type="button" class="me-chip brand" data-me-act="Gmail history">Gmail history</button>
+                    <button type="button" class="me-chip brand" data-me-act="Group conversations">Group conversations</button>
+                    <button type="button" class="me-chip brand" data-me-act="Internal files">Internal files</button>
+                  </div>
+                </div>
+              </div>
+              <div class="me-panel me-page" data-me-panel="skill" hidden>
+                <p class="me-page-kicker">Citta</p>
+                <h2>Skill</h2>
+                <p class="lead">Built-in and owner-scoped skills from the existing Symbion School contract.</p>
+                <div class="me-rule"></div>
+                <div class="me-actions">
+                  <button type="button" class="me-btn" data-me-act="Set up new skill">Set up new skill</button>
+                  <button type="button" class="me-btn" data-me-act="Refresh">Refresh</button>
+                </div>
+                <p class="me-note">Built-in Skills comes from the authenticated Symbion catalog. My Skills contains only skills owned by your signed-in account.</p>
+                <div class="me-split">
+                  <article class="me-card">
+                    <div class="me-panel-hd">
+                      <div><h3>Built-in Skills</h3><p>Skills included in the current Symbion catalog.</p></div>
+                      <button type="button" class="me-btn" data-me-act="Refresh">Refresh</button>
+                    </div>
+                    <div class="me-row"><span><b>Research Literature Watch</b><small>draft</small></span><em>research</em></div>
+                    <div class="me-row"><span><b>Message Triage and Draft</b><small>draft</small></span><em>messaging</em></div>
+                    <div class="me-row"><span><b>Coding Expert</b><small>draft</small></span><em>expert</em></div>
+                    <div class="me-row"><span><b>Data and Statistics Expert</b><small>draft</small></span><em>expert</em></div>
+                    <div class="me-row"><span><b>Design Expert</b><small>draft</small></span><em>expert</em></div>
+                    <div class="me-row"><span><b>Document Expert</b><small>draft</small></span><em>expert</em></div>
+                    <div class="me-row"><span><b>Accounting Expert</b><small>draft</small></span><em>expert</em></div>
+                    <div class="me-row"><span><b>Literature Expert</b><small>draft</small></span><em>expert</em></div>
+                    <div class="me-row"><span><b>Reviewing Expert</b><small>draft</small></span><em>expert</em></div>
+                    <div class="me-row"><span><b>Tutoring Expert</b><small>draft</small></span><em>expert</em></div>
+                    <div class="me-row"><span><b>LaTeX Typesetter Expert</b><small>draft</small></span><em>expert</em></div>
+                    <div class="me-row"><span><b>Writing Expert</b><small>draft</small></span><em>expert</em></div>
+                    <div class="me-row"><span><b>Citta — Super Agent</b><small>draft</small></span><em>super_agent</em></div>
+                    <div class="me-row"><span><b>Grant Manager</b><small>folded</small></span><em>manager</em></div>
+                    <div class="me-row"><span><b>Research Manager</b><small>draft</small></span><em>manager</em></div>
+                    <div class="me-row"><span><b>Study Manager</b><small>draft</small></span><em>manager</em></div>
+                    <div class="me-row"><span><b>Teaching Manager</b><small>draft</small></span><em>manager</em></div>
+                    <div class="me-row"><span><b>Study Group Recap</b><small>draft</small></span><em>manager</em></div>
+                  </article>
+                  <article class="me-card">
+                    <div class="me-panel-hd">
+                      <div><h3>My Skills</h3><p>Skills owned by your signed-in account.</p></div>
+                      <button type="button" class="me-btn" data-me-act="Refresh">Refresh</button>
+                    </div>
+                    <p class="me-empty">No current skills yet.</p>
+                  </article>
+                </div>
+              </div>
+              <div class="me-panel me-page" data-me-panel="loop" hidden>
+                <p class="me-page-kicker">Citta</p>
+                <h2>Loop</h2>
+                <p class="lead">Saved daily Loops and their current runtime readiness.</p>
+                <div class="me-rule"></div>
+                <div class="me-actions">
+                  <button type="button" class="me-btn" data-me-act="Add loop" disabled>Add loop</button>
+                  <button type="button" class="me-btn" data-me-act="Refresh">Refresh</button>
+                </div>
+                <p class="me-note">Saved Loops unavailable</p>
+                <p class="me-note">Saved Loops are unavailable because the existing workflow contract is not armed or could not be read.</p>
+              </div>
+            </div>
+          </section>
           <section id="dirHost" aria-label="Cosmo">
             <div class="dir-top">
               <div class="dir-row">
@@ -5884,7 +6489,7 @@
     syncPresenter(s);
   }));
 
-  let screen = 'home', tutorialStep = 1, tutorialDocPhase = null, cittaExpanded = false, newTipSeen = false, postTutorialTipPending = false, teamOpen = false, dirOpen = false, dirTab = 'cosmo', dirQuery = '', dirGroup = 'All', dirSort = 'all', deskOpen = false;
+  let screen = 'home', tutorialStep = 1, tutorialDocPhase = null, cittaExpanded = false, newTipSeen = false, postTutorialTipPending = false, teamOpen = false, dirOpen = false, dirTab = 'cosmo', dirQuery = '', dirGroup = 'All', dirSort = 'all', deskOpen = false, settingsOpen = false, settingsSection = 'profile', symbionOpen = false, meTab = 'know';
   /** H0 free-browse: coach/spotlight off, stay on tutorial tail so Reminders → Goals remain scrollable. */
   let tutorialExploring = false;
   const frame = $('frame');
@@ -5942,6 +6547,8 @@
     if (screen !== 'home') q.set('screen', screen);
     if (screen === 'dir') q.set('dir', dirTab);
     if (screen === 'desk') q.set('desk', deskSection);
+    if (screen === 'symbion') q.set('me', meTab);
+    if (screen === 'settings') q.set('set', settingsSection);
     if (screen === 'tutorial' && tutorialDocPhase === 'twin-finish') q.set('tutorial', '1d');
     else if (screen === 'tutorial' && tutorialDocPhase === 'doc-done') q.set('tutorial', '1e');
     else if (screen === 'tutorial' && tutorialDocPhase) q.set('tutorial', '1b');
@@ -7513,6 +8120,10 @@
           document.querySelector('.main')?.classList.remove('is-new-tab');
           return;
         }
+        if (document.documentElement.dataset.theme === 'blue' && el.dataset.osbar === 'symbion') {
+          openSymbion();
+          return;
+        }
         flashEl(el);
         const label = el.getAttribute('aria-label') || el.textContent.trim();
         showToastMsg(`Chrome · ${label}`);
@@ -7563,7 +8174,11 @@
           openDesk();
           return;
         }
-        if (teamOpen || dirOpen || deskOpen) setScreen('home');
+        if (el.dataset.rail === 'settings') {
+          openSettings();
+          return;
+        }
+        if (teamOpen || dirOpen || deskOpen || settingsOpen || symbionOpen) setScreen('home');
         selectRailItem(el.dataset.rail);
       });
     });
@@ -7779,6 +8394,8 @@
     if (teamOpen && next !== 'team') closeTeam();
     if (dirOpen && next !== 'dir') closeDir();
     if (deskOpen && next !== 'desk') closeDesk();
+    if (symbionOpen && next !== 'symbion') closeSymbion();
+    if (settingsOpen && next !== 'settings') closeSettings();
     screen = next;
     if (next !== 'tutorial') tutorialExploring = false;
     if (next === 'tutorial') {
@@ -8807,6 +9424,8 @@
   function openDir(tab) {
     if (teamOpen) closeTeam();
     if (deskOpen) closeDesk();
+    if (settingsOpen) closeSettings();
+    if (symbionOpen) closeSymbion();
     dirOpen = true;
     dirTab = tab === 'post' || tab === 'community' ? tab : 'cosmo';
     screen = 'dir';
@@ -8871,6 +9490,8 @@
   function openTeam() {
     if (dirOpen) closeDir();
     if (deskOpen) closeDesk();
+    if (settingsOpen) closeSettings();
+    if (symbionOpen) closeSymbion();
     teamOpen = true;
     screen = 'team';
     applyTheme('blue');
@@ -9208,6 +9829,8 @@
   function openDesk(section) {
     if (teamOpen) closeTeam();
     if (dirOpen) closeDir();
+    if (settingsOpen) closeSettings();
+    if (symbionOpen) closeSymbion();
     deskOpen = true;
     if (section) deskSection = section;
     screen = 'desk';
@@ -9237,6 +9860,201 @@
     });
   }
 
+  let settingsBound = false;
+  let settingsZoneSaved = 'device';
+  function markSettingsRail() {
+    frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
+      const on = r.dataset.rail === 'settings';
+      r.classList.toggle('on', on);
+      if (on) r.setAttribute('aria-current', 'page');
+      else r.removeAttribute('aria-current');
+    });
+  }
+  function showSettings(section) {
+    const host = document.getElementById('setHost');
+    if (!host) return;
+    settingsSection = section || 'profile';
+    host.querySelectorAll('button[data-set]').forEach((btn) => {
+      if (btn.dataset.set === settingsSection) btn.setAttribute('aria-current', 'page');
+      else btn.removeAttribute('aria-current');
+    });
+    host.querySelectorAll('[data-set-panel]').forEach((panel) => {
+      panel.hidden = panel.dataset.setPanel !== settingsSection;
+    });
+  }
+  function fillSettingsName() {
+    const name = document.getElementById('setName');
+    const current = userName();
+    if (name) name.value = current;
+    const initials = document.getElementById('setInitials');
+    if (initials) initials.textContent = userInitials(current) || 'LU';
+  }
+  function bindSettings() {
+    const host = document.getElementById('setHost');
+    if (!host || settingsBound) return;
+    settingsBound = true;
+    host.addEventListener('click', (event) => {
+      const nav = event.target.closest('button[data-set]');
+      if (nav) {
+        showSettings(nav.dataset.set);
+        syncHash();
+        return;
+      }
+      const pic = event.target.closest('button[data-pic]');
+      if (pic) {
+        host.querySelectorAll('button[data-pic]').forEach((btn) => {
+          btn.setAttribute('aria-pressed', String(btn === pic));
+        });
+        showToastMsg('Picture stays on this account.');
+        return;
+      }
+      const runtime = event.target.closest('button[data-runtime]');
+      if (runtime) {
+        host.querySelectorAll('button[data-runtime]').forEach((btn) => {
+          btn.setAttribute('aria-pressed', String(btn === runtime));
+        });
+        return;
+      }
+      const neo = event.target.closest('button[data-neo]');
+      if (neo) {
+        host.querySelectorAll('button[data-neo]').forEach((btn) => {
+          btn.setAttribute('aria-pressed', String(btn === neo));
+        });
+        const note = document.getElementById('setNeoNote');
+        const label = neo.querySelector('b')?.textContent || 'Use existing layout';
+        if (note) note.textContent = `On this device: ${label}.`;
+        return;
+      }
+      const act = event.target.closest('[data-set-act]')?.dataset.setAct;
+      if (act === 'back') setScreen('home');
+      else if (act === 'save-profile') {
+        const typed = (document.getElementById('setName')?.value || '').trim() || DEFAULT_USER_NAME;
+        const account = document.getElementById('accountName');
+        if (account) {
+          account.value = typed;
+          account.dispatchEvent(new Event('input', { bubbles: true }));
+        } else {
+          try { localStorage.setItem(USER_NAME_KEY, typed); } catch (_) {}
+          paintAccountIdentity(typed);
+          if (typeof syncLiveGreeting === 'function') syncLiveGreeting();
+        }
+        const initials = document.getElementById('setInitials');
+        if (initials) initials.textContent = userInitials(typed) || 'LU';
+        showToastMsg('Name follows you on this device.');
+      } else if (act === 'zone') {
+        settingsZoneSaved = document.getElementById('setZone')?.value || 'device';
+        const save = document.getElementById('setZoneSave');
+        if (save) save.disabled = true;
+        showToastMsg('Announcement times follow this device.');
+      } else if (act === 'reset') showToastMsg('Onboarding reset waits for the account service.');
+      else if (act === 'logout') showToastMsg('Sign out waits for the account service.');
+      else if (act === 'signout-all') showToastMsg('Sign out everywhere waits for the account service.');
+      else if (act === 'connect') showToastMsg('Google Workspace isn’t connected yet.');
+      else if (act === 'bug') {
+        const bug = document.getElementById('setBug');
+        if (!bug) return;
+        const on = bug.getAttribute('aria-pressed') !== 'true';
+        bug.setAttribute('aria-pressed', String(on));
+        const title = bug.querySelector('b');
+        const detail = bug.querySelector('small');
+        if (title) title.textContent = on ? 'On' : 'Off';
+        if (detail) detail.textContent = on ? 'Right-click reporting is available.' : 'Right-click reporting is off on this device.';
+      }
+    });
+    document.getElementById('setZone')?.addEventListener('change', (event) => {
+      const save = document.getElementById('setZoneSave');
+      if (save) save.disabled = event.target.value === settingsZoneSaved;
+    });
+  }
+  function openSettings(section) {
+    if (teamOpen) closeTeam();
+    if (dirOpen) closeDir();
+    if (deskOpen) closeDesk();
+    if (symbionOpen) closeSymbion();
+    settingsOpen = true;
+    screen = 'settings';
+    applyTheme('blue');
+    frame.classList.add('set-on');
+    const host = document.getElementById('setHost');
+    if (host) host.hidden = false;
+    bindSettings();
+    fillSettingsName();
+    showSettings(section || settingsSection || 'profile');
+    markSettingsRail();
+    document.querySelectorAll('.presenter [data-screen]').forEach((b) => {
+      b.setAttribute('aria-pressed', String(b.dataset.screen === 'home'));
+    });
+    syncHash();
+    fit();
+  }
+  function closeSettings() {
+    if (!settingsOpen) return;
+    settingsOpen = false;
+    frame.classList.remove('set-on');
+    const host = document.getElementById('setHost');
+    if (host) host.hidden = true;
+    frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
+      r.classList.remove('on');
+      r.removeAttribute('aria-current');
+    });
+  }
+
+  function paintMe() {
+    const host = document.getElementById('symbionHost');
+    if (!host) return;
+    host.querySelectorAll('[data-me-tab]').forEach((btn) => {
+      const on = btn.dataset.meTab === meTab;
+      btn.classList.toggle('on', on);
+      btn.setAttribute('aria-selected', String(on));
+    });
+    host.querySelectorAll('[data-me-panel]').forEach((panel) => {
+      panel.hidden = panel.dataset.mePanel !== meTab;
+    });
+    const scroll = host.querySelector('.me-scroll');
+    if (scroll) scroll.scrollTop = 0;
+  }
+  function openSymbion(tab) {
+    if (teamOpen) closeTeam();
+    if (dirOpen) closeDir();
+    if (deskOpen) closeDesk();
+    if (settingsOpen) closeSettings();
+    if (tab === 'skill' || tab === 'loop' || tab === 'know') meTab = tab;
+    symbionOpen = true;
+    screen = 'symbion';
+    applyTheme('blue');
+    frame.classList.add('symbion-on');
+    const host = document.getElementById('symbionHost');
+    if (host) host.hidden = false;
+    paintMe();
+    frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
+      r.classList.remove('on');
+      r.removeAttribute('aria-current');
+    });
+    document.querySelectorAll('.presenter [data-screen]').forEach((b) => {
+      b.setAttribute('aria-pressed', String(b.dataset.screen === 'home'));
+    });
+    syncHash();
+    fit();
+  }
+  function closeSymbion() {
+    if (!symbionOpen) return;
+    symbionOpen = false;
+    frame.classList.remove('symbion-on');
+    const host = document.getElementById('symbionHost');
+    if (host) host.hidden = true;
+  }
+  document.getElementById('symbionHost')?.addEventListener('click', (e) => {
+    const tab = e.target.closest('[data-me-tab]');
+    if (tab) {
+      meTab = tab.dataset.meTab;
+      paintMe();
+      syncHash();
+      return;
+    }
+    const act = e.target.closest('[data-me-act]');
+    if (act) showToastMsg('My Symbion · ' + act.dataset.meAct);
+  });
+
   function readHash() {
     const q = new URLSearchParams((location.hash || '').replace(/^#/, ''));
     const s = q.get('screen') || 'home';
@@ -9247,6 +10065,8 @@
     if (s === 'team') openTeam();
     else if (s === 'dir') openDir(q.get('dir') || 'cosmo');
     else if (s === 'desk') openDesk(q.get('desk') || 'kanban');
+    else if (s === 'symbion') openSymbion(q.get('me') || 'know');
+    else if (s === 'settings') openSettings(q.get('set') || 'profile');
     else if (s === 'tutorial') {
       const raw = q.get('tutorial') || '1';
       if (raw === '1b') startTutorial({ step: 1, docPhase: true });
