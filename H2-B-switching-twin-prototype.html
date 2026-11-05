@@ -4048,7 +4048,7 @@
                   <span class="wx" data-live="weather" aria-hidden="true"></span>
                   <span data-live="eyebrow-text">MONDAY 12 OCTOBER  ·  WEEK 6 OF FALL TERM</span>
                 </div>
-                <h2 data-live="title">Good morning, <span data-live="name">Jess</span></h2>
+                <h2 data-live="title">Good morning, <span data-live="name">Lulu</span></h2>
                 <p data-live="sub">Lecture 5 is at <b>2:30</b>. Want Citta to prep a <b>10-minute deck</b> before you go?</p>
               </div>
               <div class="day" data-live="day" aria-label="Your day">
@@ -4083,7 +4083,7 @@
                     <span class="wx" data-live="weather" aria-hidden="true"></span>
                     <span data-live="eyebrow-text">MONDAY 12 OCTOBER  ·  9 DAYS SINCE YOUR LAST VISIT</span>
                   </div>
-                  <h2 data-live="title">Welcome back, <span data-live="name">Jess</span></h2>
+                  <h2 data-live="title">Welcome back, <span data-live="name">Lulu</span></h2>
                   <p data-live="sub"><span class="lead">Everything is where you left it.</span> Your reading report is <b>due tomorrow</b>.</p>
                 </div>
                 <div class="day" data-live="day" aria-label="Your day">
@@ -4111,7 +4111,7 @@
                     <span class="wx" data-live="weather" aria-hidden="true"></span>
                     <span data-live="eyebrow-text">MONDAY 12 OCTOBER  ·  YOUR FIRST DAY</span>
                   </div>
-                  <h2 data-live="title">Welcome, <span data-live="name">Jess</span></h2>
+                  <h2 data-live="title">Welcome, <span data-live="name">Lulu</span></h2>
                   <p data-live="sub">You came in from Heavy-ion Physics. Pick a tool below and Citta will show you around.</p>
                 </div>
               </section>
@@ -4141,7 +4141,7 @@
                     <span class="wx" data-live="weather" aria-hidden="true"></span>
                     <span data-live="eyebrow-text">MONDAY 12 OCTOBER  ·  TUTORIAL COMPLETE</span>
                   </div>
-                  <h2 data-live="title">Good morning, <span data-live="name">Jess</span></h2>
+                  <h2 data-live="title">Good morning, <span data-live="name">Lulu</span></h2>
                   <p data-live="sub">Your <b>Lecture 1 summary</b> is in Doc. Pick up your deck or start something new with Citta.</p>
                 </div>
                 <div class="day" data-live="day" aria-label="This day">
@@ -4640,16 +4640,16 @@
           <h2>Team</h2>
           <span class="gcount" id="gcount"></span>
         <div class="acct">
-          <button type="button" class="p" id="accountOpen" aria-label="Account" aria-expanded="false" aria-controls="accountMenu">JE</button>
+          <button type="button" class="p" id="accountOpen" aria-label="Account" aria-expanded="false" aria-controls="accountMenu">LU</button>
           <div class="account-menu" id="accountMenu" hidden>
             <button type="button" data-account="profile" aria-expanded="false">Edit profile</button>
             <div class="fold" data-fold="profile" hidden>
-              <label>Name<input id="accountName" value="Jess" autocomplete="name"></label>
+              <label>Name<input id="accountName" value="Lulu" autocomplete="name"></label>
               <p>jess@symbion.test</p>
             </div>
             <button type="button" data-account="picture" aria-expanded="false">Profile picture</button>
             <div class="fold" data-fold="picture" hidden>
-              <p>Jess · JE. Picture changes stay on this account.</p>
+              <p id="accountPictureNote">Lulu · LU. Picture changes stay on this account.</p>
             </div>
             <button type="button" data-account="privacy" aria-expanded="false">Security and privacy</button>
             <div class="fold" data-fold="privacy" hidden>
@@ -8794,9 +8794,62 @@
     syncFsUi();
   }
 
-  const USER_NAME = (() => {
-    try { return localStorage.getItem('symbion-user-name') || 'Jess'; } catch (_) { return 'Jess'; }
-  })();
+  const USER_NAME_KEY = 'symbion-user-name';
+  const DEFAULT_USER_NAME = 'Lulu';
+
+  function userInitials(name) {
+    const parts = String(name || '').replace(/\./g, '').split(/\s+/).filter(Boolean);
+    if (!parts.length) return '';
+    if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  }
+
+  function readStoredUserName() {
+    try {
+      const stored = localStorage.getItem(USER_NAME_KEY);
+      if (!stored || stored === 'Jess') return DEFAULT_USER_NAME;
+      return stored;
+    } catch (_) {
+      return DEFAULT_USER_NAME;
+    }
+  }
+
+  function userName() {
+    const input = document.getElementById('accountName');
+    const typed = input && input.value.trim();
+    return typed || readStoredUserName();
+  }
+
+  function paintAccountIdentity(name) {
+    const next = (name || '').trim() || DEFAULT_USER_NAME;
+    const initials = userInitials(next);
+    const open = document.getElementById('accountOpen');
+    if (open) open.textContent = initials;
+    const note = document.getElementById('accountPictureNote');
+    if (note) note.textContent = `${next} · ${initials}. Picture changes stay on this account.`;
+  }
+
+  function bindUserName() {
+    const input = document.getElementById('accountName');
+    if (!input) return;
+    const stored = readStoredUserName();
+    input.value = stored;
+    paintAccountIdentity(stored);
+    try { localStorage.setItem(USER_NAME_KEY, stored); } catch (_) {}
+    input.addEventListener('input', () => {
+      const next = input.value.trim() || DEFAULT_USER_NAME;
+      try { localStorage.setItem(USER_NAME_KEY, next); } catch (_) {}
+      paintAccountIdentity(next);
+      syncLiveGreeting();
+    });
+    input.addEventListener('change', () => {
+      const next = input.value.trim() || DEFAULT_USER_NAME;
+      input.value = next;
+      try { localStorage.setItem(USER_NAME_KEY, next); } catch (_) {}
+      paintAccountIdentity(next);
+      syncLiveGreeting();
+    });
+  }
   const LAST_VISIT_KEY = 'symbion-last-visit';
   const DAY_TRACK_W = 420;
   const DAY_START_MIN = 8 * 60;
@@ -8957,7 +9010,7 @@
 
     document.querySelectorAll('[data-greeting]').forEach((sec) => {
       const kind = sec.dataset.greeting;
-      sec.querySelectorAll('[data-live="name"]').forEach((el) => { el.textContent = USER_NAME; });
+      sec.querySelectorAll('[data-live="name"]').forEach((el) => { el.textContent = userName(); });
       const wx = sec.querySelector('[data-live="weather"]');
       if (wx) wx.innerHTML = weatherIconHtml;
 
@@ -8971,7 +9024,7 @@
 
       const title = sec.querySelector('[data-live="title"]');
       if (title) {
-        const nameHtml = `<span data-live="name">${USER_NAME}</span>`;
+        const nameHtml = `<span data-live="name">${userName().replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]))}</span>`;
         if (kind === 'welcome') title.innerHTML = `Welcome back, ${nameHtml}`;
         else if (kind === 'tutorial') title.innerHTML = `Welcome, ${nameHtml}`;
         else title.innerHTML = `${hello}, ${nameHtml}`;
@@ -9022,6 +9075,7 @@
   initFullscreenToggle();
   decorateSparkIcons();
   decorateLectureBookIcons();
+  bindUserName();
   initLiveGreeting();
   const composerInputEl = $('composerInput');
   composerInputEl?.addEventListener('input', () => {
