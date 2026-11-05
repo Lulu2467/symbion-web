@@ -2045,6 +2045,7 @@
   .dock { position: absolute; right: var(--page-gutter); top: 843px; width: 44px; height: 44px; border-radius: 22px; background: #fff; border: 1.5px solid var(--green); color: var(--green); font-size: 0; font-weight: 600; display: flex; align-items: center; justify-content: center; left: auto; padding: 0; box-sizing: border-box; overflow: visible; transition: box-shadow .12s, left .2s ease, right .2s ease; z-index: 45; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-user-drag: none; user-drag: none; }
   .dock.is-dragging { cursor: grabbing; transition: none; box-shadow: 0 10px 28px rgba(var(--ink-rgb),.18); z-index: 80; }
   .dock.is-placed { right: auto !important; bottom: auto !important; }
+  html[data-theme="blue"] .dock:not(.is-placed) { top: auto; bottom: 24px; }
   /* Resting positions: left/right edges only (chat-widget style). */
   .dock .dock-av { width: 32px; height: 32px; border-radius: 9px; object-fit: cover; display: block; flex: none; pointer-events: none; -webkit-user-drag: none; user-drag: none; user-select: none; -webkit-user-select: none; }
   .dock .count { position: absolute; left: 28.5px; top: -5.5px; width: 18px; height: 18px; border-radius: 9px; background: var(--green); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; pointer-events: none; user-select: none; }
@@ -6975,18 +6976,29 @@
       };
     }
 
+    function awayFromMiddle(top) {
+      if (document.documentElement.dataset.theme !== 'blue') return top;
+      const h = dock.offsetHeight || 44;
+      const frameH = frame.offsetHeight || 0;
+      if (frameH < 200) return top;
+      const ratio = (top + h / 2) / frameH;
+      if (ratio > 0.35 && ratio < 0.72) return Math.max(8, frameH - h - 24);
+      return top;
+    }
+
     function restorePos() {
       try {
         const raw = localStorage.getItem(POS_KEY);
         if (!raw) return;
         const p = JSON.parse(raw);
         if (p?.side === 'left' || p?.side === 'right') {
-          applySide(p.side, typeof p.top === 'number' ? p.top : currentPos().top);
+          const top = awayFromMiddle(typeof p.top === 'number' ? p.top : currentPos().top);
+          applySide(p.side, top);
           return;
         }
         // Migrate older free {left,top} — force to nearest edge.
         if (typeof p?.left === 'number' && typeof p?.top === 'number') {
-          applySide(pickSide(p.left), p.top, { persist: true });
+          applySide(pickSide(p.left), awayFromMiddle(p.top), { persist: true });
         }
       } catch (_) { /* ignore */ }
     }
@@ -7123,7 +7135,23 @@
       setCittaExpanded(!cittaExpanded);
     });
 
+    function seatBlueDock() {
+      if (document.documentElement.dataset.theme !== 'blue') return;
+      if (dock.classList.contains('is-dragging')) return;
+      const h = dock.offsetHeight || 44;
+      const frameH = frame.offsetHeight || 0;
+      if (frameH < 200) return;
+      const maxT = Math.max(8, frameH - h - 24);
+      const cur = parseFloat(dock.style.top);
+      const ratio = (Number.isFinite(cur) ? cur + h / 2 : frameH) / frameH;
+      const top = (!Number.isFinite(cur) || cur > maxT || (ratio > 0.35 && ratio < 0.72)) ? maxT : cur;
+      const side = dock.classList.contains('dock-side-left') ? 'left' : 'right';
+      applySide(side, top);
+    }
+    frame.seatBlueDock = seatBlueDock;
+
     restorePos();
+    seatBlueDock();
     syncDockHomeAttr();
     syncDockNotice();
     window.addEventListener('resize', () => {
@@ -7251,6 +7279,7 @@
     }
     syncCosmosScrollFade();
     pinBlueHome();
+    if (typeof frame.seatBlueDock === 'function') frame.seatBlueDock();
   }
 
   // Spotlight + coach are absolute on .frame; .main (FS) or the window can scroll underneath — re-glue every scroll.
