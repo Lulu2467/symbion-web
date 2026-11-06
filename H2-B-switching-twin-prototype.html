@@ -5946,6 +5946,24 @@
   html[data-theme="blue"] #teamHost .thread-head,
   html[data-theme="blue"] #teamHost .announce,
   html[data-theme="blue"] #teamHost .log { background: #fff; }
+  html[data-theme="blue"] #teamHost .bubble {
+    width: fit-content;
+    max-width: 100%;
+    background: #eceef1;
+    color: #1a1d21;
+  }
+  html[data-theme="blue"] #teamHost .msg.mine .bubble {
+    align-self: flex-end;
+    background: var(--green-bubble);
+    color: #fff;
+  }
+  html[data-theme="blue"] #teamHost .qref { background: #fff; }
+  html[data-theme="blue"] #teamHost .msg.mine .qref {
+    background: rgba(255,255,255,.16);
+    color: rgba(255,255,255,.88);
+  }
+  html[data-theme="blue"] #teamHost .filechip i { background: #fff; }
+  html[data-theme="blue"] #teamHost .msg.mine .filechip i { background: rgba(255,255,255,.2); color: #fff; }
   html[data-theme="blue"] #teamHost .log.show-top-fade,
   html[data-theme="blue"] #teamHost .rows.show-top-fade {
     -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 28px, #000 100%);
