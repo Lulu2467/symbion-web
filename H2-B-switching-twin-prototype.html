@@ -13751,10 +13751,12 @@ const chats = [
   },
   {
     id: 'notes', kind: 'group', name: 'Section notes', number: '39018422', slug: 'heavy-ion',
-    description: 'Shared notes for the section. Nothing posted yet.',
-    owner: 'jess', admins: [], pinned: false, muted: false, hidden: false, unread: 0,
-    time: '', updated: 48, myName: 'Jess', membersOpen: true,
-    announce: '', titles: {}, members: ['jess'],
+    description: 'Shared notes for the section.',
+    owner: 'jess', admins: ['chris'], pinned: false, muted: false, hidden: false, unread: 0,
+    time: '1:40', updated: 48, myName: 'Jess', membersOpen: true,
+    announce: 'Section notes for this week stay in the thread. Add your page before Friday.',
+    titles: { chris: 'Teaching assistant' },
+    members: ['jess', 'chris', 'maya', 'alex', 'priya'],
     requests: [
       { id: 'r1', who: 'noah', reason: 'I want the section notes before lecture 5.' },
       { id: 'r2', who: 'hannah', reason: 'Sharing my reading outline.' }
@@ -13767,7 +13769,14 @@ const chats = [
       { id: 'ln1', status: 'active', by: 'jess' },
       { id: 'ln2', status: 'revoked', by: 'jess' }
     ],
-    messages: []
+    messages: [
+      { id: 'n1', sys: 'You created Section notes' },
+      { id: 'n2', who: 'chris', text: 'Put the lecture 5 outline here. Keep the phase diagram on its own page.' },
+      { id: 'n3', who: 'maya', text: '@Jess Can you drop the reading notes next to the deck?' },
+      { id: 'n4', who: 'alex', text: 'I added the jet quenching page.', reply: 'n3' },
+      { id: 'n5', who: 'priya', text: '', file: { name: 'Section-notes.pdf', size: '640 KB' } },
+      { id: 'n6', who: 'jess', text: "I'll add the quiz answers after class." }
+    ]
   },
   {
     id: 'qgp', kind: 'group', name: 'QGP reading group', number: '22018463', slug: 'qgp',
