@@ -2862,8 +2862,6 @@
     white-space: nowrap;
     line-height: 20px;
   }
-  html[data-theme="blue"] .tool-call .detail-line.is-out { animation: tool-detail-out 0.34s linear forwards; }
-  html[data-theme="blue"] .tool-call .detail-line.is-in { animation: tool-detail-in 0.46s linear 0.08s both; }
   html[data-theme="blue"] .tool-call .glint .detail { visibility: hidden; }
   html[data-theme="blue"] .tool-call .ink { color: #8d97a3; }
   html[data-theme="blue"] .tool-call .glint {
@@ -2897,14 +2895,6 @@
   @keyframes tool-sweep {
     0% { -webkit-mask-position: -64px 0; mask-position: -64px 0; }
     100% { -webkit-mask-position: 360px 0; mask-position: 360px 0; }
-  }
-  @keyframes tool-detail-out {
-    0% { opacity: 1; }
-    100% { opacity: 0; }
-  }
-  @keyframes tool-detail-in {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
   }
   @media (prefers-reduced-motion: reduce) {
     html[data-theme="blue"] .tool-call .glint { animation: none; visibility: hidden; }
@@ -7438,26 +7428,11 @@
     row.append(dots, label);
     return row;
   }
-  const TOOL_DETAIL_MS = 540;
   const TOOL_DETAIL_HOLD = 2200;
   function swapToolDetail(row, text) {
-    const slot = row.querySelector('.ink .detail-view');
-    if (!slot || !row.isConnected) return;
-    const current = slot.querySelector('.detail-line:not(.is-out)');
-    if (!current || current.textContent === text) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      current.textContent = text;
-      return;
-    }
-    const next = document.createElement('span');
-    next.className = 'detail-line is-in';
-    next.textContent = text;
-    current.classList.add('is-out');
-    slot.appendChild(next);
-    window.setTimeout(() => {
-      if (current.isConnected) current.remove();
-      next.classList.remove('is-in');
-    }, TOOL_DETAIL_MS);
+    const line = row.querySelector('.ink .detail-line');
+    if (!line || !row.isConnected || line.textContent === text) return;
+    line.textContent = text;
   }
   function buildToolCalls() {
     const wrap = document.createElement('div');
