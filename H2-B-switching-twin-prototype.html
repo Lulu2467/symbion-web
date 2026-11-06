@@ -4590,6 +4590,23 @@
     color: #1a1d21;
     font-weight: 500;
   }
+  html[data-theme="blue"] #dirHost .dir-sorts {
+    border: 0;
+    border-radius: 999px;
+    background: #f2f3f5;
+    padding: 3px;
+  }
+  html[data-theme="blue"] #dirHost .dir-sorts button {
+    border-radius: 999px;
+    color: #9aa0a6;
+    font-weight: 500;
+  }
+  html[data-theme="blue"] #dirHost .dir-sorts button[aria-pressed="true"] {
+    background: #fff;
+    color: #000;
+    font-weight: 650;
+    box-shadow: 0 1px 2px rgba(26, 29, 33, .08);
+  }
   .dir-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
   .frame.citta-open #dirHost .dir-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .dir-card {
