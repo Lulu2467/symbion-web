@@ -5035,19 +5035,27 @@
   }
   html[data-theme="blue"] #dirHost .dir-body:has(.chao-page) { display: flex; flex-direction: column; }
   html[data-theme="blue"] #dirHost .dir-comm:has(.chao-page) { flex: 1; display: flex; flex-direction: column; }
-  html[data-theme="blue"] #dirHost .chao-page { flex: 1; display: flex; flex-direction: column; min-height: 100%; padding: 16px 16px 0; }
+  html[data-theme="blue"] #dirHost .chao-page { flex: 1; display: flex; flex-direction: column; min-height: 100%; padding: 12px 16px 0; }
   html[data-theme="blue"] #dirHost .chao-kicker { margin: 0; color: var(--green); font-size: 13px; font-weight: 650; }
   html[data-theme="blue"] #dirHost .chao-title { margin: 0; color: #1a1d21; font-size: 22px; font-weight: 650; letter-spacing: -0.02em; }
   html[data-theme="blue"] #dirHost .chao-line { margin: 4px 0 0; color: #8b919a; font-size: 13px; }
   html[data-theme="blue"] #dirHost .chao-back {
     align-self: flex-start;
-    margin: 14px 0 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    margin: 0 0 8px;
     padding: 0;
     border: 0;
     background: none;
     color: var(--green);
-    font-size: 14px;
-    font-weight: 500;
+  }
+  html[data-theme="blue"] #dirHost .chao-back svg {
+    width: 22px;
+    height: 22px;
+    display: block;
   }
   html[data-theme="blue"] #dirHost .chao-head { display: flex; align-items: center; gap: 12px; margin-top: 14px; padding-top: 14px; border-top: 1px solid #eef0f2; }
   html[data-theme="blue"] #dirHost .chao-head .chao-copy { flex: 1; min-width: 0; }
@@ -11549,7 +11557,8 @@
     back.type = 'button';
     back.className = 'chao-back';
     back.dataset.chao = 'back';
-    back.textContent = '← Back';
+    back.setAttribute('aria-label', 'Back');
+    back.innerHTML = '<svg viewBox="62 60 484 904" aria-hidden="true"><path fill="currentColor" d="M139.392 511.744l392.96-392.96c12.16-12.16 12.8-32.64 0-45.44-12.8-12.8-33.28-12.8-45.44 0l-411.52 411.52c-7.04 7.04-10.24 17.28-8.96 26.24-1.92 10.24 1.28 20.48 8.96 27.52l411.52 412.16c12.16 12.16 32.64 12.16 45.44-0.64 12.8-12.8 12.8-32.64 0-45.44l-392.96-392.96z"/></svg>';
     const head = document.createElement('div');
     head.className = 'chao-head';
     const copy = document.createElement('div');
@@ -11576,7 +11585,7 @@
       btn.setAttribute('aria-pressed', String(dirChaoTab === id));
       tabs.appendChild(btn);
     });
-    page.append(title, line, back, head, tabs);
+    page.append(back, title, line, head, tabs);
     if (dirChaoTab === 'sub') {
       const note = document.createElement('p');
       note.className = 'chao-note';
