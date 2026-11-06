@@ -3898,7 +3898,11 @@
     letter-spacing: .06em;
   }
   .set-nav button[data-set] {
-    display: block;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 8px;
+    row-gap: 4px;
     width: 100%;
     text-align: left;
     border: 0;
@@ -4033,8 +4037,9 @@
     font-weight: 600;
   }
   .set-nav button[data-set] em {
-    margin-left: 6px;
-    padding: 1px 5px;
+    flex: none;
+    margin-left: 0;
+    padding: 1px 6px;
     border-radius: 999px;
     background: #f0f2f4;
     color: #8b919a;
@@ -4042,6 +4047,7 @@
     font-style: normal;
     font-weight: 650;
     letter-spacing: 0;
+    white-space: nowrap;
   }
   .set-pic-layout { display: flex; gap: 16px; align-items: flex-start; }
   .set-preview {
@@ -5938,7 +5944,7 @@
                 <p class="set-kicker">SECURITY</p>
                 <button type="button" data-set="security">Security</button>
                 <p class="set-kicker">ADVANCED</p>
-                <button type="button" data-set="bugs">Bug Report mode <em>Product test</em></button>
+                <button type="button" data-set="bugs"><span>Bug Report mode</span><em>Product test</em></button>
                 <p class="set-kicker">RELATED</p>
                 <button type="button" data-set="tokens">Tokens &amp; plan</button>
                 <button type="button" data-set="agents">Agents</button>
