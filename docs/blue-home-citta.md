@@ -8,8 +8,8 @@
 
 本地副本和线上文件有两处不同：
 
-1. 线上 `<head>` 只在 `localStorage['h2-theme']==='blue'` 时给 `<html>` 写 `data-theme="blue"`。本地副本在该值不是 `'green'` 时就写 `data-theme="blue"`。读 `localStorage` 失败时也写蓝色。点「绿色」后 `applyTheme` 会删掉 `data-theme` 并把 `h2-theme` 写成 `green`，再打开仍是绿色。
-2. 线上没有 hash 时执行 `setScreen('welcome')`。本地副本没有 hash 时执行 `setScreen('home')` 再 `setCittaExpanded(true)`。`setCittaExpanded(true)` 会 `history.replaceState` 成 `#citta=expanded`。已有 hash 时仍走 `readHash()`，不改 hash 含义。
+1. 线上 `<html>` 没有 `data-theme`。`<head>` 只在 `localStorage['h2-theme']==='blue'` 时写上 `data-theme="blue"`。本地副本的 `<html>` 自带 `data-theme="blue"`。`<head>` 只在 `localStorage['h2-theme']==='green'` 时删掉它。点「绿色」后 `applyTheme` 会删掉 `data-theme` 并把 `h2-theme` 写成 `green`，再打开仍是绿色。
+2. 线上首屏标记是 `#screen-welcome.on`、`#tail-welcome.on`，Citta 面板带 `hidden`，`.frame` 没有 `citta-open`。顶栏「过几天来」「绿色」是按下的。没有 hash 时执行 `setScreen('welcome')`。本地副本首屏标记是 `#screen-home.on`、`#tail-home.on`，`#cittaPanel` 没有 `hidden`，`.frame` 有 `citta-open`，`#dock` 带 `hidden`。顶栏「平时在用」「蓝色」是按下的。没有 hash 时执行 `setScreen('home')` 再 `setCittaExpanded(true)`。`setCittaExpanded(true)` 会 `history.replaceState` 成 `#citta=expanded`。已有 hash 时仍走 `readHash()`，不改 hash 含义。
 
 `#citta=expanded` 且没有 `screen` 时，`readHash` 把 `screen` 缺省成 `home`，再 `setCittaExpanded(true)`。顶栏「平时在用」是 `[data-screen="home"]`。
 
