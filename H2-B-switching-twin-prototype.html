@@ -5495,7 +5495,7 @@
   .emoji button:hover { background: var(--green-mist); }
   .thread { position: relative; }
 
-  .panel { width: 280px; flex: none; border-left: 1px solid var(--line); background: #fff; overflow: auto; padding: 0 0 20px; }
+  .panel { width: 280px; flex: none; border-left: 1px solid var(--line); background: #fff; overflow: auto; padding: 0 0 80px; }
   .panel h3 { margin: 0; font-size: 15px; font-weight: 500; }
   .panel .lead { margin: 4px 0 0; font-size: 12px; line-height: 1.45; color: var(--muted); }
   .panel .search { margin: 12px 16px 4px; border-radius: 6px; background: var(--surface); }
@@ -13846,9 +13846,9 @@ function renderPanel() {
         <div class="rowline">${inv.status === 'pending' ? `<button type="button" class="mini" data-finish="${inv.id}">Finish joining</button><button type="button" class="mini" data-revoke="${inv.id}">Revoke</button>` : ''}${inv.status === 'revoked' ? `<button type="button" class="mini" data-delete-email="${inv.id}">Delete record</button>` : ''}</div></div>`).join('')}
     </div>
     <div class="block"><h4>INVITE LINKS</h4><button type="button" class="mini" data-create-link>Create link</button>${linkRows}</div>` : ''}
+    <button type="button" class="danger" data-close-chat>Clear chat history</button>
     <button type="button" class="danger" data-leave>Leave group</button>
-    <p class="lead">${c.owner === ME ? 'Transfer ownership before you leave. Leaving does not delete the group.' : 'You stop receiving messages and cannot open this group. Everyone else stays.'}</p>
-    ${c.owner === ME ? `<button type="button" class="danger" data-delete-group>Delete group</button><p class="lead">Deletes the group for every member. This is not hiding it or clearing only your history.</p>` : ''}`;
+    ${c.owner === ME ? `<button type="button" class="danger" data-delete-group>Delete group</button>` : ''}`;
 }
 function switches(c) {
   return `<div class="rowline"><span>Mute</span><button type="button" class="switch" data-switch="muted" aria-pressed="${c.muted ? 'true' : 'false'}" aria-label="Mute"><i></i></button></div>
