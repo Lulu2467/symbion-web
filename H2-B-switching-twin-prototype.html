@@ -13392,16 +13392,14 @@ function syncTeamSend() {
 }
 function renderChrome() {
   const c = current();
-  $('title').textContent = c.kind === 'group' ? `${c.name} (${c.members.length})` : c.name;
+  $('title').textContent = c.name;
   const faceEl = $('headFace');
-  faceEl.hidden = false;
   if (c.kind === 'group') {
-    const n = canReview(c) ? pending(c) : 0;
-    faceEl.innerHTML = face(c) + (n ? `<span class="req-badge">${n}</span>` : '');
-    faceEl.setAttribute('aria-label', n ? `${n} ${n === 1 ? 'request' : 'requests'} to review` : 'Group details');
-    const slug = c.slug ? `<button type="button" class="slug-btn" data-slug-filter="${esc(c.slug)}">${esc(c.slug)}</button>` : '';
-    $('sub').hidden = false;
-    $('sub').innerHTML = `<button type="button" class="num-btn" data-copy-number="${esc(c.number)}">${esc(c.number)}</button>${slug}`;
+    faceEl.hidden = true;
+    faceEl.innerHTML = '';
+    faceEl.removeAttribute('aria-label');
+    $('sub').hidden = true;
+    $('sub').innerHTML = '';
     $('back').hidden = true;
     $('announce').hidden = !c.announce;
     $('announce').classList.toggle('clip', !state.announceOpen);
@@ -13409,6 +13407,7 @@ function renderChrome() {
     $('infoBtn').setAttribute('aria-label', 'Group details');
   } else {
     const p = person(c.person);
+    faceEl.hidden = false;
     faceEl.innerHTML = `<span class="av hue-${p.hue}">${esc(p.short)}</span>`;
     faceEl.setAttribute('aria-label', p.name);
     $('sub').hidden = true;
