@@ -6125,8 +6125,10 @@
   }
   html[data-theme="blue"] #teamHost .qref {
     display: block;
-    width: 100%;
-    margin: 8px 0 0;
+    align-self: stretch;
+    width: auto;
+    max-width: 100%;
+    margin: 0;
     padding: 1px 0 1px 8px;
     border: 0;
     border-left: 2px solid #c5c9cf;
@@ -6146,8 +6148,8 @@
     white-space: nowrap;
     text-overflow: ellipsis;
   }
-  html[data-theme="blue"] #teamHost .msg.mine .qref { color: rgba(255,255,255,.72); border-left-color: rgba(255,255,255,.55); background: transparent; }
-  html[data-theme="blue"] #teamHost .msg.mine .qref .qline { color: rgba(255,255,255,.72); }
+  html[data-theme="blue"] #teamHost .msg.mine .qref { color: #8b919a; border-left-color: #c5c9cf; background: transparent; }
+  html[data-theme="blue"] #teamHost .msg.mine .qref .qline { color: #8b919a; }
   html[data-theme="blue"] #teamHost .quote-bar {
     align-items: center;
     margin: 0 2px 8px;
@@ -14245,7 +14247,7 @@ function renderLog(scroll) {
     const stamp = m === stampAt ? `<p class="stamp">${esc(c.time)}</p>` : '';
     return `${stamp}<div class="msg${mine ? ' mine' : ''}" id="msg-${m.id}" data-id="${m.id}">
       <button type="button" class="av hue-${p.hue}" data-person="${m.who}" aria-label="${esc(p.name)}">${esc(p.short)}</button>
-      <div class="msg-col">${name}${marks}<div class="bubble">${blueQuote ? `${fwd}${file}${text}${quote}${xlate}` : `${quote}${fwd}${file}${text}${xlate}`}</div><button type="button" class="act" data-reply="${m.id}">Reply</button></div>
+      <div class="msg-col">${name}${marks}<div class="bubble">${blueQuote ? `${fwd}${file}${text}${xlate}` : `${quote}${fwd}${file}${text}${xlate}`}</div>${blueQuote ? quote : ''}<button type="button" class="act" data-reply="${m.id}">Reply</button></div>
     </div>`;
   }).join('');
   if (scroll) requestAnimationFrame(() => { $('log').scrollTop = $('log').scrollHeight; syncTeamEdgeFade(); });
