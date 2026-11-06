@@ -2736,11 +2736,11 @@
   }
   html[data-theme="blue"] .think-dots {
     display: grid;
-    grid-template-columns: repeat(3, 2px);
-    grid-template-rows: repeat(3, 2px);
+    grid-template-columns: repeat(6, 2px);
+    grid-template-rows: repeat(4, 2px);
     gap: 2px;
-    width: 10px;
-    height: 10px;
+    width: 22px;
+    height: 14px;
     flex: none;
     margin: 0;
     padding: 0;
@@ -2750,12 +2750,13 @@
     height: 2px;
     border-radius: 50%;
     background: #8d97a3;
-    animation: think-drift 1.36s linear infinite;
+    opacity: 0.22;
+    animation: think-drift 1.5s linear infinite;
   }
   @keyframes think-drift {
-    0%, 100% { opacity: 0.34; }
-    18% { opacity: 1; }
-    42% { opacity: 0.48; }
+    0%, 55%, 100% { opacity: 0.22; }
+    8% { opacity: 1; }
+    18% { opacity: 0.22; }
   }
   @media (prefers-reduced-motion: reduce) {
     html[data-theme="blue"] .think-dots span { animation: none; opacity: 0.45; }
@@ -6538,7 +6539,13 @@
     const dots = document.createElement('span');
     dots.className = 'think-dots';
     dots.setAttribute('aria-hidden', 'true');
-    for (let i = 0; i < 9; i += 1) dots.appendChild(document.createElement('span'));
+    for (let i = 0; i < 24; i += 1) {
+      const dot = document.createElement('span');
+      const col = i % 6;
+      const row = Math.floor(i / 6);
+      dot.style.animationDelay = `${(col * 0.08 + row * 0.03).toFixed(2)}s`;
+      dots.appendChild(dot);
+    }
     const label = document.createElement('span');
     label.className = 'lbl';
     label.textContent = 'Thinking';
