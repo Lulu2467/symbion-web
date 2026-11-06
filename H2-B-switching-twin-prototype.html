@@ -4235,13 +4235,13 @@
     z-index: 2;
     flex: none;
     margin: 0;
-    padding: 16px 24px 12px;
+    padding: 20px 28px 16px;
     background: #f6f7f8;
   }
   .dir-body { flex: 1; min-height: 0; overflow: auto; padding: 4px 24px 32px; scrollbar-gutter: stable; }
-  .dir-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-  .dir-row + .dir-row { margin-top: 14px; }
-  .dir-tabs { display: flex; align-items: center; gap: 22px; }
+  .dir-row { display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+  .dir-row + .dir-row { margin-top: 16px; }
+  .dir-tabs { display: flex; align-items: center; gap: 28px; }
   .dir-tab {
     position: relative;
     display: inline-flex;
@@ -4260,14 +4260,14 @@
   #dirHost .is-off { visibility: hidden; pointer-events: none; }
     .dir-tab .spark-icon { width: 16px; height: 16px; display: inline-flex; }
   .dir-tab .spark-icon svg { width: 16px; height: 16px; display: block; }
-  .dir-side { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+  .dir-side { display: flex; align-items: center; margin-left: auto; }
   .dir-search {
     display: flex;
     align-items: center;
     gap: 8px;
-    width: 200px;
+    width: 240px;
     height: 32px;
-    padding: 0 12px;
+    padding: 0 14px;
     border: 1px solid #e6e8ec;
     border-radius: 8px;
     background: #fff;
@@ -4283,7 +4283,7 @@
     color: var(--ink);
   }
   .dir-search input::placeholder { color: var(--placeholder); }
-  .dir-chips { display: flex; flex-wrap: nowrap; gap: 4px; min-width: 0; overflow: auto; }
+  .dir-chips { display: flex; flex: 1; flex-wrap: nowrap; gap: 8px; min-width: 0; overflow: auto; }
   .dir-chips button, .dir-sorts button {
     height: 28px;
     padding: 0 12px;
@@ -6079,11 +6079,6 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6.25"/><path d="M16 16.5 20 20.5" stroke-linecap="round"/></svg>
                     <input id="dirSearch" type="search" placeholder="Search Cosmos" autocomplete="off" aria-label="Search Cosmos">
                   </label>
-                  <div class="dir-sorts" role="group" aria-label="Sort">
-                    <button type="button" data-dir-sort="all" aria-pressed="true">Recommended</button>
-                    <button type="button" data-dir-sort="popular" aria-pressed="false">Popular</button>
-                    <button type="button" data-dir-sort="new" aria-pressed="false">New</button>
-                  </div>
                 </div>
               </div>
               <div class="dir-row" id="dirTools">
@@ -6094,6 +6089,11 @@
                   <button type="button" data-dir-group="Business" aria-pressed="false">Business</button>
                   <button type="button" data-dir-group="Society" aria-pressed="false">Society</button>
                   <button type="button" data-dir-group="Skincare" aria-pressed="false">Skincare</button>
+                </div>
+                <div class="dir-sorts" role="group" aria-label="Sort">
+                  <button type="button" data-dir-sort="all" aria-pressed="true">Recommended</button>
+                  <button type="button" data-dir-sort="popular" aria-pressed="false">Popular</button>
+                  <button type="button" data-dir-sort="new" aria-pressed="false">New</button>
                 </div>
               </div>
             </div>
