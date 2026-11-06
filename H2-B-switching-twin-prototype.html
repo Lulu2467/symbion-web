@@ -4479,6 +4479,33 @@
     border-radius: 12px;
     background: linear-gradient(180deg, #f6f5f1 0%, #eef1ee 100%);
   }
+  html[data-theme="blue"] #dirHost .dir-feed {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+    columns: 4;
+    column-gap: 16px;
+  }
+  html[data-theme="blue"] #dirHost .dir-feed .dir-note {
+    display: inline-block;
+    width: 100%;
+    margin: 0 0 20px;
+  }
+  html[data-theme="blue"] #dirHost .dir-feed .dir-note-pic,
+  html[data-theme="blue"] #dirHost .dir-feed .dir-note-quote { border-radius: 12px; }
+  html[data-theme="blue"] #dirHost .dir-feed .dir-note-quote {
+    min-height: 200px;
+    justify-content: center;
+    text-align: center;
+    font-size: 22px;
+  }
+  html[data-theme="blue"] #dirHost .dir-note-quote.rose { background: #fde8ef; }
+  html[data-theme="blue"] #dirHost .dir-note-quote.dot {
+    background-color: #f6f3ec;
+    background-image: radial-gradient(rgba(180, 164, 140, .55) 1.1px, transparent 1.2px);
+    background-size: 16px 16px;
+  }
   #dirHost .dir-comm { columns: 4; column-gap: 16px; }
   #dirHost .dir-note { break-inside: avoid; margin: 0 0 18px; }
   #dirHost .dir-note-pic {
@@ -9904,42 +9931,62 @@
   }
 
   const DIR_POSTS = [
-    { name: '骆王宇', initial: '骆', tone: 'sand', time: '2h', text: '分享了一份关于 Agent memory 与长上下文工作流的新研究摘要。', media: true },
-    { name: '李佳琦', initial: '李', tone: 'mint', time: '5h', text: '今天的产品笔记：把复杂能力收进一个更清晰的工作界面。', media: false },
-    { name: '豆豆', initial: '豆', tone: 'sky', time: 'Yesterday', text: '新的护肤内容合集已经更新。', media: true }
+    { title: '分享了一份关于 Agent memory 与长上下文工作流的新研究摘要。', img: 'luo/assets/luo-portrait.png', h: 'tall', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '128' },
+    { title: '今天的产品笔记', quote: '把复杂能力收进一个更清晰的工作界面。', tone: 'paper', name: '李佳琦', initial: '李', av: 'mint', likes: '54' },
+    { title: '新的护肤内容合集已经更新。', img: 'luo/assets/product-sunscreen.jpg', h: 'tall', name: '豆豆', initial: '豆', tone: 'sky', likes: '86' },
+    { title: '新的护肤内容合集封面', img: 'luo/assets/luo-hero.png', h: 'mid', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '203' },
+    { title: '研究摘要里的一句', quote: 'Agent memory 不该靠聊天记录硬记。', tone: 'dot', name: '李佳琦', initial: '李', av: 'mint', likes: '62' },
+    { title: '这套水乳，混油皮我留着白天用', img: 'luo/assets/product-cetaphil.png', h: 'mid', name: '豆豆', initial: '豆', tone: 'sky', likes: '41' },
+    { title: '重离子课，我从这张图讲起', img: 'luo/assets/cosmo-roland.jpg', h: 'short', name: 'Prof. Roland', photo: 'assets/gunther-roland-illustrated.jpg', likes: '37' },
+    { title: '修护精华敷完，先别急着洗脸', img: 'luo/assets/product-drwu.jpg', h: 'tall', name: '豆豆', initial: '豆', tone: 'sky', likes: '96' }
   ];
+  function fillNoteCard(card, note) {
+    if (note.img) {
+      const pic = document.createElement('img');
+      pic.className = 'dir-note-pic ' + note.h;
+      pic.alt = '';
+      pic.src = note.img;
+      card.appendChild(pic);
+    } else {
+      const quote = document.createElement('div');
+      quote.className = 'dir-note-quote ' + (note.tone || 'paper');
+      quote.textContent = note.quote;
+      card.appendChild(quote);
+    }
+    const title = document.createElement('p');
+    title.className = 'dir-note-title';
+    title.textContent = note.title;
+    const foot = document.createElement('div');
+    foot.className = 'dir-note-foot';
+    if (note.photo) {
+      const av = document.createElement('img');
+      av.className = 'dir-note-av';
+      av.alt = '';
+      av.src = note.photo;
+      foot.appendChild(av);
+    } else {
+      const av = document.createElement('span');
+      av.className = 'dir-note-av letter ' + (note.av || note.tone || 'sky');
+      av.textContent = note.initial || '';
+      foot.appendChild(av);
+    }
+    const who = document.createElement('span');
+    who.className = 'dir-note-who';
+    who.textContent = note.name;
+    const like = document.createElement('span');
+    like.className = 'dir-note-like';
+    like.append(noteHeart(), document.createTextNode(note.likes));
+    foot.append(who, like);
+    card.append(title, foot);
+  }
   function renderPosts(feed) {
     if (!feed) return;
     feed.hidden = false;
     feed.replaceChildren(...DIR_POSTS.map((post) => {
-      const row = document.createElement('article');
-      row.className = 'dir-post';
-      const top = document.createElement('div');
-      top.className = 'dir-post-top';
-      const av = document.createElement('span');
-      av.className = 'dir-post-av ' + post.tone;
-      av.textContent = post.initial;
-      const name = document.createElement('b');
-      name.className = 'dir-post-name';
-      name.textContent = post.name;
-      const time = document.createElement('span');
-      time.className = 'dir-post-time';
-      time.textContent = post.time;
-      top.append(av, name, time);
-      const copy = document.createElement('div');
-      copy.className = 'dir-post-copy';
-      const body = document.createElement('p');
-      body.className = 'dir-post-body';
-      body.textContent = post.text;
-      copy.appendChild(body);
-      if (post.media) {
-        const media = document.createElement('div');
-        media.className = 'dir-post-media';
-        media.setAttribute('aria-hidden', 'true');
-        copy.appendChild(media);
-      }
-      row.append(top, copy);
-      return row;
+      const card = document.createElement('article');
+      card.className = 'dir-note';
+      fillNoteCard(card, post);
+      return card;
     }));
   }
 
@@ -9972,43 +10019,7 @@
     host.replaceChildren(...DIR_NOTES.map((note) => {
       const card = document.createElement('article');
       card.className = 'dir-note';
-      if (note.img) {
-        const pic = document.createElement('img');
-        pic.className = 'dir-note-pic ' + note.h;
-        pic.alt = '';
-        pic.src = note.img;
-        card.appendChild(pic);
-      } else {
-        const quote = document.createElement('div');
-        quote.className = 'dir-note-quote ' + (note.tone || 'paper');
-        quote.textContent = note.quote;
-        card.appendChild(quote);
-      }
-      const title = document.createElement('p');
-      title.className = 'dir-note-title';
-      title.textContent = note.title;
-      const foot = document.createElement('div');
-      foot.className = 'dir-note-foot';
-      if (note.photo) {
-        const av = document.createElement('img');
-        av.className = 'dir-note-av';
-        av.alt = '';
-        av.src = note.photo;
-        foot.appendChild(av);
-      } else {
-        const av = document.createElement('span');
-        av.className = 'dir-note-av letter ' + (note.av || note.tone || 'sky');
-        av.textContent = note.initial || '';
-        foot.appendChild(av);
-      }
-      const who = document.createElement('span');
-      who.className = 'dir-note-who';
-      who.textContent = note.name;
-      const like = document.createElement('span');
-      like.className = 'dir-note-like';
-      like.append(noteHeart(), document.createTextNode(note.likes));
-      foot.append(who, like);
-      card.append(title, foot);
+      fillNoteCard(card, note);
       return card;
     }));
   }
