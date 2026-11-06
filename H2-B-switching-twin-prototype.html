@@ -4103,6 +4103,13 @@
   .set-plan small { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; line-height: 1.4; }
   .set-flow { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 14px; }
   .set-flow span { padding: 6px 10px; border-radius: 999px; background: #f0f2f4; color: #1a1d21; font-size: 12px; font-weight: 600; }
+  html[data-theme="blue"] #setHost [data-set-panel="tokens"] .set-flow { margin: 2px 0 0; }
+  html[data-theme="blue"] #setHost [data-set-panel="tokens"] .set-flow + .set-line { border-top: 0; margin-top: 12px; }
+  html[data-theme="blue"] #setHost [data-set-panel="tokens"] .set-line { padding: 8px 0; }
+  html[data-theme="blue"] #setHost [data-set-panel="tokens"] .set-actions { margin-top: 12px; }
+  html[data-theme="blue"] #setHost [data-set-panel="tokens"] .set-plans { margin-top: 16px; gap: 12px; }
+  html[data-theme="blue"] #setHost [data-set-panel="tokens"] .set-plan { padding: 14px 16px; }
+  html[data-theme="blue"] #setHost [data-set-panel="tokens"] .set-plan small { margin-top: 6px; }
   .set-hire { display: grid; grid-template-columns: 180px 1fr 220px; gap: 12px; align-items: start; }
   .set-roster { display: flex; flex-direction: column; gap: 6px; max-height: 420px; overflow: auto; }
   #setHost .set-role {
