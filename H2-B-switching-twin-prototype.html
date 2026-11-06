@@ -5793,19 +5793,21 @@
   html[data-theme="blue"] #teamHost .list-top .search svg { width: 14px; height: 14px; color: #8b919a; }
   html[data-theme="blue"] #teamHost .list-top .search input { font-size: 14px; line-height: 32px; }
   html[data-theme="blue"] #teamHost .list-top .search input::placeholder { color: #8b919a; }
+  #teamHost #plus .plus-glyph { display: none; }
   html[data-theme="blue"] #teamHost .list-top .icon-btn {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    border: 1px solid #8b919a;
+    border: 0;
     background: transparent;
-    color: #8b919a;
+    color: #333;
   }
-  html[data-theme="blue"] #teamHost .list-top .icon-btn svg { width: 16px; height: 16px; }
+  html[data-theme="blue"] #teamHost #plus .plus-stroke { display: none; }
+  html[data-theme="blue"] #teamHost #plus .plus-glyph { display: block; width: 32px; height: 32px; }
   html[data-theme="blue"] #teamHost .list-top .icon-btn:hover {
-    border-color: #5f6368;
+    border-color: transparent;
     background: transparent;
-    color: #5f6368;
+    color: #1a1d21;
   }
   #teamHost .row:hover { background: #eef0f2; }
   #teamHost .row.on { background: #d4e4ee; }
@@ -7247,7 +7249,7 @@
             <input id="q" type="search" placeholder="Search" autocomplete="off" aria-label="Search joined groups">
           </label>
           <div class="plus-wrap">
-            <button type="button" class="icon-btn" id="plus" aria-label="Create a group"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+            <button type="button" class="icon-btn" id="plus" aria-label="Create a group"><svg class="plus-stroke" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><svg class="plus-glyph" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M668.734694 532.897959H355.265306c-11.493878 0-20.897959-9.404082-20.897959-20.897959s9.404082-20.897959 20.897959-20.897959h313.469388c11.493878 0 20.897959 9.404082 20.897959 20.897959s-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 689.632653c-11.493878 0-20.897959-9.404082-20.897959-20.897959V355.265306c0-11.493878 9.404082-20.897959 20.897959-20.897959s20.897959 9.404082 20.897959 20.897959v313.469388c0 11.493878-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 929.959184c-230.4 0-417.959184-187.559184-417.959184-417.959184s187.559184-417.959184 417.959184-417.959184 417.959184 187.559184 417.959184 417.959184-187.559184 417.959184-417.959184 417.959184z m0-794.122449c-207.412245 0-376.163265 168.75102-376.163265 376.163265s168.75102 376.163265 376.163265 376.163265 376.163265-168.75102 376.163265-376.163265-168.75102-376.163265-376.163265-376.163265z"/></svg></button>
           </div>
         </div>
         <div class="rows" id="rows"></div>
