@@ -4219,7 +4219,7 @@
     padding: 22px 28px 14px;
     background: #f6f7f8;
   }
-  .dir-body { flex: 1; min-height: 0; overflow: auto; padding: 0 28px 40px; }
+  .dir-body { flex: 1; min-height: 0; overflow: auto; padding: 0 28px 40px; scrollbar-gutter: stable; }
   .dir-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
   .dir-row + .dir-row { margin-top: 14px; }
   .dir-tabs { display: flex; align-items: center; gap: 22px; }
@@ -4238,6 +4238,11 @@
   }
   #dirHost .dir-tab { color: #9aa0a6; font-weight: 500; }
   #dirHost .dir-tab.on { color: #000; font-weight: 650; }
+  #dirHost .dir-tab-lab { display: inline-grid; }
+  #dirHost .dir-tab-lab::before,
+  #dirHost .dir-tab-lab > span { grid-area: 1 / 1; }
+  #dirHost .dir-tab-lab::before { content: attr(data-text); font-weight: 650; visibility: hidden; }
+  #dirHost .is-off { visibility: hidden; pointer-events: none; }
     .dir-tab .spark-icon { width: 16px; height: 16px; display: inline-flex; }
   .dir-tab .spark-icon svg { width: 16px; height: 16px; display: block; }
   .dir-side { display: flex; align-items: center; gap: 10px; margin-left: auto; }
@@ -4407,7 +4412,7 @@
   .dir-foot .spark-icon { width: 12px; height: 12px; display: inline-flex; color: #3c7a94; }
   .dir-foot .spark-icon svg { width: 12px; height: 12px; display: block; }
   .dir-none, .dir-empty {
-    margin: 64px auto;
+    margin: 0 auto;
     text-align: center;
     color: var(--muted);
     font-size: 14px;
@@ -5911,9 +5916,9 @@
             <div class="dir-top">
               <div class="dir-row">
                 <div class="dir-tabs" role="tablist" aria-label="Directory">
-                  <button type="button" class="dir-tab on" data-dir-tab="cosmo" role="tab" aria-selected="true"><span class="spark-icon" aria-hidden="true"><svg viewBox="0 0 1024 1024" fill="none" stroke="currentColor" stroke-width="64" stroke-linejoin="round" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z"/></svg></span>Cosmo</button>
-                  <button type="button" class="dir-tab" data-dir-tab="post" role="tab" aria-selected="false"><span class="spark-icon" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M800 960H224c-52.928 0-96-43.072-96-96V224c0-52.928 43.072-96 96-96h448c17.696 0 32 14.336 32 32s-14.304 32-32 32H224c-17.632 0-32 14.368-32 32v640c0 17.664 14.368 32 32 32h576c17.664 0 32-14.336 32-32V352c0-17.664 14.304-32 32-32s32 14.336 32 32v512c0 52.928-43.072 96-96 96zM511.68 542.72c-8.256 0-16.512-3.168-22.752-9.504-12.416-12.576-12.32-32.832 0.256-45.248L907.488 74.24c12.608-12.448 32.832-12.288 45.248 0.256 12.448 12.576 12.32 32.832-0.256 45.248L534.176 533.472c-6.24 6.176-14.368 9.248-22.496 9.248z" fill="currentColor"/></svg></span>Post</button>
-                  <button type="button" class="dir-tab" data-dir-tab="community" role="tab" aria-selected="false"><span class="spark-icon" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M704 732.8c51.2 0 96-41.6 96-96V224c0-51.2-41.6-96-96-96H156.8c-51.2 0-96 41.6-96 96v412.8c0 51.2 41.6 96 96 96H192v160c0 12.8 9.6 25.6 22.4 32H224c9.6 0 19.2-3.2 25.6-12.8l131.2-179.2H704zM233.6 672c-3.2-3.2-9.6-3.2-12.8-3.2h-64c-16 0-32-12.8-32-32V224c0-16 12.8-32 32-32H704c16 0 32 12.8 32 32v412.8c0 16-12.8 32-32 32H364.8 355.2c-3.2 3.2-3.2 3.2-6.4 3.2s-3.2 3.2-6.4 3.2l-3.2 3.2s-3.2 0-3.2 3.2L256 796.8V704c0-16-9.6-25.6-22.4-32z" fill="currentColor"/><path d="M864 252.8c-19.2 0-32 12.8-32 32s16 32 32 32 32 12.8 32 32v348.8c0 19.2-16 25.6-32 25.6h-32c-19.2 0-32 12.8-32 32v3.2c0 3.2-3.2 6.4-3.2 9.6v60.8l-73.6-57.6c-3.2-3.2-9.6-3.2-16-3.2H544c-19.2 0-32 12.8-32 32s12.8 32 32 32h153.6l115.2 89.6c6.4 3.2 12.8 6.4 19.2 6.4 3.2 0 9.6 0 12.8-3.2 9.6-6.4 19.2-16 19.2-28.8v-108.8c54.4 0 96-38.4 96-89.6V348.8c0-51.2-44.8-96-96-96z" fill="currentColor"/></svg></span>Community</button>
+                  <button type="button" class="dir-tab on" data-dir-tab="cosmo" role="tab" aria-selected="true"><span class="spark-icon" aria-hidden="true"><svg viewBox="0 0 1024 1024" fill="none" stroke="currentColor" stroke-width="64" stroke-linejoin="round" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z"/></svg></span><span class="dir-tab-lab" data-text="Cosmo"><span>Cosmo</span></span></button>
+                  <button type="button" class="dir-tab" data-dir-tab="post" role="tab" aria-selected="false"><span class="spark-icon" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M800 960H224c-52.928 0-96-43.072-96-96V224c0-52.928 43.072-96 96-96h448c17.696 0 32 14.336 32 32s-14.304 32-32 32H224c-17.632 0-32 14.368-32 32v640c0 17.664 14.368 32 32 32h576c17.664 0 32-14.336 32-32V352c0-17.664 14.304-32 32-32s32 14.336 32 32v512c0 52.928-43.072 96-96 96zM511.68 542.72c-8.256 0-16.512-3.168-22.752-9.504-12.416-12.576-12.32-32.832 0.256-45.248L907.488 74.24c12.608-12.448 32.832-12.288 45.248 0.256 12.448 12.576 12.32 32.832-0.256 45.248L534.176 533.472c-6.24 6.176-14.368 9.248-22.496 9.248z" fill="currentColor"/></svg></span><span class="dir-tab-lab" data-text="Post"><span>Post</span></span></button>
+                  <button type="button" class="dir-tab" data-dir-tab="community" role="tab" aria-selected="false"><span class="spark-icon" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M704 732.8c51.2 0 96-41.6 96-96V224c0-51.2-41.6-96-96-96H156.8c-51.2 0-96 41.6-96 96v412.8c0 51.2 41.6 96 96 96H192v160c0 12.8 9.6 25.6 22.4 32H224c9.6 0 19.2-3.2 25.6-12.8l131.2-179.2H704zM233.6 672c-3.2-3.2-9.6-3.2-12.8-3.2h-64c-16 0-32-12.8-32-32V224c0-16 12.8-32 32-32H704c16 0 32 12.8 32 32v412.8c0 16-12.8 32-32 32H364.8 355.2c-3.2 3.2-3.2 3.2-6.4 3.2s-3.2 3.2-6.4 3.2l-3.2 3.2s-3.2 0-3.2 3.2L256 796.8V704c0-16-9.6-25.6-22.4-32z" fill="currentColor"/><path d="M864 252.8c-19.2 0-32 12.8-32 32s16 32 32 32 32 12.8 32 32v348.8c0 19.2-16 25.6-32 25.6h-32c-19.2 0-32 12.8-32 32v3.2c0 3.2-3.2 6.4-3.2 9.6v60.8l-73.6-57.6c-3.2-3.2-9.6-3.2-16-3.2H544c-19.2 0-32 12.8-32 32s12.8 32 32 32h153.6l115.2 89.6c6.4 3.2 12.8 6.4 19.2 6.4 3.2 0 9.6 0 12.8-3.2 9.6-6.4 19.2-16 19.2-28.8v-108.8c54.4 0 96-38.4 96-89.6V348.8c0-51.2-44.8-96-96-96z" fill="currentColor"/></svg></span><span class="dir-tab-lab" data-text="Community"><span>Community</span></span></button>
                 </div>
                 <div class="dir-side" id="dirSide">
                   <div class="dir-sorts" role="group" aria-label="Sort">
@@ -9740,8 +9745,12 @@
     const grid = document.getElementById('dirGrid');
     const none = document.getElementById('dirNone');
     const empty = document.getElementById('dirEmpty');
-    if (tools) tools.hidden = !cosmo;
-    if (searchWrap) searchWrap.hidden = !cosmo;
+    [tools, searchWrap].forEach((el) => {
+      if (!el) return;
+      el.hidden = false;
+      el.classList.toggle('is-off', !cosmo);
+      el.toggleAttribute('inert', !cosmo);
+    });
     const search = document.getElementById('dirSearch');
     if (search && search.value !== dirQuery) search.value = dirQuery;
     host.querySelectorAll('[data-dir-group]').forEach((btn) => {
@@ -9828,22 +9837,26 @@
     });
   }
   function openDir(tab) {
-    if (teamOpen) closeTeam();
-    if (deskOpen) closeDesk();
-    if (settingsOpen) closeSettings();
-    if (symbionOpen) closeSymbion();
+    const next = tab === 'post' || tab === 'community' ? tab : 'cosmo';
+    const staying = dirOpen && screen === 'dir';
+    if (!staying) {
+      if (teamOpen) closeTeam();
+      if (deskOpen) closeDesk();
+      if (settingsOpen) closeSettings();
+      if (symbionOpen) closeSymbion();
+      applyTheme('blue');
+      frame.classList.add('dir-on');
+      document.querySelectorAll('.presenter [data-screen]').forEach((b) => {
+        b.setAttribute('aria-pressed', String(b.dataset.screen === 'home'));
+      });
+    }
     dirOpen = true;
-    dirTab = tab === 'post' || tab === 'community' ? tab : 'cosmo';
+    dirTab = next;
     screen = 'dir';
-    applyTheme('blue');
-    frame.classList.add('dir-on');
     markDirRail();
-    document.querySelectorAll('.presenter [data-screen]').forEach((b) => {
-      b.setAttribute('aria-pressed', String(b.dataset.screen === 'home'));
-    });
     renderDir();
     syncHash();
-    fit();
+    if (!staying) fit();
   }
   function closeDir() {
     if (!dirOpen) return;
