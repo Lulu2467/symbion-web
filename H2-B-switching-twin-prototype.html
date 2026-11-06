@@ -2896,13 +2896,18 @@
     line-height: 20px;
   }
   html[data-theme="blue"] .tool-call .detail-view {
-    display: grid;
+    display: block;
     height: 20px;
     min-width: 0;
     overflow: hidden;
   }
+  html[data-theme="blue"] .tool-call .detail-track { display: block; }
+  html[data-theme="blue"] .tool-call .detail-track.is-sliding {
+    animation: detail-up 0.42s cubic-bezier(0.22, 0.8, 0.3, 1) forwards;
+  }
   html[data-theme="blue"] .tool-call .detail-line {
-    grid-area: 1 / 1;
+    display: block;
+    height: 20px;
     min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -2943,9 +2948,13 @@
     0% { -webkit-mask-position: -64px 0; mask-position: -64px 0; }
     100% { -webkit-mask-position: 360px 0; mask-position: 360px 0; }
   }
+  @keyframes detail-up {
+    from { transform: translateY(0); }
+    to { transform: translateY(-20px); }
+  }
   @media (prefers-reduced-motion: reduce) {
     html[data-theme="blue"] .tool-call .glint { animation: none; visibility: hidden; }
-    html[data-theme="blue"] .tool-call .detail-line { animation: none; }
+    html[data-theme="blue"] .tool-call .detail-track { animation: none; }
   }
   .citta-panel .run-hd { font-size: 10px; font-weight: 700; letter-spacing: .08em; color: var(--faint); margin: 4px 0 2px; }
   .citta-panel .run-list { display: flex; flex-direction: column; gap: 8px; }
@@ -7570,9 +7579,36 @@
   }
   const TOOL_DETAIL_HOLD = 2200;
   function swapToolDetail(row, text) {
-    const line = row.querySelector('.ink .detail-line');
-    if (!line || !row.isConnected || line.textContent === text) return;
-    line.textContent = text;
+    const view = row.querySelector('.ink .detail-view');
+    if (!view || !row.isConnected) return;
+    let track = view.querySelector('.detail-track');
+    if (!track) {
+      track = document.createElement('span');
+      track.className = 'detail-track';
+      const existing = view.querySelector('.detail-line');
+      if (existing) track.appendChild(existing);
+      view.appendChild(track);
+    }
+    const current = track.querySelector('.detail-line:last-child');
+    if (!current || current.textContent === text || track.classList.contains('is-sliding')) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      current.textContent = text;
+      return;
+    }
+    const next = document.createElement('span');
+    next.className = 'detail-line';
+    next.textContent = text;
+    track.appendChild(next);
+    track.classList.add('is-sliding');
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      current.remove();
+      track.classList.remove('is-sliding');
+    };
+    track.addEventListener('animationend', finish, { once: true });
+    window.setTimeout(finish, 480);
   }
   function buildToolCalls() {
     const wrap = document.createElement('div');
