@@ -13650,7 +13650,7 @@ function renderHistory() {
   if (!c) return;
   const count = c.kind === 'group' ? ` (${c.members.length})` : '';
   $('historyTitle').textContent = `"${c.name}" chat history${count}`;
-  const cats = [['files', 'Files'], ['links', 'Links'], ['date', 'Date'], ['members', 'Members']];
+  const cats = [['links', 'Links'], ['date', 'Date'], ['members', 'Members']];
   $('historyCats').innerHTML = cats.map(([id, label]) => `<button type="button" data-history="${id}" aria-pressed="${state.historyKind === id ? 'true' : 'false'}">${label}</button>`).join('');
   const q = state.chatQuery.trim();
   if (state.historyKind === 'members' && !state.historyWho && !q) {
@@ -13776,7 +13776,6 @@ function renderPanel() {
         <button type="button" class="btn" data-decline="${r.id}">Deny</button></div>`).join('')}`;
     return;
   }
-  const files = shownMessages(c).filter((m) => m.file);
   const manage = canManage(c);
   const slugBtn = c.slug ? `<button type="button" class="slug-btn" data-slug-filter="${esc(c.slug)}">${esc(c.slug)}</button>` : '<span>No slug</span>';
   if (manage && state.emailWhere !== c.id) {
@@ -13796,7 +13795,6 @@ function renderPanel() {
     <p class="panel-note">This number stays fixed if the name, slug, or invites change.</p>
     <div class="wx-field"><span class="k">Group slug</span><span class="v">${slugBtn}</span></div>
     ${manage ? '<div class="wx-field"><button type="button" class="text-btn" data-edit-details>Edit details</button></div>' : ''}
-    <div class="wx-field"><span class="k">Files</span><span class="v">${files.length ? files.map((m) => `<button type="button" class="file-row" data-file="${esc(m.file.name)}"><i>${esc(m.file.name.split('.').pop().toUpperCase())}</i><span><b>${esc(m.file.name)}</b><small>${esc(m.file.size)} · ${esc(firstName(m.who))}</small></span></button>`).join('') : 'No files yet.'}</span></div>
     <button type="button" class="history-entry" data-open-history><span>Search chat</span><i aria-hidden="true">›</i></button>
     ${switches(c)}
     <label class="nick">My name in this group<input id="nick" value="${esc(c.myName)}" maxlength="32"></label>
