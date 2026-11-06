@@ -5940,6 +5940,21 @@
   html[data-theme="blue"] #teamHost .thread-head,
   html[data-theme="blue"] #teamHost .announce,
   html[data-theme="blue"] #teamHost .log { background: #fff; }
+  html[data-theme="blue"] #teamHost .log.show-top-fade,
+  html[data-theme="blue"] #teamHost .rows.show-top-fade {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 28px, #000 100%);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 28px, #000 100%);
+  }
+  html[data-theme="blue"] #teamHost .log.show-bot-fade,
+  html[data-theme="blue"] #teamHost .rows.show-bot-fade {
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 28px), transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 28px), transparent 100%);
+  }
+  html[data-theme="blue"] #teamHost .log.show-top-fade.show-bot-fade,
+  html[data-theme="blue"] #teamHost .rows.show-top-fade.show-bot-fade {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%);
+  }
   html[data-theme="blue"] #teamHost .composer { padding: 8px 16px 14px; background: transparent; }
   html[data-theme="blue"] #teamHost .box {
     background: #fff;
@@ -13825,8 +13840,19 @@ function renderList() {
     </div>`;
   };
   $('rows').innerHTML = (rows.length ? `${groups.map(rowHTML).join('')}${qActive(state) ? '' : dms.map(rowHTML).join('')}` : `<p class="empty">${state.query ? 'No joined group matches that name, number, or slug.' : 'No conversations in this view.'}</p>`);
+  syncTeamEdgeFade();
 }
 function qActive() { return state.query.trim().length > 0; }
+function syncTeamEdgeFade() {
+  ['rows', 'log'].forEach((id) => {
+    const el = $(id);
+    if (!el) return;
+    const max = Math.max(0, el.scrollHeight - el.clientHeight);
+    const top = el.scrollTop;
+    el.classList.toggle('show-top-fade', max > 4 && top > 6);
+    el.classList.toggle('show-bot-fade', max > 4 && top < max - 6);
+  });
+}
 
 function syncTeamSend() {
   const btn = teamRoot.querySelector('#composer .send');
@@ -13951,7 +13977,7 @@ function renderLog(scroll) {
       <div class="msg-col">${name}<div class="bubble">${quote}${file}${text}</div><button type="button" class="act" data-reply="${m.id}">Reply</button></div>
     </div>`;
   }).join('');
-  if (scroll) requestAnimationFrame(() => { $('log').scrollTop = $('log').scrollHeight; });
+  if (scroll) requestAnimationFrame(() => { $('log').scrollTop = $('log').scrollHeight; syncTeamEdgeFade(); });
 }
 
 function nameInitials(name) {
@@ -14647,6 +14673,9 @@ $('plus').addEventListener('click', (e) => {
 });
 teamRoot.querySelectorAll('[data-open-modal]').forEach((b) => b.addEventListener('click', () => openModal(b.dataset.openModal)));
 $('q').addEventListener('input', () => { state.query = $('q').value; renderList(); });
+$('rows').addEventListener('scroll', syncTeamEdgeFade, { passive: true });
+$('log').addEventListener('scroll', syncTeamEdgeFade, { passive: true });
+window.addEventListener('resize', syncTeamEdgeFade, { passive: true });
 $('rows').addEventListener('click', (e) => {
   const more = e.target.closest('[data-more]');
   if (more) {
