@@ -11024,13 +11024,7 @@
     }
 
     function awayFromMiddle(top) {
-      if (document.documentElement.dataset.theme !== 'blue') return top;
-      const h = dock.offsetHeight || 44;
-      const frameH = frame.offsetHeight || 0;
-      if (frameH < 200) return top;
-      const ratio = (top + h / 2) / frameH;
-      if (ratio > 0.35 && ratio < 0.72) return Math.max(8, frameH - h - 24);
-      return top;
+      return clampTop(top);
     }
 
     function restorePos() {
@@ -11109,14 +11103,15 @@
       drag = null;
     }
 
-    dock.addEventListener('lostpointercapture', () => {
-      if (drag?.via === 'pointer') finish(!!drag.moved);
-    });
     window.addEventListener('blur', abortDrag);
 
     function onUp(e) {
       if (!drag) return;
       if (e && e.pointerId != null && drag.pointerId != null && e.pointerId !== drag.pointerId) return;
+      if (e && e.type === 'pointercancel' && !drag.moved) {
+        abortDrag();
+        return;
+      }
       finish(!!drag.moved);
     }
 
@@ -11190,8 +11185,7 @@
       if (frameH < 200) return;
       const maxT = Math.max(8, frameH - h - 24);
       const cur = parseFloat(dock.style.top);
-      const ratio = (Number.isFinite(cur) ? cur + h / 2 : frameH) / frameH;
-      const top = (!Number.isFinite(cur) || cur > maxT || (ratio > 0.35 && ratio < 0.72)) ? maxT : cur;
+      const top = Number.isFinite(cur) ? Math.min(maxT, Math.max(8, cur)) : maxT;
       const side = dock.classList.contains('dock-side-left') ? 'left' : 'right';
       applySide(side, top);
     }
