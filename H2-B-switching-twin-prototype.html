@@ -4882,6 +4882,15 @@
   .dir-card:focus-visible .dir-summon { display: inline-flex; }
   .dir-card:hover .dir-head,
   .dir-card:focus-visible .dir-head { padding-right: 76px; }
+  html[data-theme="blue"] #dirHost .dir-summon[aria-pressed="true"] {
+    display: inline-flex;
+    background: #fff;
+    color: #1a1d21;
+    box-shadow: inset 0 0 0 1px #cfd3d8;
+  }
+  html[data-theme="blue"] #dirHost .dir-card:has(.dir-summon[aria-pressed="true"]) .dir-head {
+    padding-right: 108px;
+  }
   .dir-head { display: flex; gap: 10px; align-items: flex-start; min-width: 0; }
   .dir-av {
     width: 40px;
@@ -11532,6 +11541,16 @@
   let dirChao = '';
   let dirChaoTab = 'big';
   const dirChaoJoined = new Set();
+  const dirSummoned = new Set();
+  document.addEventListener('h2-theme', () => {
+    const blue = document.documentElement.dataset.theme === 'blue';
+    document.querySelectorAll('#dirHost .dir-summon').forEach((summon) => {
+      const name = summon.closest('.dir-card')?.dataset.dirName || '';
+      const on = blue && dirSummoned.has(name);
+      summon.textContent = on ? 'Summoned' : 'Summon';
+      summon.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  });
   const CHAO = {
     luo: {
       name: '骆王宇',
@@ -11822,7 +11841,10 @@
       copy.append(nm, small);
       const summon = document.createElement('span');
       summon.className = 'dir-summon';
-      summon.textContent = 'Summon';
+      summon.setAttribute('role', 'button');
+      const summoned = document.documentElement.dataset.theme === 'blue' && dirSummoned.has(p.name);
+      summon.setAttribute('aria-pressed', summoned ? 'true' : 'false');
+      summon.textContent = summoned ? 'Summoned' : 'Summon';
       head.append(av, copy, summon);
       const tags = document.createElement('span');
       tags.className = 'dir-tags';
@@ -11975,7 +11997,17 @@
     }
     const summon = e.target.closest('.dir-summon');
     if (summon) {
-      showToastMsg('Summon · ' + summon.closest('.dir-card').dataset.dirName);
+      e.preventDefault();
+      e.stopPropagation();
+      const card = summon.closest('.dir-card');
+      const name = card?.dataset.dirName || '';
+      if (document.documentElement.dataset.theme !== 'blue') {
+        showToastMsg('Summon · ' + name);
+        return;
+      }
+      if (name) dirSummoned.add(name);
+      summon.textContent = 'Summoned';
+      summon.setAttribute('aria-pressed', 'true');
       return;
     }
     const card = e.target.closest('.dir-card');
