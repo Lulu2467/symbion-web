@@ -5116,12 +5116,20 @@
     flex: 1;
     min-width: 0;
     height: 36px;
-    padding: 0 14px;
+    padding: 0;
     border: 0;
-    border-radius: 999px;
-    background: #f4f5f7;
+    border-radius: 0;
+    outline: none;
+    box-shadow: none;
+    background: transparent;
     color: #1a1d21;
     font-size: 13px;
+    appearance: none;
+  }
+  html[data-theme="blue"] #dirHost .post-detail-bar input:focus {
+    outline: none;
+    border: 0;
+    box-shadow: none;
   }
   html[data-theme="blue"] #dirHost .post-detail-bar input::placeholder { color: #b0b4ba; }
   html[data-theme="blue"] #dirHost .post-detail-stat {
