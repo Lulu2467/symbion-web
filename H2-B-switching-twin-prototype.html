@@ -4503,6 +4503,43 @@
     color: var(--ink);
   }
   .dir-search input::placeholder { color: var(--placeholder); }
+  .post-search { display: none; }
+  html[data-theme="blue"] #dirHost .post-search {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    height: 44px;
+    margin-top: 16px;
+    padding: 0 6px 0 18px;
+    border: 1px solid #ececef;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(20, 24, 28, .04);
+    box-sizing: border-box;
+  }
+  html[data-theme="blue"] #dirHost .post-search input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: none;
+    background: none;
+    font-size: 15px;
+    color: #1a1d21;
+  }
+  html[data-theme="blue"] #dirHost .post-search input::placeholder { color: #b0b4ba; }
+  html[data-theme="blue"] #dirHost .post-search .post-search-ico {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #f3f4f6;
+    color: #9aa0a6;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+  }
+  html[data-theme="blue"] #dirHost .post-search svg { width: 16px; height: 16px; display: block; }
   .dir-chips { display: flex; flex: 1; flex-wrap: nowrap; gap: 8px; min-width: 0; overflow: auto; }
   .dir-chips button, .dir-sorts button {
     height: 28px;
@@ -6540,6 +6577,10 @@
                   </label>
                 </div>
               </div>
+              <label class="post-search" id="postSearchWrap" hidden>
+                <input id="postSearch" type="search" placeholder="Search posts" autocomplete="off" aria-label="Search posts">
+                <span class="post-search-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.25"/><path d="M16 16.5 20 20.5" stroke-linecap="round"/></svg></span>
+              </label>
               <div class="dir-row" id="dirTools">
                 <div class="dir-chips">
                   <button type="button" data-dir-group="All" aria-pressed="true">All</button>
@@ -10449,7 +10490,14 @@
   function renderPosts(feed) {
     if (!feed) return;
     feed.hidden = false;
-    feed.replaceChildren(...DIR_POSTS.map((post) => {
+    const q = (document.getElementById('postSearch')?.value || '').trim().toLowerCase();
+    const posts = DIR_POSTS.filter((post) => !q || (post.title + ' ' + (post.quote || '') + ' ' + post.name).toLowerCase().includes(q));
+    const none = document.getElementById('dirNone');
+    if (none) {
+      none.hidden = posts.length > 0;
+      if (!posts.length) none.textContent = 'No posts match.';
+    }
+    feed.replaceChildren(...posts.map((post) => {
       const card = document.createElement('article');
       card.className = 'dir-note';
       fillNoteCard(card, post);
@@ -10688,6 +10736,9 @@
       el.classList.toggle('is-off', !cosmo);
       el.toggleAttribute('inert', !cosmo);
     });
+    const postSearch = document.getElementById('postSearchWrap');
+    if (postSearch) postSearch.hidden = dirTab !== 'post';
+    if (tools && dirTab === 'post') tools.hidden = true;
     const search = document.getElementById('dirSearch');
     if (search && search.value !== dirQuery) search.value = dirQuery;
     host.querySelectorAll('[data-dir-group]').forEach((btn) => {
@@ -10736,6 +10787,7 @@
       comm.replaceChildren();
     }
     if (empty) empty.hidden = true;
+    if (none) none.textContent = 'No Cosmos match. Change the word or clear the filter.';
     const q = dirQuery.trim().toLowerCase();
     const rows = dirPeople().filter((p) => {
       if (dirGroup !== 'All' && p.group !== dirGroup) return false;
@@ -10894,6 +10946,9 @@
     if (!text || !topic) return;
     topic.posts.push({ initial: 'LU', tone: 'sky', name: 'Lulu', time: 'Now', text, replies: 'From big group' });
     renderDir();
+  });
+  document.getElementById('postSearch')?.addEventListener('input', () => {
+    if (dirTab === 'post') renderPosts(document.getElementById('dirFeed'));
   });
   document.getElementById('dirSearch')?.addEventListener('input', (e) => {
     dirQuery = e.target.value;
