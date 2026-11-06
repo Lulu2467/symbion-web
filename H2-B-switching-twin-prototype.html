@@ -4763,6 +4763,26 @@
   #teamHost .filechip { min-width: 0; gap: 8px; }
   #teamHost .filechip i { width: 36px; height: 36px; border-radius: 4px; background: #f2f3f5; color: #5f6670; }
   #teamHost .msg.mine .filechip i { background: rgba(255,255,255,.2); color: #fff; }
+  #teamHost .modal { padding: 24px; box-sizing: border-box; overflow: hidden; }
+  #teamHost .sheet {
+    width: min(440px, 100%);
+    max-height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0;
+    border-radius: 16px;
+    border: 1px solid #e6e8ec;
+    box-shadow: 0 12px 32px rgba(20, 24, 28, .12);
+  }
+  #teamHost .sheet-head { flex: none; align-items: center; padding: 16px 16px 0; }
+  #teamHost .sheet h2 { margin: 0; font-size: 18px; font-weight: 650; color: #1a1d21; }
+  #teamHost .sheet .lead { flex: none; margin: 6px 0 0; padding: 0 16px; }
+  #teamHost #sheetBody { flex: 1; min-height: 0; overflow: auto; padding: 12px 16px 16px; }
+  #teamHost .sheet .search { margin: 12px 0 14px; height: 36px; padding: 0 12px; border-radius: 8px; background: #f2f3f5; }
+  #teamHost .sheet-head .icon-btn { width: 28px; height: 28px; border: 0; border-radius: 0; background: transparent; color: #656d76; font-size: 20px; line-height: 1; }
+  #teamHost .sheet-head .icon-btn:hover { border: 0; background: transparent; color: #1a1d21; }
   #teamHost .composer { padding: 0; }
   #teamHost .box {
     flex-direction: column;
