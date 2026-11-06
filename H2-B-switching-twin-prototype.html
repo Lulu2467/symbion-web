@@ -4456,6 +4456,79 @@
     border-radius: 12px;
     background: linear-gradient(180deg, #f6f5f1 0%, #eef1ee 100%);
   }
+  #dirHost .dir-comm { columns: 4; column-gap: 16px; }
+  #dirHost .dir-note { break-inside: avoid; margin: 0 0 18px; }
+  #dirHost .dir-note-pic {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #eef0f2;
+  }
+  #dirHost .dir-note-pic.tall { height: 292px; }
+  #dirHost .dir-note-pic.mid { height: 220px; }
+  #dirHost .dir-note-pic.short { height: 168px; }
+  #dirHost .dir-note-quote {
+    min-height: 176px;
+    padding: 22px 18px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    color: #1a1d21;
+    font-size: 20px;
+    font-weight: 650;
+    line-height: 1.45;
+  }
+  #dirHost .dir-note-quote.paper { background: #f4f1ea; }
+  #dirHost .dir-note-quote.mist { background: #eef3f6; }
+  #dirHost .dir-note-title {
+    margin: 8px 2px 0;
+    color: #1a1d21;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.45;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  #dirHost .dir-note-foot { display: flex; align-items: center; gap: 6px; padding: 8px 2px 0; }
+  #dirHost .dir-note-av {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex: none;
+  }
+  #dirHost .dir-note-av.letter {
+    display: grid;
+    place-items: center;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1;
+  }
+  #dirHost .dir-note-av.sand { background: #f6e7b8; color: #8a6a2a; }
+  #dirHost .dir-note-av.mint { background: #d7efe4; color: #2f7d62; }
+  #dirHost .dir-note-av.sky { background: #d7e6f6; color: #3c6ea8; }
+  #dirHost .dir-note-who {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #8b919a;
+    font-size: 12px;
+  }
+  #dirHost .dir-note-like {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    flex: none;
+    color: #9aa0a6;
+    font-size: 12px;
+    font-weight: 400;
+  }
+  #dirHost .dir-note-like svg { width: 14px; height: 14px; display: block; }
   .frame.team-on { display: flex; flex-direction: column; height: 900px; }
   .frame.team-on .body { flex: 1; min-height: 0; }
   .frame.team-on .content.hub,
@@ -5985,6 +6058,7 @@
             <div class="dir-body">
               <div class="dir-grid" id="dirGrid"></div>
               <div class="dir-feed" id="dirFeed" hidden></div>
+              <div class="dir-comm" id="dirComm" hidden></div>
               <p class="dir-none" id="dirNone" hidden>No Cosmos match. Change the word or clear the filter.</p>
               <p class="dir-empty" id="dirEmpty" hidden></p>
             </div>
@@ -9818,6 +9892,76 @@
     }));
   }
 
+  const DIR_NOTES = [
+    { title: '通勤防晒，我只留这一支', img: 'luo/assets/product-sunscreen.jpg', h: 'tall', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '128' },
+    { title: '修护精华敷完，先别急着洗脸', img: 'luo/assets/product-drwu.jpg', h: 'mid', name: '豆豆', initial: '豆', tone: 'sky', likes: '86' },
+    { title: '今天的产品笔记', quote: '把复杂能力收进一个更清晰的工作界面。', tone: 'paper', name: '李佳琦', initial: '李', av: 'mint', likes: '54' },
+    { title: '新的护肤内容合集封面', img: 'luo/assets/luo-hero.png', h: 'tall', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '203' },
+    { title: '这套水乳，混油皮我留着白天用', img: 'luo/assets/product-cetaphil.png', h: 'mid', name: '豆豆', initial: '豆', tone: 'sky', likes: '41' },
+    { title: '重离子课，我从这张图讲起', img: 'luo/assets/cosmo-roland.jpg', h: 'short', name: 'Prof. Roland', photo: 'assets/gunther-roland-illustrated.jpg', likes: '37' },
+    { title: '研究摘要里的一句', quote: 'Agent memory 不该靠聊天记录硬记。', tone: 'mist', name: '李佳琦', initial: '李', av: 'mint', likes: '62' },
+    { title: '近距离看一下修护后的状态', img: 'luo/assets/luo-portrait.png', h: 'tall', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '96' }
+  ];
+  function noteHeart() {
+    const ns = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('aria-hidden', 'true');
+    const path = document.createElementNS(ns, 'path');
+    path.setAttribute('d', 'M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z');
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', 'currentColor');
+    path.setAttribute('stroke-width', '1.6');
+    svg.appendChild(path);
+    return svg;
+  }
+  function renderNotes(host) {
+    if (!host) return;
+    host.hidden = false;
+    host.replaceChildren(...DIR_NOTES.map((note) => {
+      const card = document.createElement('article');
+      card.className = 'dir-note';
+      if (note.img) {
+        const pic = document.createElement('img');
+        pic.className = 'dir-note-pic ' + note.h;
+        pic.alt = '';
+        pic.src = note.img;
+        card.appendChild(pic);
+      } else {
+        const quote = document.createElement('div');
+        quote.className = 'dir-note-quote ' + (note.tone || 'paper');
+        quote.textContent = note.quote;
+        card.appendChild(quote);
+      }
+      const title = document.createElement('p');
+      title.className = 'dir-note-title';
+      title.textContent = note.title;
+      const foot = document.createElement('div');
+      foot.className = 'dir-note-foot';
+      if (note.photo) {
+        const av = document.createElement('img');
+        av.className = 'dir-note-av';
+        av.alt = '';
+        av.src = note.photo;
+        foot.appendChild(av);
+      } else {
+        const av = document.createElement('span');
+        av.className = 'dir-note-av letter ' + (note.av || note.tone || 'sky');
+        av.textContent = note.initial || '';
+        foot.appendChild(av);
+      }
+      const who = document.createElement('span');
+      who.className = 'dir-note-who';
+      who.textContent = note.name;
+      const like = document.createElement('span');
+      like.className = 'dir-note-like';
+      like.append(noteHeart(), document.createTextNode(note.likes));
+      foot.append(who, like);
+      card.append(title, foot);
+      return card;
+    }));
+  }
+
   function renderDir() {
     const host = document.getElementById('dirHost');
     if (!host) return;
@@ -9831,6 +9975,7 @@
     const searchWrap = document.getElementById('dirSide');
     const grid = document.getElementById('dirGrid');
     const feed = document.getElementById('dirFeed');
+    const comm = document.getElementById('dirComm');
     const none = document.getElementById('dirNone');
     const empty = document.getElementById('dirEmpty');
     [tools, searchWrap].forEach((el) => {
@@ -9852,12 +9997,25 @@
       if (none) none.hidden = true;
       if (dirTab === 'post') {
         if (empty) empty.hidden = true;
+        if (comm) {
+          comm.hidden = true;
+          comm.replaceChildren();
+        }
         renderPosts(feed);
         return;
       }
       if (feed) {
         feed.hidden = true;
         feed.replaceChildren();
+      }
+      if (dirTab === 'community') {
+        if (empty) empty.hidden = true;
+        renderNotes(comm);
+        return;
+      }
+      if (comm) {
+        comm.hidden = true;
+        comm.replaceChildren();
       }
       if (empty) {
         empty.hidden = false;
@@ -9868,6 +10026,10 @@
     if (feed) {
       feed.hidden = true;
       feed.replaceChildren();
+    }
+    if (comm) {
+      comm.hidden = true;
+      comm.replaceChildren();
     }
     if (empty) empty.hidden = true;
     const q = dirQuery.trim().toLowerCase();
