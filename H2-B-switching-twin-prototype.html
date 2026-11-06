@@ -5869,6 +5869,19 @@
   #teamHost .sheet .search { margin: 12px 0 14px; height: 36px; padding: 0 12px; border-radius: 8px; background: #f2f3f5; }
   #teamHost .sheet-head .icon-btn { width: 28px; height: 28px; border: 0; border-radius: 0; background: transparent; color: #656d76; font-size: 20px; line-height: 1; }
   #teamHost .sheet-head .icon-btn:hover { border: 0; background: transparent; color: #1a1d21; }
+  html[data-theme="blue"] #teamHost .modal { background: rgba(26, 29, 33, .32); }
+  html[data-theme="blue"] #teamHost .sheet {
+    border-color: #d5dbe1;
+    box-shadow: 0 24px 64px rgba(20, 24, 28, .32);
+  }
+  html[data-theme="blue"] #teamHost .sheet-head {
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+  }
+  html[data-theme="blue"] #teamHost .sheet.is-dragging .sheet-head { cursor: grabbing; }
+  html[data-theme="blue"] #teamHost .sheet .err { flex: none; margin: 0; padding: 0 16px; }
+  html[data-theme="blue"] #teamHost .sheet-actions { flex: none; padding: 8px 16px 16px; }
   #teamHost .composer { padding: 0; }
   #teamHost .box {
     flex-direction: column;
@@ -10595,6 +10608,8 @@
       const railMenu = document.getElementById('railMeMenu');
       if (railMenu) railMenu.hidden = true;
       document.getElementById('railMe')?.setAttribute('aria-expanded', 'false');
+      const sheet = document.getElementById('sheet');
+      if (sheet) sheet.style.transform = '';
     }
 
     placeHeaderSearch();
@@ -14149,12 +14164,21 @@ function showGo(label) {
   go.disabled = false;
   if (label) go.textContent = label;
 }
+function resetSheetDrag() {
+  const sheet = $('sheet');
+  if (!sheet) return;
+  sheet.style.transform = '';
+  sheet._dragX = 0;
+  sheet._dragY = 0;
+  sheet.classList.remove('is-dragging');
+}
 function openModal(kind, extra) {
   extra = extra || {};
   if (!extra.nested) closePopovers();
   state.modal = kind;
   state.modalBack = extra.back || null;
   $('sheetErr').textContent = '';
+  resetSheetDrag();
   $('modal').hidden = false;
   showGo('');
   cancelBtn().textContent = 'Cancel';
@@ -14256,9 +14280,55 @@ function closeModal() {
   const back = state.modalBack;
   state.modal = null;
   state.modalBack = null;
+  resetSheetDrag();
   if (back === 'finder') { openModal('finder', { nested: true }); return; }
   $('modal').hidden = true;
 }
+(function bindSheetDrag() {
+  const sheet = $('sheet');
+  const head = sheet && sheet.querySelector('.sheet-head');
+  if (!sheet || !head) return;
+  head.addEventListener('pointerdown', (e) => {
+    if (document.documentElement.dataset.theme !== 'blue') return;
+    if (e.button !== 0 || e.target.closest('button')) return;
+    const modal = sheet.parentElement;
+    const pad = 12;
+    const ox = sheet._dragX || 0;
+    const oy = sheet._dragY || 0;
+    const sr = sheet.getBoundingClientRect();
+    const mr = modal.getBoundingClientRect();
+    const drag = {
+      x: e.clientX,
+      y: e.clientY,
+      ox: ox,
+      oy: oy,
+      minX: ox + mr.left + pad - sr.left,
+      maxX: ox + mr.right - pad - sr.right,
+      minY: oy + mr.top + pad - sr.top,
+      maxY: oy + mr.bottom - pad - sr.bottom
+    };
+    if (drag.maxX < drag.minX) drag.minX = drag.maxX = ox;
+    if (drag.maxY < drag.minY) drag.minY = drag.maxY = oy;
+    sheet.classList.add('is-dragging');
+    try { head.setPointerCapture(e.pointerId); } catch (err) {}
+    const move = (ev) => {
+      let x = drag.ox + ev.clientX - drag.x;
+      let y = drag.oy + ev.clientY - drag.y;
+      x = Math.min(drag.maxX, Math.max(drag.minX, x));
+      y = Math.min(drag.maxY, Math.max(drag.minY, y));
+      sheet._dragX = x;
+      sheet._dragY = y;
+      sheet.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+    };
+    const up = () => {
+      document.removeEventListener('pointermove', move);
+      document.removeEventListener('pointerup', up);
+      sheet.classList.remove('is-dragging');
+    };
+    document.addEventListener('pointermove', move);
+    document.addEventListener('pointerup', up);
+  });
+})();
 function findNotJoined(id) {
   return directory.find((g) => g.id === id) || parked.find((g) => g.id === id);
 }
