@@ -163,7 +163,23 @@
   html[data-theme="blue"] .frame.citta-open .citta-panel { transform: none; }
   .osbar-nav { display: none; }
   html[data-theme="blue"] .osbar-nav { display: inline-flex; align-items: center; gap: 4px; flex: none; }
-  html[data-theme="blue"] .osbar-cosmo { display: none; }
+  html[data-theme="blue"] .osbar-cosmo { display: inline-flex; align-items: flex-start; }
+  html[data-theme="blue"] .osbar-cosmo .osbar-book-mgr { display: none; }
+  .osbar-cosmo-stack { display: contents; }
+  .osbar-back { display: none; }
+  html[data-theme="blue"] .osbar-cosmo-stack {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  html[data-theme="blue"] .osbar-back {
+    display: inline-flex;
+    width: 28px;
+    height: 28px;
+    color: #5f6368;
+  }
+  html[data-theme="blue"] .osbar-back .osbar-ico { width: 16px; height: 16px; }
   html[data-theme="blue"] .osbar-nav-btn { width: 28px; height: 28px; padding: 0; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; color: #5f6368; }
   html[data-theme="blue"] .osbar-nav-btn:hover { background: #d4e4ee; color: #1f1f1f; }
   .osbar-folder { position: relative; display: inline-flex; align-items: center; gap: 16px; flex: none; }
@@ -5472,7 +5488,10 @@
         <div class="osbar-tabs" aria-label="Tabs"></div>
         <button type="button" class="osbar-nav-btn osbar-plus" aria-label="New" data-osbar="new"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
         <div class="osbar-cosmo">
-          <button type="button" class="osbar-cosmo-btn" data-osbar="cosmo">Cosmo</button>
+          <div class="osbar-cosmo-stack">
+            <button type="button" class="osbar-cosmo-btn" data-osbar="cosmo">Cosmo</button>
+            <button type="button" class="osbar-nav-btn osbar-back" aria-label="Back" data-osbar="back"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
+          </div>
           <button type="button" class="osbar-book-mgr" aria-label="Manage bookmarks" data-osbar="bookmarks"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 6 4 14M12 6v14M8 8v12M4 4v16"/></svg></button>
         </div>
         <div class="osbar-folder">
@@ -5522,6 +5541,8 @@
                 var tabs = bar && bar.querySelector('.osbar-tabs');
                 var sp = bar && bar.querySelector(':scope > .sp');
                 if (bar && logo && bar.firstElementChild !== logo) bar.prepend(logo);
+                var cosmo = bar && bar.querySelector('.osbar-cosmo');
+                if (cosmo && logo && cosmo.previousElementSibling !== logo) logo.after(cosmo);
                 var folder = bar && bar.querySelector('.osbar-folder');
                 var homeBtn = nav && nav.querySelector('[data-osbar="home"]');
                 var reloadBtn = nav && nav.querySelector('[data-osbar="reload"]');
@@ -9167,7 +9188,7 @@
           openNewTab();
           return;
         }
-        if (document.documentElement.dataset.theme === 'blue' && el.dataset.osbar === 'home') {
+        if (document.documentElement.dataset.theme === 'blue' && (el.dataset.osbar === 'home' || el.dataset.osbar === 'back')) {
           setScreen('home');
           document.querySelector('.main')?.classList.remove('is-new-tab');
           return;
@@ -9657,6 +9678,8 @@
       const homeBtn = nav && nav.querySelector('[data-osbar="home"]');
       const reloadBtn = nav && nav.querySelector('[data-osbar="reload"]');
       if (logo && bar.firstElementChild !== logo) bar.prepend(logo);
+      const cosmo = bar.querySelector('.osbar-cosmo');
+      if (cosmo && logo && cosmo.previousElementSibling !== logo) logo.after(cosmo);
       if (homeBtn && folder && homeBtn.previousElementSibling !== folder) homeBtn.after(folder);
       if (reloadBtn && homeBtn && reloadBtn.previousElementSibling !== folder) folder.after(reloadBtn);
       if (nav && search.previousElementSibling !== nav) nav.after(search);
