@@ -4779,7 +4779,7 @@
   html[data-theme="blue"] #dirHost .dir-comm:has(.chao-page) { flex: 1; display: flex; flex-direction: column; }
   html[data-theme="blue"] #dirHost .chao-page { flex: 1; display: flex; flex-direction: column; min-height: 100%; padding: 16px 16px 0; }
   html[data-theme="blue"] #dirHost .chao-kicker { margin: 0; color: var(--green); font-size: 13px; font-weight: 650; }
-  html[data-theme="blue"] #dirHost .chao-title { margin: 4px 0 0; color: #1a1d21; font-size: 22px; font-weight: 650; letter-spacing: -0.02em; }
+  html[data-theme="blue"] #dirHost .chao-title { margin: 0; color: #1a1d21; font-size: 22px; font-weight: 650; letter-spacing: -0.02em; }
   html[data-theme="blue"] #dirHost .chao-line { margin: 4px 0 0; color: #8b919a; font-size: 13px; }
   html[data-theme="blue"] #dirHost .chao-back {
     align-self: flex-start;
@@ -10540,7 +10540,7 @@
   const dirChaoJoined = new Set();
   const CHAO = {
     luo: {
-      name: '骆王宇 Community',
+      name: '骆王宇',
       initial: '骆',
       tone: 'sand',
       line: 'One big group · 12.8k · preview without joining',
@@ -10550,7 +10550,7 @@
       ]
     },
     li: {
-      name: '李佳琦 Community',
+      name: '李佳琦',
       initial: '李',
       tone: 'mint',
       line: 'One big group · 8.1k · preview without joining',
@@ -10561,8 +10561,8 @@
     }
   };
   const CHAO_LIST = [
-    { id: 'luo', kind: 'topic', name: '骆王宇 Community', initial: '骆', tone: 'sand', sub: '12.8k · 1 featured announcement', act: 'Preview' },
-    { id: 'li', kind: 'topic', name: '李佳琦 Community', initial: '李', tone: 'mint', sub: '8.1k · 1 featured announcement', act: 'Preview' },
+    { id: 'luo', kind: 'topic', name: '骆王宇', initial: '骆', tone: 'sand', sub: '12.8k · 1 featured announcement', act: 'Preview' },
+    { id: 'li', kind: 'topic', name: '李佳琦', initial: '李', tone: 'mint', sub: '8.1k · 1 featured announcement', act: 'Preview' },
     { kind: 'person', name: 'Prof. Gunther Roland', photo: 'assets/gunther-roland-illustrated.jpg', sub: 'MIT Professor of Physics · Nuclear and particle physics', act: 'Available', ok: true },
     { kind: 'person', name: '骆王宇', photo: 'assets/luo-wangyu.png', sub: '护肤内容创作者', act: 'Available', ok: true },
     { kind: 'person', name: '李佳琦', initial: '李', tone: 'mint', sub: 'Review required', act: 'Unavailable', ok: false },
@@ -10602,9 +10602,6 @@
   function renderChaoPage(host, topic) {
     const page = document.createElement('div');
     page.className = 'chao-page';
-    const kicker = document.createElement('p');
-    kicker.className = 'chao-kicker';
-    kicker.textContent = 'Community';
     const title = document.createElement('h2');
     title.className = 'chao-title';
     title.textContent = topic.name;
@@ -10642,7 +10639,7 @@
       btn.setAttribute('aria-pressed', String(dirChaoTab === id));
       tabs.appendChild(btn);
     });
-    page.append(kicker, title, line, back, head, tabs);
+    page.append(title, line, back, head, tabs);
     if (dirChaoTab === 'sub') {
       const note = document.createElement('p');
       note.className = 'chao-note';
@@ -10716,7 +10713,7 @@
     const name = document.createElement('b');
     name.textContent = '武汉粉丝';
     const sub = document.createElement('small');
-    sub.textContent = '骆王宇 Community · subgroup';
+    sub.textContent = '骆王宇 · subgroup';
     copy.append(name, sub);
     joined.append(chaoAv({ initial: '骆', tone: 'sand' }), copy);
     host.replaceChildren(...rows, sec, joined);
