@@ -4773,7 +4773,12 @@
     background: #fff;
     border: 1px solid #eceef1;
     border-radius: 12px;
+    overflow: hidden;
     min-height: 100%;
+  }
+  html[data-theme="blue"] #dirHost .dir-comm > :first-child {
+    border-top-left-radius: 11px;
+    border-top-right-radius: 11px;
   }
   html[data-theme="blue"] #dirHost .dir-body:has(.chao-page) { display: flex; flex-direction: column; }
   html[data-theme="blue"] #dirHost .dir-comm:has(.chao-page) { flex: 1; display: flex; flex-direction: column; }
