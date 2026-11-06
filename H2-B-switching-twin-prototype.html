@@ -3791,7 +3791,8 @@
   }
   .frame.set-on #setHost { display: flex; }
   #setHost[hidden] { display: none !important; }
-  #setHost button, #setHost input, #setHost select { font: inherit; color: inherit; }
+  #setHost { font-size: 13px; }
+  #setHost button, #setHost input, #setHost select { font-family: inherit; color: inherit; }
   #setHost button { cursor: pointer; }
   .set-shell { display: flex; flex: 1; min-width: 0; min-height: 0; }
   .set-nav {
@@ -3802,7 +3803,7 @@
     overflow: auto;
     padding: 18px 12px 28px;
   }
-  .set-nav h2 { margin: 0 8px 14px; font-size: 18px; font-weight: 650; letter-spacing: -0.02em; }
+  .set-nav h2 { margin: 0 8px 12px; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
   .set-kicker {
     margin: 14px 8px 4px;
     color: var(--label);
@@ -3817,13 +3818,14 @@
     border: 0;
     background: transparent;
     border-radius: 8px;
-    padding: 7px 10px;
+    padding: 6px 10px;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 400;
+    line-height: 1.4;
     color: #1f1f1f;
   }
   .set-nav button[data-set]:hover { background: #f3f5f7; }
-  .set-nav button[data-set][aria-current="page"] { background: var(--green-tint); color: var(--green); }
+  .set-nav button[data-set][aria-current="page"] { background: var(--green-tint); color: var(--green); font-weight: 500; }
   .set-main { flex: 1; min-width: 0; overflow: auto; padding: 22px 28px 40px; }
   .set-top { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
   .set-top p { margin: 0 0 0 auto; color: var(--label); font-size: 11px; font-weight: 700; letter-spacing: .08em; }
@@ -3832,7 +3834,7 @@
     background: transparent;
     color: var(--green);
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 500;
     padding: 4px 2px;
   }
   .set-back:hover { color: var(--green-dark); }
@@ -3843,8 +3845,8 @@
     padding: 18px 18px 20px;
     margin-bottom: 14px;
   }
-  .set-card h3 { margin: 0; font-size: 18px; font-weight: 650; letter-spacing: -0.02em; }
-  .set-card .sub { margin: 4px 0 14px; color: var(--muted); font-size: 13px; line-height: 1.45; }
+  .set-card h3 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.4; }
+  .set-card .sub { margin: 4px 0 12px; color: var(--muted); font-size: 13px; line-height: 1.6; }
   .set-card label { display: block; margin: 12px 0 0; }
   .set-card label span, .set-field-label {
     display: block;
