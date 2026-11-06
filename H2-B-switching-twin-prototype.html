@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<script>try{if(localStorage.getItem('h2-theme')==='blue')document.documentElement.dataset.theme='blue'}catch(e){}</script>
+<script>try{if(localStorage.getItem('h2-theme')!=='green')document.documentElement.dataset.theme='blue'}catch(e){document.documentElement.dataset.theme='blue'}</script>
 <style>
   /* Tokens from Figma · Home v2 · B · H2 */
   :root {
@@ -13770,9 +13770,13 @@
   });
   syncCittaSendReady();
   setAI('citta', { announce: false });
-  // Figma 122:2523 — land on Welcome back unless the hash asks for another screen.
+  // Published page lands on Welcome back with an empty hash.
+  // This local copy opens the blue home with Citta expanded, matching #citta=expanded.
   if (location.hash) readHash();
-  else setScreen('welcome');
+  else {
+    setScreen('home');
+    setCittaExpanded(true);
+  }
   fit();
   bindCittaScrollFade();
   bindCosmosScrollFade();
