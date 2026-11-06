@@ -5635,6 +5635,8 @@
   .qref { display: block; width: 100%; margin: 0 0 6px; padding: 4px 8px; border-left: 2px solid var(--green-line); border-radius: 2px; background: rgba(var(--ink-rgb), .04); color: var(--muted); font-size: 12px; line-height: 1.35; text-align: left; cursor: pointer; }
   .msg.mine .qref { border-left-color: rgba(255,255,255,.7); background: rgba(255,255,255,.16); color: rgba(255,255,255,.88); }
   .qref b { display: block; font-weight: 600; }
+  .fwd { display: block; margin: 0 0 4px; font-size: 12px; line-height: 1.35; color: var(--muted); }
+  .msg.mine .fwd { color: rgba(255,255,255,.8); }
   .filechip { display: flex; gap: 10px; align-items: center; min-width: 220px; text-align: left; }
   .filechip i { width: 36px; height: 36px; border-radius: 10px; background: var(--blue-tint); color: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; font-style: normal; flex: none; }
   .msg.mine .filechip i { background: rgba(255,255,255,.2); color: #fff; }
@@ -5805,6 +5807,77 @@
   html[data-theme="blue"] #teamHost .panel .mrow:has(> .btn) .btn:not(.go) { grid-column: 3; }
   html[data-theme="blue"] #teamHost .panel .danger,
   html[data-theme="blue"] #teamHost .panel .danger:hover { color: #d93025; }
+  html[data-theme="blue"] #teamHost .msg .act { display: none; }
+  html[data-theme="blue"] #teamHost .bubble { cursor: pointer; }
+  html[data-theme="blue"] #teamHost .msg-marks {
+    display: flex;
+    gap: 6px;
+    margin: 0 0 4px;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #8b919a;
+  }
+  html[data-theme="blue"] #teamHost .msg.mine .msg-marks { justify-content: flex-end; }
+  html[data-theme="blue"] #teamHost .xlate {
+    margin: 6px 0 0;
+    padding-top: 6px;
+    border-top: 1px solid rgba(26, 29, 33, .08);
+    font-size: 13px;
+    line-height: 1.4;
+    color: #5f6670;
+  }
+  html[data-theme="blue"] #teamHost .msg.mine .xlate {
+    border-top-color: rgba(255,255,255,.28);
+    color: rgba(255,255,255,.88);
+  }
+  html[data-theme="blue"] #teamHost .msg-menu {
+    position: absolute;
+    z-index: 40;
+    min-width: 220px;
+    padding: 6px;
+    background: #fff;
+    border: 1px solid #e6e8ec;
+    border-radius: 12px;
+    box-shadow: 0 10px 28px rgba(20, 24, 28, .12);
+    color: #1a1d21;
+  }
+  html[data-theme="blue"] #teamHost .msg-menu .kicker {
+    margin: 4px 10px 6px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    color: var(--label);
+  }
+  html[data-theme="blue"] #teamHost .msg-menu button {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: transparent;
+    color: #1a1d21;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.2;
+    text-align: left;
+  }
+  html[data-theme="blue"] #teamHost .msg-menu button:hover { background: #ececee; }
+  html[data-theme="blue"] #teamHost .msg-menu svg {
+    width: 16px;
+    height: 16px;
+    flex: none;
+    color: #5f6670;
+  }
+  html[data-theme="blue"] #teamHost .msg-menu .rule {
+    height: 1px;
+    margin: 4px 8px;
+    background: #e6e8ec;
+  }
+  html[data-theme="blue"] #teamHost .msg-menu .danger,
+  html[data-theme="blue"] #teamHost .msg-menu .danger:hover { color: #d93025; }
+  html[data-theme="blue"] #teamHost .msg-menu .danger svg { color: #d93025; }
 
   #teamHost .menu { opacity: 1; pointer-events: auto; left: auto; transform: none; }
   #teamHost .composer { position: relative; z-index: 1; isolation: auto; background: transparent; border: 0; border-radius: 0; box-shadow: none; }
@@ -7388,6 +7461,7 @@
     </form>
   </div>
   <div class="menu ctx" id="ctx" hidden role="menu"></div>
+  <div class="msg-menu" id="msgMenu" hidden role="menu"></div>
   <div class="toast" id="toast" role="status"></div>
           </section>
         </div>
@@ -13739,7 +13813,7 @@ const state = {
   panel: false, panelMode: 'info', chatSearch: false, chatQuery: '', historyKind: '', historyWho: '',
   quote: null, modal: null, modalBack: null,
   mention: null, mentionIndex: 0, mentionStart: null,
-  memberQ: '', announceOpen: false, ctx: null, pendingRecord: null, pendingJoinId: null,
+  memberQ: '', announceOpen: false, ctx: null, msgId: '', msgMode: '', msgX: 0, msgY: 0, pendingRecord: null, pendingJoinId: null,
   emailRows: [''], emailErrors: [''], emailWhere: ''
 };
 
@@ -14073,10 +14147,14 @@ function renderLog(scroll) {
     const quote = ref ? `<button type="button" class="qref" data-jump="${ref.id}"><b>${esc(ref.who ? person(ref.who).name : '')}</b><span>${esc(ref.file ? ref.file.name : (ref.text || ''))}</span></button>` : '';
     const file = m.file ? `<button type="button" class="filechip" data-file="${esc(m.file.name)}"><i>${esc(m.file.name.split('.').pop().toUpperCase())}</i><span><b>${esc(m.file.name)}</b><small>${esc(m.file.size)}</small></span></button>` : '';
     const text = m.text ? `<div>${linkMentions(m.text)}</div>` : '';
+    const fwd = m.forwardFrom ? `<span class="fwd">Forwarded from ${esc(m.forwardFrom)}</span>` : '';
+    const blue = document.documentElement.dataset.theme === 'blue';
+    const marks = blue && (m.pinned || m.saved) ? `<div class="msg-marks">${m.pinned ? '<span>Pinned</span>' : ''}${m.saved ? '<span>Saved</span>' : ''}</div>` : '';
+    const xlate = blue && m.translated && m.text ? `<p class="xlate">${esc(m.text)}</p>` : '';
     const stamp = m === stampAt ? `<p class="stamp">${esc(c.time)}</p>` : '';
-    return `${stamp}<div class="msg${mine ? ' mine' : ''}" id="msg-${m.id}">
+    return `${stamp}<div class="msg${mine ? ' mine' : ''}" id="msg-${m.id}" data-id="${m.id}">
       <button type="button" class="av hue-${p.hue}" data-person="${m.who}" aria-label="${esc(p.name)}">${esc(p.short)}</button>
-      <div class="msg-col">${name}<div class="bubble">${quote}${file}${text}</div><button type="button" class="act" data-reply="${m.id}">Reply</button></div>
+      <div class="msg-col">${name}${marks}<div class="bubble">${quote}${fwd}${file}${text}${xlate}</div><button type="button" class="act" data-reply="${m.id}">Reply</button></div>
     </div>`;
   }).join('');
   if (scroll) requestAnimationFrame(() => { $('log').scrollTop = $('log').scrollHeight; syncTeamEdgeFade(); });
@@ -14254,6 +14332,10 @@ function closePopovers() {
   $('emoji').hidden = true;
   $('emojiBtn').setAttribute('aria-expanded', 'false');
   $('ctx').hidden = true;
+  const msgMenu = $('msgMenu');
+  if (msgMenu) msgMenu.hidden = true;
+  state.msgId = '';
+  state.msgMode = '';
   $('accountMenu').hidden = true;
   $('accountOpen').setAttribute('aria-expanded', 'false');
   state.mention = null;
@@ -14912,9 +14994,156 @@ document.addEventListener('click', (e) => {
   if (num) copyText(num.dataset.copyNumber, `Group number ${num.dataset.copyNumber} copied`);
 });
 
+function messageBody(m) {
+  return (m.text || '').trim() || (m.file ? m.file.name : '');
+}
+function msgIcon(name) {
+  const paths = {
+    copy: '<rect x="5.2" y="5.2" width="7.2" height="7.2" rx="1.4" stroke="currentColor" stroke-width="1.4"/><path d="M10.6 5.1V3.8A1.3 1.3 0 0 0 9.3 2.5H3.8A1.3 1.3 0 0 0 2.5 3.8v5.5A1.3 1.3 0 0 0 3.8 10.6H5.1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>',
+    quote: '<path d="M7 3.5 3 8l4 4.5M3.5 8H13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>',
+    forward: '<path d="M9 3.5 13 8l-4 4.5M12.5 8H3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>',
+    translate: '<path d="M3.2 11.5 6.2 4h1.1l3 7.5M4.2 9.2h4.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M11.2 6.4l1.5-1.1.3 1.7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>',
+    pin: '<path d="M8 9.2V13.5M6.2 2.8h3.6l-.6 3.2 2.2 2.2H4.6l2.2-2.2-.6-3.2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/>',
+    save: '<path d="M4.5 2.8h7v10.4L8 10.6 4.5 13.2V2.8z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>',
+    delete: '<path d="M3.5 4.5h9M6.2 4.4V3.2h3.6v1.2M5 4.5l.4 8h5.2l.4-8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>',
+    back: '<path d="M9.5 3.5 5 8l4.5 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>'
+  };
+  return `<svg viewBox="0 0 16 16" fill="none" aria-hidden="true">${paths[name] || ''}</svg>`;
+}
+function keepLogScroll(paint) {
+  const log = $('log');
+  const top = log.scrollTop;
+  paint();
+  log.scrollTop = top;
+}
+function paintMsgMenu() {
+  const menu = $('msgMenu');
+  const c = current();
+  const m = c && findMessage(c, state.msgId);
+  if (!menu || !m) return;
+  if (state.msgMode === 'forward') {
+    const others = chats.filter((ch) => ch.id !== c.id && !ch.hidden);
+    menu.innerHTML = `<p class="kicker">FORWARD TO</p><button type="button" data-msg-act="back">${msgIcon('back')}Back</button>${others.length ? others.map((ch) => `<button type="button" data-forward="${ch.id}">${esc(ch.name)}</button>`).join('') : '<p class="kicker">No other conversation</p>'}`;
+    return;
+  }
+  const rows = [
+    ['copy', 'Copy message text'],
+    ['quote', 'Quote'],
+    ['forward', 'Forward'],
+    ['rule'],
+    ['translate', m.translated ? 'Show original' : 'Translate to English'],
+    ['pin', m.pinned ? 'Unpin' : 'Pin'],
+    ['save', m.saved ? 'Remove saved' : 'Save'],
+    ['rule'],
+    ['delete', 'Delete']
+  ];
+  menu.innerHTML = `<p class="kicker">MESSAGE ACTIONS</p>` + rows.map((row) => {
+    if (row[0] === 'rule') return '<div class="rule" role="separator"></div>';
+    const danger = row[0] === 'delete' ? ' class="danger"' : '';
+    return `<button type="button" role="menuitem" data-msg-act="${row[0]}"${danger}>${msgIcon(row[0])}${row[1]}</button>`;
+  }).join('');
+}
+function openMsgMenu(id, clientX, clientY) {
+  state.msgId = id;
+  state.msgMode = 'actions';
+  state.msgX = clientX;
+  state.msgY = clientY;
+  paintMsgMenu();
+  placeMenu($('msgMenu'), clientX, clientY);
+}
+function runMsgAction(act) {
+  const c = current();
+  const m = c && findMessage(c, state.msgId);
+  if (!m) return;
+  if (act === 'copy') {
+    const body = messageBody(m);
+    if (!body) { toast('Nothing to copy.'); return; }
+    copyText(body, 'Message copied');
+    return;
+  }
+  if (act === 'quote') {
+    state.quote = m.id;
+    renderChrome();
+    $('compose').focus();
+    return;
+  }
+  if (act === 'forward') {
+    state.msgMode = 'forward';
+    paintMsgMenu();
+    placeMenu($('msgMenu'), state.msgX, state.msgY);
+    return;
+  }
+  if (act === 'back') {
+    state.msgMode = 'actions';
+    paintMsgMenu();
+    placeMenu($('msgMenu'), state.msgX, state.msgY);
+    return;
+  }
+  if (act === 'translate') {
+    if (!m.text) { toast('Nothing to translate.'); return; }
+    m.translated = !m.translated;
+    keepLogScroll(() => renderLog(false));
+    toast(m.translated ? 'Translated to English.' : 'Showing the original.');
+    return;
+  }
+  if (act === 'pin') {
+    m.pinned = !m.pinned;
+    keepLogScroll(() => renderLog(false));
+    toast(m.pinned ? 'Message pinned.' : 'Message unpinned.');
+    return;
+  }
+  if (act === 'save') {
+    m.saved = !m.saved;
+    keepLogScroll(() => renderLog(false));
+    toast(m.saved ? 'Message saved.' : 'Removed from saved.');
+    return;
+  }
+  if (act === 'delete') {
+    c.messages = c.messages.filter((item) => item.id !== m.id);
+    if (state.quote === m.id) state.quote = null;
+    keepLogScroll(() => { renderChrome(); renderLog(false); });
+    toast('Message deleted.');
+  }
+}
+$('msgMenu').addEventListener('click', (e) => {
+  const forward = e.target.closest('[data-forward]');
+  if (forward) {
+    const c = current();
+    const m = c && findMessage(c, state.msgId);
+    const target = chats.find((ch) => ch.id === forward.dataset.forward);
+    if (m && target) {
+      target.messages.push({
+        id: uid(), seq: ++msgSeq, who: ME,
+        text: m.text || '', file: m.file ? { name: m.file.name, size: m.file.size } : null,
+        forwardFrom: m.who === ME ? 'you' : person(m.who).name
+      });
+      target.time = 'now';
+      target.updated = Date.now();
+      target.hidden = false;
+      toast(`Forwarded to ${target.name}`);
+    }
+    closePopovers();
+    return;
+  }
+  const act = e.target.closest('[data-msg-act]');
+  if (!act) return;
+  const key = act.dataset.msgAct;
+  runMsgAction(key);
+  if (key !== 'forward' && key !== 'back') closePopovers();
+});
 $('log').addEventListener('click', (e) => {
   const who = e.target.closest('[data-person]');
   if (who) { openDirect(who.dataset.person); return; }
+  const bubble = e.target.closest('.bubble');
+  if (bubble && document.documentElement.dataset.theme === 'blue' && !e.target.closest('.qref, .filechip')) {
+    const msg = bubble.closest('.msg');
+    if (msg && msg.dataset.id) {
+      e.stopPropagation();
+      closePopovers();
+      openMsgMenu(msg.dataset.id, e.clientX, e.clientY);
+    }
+    return;
+  }
   const reply = e.target.closest('[data-reply]');
   if (reply) { state.quote = reply.dataset.reply; renderChrome(); $('compose').focus(); return; }
   const jump = e.target.closest('[data-jump]');
@@ -15213,6 +15442,10 @@ document.addEventListener('keydown', (e) => {
 document.addEventListener('click', (e) => {
   if (!e.target.closest('#emoji') && !e.target.closest('#emojiBtn')) $('emoji').hidden = true;
   if (!e.target.closest('#ctx') && !e.target.closest('[data-more]') && !e.target.closest('#threadMore')) $('ctx').hidden = true;
+  if (!e.target.closest('#msgMenu')) {
+    const msgMenu = $('msgMenu');
+    if (msgMenu) msgMenu.hidden = true;
+  }
   if (!e.target.closest('#accountMenu') && !e.target.closest('#accountOpen')) {
     $('accountMenu').hidden = true;
     $('accountOpen').setAttribute('aria-expanded', 'false');
