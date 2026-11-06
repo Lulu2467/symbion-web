@@ -2806,9 +2806,29 @@
     font-weight: 650;
     line-height: 20px;
   }
-  html[data-theme="blue"] .tool-call .lbl { font-weight: 650; }
-  html[data-theme="blue"] .tool-call .lbl b { font-weight: 650; }
-  html[data-theme="blue"] .tool-call .lbl .detail { font-weight: 400; }
+  html[data-theme="blue"] .tool-call .lbl {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    min-width: 0;
+    font-weight: 650;
+  }
+  html[data-theme="blue"] .tool-call .lbl b { font-weight: 650; flex: none; }
+  html[data-theme="blue"] .tool-call .lbl .detail {
+    display: block;
+    height: 20px;
+    overflow: hidden;
+    font-weight: 400;
+    line-height: 20px;
+  }
+  html[data-theme="blue"] .tool-call .detail-view { display: grid; height: 20px; }
+  html[data-theme="blue"] .tool-call .detail-line {
+    grid-area: 1 / 1;
+    white-space: nowrap;
+    line-height: 20px;
+  }
+  html[data-theme="blue"] .tool-call .detail-line.is-out { animation: tool-detail-out 0.42s linear forwards; }
+  html[data-theme="blue"] .tool-call .detail-line.is-in { animation: tool-detail-in 0.42s linear forwards; }
   html[data-theme="blue"] .tool-call .glint .detail { visibility: hidden; }
   html[data-theme="blue"] .tool-call .ink { color: #8d97a3; }
   html[data-theme="blue"] .tool-call .glint {
@@ -2843,8 +2863,17 @@
     0% { -webkit-mask-position: -64px 0; mask-position: -64px 0; }
     100% { -webkit-mask-position: 360px 0; mask-position: 360px 0; }
   }
+  @keyframes tool-detail-out {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-100%); opacity: 0; }
+  }
+  @keyframes tool-detail-in {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
   @media (prefers-reduced-motion: reduce) {
     html[data-theme="blue"] .tool-call .glint { animation: none; visibility: hidden; }
+    html[data-theme="blue"] .tool-call .detail-line { animation: none; }
   }
   .citta-panel .run-hd { font-size: 10px; font-weight: 700; letter-spacing: .08em; color: var(--faint); margin: 4px 0 2px; }
   .citta-panel .run-list { display: flex; flex-direction: column; gap: 8px; }
@@ -5035,6 +5064,23 @@
   .mini { font-size: 12px; font-weight: 600; color: var(--green-dark); }
   }
 
+  html[data-theme="blue"] #teamHost .panel .mrow:has(> .btn) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    column-gap: 8px;
+    row-gap: 8px;
+    padding: 12px 16px;
+  }
+  html[data-theme="blue"] #teamHost .panel .mrow:has(> .btn) .mopen {
+    grid-column: 1 / -1;
+    align-items: flex-start;
+  }
+  html[data-theme="blue"] #teamHost .panel .mrow:has(> .btn) .mopen > span:last-child { min-width: 0; flex: 1; }
+  html[data-theme="blue"] #teamHost .panel .mrow:has(> .btn) .mopen small { white-space: normal; overflow-wrap: anywhere; }
+  html[data-theme="blue"] #teamHost .panel .mrow:has(> .btn) .btn.go { grid-column: 2; justify-self: end; }
+  html[data-theme="blue"] #teamHost .panel .mrow:has(> .btn) .btn:not(.go) { grid-column: 3; }
+
   #teamHost .menu { opacity: 1; pointer-events: auto; left: auto; transform: none; }
   #teamHost .composer { position: relative; z-index: 1; isolation: auto; background: transparent; border: 0; border-radius: 0; box-shadow: none; }
   #teamHost .composer:focus-within { border: 0; box-shadow: none; }
@@ -6791,33 +6837,33 @@
   }
 
   const TOOL_CALLS = [
-    { verb: 'Searching', detail: 'quark-gluon plasma', svg: `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    { verb: 'Searching', lines: ['quark-gluon plasma', 'lecture 5 slides', 'Bjorken energy', 'sPHENIX sample'], svg: `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M10.4102 9.86719L11.6682 11.1253" stroke-width="1.08333" stroke-linecap="round" stroke="black"/>
 <path d="M10.0417 6.25C10.0417 8.34408 8.34408 10.0417 6.25 10.0417C4.15592 10.0417 2.45833 8.34408 2.45833 6.25C2.45833 4.15592 4.15592 2.45833 6.25 2.45833C8.34408 2.45833 10.0417 4.15592 10.0417 6.25Z" stroke-width="1.08333" stroke="black"/>
 </svg>` },
-    { verb: 'Reading', detail: 'QGP notes', svg: `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    { verb: 'Reading', lines: ['QGP notes', 'lecture 5 notes', 'the reading report'], svg: `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M2 11.3958H1.45833C1.45833 11.5849 1.55694 11.7603 1.71849 11.8586C1.88004 11.9569 2.08114 11.9638 2.24906 11.8768L2 11.3958ZM2 3.54167L1.8267 3.02847C1.60655 3.10281 1.45833 3.3093 1.45833 3.54167H2ZM7.41667 3.54167H7.95833C7.95833 3.3093 7.81012 3.10281 7.58996 3.02847L7.41667 3.54167ZM7.41667 11.3958L7.16761 11.8768C7.33552 11.9638 7.53663 11.9569 7.69818 11.8586C7.85972 11.7603 7.95833 11.5849 7.95833 11.3958H7.41667ZM2 11.3958H2.54167V3.54167H2H1.45833V11.3958H2ZM2 3.54167C2.1733 4.05486 2.17325 4.05488 2.17321 4.05489C2.1732 4.05489 2.17317 4.05491 2.17316 4.05491C2.17314 4.05492 2.17314 4.05492 2.17317 4.05491C2.17322 4.05489 2.17337 4.05484 2.17362 4.05476C2.17411 4.05459 2.17498 4.0543 2.17622 4.05388C2.17871 4.05305 2.18268 4.05173 2.18808 4.04995C2.19888 4.04639 2.21537 4.04098 2.23704 4.03401C2.28039 4.02006 2.34438 3.99984 2.42493 3.97543C2.58629 3.92655 2.81276 3.86131 3.07205 3.79618C3.60221 3.66299 4.22587 3.54167 4.70833 3.54167V3V2.45833C4.08656 2.45833 3.35605 2.60784 2.8081 2.74549C2.52834 2.81577 2.28477 2.88595 2.11086 2.93863C2.02377 2.96501 1.95381 2.9871 1.90513 3.00277C1.88078 3.01061 1.86173 3.01685 1.84849 3.02122C1.84187 3.0234 1.8367 3.02512 1.83305 3.02634C1.83123 3.02695 1.82978 3.02744 1.82872 3.02779C1.82819 3.02797 1.82775 3.02812 1.82742 3.02823C1.82725 3.02829 1.82711 3.02833 1.82699 3.02837C1.82693 3.02839 1.82686 3.02842 1.82683 3.02843C1.82676 3.02845 1.8267 3.02847 2 3.54167ZM4.70833 3V3.54167C5.1908 3.54167 5.81446 3.66299 6.34462 3.79618C6.60391 3.86131 6.83037 3.92655 6.99174 3.97543C7.07229 3.99984 7.13628 4.02006 7.17963 4.03401C7.2013 4.04098 7.21779 4.04639 7.22859 4.04995C7.23399 4.05173 7.23796 4.05305 7.24045 4.05388C7.24169 4.0543 7.24256 4.05459 7.24305 4.05476C7.24329 4.05484 7.24344 4.05489 7.2435 4.05491C7.24353 4.05492 7.24353 4.05492 7.24351 4.05491C7.2435 4.05491 7.24346 4.05489 7.24346 4.05489C7.24342 4.05488 7.24337 4.05486 7.41667 3.54167C7.58996 3.02847 7.5899 3.02845 7.58984 3.02843C7.58981 3.02842 7.58974 3.02839 7.58968 3.02837C7.58956 3.02833 7.58942 3.02829 7.58925 3.02823C7.58891 3.02812 7.58848 3.02797 7.58795 3.02779C7.58689 3.02744 7.58544 3.02695 7.58361 3.02634C7.57996 3.02512 7.5748 3.0234 7.56818 3.02122C7.55494 3.01685 7.53589 3.01061 7.51154 3.00277C7.46285 2.9871 7.3929 2.96501 7.30581 2.93863C7.1319 2.88595 6.88833 2.81577 6.60856 2.74549C6.06062 2.60784 5.33011 2.45833 4.70833 2.45833V3ZM7.41667 3.54167H6.875V11.3958H7.41667H7.95833V3.54167H7.41667ZM7.41667 11.3958C7.66573 10.9148 7.66565 10.9148 7.66557 10.9147C7.66553 10.9147 7.66545 10.9147 7.66537 10.9146C7.66523 10.9146 7.66507 10.9145 7.66488 10.9144C7.6645 10.9142 7.66403 10.9139 7.66346 10.9137C7.66232 10.9131 7.6608 10.9123 7.65891 10.9113C7.65513 10.9094 7.64985 10.9067 7.64315 10.9033C7.62975 10.8965 7.61061 10.8869 7.58624 10.8749C7.53752 10.851 7.46773 10.8173 7.38082 10.7771C7.20737 10.697 6.96378 10.5903 6.68204 10.4832C6.13511 10.2755 5.38118 10.0417 4.70833 10.0417V10.5833V11.125C5.17463 11.125 5.77486 11.2975 6.29732 11.4959C6.55027 11.592 6.77017 11.6884 6.92655 11.7606C7.00454 11.7967 7.06624 11.8264 7.10779 11.8469C7.12855 11.8571 7.14424 11.865 7.15438 11.8701C7.15945 11.8727 7.16313 11.8745 7.16535 11.8757C7.16646 11.8763 7.16721 11.8766 7.16759 11.8768C7.16778 11.8769 7.16788 11.877 7.16788 11.877C7.16788 11.877 7.16786 11.877 7.16781 11.877C7.16779 11.8769 7.16774 11.8769 7.16773 11.8769C7.16767 11.8769 7.16761 11.8768 7.41667 11.3958ZM4.70833 10.5833V10.0417C4.03549 10.0417 3.28155 10.2755 2.73462 10.4832C2.45289 10.5903 2.20929 10.697 2.03585 10.7771C1.94894 10.8173 1.87914 10.851 1.83042 10.8749C1.80605 10.8869 1.78692 10.8965 1.77352 10.9033C1.76681 10.9067 1.76154 10.9094 1.75776 10.9113C1.75587 10.9123 1.75435 10.9131 1.75321 10.9137C1.75264 10.9139 1.75217 10.9142 1.75179 10.9144C1.7516 10.9145 1.75143 10.9146 1.75129 10.9146C1.75122 10.9147 1.75113 10.9147 1.7511 10.9147C1.75102 10.9148 1.75094 10.9148 2 11.3958C2.24906 11.8768 2.249 11.8769 2.24894 11.8769C2.24893 11.8769 2.24888 11.8769 2.24885 11.877C2.24881 11.877 2.24878 11.877 2.24879 11.877C2.24879 11.877 2.24889 11.8769 2.24907 11.8768C2.24945 11.8766 2.2502 11.8763 2.25131 11.8757C2.25354 11.8745 2.25722 11.8727 2.26229 11.8701C2.27242 11.865 2.28812 11.8571 2.30888 11.8469C2.35042 11.8264 2.41212 11.7967 2.49012 11.7606C2.6465 11.6884 2.8664 11.592 3.11935 11.4959C3.6418 11.2975 4.24203 11.125 4.70833 11.125V10.5833Z" fill="black"/>
 <path d="M7.41602 11.3958V3.54167C7.41602 3.54167 9.02011 3 10.1243 3C11.2286 3 12.8327 3.54167 12.8327 3.54167V11.3958C12.8327 11.3958 11.2635 10.5833 10.1243 10.5833C8.9852 10.5833 7.41602 11.3958 7.41602 11.3958Z" stroke-width="1.08333" stroke-linecap="round" stroke-linejoin="round" stroke="black"/>
 </svg>` },
-    { verb: 'Creating', detail: 'Lecture 5 slides', svg: `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    { verb: 'Creating', lines: ['Lecture 5 slides', '3 quiz questions', 'speaker notes'], svg: `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M5.4375 7.00006V8.56256H7L11.6875 3.87506C11.8201 3.63086 11.8219 3.49445 11.6875 3.25006L10.75 2.31256C10.4863 2.16048 10.3497 2.1624 10.125 2.31256L5.4375 7.00006Z" stroke-width="1.08" stroke-linecap="round" stroke-linejoin="round" stroke="black"/>
 <path d="M7 3.08008H3.25C3.15611 3.08008 3.08008 3.15611 3.08008 3.25V10.75C3.08008 10.8439 3.15611 10.9199 3.25 10.9199H10.75C10.8439 10.9199 10.9199 10.8439 10.9199 10.75V7H12V10.75C12 11.4404 11.4404 12 10.75 12H3.25C2.55964 12 2 11.4404 2 10.75V3.25C2 2.55964 2.55964 2 3.25 2H7V3.08008Z" fill="black"/>
 </svg>` },
-    { verb: 'Browsing', detail: 'heavy-ion course page', svg: `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    { verb: 'Browsing', lines: ['heavy-ion course page', 'lecture 5 files', 'course readings'], svg: `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M11.8333 6.6875C11.8333 9.52947 9.52947 11.8333 6.6875 11.8333C3.84553 11.8333 1.54167 9.52947 1.54167 6.6875C1.54167 3.84553 3.84553 1.54167 6.6875 1.54167C9.52947 1.54167 11.8333 3.84553 11.8333 6.6875Z" stroke-width="1.08333" stroke="black"/>
 <path d="M4.41406 8.96211L5.55156 5.77711L8.96406 4.41211L7.82656 7.59711L4.41406 8.96211Z" stroke-width="1.08333" stroke-linecap="round" stroke-linejoin="round" stroke="black"/>
 </svg>` },
-    { verb: 'Designing', detail: 'lecture page 7', svg: `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    { verb: 'Designing', lines: ['lecture page 7', 'the chart slide', 'the title slide'], svg: `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M6.64583 4.5293C6.78473 6.20808 7.20277 6.93929 9.4694 7.35286C7.40411 7.42338 6.82863 8.08664 6.64583 10.1764C6.43106 8.05771 5.82598 7.4387 3.82227 7.35286C5.58038 7.10735 6.25353 6.56018 6.64583 4.5293Z" stroke-width="1.08" stroke-linecap="round" stroke-linejoin="round" stroke="black"/>
 <path d="M10.8833 1C10.9875 2.25909 11.301 2.8075 13.001 3.11767C11.452 3.17056 11.0204 3.66801 10.8833 5.23535C10.7222 3.64631 10.2684 3.18205 8.76562 3.11767C10.0842 2.93354 10.5891 2.52316 10.8833 1Z" stroke-width="1.08" stroke-linecap="round" stroke-linejoin="round" stroke="black"/>
 <path d="M6.64648 2.78516C4.12458 2.78568 2.08008 4.83051 2.08008 7.35254C2.08026 9.87474 4.12521 11.9189 6.64746 11.9189C9.09062 11.9188 11.0854 10.0006 11.208 7.58789L11.2139 7.35254H12.2939L12.2871 7.64258C12.136 10.6264 9.66875 12.9989 6.64746 12.999L6.35645 12.9922C3.46889 12.8458 1.15408 10.5302 1.00781 7.64258L1 7.35254C1 4.23404 3.52811 1.70561 6.64648 1.70508V2.78516Z" fill="black"/>
 </svg>` },
-    { verb: 'Running', detail: 'Lab 3 trend chart', svg: `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    { verb: 'Running', lines: ['Lab 3 trend chart', 'the sPHENIX plot', 'sample data'], svg: `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M4.35352 4.35352H9.64763" stroke-width="1.08" stroke-linecap="round" stroke-linejoin="round" stroke="black"/>
 <path d="M5.23438 7.58824L6.70496 9.05882L8.76379 7" stroke-width="1.08" stroke-linecap="round" stroke-linejoin="round" stroke="black"/>
 <path d="M3.25 2.54H10.75C11.1421 2.54 11.46 2.85788 11.46 3.25V10.75C11.46 11.1421 11.1421 11.46 10.75 11.46H3.25C2.85788 11.46 2.54 11.1421 2.54 10.75V3.25C2.54 2.85788 2.85788 2.54 3.25 2.54Z" stroke-width="1.08" stroke-linejoin="round" stroke="black"/>
 </svg>` },
-    { verb: 'Processing', detail: 'quiz answer key', svg: `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    { verb: 'Processing', lines: ['quiz answer key', 'the QGP reading', 'answer keys'], svg: `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M4 6.5L6 8.5L9 5" stroke-width="1.08" stroke-linecap="round" stroke-linejoin="round" stroke="black"/>
 <path d="M11.46 6.5C11.46 9.23933 9.23933 11.46 6.5 11.46C3.76067 11.46 1.54 9.23933 1.54 6.5C1.54 3.76067 3.76067 1.54 6.5 1.54C9.23933 1.54 11.46 3.76067 11.46 6.5Z" stroke-width="1.08" stroke="black"/>
 </svg>` }
@@ -6845,17 +6891,38 @@
     row.append(dots, label);
     return row;
   }
+  const TOOL_DETAIL_MS = 420;
+  const TOOL_DETAIL_HOLD = 2200;
+  function swapToolDetail(row, text) {
+    const slot = row.querySelector('.ink .detail-view');
+    if (!slot || !row.isConnected) return;
+    const current = slot.querySelector('.detail-line:not(.is-out)');
+    if (!current || current.textContent === text) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      current.textContent = text;
+      return;
+    }
+    const next = document.createElement('span');
+    next.className = 'detail-line is-in';
+    next.textContent = text;
+    current.classList.add('is-out');
+    slot.appendChild(next);
+    window.setTimeout(() => {
+      if (current.isConnected) current.remove();
+      next.classList.remove('is-in');
+    }, TOOL_DETAIL_MS);
+  }
   function buildToolCalls() {
     const wrap = document.createElement('div');
     wrap.className = 'tool-calls';
-    TOOL_CALLS.forEach((item) => {
+    TOOL_CALLS.forEach((item, index) => {
       const row = document.createElement('div');
       row.className = 'tool-call';
       const ink = document.createElement('span');
       ink.className = 'ink';
-      ink.innerHTML = item.svg + '<span class="lbl"><b></b> <span class="detail"></span></span>';
+      ink.innerHTML = item.svg + '<span class="lbl"><b></b><span class="detail"><span class="detail-view"><span class="detail-line"></span></span></span></span>';
       ink.querySelector('.lbl b').textContent = item.verb;
-      ink.querySelector('.detail').textContent = item.detail;
+      ink.querySelector('.detail-line').textContent = item.lines[0];
       const svg = ink.querySelector('svg');
       if (svg) svg.setAttribute('aria-hidden', 'true');
       const glint = ink.cloneNode(true);
@@ -6863,6 +6930,16 @@
       glint.setAttribute('aria-hidden', 'true');
       row.append(ink, glint);
       wrap.appendChild(row);
+      let step = 0;
+      const tick = () => {
+        if (!row.isConnected) return;
+        step = (step + 1) % item.lines.length;
+        swapToolDetail(row, item.lines[step]);
+      };
+      window.setTimeout(() => {
+        tick();
+        window.setInterval(tick, TOOL_DETAIL_HOLD);
+      }, TOOL_DETAIL_HOLD + index * Math.round(TOOL_DETAIL_HOLD / TOOL_CALLS.length));
     });
     return wrap;
   }
