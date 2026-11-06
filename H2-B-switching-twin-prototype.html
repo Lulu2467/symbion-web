@@ -3164,8 +3164,17 @@
   .citta-panel .ask-row .plus::before { width: 12px; height: 1.5px; }
   .citta-panel .ask-row .plus::after { width: 1.5px; height: 12px; }
   /* 1.5px strokes land between pixels and the cross looks off-center. Even 2px stays on the circle's center. */
-  html[data-theme="blue"] .citta-panel .ask-row .plus::before { height: 2px; }
-  html[data-theme="blue"] .citta-panel .ask-row .plus::after { width: 2px; }
+  .citta-panel .ask-row .plus .plus-glyph { display: none; }
+  html[data-theme="blue"] .citta-panel .ask-row .plus {
+    background: transparent;
+    color: #333;
+  }
+  html[data-theme="blue"] .citta-panel .ask-row .plus::before,
+  html[data-theme="blue"] .citta-panel .ask-row .plus::after { content: none; }
+  html[data-theme="blue"] .citta-panel .ask-row .plus .plus-glyph { display: block; width: 22px; height: 22px; }
+  html[data-theme="blue"] .citta-panel .ask-row .plus:hover,
+  html[data-theme="blue"] .citta-panel .ask-row .plus:hover::before,
+  html[data-theme="blue"] .citta-panel .ask-row .plus:hover::after { background: transparent; color: #1a1d21; }
   .citta-panel .ask-row .plus:hover { background: #e6e9e7; }
   .citta-panel .ask-row .plus:hover::before,
   .citta-panel .ask-row .plus:hover::after { background: var(--ink); }
@@ -6150,33 +6159,22 @@
   html[data-theme="blue"] #teamHost .box textarea::placeholder { color: #b0b4ba; }
   html[data-theme="blue"] #teamHost #emojiBtn,
   html[data-theme="blue"] #teamHost #atBtn { display: none; }
+  #teamHost #fileBtn .plus-glyph { display: none; }
   html[data-theme="blue"] #teamHost #fileBtn {
     width: 32px;
     height: 32px;
     border-radius: 999px;
-    border: 1px solid #e0e0e0;
-    background: #fff;
-    color: transparent;
-    position: relative;
+    border: 0;
+    background: transparent;
+    color: #333;
   }
-  html[data-theme="blue"] #teamHost #fileBtn svg { display: none; }
-  html[data-theme="blue"] #teamHost #fileBtn::before,
-  html[data-theme="blue"] #teamHost #fileBtn::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    background: #3c4043;
-    border-radius: 1px;
-    transform: translate(-50%, -50%);
-  }
-  html[data-theme="blue"] #teamHost #fileBtn::before { width: 14px; height: 2px; }
-  html[data-theme="blue"] #teamHost #fileBtn::after { width: 2px; height: 14px; }
+  html[data-theme="blue"] #teamHost #fileBtn > svg:not(.plus-glyph) { display: none; }
+  html[data-theme="blue"] #teamHost #fileBtn .plus-glyph { display: block; width: 22px; height: 22px; }
   html[data-theme="blue"] #teamHost #fileBtn:hover,
   html[data-theme="blue"] #teamHost #fileBtn[aria-expanded="true"] {
-    border-color: #d0d0d0;
-    background: #fff;
-    color: transparent;
+    border: 0;
+    background: transparent;
+    color: #1a1d21;
   }
   html[data-theme="blue"] #teamHost .box-bar .send {
     width: 32px;
@@ -7461,7 +7459,7 @@
             <div class="box-bar">
               <button type="button" class="icon-btn" id="emojiBtn" aria-label="Emoji" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M8.5 13.5s1.2 2 3.5 2 3.5-2 3.5-2M9 9.5h.01M15 9.5h.01"/></svg></button>
               <button type="button" class="icon-btn" id="atBtn" aria-label="Mention"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M16 12v1.2a2 2 0 0 0 4 0V12a8 8 0 1 0-3.2 6.4"/></svg></button>
-              <button type="button" class="icon-btn" id="fileBtn" aria-label="Send a file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H7.5A1.5 1.5 0 0 0 6 4.5v15A1.5 1.5 0 0 0 7.5 21h9a1.5 1.5 0 0 0 1.5-1.5V8L14 3z"/><path d="M14 3v5h5"/></svg></button>
+              <button type="button" class="icon-btn" id="fileBtn" aria-label="Send a file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H7.5A1.5 1.5 0 0 0 6 4.5v15A1.5 1.5 0 0 0 7.5 21h9a1.5 1.5 0 0 0 1.5-1.5V8L14 3z"/><path d="M14 3v5h5"/></svg><svg class="plus-glyph" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M668.734694 532.897959H355.265306c-11.493878 0-20.897959-9.404082-20.897959-20.897959s9.404082-20.897959 20.897959-20.897959h313.469388c11.493878 0 20.897959 9.404082 20.897959 20.897959s-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 689.632653c-11.493878 0-20.897959-9.404082-20.897959-20.897959V355.265306c0-11.493878 9.404082-20.897959 20.897959-20.897959s20.897959 9.404082 20.897959 20.897959v313.469388c0 11.493878-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 929.959184c-230.4 0-417.959184-187.559184-417.959184-417.959184s187.559184-417.959184 417.959184-417.959184 417.959184 187.559184 417.959184 417.959184-187.559184 417.959184-417.959184 417.959184z m0-794.122449c-207.412245 0-376.163265 168.75102-376.163265 376.163265s168.75102 376.163265 376.163265 376.163265 376.163265-168.75102 376.163265-376.163265-168.75102-376.163265-376.163265-376.163265z"/></svg></button>
               <button type="submit" class="send" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
             </div>
           </div>
@@ -7598,7 +7596,7 @@
               <textarea class="citta-input" id="cittaInput" rows="2" placeholder="Ask Citta, or / for a tool…" aria-label="Ask Citta"></textarea>
             </div>
             <div class="ask-bar">
-              <button type="button" class="plus" id="cittaPlus" aria-label="Attach"></button>
+              <button type="button" class="plus" id="cittaPlus" aria-label="Attach"><svg class="plus-glyph" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M668.734694 532.897959H355.265306c-11.493878 0-20.897959-9.404082-20.897959-20.897959s9.404082-20.897959 20.897959-20.897959h313.469388c11.493878 0 20.897959 9.404082 20.897959 20.897959s-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 689.632653c-11.493878 0-20.897959-9.404082-20.897959-20.897959V355.265306c0-11.493878 9.404082-20.897959 20.897959-20.897959s20.897959 9.404082 20.897959 20.897959v313.469388c0 11.493878-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 929.959184c-230.4 0-417.959184-187.559184-417.959184-417.959184s187.559184-417.959184 417.959184-417.959184 417.959184 187.559184 417.959184 417.959184-187.559184 417.959184-417.959184 417.959184z m0-794.122449c-207.412245 0-376.163265 168.75102-376.163265 376.163265s168.75102 376.163265 376.163265 376.163265 376.163265-168.75102 376.163265-376.163265-168.75102-376.163265-376.163265-376.163265z"/></svg></button>
               <span class="sp" aria-hidden="true"></span>
               <button type="button" class="send" aria-label="Send">
                 <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
