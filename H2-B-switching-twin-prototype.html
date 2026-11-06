@@ -4415,6 +4415,46 @@
     color: var(--muted);
     font-size: 14px;
   }
+  #dirHost .dir-feed {
+    background: #fff;
+    border: 1px solid #eceef1;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  #dirHost .dir-post { padding: 16px 18px 18px; }
+  #dirHost .dir-post + .dir-post { border-top: 1px solid #eef0f2; }
+  #dirHost .dir-post-top { display: flex; align-items: center; gap: 10px; }
+  #dirHost .dir-post-av {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    flex: none;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+  }
+  #dirHost .dir-post-av.sand { background: #f6e7b8; color: #8a6a2a; }
+  #dirHost .dir-post-av.mint { background: #d7efe4; color: #2f7d62; }
+  #dirHost .dir-post-av.sky { background: #d7e6f6; color: #3c6ea8; }
+  #dirHost .dir-post-name { font-size: 15px; font-weight: 650; color: #1a1d21; }
+  #dirHost .dir-post-time { margin-left: auto; color: #9aa0a6; font-size: 13px; font-weight: 400; }
+  #dirHost .dir-post-copy { margin: 10px 0 0 46px; }
+  #dirHost .dir-post-body {
+    margin: 0;
+    max-width: 640px;
+    color: #1a1d21;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.55;
+  }
+  #dirHost .dir-post-media {
+    height: 132px;
+    margin-top: 12px;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #f6f5f1 0%, #eef1ee 100%);
+  }
   .frame.team-on { display: flex; flex-direction: column; height: 900px; }
   .frame.team-on .body { flex: 1; min-height: 0; }
   .frame.team-on .content.hub,
@@ -5943,6 +5983,7 @@
             </div>
             <div class="dir-body">
               <div class="dir-grid" id="dirGrid"></div>
+              <div class="dir-feed" id="dirFeed" hidden></div>
               <p class="dir-none" id="dirNone" hidden>No Cosmos match. Change the word or clear the filter.</p>
               <p class="dir-empty" id="dirEmpty" hidden></p>
             </div>
@@ -9730,6 +9771,46 @@
     return people;
   }
 
+  const DIR_POSTS = [
+    { name: '骆王宇', initial: '骆', tone: 'sand', time: '2h', text: '分享了一份关于 Agent memory 与长上下文工作流的新研究摘要。', media: true },
+    { name: '李佳琦', initial: '李', tone: 'mint', time: '5h', text: '今天的产品笔记：把复杂能力收进一个更清晰的工作界面。', media: false },
+    { name: '豆豆', initial: '豆', tone: 'sky', time: 'Yesterday', text: '新的护肤内容合集已经更新。', media: true }
+  ];
+  function renderPosts(feed) {
+    if (!feed) return;
+    feed.hidden = false;
+    feed.replaceChildren(...DIR_POSTS.map((post) => {
+      const row = document.createElement('article');
+      row.className = 'dir-post';
+      const top = document.createElement('div');
+      top.className = 'dir-post-top';
+      const av = document.createElement('span');
+      av.className = 'dir-post-av ' + post.tone;
+      av.textContent = post.initial;
+      const name = document.createElement('b');
+      name.className = 'dir-post-name';
+      name.textContent = post.name;
+      const time = document.createElement('span');
+      time.className = 'dir-post-time';
+      time.textContent = post.time;
+      top.append(av, name, time);
+      const copy = document.createElement('div');
+      copy.className = 'dir-post-copy';
+      const body = document.createElement('p');
+      body.className = 'dir-post-body';
+      body.textContent = post.text;
+      copy.appendChild(body);
+      if (post.media) {
+        const media = document.createElement('div');
+        media.className = 'dir-post-media';
+        media.setAttribute('aria-hidden', 'true');
+        copy.appendChild(media);
+      }
+      row.append(top, copy);
+      return row;
+    }));
+  }
+
   function renderDir() {
     const host = document.getElementById('dirHost');
     if (!host) return;
@@ -9742,6 +9823,7 @@
     const tools = document.getElementById('dirTools');
     const searchWrap = document.getElementById('dirSide');
     const grid = document.getElementById('dirGrid');
+    const feed = document.getElementById('dirFeed');
     const none = document.getElementById('dirNone');
     const empty = document.getElementById('dirEmpty');
     [tools, searchWrap].forEach((el) => {
@@ -9761,11 +9843,24 @@
     if (!cosmo) {
       if (grid) grid.replaceChildren();
       if (none) none.hidden = true;
+      if (dirTab === 'post') {
+        if (empty) empty.hidden = true;
+        renderPosts(feed);
+        return;
+      }
+      if (feed) {
+        feed.hidden = true;
+        feed.replaceChildren();
+      }
       if (empty) {
         empty.hidden = false;
-        empty.textContent = dirTab === 'post' ? 'Posts will show up here.' : 'Community will show up here.';
+        empty.textContent = 'Community will show up here.';
       }
       return;
+    }
+    if (feed) {
+      feed.hidden = true;
+      feed.replaceChildren();
     }
     if (empty) empty.hidden = true;
     const q = dirQuery.trim().toLowerCase();
