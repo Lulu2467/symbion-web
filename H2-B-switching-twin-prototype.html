@@ -4953,6 +4953,178 @@
   #dirHost .dir-note-pic.tall { height: 292px; }
   #dirHost .dir-note-pic.mid { height: 220px; }
   #dirHost .dir-note-pic.short { height: 168px; }
+
+  html[data-theme="blue"] #dirHost .dir-feed .dir-note { cursor: pointer; }
+  html[data-theme="blue"] #dirHost { position: relative; }
+  html[data-theme="blue"] #dirHost .post-detail {
+    position: absolute;
+    inset: 0;
+    z-index: 30;
+    display: grid;
+    place-items: center;
+    padding: 28px 36px;
+    background: rgba(20, 24, 28, .42);
+  }
+  html[data-theme="blue"] #dirHost .post-detail-sheet {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr);
+    width: min(960px, 100%);
+    height: min(640px, 100%);
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(20, 24, 28, .22);
+  }
+  html[data-theme="blue"] #dirHost .post-detail-x {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 2;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    border-radius: 50%;
+    background: #fff;
+    color: #5f6368;
+    box-shadow: 0 1px 4px rgba(20, 24, 28, .16);
+  }
+  html[data-theme="blue"] #dirHost .post-detail-x svg { width: 18px; height: 18px; display: block; margin: auto; }
+  html[data-theme="blue"] #dirHost .post-detail-media {
+    min-width: 0;
+    min-height: 0;
+    display: grid;
+    place-items: center;
+    background: #fff;
+  }
+  html[data-theme="blue"] #dirHost .post-detail-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #f6f7f8;
+  }
+  html[data-theme="blue"] #dirHost .post-detail-media .dir-note-quote {
+    width: min(72%, 380px);
+    border-radius: 12px;
+  }
+  html[data-theme="blue"] #dirHost .post-detail-side {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    border-left: 1px solid #eef0f2;
+  }
+  html[data-theme="blue"] #dirHost .post-detail-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 18px 18px 0;
+  }
+  html[data-theme="blue"] #dirHost .post-detail-av {
+    width: 36px;
+    height: 36px;
+    flex: none;
+    border-radius: 50%;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+    font-weight: 650;
+    line-height: 1;
+  }
+  html[data-theme="blue"] #dirHost .post-detail-av img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  html[data-theme="blue"] #dirHost .post-detail-top b {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #1a1d21;
+    font-size: 15px;
+    font-weight: 650;
+  }
+  html[data-theme="blue"] #dirHost .post-detail-follow {
+    flex: none;
+    height: 32px;
+    padding: 0 14px;
+    border: 1px solid #3c7a94;
+    border-radius: 999px;
+    background: #fff;
+    color: #3c7a94;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  html[data-theme="blue"] #dirHost .post-detail-follow:hover { background: #ebf5fa; }
+  html[data-theme="blue"] #dirHost .post-detail-follow.on { background: #3c7a94; color: #fff; }
+  html[data-theme="blue"] #dirHost .post-detail-copy { padding: 16px 18px 0; }
+  html[data-theme="blue"] #dirHost .post-detail-copy h3 {
+    margin: 0;
+    color: #1a1d21;
+    font-size: 16px;
+    font-weight: 650;
+    line-height: 1.45;
+  }
+  html[data-theme="blue"] #dirHost .post-detail-body {
+    margin: 8px 0 0;
+    color: #1a1d21;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  html[data-theme="blue"] #dirHost .post-detail-comments {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    margin-top: 16px;
+    padding: 14px 18px 8px;
+    border-top: 1px solid #eef0f2;
+    color: #8b919a;
+    font-size: 13px;
+  }
+  html[data-theme="blue"] #dirHost .post-detail-comment {
+    margin: 0 0 12px;
+    color: #1a1d21;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  html[data-theme="blue"] #dirHost .post-detail-comment b {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 13px;
+    font-weight: 650;
+  }
+  html[data-theme="blue"] #dirHost .post-detail-bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    border-top: 1px solid #e6e8ec;
+  }
+  html[data-theme="blue"] #dirHost .post-detail-bar input {
+    flex: 1;
+    min-width: 0;
+    height: 36px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 999px;
+    background: #f4f5f7;
+    color: #1a1d21;
+    font-size: 13px;
+  }
+  html[data-theme="blue"] #dirHost .post-detail-bar input::placeholder { color: #b0b4ba; }
+  html[data-theme="blue"] #dirHost .post-detail-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex: none;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #8b919a;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  html[data-theme="blue"] #dirHost .post-detail-stat svg { width: 18px; height: 18px; display: block; }
+  html[data-theme="blue"] #dirHost .post-detail-stat.on { color: #3c7a94; }
   html[data-theme="blue"] #dirHost .dir-note-pic.tall,
   html[data-theme="blue"] #dirHost .dir-note-pic.mid,
   html[data-theme="blue"] #dirHost .dir-note-pic.short,
@@ -6642,6 +6814,30 @@
               <div class="dir-comm" id="dirComm" hidden></div>
               <p class="dir-none" id="dirNone" hidden>No Cosmos match. Change the word or clear the filter.</p>
               <p class="dir-empty" id="dirEmpty" hidden></p>
+            </div>
+            <div class="post-detail" id="postDetail" hidden>
+              <button type="button" class="post-detail-x" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+              <div class="post-detail-sheet" role="dialog" aria-modal="true" aria-labelledby="postDetailTitle">
+                <div class="post-detail-media" id="postDetailMedia"></div>
+                <div class="post-detail-side">
+                  <div class="post-detail-top">
+                    <span class="post-detail-av" id="postDetailAv"></span>
+                    <b id="postDetailName"></b>
+                    <button type="button" class="post-detail-follow" id="postDetailFollow">Follow</button>
+                  </div>
+                  <div class="post-detail-copy">
+                    <h3 id="postDetailTitle"></h3>
+                    <p class="post-detail-body" id="postDetailBody" hidden></p>
+                  </div>
+                  <div class="post-detail-comments" id="postDetailComments"></div>
+                  <form class="post-detail-bar" id="postDetailForm">
+                    <input type="text" placeholder="Say something…" aria-label="Comment" autocomplete="off">
+                    <button type="button" class="post-detail-stat" id="postDetailLike" aria-label="Like"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z"/></svg><span id="postDetailLikes"></span></button>
+                    <button type="button" class="post-detail-stat" id="postDetailStar" aria-label="Save"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m12 3.5 2.4 5.2 5.6.7-4.1 3.8 1.1 5.6L12 16.2 7 18.8l1.1-5.6L4 9.4l5.6-.7L12 3.5z"/></svg></button>
+                    <span class="post-detail-stat" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 16.5 4 19.5V6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v7A2.5 2.5 0 0 1 17.5 16H8.2L6 16.5z"/></svg><span id="postDetailCommentCount">0</span></span>
+                  </form>
+                </div>
+              </div>
             </div>
           </section>
           <section id="teamHost" aria-label="Team">
@@ -10041,6 +10237,7 @@
     root.classList.add('theme-swap');
     if (next === 'blue') root.dataset.theme = 'blue';
     else delete root.dataset.theme;
+    if (next !== 'blue') document.getElementById('postDetail')?.setAttribute('hidden', '');
     placeHeaderSearch();
     const teamSearch = document.getElementById('q');
     if (teamSearch) teamSearch.placeholder = next === 'blue' ? '搜索' : 'Search';
@@ -10539,11 +10736,77 @@
     feed.replaceChildren(...posts.map((post) => {
       const card = document.createElement('article');
       card.className = 'dir-note';
+      card.dataset.postIndex = String(DIR_POSTS.indexOf(post));
       fillNoteCard(card, post);
       return card;
     }));
   }
 
+
+  function closePostDetail() {
+    const root = document.getElementById('postDetail');
+    if (root) root.hidden = true;
+  }
+  function syncPostCommentCount() {
+    const n = document.querySelectorAll('#postDetailComments .post-detail-comment').length;
+    const el = document.getElementById('postDetailCommentCount');
+    if (el) el.textContent = String(n);
+  }
+  function openPostDetail(note) {
+    if (document.documentElement.dataset.theme !== 'blue' || !note) return;
+    const root = document.getElementById('postDetail');
+    const media = document.getElementById('postDetailMedia');
+    const av = document.getElementById('postDetailAv');
+    const body = document.getElementById('postDetailBody');
+    const comments = document.getElementById('postDetailComments');
+    if (!root || !media || !av || !body || !comments) return;
+    media.replaceChildren();
+    if (note.img) {
+      const pic = document.createElement('img');
+      pic.className = 'post-detail-pic';
+      pic.alt = '';
+      pic.src = note.img;
+      media.appendChild(pic);
+    } else {
+      const quote = document.createElement('div');
+      quote.className = 'dir-note-quote ' + (note.tone || 'paper');
+      quote.textContent = note.quote || note.title;
+      media.appendChild(quote);
+    }
+    av.replaceChildren();
+    av.className = 'post-detail-av';
+    if (note.photo) {
+      const img = document.createElement('img');
+      img.alt = '';
+      img.src = note.photo;
+      av.appendChild(img);
+    } else {
+      av.className = 'post-detail-av dir-note-av letter ' + (note.av || note.tone || 'sky');
+      av.textContent = note.initial || '';
+    }
+    document.getElementById('postDetailName').textContent = note.name;
+    document.getElementById('postDetailTitle').textContent = note.title;
+    const extra = note.quote && note.quote !== note.title ? note.quote : '';
+    body.hidden = !extra;
+    body.textContent = extra;
+    comments.replaceChildren();
+    const empty = document.createElement('p');
+    empty.className = 'post-detail-empty';
+    empty.textContent = 'No comments yet.';
+    comments.appendChild(empty);
+    const follow = document.getElementById('postDetailFollow');
+    follow.classList.remove('on');
+    follow.textContent = 'Follow';
+    const like = document.getElementById('postDetailLike');
+    like.classList.remove('on');
+    like.dataset.base = String(parseInt(note.likes, 10) || 0);
+    document.getElementById('postDetailLikes').textContent = like.dataset.base;
+    document.getElementById('postDetailStar').classList.remove('on');
+    const input = document.querySelector('#postDetailForm input');
+    if (input) input.value = '';
+    syncPostCommentCount();
+    root.hidden = false;
+  }
   const DIR_NOTES = [
     { title: '通勤防晒，我只留这一支', img: 'luo/assets/product-sunscreen.jpg', h: 'tall', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '128' },
     { title: '修护精华敷完，先别急着洗脸', img: 'luo/assets/product-drwu.jpg', h: 'mid', name: '豆豆', initial: '豆', tone: 'sky', likes: '86' },
@@ -10924,7 +11187,49 @@
       r.removeAttribute('aria-current');
     });
   }
+  document.getElementById('postDetailFollow')?.addEventListener('click', () => {
+    const follow = document.getElementById('postDetailFollow');
+    const on = follow.classList.toggle('on');
+    follow.textContent = on ? 'Following' : 'Follow';
+  });
+  document.getElementById('postDetailLike')?.addEventListener('click', () => {
+    const like = document.getElementById('postDetailLike');
+    const on = like.classList.toggle('on');
+    const base = parseInt(like.dataset.base, 10) || 0;
+    document.getElementById('postDetailLikes').textContent = String(base + (on ? 1 : 0));
+  });
+  document.getElementById('postDetailStar')?.addEventListener('click', () => {
+    document.getElementById('postDetailStar').classList.toggle('on');
+  });
+  document.getElementById('postDetailForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const input = e.target.querySelector('input');
+    const text = input?.value.trim();
+    if (!text) return;
+    const list = document.getElementById('postDetailComments');
+    list.querySelector('.post-detail-empty')?.remove();
+    const row = document.createElement('p');
+    row.className = 'post-detail-comment';
+    const who = document.createElement('b');
+    who.textContent = 'You';
+    row.append(who, document.createTextNode(text));
+    list.appendChild(row);
+    input.value = '';
+    syncPostCommentCount();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closePostDetail();
+  });
   document.getElementById('dirHost')?.addEventListener('click', (e) => {
+    if (e.target.closest('.post-detail')) {
+      if (e.target.closest('.post-detail-x') || e.target.id === 'postDetail') closePostDetail();
+      return;
+    }
+    const noteCard = e.target.closest('.dir-note');
+    if (noteCard && dirTab === 'post') {
+      openPostDetail(DIR_POSTS[Number(noteCard.dataset.postIndex)]);
+      return;
+    }
     const tab = e.target.closest('[data-dir-tab]');
     if (tab) {
       if (tab.dataset.dirTab === 'community' && dirTab === 'community' && dirChao) {
