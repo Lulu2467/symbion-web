@@ -4728,22 +4728,41 @@
   #teamHost .row.on .dot { border-color: #ebf5fa; }
   #teamHost .acct { position: relative; }
   #teamHost .acct .p { width: 28px; height: 28px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); font-size: 9px; font-weight: 700; }
+  #teamHost .thread { background: #ededed; }
+  #teamHost .log { gap: 16px; padding: 14px 12px 10px; background: #ededed; }
+  #teamHost .stamp { color: #b0b4ba; }
+  #teamHost .msg { gap: 8px; }
+  #teamHost .msg-name { margin: 0 0 2px; color: #8b919a; font-size: 12px; }
+  #teamHost .log .av { width: 40px; height: 40px; border-radius: 4px; }
+  #teamHost .tag { padding: 0; background: transparent; color: #9aa0a6; font-weight: 500; letter-spacing: 0; }
   #teamHost .bubble {
     padding: 8px 10px;
-    border: 1px solid transparent;
+    border: 0;
     border-radius: 4px;
-    background: #eef1ef;
-    border-color: #eef1ef;
-    color: var(--ink);
-    font-size: 14px;
+    background: #fff;
+    color: #1a1d21;
+    font-size: 15px;
     line-height: 1.45;
+    box-shadow: none;
   }
   #teamHost .msg.mine .bubble {
     border-radius: 4px;
     background: var(--green-bubble);
-    border-color: var(--green-bubble);
     color: #fff;
   }
+  #teamHost .qref {
+    margin: 0 0 6px;
+    padding: 4px 8px;
+    border: 0;
+    border-left: 2px solid #d8dce0;
+    border-radius: 2px;
+    background: #f3f4f6;
+    color: #8b919a;
+  }
+  #teamHost .msg.mine .qref { border-left-color: rgba(255,255,255,.55); background: rgba(255,255,255,.16); color: rgba(255,255,255,.88); }
+  #teamHost .filechip { min-width: 0; gap: 8px; }
+  #teamHost .filechip i { width: 36px; height: 36px; border-radius: 4px; background: #f2f3f5; color: #5f6670; }
+  #teamHost .msg.mine .filechip i { background: rgba(255,255,255,.2); color: #fff; }
   #teamHost .composer { padding: 0; }
   #teamHost .box {
     flex-direction: column;
