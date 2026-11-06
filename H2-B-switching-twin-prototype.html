@@ -3994,15 +3994,23 @@
   .set-choice[aria-pressed="true"] { border-color: var(--green-line); background: var(--green-wash); }
   .set-choice b { display: block; font-size: 13px; font-weight: 650; }
   .set-choice small { display: block; margin-top: 2px; color: var(--muted); font-size: 12px; font-weight: 400; line-height: 1.4; }
-  .set-pics { display: flex; flex-wrap: wrap; gap: 10px; }
+  .set-pics { display: grid; grid-template-columns: repeat(4, 72px); gap: 10px; }
   .set-pic {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
     width: 72px;
+    height: 72px;
     border: 1px solid var(--line);
     border-radius: 12px;
     background: #fff;
-    padding: 8px 4px;
+    padding: 6px 4px;
     font-size: 11px;
     font-weight: 600;
+    line-height: 1;
     color: #1f1f1f;
   }
   .set-pic i {
@@ -4010,13 +4018,15 @@
     place-items: center;
     width: 36px;
     height: 36px;
-    margin: 0 auto 6px;
-    border-radius: 18px;
+    margin: 0;
+    border-radius: 10px;
+    background: var(--green-wash);
+    color: var(--green);
     font-style: normal;
     font-size: 12px;
     font-weight: 700;
   }
-  .set-pic[aria-pressed="true"] { border-color: var(--green); box-shadow: 0 0 0 1px var(--green); }
+  .set-pic[aria-pressed="true"] { border-color: var(--green); box-shadow: none; }
   .set-line { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); font-size: 13px; }
   .set-line:first-of-type { border-top: 0; }
   .set-line b { font-weight: 650; }
@@ -4050,9 +4060,19 @@
     white-space: nowrap;
   }
   .set-pic-layout { display: flex; gap: 16px; align-items: flex-start; }
+  .set-pic-layout .set-actions { margin-top: 12px; }
+  #setHost .set-pic-layout .set-quiet {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    padding: 0 14px;
+  }
   .set-preview {
-    width: 112px;
-    height: 112px;
+    box-sizing: border-box;
+    width: 154px;
+    height: 154px;
     flex: none;
     display: grid;
     place-items: center;
@@ -4064,9 +4084,8 @@
     overflow: hidden;
   }
   .set-preview img { width: 100%; height: 100%; object-fit: cover; }
-  .set-preview svg { width: 72px; height: 72px; }
-  .set-pics { display: grid; grid-template-columns: repeat(4, 64px); }
-  .set-pic svg { display: block; width: 40px; height: 40px; margin: 0 auto 4px; border-radius: 10px; }
+  .set-preview svg { width: 96px; height: 96px; }
+  .set-pic svg { display: block; width: 36px; height: 36px; margin: 0; border-radius: 10px; flex: none; }
   .set-file { display: inline-flex; align-items: center; }
   .set-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
   #setHost .set-tabs button {
@@ -6010,7 +6029,7 @@
                     <div class="set-preview" id="setPreview"><span id="setInitials">LU</span></div>
                     <div>
                       <div class="set-pics" id="setPics">
-                        <button type="button" class="set-pic" data-pic="initials" aria-pressed="true">Initials</button>
+                        <button type="button" class="set-pic" data-pic="initials" aria-pressed="true"><i id="setPicInitials">LU</i><span>Initials</span></button>
                         <button type="button" class="set-pic" data-pic="sage" aria-pressed="false"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#ebf5fa"/><circle cx="20" cy="16" r="6" fill="#3c7a94"/><path d="M10 32c1.5-6 5-8 10-8s8.5 2 10 8" fill="#3c7a94"/></svg>Sage</button>
                         <button type="button" class="set-pic" data-pic="navy" aria-pressed="false"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#e8eef6"/><circle cx="20" cy="15" r="6" fill="#316479"/><rect x="12" y="24" width="16" height="10" rx="5" fill="#316479"/></svg>Navy</button>
                         <button type="button" class="set-pic" data-pic="sunny" aria-pressed="false"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#f4f8fa"/><circle cx="20" cy="16" r="7" fill="#c5d6e0"/><circle cx="17" cy="15" r="1" fill="#1a1d21"/><circle cx="23" cy="15" r="1" fill="#1a1d21"/><path d="M16 19c1.2 1.4 6.8 1.4 8 0" stroke="#1a1d21" stroke-width="1.2" fill="none"/></svg>Sunny</button>
@@ -11595,7 +11614,10 @@
     const current = userName();
     if (name) name.value = current;
     const initials = document.getElementById('setInitials');
-    if (initials) initials.textContent = userInitials(current) || 'LU';
+    const mark = userInitials(current) || 'LU';
+    if (initials) initials.textContent = mark;
+    const picMark = document.getElementById('setPicInitials');
+    if (picMark) picMark.textContent = mark;
     const zone = document.getElementById('setDeviceZone');
     if (zone && !zone.textContent) {
       let tz = 'this device';
