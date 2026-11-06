@@ -4717,15 +4717,16 @@
   #teamHost .list-brand,
   #teamHost .list-title { display: none; }
   #teamHost .list-top { display: flex; align-items: center; gap: 8px; padding: 12px 12px 8px; }
-  #teamHost .list-top .search { flex: 1; margin: 0; height: 36px; padding: 0 12px; border-radius: 8px; background: #f2f3f5; }
+  #teamHost .list { background: #f7f7f7; }
+  #teamHost .list-top .search { flex: 1; margin: 0; height: 36px; padding: 0 12px; border-radius: 8px; background: #fff; }
   #teamHost .list-top .search input { font-size: 14px; }
   #teamHost .list-top .search input::placeholder { color: #b0b4ba; }
   #teamHost .list-top .icon-btn { width: 32px; height: 32px; border-radius: 16px; border: 1px solid #e6e8ec; background: #fff; color: #1f1f1f; }
   #teamHost .list-top .icon-btn:hover { border-color: transparent; background: #d4e4ee; color: #1f1f1f; }
-  #teamHost .row:hover { background: #f6f7f8; }
-  #teamHost .row.on { background: #ebf5fa; }
-  #teamHost .row:hover .dot { border-color: #f6f7f8; }
-  #teamHost .row.on .dot { border-color: #ebf5fa; }
+  #teamHost .row:hover { background: #eef0f2; }
+  #teamHost .row.on { background: #d4e4ee; }
+  #teamHost .row:hover .dot { border-color: #eef0f2; }
+  #teamHost .row.on .dot { border-color: #d4e4ee; }
   #teamHost .acct { position: relative; }
   #teamHost .acct .p { width: 28px; height: 28px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); font-size: 9px; font-weight: 700; }
   #teamHost .thread { background: #ededed; }
@@ -4734,7 +4735,19 @@
   #teamHost .msg { gap: 8px; }
   #teamHost .msg-name { margin: 0 0 2px; color: #8b919a; font-size: 12px; }
   #teamHost .log .av { width: 40px; height: 40px; border-radius: 4px; }
-  #teamHost .tag { padding: 0; background: transparent; color: #9aa0a6; font-weight: 500; letter-spacing: 0; }
+  #teamHost .tag {
+    padding: 0 5px;
+    border-radius: 3px;
+    background: #f2f3f5;
+    color: #8b919a;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0;
+  }
+  #teamHost .tag.owner,
+  #teamHost .tag.admin { background: #f2f3f5; color: #8b919a; }
+  #teamHost .tag.twin { background: #ebf5fa; color: #3c7a94; }
   #teamHost .bubble {
     padding: 8px 10px;
     border: 0;
