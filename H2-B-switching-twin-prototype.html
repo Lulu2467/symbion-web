@@ -4469,7 +4469,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    width: 240px;
+    width: 320px;
     height: 32px;
     padding: 0 14px;
     border: 1px solid #e6e8ec;
@@ -4504,6 +4504,7 @@
     align-items: center;
     gap: 0;
     flex: none;
+    width: 320px;
     height: 32px;
     padding: 2px;
     border-radius: 8px;
@@ -4511,8 +4512,10 @@
     background: #fff;
   }
   #dirHost .dir-sorts button {
+    flex: 1;
+    min-width: 0;
     height: 26px;
-    padding: 0 12px;
+    padding: 0 8px;
     border: 0;
     border-radius: 6px;
     background: transparent;
@@ -4520,6 +4523,7 @@
     font-size: 13px;
     font-weight: 500;
     line-height: 1;
+    white-space: nowrap;
   }
   #dirHost .dir-sorts button[aria-pressed="true"] {
     background: #f4f5f7;
