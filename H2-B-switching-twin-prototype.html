@@ -484,6 +484,97 @@
     white-space: nowrap;
   }
   html[data-theme="blue"] .rail-me:hover { background: transparent; }
+  html[data-theme="blue"] .rail-me-menu {
+    position: absolute;
+    left: calc(100% + 10px);
+    bottom: 10px;
+    width: 260px;
+    padding: 6px 0;
+    background: #fff;
+    border: 1px solid #e6e8ec;
+    border-radius: 12px;
+    box-shadow: 0 10px 28px rgba(20, 24, 28, .12);
+    z-index: 40;
+  }
+  html[data-theme="blue"] .rail-me-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px 12px;
+  }
+  html[data-theme="blue"] .rail-me-face {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #d7e8f2;
+    color: #3c7a94;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 650;
+    flex: none;
+  }
+  html[data-theme="blue"] .rail-me-face i {
+    position: absolute;
+    right: -4px;
+    bottom: -2px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 9px;
+    border: 2px solid #fff;
+    background: #3c7a94;
+    color: #fff;
+    font-style: normal;
+    font-size: 10px;
+    font-weight: 650;
+    line-height: 14px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  html[data-theme="blue"] .rail-me-id { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  html[data-theme="blue"] .rail-me-id b {
+    font-size: 15px;
+    font-weight: 650;
+    line-height: 1.2;
+    color: #1a1d21;
+  }
+  html[data-theme="blue"] .rail-me-id small {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.3;
+    color: #8b919a;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  html[data-theme="blue"] .rail-me-menu hr {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 4px 0;
+  }
+  html[data-theme="blue"] .rail-me-menu button {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    text-align: left;
+    color: #1a1d21;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  html[data-theme="blue"] .rail-me-menu button svg {
+    width: 16px;
+    height: 16px;
+    flex: none;
+    color: #5f6368;
+  }
+  html[data-theme="blue"] .rail-me-menu button:hover { background: #f4f5f7; }
+  html[data-theme="blue"] .rail-me-menu button.is-out { color: #d93025; font-weight: 600; }
   html[data-theme="blue"] #screen-home > .course-banner,
   html[data-theme="blue"] #screen-tutorial > .course-banner { display: none; }
   html[data-theme="blue"] #greeting-home .course-banner ~ p[data-live="sub"],
@@ -5969,6 +6060,23 @@
           <div class="div" role="presentation"></div>
           <button type="button" class="p" aria-label="Prof. Roland">GR</button><button type="button" class="p" aria-label="王">王</button><button type="button" class="p" aria-label="Prof. Pajer">EP</button><button type="button" class="p" aria-label="Prof. Xu">HX</button>
           <button type="button" class="rail-me" id="railMe" aria-label="Lulu"><span class="rail-me-av" id="railMeAv" aria-hidden="true">LU</span><span class="rail-me-copy"><b id="railMeName">Lulu</b></span></button>
+          <div class="rail-me-menu" id="railMeMenu" role="menu" hidden>
+            <div class="rail-me-head">
+              <span class="rail-me-face" id="railMeMenuAv" aria-hidden="true">LU<i>28</i></span>
+              <span class="rail-me-id"><b id="railMeMenuName">lulu</b><small>2849182439@qq.com</small></span>
+            </div>
+            <hr>
+            <button type="button" role="menuitem" data-rail-account="profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M8 13h8M8 17h5"/></svg>Edit profile</button>
+            <button type="button" role="menuitem" data-rail-account="picture"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.2"/><path d="M5 19.2c1.2-2.6 3.4-3.8 7-3.8s5.8 1.2 7 3.8"/></svg>Profile picture</button>
+            <button type="button" role="menuitem" data-rail-account="friends"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="2.6"/><circle cx="16" cy="9" r="2.2"/><path d="M4.5 18.2c.8-2.2 2.4-3.2 4.5-3.2s3.7 1 4.5 3.2M14 15.2c1.4-.3 2.6.2 3.6 1.4"/></svg>Friends</button>
+            <button type="button" role="menuitem" data-rail-account="security"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3"/><path d="M6.2 19c1-2.4 2.8-3.6 5.8-3.6 1.2 0 2.2.2 3.1.6"/><path d="M16.2 14.2 18.6 16.6 22 12.4"/></svg>Security &amp; privacy</button>
+            <button type="button" role="menuitem" data-rail-account="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7.5h6.2L12 5h8v12H4z"/></svg>Account &amp; settings</button>
+            <button type="button" role="menuitem" data-rail-account="apps"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c2.2 2.4 3.3 5.1 3.3 8S14.2 17.6 12 20c-2.2-2.4-3.3-5.1-3.3-8S9.8 6.4 12 4z"/></svg>Connected apps</button>
+            <button type="button" role="menuitem" data-rail-account="about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3.5h7l5 5V20a1.5 1.5 0 0 1-1.5 1.5h-10.5A1.5 1.5 0 0 1 5.5 20V5A1.5 1.5 0 0 1 7 3.5z"/><path d="M14 3.8V9h5"/></svg>About Symbion</button>
+            <button type="button" role="menuitem" data-rail-account="history"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7h11M8 12h11M8 17h11"/><path d="M4.5 7h.01M4.5 12h.01M4.5 17h.01"/></svg>Recent history</button>
+            <hr>
+            <button type="button" role="menuitem" class="is-out" data-rail-account="signout">Sign out</button>
+          </div>
         </nav>
 
         <div class="main">
@@ -9748,9 +9856,36 @@
       });
     });
 
-    $('railMe')?.addEventListener('click', () => {
-      openSettings('profile');
+    function setRailMeMenu(open) {
+      const menu = document.getElementById('railMeMenu');
+      const btn = $('railMe');
+      if (!menu || !btn) return;
+      menu.hidden = !open;
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    $('railMe')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const menu = document.getElementById('railMeMenu');
+      setRailMeMenu(!!(menu && menu.hidden));
     });
+    document.getElementById('railMeMenu')?.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-rail-account]');
+      if (!btn) return;
+      const act = btn.dataset.railAccount;
+      setRailMeMenu(false);
+      if (act === 'profile' || act === 'settings') openSettings('profile');
+      else if (act === 'picture') openSettings('picture');
+      else if (act === 'security') openSettings('security');
+      else if (act === 'apps') openSettings('apps');
+      else if (act === 'signout') showToastMsg('Sign out waits for the account service.');
+    });
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('railMeMenu');
+      if (!menu || menu.hidden) return;
+      if (e.target.closest('#railMeMenu') || e.target.closest('#railMe')) return;
+      setRailMeMenu(false);
+    });
+
 
     $('cittaPanelSwitch')?.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -10450,7 +10585,13 @@
     root.classList.add('theme-swap');
     if (next === 'blue') root.dataset.theme = 'blue';
     else delete root.dataset.theme;
-    if (next !== 'blue') document.getElementById('postDetail')?.setAttribute('hidden', '');
+    if (next !== 'blue') {
+      document.getElementById('postDetail')?.setAttribute('hidden', '');
+      const railMenu = document.getElementById('railMeMenu');
+      if (railMenu) railMenu.hidden = true;
+      document.getElementById('railMe')?.setAttribute('aria-expanded', 'false');
+    }
+
     placeHeaderSearch();
     const teamSearch = document.getElementById('q');
     if (teamSearch) teamSearch.placeholder = next === 'blue' ? '搜索' : 'Search';
@@ -13021,7 +13162,12 @@
     const railName = document.getElementById('railMeName');
     const railMe = document.getElementById('railMe');
     if (railAv) railAv.textContent = initials;
+    const menuAv = document.getElementById('railMeMenuAv');
+    const menuName = document.getElementById('railMeMenuName');
+    if (menuAv) menuAv.firstChild.textContent = initials;
+    if (menuName) menuName.textContent = next;
     if (railName) railName.textContent = next;
+
     if (railMe) railMe.setAttribute('aria-label', next);
     const note = document.getElementById('accountPictureNote');
     if (note) note.textContent = `${next} · ${initials}. Picture changes stay on this account.`;
