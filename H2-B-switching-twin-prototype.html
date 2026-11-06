@@ -3005,21 +3005,21 @@
     white-space: nowrap;
     line-height: 20px;
   }
-  html[data-theme="blue"] .tool-call .glint .detail { visibility: hidden; }
+  html[data-theme="blue"] .tool-call .glint .detail { visibility: visible; }
   html[data-theme="blue"] .tool-call .ink { color: #8d97a3; }
   html[data-theme="blue"] .tool-call .glint {
     position: absolute;
     left: 0;
     top: 0;
-    color: #1f1f1f;
+    color: #fff;
     pointer-events: none;
-    -webkit-mask-image: linear-gradient(120deg, transparent 0%, transparent 18%, #000 50%, transparent 82%, transparent 100%);
-    mask-image: linear-gradient(120deg, transparent 0%, transparent 18%, #000 50%, transparent 82%, transparent 100%);
-    -webkit-mask-size: 64px 100%;
-    mask-size: 64px 100%;
+    -webkit-mask-image: linear-gradient(100deg, transparent 0%, transparent 38%, rgba(0, 0, 0, .8) 50%, transparent 62%, transparent 100%);
+    mask-image: linear-gradient(100deg, transparent 0%, transparent 38%, rgba(0, 0, 0, .8) 50%, transparent 62%, transparent 100%);
+    -webkit-mask-size: 220% 100%;
+    mask-size: 220% 100%;
     -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
-    animation: tool-sweep 1.8s linear infinite;
+    animation: tool-sweep 4s linear infinite;
   }
   html[data-theme="blue"] .tool-call svg {
     width: 18px;
@@ -3036,8 +3036,9 @@
     color: var(--ink);
   }
   @keyframes tool-sweep {
-    0% { -webkit-mask-position: -64px 0; mask-position: -64px 0; }
-    100% { -webkit-mask-position: 360px 0; mask-position: 360px 0; }
+    0% { -webkit-mask-position: 100% 0; mask-position: 100% 0; }
+    18% { -webkit-mask-position: 0% 0; mask-position: 0% 0; }
+    100% { -webkit-mask-position: 0% 0; mask-position: 0% 0; }
   }
   @keyframes detail-up {
     from { transform: translateY(0); }
@@ -7731,6 +7732,8 @@
     if (!current || current.textContent === text || track.classList.contains('is-sliding')) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       current.textContent = text;
+      const gleam = row.querySelector('.glint .detail-line');
+      if (gleam) gleam.textContent = text;
       return;
     }
     const next = document.createElement('span');
@@ -7744,6 +7747,8 @@
       done = true;
       current.remove();
       track.classList.remove('is-sliding');
+      const gleam = row.querySelector('.glint .detail-line');
+      if (gleam) gleam.textContent = text;
     };
     track.addEventListener('animationend', finish, { once: true });
     window.setTimeout(finish, 480);
