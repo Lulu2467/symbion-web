@@ -4859,6 +4859,7 @@
   #teamHost .acct { position: relative; }
   #teamHost .acct .p { width: 28px; height: 28px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); font-size: 9px; font-weight: 700; }
   #teamHost .thread { background: #ededed; }
+  #teamHost .announce { background: #ededed; border-bottom: 0; }
   #teamHost .log { gap: 16px; padding: 14px 12px 10px; background: #ededed; }
   #teamHost .stamp { color: #b0b4ba; }
   #teamHost .msg { gap: 8px; }
@@ -4933,9 +4934,9 @@
     padding: 8px 12px 8px;
     border: 0;
     border-radius: 0;
-    border-top: 1px solid var(--line);
+    border-top: 0;
     box-shadow: none;
-    background: #fff;
+    background: #ededed;
   }
   #teamHost .box-bar { display: flex; align-items: center; gap: 2px; }
   #teamHost .box-bar .icon-btn { border: 0; background: transparent; color: #5f6368; }
@@ -4949,8 +4950,7 @@
     flex: none;
     width: 100%;
     margin: 0;
-    padding: 6px 2px;
-    border: 0;
+    padding: 6px 10px;
     height: 36px;
     min-height: 36px;
     max-height: 96px;
@@ -4958,7 +4958,9 @@
     font-size: 14px;
     font-family: inherit;
     box-sizing: border-box;
-    background: transparent;
+    background: #fff;
+    border: 1px solid #e6e8ec;
+    border-radius: 4px;
     overflow: hidden;
   }
   #teamHost .box textarea::placeholder {
