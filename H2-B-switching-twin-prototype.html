@@ -2988,9 +2988,16 @@
     min-width: 0;
     overflow: hidden;
   }
+  html[data-theme="blue"] .tool-call .detail-view:has(.detail-track.is-sliding) {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 12px, #000 calc(100% - 6px), transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 12px, #000 calc(100% - 6px), transparent 100%);
+  }
   html[data-theme="blue"] .tool-call .detail-track { display: block; }
   html[data-theme="blue"] .tool-call .detail-track.is-sliding {
     animation: detail-up 0.42s cubic-bezier(0.22, 0.8, 0.3, 1) forwards;
+  }
+  html[data-theme="blue"] .tool-call .detail-track.is-sliding > .detail-line:first-child {
+    animation: detail-fade 0.42s linear forwards;
   }
   html[data-theme="blue"] .tool-call .detail-line {
     display: block;
@@ -3040,9 +3047,14 @@
     from { transform: translateY(0); }
     to { transform: translateY(-20px); }
   }
+  @keyframes detail-fade {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
   @media (prefers-reduced-motion: reduce) {
     html[data-theme="blue"] .tool-call .glint { animation: none; visibility: hidden; }
-    html[data-theme="blue"] .tool-call .detail-track { animation: none; }
+    html[data-theme="blue"] .tool-call .detail-track,
+    html[data-theme="blue"] .tool-call .detail-track .detail-line { animation: none; }
   }
   .citta-panel .run-hd { font-size: 10px; font-weight: 700; letter-spacing: .08em; color: var(--faint); margin: 4px 0 2px; }
   .citta-panel .run-list { display: flex; flex-direction: column; gap: 8px; }
@@ -7815,38 +7827,47 @@
     return row;
   }
   const TOOL_DETAIL_HOLD = 2200;
-  function swapToolDetail(row, text) {
-    const view = row.querySelector('.ink .detail-view');
-    if (!view || !row.isConnected) return;
+  function ensureDetailTrack(view) {
     let track = view.querySelector('.detail-track');
-    if (!track) {
-      track = document.createElement('span');
-      track.className = 'detail-track';
-      const existing = view.querySelector('.detail-line');
-      if (existing) track.appendChild(existing);
-      view.appendChild(track);
-    }
+    if (track) return track;
+    track = document.createElement('span');
+    track.className = 'detail-track';
+    const existing = view.querySelector('.detail-line');
+    if (existing) track.appendChild(existing);
+    view.appendChild(track);
+    return track;
+  }
+  function swapToolDetail(row, text) {
+    const views = [...row.querySelectorAll('.detail-view')];
+    if (!views.length || !row.isConnected) return;
+    const track = ensureDetailTrack(views[0]);
     const current = track.querySelector('.detail-line:last-child');
     if (!current || current.textContent === text || track.classList.contains('is-sliding')) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      current.textContent = text;
-      const gleam = row.querySelector('.glint .detail-line');
-      if (gleam) gleam.textContent = text;
+      views.forEach((view) => {
+        const line = ensureDetailTrack(view).querySelector('.detail-line:last-child');
+        if (line) line.textContent = text;
+      });
       return;
     }
-    const next = document.createElement('span');
-    next.className = 'detail-line';
-    next.textContent = text;
-    track.appendChild(next);
-    track.classList.add('is-sliding');
+    const tracks = views.map((view) => {
+      const item = ensureDetailTrack(view);
+      const next = document.createElement('span');
+      next.className = 'detail-line';
+      next.textContent = text;
+      item.appendChild(next);
+      item.classList.add('is-sliding');
+      return item;
+    });
     let done = false;
     const finish = () => {
       if (done) return;
       done = true;
-      current.remove();
-      track.classList.remove('is-sliding');
-      const gleam = row.querySelector('.glint .detail-line');
-      if (gleam) gleam.textContent = text;
+      tracks.forEach((item) => {
+        const lines = [...item.querySelectorAll('.detail-line')];
+        lines.slice(0, -1).forEach((line) => line.remove());
+        item.classList.remove('is-sliding');
+      });
     };
     track.addEventListener('animationend', finish, { once: true });
     window.setTimeout(finish, 480);
