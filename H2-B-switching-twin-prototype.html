@@ -9803,7 +9803,7 @@
       copy.append(nm, small);
       const summon = document.createElement('span');
       summon.className = 'dir-summon';
-      summon.textContent = '召唤';
+      summon.textContent = 'Summon';
       head.append(av, copy, summon);
       const tags = document.createElement('span');
       tags.className = 'dir-tags';
@@ -9887,7 +9887,7 @@
     }
     const summon = e.target.closest('.dir-summon');
     if (summon) {
-      showToastMsg('召唤 · ' + summon.closest('.dir-card').dataset.dirName);
+      showToastMsg('Summon · ' + summon.closest('.dir-card').dataset.dirName);
       return;
     }
     const card = e.target.closest('.dir-card');
