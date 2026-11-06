@@ -4827,16 +4827,23 @@
     line-height: 1.5;
   }
   html[data-theme="blue"] #dirHost .chao-post {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr) auto;
+    column-gap: 10px;
+    row-gap: 4px;
+    align-items: start;
     margin: 12px 0 0;
-    padding: 12px 14px;
+    padding: 14px 16px;
     border: 1px solid #e6e8ec;
     border-radius: 12px;
+    background: #fff;
   }
-  html[data-theme="blue"] #dirHost .chao-post-top { display: flex; align-items: center; gap: 8px; }
-  html[data-theme="blue"] #dirHost .chao-post-top b { font-size: 14px; font-weight: 650; color: #1a1d21; }
-  html[data-theme="blue"] #dirHost .chao-post-top span { margin-left: auto; color: #9aa0a6; font-size: 12px; }
-  html[data-theme="blue"] #dirHost .chao-post p { margin: 8px 0 0; color: #1a1d21; font-size: 14px; line-height: 1.5; }
-  html[data-theme="blue"] #dirHost .chao-post small { display: block; margin-top: 8px; color: #8b919a; font-size: 12px; }
+  html[data-theme="blue"] #dirHost .chao-post-top { display: contents; }
+  html[data-theme="blue"] #dirHost .chao-post .chao-av { grid-column: 1; grid-row: 1; }
+  html[data-theme="blue"] #dirHost .chao-post-top b { grid-column: 2; grid-row: 1; align-self: center; font-size: 14px; font-weight: 650; color: #1a1d21; }
+  html[data-theme="blue"] #dirHost .chao-post .chao-time { grid-column: 3; grid-row: 1; align-self: center; margin: 0; color: #9aa0a6; font-size: 12px; font-weight: 500; }
+  html[data-theme="blue"] #dirHost .chao-post p { grid-column: 2 / -1; margin: 2px 0 0; color: #1a1d21; font-size: 14px; line-height: 1.55; }
+  html[data-theme="blue"] #dirHost .chao-post small { grid-column: 2 / -1; display: block; margin-top: 2px; color: #8b919a; font-size: 12px; }
   html[data-theme="blue"] #dirHost .chao-box {
     display: flex;
     gap: 10px;
@@ -10582,6 +10589,7 @@
     const who = document.createElement('b');
     who.textContent = post.name;
     const time = document.createElement('span');
+    time.className = 'chao-time';
     time.textContent = post.time;
     top.append(chaoAv(post), who, time);
     const body = document.createElement('p');
