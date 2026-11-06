@@ -5258,8 +5258,8 @@
                 var folder = bar && bar.querySelector('.osbar-folder');
                 var homeBtn = nav && nav.querySelector('[data-osbar="home"]');
                 var reloadBtn = nav && nav.querySelector('[data-osbar="reload"]');
-                if (homeBtn && folder && homeBtn.previousElementSibling !== folder) homeBtn.before(folder);
-                if (reloadBtn && homeBtn && reloadBtn.previousElementSibling !== homeBtn) homeBtn.after(reloadBtn);
+                if (homeBtn && folder && homeBtn.previousElementSibling !== folder) homeBtn.after(folder);
+                if (reloadBtn && homeBtn && reloadBtn.previousElementSibling !== folder) folder.after(reloadBtn);
                 if (bar && search && nav && search.previousElementSibling !== nav) nav.after(search);
                 if (tabs && search && tabs.previousElementSibling !== search) search.after(tabs);
                 if (plus && tabs && plus.previousElementSibling !== tabs) tabs.after(plus);
@@ -9359,8 +9359,8 @@
       const homeBtn = nav && nav.querySelector('[data-osbar="home"]');
       const reloadBtn = nav && nav.querySelector('[data-osbar="reload"]');
       if (logo && bar.firstElementChild !== logo) bar.prepend(logo);
-      if (homeBtn && folder && homeBtn.previousElementSibling !== folder) homeBtn.before(folder);
-      if (reloadBtn && homeBtn && reloadBtn.previousElementSibling !== homeBtn) homeBtn.after(reloadBtn);
+      if (homeBtn && folder && homeBtn.previousElementSibling !== folder) homeBtn.after(folder);
+      if (reloadBtn && homeBtn && reloadBtn.previousElementSibling !== folder) folder.after(reloadBtn);
       if (nav && search.previousElementSibling !== nav) nav.after(search);
       if (tabs && tabs.previousElementSibling !== search) search.after(tabs);
       if (plus && tabs && plus.previousElementSibling !== tabs) tabs.after(plus);
