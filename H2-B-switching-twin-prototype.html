@@ -5393,12 +5393,14 @@
   .hue-purple { background: var(--purple-tint); color: var(--purple); }
   .hue-slate { background: var(--slate-tint); color: var(--slate); }
   .hue-twin { background: var(--green); color: #fff; }
-  .row-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-  .row-top, .row-bot { display: flex; align-items: center; gap: 6px; min-width: 0; }
-  .row-top strong { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 15px; font-weight: 500; color: #191919; }
+  .row-body { flex: 1; min-width: 0; height: 44px; display: flex; flex-direction: column; justify-content: space-between; gap: 0; }
+  .row-top, .row-bot { display: flex; align-items: center; gap: 0; min-width: 0; }
+  .row-top strong { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 15px; font-weight: 500; line-height: 20px; color: #191919; }
   .row-top time, .row-top .tag, .row-top .pin { flex: none; }
-  .row-top time { margin-left: auto; font-style: normal; color: #b2b2b2; font-size: 12px; font-weight: 400; }
-  .row-bot em { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-style: normal; font-size: 13px; color: #9a9a9a; font-weight: 400; }
+  .row-top time { margin-left: auto; font-style: normal; color: #b2b2b2; font-size: 12px; font-weight: 400; line-height: 20px; }
+  .row-top time:not(:empty) { margin-left: 12px; }
+  .row-bot em { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-style: normal; font-size: 13px; line-height: 18px; color: #b2b2b2; font-weight: 400; }
+  .row-bot .mute { margin-left: 6px; }
   .pin { width: 12px; height: 12px; color: var(--green); flex: none; }
   .badge { min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; background: var(--green); color: #fff; font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; }
   .row .dot { position: absolute; top: -3px; right: -3px; width: 10px; height: 10px; border-radius: 50%; background: #fa5151; border: 2px solid #fff; box-sizing: content-box; }
