@@ -4974,36 +4974,38 @@
     position: absolute;
     inset: 0;
     z-index: 30;
-    display: grid;
-    place-items: center;
-    padding: 28px 36px;
-    background: rgba(20, 24, 28, .42);
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    background: #fff;
   }
   html[data-theme="blue"] #dirHost .post-detail-sheet {
     position: relative;
     display: grid;
     grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr);
-    width: min(960px, 100%);
-    height: min(640px, 100%);
+    flex: 1;
+    width: 100%;
+    height: auto;
+    min-height: 0;
     background: #fff;
-    border-radius: 16px;
+    border-radius: 0;
     overflow: hidden;
-    box-shadow: 0 24px 64px rgba(20, 24, 28, .22);
+    box-shadow: none;
   }
   html[data-theme="blue"] #dirHost .post-detail-x {
-    position: absolute;
-    top: 16px;
-    left: 16px;
-    z-index: 2;
-    width: 32px;
-    height: 32px;
+    position: static;
+    align-self: flex-start;
+    flex: none;
+    width: 40px;
+    height: 40px;
+    margin: 8px 12px 0;
     border: 0;
-    border-radius: 50%;
-    background: #fff;
-    color: #5f6368;
-    box-shadow: 0 1px 4px rgba(20, 24, 28, .16);
+    border-radius: 8px;
+    background: transparent;
+    color: #1a1d21;
+    box-shadow: none;
   }
-  html[data-theme="blue"] #dirHost .post-detail-x svg { width: 18px; height: 18px; display: block; margin: auto; }
+  html[data-theme="blue"] #dirHost .post-detail-x svg { width: 20px; height: 20px; display: block; margin: auto; }
   html[data-theme="blue"] #dirHost .post-detail-media {
     min-width: 0;
     min-height: 0;
@@ -5015,7 +5017,7 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
-    background: #f6f7f8;
+    background: #fff;
   }
   html[data-theme="blue"] #dirHost .post-detail-media .dir-note-quote {
     width: min(72%, 380px);
@@ -6846,7 +6848,7 @@
               <p class="dir-empty" id="dirEmpty" hidden></p>
             </div>
             <div class="post-detail" id="postDetail" hidden>
-              <button type="button" class="post-detail-x" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+              <button type="button" class="post-detail-x" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
               <div class="post-detail-sheet" role="dialog" aria-modal="true" aria-labelledby="postDetailTitle">
                 <div class="post-detail-media" id="postDetailMedia"></div>
                 <div class="post-detail-side">
@@ -11237,7 +11239,7 @@
   });
   document.getElementById('dirHost')?.addEventListener('click', (e) => {
     if (e.target.closest('.post-detail')) {
-      if (e.target.closest('.post-detail-x') || e.target.id === 'postDetail') closePostDetail();
+      if (e.target.closest('.post-detail-x')) closePostDetail();
       return;
     }
     const noteCard = e.target.closest('.dir-note');
