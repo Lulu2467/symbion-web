@@ -14387,10 +14387,11 @@ function openCtx(id, clientX, clientY) {
     ['Hide conversation', 'hide'],
     ['Delete conversation and history', 'history']
   ];
+  const note = c.kind === 'group'
+    ? (document.documentElement.dataset.theme === 'blue' ? '' : 'This only changes your list. You stay in the group. Leave group, and delete the group for everyone, are in group details.')
+    : 'This only changes your conversation. It does not change a group.';
   $('ctx').innerHTML = items.map(([label, key]) => `<button type="button" role="menuitem" data-ctx="${key}">${label}</button>`).join('')
-    + `<p class="note">${c.kind === 'group'
-      ? 'This only changes your list. You stay in the group. Leave group, and delete the group for everyone, are in group details.'
-      : 'This only changes your conversation. It does not change a group.'}</p>`;
+    + (note ? `<p class="note">${note}</p>` : '');
   placeMenu($('ctx'), clientX, clientY);
 }
 
