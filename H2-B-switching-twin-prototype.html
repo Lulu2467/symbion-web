@@ -4628,6 +4628,25 @@
   }
   .dir-card:hover .dir-summon,
   .dir-card:focus-visible .dir-summon { display: inline-flex; }
+  html[data-theme="blue"] #dirHost .dir-head { padding-right: 76px; }
+  html[data-theme="blue"] #dirHost .dir-summon {
+    display: inline-flex;
+    border: 1px solid #e6e8ec;
+    background: #fff;
+    color: #3c7a94;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .16s ease, background .16s ease, border-color .16s ease;
+  }
+  html[data-theme="blue"] #dirHost .dir-card:hover .dir-summon,
+  html[data-theme="blue"] #dirHost .dir-card:focus-visible .dir-summon {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  html[data-theme="blue"] #dirHost .dir-summon:hover {
+    background: #ebf5fa;
+    border-color: #c5d6e0;
+  }
   .dir-card:hover .dir-head,
   .dir-card:focus-visible .dir-head { padding-right: 76px; }
   .dir-head { display: flex; gap: 10px; align-items: flex-start; min-width: 0; }
