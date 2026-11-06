@@ -5019,6 +5019,16 @@
     overflow: hidden;
     min-height: 100%;
   }
+  html[data-theme="blue"] #dirHost .dir-body:has(#dirComm:not([hidden])) {
+    display: flex;
+    flex-direction: column;
+    padding: 0 28px 24px;
+    scrollbar-gutter: auto;
+  }
+  html[data-theme="blue"] #dirHost #dirComm:not(:has(.chao-page)) {
+    flex: 1;
+    min-height: 0;
+  }
   html[data-theme="blue"] #dirHost .dir-comm > :first-child {
     border-top-left-radius: 11px;
     border-top-right-radius: 11px;
@@ -11676,7 +11686,7 @@
     });
     const postSearch = document.getElementById('postSearchWrap');
     if (postSearch) postSearch.hidden = dirTab !== 'post';
-    if (tools && dirTab === 'post') tools.hidden = true;
+    if (tools) tools.hidden = !cosmo;
     const search = document.getElementById('dirSearch');
     if (search && search.value !== dirQuery) search.value = dirQuery;
     host.querySelectorAll('[data-dir-group]').forEach((btn) => {
