@@ -4100,8 +4100,43 @@
   }
   #setHost .set-tabs button[aria-pressed="true"] { background: var(--green-tint); border-color: var(--green-line); color: var(--green-dark); }
   #setHost .set-tabs button:disabled { color: #b0b4ba; }
-  .set-check { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 13px; color: #1a1d21; }
-  #setHost .set-check input { width: 16px; height: 16px; margin: 0; }
+  #setHost .set-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    font-size: 13px;
+    line-height: 20px;
+    color: #1a1d21;
+  }
+  #setHost .set-check > span {
+    display: block;
+    margin: 0;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 20px;
+    color: #1a1d21;
+  }
+  #setHost .set-check input {
+    appearance: none;
+    -webkit-appearance: none;
+    box-sizing: border-box;
+    flex: none;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    padding: 0;
+    border: 1.5px solid var(--line-strong);
+    border-radius: 4px;
+    background: #fff center / 10px 10px no-repeat;
+  }
+  #setHost .set-check input:checked {
+    border-color: var(--green);
+    background-color: var(--green);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.2 4.8 8.5 9.5 3.5' fill='none' stroke='%23fff' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+  #setHost .set-check input:focus-visible { outline: none; box-shadow: 0 0 0 1px var(--green-line); }
   .set-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 14px 0; }
   .set-stats div { padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; }
   .set-stats span { display: block; color: var(--label); font-size: 11px; font-weight: 700; letter-spacing: .04em; }
@@ -6192,7 +6227,7 @@
                   <h3>Runtime</h3>
                   <p class="sub">Choose how local and cloud browser work is handled.</p>
                   <div class="set-line"><b>Browser operation</b><span id="setRuntimeSaved">Not saved</span></div>
-                  <label class="set-check"><input type="checkbox" id="setPreferLocal" checked>Prefer local first</label>
+                  <label class="set-check"><input type="checkbox" id="setPreferLocal" checked><span>Prefer local first</span></label>
                   <p class="set-note">Desktop and extension browser work stay first in line for authenticated tasks.</p>
                   <h3 style="margin-top:16px">Per-turn preference</h3>
                   <button type="button" class="set-choice" data-runtime="local" aria-pressed="true"><span><b>Local first</b><small>Use the Symbion Desktop browser session when browser work is needed.</small></span></button>
@@ -6212,7 +6247,7 @@
                   <label><span>PREFERRED LANGUAGE</span>
                     <select id="setLang" aria-label="Preferred language"><option>English</option><option>Simplified Chinese</option></select>
                   </label>
-                  <label class="set-check"><input type="checkbox" id="setAutoTranslate" checked>Automatically translate messages into my preferred language</label>
+                  <label class="set-check"><input type="checkbox" id="setAutoTranslate" checked><span>Automatically translate messages into my preferred language</span></label>
                   <label><span>MESSAGE DISPLAY</span>
                     <select id="setLangDisplay" aria-label="Message display"><option>Original and translation</option><option>Translation only</option><option>Original only</option></select>
                   </label>
