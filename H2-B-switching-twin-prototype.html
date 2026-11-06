@@ -13435,6 +13435,7 @@ function renderChrome() {
     $('infoBtn').setAttribute('aria-label', 'Chat details');
   }
   $('infoBtn').setAttribute('aria-pressed', state.panel ? 'true' : 'false');
+  $('threadMore').setAttribute('aria-pressed', document.documentElement.dataset.theme === 'blue' && state.panel ? 'true' : 'false');
   $('searchBtn').setAttribute('aria-pressed', state.chatSearch ? 'true' : 'false');
   $('chatSearch').hidden = !state.chatSearch;
   teamRoot.querySelector('.thread').classList.toggle('history-on', state.chatSearch);
@@ -14198,6 +14199,17 @@ $('rows').addEventListener('contextmenu', (e) => {
 });
 $('threadMore').addEventListener('click', (e) => {
   e.stopPropagation();
+  if (document.documentElement.dataset.theme === 'blue') {
+    $('ctx').hidden = true;
+    if (state.panel && state.panelMode !== 'info') state.panelMode = 'info';
+    else {
+      state.panelMode = 'info';
+      state.panel = !state.panel;
+    }
+    renderChrome();
+    renderPanel();
+    return;
+  }
   const r = e.currentTarget.getBoundingClientRect();
   openCtx(state.id, r.left, r.bottom + 4);
 });
