@@ -4666,6 +4666,34 @@
     color: #1a1d21;
     font-weight: 500;
   }
+  html[data-theme="blue"] #dirHost .dir-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 28px;
+    align-items: center;
+  }
+  html[data-theme="blue"] #dirHost .dir-row {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
+    align-items: center;
+  }
+  html[data-theme="blue"] #dirHost .post-search { grid-column: 1 / -1; }
+  html[data-theme="blue"] #dirHost .dir-side {
+    width: 0;
+    min-width: 100%;
+    margin-left: 0;
+  }
+  html[data-theme="blue"] #dirHost .dir-search {
+    width: 100%;
+    box-sizing: border-box;
+    height: 32px;
+    border-radius: 999px;
+  }
+  html[data-theme="blue"] #dirHost .dir-search input {
+    font-size: 13px;
+    font-weight: 500;
+  }
   html[data-theme="blue"] #dirHost .dir-sorts {
     width: max-content;
     border: 0;
