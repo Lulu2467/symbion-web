@@ -3696,14 +3696,55 @@
   .desk-folder.on { outline: 2px solid var(--green); }
   .desk-folder b { display: block; font-size: 13px; }
   .desk-folder small { color: #71777d; font-size: 12px; }
-  .desk-foot { display: flex; gap: 14px; align-items: center; color: #8b9198; font-size: 12px; margin-top: 12px; }
-  .drive-head { display: flex; align-items: baseline; gap: 10px; }
-  .drive-head .sub { margin: 0; }
-  .drive-crumb { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin: 0 0 10px; font-size: 13px; }
+  .desk-foot {
+    display: flex; gap: 16px; align-items: center;
+    margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--line);
+    color: var(--label); font-size: 12px;
+  }
+  .drive-head { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+  .drive-head .sub { margin: 0 0 12px; }
+  #deskHost .desk-drive-bar[role="tablist"] {
+    gap: 0; margin: 0 0 12px; border-bottom: 1px solid var(--line);
+  }
+  #deskHost .desk-drive-bar[role="tablist"] button {
+    height: 36px; margin-bottom: -1px; padding: 0 14px; border-radius: 0;
+    border-bottom: 2px solid transparent; font-size: 13px; font-weight: 650; color: var(--label);
+  }
+  #deskHost .desk-drive-bar[role="tablist"] button[aria-pressed="true"] {
+    background: transparent; color: var(--ink); border-bottom-color: var(--green);
+  }
+  .drive-crumb { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 0 0 10px; font-size: 13px; }
+  .drive-crumb:empty { display: none; }
   .drive-crumb button { border: 0; background: transparent; padding: 0; font-weight: 650; color: var(--green); }
   #deskHost .drive-crumb span { color: var(--ink); font-weight: 650; }
-  .drive-tools { position: relative; }
-  #deskHost .drive-soon[disabled] { color: var(--label); cursor: default; }
+  .drive-tools { position: relative; display: flex; align-items: center; gap: 8px; }
+  .drive-search {
+    display: flex; align-items: center; gap: 6px; width: 220px; height: 32px;
+    padding: 0 10px; border: 1px solid var(--line); border-radius: 4px; background: #fff; color: #5f6368;
+  }
+  .drive-search svg { width: 16px; height: 16px; flex: none; }
+  #deskHost .drive-search input {
+    width: 100%; height: 30px; margin: 0; padding: 0; border: 0; border-radius: 0;
+    background: transparent; font-size: 13px; color: var(--ink);
+  }
+  #deskHost .drive-search input::placeholder { color: var(--placeholder); }
+  #deskHost .drive-search input:focus { outline: none; }
+  #deskHost .drive-search:focus-within { box-shadow: 0 0 0 1px var(--green-line); }
+  .drive-views { display: flex; height: 32px; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+  #deskHost .drive-views button { height: 32px; padding: 0 12px; border-radius: 0; font-size: 13px; color: var(--label); }
+  #deskHost .drive-views button + button { border-left: 1px solid var(--line); }
+  #deskHost .drive-views button[aria-pressed="true"] { background: var(--green-tint); color: var(--green-dark); }
+  .drive-actions { display: flex; align-items: center; gap: 2px; margin-left: auto; }
+  .drive-upload { position: relative; }
+  #deskHost .drive-actions > button,
+  #deskHost .drive-upload > button,
+  #deskHost #deskSelectSlot > button {
+    height: 32px; padding: 0 10px; border-radius: 4px; font-size: 13px; font-weight: 600; color: var(--ink);
+  }
+  #deskHost .drive-actions > button:hover,
+  #deskHost .drive-upload > button:hover,
+  #deskHost #deskSelectSlot > button:hover { background: #f3f5f7; }
+  #deskHost .drive-soon[disabled] { color: var(--placeholder); cursor: default; }
   .drive-pop {
     position: absolute; z-index: 4; top: calc(100% + 4px); min-width: 180px;
     background: #fff; border: 1px solid var(--line); border-radius: 12px;
@@ -3715,11 +3756,14 @@
   }
   #deskHost .drive-pop button:hover, #deskHost .drive-menu button:hover { background: #f3f5f7; }
   #deskHost .drive-pop button:disabled, #deskHost .drive-menu button:disabled { color: var(--label); background: transparent; cursor: default; }
-  .drive-note { margin: 0 0 10px; color: var(--muted); font-size: 13px; line-height: 1.45; }
+  .drive-note {
+    margin: 0 0 10px; padding: 8px 12px; border-radius: 8px;
+    background: var(--green-wash); color: var(--muted); font-size: 13px; line-height: 1.45;
+  }
   #deskHost .drive-link { border: 0; background: transparent; padding: 0; color: var(--green); font-weight: 650; }
   .drive-drop {
-    width: 100%; margin: 0 0 12px; border: 1px dashed var(--line-strong); border-radius: 12px;
-    background: #fff; color: var(--muted); padding: 14px; font-size: 13px;
+    width: 100%; margin: 0 0 12px; border: 1px dashed var(--line-strong); border-radius: 8px;
+    background: #fff; color: var(--label); padding: 8px 12px; font-size: 13px; text-align: center;
   }
   #deskHost .drive-drop:hover, #deskHost .drive-drop.is-over { border-color: var(--green); color: var(--green-dark); }
   .drive-name {
@@ -10891,12 +10935,17 @@
     const kids = deskKids(here);
     const folders = kids.filter((node) => node.kind === 'folder').length;
     const files = kids.length - folders;
-    if (count) count.textContent = deskDriveTab === 'courses' ? 'Courses' : `Current folder: ${folders} folder${folders === 1 ? '' : 's'} · ${files} file${files === 1 ? '' : 's'}`;
+    if (count) count.textContent = deskDriveTab === 'courses' ? 'Folders shared with you' : `${folders} folder${folders === 1 ? '' : 's'} · ${files} file${files === 1 ? '' : 's'}`;
     const crumb = document.getElementById('deskDriveCrumb');
     if (crumb) {
       if (deskDriveTab === 'courses') {
+        crumb.hidden = false;
         crumb.innerHTML = '<button type="button" data-drive-do="root">Super Drive</button><span aria-hidden="true">/</span><span>Courses</span>';
+      } else if (!deskPath.length) {
+        crumb.hidden = true;
+        crumb.innerHTML = '';
       } else {
+        crumb.hidden = false;
         const bits = ['<button type="button" data-drive-do="root">Super Drive</button>'];
         deskPath.forEach((id, index) => {
           const node = deskNode(id);
@@ -10928,7 +10977,7 @@
     }
     const q = deskQuery.trim().toLowerCase();
     const shown = kids.filter((node) => !q || node.name.toLowerCase().includes(q));
-    const google = here ? '' : `<p class="drive-note">Google Drive is not connected. <button type="button" class="drive-link" data-drive-do="connect">Connect account</button><br>Google Shared drives aren’t available yet. Course folders shared with you appear in the Courses tab.</p>`;
+    const google = here ? '' : `<p class="drive-note">Google Drive is not connected. <button type="button" class="drive-link" data-drive-do="connect">Connect account</button>. Shared drives aren’t available yet. Course folders are in Courses.</p>`;
     const naming = deskNaming ? `<form class="drive-name" id="deskNameForm"><input id="deskNewFolder" type="text" placeholder="Folder name" aria-label="Folder name" autocomplete="off"><button type="submit" class="drive-go" id="deskCreateFolder" disabled>Create</button></form>` : '';
     const empty = !shown.length
       ? `<p class="desk-empty">${q ? 'No folders match.' : (here === 'shared' ? 'Files shared with you stay with the account. None are listed on this device.' : 'This folder is empty.')}</p>`
@@ -10958,7 +11007,7 @@
     }).join('');
     const used = deskNodes.reduce((sum, node) => sum + (node.size || 0), 0);
     const shownCount = shown.length;
-    host.innerHTML = `${google}<button type="button" class="drive-drop" id="deskDrop">${here ? 'Drop more files here or choose Upload' : 'Drop files here or choose Upload'}</button>${naming}${empty}<div class="desk-folders ${deskDriveView === 'list' ? 'is-list' : ''}">${cards}</div><div class="desk-foot"><button type="button" class="drive-status" data-drive-do="source" aria-expanded="${deskSourceOpen}"><span class="desk-status ok" style="margin:0;padding:4px 8px"><b>CONNECTED</b></span></button><span>${shownCount} item${shownCount === 1 ? '' : 's'} shown in this folder</span><span>${deskBytes(used)} of 50 GB used</span><span>Healthy</span></div>${deskSourceOpen ? '<p class="drive-note">Symbion files on this device are available. Google Drive is not connected.</p>' : ''}`;
+    host.innerHTML = `${google}<button type="button" class="drive-drop" id="deskDrop">${here ? 'Drop more files here or choose Upload' : 'Drop files here or choose Upload'}</button>${naming}${empty}<div class="desk-folders ${deskDriveView === 'list' ? 'is-list' : ''}">${cards}</div><div class="desk-foot"><button type="button" class="drive-status" data-drive-do="source" aria-expanded="${deskSourceOpen}">On this device</button><span>${shownCount} item${shownCount === 1 ? '' : 's'}</span><span>${deskBytes(used)} of 50 GB</span></div>${deskSourceOpen ? '<p class="drive-note">Symbion files on this device are available. Google Drive is not connected.</p>' : ''}`;
     if (searchFocused) {
       const field = document.getElementById('deskSearch');
       if (field) { field.focus(); field.setSelectionRange(caret, caret); }
@@ -11029,20 +11078,29 @@
           <div class="desk-drive-bar" role="tablist" aria-label="Drive sources">
             <button type="button" data-desk-drive="files">Files</button>
             <button type="button" data-desk-drive="courses">Courses</button>
-            <button type="button" class="drive-soon" disabled title="Google shared drives aren’t available yet.">Super Drive</button>
+            <button type="button" class="drive-soon" disabled title="Google shared drives aren’t available yet.">Shared drives</button>
           </div>
           <nav class="drive-crumb" id="deskDriveCrumb" aria-label="Folder path"></nav>
           <div class="desk-drive-bar drive-tools" id="deskDriveTools">
-            <input id="deskSearch" type="search" placeholder="Search" aria-label="Search files and folders by name">
-            <button type="button" data-desk-drive-view="grid" aria-pressed="true">Grid</button>
-            <button type="button" data-desk-drive-view="list" aria-pressed="false">List</button>
-            <button type="button" id="deskNameBtn" data-drive-do="name" aria-expanded="false">New folder</button>
-            <button type="button" id="deskUploadBtn" data-drive-do="upload-menu" aria-expanded="false">Upload</button>
-            <div class="drive-pop" id="deskUploadPop" hidden role="menu">
-              <button type="button" data-drive-do="pick-files">Files</button>
-              <button type="button" data-drive-do="pick-folder">Folder</button>
+            <label class="drive-search">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M16 16l4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <input id="deskSearch" type="search" placeholder="Search" aria-label="Search files and folders by name">
+            </label>
+            <div class="drive-views" role="group" aria-label="Layout">
+              <button type="button" data-desk-drive-view="grid" aria-pressed="true">Grid</button>
+              <button type="button" data-desk-drive-view="list" aria-pressed="false">List</button>
             </div>
-            <span id="deskSelectSlot"></span>
+            <div class="drive-actions">
+              <button type="button" id="deskNameBtn" data-drive-do="name" aria-expanded="false">New folder</button>
+              <span class="drive-upload">
+                <button type="button" id="deskUploadBtn" data-drive-do="upload-menu" aria-expanded="false">Upload</button>
+                <div class="drive-pop" id="deskUploadPop" hidden role="menu">
+                  <button type="button" data-drive-do="pick-files">Files</button>
+                  <button type="button" data-drive-do="pick-folder">Folder</button>
+                </div>
+              </span>
+              <span id="deskSelectSlot"></span>
+            </div>
           </div>
           <input id="deskFilePick" type="file" multiple hidden>
           <input id="deskFolderPick" type="file" webkitdirectory multiple hidden>
