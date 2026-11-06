@@ -6096,6 +6096,13 @@
   html[data-theme="blue"] #teamHost #threadMore .thread-dots-txt { display: none; }
   html[data-theme="blue"] #teamHost #searchBtn,
   html[data-theme="blue"] #teamHost #infoBtn { display: none; }
+  #teamHost .thread-head #threadMore,
+  #teamHost .thread-head #threadMore:hover,
+  #teamHost .thread-head #threadMore[aria-pressed="true"],
+  #teamHost .thread-head #threadMore[aria-expanded="true"] {
+    background: transparent;
+    color: #5f6368;
+  }
 </style>
 </head>
 <body>
@@ -14794,6 +14801,13 @@ $('threadMore').addEventListener('click', (e) => {
   }
   const r = e.currentTarget.getBoundingClientRect();
   openCtx(state.id, r.left, r.bottom + 4);
+});
+document.getElementById('teamHost').addEventListener('click', (e) => {
+  if (document.documentElement.dataset.theme !== 'blue' || !state.panel) return;
+  if (e.target.closest('#panel, #threadMore, #headFace, #modal, #ctx')) return;
+  state.panel = false;
+  renderChrome();
+  renderPanel();
 });
 $('ctx').addEventListener('click', (e) => {
   const b = e.target.closest('[data-ctx]');
