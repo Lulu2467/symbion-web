@@ -14241,9 +14241,10 @@ function renderPanel() {
   if (c.kind === 'dm') {
     const p = person(c.person);
     const from = chats.find((g) => g.id === c.from);
+    const removeNote = document.documentElement.dataset.theme === 'blue' ? '' : '<p class="lead">This removes your conversation. It does not change a group.</p>';
     $('panel').innerHTML = `<h3>${esc(p.name)}</h3><p class="lead">${from ? `From ${esc(from.name)}.` : ''}</p><button type="button" class="history-entry" data-open-history><span>Search chat</span><i aria-hidden="true">›</i></button>${switches(c)}
       <button type="button" class="danger" data-close-chat>Delete conversation history</button>
-      <p class="lead">This removes your conversation. It does not change a group.</p>`;
+      ${removeNote}`;
     return;
   }
   if (state.panelMode === 'review' && canReview(c)) {
