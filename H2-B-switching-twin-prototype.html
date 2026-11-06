@@ -4847,9 +4847,11 @@
   #teamHost .list-title { display: none; }
   #teamHost .list-top { display: flex; align-items: center; gap: 8px; padding: 12px 12px 8px; }
   #teamHost .list { background: #f7f7f7; }
-  #teamHost .list-top .search { flex: 1; margin: 0; height: 36px; padding: 0 12px; border-radius: 8px; background: #fff; }
-  #teamHost .list-top .search input { font-size: 14px; }
-  #teamHost .list-top .search input::placeholder { color: #b0b4ba; }
+  #teamHost .list-top .search { flex: 1; margin: 0; height: 32px; padding: 0 10px; gap: 6px; border-radius: 4px; background: #fff; }
+  #teamHost .list-top .search svg { width: 16px; height: 16px; color: #5f6368; }
+  #teamHost .list-top .search input { font-size: 13px; line-height: 32px; color: var(--ink); }
+  #teamHost .list-top .search input::placeholder { color: var(--placeholder); }
+  #teamHost .list-top .search:focus-within { box-shadow: 0 0 0 1px var(--green-line); }
   #teamHost .list-top .icon-btn { width: 32px; height: 32px; border-radius: 16px; border: 1px solid #e6e8ec; background: #fff; color: #1f1f1f; }
   #teamHost .list-top .icon-btn:hover { border-color: transparent; background: #d4e4ee; color: #1f1f1f; }
   #teamHost .row:hover { background: #eef0f2; }
