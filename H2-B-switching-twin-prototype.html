@@ -4217,10 +4217,10 @@
     z-index: 2;
     flex: none;
     margin: 0;
-    padding: 22px 28px 14px;
+    padding: 16px 24px 12px;
     background: #f6f7f8;
   }
-  .dir-body { flex: 1; min-height: 0; overflow: auto; padding: 0 28px 40px; scrollbar-gutter: stable; }
+  .dir-body { flex: 1; min-height: 0; overflow: auto; padding: 4px 24px 32px; scrollbar-gutter: stable; }
   .dir-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
   .dir-row + .dir-row { margin-top: 14px; }
   .dir-tabs { display: flex; align-items: center; gap: 22px; }
@@ -4247,11 +4247,11 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    width: 220px;
-    height: 36px;
+    width: 200px;
+    height: 32px;
     padding: 0 12px;
-    border: 1px solid var(--line);
-    border-radius: 999px;
+    border: 1px solid #e6e8ec;
+    border-radius: 8px;
     background: #fff;
     color: #8b919a;
   }
@@ -4265,9 +4265,9 @@
     color: var(--ink);
   }
   .dir-search input::placeholder { color: var(--placeholder); }
-  .dir-chips { display: flex; flex-wrap: wrap; gap: 8px; min-width: 0; }
+  .dir-chips { display: flex; flex-wrap: nowrap; gap: 4px; min-width: 0; overflow: auto; }
   .dir-chips button, .dir-sorts button {
-    height: 32px;
+    height: 28px;
     padding: 0 12px;
     border: 0;
     border-radius: 999px;
@@ -4275,71 +4275,76 @@
     color: #4b5158;
     font-size: 13px;
   }
-  #dirHost .dir-chips button { color: #9aa0a6; font-weight: 500; }
-  #dirHost .dir-chips button[aria-pressed="true"] { background: #eceef1; color: #1f1f1f; font-weight: 600; }
+  #dirHost .dir-chips button { color: #8b919a; font-weight: 500; white-space: nowrap; }
+  #dirHost .dir-chips button[aria-pressed="true"] { background: #1a1d21; color: #fff; font-weight: 500; }
   #dirHost .dir-sorts {
     display: flex;
     align-items: center;
-    gap: 2px;
+    gap: 0;
     flex: none;
-    height: 36px;
-    padding: 3px;
-    border-radius: 10px;
-    background: #f2f3f5;
+    height: 32px;
+    padding: 2px;
+    border-radius: 8px;
+    border: 1px solid #e6e8ec;
+    background: #fff;
   }
   #dirHost .dir-sorts button {
-    height: 30px;
-    padding: 0 14px;
+    height: 26px;
+    padding: 0 12px;
     border: 0;
-    border-radius: 8px;
+    border-radius: 6px;
     background: transparent;
     color: #8b919a;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     line-height: 1;
   }
   #dirHost .dir-sorts button[aria-pressed="true"] {
-    background: #fff;
+    background: #f4f5f7;
     color: #1a1d21;
-    font-weight: 600;
-    box-shadow: 0 1px 2px rgba(20, 24, 28, .08);
+    font-weight: 500;
   }
-  .dir-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+  .dir-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
   .frame.citta-open #dirHost .dir-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .dir-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 10px;
-    min-height: 148px;
-    padding: 16px;
-    border: 1px solid #e7e9ec;
-    border-radius: 16px;
+    gap: 12px;
+    min-height: 0;
+    padding: 14px;
+    border: 1px solid #eceef1;
+    border-radius: 12px;
     background: #fff;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
+    box-shadow: none;
     text-align: left;
   }
-  .dir-card:hover { border-color: #d5d8dc; box-shadow: 0 4px 14px rgba(0, 0, 0, .06); }
+  .dir-card:hover { border-color: #e1e4e8; box-shadow: 0 4px 14px rgba(20, 24, 28, .05); }
   .dir-summon {
     display: none;
-    flex: none;
-    margin-left: auto;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 1;
     height: 24px;
     padding: 0 10px;
     border-radius: 999px;
     background: #1a1d21;
     color: #fff;
-    font-size: 13px;
-    font-weight: 600;
+    font-size: 12px;
+    font-weight: 500;
     line-height: 1;
     align-items: center;
   }
   .dir-card:hover .dir-summon,
   .dir-card:focus-visible .dir-summon { display: inline-flex; }
-  .dir-head { display: flex; gap: 12px; align-items: flex-start; min-width: 0; }
+  .dir-card:hover .dir-head,
+  .dir-card:focus-visible .dir-head { padding-right: 76px; }
+  .dir-head { display: flex; gap: 10px; align-items: flex-start; min-width: 0; }
   .dir-av {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     flex: none;
     border-radius: 50%;
     overflow: hidden;
@@ -4352,31 +4357,30 @@
   }
   .dir-av img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .dir-copy { flex: 1; min-width: 0; }
-  .dir-card:hover .dir-copy b,
-  .dir-card:focus-visible .dir-copy b {
+  .dir-copy b {
+    display: block;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-  }
-  .dir-copy b {
-    display: block;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 650;
     letter-spacing: -0.01em;
-    line-height: 1.25;
-    color: #1f1f1f;
+    line-height: 1.3;
+    color: #1a1d21;
   }
   .dir-copy small {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    margin-top: 3px;
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.35;
+    margin-top: 2px;
+    color: #8b919a;
+    font-size: 12px;
+    line-height: 1.4;
   }
-  .dir-tags { display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
+  .dir-meta { align-items: flex-start; }
+  .dir-tags { display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; flex: 1; }
+  .dir-foot { display: none; }
   .dir-tags i {
     display: inline-flex;
     align-items: center;
@@ -4397,14 +4401,7 @@
     margin-top: auto;
   }
   .dir-foot {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    margin-left: auto;
-    flex: none;
-    color: #8b919a;
-    font-size: 12px;
-    font-weight: 500;
+    display: none;
   }
   .dir-foot .spark-icon { width: 12px; height: 12px; display: inline-flex; color: #3c7a94; }
   .dir-foot .spark-icon svg { width: 12px; height: 12px; display: block; }
@@ -5918,15 +5915,15 @@
                   <button type="button" class="dir-tab" data-dir-tab="community" role="tab" aria-selected="false"><span class="spark-icon" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M704 732.8c51.2 0 96-41.6 96-96V224c0-51.2-41.6-96-96-96H156.8c-51.2 0-96 41.6-96 96v412.8c0 51.2 41.6 96 96 96H192v160c0 12.8 9.6 25.6 22.4 32H224c9.6 0 19.2-3.2 25.6-12.8l131.2-179.2H704zM233.6 672c-3.2-3.2-9.6-3.2-12.8-3.2h-64c-16 0-32-12.8-32-32V224c0-16 12.8-32 32-32H704c16 0 32 12.8 32 32v412.8c0 16-12.8 32-32 32H364.8 355.2c-3.2 3.2-3.2 3.2-6.4 3.2s-3.2 3.2-6.4 3.2l-3.2 3.2s-3.2 0-3.2 3.2L256 796.8V704c0-16-9.6-25.6-22.4-32z" fill="currentColor"/><path d="M864 252.8c-19.2 0-32 12.8-32 32s16 32 32 32 32 12.8 32 32v348.8c0 19.2-16 25.6-32 25.6h-32c-19.2 0-32 12.8-32 32v3.2c0 3.2-3.2 6.4-3.2 9.6v60.8l-73.6-57.6c-3.2-3.2-9.6-3.2-16-3.2H544c-19.2 0-32 12.8-32 32s12.8 32 32 32h153.6l115.2 89.6c6.4 3.2 12.8 6.4 19.2 6.4 3.2 0 9.6 0 12.8-3.2 9.6-6.4 19.2-16 19.2-28.8v-108.8c54.4 0 96-38.4 96-89.6V348.8c0-51.2-44.8-96-96-96z" fill="currentColor"/></svg></span><span class="dir-tab-lab" data-text="Community"><span>Community</span></span></button>
                 </div>
                 <div class="dir-side" id="dirSide">
+                  <label class="dir-search" id="dirSearchWrap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6.25"/><path d="M16 16.5 20 20.5" stroke-linecap="round"/></svg>
+                    <input id="dirSearch" type="search" placeholder="Search Cosmos" autocomplete="off" aria-label="Search Cosmos">
+                  </label>
                   <div class="dir-sorts" role="group" aria-label="Sort">
                     <button type="button" data-dir-sort="all" aria-pressed="true">Recommended</button>
                     <button type="button" data-dir-sort="popular" aria-pressed="false">Popular</button>
                     <button type="button" data-dir-sort="new" aria-pressed="false">New</button>
                   </div>
-                  <label class="dir-search" id="dirSearchWrap">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6.25"/><path d="M16 16.5 20 20.5" stroke-linecap="round"/></svg>
-                    <input id="dirSearch" type="search" placeholder="Search Cosmos" autocomplete="off" aria-label="Search Cosmos">
-                  </label>
                 </div>
               </div>
               <div class="dir-row" id="dirTools">
