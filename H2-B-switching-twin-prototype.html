@@ -4507,6 +4507,150 @@
     background-size: 16px 16px;
   }
   #dirHost .dir-comm { columns: 4; column-gap: 16px; }
+  html[data-theme="blue"] #dirHost .dir-comm {
+    columns: unset;
+    background: #fff;
+    border: 1px solid #eceef1;
+    border-radius: 12px;
+    min-height: 100%;
+  }
+  html[data-theme="blue"] #dirHost .dir-body:has(.chao-page) { display: flex; flex-direction: column; }
+  html[data-theme="blue"] #dirHost .dir-comm:has(.chao-page) { flex: 1; display: flex; flex-direction: column; }
+  html[data-theme="blue"] #dirHost .chao-page { flex: 1; display: flex; flex-direction: column; min-height: 100%; padding: 16px 16px 0; }
+  html[data-theme="blue"] #dirHost .chao-kicker { margin: 0; color: var(--green); font-size: 13px; font-weight: 650; }
+  html[data-theme="blue"] #dirHost .chao-title { margin: 4px 0 0; color: #1a1d21; font-size: 22px; font-weight: 650; letter-spacing: -0.02em; }
+  html[data-theme="blue"] #dirHost .chao-line { margin: 4px 0 0; color: #8b919a; font-size: 13px; }
+  html[data-theme="blue"] #dirHost .chao-back {
+    align-self: flex-start;
+    margin: 14px 0 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--green);
+    font-size: 14px;
+    font-weight: 500;
+  }
+  html[data-theme="blue"] #dirHost .chao-head { display: flex; align-items: center; gap: 12px; margin-top: 14px; padding-top: 14px; border-top: 1px solid #eef0f2; }
+  html[data-theme="blue"] #dirHost .chao-head .chao-copy { flex: 1; min-width: 0; }
+  html[data-theme="blue"] #dirHost .chao-join,
+  html[data-theme="blue"] #dirHost .chao-send {
+    flex: none;
+    height: 36px;
+    padding: 0 18px;
+    border: 0;
+    border-radius: 10px;
+    background: #1a1d21;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  html[data-theme="blue"] #dirHost .chao-tabs { display: flex; gap: 22px; margin-top: 16px; border-bottom: 1px solid #eef0f2; }
+  html[data-theme="blue"] #dirHost .chao-tabs button {
+    margin-bottom: -1px;
+    padding: 0 0 10px;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: none;
+    color: #8b919a;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  html[data-theme="blue"] #dirHost .chao-tabs button[aria-pressed="true"] { border-bottom-color: var(--green); color: var(--green); font-weight: 650; }
+  html[data-theme="blue"] #dirHost .chao-note {
+    margin: 14px 0 0;
+    padding: 12px 14px;
+    border: 1px solid #e6e8ec;
+    border-radius: 10px;
+    color: #656d76;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  html[data-theme="blue"] #dirHost .chao-post {
+    margin: 12px 0 0;
+    padding: 12px 14px;
+    border: 1px solid #e6e8ec;
+    border-radius: 12px;
+  }
+  html[data-theme="blue"] #dirHost .chao-post-top { display: flex; align-items: center; gap: 8px; }
+  html[data-theme="blue"] #dirHost .chao-post-top b { font-size: 14px; font-weight: 650; color: #1a1d21; }
+  html[data-theme="blue"] #dirHost .chao-post-top span { margin-left: auto; color: #9aa0a6; font-size: 12px; }
+  html[data-theme="blue"] #dirHost .chao-post p { margin: 8px 0 0; color: #1a1d21; font-size: 14px; line-height: 1.5; }
+  html[data-theme="blue"] #dirHost .chao-post small { display: block; margin-top: 8px; color: #8b919a; font-size: 12px; }
+  html[data-theme="blue"] #dirHost .chao-box {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: auto;
+    padding: 12px 0 14px;
+  }
+  html[data-theme="blue"] #dirHost .chao-box input {
+    flex: 1;
+    min-width: 0;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid #e6e8ec;
+    border-radius: 10px;
+    background: #fff;
+    color: #1a1d21;
+    font-size: 14px;
+  }
+  html[data-theme="blue"] #dirHost .chao-row,
+  html[data-theme="blue"] #dirHost .chao-person {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 14px 16px;
+    border: 0;
+    border-top: 1px solid #eef0f2;
+    background: #fff;
+    text-align: left;
+  }
+  html[data-theme="blue"] #dirHost .chao-row:first-child,
+  html[data-theme="blue"] #dirHost .chao-person:first-child { border-top: 0; }
+  html[data-theme="blue"] #dirHost .chao-av {
+    width: 40px;
+    height: 40px;
+    flex: none;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    object-fit: cover;
+    font-size: 15px;
+    font-weight: 650;
+    line-height: 1;
+  }
+  html[data-theme="blue"] #dirHost .chao-av.sand { background: #f6e7b8; color: #8a6a2a; }
+  html[data-theme="blue"] #dirHost .chao-av.mint { background: #d7efe4; color: #2f7d62; }
+  html[data-theme="blue"] #dirHost .chao-av.sky { background: #d7e6f6; color: #3c6ea8; }
+  html[data-theme="blue"] #dirHost .chao-copy { flex: 1; min-width: 0; }
+  html[data-theme="blue"] #dirHost .chao-copy b,
+  html[data-theme="blue"] #dirHost .chao-person b {
+    display: block;
+    color: #1a1d21;
+    font-size: 15px;
+    font-weight: 650;
+    line-height: 1.3;
+  }
+  html[data-theme="blue"] #dirHost .chao-copy small,
+  html[data-theme="blue"] #dirHost .chao-person small {
+    display: block;
+    margin-top: 2px;
+    color: #8b919a;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  html[data-theme="blue"] #dirHost .chao-act { flex: none; color: #8b919a; font-size: 14px; font-weight: 500; }
+  html[data-theme="blue"] #dirHost .chao-act.ok { color: var(--green); }
+  html[data-theme="blue"] #dirHost .chao-act.no { color: #c44747; }
+  html[data-theme="blue"] #dirHost .chao-sec {
+    margin: 0;
+    padding: 16px 16px 8px;
+    border-top: 1px solid #eef0f2;
+    color: #8b919a;
+    font-size: 13px;
+    font-weight: 500;
+  }
   #dirHost .dir-note { break-inside: avoid; margin: 0 0 18px; }
   #dirHost .dir-note-pic {
     display: block;
@@ -10013,15 +10157,190 @@
     svg.appendChild(path);
     return svg;
   }
+  let dirChao = '';
+  let dirChaoTab = 'big';
+  const dirChaoJoined = new Set();
+  const CHAO = {
+    luo: {
+      name: '骆王宇 Community',
+      initial: '骆',
+      tone: 'sand',
+      line: 'One big group · 12.8k · preview without joining',
+      meta: 'One big group · many subgroups · 12.8k · you are admin',
+      posts: [
+        { initial: '骆', tone: 'sand', name: '骆王宇', time: '1h', text: '周五 20:00 直播：屏障修护怎么选。回这条帖子提问即可，不用在大群里刷屏', replies: '2 replies 武汉粉丝 From big group' }
+      ]
+    },
+    li: {
+      name: '李佳琦 Community',
+      initial: '李',
+      tone: 'mint',
+      line: 'One big group · 8.1k · preview without joining',
+      meta: 'One big group · many subgroups · 8.1k',
+      posts: [
+        { initial: '李', tone: 'mint', name: '李佳琦', time: '5h', text: '今天的产品笔记：把复杂能力收进一个更清晰的工作界面。', replies: 'From big group' }
+      ]
+    }
+  };
+  const CHAO_LIST = [
+    { id: 'luo', kind: 'topic', name: '骆王宇 Community', initial: '骆', tone: 'sand', sub: '12.8k · 1 featured announcement', act: 'Preview' },
+    { id: 'li', kind: 'topic', name: '李佳琦 Community', initial: '李', tone: 'mint', sub: '8.1k · 1 featured announcement', act: 'Preview' },
+    { kind: 'person', name: 'Prof. Gunther Roland', photo: 'assets/gunther-roland-illustrated.jpg', sub: 'MIT Professor of Physics · Nuclear and particle physics', act: 'Available', ok: true },
+    { kind: 'person', name: '骆王宇', photo: 'assets/luo-wangyu.png', sub: '护肤内容创作者', act: 'Available', ok: true },
+    { kind: 'person', name: '李佳琦', initial: '李', tone: 'mint', sub: 'Review required', act: 'Unavailable', ok: false },
+    { kind: 'person', name: '豆豆', initial: '豆', tone: 'sky', sub: 'Identity ambiguous', act: 'Unavailable', ok: false }
+  ];
+  function chaoAv(item) {
+    if (item.photo) {
+      const img = document.createElement('img');
+      img.className = 'chao-av';
+      img.alt = '';
+      img.src = item.photo;
+      return img;
+    }
+    const av = document.createElement('span');
+    av.className = 'chao-av ' + (item.tone || 'sand');
+    av.textContent = item.initial || '';
+    return av;
+  }
+  function chaoPost(post) {
+    const card = document.createElement('article');
+    card.className = 'chao-post';
+    const top = document.createElement('div');
+    top.className = 'chao-post-top';
+    const who = document.createElement('b');
+    who.textContent = post.name;
+    const time = document.createElement('span');
+    time.textContent = post.time;
+    top.append(chaoAv(post), who, time);
+    const body = document.createElement('p');
+    body.textContent = post.text;
+    const meta = document.createElement('small');
+    meta.textContent = post.replies;
+    card.append(top, body, meta);
+    return card;
+  }
+  function renderChaoPage(host, topic) {
+    const page = document.createElement('div');
+    page.className = 'chao-page';
+    const kicker = document.createElement('p');
+    kicker.className = 'chao-kicker';
+    kicker.textContent = 'Community';
+    const title = document.createElement('h2');
+    title.className = 'chao-title';
+    title.textContent = topic.name;
+    const line = document.createElement('p');
+    line.className = 'chao-line';
+    line.textContent = topic.line;
+    const back = document.createElement('button');
+    back.type = 'button';
+    back.className = 'chao-back';
+    back.dataset.chao = 'back';
+    back.textContent = '← Back';
+    const head = document.createElement('div');
+    head.className = 'chao-head';
+    const copy = document.createElement('div');
+    copy.className = 'chao-copy';
+    const name = document.createElement('b');
+    name.textContent = topic.name;
+    const meta = document.createElement('small');
+    meta.textContent = topic.meta;
+    copy.append(name, meta);
+    const join = document.createElement('button');
+    join.type = 'button';
+    join.className = 'chao-join';
+    join.dataset.chao = 'join';
+    join.textContent = dirChaoJoined.has(dirChao) ? 'Joined' : 'Join';
+    head.append(chaoAv(topic), copy, join);
+    const tabs = document.createElement('div');
+    tabs.className = 'chao-tabs';
+    [['big', 'Big group'], ['sub', 'Subgroup chat']].forEach(([id, label]) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.dataset.chao = 'tab';
+      btn.dataset.chaoTab = id;
+      btn.textContent = label;
+      btn.setAttribute('aria-pressed', String(dirChaoTab === id));
+      tabs.appendChild(btn);
+    });
+    page.append(kicker, title, line, back, head, tabs);
+    if (dirChaoTab === 'sub') {
+      const note = document.createElement('p');
+      note.className = 'chao-note';
+      note.textContent = '武汉粉丝';
+      const hint = document.createElement('p');
+      hint.className = 'chao-line';
+      hint.textContent = 'Big group posts sync here.';
+      page.append(note, hint, chaoPost(topic.posts[0]));
+    } else {
+      const note = document.createElement('p');
+      note.className = 'chao-note';
+      note.textContent = 'Big group is muted for members. Only the owner and admins can post; those posts sync into every subgroup. They can also sync a hot subgroup post up to the big group.';
+      page.append(note);
+      topic.posts.forEach((post) => page.appendChild(chaoPost(post)));
+      const box = document.createElement('form');
+      box.className = 'chao-box';
+      box.dataset.chaoForm = '1';
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.placeholder = 'Post to the big group · syncs to all sub';
+      input.setAttribute('aria-label', 'Post to the big group');
+      const send = document.createElement('button');
+      send.type = 'submit';
+      send.className = 'chao-send';
+      send.textContent = 'Send';
+      box.append(input, send);
+      page.appendChild(box);
+    }
+    host.replaceChildren(page);
+  }
   function renderNotes(host) {
     if (!host) return;
     host.hidden = false;
-    host.replaceChildren(...DIR_NOTES.map((note) => {
-      const card = document.createElement('article');
-      card.className = 'dir-note';
-      fillNoteCard(card, note);
-      return card;
-    }));
+    const topic = CHAO[dirChao];
+    if (topic) {
+      renderChaoPage(host, topic);
+      return;
+    }
+    const rows = CHAO_LIST.map((item) => {
+      const row = document.createElement(item.kind === 'topic' ? 'button' : 'div');
+      row.className = item.kind === 'topic' ? 'chao-row' : 'chao-person';
+      if (item.kind === 'topic') {
+        row.type = 'button';
+        row.dataset.chao = 'open';
+        row.dataset.id = item.id;
+      }
+      const copy = document.createElement('div');
+      copy.className = 'chao-copy';
+      const name = document.createElement('b');
+      name.textContent = item.name;
+      const sub = document.createElement('small');
+      sub.textContent = item.sub;
+      copy.append(name, sub);
+      const act = document.createElement('span');
+      act.className = 'chao-act' + (item.ok === true ? ' ok' : item.ok === false ? ' no' : '');
+      act.textContent = item.act;
+      row.append(chaoAv(item), copy, act);
+      return row;
+    });
+    const sec = document.createElement('h3');
+    sec.className = 'chao-sec';
+    sec.textContent = 'Joined chats';
+    const joined = document.createElement('button');
+    joined.type = 'button';
+    joined.className = 'chao-row';
+    joined.dataset.chao = 'open';
+    joined.dataset.id = 'luo';
+    joined.dataset.chaoTab = 'sub';
+    const copy = document.createElement('div');
+    copy.className = 'chao-copy';
+    const name = document.createElement('b');
+    name.textContent = '武汉粉丝';
+    const sub = document.createElement('small');
+    sub.textContent = '骆王宇 Community · subgroup';
+    copy.append(name, sub);
+    joined.append(chaoAv({ initial: '骆', tone: 'sand' }), copy);
+    host.replaceChildren(...rows, sec, joined);
   }
 
   function renderDir() {
@@ -10176,6 +10495,7 @@
       });
     }
     dirOpen = true;
+    if (next !== 'community') dirChao = '';
     dirTab = next;
     screen = 'dir';
     markDirRail();
@@ -10195,7 +10515,30 @@
   document.getElementById('dirHost')?.addEventListener('click', (e) => {
     const tab = e.target.closest('[data-dir-tab]');
     if (tab) {
+      if (tab.dataset.dirTab === 'community' && dirTab === 'community' && dirChao) {
+        dirChao = '';
+        dirChaoTab = 'big';
+        renderDir();
+        return;
+      }
       openDir(tab.dataset.dirTab);
+      return;
+    }
+    const chao = e.target.closest('[data-chao]');
+    if (chao && dirTab === 'community') {
+      if (chao.dataset.chao === 'back') {
+        dirChao = '';
+        dirChaoTab = 'big';
+      } else if (chao.dataset.chao === 'open') {
+        dirChao = chao.dataset.id || '';
+        dirChaoTab = chao.dataset.chaoTab || 'big';
+      } else if (chao.dataset.chao === 'tab') {
+        dirChaoTab = chao.dataset.chaoTab || 'big';
+      } else if (chao.dataset.chao === 'join') {
+        if (dirChaoJoined.has(dirChao)) dirChaoJoined.delete(dirChao);
+        else dirChaoJoined.add(dirChao);
+      }
+      renderDir();
       return;
     }
     const group = e.target.closest('[data-dir-group]');
@@ -10217,6 +10560,17 @@
     }
     const card = e.target.closest('.dir-card');
     if (card) showToastMsg('Cosmo · ' + card.dataset.dirName);
+  });
+  document.getElementById('dirHost')?.addEventListener('submit', (e) => {
+    const form = e.target.closest('[data-chao-form]');
+    if (!form) return;
+    e.preventDefault();
+    const input = form.querySelector('input');
+    const text = input?.value.trim();
+    const topic = CHAO[dirChao];
+    if (!text || !topic) return;
+    topic.posts.push({ initial: 'LU', tone: 'sky', name: 'Lulu', time: 'Now', text, replies: 'From big group' });
+    renderDir();
   });
   document.getElementById('dirSearch')?.addEventListener('input', (e) => {
     dirQuery = e.target.value;
