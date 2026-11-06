@@ -2792,20 +2792,28 @@
   html[data-theme="blue"] .asst-card.is-tools {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    align-self: stretch;
     gap: 10px;
+    width: 92%;
+    max-width: 92%;
+    overflow: hidden;
+    box-sizing: border-box;
   }
   html[data-theme="blue"] .tool-calls {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 8px;
     width: 100%;
+    min-width: 0;
   }
   html[data-theme="blue"] .tool-call {
     position: relative;
-    display: inline-flex;
+    display: flex;
     align-items: center;
+    width: 100%;
+    min-width: 0;
     max-width: 100%;
     font-size: 13px;
     font-weight: 650;
@@ -2813,33 +2821,46 @@
   }
   html[data-theme="blue"] .tool-call .ink,
   html[data-theme="blue"] .tool-call .glint {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 8px;
+    width: 100%;
+    min-width: 0;
     font-weight: 650;
     line-height: 20px;
   }
   html[data-theme="blue"] .tool-call .lbl {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 0.35em;
+    flex: 1;
     min-width: 0;
+    overflow: hidden;
     font-weight: 650;
   }
   html[data-theme="blue"] .tool-call .lbl b { font-weight: 650; flex: none; }
   html[data-theme="blue"] .tool-call .lbl .detail {
     display: block;
+    flex: 1;
+    min-width: 0;
     height: 20px;
-    overflow: visible;
+    overflow: hidden;
     font-weight: 400;
     line-height: 20px;
   }
-  html[data-theme="blue"] .tool-call .detail-view { display: grid; height: 20px; overflow: visible; }
+  html[data-theme="blue"] .tool-call .detail-view {
+    display: grid;
+    height: 20px;
+    min-width: 0;
+    overflow: hidden;
+  }
   html[data-theme="blue"] .tool-call .detail-line {
     grid-area: 1 / 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
     line-height: 20px;
-    transform-origin: left center;
   }
   html[data-theme="blue"] .tool-call .detail-line.is-out { animation: tool-detail-out 0.34s linear forwards; }
   html[data-theme="blue"] .tool-call .detail-line.is-in { animation: tool-detail-in 0.46s linear 0.08s both; }
@@ -2878,16 +2899,12 @@
     100% { -webkit-mask-position: 360px 0; mask-position: 360px 0; }
   }
   @keyframes tool-detail-out {
-    0% { opacity: 1; transform: translateY(0); }
-    36% { opacity: 0; transform: translateY(-6px); }
-    100% { opacity: 0; transform: translateY(-6px); }
+    0% { opacity: 1; }
+    100% { opacity: 0; }
   }
   @keyframes tool-detail-in {
-    0% { opacity: 0; transform: translateY(7px); }
-    34% { opacity: 1; transform: translateY(-3px); }
-    55% { opacity: 1; transform: translateY(1.4px); }
-    74% { opacity: 1; transform: translateY(-0.7px); }
-    100% { opacity: 1; transform: translateY(0); }
+    0% { opacity: 0; }
+    100% { opacity: 1; }
   }
   @media (prefers-reduced-motion: reduce) {
     html[data-theme="blue"] .tool-call .glint { animation: none; visibility: hidden; }
