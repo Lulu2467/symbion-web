@@ -4307,6 +4307,76 @@
   .me-row small { display: block; margin-top: 2px; color: #8b919a; font-size: 12px; }
   .me-row em { font-style: normal; color: #656d76; font-size: 13px; }
   .me-empty { margin: 8px 0 0; font-size: 14px; color: #656d76; }
+  html[data-theme="blue"] #symbionHost { background: #fff; }
+  html[data-theme="blue"] #symbionHost .me-tabs {
+    gap: 8px;
+    padding: 8px 28px 0;
+    border-bottom: 1px solid #e6e8ec;
+  }
+  html[data-theme="blue"] #symbionHost .me-tab {
+    height: 44px;
+    padding: 0 4px;
+    color: #71777d;
+    font-weight: 500;
+  }
+  html[data-theme="blue"] #symbionHost .me-tab.on {
+    color: #000;
+    font-weight: 650;
+    box-shadow: inset 0 -2px 0 #3c7a94;
+  }
+  html[data-theme="blue"] #symbionHost .me-scroll { padding: 20px 28px 40px; }
+  html[data-theme="blue"] #symbionHost .me-stack { gap: 12px; }
+  html[data-theme="blue"] #symbionHost .me-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 16px;
+    row-gap: 8px;
+    align-items: start;
+    border-radius: 12px;
+    padding: 16px 18px;
+    background: #fff;
+    border-color: #e6e8ec;
+  }
+  html[data-theme="blue"] #symbionHost .me-card > .me-badges {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+    justify-content: flex-end;
+    align-self: center;
+  }
+  html[data-theme="blue"] #symbionHost .me-card > h3 {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0;
+    align-self: center;
+  }
+  html[data-theme="blue"] #symbionHost .me-card > p,
+  html[data-theme="blue"] #symbionHost .me-card > .me-panel-hd,
+  html[data-theme="blue"] #symbionHost .me-card > .me-row,
+  html[data-theme="blue"] #symbionHost .me-card > .me-empty { grid-column: 1 / -1; }
+  html[data-theme="blue"] #symbionHost .me-card > .me-meta { margin: 0; color: #8b919a; }
+  html[data-theme="blue"] #symbionHost .me-card:has(> .me-kicker) > .me-kicker {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0;
+    align-self: center;
+  }
+  html[data-theme="blue"] #symbionHost .me-card:has(> .me-kicker) > h3 {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+  html[data-theme="blue"] #symbionHost .me-h { margin: 28px 0 12px; }
+  html[data-theme="blue"] #symbionHost .me-h h2 { font-size: 16px; letter-spacing: -0.01em; }
+  html[data-theme="blue"] #symbionHost .me-intro,
+  html[data-theme="blue"] #symbionHost .me-foot {
+    background: #fff;
+    border: 1px solid #e6e8ec;
+    border-radius: 12px;
+    padding: 16px 18px;
+    align-items: center;
+  }
+  html[data-theme="blue"] #symbionHost .me-foot { margin-top: 12px; }
+  html[data-theme="blue"] #symbionHost .me-grid3 { gap: 12px; }
 
   .frame.dir-on { display: flex; flex-direction: column; height: 900px; }
   .frame.dir-on .body { flex: 1; min-height: 0; }
