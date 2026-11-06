@@ -6123,60 +6123,47 @@
     color: #fff;
   }
   html[data-theme="blue"] #teamHost .qref {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
+    display: block;
     width: 100%;
-    margin: 0 0 8px;
-    padding: 0;
+    margin: 8px 0 0;
+    padding: 1px 0 1px 8px;
     border: 0;
+    border-left: 2px solid #c5c9cf;
     border-radius: 0;
     background: transparent;
-    color: #1a1d21;
+    color: #8b919a;
     font: inherit;
-    font-size: 14px;
-    line-height: 1.45;
-    text-align: left;
-  }
-  html[data-theme="blue"] #teamHost .qref .qav {
-    width: 32px;
-    height: 32px;
-    border-radius: 4px;
-    flex: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: 650;
-  }
-  html[data-theme="blue"] #teamHost .qref .qbody { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 2px; }
-  html[data-theme="blue"] #teamHost .qref b {
-    display: block;
     font-size: 12px;
     font-weight: 400;
-    line-height: 1.3;
-    color: #8b919a;
+    line-height: 1.4;
+    text-align: left;
   }
-  html[data-theme="blue"] #teamHost .qref .qtext { color: #1a1d21; font-size: 14px; line-height: 1.45; }
-  html[data-theme="blue"] #teamHost .qref .qfile {
-    display: flex;
+  html[data-theme="blue"] #teamHost .qref .qline {
+    display: block;
+    overflow: hidden;
+    color: #8b919a;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  html[data-theme="blue"] #teamHost .msg.mine .qref { color: rgba(255,255,255,.72); border-left-color: rgba(255,255,255,.55); background: transparent; }
+  html[data-theme="blue"] #teamHost .msg.mine .qref .qline { color: rgba(255,255,255,.72); }
+  html[data-theme="blue"] #teamHost .quote-bar {
     align-items: center;
-    gap: 10px;
-    margin-top: 8px;
-    padding-top: 8px;
-    border-top: 1px solid #e0e3e7;
-    color: #8b919a;
-    font-size: 12px;
-    line-height: 1.35;
+    margin: 0 2px 8px;
+    padding: 1px 4px 1px 8px;
+    border: 0;
+    border-left: 2px solid #c5c9cf;
+    border-radius: 0;
+    background: transparent;
   }
-  html[data-theme="blue"] #teamHost .qref .qname { flex: 1; min-width: 0; }
-  html[data-theme="blue"] #teamHost .qref .qdoc { width: 14px; height: 14px; vertical-align: -2px; margin: 0 4px; }
-  html[data-theme="blue"] #teamHost .qref .qzip { width: 36px; height: 36px; flex: none; }
-  html[data-theme="blue"] #teamHost .msg.mine .qref,
-  html[data-theme="blue"] #teamHost .msg.mine .qref .qtext { color: rgba(255,255,255,.92); background: transparent; }
-  html[data-theme="blue"] #teamHost .msg.mine .qref b,
-  html[data-theme="blue"] #teamHost .msg.mine .qref .qfile { color: rgba(255,255,255,.72); }
-  html[data-theme="blue"] #teamHost .msg.mine .qref .qfile { border-top-color: rgba(255,255,255,.28); }
+  html[data-theme="blue"] #teamHost .quote-bar b,
+  html[data-theme="blue"] #teamHost .quote-bar span {
+    display: inline;
+    font-size: 12px;
+    font-weight: 400;
+    color: #8b919a;
+  }
+  html[data-theme="blue"] #teamHost .quote-bar b::after { content: ": "; }
   html[data-theme="blue"] #teamHost .filechip i { background: #fff; }
   html[data-theme="blue"] #teamHost .msg.mine .filechip i { background: rgba(255,255,255,.2); color: #fff; }
   html[data-theme="blue"] #teamHost .log.show-top-fade,
@@ -14227,10 +14214,9 @@ function quoteBlock(ref, blue) {
   if (!blue) {
     return `<button type="button" class="qref" data-jump="${ref.id}"><b>${esc(whoName)}</b><span>${esc(ref.file ? ref.file.name : (ref.text || ''))}</span></button>`;
   }
-  const av = who ? `<span class="qav hue-${who.hue}" aria-hidden="true">${esc(who.short)}</span>` : '';
-  const text = ref.text ? `<span class="qtext">${esc(ref.text)}</span>` : '';
-  const file = ref.file ? `<span class="qfile"><span class="qname">${esc(whoName)}: <svg class="qdoc" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 1.5h6L13 5v9.5h-9.5z" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M9.5 1.5V5H13" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>${esc(ref.file.name)}</span><svg class="qzip" viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="6" fill="#f0a202"/><path fill="#fff" d="M16 7h4v2h-4zm0 4h4v2h-4zm0 4h4v2h-4z"/><rect x="12" y="19" width="12" height="10" rx="1" fill="#fff"/><rect x="15" y="22" width="6" height="2" fill="#f0a202"/></svg></span>` : '';
-  return `<button type="button" class="qref" data-jump="${ref.id}">${av}<span class="qbody"><b>${esc(whoName)}</b>${text}${file}</span></button>`;
+  const body = ref.file ? ref.file.name : (ref.text || '');
+  const line = whoName ? `${whoName}: ${body}` : body;
+  return `<button type="button" class="qref" data-jump="${ref.id}"><span class="qline">${esc(line)}</span></button>`;
 }
 function renderLog(scroll) {
   const c = current();
@@ -14259,7 +14245,7 @@ function renderLog(scroll) {
     const stamp = m === stampAt ? `<p class="stamp">${esc(c.time)}</p>` : '';
     return `${stamp}<div class="msg${mine ? ' mine' : ''}" id="msg-${m.id}" data-id="${m.id}">
       <button type="button" class="av hue-${p.hue}" data-person="${m.who}" aria-label="${esc(p.name)}">${esc(p.short)}</button>
-      <div class="msg-col">${name}${marks}<div class="bubble">${quote}${fwd}${file}${text}${xlate}</div><button type="button" class="act" data-reply="${m.id}">Reply</button></div>
+      <div class="msg-col">${name}${marks}<div class="bubble">${blueQuote ? `${fwd}${file}${text}${quote}${xlate}` : `${quote}${fwd}${file}${text}${xlate}`}</div><button type="button" class="act" data-reply="${m.id}">Reply</button></div>
     </div>`;
   }).join('');
   if (scroll) requestAnimationFrame(() => { $('log').scrollTop = $('log').scrollHeight; syncTeamEdgeFade(); });
