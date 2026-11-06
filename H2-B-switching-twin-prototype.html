@@ -11205,7 +11205,7 @@
     dock.addEventListener('pointerdown', (e) => {
       if (e.button != null && e.button !== 0) return;
       if (e.target.closest('#dockSwitch, .sw, #dockTipAct, .dock-tip-act, #dockTipDismiss, .dock-tip-x')) return;
-      if (!isDockHomeScreen() || cittaExpanded) return;
+      if (cittaExpanded) return;
       // Don't preventDefault here — it can block pointerup in some embeds.
       e.stopPropagation();
       startDrag(e.clientX, e.clientY, e.pointerId, 'pointer');
@@ -11215,7 +11215,7 @@
     dock.addEventListener('mousedown', (e) => {
       if (e.button !== 0) return;
       if (e.target.closest('#dockSwitch, .sw, #dockTipAct, .dock-tip-act, #dockTipDismiss, .dock-tip-x')) return;
-      if (!isDockHomeScreen() || cittaExpanded) return;
+      if (cittaExpanded) return;
       if (drag) return;
       e.stopPropagation();
       startDrag(e.clientX, e.clientY, null, 'mouse');
@@ -11223,7 +11223,6 @@
 
     dock.addEventListener('click', (e) => {
       if (e.target.closest('#dockSwitch, .sw, #dockTipAct, .dock-tip-act, #dockTipDismiss, .dock-tip-x')) return;
-      if (!isDockHomeScreen()) return;
       if (suppressClick || openedByPointer) {
         e.preventDefault();
         e.stopPropagation();
