@@ -6113,11 +6113,61 @@
     background: var(--green-bubble);
     color: #fff;
   }
-  html[data-theme="blue"] #teamHost .qref { background: #fff; }
-  html[data-theme="blue"] #teamHost .msg.mine .qref {
-    background: rgba(255,255,255,.16);
-    color: rgba(255,255,255,.88);
+  html[data-theme="blue"] #teamHost .qref {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+    margin: 0 0 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #1a1d21;
+    font: inherit;
+    font-size: 14px;
+    line-height: 1.45;
+    text-align: left;
   }
+  html[data-theme="blue"] #teamHost .qref .qav {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 650;
+  }
+  html[data-theme="blue"] #teamHost .qref .qbody { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 2px; }
+  html[data-theme="blue"] #teamHost .qref b {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.3;
+    color: #8b919a;
+  }
+  html[data-theme="blue"] #teamHost .qref .qtext { color: #1a1d21; font-size: 14px; line-height: 1.45; }
+  html[data-theme="blue"] #teamHost .qref .qfile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #e0e3e7;
+    color: #8b919a;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+  html[data-theme="blue"] #teamHost .qref .qname { flex: 1; min-width: 0; }
+  html[data-theme="blue"] #teamHost .qref .qdoc { width: 14px; height: 14px; vertical-align: -2px; margin: 0 4px; }
+  html[data-theme="blue"] #teamHost .qref .qzip { width: 36px; height: 36px; flex: none; }
+  html[data-theme="blue"] #teamHost .msg.mine .qref,
+  html[data-theme="blue"] #teamHost .msg.mine .qref .qtext { color: rgba(255,255,255,.92); background: transparent; }
+  html[data-theme="blue"] #teamHost .msg.mine .qref b,
+  html[data-theme="blue"] #teamHost .msg.mine .qref .qfile { color: rgba(255,255,255,.72); }
+  html[data-theme="blue"] #teamHost .msg.mine .qref .qfile { border-top-color: rgba(255,255,255,.28); }
   html[data-theme="blue"] #teamHost .filechip i { background: #fff; }
   html[data-theme="blue"] #teamHost .msg.mine .filechip i { background: rgba(255,255,255,.2); color: #fff; }
   html[data-theme="blue"] #teamHost .log.show-top-fade,
@@ -10853,6 +10903,7 @@
     decorateLectureBookIcons();
     balancePostColumns();
     try { localStorage.setItem('h2-theme', next); } catch (e) {}
+    document.dispatchEvent(new Event('h2-theme'));
   }
   applyTheme(document.documentElement.dataset.theme === 'blue' ? 'blue' : 'green');
   document.querySelectorAll('[data-theme-pick]').forEach((b) => b.addEventListener('click', () => applyTheme(b.dataset.themePick)));
@@ -14161,6 +14212,17 @@ function renderHistory() {
   }).join('')}</div>` : '';
   $('historyBody').innerHTML = people + head + list.map(historyHit).join('');
 }
+function quoteBlock(ref, blue) {
+  const who = ref.who ? person(ref.who) : null;
+  const whoName = who ? who.name : '';
+  if (!blue) {
+    return `<button type="button" class="qref" data-jump="${ref.id}"><b>${esc(whoName)}</b><span>${esc(ref.file ? ref.file.name : (ref.text || ''))}</span></button>`;
+  }
+  const av = who ? `<span class="qav hue-${who.hue}" aria-hidden="true">${esc(who.short)}</span>` : '';
+  const text = ref.text ? `<span class="qtext">${esc(ref.text)}</span>` : '';
+  const file = ref.file ? `<span class="qfile"><span class="qname">${esc(whoName)}: <svg class="qdoc" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 1.5h6L13 5v9.5h-9.5z" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M9.5 1.5V5H13" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>${esc(ref.file.name)}</span><svg class="qzip" viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="6" fill="#f0a202"/><path fill="#fff" d="M16 7h4v2h-4zm0 4h4v2h-4zm0 4h4v2h-4z"/><rect x="12" y="19" width="12" height="10" rx="1" fill="#fff"/><rect x="15" y="22" width="6" height="2" fill="#f0a202"/></svg></span>` : '';
+  return `<button type="button" class="qref" data-jump="${ref.id}">${av}<span class="qbody"><b>${esc(whoName)}</b>${text}${file}</span></button>`;
+}
 function renderLog(scroll) {
   const c = current();
   const list = shownMessages(c);
@@ -14177,7 +14239,8 @@ function renderLog(scroll) {
     const tag = role && role !== 'Member' && role !== 'You' ? `<span class="tag ${role.toLowerCase()}">${esc(role)}</span>` : '';
     const name = mine ? '' : `<div class="msg-name">${esc(p.name)}${tag}</div>`;
     const ref = m.reply ? findMessage(c, m.reply) : null;
-    const quote = ref ? `<button type="button" class="qref" data-jump="${ref.id}"><b>${esc(ref.who ? person(ref.who).name : '')}</b><span>${esc(ref.file ? ref.file.name : (ref.text || ''))}</span></button>` : '';
+    const blueQuote = document.documentElement.dataset.theme === 'blue';
+    const quote = ref ? quoteBlock(ref, blueQuote) : '';
     const file = m.file ? `<button type="button" class="filechip" data-file="${esc(m.file.name)}"><i>${esc(m.file.name.split('.').pop().toUpperCase())}</i><span><b>${esc(m.file.name)}</b><small>${esc(m.file.size)}</small></span></button>` : '';
     const text = m.text ? `<div>${linkMentions(m.text)}</div>` : '';
     const fwd = m.forwardFrom ? `<span class="fwd">Forwarded from ${esc(m.forwardFrom)}</span>` : '';
@@ -15051,6 +15114,10 @@ function keepLogScroll(paint) {
   paint();
   log.scrollTop = top;
 }
+document.addEventListener('h2-theme', () => {
+  if (!$('log')) return;
+  keepLogScroll(() => renderLog(false));
+});
 function paintMsgMenu() {
   const menu = $('msgMenu');
   const c = current();
