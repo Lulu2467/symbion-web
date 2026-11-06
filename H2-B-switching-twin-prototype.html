@@ -5171,7 +5171,33 @@
   #teamHost .list-top .icon-btn:hover { border-color: transparent; background: #d4e4ee; color: #1f1f1f; }
   html[data-theme="blue"] #teamHost .list-top,
   html[data-theme="blue"] #teamHost .thread-head { height: 60px; box-sizing: border-box; }
-  html[data-theme="blue"] #teamHost .list-top { padding: 0 12px; }
+  html[data-theme="blue"] #teamHost .list-top { padding: 0 12px; gap: 10px; }
+  html[data-theme="blue"] #teamHost .list-top .search {
+    height: 36px;
+    padding: 0 14px;
+    gap: 8px;
+    border: 0;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: none;
+  }
+  html[data-theme="blue"] #teamHost .list-top .search:focus-within { box-shadow: none; }
+  html[data-theme="blue"] #teamHost .list-top .search svg { width: 16px; height: 16px; color: #b0b4ba; }
+  html[data-theme="blue"] #teamHost .list-top .search input { font-size: 14px; line-height: 36px; }
+  html[data-theme="blue"] #teamHost .list-top .search input::placeholder { color: #b0b4ba; }
+  html[data-theme="blue"] #teamHost .list-top .icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid #e0e0e0;
+    background: #fff;
+    color: #8d939a;
+  }
+  html[data-theme="blue"] #teamHost .list-top .icon-btn:hover {
+    border-color: #d0d0d0;
+    background: #fff;
+    color: #5f6368;
+  }
   #teamHost .row:hover { background: #eef0f2; }
   #teamHost .row.on { background: #d4e4ee; }
   #teamHost .row:hover .dot { border-color: #eef0f2; }
@@ -9804,6 +9830,8 @@
     if (next === 'blue') root.dataset.theme = 'blue';
     else delete root.dataset.theme;
     placeHeaderSearch();
+    const teamSearch = document.getElementById('q');
+    if (teamSearch) teamSearch.placeholder = next === 'blue' ? '搜索' : 'Search';
     placeCourseBanner();
     placeCittaPicker();
     placeComposerToolChip();
