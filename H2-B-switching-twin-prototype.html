@@ -2995,6 +2995,11 @@
     gap: 12px;
     scrollbar-width: thin;
   }
+  html[data-theme="blue"] .citta-panel .citta-scroll {
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
   /* Message overflow: plain white edge fades — no backdrop blur (it smears green into a halo). */
   .citta-panel .citta-scroll-wrap::before,
   .citta-panel .citta-scroll-wrap::after {
@@ -11192,11 +11197,49 @@
     wrap.classList.toggle('show-bot-fade', canScroll && top < max - 6);
   }
 
+  function seatCittaPanel() {
+    const panel = $('cittaPanel');
+    if (!panel) return;
+    const blueOpen = document.documentElement.dataset.theme === 'blue'
+      && frame.classList.contains('citta-open')
+      && !panel.hidden;
+    if (!blueOpen) {
+      panel.style.top = '';
+      panel.style.height = '';
+      panel.style.bottom = '';
+      return;
+    }
+    const fr = frame.getBoundingClientRect();
+    const scale = frame.offsetHeight ? fr.height / frame.offsetHeight : 1;
+    const osbar = 48;
+    const frameH = frame.offsetHeight;
+    const viewTop = Math.max(0, -fr.top / scale);
+    const viewBottom = Math.min(frameH, (window.innerHeight - fr.top) / scale);
+    let top = Math.max(osbar, viewTop);
+    let height = viewBottom - top;
+    if (height < 360) height = Math.min(frameH - osbar, 360);
+    if (top + height > frameH) height = frameH - top;
+    panel.style.top = `${Math.round(top)}px`;
+    panel.style.bottom = 'auto';
+    panel.style.height = `${Math.max(280, Math.round(height))}px`;
+    syncCittaScrollFade();
+  }
+
   function bindCittaScrollFade() {
     const scroll = $('cittaScroll') || document.querySelector('.citta-panel .citta-scroll');
     if (!scroll || scroll.dataset.fadeBound) return;
     scroll.dataset.fadeBound = '1';
     scroll.addEventListener('scroll', syncCittaScrollFade, { passive: true });
+    scroll.addEventListener('wheel', (e) => {
+      if (e.ctrlKey || !e.deltaY) return;
+      const dy = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaMode === 2 ? e.deltaY * scroll.clientHeight : e.deltaY;
+      const max = scroll.scrollHeight - scroll.clientHeight;
+      if (max <= 1) return;
+      const next = Math.min(max, Math.max(0, scroll.scrollTop + dy));
+      if (next === scroll.scrollTop) return;
+      scroll.scrollTop = next;
+      e.preventDefault();
+    }, { passive: false });
     window.addEventListener('resize', syncCittaScrollFade, { passive: true });
     syncCittaScrollFade();
   }
@@ -11707,6 +11750,7 @@
     balancePostColumns();
     try { localStorage.setItem('h2-theme', next); } catch (e) {}
     document.dispatchEvent(new Event('h2-theme'));
+    if (typeof seatCittaPanel === 'function') seatCittaPanel();
   }
   applyTheme(document.documentElement.dataset.theme === 'blue' ? 'blue' : 'green');
   document.querySelectorAll('[data-theme-pick]').forEach((b) => b.addEventListener('click', () => applyTheme(b.dataset.themePick)));
@@ -14108,12 +14152,14 @@
     pinBlueHome();
     if (typeof frame.seatBlueDock === 'function') frame.seatBlueDock();
     balancePostColumns();
+    if (typeof seatCittaPanel === 'function') seatCittaPanel();
   }
 
   // Spotlight + coach are absolute on .frame; .main (FS) or the window can scroll underneath — re-glue every scroll.
   const mainScrollEl = frame.querySelector('.main');
   mainScrollEl?.addEventListener('scroll', syncTutorialChromeOnScroll, { passive: true });
   window.addEventListener('scroll', syncTutorialChromeOnScroll, { passive: true, capture: true });
+  window.addEventListener('scroll', () => { if (typeof seatCittaPanel === 'function') seatCittaPanel(); }, { passive: true });
   window.addEventListener('resize', fit);
   // Keep stage scroll range in sync when tails/fonts/images change frame height.
   if (typeof ResizeObserver !== 'undefined') {
