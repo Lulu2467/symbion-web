@@ -2396,6 +2396,7 @@
     outline: none;
   }
   html[data-theme="blue"] #tail-home .todo-inline::placeholder { color: #b0b4ba; }
+  html[data-theme="blue"] #tail-home .act-add[data-action="add-reminder"]::after { content: none; }
   html[data-theme="blue"] #tail-home .btn-soft { display: none; }
   html[data-theme="blue"] #tail-home .rem .badge.course,
   html[data-theme="blue"] #tail-home .rem .badge:not(.email):not(.yours) {
@@ -8491,7 +8492,7 @@
     }
     const rem = document.createElement('div');
     rem.className = 'rem is-added is-draft';
-    rem.innerHTML = '<button type="button" class="rem-check" aria-label="Mark complete"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.6 8.2 6.5 11.1 12.4 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="when hot"></span><div class="col"><input class="todo-inline" type="text" maxlength="120" placeholder="To-do" aria-label="To-do"><span class="meta"><span class="badge yours">Yours</span></span></div>';
+    rem.innerHTML = '<button type="button" class="rem-check" aria-label="Mark complete"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.6 8.2 6.5 11.1 12.4 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="when hot"></span><div class="col"><input class="todo-inline" type="text" maxlength="120" placeholder="New to-do" aria-label="New to-do"></div>';
     const when = todoStamp(new Date());
     const whenEl = rem.querySelector('.when');
     whenEl.dataset.when = when;
