@@ -2995,10 +2995,23 @@
     gap: 12px;
     scrollbar-width: thin;
   }
+  html[data-theme="blue"] .citta-panel .citta-scroll-wrap {
+    flex: none;
+    min-height: 0;
+    overflow: hidden;
+  }
   html[data-theme="blue"] .citta-panel .citta-scroll {
+    height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-    overscroll-behavior: contain;
+    overscroll-behavior: auto;
+    padding-bottom: 18px;
+  }
+  html[data-theme="blue"] .citta-panel .foot {
+    position: relative;
+    z-index: 3;
+    flex: none;
+    background: #fff;
   }
   /* Message overflow: plain white edge fades — no backdrop blur (it smears green into a halo). */
   .citta-panel .citta-scroll-wrap::before,
@@ -11207,6 +11220,12 @@
       panel.style.top = '';
       panel.style.height = '';
       panel.style.bottom = '';
+      const wrap = $('cittaScrollWrap');
+      if (wrap) {
+        wrap.style.flex = '';
+        wrap.style.height = '';
+        wrap.style.overflow = '';
+      }
       return;
     }
     const fr = frame.getBoundingClientRect();
@@ -11222,6 +11241,15 @@
     panel.style.top = `${Math.round(top)}px`;
     panel.style.bottom = 'auto';
     panel.style.height = `${Math.max(280, Math.round(height))}px`;
+    const wrap = $('cittaScrollWrap');
+    const head = panel.querySelector('.ph');
+    const foot = panel.querySelector('.foot');
+    if (wrap && head && foot) {
+      const room = Math.max(120, panel.clientHeight - head.offsetHeight - foot.offsetHeight);
+      wrap.style.flex = 'none';
+      wrap.style.height = `${room}px`;
+      wrap.style.overflow = 'hidden';
+    }
     syncCittaScrollFade();
   }
 
@@ -11230,17 +11258,25 @@
     if (!scroll || scroll.dataset.fadeBound) return;
     scroll.dataset.fadeBound = '1';
     scroll.addEventListener('scroll', syncCittaScrollFade, { passive: true });
-    scroll.addEventListener('wheel', (e) => {
-      if (e.ctrlKey || !e.deltaY) return;
-      const dy = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaMode === 2 ? e.deltaY * scroll.clientHeight : e.deltaY;
-      const max = scroll.scrollHeight - scroll.clientHeight;
-      if (max <= 1) return;
-      const next = Math.min(max, Math.max(0, scroll.scrollTop + dy));
-      if (next === scroll.scrollTop) return;
-      scroll.scrollTop = next;
-      e.preventDefault();
-    }, { passive: false });
     window.addEventListener('resize', syncCittaScrollFade, { passive: true });
+    if (!window.__cittaPanelWheel) {
+      window.__cittaPanelWheel = true;
+      window.addEventListener('wheel', (e) => {
+        if (document.documentElement.dataset.theme !== 'blue' || e.ctrlKey || !e.deltaY) return;
+        const panel = document.getElementById('cittaPanel');
+        const box = document.getElementById('cittaScroll');
+        if (!panel || panel.hidden || !box) return;
+        const r = box.getBoundingClientRect();
+        if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) return;
+        const dy = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaMode === 2 ? e.deltaY * box.clientHeight : e.deltaY;
+        const max = box.scrollHeight - box.clientHeight;
+        if (max <= 1) return;
+        const next = Math.min(max, Math.max(0, box.scrollTop + dy));
+        if (next === box.scrollTop) return;
+        box.scrollTop = next;
+        e.preventDefault();
+      }, { passive: false, capture: true });
+    }
     syncCittaScrollFade();
   }
 
