@@ -2906,6 +2906,63 @@
   .citta-panel .asst-card a:hover,
   .citta-panel .asst-card .act-link:hover { color: var(--green); text-decoration: none; }
   .citta-panel .asst-card .act-link .ico-ne { color: inherit; }
+  .citta-file { display: none; }
+  html[data-theme="blue"] .citta-file {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    align-self: stretch;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 10px 12px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-sizing: border-box;
+  }
+  html[data-theme="blue"] .citta-file.is-in { animation: citta-file-in .28s ease; }
+  @keyframes citta-file-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+  }
+  html[data-theme="blue"] .citta-file-ico {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: #f3f4f6;
+    color: #8b919a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+  }
+  html[data-theme="blue"] .citta-file-ico svg { width: 18px; height: 18px; display: block; }
+  html[data-theme="blue"] .citta-file-meta { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 2px; }
+  html[data-theme="blue"] .citta-file-title {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.25;
+    color: #1a1d21;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  html[data-theme="blue"] .citta-file-type { font-size: 12px; line-height: 1.3; color: #8b919a; }
+  html[data-theme="blue"] .citta-file-preview {
+    flex: none;
+    height: 32px;
+    margin: 0;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 8px;
+    background: #f2f3f5;
+    color: #1a1d21;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  html[data-theme="blue"] .citta-file-preview:hover { background: #e8eaed; }
   html[data-theme="blue"] .asst-card.is-thinking {
     display: flex;
     align-items: center;
@@ -7661,10 +7718,20 @@
               I drafted a 10-slide deck from Prof. Roland’s lecture 5 slides, with 3 quiz questions at the end.
               <button type="button" class="act-link">Open in Deck<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
             </div>
+            <div class="citta-file">
+              <span class="citta-file-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7.2 3.8h6.4L18.2 8.4V19.2a1.2 1.2 0 0 1-1.2 1.2H7.2A1.2 1.2 0 0 1 6 19.2V5a1.2 1.2 0 0 1 1.2-1.2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M13.4 3.9V8.2h4.4" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M9 12.2h6M9 15.2h6M9 18.2h3.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+              <span class="citta-file-meta"><span class="citta-file-title">Lecture 5 deck</span><span class="citta-file-type">Deck</span></span>
+              <button type="button" class="citta-file-preview">Preview</button>
+            </div>
             <div class="user-bubble">Can you also pull quiz answers from the reading?</div>
             <div class="asst-card">
               Yes — I lined up 3 quiz prompts with short answer keys from the QGP reading notes. Open the deck to tweak wording.
               <button type="button" class="act-link">Open in Deck<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button>
+            </div>
+            <div class="citta-file">
+              <span class="citta-file-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7.2 3.8h6.4L18.2 8.4V19.2a1.2 1.2 0 0 1-1.2 1.2H7.2A1.2 1.2 0 0 1 6 19.2V5a1.2 1.2 0 0 1 1.2-1.2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M13.4 3.9V8.2h4.4" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M9 12.2h6M9 15.2h6M9 18.2h3.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span>
+              <span class="citta-file-meta"><span class="citta-file-title">Lecture 5 quiz keys</span><span class="citta-file-type">Deck</span></span>
+              <button type="button" class="citta-file-preview">Preview</button>
             </div>
             <div class="asst-card is-tools" id="toolCallPreview" hidden></div>
             <div class="run-hd">RUNNING &amp; READY</div>
@@ -7960,6 +8027,33 @@
     syncCosmosScrollFade();
   }
 
+  const CITTA_FILE_ICON = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7.2 3.8h6.4L18.2 8.4V19.2a1.2 1.2 0 0 1-1.2 1.2H7.2A1.2 1.2 0 0 1 6 19.2V5a1.2 1.2 0 0 1 1.2-1.2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M13.4 3.9V8.2h4.4" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M9 12.2h6M9 15.2h6M9 18.2h3.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
+  function cittaFileCard(file) {
+    const card = document.createElement('div');
+    card.className = 'citta-file';
+    card.innerHTML = `<span class="citta-file-ico" aria-hidden="true">${CITTA_FILE_ICON}</span><span class="citta-file-meta"><span class="citta-file-title"></span><span class="citta-file-type"></span></span><button type="button" class="citta-file-preview">Preview</button>`;
+    card.querySelector('.citta-file-title').textContent = file.title;
+    card.querySelector('.citta-file-type').textContent = file.type;
+    return card;
+  }
+  function documentRequest(text) {
+    const raw = String(text || '').trim();
+    const m = raw.match(/^(?:please\s+)?(?:write|draft|create|make)\s+(?:me\s+)?(?:a|an|the\s+)?(.+)$/i)
+      || raw.match(/^(?:帮我)?(?:写|做|创建)(?:一份|一个|一篇)?(.+)$/);
+    if (!m) return null;
+    let title = m[1].trim().replace(/[.!?。！？]+$/u, '').trim();
+    if (!title) return null;
+    if (title.length > 36) title = `${title.slice(0, 36).trim()}…`;
+    title = title.charAt(0).toUpperCase() + title.slice(1);
+    const lower = `${raw} ${title}`.toLowerCase();
+    let type = 'Doc';
+    if (/deck|slide/.test(lower)) type = 'Deck';
+    else if (/markdown|\.md\b/.test(lower)) type = 'Markdown';
+    else if (/sheet|csv|numbers|spreadsheet/.test(lower)) type = 'Numbers';
+    else if (/latex|symtex/.test(lower)) type = 'SymTex';
+    else if (/code|python|notebook/.test(lower)) type = 'Code';
+    return { title, type };
+  }
   function cittaReplyFor(text) {
     const t = text.toLowerCase();
     const reminder = parseReminderIntent(text);
@@ -7974,12 +8068,22 @@
       return {
         html: 'Opening the deck editor with speaker notes expanded on slides 1–3. You can edit anything before I keep going.',
         link: 'Open in Deck',
+        file: { title: 'Lecture 5 deck', type: 'Deck' },
       };
     }
     if (t.includes('lab 3') || t.includes('trends') || t.includes('slides')) {
       return {
         html: 'I’ll turn Lab 3 trends into a 6-slide deck with a chart on slide 2. Drafting now…',
         link: 'Open in Deck',
+        file: { title: 'Lab 3 trends', type: 'Deck' },
+      };
+    }
+    const doc = documentRequest(text);
+    if (doc) {
+      return {
+        html: `Done — “${doc.title}” is ready.`,
+        link: doc.type === 'Deck' ? 'Open in Deck' : null,
+        file: doc,
       };
     }
     return {
@@ -8196,6 +8300,16 @@
       if (!blue) scroll.appendChild(asst);
       scroll.scrollTop = scroll.scrollHeight;
       syncCittaScrollFade();
+      if (reply.file && blue) {
+        window.setTimeout(() => {
+          if (!asst.isConnected) return;
+          const card = cittaFileCard(reply.file);
+          card.classList.add('is-in');
+          asst.after(card);
+          scroll.scrollTop = scroll.scrollHeight;
+          syncCittaScrollFade();
+        }, 280);
+      }
     }, blue ? 1500 : 220);
 
     scroll.scrollTop = scroll.scrollHeight;
@@ -10049,6 +10163,14 @@
       const panelDeck = e.target.closest('.citta-panel .asst-card .act-link');
       if (panelDeck) {
         showToastMsg('Opening in Deck');
+        return;
+      }
+
+      const filePreview = e.target.closest('.citta-file-preview');
+      if (filePreview) {
+        const title = filePreview.closest('.citta-file')?.querySelector('.citta-file-title')?.textContent || 'Document';
+        if (document.documentElement.dataset.theme === 'blue') openNewTab(title);
+        showToastMsg(title);
         return;
       }
 
