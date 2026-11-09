@@ -419,6 +419,8 @@
   .todo-field { display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 0; border: 0; }
   .todo-field > span, .todo-field legend { font-size: 12px; font-weight: 600; color: #1a1d21; }
   .todo-field input[type="text"],
+  .todo-field input[type="date"],
+  .todo-field input[type="time"],
   .todo-field input[type="datetime-local"],
   .todo-field textarea {
     width: 100%;
@@ -431,6 +433,18 @@
     background: #fff;
     box-sizing: border-box;
   }
+  .todo-when-block { display: flex; flex-direction: column; gap: 8px; }
+  .todo-opt { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; margin: 0; cursor: pointer; }
+  .todo-opt.is-locked { opacity: .45; cursor: default; }
+  .todo-opt-input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .todo-opt-switch { width: 36px; height: 22px; border-radius: 999px; background: #e6e8ec; position: relative; flex: none; }
+  .todo-opt-switch::after { content: ""; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: #fff; transition: transform .15s; }
+  .todo-opt-input:checked + .todo-opt-switch { background: var(--green); }
+  .todo-opt-input:focus-visible + .todo-opt-switch { outline: 2px solid var(--green); outline-offset: 2px; }
+  .todo-opt-input:checked + .todo-opt-switch::after { transform: translateX(14px); }
+  #todoDate[hidden], #todoTime[hidden] { display: none !important; }
+  .todo-field input[type="date"]::-webkit-calendar-picker-indicator,
+  .todo-field input[type="time"]::-webkit-calendar-picker-indicator,
   .todo-field input[type="datetime-local"]::-webkit-calendar-picker-indicator {
     cursor: pointer;
     opacity: .55;
@@ -456,6 +470,8 @@
   html[data-theme="blue"] .todo-field { gap: 6px; min-inline-size: 0; }
   html[data-theme="blue"] .todo-field legend { padding: 0; margin: 0; line-height: 16px; }
   html[data-theme="blue"] .todo-field input[type="text"],
+  html[data-theme="blue"] .todo-field input[type="date"],
+  html[data-theme="blue"] .todo-field input[type="time"],
   html[data-theme="blue"] .todo-field input[type="datetime-local"] { height: 32px; padding: 0 10px; }
   html[data-theme="blue"] .todo-field textarea { height: 64px; min-height: 64px; resize: vertical; }
   html[data-theme="blue"] .todo-types label { display: block; min-width: 0; }
@@ -8052,7 +8068,7 @@
             <div class="todo-split">
               <fieldset class="todo-field"><legend>Type</legend><div class="todo-types"><label><input type="radio" name="todoType" value="course"><span>Course</span></label><label><input type="radio" name="todoType" value="email"><span>Email</span></label><label><input type="radio" name="todoType" value="yours" checked><span>Yours</span></label></div></fieldset>
             </div>
-            <label class="todo-field"><span>When</span><input id="todoWhen" type="datetime-local" step="60" required></label>
+            <div class="todo-field" id="todoWhenField"><span>When</span><div class="todo-when-block"><label class="todo-opt"><span>Date</span><input class="todo-opt-input" id="todoDateOn" type="checkbox"><span class="todo-opt-switch" aria-hidden="true"></span></label><input id="todoDate" type="date" hidden aria-label="Date"><label class="todo-opt" id="todoTimeRow"><span>Time</span><input class="todo-opt-input" id="todoTimeOn" type="checkbox"><span class="todo-opt-switch" aria-hidden="true"></span></label><input id="todoTime" type="time" step="60" hidden aria-label="Time"></div></div>
             <label class="todo-field"><span>Notes</span><textarea id="todoNotes" maxlength="240" rows="3"></textarea></label>
           </div>
           <div class="todo-ft"><button type="button" class="todo-cancel" id="todoCancel">Cancel</button><button type="submit" class="todo-save">Save</button></div>
@@ -8334,6 +8350,10 @@
         when.textContent = formatTodoWhen(when.dataset.when);
         return;
       }
+      if (when.dataset.raw === '') {
+        when.textContent = '';
+        return;
+      }
       const raw = when.dataset.raw;
       when.textContent = /^\d{1,2}:\d{2}$/.test(raw) ? `Today\n${raw}` : raw;
     });
@@ -8409,7 +8429,7 @@
   const TODO_WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const TODO_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   function formatTodoWhen(value) {
-    const m = String(value || '').match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}:\d{2})/);
+    const m = String(value || '').match(/^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}:\d{2}))?/);
     if (!m) return '';
     const date = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
     const now = new Date();
@@ -8421,11 +8441,64 @@
     else if (diff === -1) label = 'Yesterday';
     else if (diff > 1 && diff < 7) label = TODO_WEEKDAYS[date.getDay()];
     else if (date.getFullYear() !== now.getFullYear()) label = `${label}, ${date.getFullYear()}`;
-    return `${label}\n${m[4]}`;
+    return m[4] ? `${label}\n${m[4]}` : label;
   }
-  function todoWhenValue(rem) {
+  function todoDateIso(date) {
+    const pad = (n) => String(n).padStart(2, '0');
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+  }
+  function todoWhenParts(rem) {
     const stored = rem?.querySelector('.when')?.dataset.when || '';
-    return /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(stored) ? stored.slice(0, 16) : todoStamp(new Date());
+    const full = stored.match(/^(\d{4}-\d{2}-\d{2})(?:T(\d{2}:\d{2}))?/);
+    if (full) return { date: full[1], time: full[2] || '' };
+    if (!rem) return { date: '', time: '' };
+    const raw = (rem.querySelector('.when')?.dataset.raw || rem.querySelector('.when')?.textContent || '').replace(/\s+/g, ' ').trim();
+    const clock = raw.match(/^(\d{1,2}):(\d{2})$/);
+    if (clock) return { date: todoDateIso(new Date()), time: `${clock[1].padStart(2, '0')}:${clock[2]}` };
+    const day = raw.split(' ')[0];
+    const now = new Date();
+    if (day === 'Today') return { date: todoDateIso(now), time: '' };
+    if (day === 'Tomorrow') { const d = new Date(now); d.setDate(d.getDate() + 1); return { date: todoDateIso(d), time: '' }; }
+    if (day === 'Yesterday') { const d = new Date(now); d.setDate(d.getDate() - 1); return { date: todoDateIso(d), time: '' }; }
+    const weekday = TODO_WEEKDAYS.indexOf(day);
+    if (weekday >= 0) {
+      const d = new Date(now);
+      d.setDate(d.getDate() + ((weekday - d.getDay() + 7) % 7));
+      return { date: todoDateIso(d), time: '' };
+    }
+    return { date: '', time: '' };
+  }
+  function syncTodoWhen() {
+    const dateOn = document.getElementById('todoDateOn');
+    const timeOn = document.getElementById('todoTimeOn');
+    const date = document.getElementById('todoDate');
+    const time = document.getElementById('todoTime');
+    const timeRow = document.getElementById('todoTimeRow');
+    if (!dateOn || !timeOn || !date || !time) return;
+    if (!dateOn.checked) {
+      timeOn.checked = false;
+      timeOn.disabled = true;
+      date.value = '';
+      time.value = '';
+      date.hidden = true;
+      time.hidden = true;
+      timeRow?.classList.add('is-locked');
+      return;
+    }
+    timeOn.disabled = false;
+    timeRow?.classList.remove('is-locked');
+    if (!date.value) date.value = todoDateIso(new Date());
+    date.hidden = false;
+    if (!timeOn.checked) {
+      time.value = '';
+      time.hidden = true;
+      return;
+    }
+    if (!time.value) {
+      const now = new Date();
+      time.value = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    }
+    time.hidden = false;
   }
   function openTodoEditor(rem) {
     todoEditing = rem || null;
@@ -8434,7 +8507,14 @@
     document.getElementById('todoConfirm').hidden = true;
     document.getElementById('todoFormTitle').textContent = rem ? 'Edit to-do' : 'Add to-do';
     document.getElementById('todoTitle').value = rem ? rem.querySelector('.t').textContent.trim() : '';
-    document.getElementById('todoWhen').value = todoWhenValue(rem);
+    const when = todoWhenParts(rem);
+    const dateOn = document.getElementById('todoDateOn');
+    const timeOn = document.getElementById('todoTimeOn');
+    document.getElementById('todoDate').value = when.date;
+    document.getElementById('todoTime').value = when.time;
+    if (dateOn) dateOn.checked = !!when.date;
+    if (timeOn) timeOn.checked = !!when.time;
+    syncTodoWhen();
     document.getElementById('todoNotes').value = rem ? todoNotesOf(rem) : '';
     const type = rem ? todoTypeOf(rem) : 'yours';
     const radio = document.querySelector(`#todoForm input[name="todoType"][value="${type}"]`);
@@ -8454,9 +8534,15 @@
   function writeTodoRow(rem, title, type, when, notes) {
     rem.querySelector('.t').textContent = title;
     const whenEl = rem.querySelector('.when');
-    whenEl.dataset.when = when;
-    whenEl.textContent = formatTodoWhen(when);
-    whenEl.classList.toggle('hot', when.slice(0, 10) === todoStamp(new Date()).slice(0, 10));
+    if (when) {
+      whenEl.dataset.when = when;
+      whenEl.textContent = formatTodoWhen(when);
+    } else {
+      whenEl.dataset.when = '';
+      whenEl.dataset.raw = '';
+      whenEl.textContent = '';
+    }
+    whenEl.classList.toggle('hot', !!when && when.slice(0, 10) === todoDateIso(new Date()));
     applyTodoBadge(rem.querySelector('.badge'), type);
     setTodoNotes(rem, notes);
     rem.querySelector('.rem-check')?.setAttribute('aria-label', `Mark complete: ${title}`);
@@ -8466,8 +8552,11 @@
     const title = document.getElementById('todoTitle').value.trim();
     if (!title) return;
     const type = document.querySelector('#todoForm input[name="todoType"]:checked')?.value || 'yours';
-    const when = document.getElementById('todoWhen').value;
-    if (!formatTodoWhen(when)) return;
+    const dateOn = document.getElementById('todoDateOn')?.checked;
+    const timeOn = dateOn && document.getElementById('todoTimeOn')?.checked;
+    const date = dateOn ? document.getElementById('todoDate').value : '';
+    const time = timeOn ? document.getElementById('todoTime').value : '';
+    const when = date ? (time ? `${date}T${time}` : date) : '';
     const notes = document.getElementById('todoNotes').value.trim();
     const list = document.querySelector('#tail-home .two-main-l');
     if (todoEditing) {
@@ -8483,6 +8572,7 @@
       showToastMsg('To-do added');
     }
     closeTodo();
+    paintHomeTodoButtons();
     syncTodoEmpty();
   }
   function toggleTodoDone(rem) {
@@ -8551,6 +8641,8 @@
     closeTodo();
     syncTodoEmpty();
   }
+  document.getElementById('todoDateOn')?.addEventListener('change', syncTodoWhen);
+  document.getElementById('todoTimeOn')?.addEventListener('change', syncTodoWhen);
   document.getElementById('todoForm')?.addEventListener('submit', saveTodo);
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && document.getElementById('todoScrim') && !document.getElementById('todoScrim').hidden) closeTodo();
