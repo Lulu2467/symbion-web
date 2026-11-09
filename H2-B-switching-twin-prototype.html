@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<script>try{if(localStorage.getItem('h2-theme')==='blue')document.documentElement.dataset.theme='blue'}catch(e){}</script>
+<script>try{document.documentElement.dataset.theme='blue'}catch(e){}</script>
 <style>
   /* Tokens from Figma · Home v2 · B · H2 */
   :root {
@@ -6590,13 +6590,13 @@
   <h1>Home v2</h1>
   <div class="seg scenario" role="group" aria-label="主页情境">
     <button type="button" data-screen="tutorial" aria-pressed="false">第一次来</button>
-    <button type="button" data-screen="welcome" aria-pressed="true">过几天来</button>
-    <button type="button" data-screen="home" aria-pressed="false">平时在用</button>
+    <button type="button" data-screen="welcome" aria-pressed="false">过几天来</button>
+    <button type="button" data-screen="home" aria-pressed="true">平时在用</button>
   </div>
   <span class="theme-label">配色</span>
   <div class="seg theme-seg" role="group" aria-label="主题色">
-    <button type="button" data-theme-pick="green" aria-pressed="true">绿色</button>
-    <button type="button" data-theme-pick="blue" aria-pressed="false">蓝色</button>
+    <button type="button" data-theme-pick="green" aria-pressed="false">绿色</button>
+    <button type="button" data-theme-pick="blue" aria-pressed="true">蓝色</button>
   </div>
 </div>
 
@@ -6705,7 +6705,7 @@
           </script>
 
           <div class="content hub">
-            <div class="screen" id="screen-home" data-screen="home">
+            <div class="screen on" id="screen-home" data-screen="home">
             <div class="course-banner">
               <span class="av">GR</span>
               <span class="sp">You came from <b>Prof. Roland’s Cosmo</b> · Heavy-ion Physics</span>
@@ -6745,7 +6745,7 @@
               } catch (e) {}
             </script>
 
-            <div class="screen on" id="screen-welcome" data-screen="welcome">
+            <div class="screen" id="screen-welcome" data-screen="welcome">
               <section class="greeting quiet" data-greeting="welcome">
                 <div class="hello">
                   <div class="eyebrow" data-live="eyebrow">
@@ -6927,7 +6927,7 @@
             </section>
 
             <!-- 平时在用：续写工具 + Goal，不再推 Try（试用已过） -->
-            <div class="screen" id="tail-home" data-tail="home">
+            <div class="screen on" id="tail-home" data-tail="home">
             <section class="week-tools-panel" id="sec-tools-week">
               <div class="week-tools-hd">
                 <h3><span class="tools-title-week">Your tools this week</span><span class="tools-title-usual">Quick start</span></h3>
@@ -7040,7 +7040,7 @@
             </div>
 
             <!-- Figma 122:2523 · Welcome back — Discover → Pick up → Coming up / Cosmos -->
-            <div class="screen on" id="tail-welcome" data-tail="welcome">
+            <div class="screen" id="tail-welcome" data-tail="welcome">
               <section class="discover">
                 <div class="discover-topics">
                   <span class="k">Discover in</span>
@@ -14571,9 +14571,8 @@
   });
   syncCittaSendReady();
   setAI('citta', { announce: false });
-  // Figma 122:2523 — land on Welcome back unless the hash asks for another screen.
-  if (location.hash) readHash();
-  else setScreen('welcome');
+  applyTheme('blue');
+  setScreen('home');
   fit();
   bindCittaScrollFade();
   bindCosmosScrollFade();
