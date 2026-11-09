@@ -6002,6 +6002,7 @@
   .invite small { display: block; color: var(--muted); font-size: 12px; }
   .invite .rowline { border-top: 0; padding: 6px 0 0; }
   .mini { font-size: 12px; font-weight: 600; color: var(--green-dark); }
+  .mini .plus-glyph { display: none; }
   }
 
   html[data-theme="blue"] #teamHost .panel .mrow:has(> .btn) {
@@ -6244,7 +6245,23 @@
   html[data-theme="blue"] #teamHost .field select { font-weight: 400; color: #1a1d21; border-color: #e6e8ec; }
   html[data-theme="blue"] #teamHost .field input::placeholder,
   html[data-theme="blue"] #teamHost .field textarea::placeholder { color: #b0b4ba; }
-  html[data-theme="blue"] #teamHost .field > [data-add-email] { align-self: flex-start; color: #3c7a94; }
+  html[data-theme="blue"] #teamHost [data-add-email] {
+    align-self: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #3c7a94;
+    line-height: 0;
+    font-size: 0;
+  }
+  html[data-theme="blue"] #teamHost [data-add-email] .plus-glyph { display: block; width: 22px; height: 22px; }
   #teamHost .composer { padding: 0; }
   #teamHost .box {
     flex-direction: column;
@@ -14897,7 +14914,7 @@ function renderPanel() {
       <label class="field">Join policy<select id="policyPick"><option value="anyone"${c.policy === 'anyone' ? ' selected' : ''}>Anyone can join</option><option value="approval"${c.policy === 'approval' ? ' selected' : ''}>Approve each request</option><option value="invite"${c.policy === 'invite' ? ' selected' : ''}>Invite-only</option></select></label>
       <button type="button" class="mini" data-lock>${c.locked ? 'Unlock posting' : 'Lock posting'}</button>
     </div>
-    <div class="block"><h4>EMAIL INVITE</h4><div data-email-box>${emailBoxHTML()}</div><button type="button" class="mini" data-add-email>＋</button>
+    <div class="block"><h4>EMAIL INVITE</h4><div data-email-box>${emailBoxHTML()}</div><button type="button" class="mini" data-add-email aria-label="Add email"><span class="add-plus">＋</span><svg class="plus-glyph" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M668.734694 532.897959H355.265306c-11.493878 0-20.897959-9.404082-20.897959-20.897959s9.404082-20.897959 20.897959-20.897959h313.469388c11.493878 0 20.897959 9.404082 20.897959 20.897959s-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 689.632653c-11.493878 0-20.897959-9.404082-20.897959-20.897959V355.265306c0-11.493878 9.404082-20.897959 20.897959-20.897959s20.897959 9.404082 20.897959 20.897959v313.469388c0 11.493878-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 929.959184c-230.4 0-417.959184-187.559184-417.959184-417.959184s187.559184-417.959184 417.959184-417.959184 417.959184 187.559184 417.959184 417.959184-187.559184 417.959184-417.959184 417.959184z m0-794.122449c-207.412245 0-376.163265 168.75102-376.163265 376.163265s168.75102 376.163265 376.163265 376.163265 376.163265-168.75102 376.163265-376.163265-168.75102-376.163265-376.163265-376.163265z"/></svg></button>
       <div class="sheet-actions" style="margin-top:8px"><button type="button" class="btn go" data-send-invites ${state.emailRows.some((v) => v.trim()) ? '' : 'disabled'}>Send</button></div>
       <p class="lead">An invite does not make them a member. They join only after they finish.</p>
       ${(c.invites || []).map((inv) => `<div class="invite"><b>${esc(inv.email)}</b><small>${inv.status === 'pending' ? 'Waiting to join' : inv.status === 'joined' ? 'Joined' : 'Revoked'}</small>
@@ -15059,7 +15076,7 @@ function openModal(kind, extra) {
       <label class="field">${fieldHint('Group description', 'optional')}<textarea id="gdesc" maxlength="240" placeholder="What this group is for"></textarea></label>
       <label class="field">${fieldHint('Group slug', 'optional category')}<input id="gslug" list="slugList" placeholder="heavy-ion" autocomplete="off"></label>
       <datalist id="slugList">${slugOptions().map((s) => `<option value="${esc(s)}"></option>`).join('')}</datalist>
-      <div class="field">Invite by email<div data-email-box>${emailBoxHTML()}</div><button type="button" class="mini" data-add-email>＋</button></div>
+      <div class="field">Invite by email<div data-email-box>${emailBoxHTML()}</div><button type="button" class="mini" data-add-email aria-label="Add email"><span class="add-plus">＋</span><svg class="plus-glyph" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M668.734694 532.897959H355.265306c-11.493878 0-20.897959-9.404082-20.897959-20.897959s9.404082-20.897959 20.897959-20.897959h313.469388c11.493878 0 20.897959 9.404082 20.897959 20.897959s-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 689.632653c-11.493878 0-20.897959-9.404082-20.897959-20.897959V355.265306c0-11.493878 9.404082-20.897959 20.897959-20.897959s20.897959 9.404082 20.897959 20.897959v313.469388c0 11.493878-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 929.959184c-230.4 0-417.959184-187.559184-417.959184-417.959184s187.559184-417.959184 417.959184-417.959184 417.959184 187.559184 417.959184 417.959184-187.559184 417.959184-417.959184 417.959184z m0-794.122449c-207.412245 0-376.163265 168.75102-376.163265 376.163265s168.75102 376.163265 376.163265 376.163265 376.163265-168.75102 376.163265-376.163265-168.75102-376.163265-376.163265-376.163265z"/></svg></button></div>
       <label class="checkline"><input id="gcitta" type="checkbox"> Add Citta</label>
       <p class="lead">Citta stays the group agent. It is not someone you message directly.</p>`;
     $('gname').focus();
