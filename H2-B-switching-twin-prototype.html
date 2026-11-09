@@ -494,7 +494,13 @@
   html[data-theme="blue"] .todo-field input[type="date"],
   html[data-theme="blue"] .todo-field input[type="time"],
   html[data-theme="blue"] .todo-field input[type="datetime-local"] { height: 32px; padding: 0 10px; }
-  html[data-theme="blue"] .todo-field textarea { height: 64px; min-height: 64px; resize: vertical; }
+  html[data-theme="blue"] .todo-field textarea {
+    height: 36px;
+    min-height: 36px;
+    line-height: 20px;
+    resize: none;
+    overflow: hidden;
+  }
   html[data-theme="blue"] .todo-types label { display: block; min-width: 0; }
   html[data-theme="blue"] .todo-types span {
     width: 100%;
@@ -8266,7 +8272,7 @@
               <fieldset class="todo-field"><legend>Type</legend><div class="todo-types"><label><input type="radio" name="todoType" value="course"><span>Course</span></label><label><input type="radio" name="todoType" value="email"><span>Email</span></label><label><input type="radio" name="todoType" value="yours" checked><span>Yours</span></label></div></fieldset>
             </div>
             <div class="todo-field" id="todoWhenField"><span>When</span><div class="todo-when-block"><label class="todo-opt"><span class="todo-opt-copy"><span>Date</span><span class="todo-opt-sub" id="todoDateLabel" hidden></span></span><input class="todo-opt-input" id="todoDateOn" type="checkbox"><span class="todo-opt-switch" aria-hidden="true"></span></label><div class="todo-cal" id="todoCal" hidden><div class="todo-cal-hd"><span class="todo-cal-title" id="todoCalTitle"></span><span class="todo-cal-nav"><button type="button" id="todoCalPrev" aria-label="Previous month">‹</button><button type="button" id="todoCalNext" aria-label="Next month">›</button></span></div><div class="todo-cal-week" id="todoCalWeek"></div><div class="todo-cal-grid" id="todoCalGrid"></div></div><input id="todoDate" type="hidden"><label class="todo-opt" id="todoTimeRow"><span>Time</span><input class="todo-opt-input" id="todoTimeOn" type="checkbox"><span class="todo-opt-switch" aria-hidden="true"></span></label><input id="todoTime" type="time" step="60" hidden aria-label="Time"></div></div>
-            <label class="todo-field"><span>Notes</span><textarea id="todoNotes" maxlength="240" rows="3"></textarea></label>
+            <label class="todo-field"><span>Notes</span><textarea id="todoNotes" maxlength="240" rows="1"></textarea></label>
           </div>
           <div class="todo-ft"><button type="button" class="todo-cancel" id="todoCancel">Cancel</button><button type="submit" class="todo-save">Save</button></div>
         </form>
@@ -8765,6 +8771,15 @@
     time.hidden = false;
     paintTodoCal();
   }
+  function fitTodoNotes() {
+    const el = document.getElementById('todoNotes');
+    if (!el) return;
+    if (document.documentElement.dataset.theme !== 'blue') {
+      el.style.height = '';
+      return;
+    }
+    resizeTextarea(el);
+  }
   function openTodoEditor(rem) {
     todoEditing = rem || null;
     todoPending = null;
@@ -8787,6 +8802,7 @@
     const radio = document.querySelector(`#todoForm input[name="todoType"][value="${type}"]`);
     if (radio) radio.checked = true;
     document.getElementById('todoScrim').hidden = false;
+    requestAnimationFrame(fitTodoNotes);
     document.getElementById('todoTitle').focus();
   }
   function openTodoConfirm(rem) {
@@ -8909,6 +8925,7 @@
     syncTodoEmpty();
   }
   document.getElementById('todoDateOn')?.addEventListener('change', syncTodoWhen);
+  document.getElementById('todoNotes')?.addEventListener('input', fitTodoNotes);
   document.getElementById('todoTimeOn')?.addEventListener('change', syncTodoWhen);
   document.getElementById('todoCalPrev')?.addEventListener('click', () => shiftTodoCal(-1));
   document.getElementById('todoCalNext')?.addEventListener('click', () => shiftTodoCal(1));
