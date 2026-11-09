@@ -14883,7 +14883,7 @@ function memberPane(c) {
     return `<button type="button" class="member" ${attrs}><span class="av hue-${p.hue}">${esc(p.short)}</span><span>${esc(self ? 'You' : p.name.split(' ')[0])}</span></button>`;
   }).join('');
   const more = !open && ids.length > 8 ? `<button type="button" class="member" data-toggle-members><span class="av hue-slate">+</span><span>More</span></button>` : '';
-  const manage = canManage(c) && open ? `<div class="manage-list">${memberItems(c)}</div>` : '';
+  const manage = canManage(c) && open && document.documentElement.dataset.theme !== 'blue' ? `<div class="manage-list">${memberItems(c)}</div>` : '';
   return `<div class="members">${cells}${more}</div>${manage}`;
 }
 function memberItems(c) {
@@ -14935,7 +14935,7 @@ function renderPanel() {
         <button type="button" class="btn" data-decline="${r.id}">Deny</button></div>`).join('')}`;
     return;
   }
-  const manage = canManage(c);
+  const manage = canManage(c) && document.documentElement.dataset.theme !== 'blue';
   const slugBtn = c.slug ? `<button type="button" class="slug-btn" data-slug-filter="${esc(c.slug)}">${esc(c.slug)}</button>` : '<span>No slug</span>';
   if (manage && state.emailWhere !== c.id) {
     state.emailWhere = c.id;
@@ -14971,7 +14971,7 @@ function renderPanel() {
     <div class="block"><h4>INVITE LINKS</h4><button type="button" class="mini" data-create-link>Create link</button>${linkRows}</div>` : ''}
     <button type="button" class="danger" data-close-chat>Clear chat history</button>
     <button type="button" class="danger" data-leave>Leave group</button>
-    ${c.owner === ME ? `<button type="button" class="danger" data-delete-group>Delete group</button>` : ''}`;
+    ${manage && c.owner === ME ? `<button type="button" class="danger" data-delete-group>Delete group</button>` : ''}`;
 }
 function switches(c) {
   return `<div class="rowline"><span>Mute</span><button type="button" class="switch" data-switch="muted" aria-pressed="${c.muted ? 'true' : 'false'}" aria-label="Mute"><i></i></button></div>
