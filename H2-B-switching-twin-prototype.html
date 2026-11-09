@@ -6134,6 +6134,7 @@
   .gresults b { display: block; font-size: 13px; }
   .gresults small { color: var(--muted); font-size: 12px; }
   .email-row { display: flex; gap: 6px; align-items: flex-start; margin-bottom: 6px; }
+  .email-row .row-minus { display: none; }
   .email-row .grow { flex: 1; min-width: 0; }
   .email-row input, .field input, .field textarea, .nick input, .field select { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; font-size: 14px; outline: none; background: #fff; width: 100%; }
   .email-row input.invalid { border-color: #c45c4a; }
@@ -6546,6 +6547,39 @@
     font-size: 0;
   }
   html[data-theme="blue"] #teamHost [data-add-email] .plus-glyph { display: block; width: 22px; height: 22px; }
+  html[data-theme="blue"] #teamHost .email-invite {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    column-gap: 12px;
+    row-gap: 8px;
+  }
+  html[data-theme="blue"] #teamHost .email-invite > .email-label,
+  html[data-theme="blue"] #teamHost .email-invite > h4 { grid-column: 1; grid-row: 1; margin: 0; }
+  html[data-theme="blue"] #teamHost .email-invite > [data-add-email] {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    margin: 0;
+  }
+  html[data-theme="blue"] #teamHost .email-invite > [data-email-box] { grid-column: 1 / -1; grid-row: 2; }
+  html[data-theme="blue"] #teamHost .email-row { gap: 8px; }
+  html[data-theme="blue"] #teamHost .email-row .row-minus {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    margin-top: 7px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #3c7a94;
+    cursor: pointer;
+  }
+  html[data-theme="blue"] #teamHost .email-row .minus-glyph { display: block; width: 22px; height: 22px; }
+  html[data-theme="blue"] #teamHost .email-row > [data-del-email]:not(.row-minus) { display: none; }
   #teamHost [data-del-email] .row-x-blue { display: none; }
   html[data-theme="blue"] #teamHost [data-del-email] {
     border: 0;
@@ -15266,7 +15300,7 @@ function copyText(text, ok) {
 function emailPieces(text) { return String(text || '').split(/[\s,，;；、]+/).map((s) => s.trim()).filter(Boolean); }
 function validEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
 function emailRow(i, value, error) {
-  return `<div class="email-row"><div class="grow"><input class="email-input${error ? ' invalid' : ''}" data-email-index="${i}" type="text" inputmode="email" placeholder="name@school.edu" aria-label="Email ${i + 1}" value="${esc(value || '')}" ${error ? 'aria-invalid="true"' : ''}><div class="row-err">${esc(error || '')}</div></div><button type="button" class="icon-btn" data-del-email aria-label="Remove row"><span class="row-x">×</span><svg class="row-x-blue" viewBox="0 0 950.857143 950.857143" aria-hidden="true"><path fill="currentColor" d="M475.428571 877.714286C256 877.714286 73.142857 694.857143 73.142857 475.428571S256 73.142857 475.428571 73.142857 877.714286 256 877.714286 475.428571 694.857143 877.714286 475.428571 877.714286m0-877.714286C212.114286 0 0 212.114286 0 475.428571S212.114286 950.857143 475.428571 950.857143 950.857143 738.742857 950.857143 475.428571 738.742857 0 475.428571 0m131.657143 343.771429c-14.628571-14.628571-36.571429-14.628571-51.2 0L475.428571 424.228571 394.971429 343.771429c-14.628571-14.628571-36.571429-14.628571-51.2 0s-14.628571 36.571429 0 51.2l80.457142 80.457142-80.457142 80.457143c-14.628571 14.628571-14.628571 36.571429 0 51.2 14.628571 14.628571 36.571429 14.628571 51.2 0l80.457142-80.457143 80.457143 80.457143c14.628571 14.628571 36.571429 14.628571 51.2 0 14.628571-14.628571 14.628571-36.571429 0-51.2L526.628571 475.428571l80.457143-80.457142c14.628571-14.628571 14.628571-36.571429 0-51.2"/></svg></button></div>`;
+  return `<div class="email-row"><button type="button" class="row-minus" data-del-email aria-label="Remove email"><svg class="minus-glyph" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M668.734694 532.897959H355.265306c-11.493878 0-20.897959-9.404082-20.897959-20.897959s9.404082-20.897959 20.897959-20.897959h313.469388c11.493878 0 20.897959 9.404082 20.897959 20.897959s-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 929.959184c-230.4 0-417.959184-187.559184-417.959184-417.959184s187.559184-417.959184 417.959184-417.959184 417.959184 187.559184 417.959184 417.959184-187.559184 417.959184-417.959184 417.959184z m0-794.122449c-207.412245 0-376.163265 168.75102-376.163265 376.163265s168.75102 376.163265 376.163265 376.163265 376.163265-168.75102 376.163265-376.163265-168.75102-376.163265-376.163265-376.163265z"/></svg></button><div class="grow"><input class="email-input${error ? ' invalid' : ''}" data-email-index="${i}" type="text" inputmode="email" placeholder="name@school.edu" aria-label="Email ${i + 1}" value="${esc(value || '')}" ${error ? 'aria-invalid="true"' : ''}><div class="row-err">${esc(error || '')}</div></div><button type="button" class="icon-btn" data-del-email aria-label="Remove row"><span class="row-x">×</span><svg class="row-x-blue" viewBox="0 0 950.857143 950.857143" aria-hidden="true"><path fill="currentColor" d="M475.428571 877.714286C256 877.714286 73.142857 694.857143 73.142857 475.428571S256 73.142857 475.428571 73.142857 877.714286 256 877.714286 475.428571 694.857143 877.714286 475.428571 877.714286m0-877.714286C212.114286 0 0 212.114286 0 475.428571S212.114286 950.857143 475.428571 950.857143 950.857143 738.742857 950.857143 475.428571 738.742857 0 475.428571 0m131.657143 343.771429c-14.628571-14.628571-36.571429-14.628571-51.2 0L475.428571 424.228571 394.971429 343.771429c-14.628571-14.628571-36.571429-14.628571-51.2 0s-14.628571 36.571429 0 51.2l80.457142 80.457142-80.457142 80.457143c-14.628571 14.628571-14.628571 36.571429 0 51.2 14.628571 14.628571 36.571429 14.628571 51.2 0l80.457142-80.457143 80.457143 80.457143c14.628571 14.628571 36.571429 14.628571 51.2 0 14.628571-14.628571 14.628571-36.571429 0-51.2L526.628571 475.428571l80.457143-80.457142c14.628571-14.628571 14.628571-36.571429 0-51.2"/></svg></button></div>`;
 }
 function emailBoxHTML() {
   if (!state.emailRows.length) state.emailRows = [''];
@@ -15283,6 +15317,28 @@ function paintEmails(root) {
   if (box) box.innerHTML = emailBoxHTML();
   const send = root.querySelector('[data-send-invites]');
   if (send) send.disabled = !state.emailRows.some((v) => v.trim());
+}
+function addEmailRow(root) {
+  syncEmailFrom(root);
+  state.emailRows.push('');
+  state.emailErrors.push('');
+  paintEmails(root);
+  root.querySelector('.email-row:last-child .email-input')?.focus();
+}
+function removeEmailRow(root, row) {
+  syncEmailFrom(root);
+  const index = [...root.querySelectorAll('.email-row')].indexOf(row);
+  if (index < 0) return;
+  if (state.emailRows.length < 2) {
+    state.emailRows = [''];
+    state.emailErrors = [''];
+  } else {
+    state.emailRows.splice(index, 1);
+    state.emailErrors.splice(index, 1);
+  }
+  paintEmails(root);
+  const inputs = root.querySelectorAll('.email-input');
+  inputs[Math.min(index, inputs.length - 1)]?.focus();
 }
 function ensurePerson(email) {
   const known = Object.entries(people).find(([, p]) => p.email === email.toLowerCase());
@@ -15579,7 +15635,7 @@ function renderPanel() {
       <label class="field">Join policy<select id="policyPick"><option value="anyone"${c.policy === 'anyone' ? ' selected' : ''}>Anyone can join</option><option value="approval"${c.policy === 'approval' ? ' selected' : ''}>Approve each request</option><option value="invite"${c.policy === 'invite' ? ' selected' : ''}>Invite-only</option></select></label>
       <button type="button" class="mini" data-lock>${c.locked ? 'Unlock posting' : 'Lock posting'}</button>
     </div>
-    <div class="block"><h4>EMAIL INVITE</h4><div data-email-box>${emailBoxHTML()}</div><button type="button" class="mini" data-add-email aria-label="Add email"><span class="add-plus">＋</span><svg class="plus-glyph" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M668.734694 532.897959H355.265306c-11.493878 0-20.897959-9.404082-20.897959-20.897959s9.404082-20.897959 20.897959-20.897959h313.469388c11.493878 0 20.897959 9.404082 20.897959 20.897959s-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 689.632653c-11.493878 0-20.897959-9.404082-20.897959-20.897959V355.265306c0-11.493878 9.404082-20.897959 20.897959-20.897959s20.897959 9.404082 20.897959 20.897959v313.469388c0 11.493878-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 929.959184c-230.4 0-417.959184-187.559184-417.959184-417.959184s187.559184-417.959184 417.959184-417.959184 417.959184 187.559184 417.959184 417.959184-187.559184 417.959184-417.959184 417.959184z m0-794.122449c-207.412245 0-376.163265 168.75102-376.163265 376.163265s168.75102 376.163265 376.163265 376.163265 376.163265-168.75102 376.163265-376.163265-168.75102-376.163265-376.163265-376.163265z"/></svg></button>
+    <div class="block"><div class="email-invite"><h4>EMAIL INVITE</h4><div data-email-box>${emailBoxHTML()}</div><button type="button" class="mini" data-add-email aria-label="Add email"><span class="add-plus">＋</span><svg class="plus-glyph" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M668.734694 532.897959H355.265306c-11.493878 0-20.897959-9.404082-20.897959-20.897959s9.404082-20.897959 20.897959-20.897959h313.469388c11.493878 0 20.897959 9.404082 20.897959 20.897959s-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 689.632653c-11.493878 0-20.897959-9.404082-20.897959-20.897959V355.265306c0-11.493878 9.404082-20.897959 20.897959-20.897959s20.897959 9.404082 20.897959 20.897959v313.469388c0 11.493878-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 929.959184c-230.4 0-417.959184-187.559184-417.959184-417.959184s187.559184-417.959184 417.959184-417.959184 417.959184 187.559184 417.959184 417.959184-187.559184 417.959184-417.959184 417.959184z m0-794.122449c-207.412245 0-376.163265 168.75102-376.163265 376.163265s168.75102 376.163265 376.163265 376.163265 376.163265-168.75102 376.163265-376.163265-168.75102-376.163265-376.163265-376.163265z"/></svg></button></div>
       <div class="sheet-actions" style="margin-top:8px"><button type="button" class="btn go" data-send-invites ${state.emailRows.some((v) => v.trim()) ? '' : 'disabled'}>Send</button></div>
       <p class="lead">An invite does not make them a member. They join only after they finish.</p>
       ${(c.invites || []).map((inv) => `<div class="invite"><b>${esc(inv.email)}</b><small>${inv.status === 'pending' ? 'Waiting to join' : inv.status === 'joined' ? 'Joined' : 'Revoked'}</small>
@@ -15744,7 +15800,7 @@ function openModal(kind, extra) {
       <label class="field">${fieldHint('Group description', 'optional')}<textarea id="gdesc" maxlength="240" placeholder="What this group is for"></textarea></label>
       <label class="field">${fieldHint('Group slug', 'optional category')}<input id="gslug" list="slugList" placeholder="heavy-ion" autocomplete="off"></label>
       <datalist id="slugList">${slugOptions().map((s) => `<option value="${esc(s)}"></option>`).join('')}</datalist>
-      <div class="field">Invite by email<div data-email-box>${emailBoxHTML()}</div><button type="button" class="mini" data-add-email aria-label="Add email"><span class="add-plus">＋</span><svg class="plus-glyph" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M668.734694 532.897959H355.265306c-11.493878 0-20.897959-9.404082-20.897959-20.897959s9.404082-20.897959 20.897959-20.897959h313.469388c11.493878 0 20.897959 9.404082 20.897959 20.897959s-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 689.632653c-11.493878 0-20.897959-9.404082-20.897959-20.897959V355.265306c0-11.493878 9.404082-20.897959 20.897959-20.897959s20.897959 9.404082 20.897959 20.897959v313.469388c0 11.493878-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 929.959184c-230.4 0-417.959184-187.559184-417.959184-417.959184s187.559184-417.959184 417.959184-417.959184 417.959184 187.559184 417.959184 417.959184-187.559184 417.959184-417.959184 417.959184z m0-794.122449c-207.412245 0-376.163265 168.75102-376.163265 376.163265s168.75102 376.163265 376.163265 376.163265 376.163265-168.75102 376.163265-376.163265-168.75102-376.163265-376.163265-376.163265z"/></svg></button></div>
+      <div class="field email-invite"><span class="email-label">Invite by email</span><div data-email-box>${emailBoxHTML()}</div><button type="button" class="mini" data-add-email aria-label="Add email"><span class="add-plus">＋</span><svg class="plus-glyph" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M668.734694 532.897959H355.265306c-11.493878 0-20.897959-9.404082-20.897959-20.897959s9.404082-20.897959 20.897959-20.897959h313.469388c11.493878 0 20.897959 9.404082 20.897959 20.897959s-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 689.632653c-11.493878 0-20.897959-9.404082-20.897959-20.897959V355.265306c0-11.493878 9.404082-20.897959 20.897959-20.897959s20.897959 9.404082 20.897959 20.897959v313.469388c0 11.493878-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 929.959184c-230.4 0-417.959184-187.559184-417.959184-417.959184s187.559184-417.959184 417.959184-417.959184 417.959184 187.559184 417.959184 417.959184-187.559184 417.959184-417.959184 417.959184z m0-794.122449c-207.412245 0-376.163265 168.75102-376.163265 376.163265s168.75102 376.163265 376.163265 376.163265 376.163265-168.75102 376.163265-376.163265-168.75102-376.163265-376.163265-376.163265z"/></svg></button></div>
       <label class="checkline"><input id="gcitta" type="checkbox"> Add Citta</label>
       <p class="lead">Citta stays the group agent. It is not someone you message directly.</p>`;
     $('gname').focus();
@@ -16530,23 +16586,8 @@ $('panel').addEventListener('click', (e) => {
     $('chatQ').focus();
     return;
   }
-  if (e.target.closest('[data-add-email]')) {
-    syncEmailFrom($('panel'));
-    state.emailRows.push('');
-    state.emailErrors.push('');
-    paintEmails($('panel'));
-    return;
-  }
-  if (e.target.closest('[data-del-email]')) {
-    syncEmailFrom($('panel'));
-    const row = e.target.closest('.email-row');
-    const index = [...$('panel').querySelectorAll('.email-row')].indexOf(row);
-    state.emailRows.splice(index, 1);
-    state.emailErrors.splice(index, 1);
-    if (!state.emailRows.length) state.emailRows = [''];
-    paintEmails($('panel'));
-    return;
-  }
+  if (e.target.closest('[data-add-email]')) { addEmailRow($('panel')); return; }
+  if (e.target.closest('[data-del-email]')) { removeEmailRow($('panel'), e.target.closest('.email-row')); return; }
   if (e.target.closest('[data-send-invites]')) { sendInvites($('panel'), current()); return; }
   if (e.target.closest('[data-edit-details]')) { openModal('edit'); return; }
   if (e.target.closest('[data-create-link]')) {
@@ -16763,22 +16804,8 @@ $('sheet').addEventListener('click', (e) => {
     toast('You joined. The group is in Team, even with no messages.');
     return;
   }
-  if (e.target.closest('[data-add-email]')) {
-    syncEmailFrom($('sheetBody'));
-    state.emailRows.push('');
-    state.emailErrors.push('');
-    paintEmails($('sheetBody'));
-    return;
-  }
-  if (e.target.closest('[data-del-email]')) {
-    syncEmailFrom($('sheetBody'));
-    const row = e.target.closest('.email-row');
-    const index = [...$('sheetBody').querySelectorAll('.email-row')].indexOf(row);
-    state.emailRows.splice(Math.max(0, index), 1);
-    state.emailErrors.splice(Math.max(0, index), 1);
-    if (!state.emailRows.length) state.emailRows = [''];
-    paintEmails($('sheetBody'));
-  }
+  if (e.target.closest('[data-add-email]')) { addEmailRow($('sheetBody')); return; }
+  if (e.target.closest('[data-del-email]')) { removeEmailRow($('sheetBody'), e.target.closest('.email-row')); return; }
 });
 document.addEventListener('paste', (e) => {
   const input = e.target;
