@@ -414,7 +414,9 @@
   .todo-body { padding: 14px 16px 4px; display: flex; flex-direction: column; gap: 12px; }
   .todo-field { display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 0; border: 0; }
   .todo-field > span, .todo-field legend { font-size: 12px; font-weight: 600; color: #1a1d21; }
-  .todo-field input[type="text"], .todo-field textarea {
+  .todo-field input[type="text"],
+  .todo-field input[type="datetime-local"],
+  .todo-field textarea {
     width: 100%;
     border: 1px solid var(--line);
     border-radius: 8px;
@@ -424,6 +426,10 @@
     color: #1a1d21;
     background: #fff;
     box-sizing: border-box;
+  }
+  .todo-field input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: .55;
   }
   .todo-field textarea { resize: vertical; min-height: 72px; }
   .todo-field input:focus, .todo-field textarea:focus { outline: 2px solid var(--green); outline-offset: 1px; }
