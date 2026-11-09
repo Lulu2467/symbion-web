@@ -10540,7 +10540,7 @@
       const addRem = e.target.closest('[data-action="add-reminder"]');
       if (addRem) {
         if (document.documentElement.dataset.theme === 'blue' && addRem.closest('#tail-home')) {
-          startTodoRow();
+          openTodoEditor(null);
           return;
         }
         flashEl(addRem);
