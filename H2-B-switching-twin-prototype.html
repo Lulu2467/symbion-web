@@ -4388,6 +4388,34 @@
   #deskHost .kanban-next:hover { background: var(--green-dark); }
   #deskHost .kanban-next:disabled { background: #e6e8eb; color: #6b7076; cursor: default; }
   .kanban-block { margin-bottom: 8px; }
+  .kanban-sheet[hidden] { display: none !important; }
+  #kanbanCard .todo-types { grid-template-columns: repeat(4, 1fr); }
+  #kanbanCardTime[hidden] { display: none !important; }
+  #deskHost .kanban-card .todo-save { color: #fff; }
+  #deskHost .kanban-card .todo-cancel { color: #1a1d21; }
+  #deskHost .kanban-card .todo-cal-nav button { color: var(--green); }
+  #deskHost .kanban-card .todo-cal-grid button { color: #1a1d21; }
+  #deskHost .kanban-card .todo-cal-grid button.is-today { color: var(--green); }
+  #deskHost .kanban-card .todo-cal-grid button.is-on { color: #fff; }
+  html[data-theme="blue"] #deskHost { background: #f6f7f8; }
+  html[data-theme="blue"] #deskHost .kanban-modal { background: rgba(26, 29, 33, .28); }
+  html[data-theme="blue"] #deskHost .desk-scroll { padding: 20px 24px 40px; }
+  html[data-theme="blue"] #deskHost .desk-card { border-color: var(--line); margin-bottom: 16px; }
+  html[data-theme="blue"] #deskHost .desk-card h2 { font-size: 16px; font-weight: 600; letter-spacing: 0; }
+  html[data-theme="blue"] #deskHost .desk-card .sub { margin: 2px 0 14px; font-size: 13px; }
+  html[data-theme="blue"] #deskHost .desk-tools { gap: 8px; align-items: center; }
+  html[data-theme="blue"] #deskHost .desk-tools > button { height: 32px; padding: 0 8px; border-radius: 8px; font-weight: 500; }
+  html[data-theme="blue"] #deskHost .desk-range { font-weight: 600; }
+  html[data-theme="blue"] #deskHost .desk-views { background: #f3f4f6; border-radius: 8px; padding: 2px; gap: 0; }
+  html[data-theme="blue"] #deskHost .desk-views + .desk-views { margin-left: 8px; }
+  html[data-theme="blue"] #deskHost .desk-views button { height: 28px; padding: 0 10px; border-radius: 6px; font-weight: 500; color: #656d76; }
+  html[data-theme="blue"] #deskHost .desk-views button[aria-pressed="true"] { background: #fff; color: #1a1d21; box-shadow: 0 1px 2px rgba(20, 24, 28, .08); }
+  html[data-theme="blue"] #deskHost .desk-new > button { height: 32px; padding: 0 14px; border-radius: 8px; font-size: 13px; font-weight: 500; }
+  html[data-theme="blue"] #deskHost .desk-status,
+  html[data-theme="blue"] #deskHost .desk-status.ok { justify-content: flex-start; gap: 12px; background: transparent; border: 0; border-top: 1px solid var(--line); border-radius: 0; padding: 10px 0 0; }
+  html[data-theme="blue"] #deskHost .desk-status button { margin-left: auto; }
+  html[data-theme="blue"] #deskHost .desk-board { border-color: var(--line); border-radius: 12px; }
+
 
   .frame.set-on { display: flex; flex-direction: column; height: 900px; }
   .frame.set-on .body { flex: 1; min-height: 0; }
@@ -13715,7 +13743,7 @@
         </section>
       </div>
       <div class="kanban-modal" id="kanbanModal" hidden>
-        <div class="kanban-sheet" role="dialog" aria-modal="true" aria-labelledby="kanbanTitle">
+        <div class="kanban-sheet" id="kanbanSheet" role="dialog" aria-modal="true" aria-labelledby="kanbanTitle">
           <div class="kanban-top"><span class="kanban-kicker">CREATE</span><button type="button" class="kanban-x" data-kanban="close" aria-label="Close"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
           <h2 id="kanbanTitle">New Kanban item</h2>
           <p class="kanban-lead" id="kanbanLead">Create a scheduled Kanban item for Personal.</p>
@@ -13765,11 +13793,23 @@
             </div>
           </div>
         </div>
+        <form class="todo-card kanban-card" id="kanbanCard" hidden>
+          <div class="todo-hd"><b>New item</b><button type="button" class="todo-x" data-kanban="close" aria-label="Close"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.25 3.25 12.75 12.75M12.75 3.25 3.25 12.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
+          <div class="todo-body">
+            <label class="todo-field"><span>Title</span><input id="kanbanCardName" type="text" maxlength="120" required autocomplete="off"></label>
+            <fieldset class="todo-field"><legend>Type</legend><div class="todo-types"><label><input type="radio" name="kanbanCardType" value="Document"><span>Document</span></label><label><input type="radio" name="kanbanCardType" value="Task"><span>Task</span></label><label><input type="radio" name="kanbanCardType" value="Meeting" checked><span>Meeting</span></label><label><input type="radio" name="kanbanCardType" value="Pod"><span>Pod</span></label></div></fieldset>
+            <div class="todo-field"><span>When</span><div class="todo-when-block"><label class="todo-opt"><span class="todo-opt-copy"><span>Date</span><span class="todo-opt-sub" id="kanbanDateLabel" hidden></span></span><input class="todo-opt-input" id="kanbanDateOn" type="checkbox"><span class="todo-opt-switch" aria-hidden="true"></span></label><div class="todo-cal" id="kanbanCal" hidden><div class="todo-cal-hd"><span class="todo-cal-title" id="kanbanCalTitle"></span><span class="todo-cal-nav"><button type="button" id="kanbanCalPrev" aria-label="Previous month">‹</button><button type="button" id="kanbanCalNext" aria-label="Next month">›</button></span></div><div class="todo-cal-week" id="kanbanCalWeek"></div><div class="todo-cal-grid" id="kanbanCalGrid"></div></div><input id="kanbanCardDate" type="hidden"><label class="todo-opt" id="kanbanTimeRow"><span>Time</span><input class="todo-opt-input" id="kanbanTimeOn" type="checkbox"><span class="todo-opt-switch" aria-hidden="true"></span></label><input id="kanbanCardTime" type="time" step="60" hidden aria-label="Time"></div></div>
+            <label class="todo-field"><span>Notes</span><textarea id="kanbanCardNotes" maxlength="240" rows="1"></textarea></label>
+          </div>
+          <div class="todo-ft"><button type="button" class="todo-cancel" data-kanban="cancel">Cancel</button><button type="submit" class="todo-save">Save</button></div>
+        </form>
       </div>
     </div>`;
+
     host.addEventListener('click', onDeskClick);
     host.addEventListener('input', (e) => {
-      if (e.target.closest('#kanbanModal')) paintKanban();
+      if (e.target.id === 'kanbanCardNotes') resizeTextarea(e.target);
+      if (e.target.closest('#kanbanSheet')) paintKanban();
       if (e.target.id === 'deskSearch') {
         deskQuery = e.target.value;
         paintDeskDrive();
@@ -13780,6 +13820,7 @@
       }
     });
     host.addEventListener('change', (e) => {
+      if (e.target.id === 'kanbanDateOn' || e.target.id === 'kanbanTimeOn') syncKanbanWhen();
       if (e.target.id === 'deskFilePick' || e.target.id === 'deskFolderPick') {
         addDeskFiles(e.target.files || []);
         e.target.value = '';
@@ -13791,6 +13832,11 @@
       paintDeskDrive();
     });
     host.addEventListener('submit', (e) => {
+      if (e.target.id === 'kanbanCard') {
+        e.preventDefault();
+        createKanbanItem();
+        return;
+      }
       if (e.target.id !== 'deskNameForm') return;
       e.preventDefault();
       const name = document.getElementById('deskNewFolder')?.value.trim();
@@ -13837,6 +13883,7 @@
   let kanbanStep = 1;
   let kanbanType = 'Meeting';
   let kanbanLane = 'personal';
+  let kanbanCalMonth = null;
   function kanbanLaneName() {
     return (DESK_LANES.find((lane) => lane.id === kanbanLane) || DESK_LANES[0]).name;
   }
@@ -13879,13 +13926,135 @@
       next.disabled = !kanbanCanAdvance();
     }
   }
+  function kanbanUseCard() {
+    return document.documentElement.dataset.theme === 'blue';
+  }
+  function paintKanbanCal() {
+    const cal = document.getElementById('kanbanCal');
+    const date = document.getElementById('kanbanCardDate');
+    const dateOn = document.getElementById('kanbanDateOn');
+    const label = document.getElementById('kanbanDateLabel');
+    if (!cal || !date) return;
+    if (!dateOn?.checked) {
+      cal.hidden = true;
+      if (label) { label.hidden = true; label.textContent = ''; }
+      return;
+    }
+    cal.hidden = false;
+    if (!date.value) date.value = todoDateIso(new Date());
+    const selected = todoParseIso(date.value) || new Date();
+    if (!kanbanCalMonth) kanbanCalMonth = new Date(selected.getFullYear(), selected.getMonth(), 1);
+    const title = document.getElementById('kanbanCalTitle');
+    if (title) title.textContent = `${TODO_MONTHS_LONG[kanbanCalMonth.getMonth()]} ${kanbanCalMonth.getFullYear()}`;
+    if (label) {
+      label.hidden = false;
+      label.textContent = formatTodoWhen(date.value).split('\n')[0];
+    }
+    const week = document.getElementById('kanbanCalWeek');
+    if (week && !week.childElementCount) {
+      TODO_WEEKDAYS.forEach((name) => {
+        const cell = document.createElement('span');
+        cell.textContent = name;
+        week.appendChild(cell);
+      });
+    }
+    const grid = document.getElementById('kanbanCalGrid');
+    if (!grid) return;
+    grid.replaceChildren();
+    const year = kanbanCalMonth.getFullYear();
+    const month = kanbanCalMonth.getMonth();
+    const firstDow = new Date(year, month, 1).getDay();
+    const days = new Date(year, month + 1, 0).getDate();
+    const todayIso = todoDateIso(new Date());
+    for (let i = 0; i < firstDow; i += 1) grid.appendChild(document.createElement('span'));
+    for (let day = 1; day <= days; day += 1) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      const iso = todoDateIso(new Date(year, month, day));
+      btn.textContent = String(day);
+      btn.setAttribute('aria-label', iso);
+      if (iso === todayIso) btn.classList.add('is-today');
+      if (iso === date.value) btn.classList.add('is-on');
+      btn.addEventListener('click', () => {
+        date.value = iso;
+        paintKanbanCal();
+      });
+      grid.appendChild(btn);
+    }
+  }
+  function shiftKanbanCal(step) {
+    const base = kanbanCalMonth || new Date();
+    kanbanCalMonth = new Date(base.getFullYear(), base.getMonth() + step, 1);
+    paintKanbanCal();
+  }
+  function syncKanbanWhen() {
+    const dateOn = document.getElementById('kanbanDateOn');
+    const timeOn = document.getElementById('kanbanTimeOn');
+    const date = document.getElementById('kanbanCardDate');
+    const time = document.getElementById('kanbanCardTime');
+    const timeRow = document.getElementById('kanbanTimeRow');
+    if (!dateOn || !timeOn || !date || !time) return;
+    if (!dateOn.checked) {
+      timeOn.checked = false;
+      timeOn.disabled = true;
+      date.value = '';
+      time.value = '';
+      time.hidden = true;
+      timeRow?.classList.add('is-locked');
+      kanbanCalMonth = null;
+      paintKanbanCal();
+      return;
+    }
+    timeOn.disabled = false;
+    timeRow?.classList.remove('is-locked');
+    if (!date.value) date.value = todoDateIso(new Date());
+    if (!timeOn.checked) {
+      time.value = '';
+      time.hidden = true;
+      paintKanbanCal();
+      return;
+    }
+    if (!time.value) {
+      const now = new Date();
+      time.value = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    }
+    time.hidden = false;
+    paintKanbanCal();
+  }
+  function resetKanbanCard() {
+    const name = document.getElementById('kanbanCardName');
+    const notes = document.getElementById('kanbanCardNotes');
+    const meeting = document.querySelector('#kanbanCard input[value="Meeting"]');
+    const dateOn = document.getElementById('kanbanDateOn');
+    const timeOn = document.getElementById('kanbanTimeOn');
+    if (name) name.value = '';
+    if (notes) { notes.value = ''; notes.style.height = ''; }
+    if (meeting) meeting.checked = true;
+    if (dateOn) dateOn.checked = false;
+    if (timeOn) timeOn.checked = false;
+    kanbanCalMonth = null;
+    syncKanbanWhen();
+    requestAnimationFrame(() => resizeTextarea(notes));
+  }
   function openKanban() {
     kanbanStep = 1;
     kanbanType = 'Meeting';
     kanbanLane = 'personal';
     const modal = document.getElementById('kanbanModal');
+    const sheet = document.getElementById('kanbanSheet');
+    const card = document.getElementById('kanbanCard');
     if (!modal) return;
-    modal.querySelectorAll('input, textarea').forEach((el) => { el.value = ''; });
+    if (kanbanUseCard()) {
+      if (sheet) sheet.hidden = true;
+      if (card) card.hidden = false;
+      resetKanbanCard();
+      modal.hidden = false;
+      document.getElementById('kanbanCardName')?.focus();
+      return;
+    }
+    if (card) card.hidden = true;
+    if (sheet) sheet.hidden = false;
+    modal.querySelectorAll('#kanbanSheet input, #kanbanSheet textarea').forEach((el) => { el.value = ''; });
     modal.hidden = false;
     paintKanban();
     document.getElementById('kanbanStart')?.focus();
@@ -13895,7 +14064,29 @@
     if (modal) modal.hidden = true;
   }
   function createKanbanItem() {
-    const start = document.getElementById('kanbanStart')?.value;
+    if (kanbanUseCard()) {
+      const name = document.getElementById('kanbanCardName')?.value.trim();
+      if (!name) return;
+      const dateOn = document.getElementById('kanbanDateOn')?.checked;
+      const timeOn = document.getElementById('kanbanTimeOn')?.checked;
+      const start = dateOn ? document.getElementById('kanbanCardDate')?.value : deskIso(deskFocus);
+      if (!start) return;
+      const startTime = timeOn ? (document.getElementById('kanbanCardTime')?.value || '') : '';
+      const details = document.getElementById('kanbanCardNotes')?.value.trim() || '';
+      const type = document.querySelector('#kanbanCard input[name="kanbanCardType"]:checked')?.value || 'Meeting';
+      deskItems = deskItems.concat([{
+        id: `n${Date.now()}`,
+        lane: 'personal',
+        title: name,
+        type: startTime ? `${type} · ${startTime}` : type,
+        date: start,
+        end: start,
+        details,
+      }]);
+      closeKanban();
+      paintDeskBoard();
+      return;
+    }
     if (!start || kanbanRangeError()) return;
     const end = document.getElementById('kanbanEnd')?.value || start;
     const name = document.getElementById('kanbanName')?.value.trim();
@@ -13918,6 +14109,8 @@
     if (!modal || modal.hidden) return false;
     if (!e.target.closest('#kanbanModal')) return false;
     if (e.target === modal) { closeKanban(); return true; }
+    if (e.target.closest('#kanbanCalPrev')) { shiftKanbanCal(-1); return true; }
+    if (e.target.closest('#kanbanCalNext')) { shiftKanbanCal(1); return true; }
     const stepBtn = e.target.closest('[data-kanban-step]');
     if (stepBtn) {
       const nextStep = Number(stepBtn.dataset.kanbanStep);
