@@ -14451,7 +14451,7 @@ const directory = [
   { id: 'office', name: 'Office hours', number: '55001928', slug: 'heavy-ion', description: 'TA hours for Heavy-ion Physics.', policy: 'approval', listed: true, requested: false, members: ['chris', 'maya'] },
   { id: 'board', name: 'Open QGP board', number: '66018420', slug: 'qgp', description: 'Anyone in the course can join.', policy: 'anyone', listed: true, requested: false, members: ['elena'] },
   { id: 'editors', name: 'Editors', number: '77018421', slug: 'heavy-ion', description: 'Invite-only notes desk.', policy: 'invite', listed: true, requested: false, members: ['chris'] },
-  { id: 'seminar', name: 'Heavy seminar', number: '88018422', slug: 'heavy', description: 'A shorter category than heavy-ion.', policy: 'approval', listed: true, requested: false, members: ['chris'] },
+  { id: 'seminar', name: 'Heavy seminar', number: '88018422', slug: 'heavy-ion', description: 'Weekly seminar for Heavy-ion Physics.', policy: 'approval', listed: true, requested: false, members: ['chris'] },
   { id: 'faculty', name: 'Faculty only', number: '10000001', slug: 'faculty-private', description: 'Private to faculty.', policy: 'invite', listed: false, requested: false, members: ['roland'] }
 ];
 const parked = [];
@@ -14508,7 +14508,8 @@ function slugOptions() {
   const set = new Set();
   joinedGroups().forEach((c) => { if (c.slug) set.add(c.slug); });
   notJoinedVisible().forEach((g) => { if (g.slug) set.add(g.slug); });
-  return [...set];
+  const rank = { 'heavy-ion': 0, qgp: 1, sphenix: 2 };
+  return [...set].sort((a, b) => (rank[a] ?? 9) - (rank[b] ?? 9) || a.localeCompare(b));
 }
 function canReview(c) { return c && c.kind === 'group' && (c.owner === ME || c.admins.includes(ME)); }
 function canManage(c) { return canReview(c); }
