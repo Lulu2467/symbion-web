@@ -404,6 +404,9 @@
   }
   .todo-card {
     width: min(420px, 100%);
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
     background: #fff;
     border: 1px solid var(--line);
     border-radius: 16px;
@@ -417,7 +420,7 @@
   .todo-x { width: 28px; height: 28px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: #1a1d21; display: grid; place-items: center; cursor: pointer; }
   .todo-x:hover { background: #f3f4f6; }
   .todo-x svg { width: 16px; height: 16px; }
-  .todo-body { padding: 14px 16px 4px; display: flex; flex-direction: column; gap: 12px; }
+  .todo-body { padding: 14px 16px 4px; display: flex; flex-direction: column; gap: 12px; overflow: auto; }
   .todo-field { display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 0; border: 0; }
   .todo-field > span, .todo-field legend { font-size: 12px; font-weight: 600; color: #1a1d21; }
   .todo-field input[type="text"],
@@ -444,7 +447,22 @@
   .todo-opt-input:checked + .todo-opt-switch { background: var(--green); }
   .todo-opt-input:focus-visible + .todo-opt-switch { outline: 2px solid var(--green); outline-offset: 2px; }
   .todo-opt-input:checked + .todo-opt-switch::after { transform: translateX(14px); }
-  #todoDate[hidden], #todoTime[hidden] { display: none !important; }
+  .todo-opt-copy { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+  .todo-opt-sub { font-size: 12px; font-weight: 500; line-height: 16px; color: var(--green); }
+  .todo-opt-sub[hidden] { display: none !important; }
+  .todo-cal { display: flex; flex-direction: column; gap: 6px; padding: 4px 0 8px; }
+  .todo-cal[hidden] { display: none !important; }
+  .todo-cal-hd { display: flex; align-items: center; justify-content: space-between; min-height: 32px; }
+  .todo-cal-title { border: 0; background: none; padding: 0; font: inherit; font-size: 14px; font-weight: 600; line-height: 20px; color: #1a1d21; }
+  .todo-cal-nav { display: flex; gap: 4px; }
+  .todo-cal-nav button { width: 28px; height: 28px; border: 0; border-radius: 8px; background: transparent; color: var(--green); font: inherit; font-size: 18px; line-height: 28px; cursor: pointer; }
+  .todo-cal-nav button:hover { background: var(--green-tint); }
+  .todo-cal-week, .todo-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
+  .todo-cal-week span { text-align: center; font-size: 11px; line-height: 16px; color: var(--muted); }
+  .todo-cal-grid button { width: 32px; height: 32px; margin: 2px auto; border: 0; border-radius: 50%; background: transparent; font: inherit; font-size: 13px; line-height: 32px; color: #1a1d21; cursor: pointer; }
+  .todo-cal-grid button.is-today { color: var(--green); font-weight: 600; }
+  .todo-cal-grid button.is-on { background: var(--green); color: #fff; font-weight: 600; }
+  #todoTime[hidden] { display: none !important; }
   .todo-field input[type="date"]::-webkit-calendar-picker-indicator,
   .todo-field input[type="time"]::-webkit-calendar-picker-indicator,
   .todo-field input[type="datetime-local"]::-webkit-calendar-picker-indicator {
@@ -8090,7 +8108,7 @@
             <div class="todo-split">
               <fieldset class="todo-field"><legend>Type</legend><div class="todo-types"><label><input type="radio" name="todoType" value="course"><span>Course</span></label><label><input type="radio" name="todoType" value="email"><span>Email</span></label><label><input type="radio" name="todoType" value="yours" checked><span>Yours</span></label></div></fieldset>
             </div>
-            <div class="todo-field" id="todoWhenField"><span>When</span><div class="todo-when-block"><label class="todo-opt"><span>Date</span><input class="todo-opt-input" id="todoDateOn" type="checkbox"><span class="todo-opt-switch" aria-hidden="true"></span></label><input id="todoDate" type="date" hidden aria-label="Date"><label class="todo-opt" id="todoTimeRow"><span>Time</span><input class="todo-opt-input" id="todoTimeOn" type="checkbox"><span class="todo-opt-switch" aria-hidden="true"></span></label><input id="todoTime" type="time" step="60" hidden aria-label="Time"></div></div>
+            <div class="todo-field" id="todoWhenField"><span>When</span><div class="todo-when-block"><label class="todo-opt"><span class="todo-opt-copy"><span>Date</span><span class="todo-opt-sub" id="todoDateLabel" hidden></span></span><input class="todo-opt-input" id="todoDateOn" type="checkbox"><span class="todo-opt-switch" aria-hidden="true"></span></label><div class="todo-cal" id="todoCal" hidden><div class="todo-cal-hd"><span class="todo-cal-title" id="todoCalTitle"></span><span class="todo-cal-nav"><button type="button" id="todoCalPrev" aria-label="Previous month">‹</button><button type="button" id="todoCalNext" aria-label="Next month">›</button></span></div><div class="todo-cal-week" id="todoCalWeek"></div><div class="todo-cal-grid" id="todoCalGrid"></div></div><input id="todoDate" type="hidden"><label class="todo-opt" id="todoTimeRow"><span>Time</span><input class="todo-opt-input" id="todoTimeOn" type="checkbox"><span class="todo-opt-switch" aria-hidden="true"></span></label><input id="todoTime" type="time" step="60" hidden aria-label="Time"></div></div>
             <label class="todo-field"><span>Notes</span><textarea id="todoNotes" maxlength="240" rows="3"></textarea></label>
           </div>
           <div class="todo-ft"><button type="button" class="todo-cancel" id="todoCancel">Cancel</button><button type="submit" class="todo-save">Save</button></div>
@@ -8334,6 +8352,7 @@
   const TODO_MARK = '<svg class="todo-mark" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.6 8.2 6.5 11.1 12.4 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   let todoEditing = null;
   let todoPending = null;
+  let todoCalMonth = null;
   function paintHomeTodoButtons() {
     const blue = document.documentElement.dataset.theme === 'blue';
     document.querySelectorAll('#tail-home .rem-check, #tail-home .rem button.t').forEach((el) => {
@@ -8450,6 +8469,7 @@
   }
   const TODO_WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const TODO_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const TODO_MONTHS_LONG = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   function formatTodoWhen(value) {
     const m = String(value || '').match(/^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}:\d{2}))?/);
     if (!m) return '';
@@ -8490,6 +8510,70 @@
     }
     return { date: '', time: '' };
   }
+  function todoParseIso(value) {
+    const m = String(value || '').match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (!m) return null;
+    return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+  }
+  function paintTodoCal() {
+    const cal = document.getElementById('todoCal');
+    const date = document.getElementById('todoDate');
+    const dateOn = document.getElementById('todoDateOn');
+    const label = document.getElementById('todoDateLabel');
+    if (!cal || !date) return;
+    if (!dateOn?.checked) {
+      cal.hidden = true;
+      if (label) { label.hidden = true; label.textContent = ''; }
+      return;
+    }
+    cal.hidden = false;
+    if (!date.value) date.value = todoDateIso(new Date());
+    const selected = todoParseIso(date.value) || new Date();
+    if (!todoCalMonth) todoCalMonth = new Date(selected.getFullYear(), selected.getMonth(), 1);
+    const title = document.getElementById('todoCalTitle');
+    if (title) title.textContent = `${TODO_MONTHS_LONG[todoCalMonth.getMonth()]} ${todoCalMonth.getFullYear()}`;
+    if (label) {
+      label.hidden = false;
+      label.textContent = formatTodoWhen(date.value).split('\n')[0];
+    }
+    const week = document.getElementById('todoCalWeek');
+    if (week && !week.childElementCount) {
+      TODO_WEEKDAYS.forEach((name) => {
+        const cell = document.createElement('span');
+        cell.textContent = name;
+        week.appendChild(cell);
+      });
+    }
+    const grid = document.getElementById('todoCalGrid');
+    if (!grid) return;
+    grid.replaceChildren();
+    const year = todoCalMonth.getFullYear();
+    const month = todoCalMonth.getMonth();
+    const firstDow = new Date(year, month, 1).getDay();
+    const days = new Date(year, month + 1, 0).getDate();
+    const todayIso = todoDateIso(new Date());
+    for (let i = 0; i < firstDow; i += 1) grid.appendChild(document.createElement('span'));
+    for (let day = 1; day <= days; day += 1) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      const iso = todoDateIso(new Date(year, month, day));
+      btn.textContent = String(day);
+      btn.setAttribute('aria-label', iso);
+      btn.setAttribute('aria-pressed', iso === date.value ? 'true' : 'false');
+      if (iso === todayIso) btn.classList.add('is-today');
+      if (iso === date.value) btn.classList.add('is-on');
+      btn.addEventListener('click', () => {
+        date.value = iso;
+        paintTodoCal();
+      });
+      grid.appendChild(btn);
+    }
+  }
+  function shiftTodoCal(step) {
+    const base = todoCalMonth || new Date();
+    todoCalMonth = new Date(base.getFullYear(), base.getMonth() + step, 1);
+    paintTodoCal();
+  }
   function syncTodoWhen() {
     const dateOn = document.getElementById('todoDateOn');
     const timeOn = document.getElementById('todoTimeOn');
@@ -8502,18 +8586,19 @@
       timeOn.disabled = true;
       date.value = '';
       time.value = '';
-      date.hidden = true;
       time.hidden = true;
       timeRow?.classList.add('is-locked');
+      todoCalMonth = null;
+      paintTodoCal();
       return;
     }
     timeOn.disabled = false;
     timeRow?.classList.remove('is-locked');
     if (!date.value) date.value = todoDateIso(new Date());
-    date.hidden = false;
     if (!timeOn.checked) {
       time.value = '';
       time.hidden = true;
+      paintTodoCal();
       return;
     }
     if (!time.value) {
@@ -8521,6 +8606,7 @@
       time.value = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
     }
     time.hidden = false;
+    paintTodoCal();
   }
   function openTodoEditor(rem) {
     todoEditing = rem || null;
@@ -8530,6 +8616,8 @@
     document.getElementById('todoFormTitle').textContent = rem ? 'Edit to-do' : 'Add to-do';
     document.getElementById('todoTitle').value = rem ? rem.querySelector('.t').textContent.trim() : '';
     const when = todoWhenParts(rem);
+    const picked = todoParseIso(when.date);
+    todoCalMonth = picked ? new Date(picked.getFullYear(), picked.getMonth(), 1) : null;
     const dateOn = document.getElementById('todoDateOn');
     const timeOn = document.getElementById('todoTimeOn');
     document.getElementById('todoDate').value = when.date;
@@ -8665,6 +8753,8 @@
   }
   document.getElementById('todoDateOn')?.addEventListener('change', syncTodoWhen);
   document.getElementById('todoTimeOn')?.addEventListener('change', syncTodoWhen);
+  document.getElementById('todoCalPrev')?.addEventListener('click', () => shiftTodoCal(-1));
+  document.getElementById('todoCalNext')?.addEventListener('click', () => shiftTodoCal(1));
   document.getElementById('todoForm')?.addEventListener('submit', saveTodo);
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && document.getElementById('todoScrim') && !document.getElementById('todoScrim').hidden) closeTodo();
