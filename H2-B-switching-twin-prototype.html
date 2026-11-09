@@ -6331,6 +6331,9 @@
   #teamHost .sheet .search { margin: 12px 0 14px; height: 36px; padding: 0 12px; border-radius: 8px; background: #f2f3f5; }
   #teamHost .sheet-head .icon-btn { width: 28px; height: 28px; border: 0; border-radius: 0; background: transparent; color: #656d76; font-size: 20px; line-height: 1; }
   #teamHost .sheet-head .icon-btn:hover { border: 0; background: transparent; color: #1a1d21; }
+  #teamHost .sheet-head .sheet-x-blue { display: none; }
+  html[data-theme="blue"] #teamHost .sheet-head .sheet-x-mark { display: none; }
+  html[data-theme="blue"] #teamHost .sheet-head .sheet-x-blue { display: block; width: 20px; height: 20px; }
   html[data-theme="blue"] #teamHost .modal { background: transparent; }
   html[data-theme="blue"] #teamHost .sheet {
     border-color: #d5dbe1;
@@ -7854,7 +7857,7 @@
     <form class="sheet" id="sheet">
       <div class="sheet-head">
         <h2 id="sheetTitle"></h2>
-        <button type="button" class="icon-btn" data-close aria-label="Close">×</button>
+        <button type="button" class="icon-btn" data-close aria-label="Close"><span class="sheet-x-mark">×</span><svg class="sheet-x-blue" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M512 0C794.769794 0 1024 229.805588 1024 512 1024 794.769794 794.194408 1024 512 1024 229.230208 1024 0 794.194408 0 512 0 229.230208 229.805588 0 512 0ZM512 984.615385C772.648448 984.615385 984.615385 772.81286 984.615385 512 984.615385 251.351552 772.81286 39.384615 512 39.384615 251.351552 39.384615 39.384615 251.18714 39.384615 512 39.384615 772.648448 251.18714 984.615385 512 984.615385ZM512 539.849129 358.829792 693.019336C351.139468 700.70966 338.670988 700.70966 330.980664 693.019336 323.29034 685.329012 323.29034 672.860532 330.980664 665.170208L484.150871 512 330.980664 358.829792C323.29034 351.139468 323.29034 338.670988 330.980664 330.980664 338.670988 323.29034 351.139468 323.29034 358.829792 330.980664L512 484.150871 665.170208 330.980664C672.860532 323.29034 685.329012 323.29034 693.019336 330.980664 700.70966 338.670988 700.70966 351.139468 693.019336 358.829792L539.849129 512 693.019336 665.170208C700.70966 672.860532 700.70966 685.329012 693.019336 693.019336 685.329012 700.70966 672.860532 700.70966 665.170208 693.019336L512 539.849129Z"/></svg></button>
       </div>
       <p class="lead" id="sheetLead"></p>
       <div id="sheetBody"></div>
