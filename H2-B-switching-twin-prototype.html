@@ -15935,7 +15935,7 @@ $('threadMore').addEventListener('click', (e) => {
 });
 document.getElementById('teamHost').addEventListener('click', (e) => {
   if (document.documentElement.dataset.theme !== 'blue' || !state.panel) return;
-  if (e.target.closest('#panel, #threadMore, #headFace, #modal, #ctx')) return;
+  if (e.target.closest('#panel, #threadMore, #headFace, #modal, #ctx, #chatSearch, #searchBtn')) return;
   state.panel = false;
   renderChrome();
   renderPanel();
@@ -15974,6 +15974,16 @@ $('headFace').addEventListener('click', () => {
   renderChrome();
   renderPanel();
 });
+let panelScroll = 0;
+function rememberPanelScroll() {
+  const panel = $('panel');
+  if (panel && state.panel) panelScroll = panel.scrollTop;
+}
+function restorePanelScroll() {
+  if (!state.panel) return;
+  const panel = $('panel');
+  if (panel) panel.scrollTop = panelScroll;
+}
 function closeHistory() {
   state.chatSearch = false;
   state.chatQuery = '';
@@ -15982,14 +15992,26 @@ function closeHistory() {
   const box = $('chatQ');
   if (box) box.value = '';
 }
-$('searchBtn').addEventListener('click', () => {
-  if (state.chatSearch) closeHistory();
-  else state.chatSearch = true;
+$('searchBtn').addEventListener('click', (e) => {
+  if (state.chatSearch) {
+    e.stopPropagation();
+    closeHistory();
+  } else {
+    rememberPanelScroll();
+    state.chatSearch = true;
+  }
   renderChrome();
   renderHistory();
+  restorePanelScroll();
   if (state.chatSearch) $('chatQ').focus();
 });
-$('historyClose').addEventListener('click', () => { closeHistory(); renderChrome(); renderHistory(); });
+$('historyClose').addEventListener('click', (e) => {
+  e.stopPropagation();
+  closeHistory();
+  renderChrome();
+  renderHistory();
+  restorePanelScroll();
+});
 $('chatQ').addEventListener('input', () => { state.chatQuery = $('chatQ').value; renderHistory(); });
 $('chatSearch').addEventListener('click', (e) => {
   const cat = e.target.closest('[data-history]');
@@ -16195,6 +16217,7 @@ $('log').addEventListener('click', (e) => {
 });
 $('panel').addEventListener('click', (e) => {
   if (e.target.closest('[data-open-history]')) {
+    rememberPanelScroll();
     state.chatSearch = true;
     state.historyKind = '';
     state.historyWho = '';
