@@ -8298,14 +8298,26 @@
     const pad = (n) => String(n).padStart(2, '0');
     return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
   }
+  const TODO_WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const TODO_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   function formatTodoWhen(value) {
-    const m = String(value || '').match(/^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})/);
-    return m ? `${m[1]}\n${m[2]}` : '';
+    const m = String(value || '').match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}:\d{2})/);
+    if (!m) return '';
+    const date = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+    const now = new Date();
+    const start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const diff = Math.round((date - start) / 86400000);
+    let label = `${TODO_MONTHS[date.getMonth()]} ${date.getDate()}`;
+    if (diff === 0) label = 'Today';
+    else if (diff === 1) label = 'Tomorrow';
+    else if (diff === -1) label = 'Yesterday';
+    else if (diff > 1 && diff < 7) label = TODO_WEEKDAYS[date.getDay()];
+    else if (date.getFullYear() !== now.getFullYear()) label = `${label}, ${date.getFullYear()}`;
+    return `${label}\n${m[4]}`;
   }
-  function todoWhenValue(text) {
-    const flat = String(text || '').replace(/\s+/g, ' ').trim();
-    const m = flat.match(/^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2})$/);
-    return m ? `${m[1]}T${m[2]}` : todoStamp(new Date());
+  function todoWhenValue(rem) {
+    const stored = rem?.querySelector('.when')?.dataset.when || '';
+    return /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(stored) ? stored.slice(0, 16) : todoStamp(new Date());
   }
   function openTodoEditor(rem) {
     todoEditing = rem || null;
@@ -8314,7 +8326,7 @@
     document.getElementById('todoConfirm').hidden = true;
     document.getElementById('todoFormTitle').textContent = rem ? 'Edit to-do' : 'Add to-do';
     document.getElementById('todoTitle').value = rem ? rem.querySelector('.t').textContent.trim() : '';
-    document.getElementById('todoWhen').value = todoWhenValue(rem ? rem.querySelector('.when').textContent : '');
+    document.getElementById('todoWhen').value = todoWhenValue(rem);
     document.getElementById('todoNotes').value = rem ? todoNotesOf(rem) : '';
     const type = rem ? todoTypeOf(rem) : 'yours';
     const radio = document.querySelector(`#todoForm input[name="todoType"][value="${type}"]`);
@@ -8334,7 +8346,8 @@
   function writeTodoRow(rem, title, type, when, notes) {
     rem.querySelector('.t').textContent = title;
     const whenEl = rem.querySelector('.when');
-    whenEl.textContent = when;
+    whenEl.dataset.when = when;
+    whenEl.textContent = formatTodoWhen(when);
     whenEl.classList.toggle('hot', when.slice(0, 10) === todoStamp(new Date()).slice(0, 10));
     applyTodoBadge(rem.querySelector('.badge'), type);
     setTodoNotes(rem, notes);
@@ -8345,8 +8358,8 @@
     const title = document.getElementById('todoTitle').value.trim();
     if (!title) return;
     const type = document.querySelector('#todoForm input[name="todoType"]:checked')?.value || 'yours';
-    const when = formatTodoWhen(document.getElementById('todoWhen').value);
-    if (!when) return;
+    const when = document.getElementById('todoWhen').value;
+    if (!formatTodoWhen(when)) return;
     const notes = document.getElementById('todoNotes').value.trim();
     const list = document.querySelector('#tail-home .two-main-l');
     if (todoEditing) {
