@@ -187,6 +187,7 @@
   .osbar-folder-btn { display: none; }
   .osbar-folder-menu { display: contents; }
   html[data-theme="blue"] .osbar-folder-btn { display: inline-flex; }
+  html[data-theme="blue"] .osbar-folder.is-open { z-index: 6; }
   html[data-theme="blue"] .osbar-folder.is-open .osbar-folder-btn { background: #d4e4ee; color: #1f1f1f; }
   html[data-theme="blue"] .osbar-folder-menu {
     display: none;
@@ -207,8 +208,8 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: -8px;
-    height: 8px;
+    top: -14px;
+    height: 14px;
   }
   html[data-theme="blue"] .osbar-folder.is-open .osbar-folder-menu { display: flex; flex-direction: column; gap: 2px; }
   html[data-theme="blue"] .osbar-folder-menu .osbar-bm { gap: 8px; padding: 8px 10px; border-radius: 8px; justify-content: flex-start; }
@@ -11156,18 +11157,24 @@
     folder.classList.toggle('is-open', open);
     btn.setAttribute('aria-expanded', open ? 'true' : 'false');
   }
+  let bookmarkFolderTimer = 0;
   const bookmarkFolder = frame.querySelector('.osbar-folder');
   const bookmarkFolderBtn = bookmarkFolder && bookmarkFolder.querySelector('.osbar-folder-btn');
   if (bookmarkFolderBtn) {
     bookmarkFolderBtn.addEventListener('click', (e) => {
       e.stopPropagation();
+      clearTimeout(bookmarkFolderTimer);
       setBookmarkFolder(true);
     });
     bookmarkFolder.addEventListener('mouseenter', () => {
-      if (document.documentElement.dataset.theme === 'blue') setBookmarkFolder(true);
+      if (document.documentElement.dataset.theme !== 'blue') return;
+      clearTimeout(bookmarkFolderTimer);
+      setBookmarkFolder(true);
     });
     bookmarkFolder.addEventListener('mouseleave', () => {
-      if (document.documentElement.dataset.theme === 'blue') setBookmarkFolder(false);
+      if (document.documentElement.dataset.theme !== 'blue') return;
+      clearTimeout(bookmarkFolderTimer);
+      bookmarkFolderTimer = setTimeout(() => setBookmarkFolder(false), 240);
     });
     bookmarkFolder.querySelectorAll('[data-osbar]').forEach((btn) => {
       btn.addEventListener('click', () => setBookmarkFolder(false));
