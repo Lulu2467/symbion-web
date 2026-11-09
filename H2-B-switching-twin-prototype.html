@@ -199,7 +199,7 @@
     border: 1px solid #e6e6e8;
     border-radius: 12px;
     box-shadow: 0 10px 28px rgba(20, 24, 28, .12);
-    z-index: 5;
+    z-index: 80;
   }
   html[data-theme="blue"] .osbar-folder-menu::before {
     content: "";
@@ -5937,6 +5937,11 @@
   #teamHost .composer:focus-within { border: 0; box-shadow: none; }
   #teamHost .toast { top: auto; bottom: 24px; opacity: 0; transform: translateX(-50%) translateY(6px); }
   #teamHost .toast.on { opacity: 1; transform: translateX(-50%); }
+  html[data-theme="blue"] #frame > .toast.show {
+    top: auto;
+    bottom: 24px;
+    z-index: 70;
+  }
   #teamHost .list-brand,
   #teamHost .list-title { display: none; }
   #teamHost .list-top { display: flex; align-items: center; gap: 8px; padding: 12px 12px 8px; }
@@ -7747,7 +7752,7 @@
   };
 
   const $ = (id) => document.getElementById(id);
-  const composer = $('composer'), picker = $('picker'), menu = $('menu'), toast = $('toast');
+  const composer = $('composer'), picker = $('picker'), menu = $('menu'), toast = document.getElementById('toastText')?.closest('.toast') || $('toast');
   let current = 'citta', previous = 'citta', toastTimer;
 
   const CITTA_AVATAR_SRC = 'assets/citta-avatar.png?v=2';
@@ -10027,11 +10032,12 @@
       }
     });
 
-    function openNewTab() {
+    function openNewTab(label) {
       const tabs = document.querySelector('.osbar-tabs');
       const search = document.getElementById('headerSearch');
       const main = document.querySelector('.main');
       if (!tabs) return;
+      const name = label || 'New tab';
       const make = (label, active, animate) => {
         const tab = document.createElement('button');
         tab.type = 'button';
@@ -10054,10 +10060,17 @@
         tabs.appendChild(tab);
         return tab;
       };
-      if (tabs.children.length >= 3) {
+      const existing = label
+        ? [...tabs.querySelectorAll('.osbar-tab')].find((t) => t.querySelector('.osbar-tab-label')?.textContent === name)
+        : null;
+      if (existing) {
+        tabs.querySelectorAll('.osbar-tab').forEach((t) => t.classList.remove('on'));
+        existing.classList.add('on');
+      } else if (tabs.children.length >= 3) {
         const last = tabs.querySelector('.osbar-tab:last-child');
         tabs.querySelectorAll('.osbar-tab').forEach((t) => t.classList.remove('on'));
         if (last) {
+          if (label) last.querySelector('.osbar-tab-label').textContent = name;
           last.classList.add('on');
           last.classList.remove('is-in');
           void last.offsetWidth;
@@ -10065,7 +10078,7 @@
         }
       } else {
         tabs.querySelectorAll('.osbar-tab').forEach((t) => t.classList.remove('on'));
-        make('New tab', true, true);
+        make(name, true, true);
       }
       if (search) search.value = '';
       if (main) {
@@ -10090,7 +10103,13 @@
           openSymbion();
           return;
         }
-        flashEl(el);
+        if (document.documentElement.dataset.theme === 'blue' && (el.dataset.osbar === 'scholar' || el.dataset.osbar === 'arxiv' || el.dataset.osbar === 'notion')) {
+          const name = el.querySelector('span')?.textContent.trim() || el.dataset.osbar;
+          openNewTab(name);
+          showToastMsg(name);
+          return;
+        }
+
         const label = el.getAttribute('aria-label') || el.textContent.trim();
         showToastMsg(`Chrome · ${label}`);
       });
