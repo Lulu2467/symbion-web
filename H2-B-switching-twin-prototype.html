@@ -6658,31 +6658,52 @@
   }
   html[data-theme="blue"] #teamHost .qref {
     display: block;
-    align-self: stretch;
-    width: auto;
-    max-width: 100%;
+    align-self: flex-start;
+    width: fit-content;
+    max-width: min(100%, 280px);
     margin: 0;
-    padding: 1px 0 1px 8px;
+    padding: 6px 8px;
     border: 0;
-    border-left: 2px solid #c5c9cf;
-    border-radius: 0;
-    background: transparent;
-    color: #8b919a;
+    border-radius: 4px;
+    background: #eeedf0;
+    color: #8a8a8a;
     font: inherit;
     font-size: 12px;
     font-weight: 400;
-    line-height: 1.4;
+    line-height: 18px;
     text-align: left;
+    cursor: pointer;
   }
   html[data-theme="blue"] #teamHost .qref .qline {
-    display: block;
+    display: -webkit-box;
     overflow: hidden;
-    color: #8b919a;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    color: #8a8a8a;
+    white-space: normal;
+    word-break: break-word;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
-  html[data-theme="blue"] #teamHost .msg.mine .qref { color: #8b919a; border-left-color: #c5c9cf; background: transparent; }
-  html[data-theme="blue"] #teamHost .msg.mine .qref .qline { color: #8b919a; }
+  html[data-theme="blue"] #teamHost .msg.mine .qref { align-self: flex-end; color: #8a8a8a; background: #eeedf0; }
+  html[data-theme="blue"] #teamHost .msg.mine .qref .qline { color: #8a8a8a; }
+  #teamHost .quote-peek { display: none; }
+  html[data-theme="blue"] #teamHost .quote-peek:not([hidden]) {
+    display: block;
+    position: fixed;
+    z-index: 40;
+    max-width: 360px;
+    max-height: 280px;
+    overflow: auto;
+    padding: 14px 16px;
+    border-radius: 8px;
+    background: #f3f3f4;
+    color: #1a1d21;
+    font-size: 14px;
+    line-height: 22px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, .14);
+  }
+  html[data-theme="blue"] #teamHost .quote-peek a { color: #576b95; text-decoration: underline; }
   html[data-theme="blue"] #teamHost .quote-bar {
     align-items: center;
     margin: 0 2px 8px;
@@ -8039,6 +8060,7 @@
         </div>
         <button type="button" class="announce clip" id="announce" hidden></button>
         <div class="log" id="log"></div>
+        <div class="quote-peek" id="quotePeek" hidden></div>
         <div class="mention" id="mention" hidden role="listbox" aria-label="Mention someone"></div>
         <div class="emoji" id="emoji" hidden></div>
         <form class="composer" id="composer">
@@ -15490,6 +15512,42 @@ function renderHistory() {
   }).join('')}</div>` : '';
   $('historyBody').innerHTML = people + head + list.map(historyHit).join('');
 }
+let quotePeekTimer = 0;
+function quotePeekBody(ref) {
+  if (!ref) return '';
+  if (ref.file && ref.text) return `${ref.text}\n${ref.file.name}`;
+  if (ref.file) return ref.file.name;
+  return ref.text || '';
+}
+function linkifyQuote(text) {
+  return esc(text).replace(/https?:\/\/[^\s<]+/g, (url) => `<a href="${url}" target="_blank" rel="noreferrer">${url}</a>`);
+}
+function hideQuotePeek() {
+  const peek = $('quotePeek');
+  if (peek) peek.hidden = true;
+}
+function showQuotePeek(btn) {
+  if (document.documentElement.dataset.theme !== 'blue') return;
+  const ref = findMessage(current(), btn.dataset.jump);
+  const peek = $('quotePeek');
+  if (!ref || !peek) return;
+  clearTimeout(quotePeekTimer);
+  peek.innerHTML = linkifyQuote(quotePeekBody(ref));
+  peek.hidden = false;
+  const r = btn.getBoundingClientRect();
+  const w = peek.offsetWidth;
+  const h = peek.offsetHeight;
+  const mine = !!btn.closest('.msg.mine');
+  const log = $('log').getBoundingClientRect();
+  let left = mine ? r.left - w - 8 : r.right + 8;
+  let top = r.top + (r.height - h) / 2;
+  left = Math.max(log.left + 8, Math.min(left, log.right - w - 8));
+  top = Math.max(log.top + 8, Math.min(top, log.bottom - h - 8));
+  const origin = peek.offsetParent ? peek.offsetParent.getBoundingClientRect() : { left: 0, top: 0 };
+  const scale = origin.width && peek.offsetParent ? origin.width / peek.offsetParent.offsetWidth || 1 : 1;
+  peek.style.left = `${(left - origin.left) / scale}px`;
+  peek.style.top = `${(top - origin.top) / scale}px`;
+}
 function quoteBlock(ref, blue) {
   const who = ref.who ? person(ref.who) : null;
   const whoName = who ? who.name : '';
@@ -16556,6 +16614,24 @@ $('msgMenu').addEventListener('click', (e) => {
   runMsgAction(key);
   if (key !== 'forward' && key !== 'back') closePopovers();
 });
+$('log').addEventListener('mouseover', (e) => {
+  const btn = e.target.closest('.qref');
+  if (btn) showQuotePeek(btn);
+});
+$('log').addEventListener('mouseout', (e) => {
+  const btn = e.target.closest('.qref');
+  if (!btn) return;
+  const next = e.relatedTarget;
+  if (next && (btn.contains(next) || $('quotePeek')?.contains(next))) return;
+  clearTimeout(quotePeekTimer);
+  quotePeekTimer = setTimeout(hideQuotePeek, 120);
+});
+$('quotePeek').addEventListener('mouseenter', () => clearTimeout(quotePeekTimer));
+$('quotePeek').addEventListener('mouseleave', () => {
+  clearTimeout(quotePeekTimer);
+  quotePeekTimer = setTimeout(hideQuotePeek, 120);
+});
+$('log').addEventListener('scroll', hideQuotePeek);
 $('log').addEventListener('click', (e) => {
   const who = e.target.closest('[data-person]');
   if (who) { openDirect(who.dataset.person); return; }
