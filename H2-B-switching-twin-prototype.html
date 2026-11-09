@@ -14344,7 +14344,7 @@ function memberPane(c) {
     return `<button type="button" class="member" ${attrs}><span class="av hue-${p.hue}">${esc(p.short)}</span><span>${esc(self ? 'You' : p.name.split(' ')[0])}</span></button>`;
   }).join('');
   const more = !open && ids.length > 8 ? `<button type="button" class="member" data-toggle-members><span class="av hue-slate">+</span><span>More</span></button>` : '';
-  const manage = canManage(c) && open ? `<div class="manage-list">${memberItems(c)}</div>` : '';
+  const manage = canManage(c) && open && document.documentElement.dataset.theme !== 'blue' ? `<div class="manage-list">${memberItems(c)}</div>` : '';
   return `<div class="members">${cells}${more}</div>${manage}`;
 }
 function memberItems(c) {
@@ -14397,6 +14397,7 @@ function renderPanel() {
     return;
   }
   const manage = canManage(c);
+  const blue = document.documentElement.dataset.theme === 'blue';
   const slugBtn = c.slug ? `<button type="button" class="slug-btn" data-slug-filter="${esc(c.slug)}">${esc(c.slug)}</button>` : '<span>No slug</span>';
   if (manage && state.emailWhere !== c.id) {
     state.emailWhere = c.id;
@@ -14414,10 +14415,11 @@ function renderPanel() {
     <div class="wx-field"><span class="k">Group number</span><span class="v"><button type="button" class="num-btn" data-copy-number="${esc(c.number)}">${esc(c.number)}</button></span></div>
     <p class="panel-note">This number stays fixed if the name, slug, or invites change.</p>
     <div class="wx-field"><span class="k">Group slug</span><span class="v">${slugBtn}</span></div>
-    ${manage ? '<div class="wx-field"><button type="button" class="text-btn" data-edit-details>Edit details</button></div>' : ''}
+    ${manage && !blue ? '<div class="wx-field"><button type="button" class="text-btn" data-edit-details>Edit details</button></div>' : ''}
     <button type="button" class="history-entry" data-open-history><span>Search chat</span><i aria-hidden="true">›</i></button>
     ${switches(c)}
     <label class="nick">My name in this group<input id="nick" value="${esc(c.myName)}" maxlength="32"></label>
+    ${manage && blue ? `<div class="manage-list">${memberItems(c)}</div><div class="wx-field"><button type="button" class="text-btn" data-edit-details>Edit details</button></div>` : ''}
     ${manage ? `<div class="block"><h4>DIRECTORY AND JOINING</h4>
       <label class="checkline"><input type="checkbox" id="listedToggle" ${c.listed ? 'checked' : ''}> List in the group directory</label>
       <label class="field">Join policy<select id="policyPick"><option value="anyone"${c.policy === 'anyone' ? ' selected' : ''}>Anyone can join</option><option value="approval"${c.policy === 'approval' ? ' selected' : ''}>Approve each request</option><option value="invite"${c.policy === 'invite' ? ' selected' : ''}>Invite-only</option></select></label>
