@@ -155,6 +155,7 @@
   html[data-theme="blue"] .citta-panel {
     top: 48px;
     right: 0;
+    width: var(--citta-w, 320px);
     border-left: 1px solid var(--line);
     border-radius: 0;
     overflow: hidden;
@@ -2703,6 +2704,32 @@
   .citta-panel[hidden] { display: none !important; }
   .frame.citta-open .citta-panel { transform: none; }
   .frame.citta-open .body .main { margin-right: 320px; }
+  html[data-theme="blue"] .frame.citta-open .body .main { margin-right: var(--citta-w, 320px); }
+  .citta-resize { display: none; }
+  html[data-theme="blue"] .citta-resize {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 12px;
+    cursor: col-resize;
+    touch-action: none;
+    z-index: 4;
+  }
+  html[data-theme="blue"] .citta-resize::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: transparent;
+  }
+  html[data-theme="blue"] .citta-resize:hover::before,
+  html[data-theme="blue"] .frame.citta-resizing .citta-resize::before { background: #3c7a94; }
+  html[data-theme="blue"] .frame.citta-resizing,
+  html[data-theme="blue"] .frame.citta-resizing * { cursor: col-resize; user-select: none; }
   .citta-panel .ph { padding: 14px 16px 12px; display: flex; gap: 6px; align-items: center; flex: none; min-width: 0; overflow: hidden; border-bottom: 1px solid var(--line); }
   .citta-panel .ph .citta-av { width: 28px; height: 28px; border-radius: 10px; background: transparent; color: var(--green-dark); font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex: none; overflow: hidden; padding: 0; }
   .citta-panel .ph .citta-av img { border-radius: 10px; }
@@ -7617,6 +7644,7 @@
       </div>
 
       <aside class="citta-panel" id="cittaPanel" aria-label="Citta panel" hidden>
+        <div class="citta-resize" role="separator" aria-orientation="vertical" aria-label="Resize Citta" aria-valuemin="280" aria-valuemax="640" aria-valuenow="320" tabindex="0"></div>
         <div class="ph">
           <span class="citta-av citta-portrait" id="cittaPanelAv" aria-hidden="true"><img src="assets/citta-avatar.png?v=2" width="28" height="28" alt=""></span>
           <b id="cittaPanelName">Citta</b>
@@ -10604,6 +10632,65 @@
     fit();
     if (open) requestAnimationFrame(() => { bindCittaScrollFade(); syncCittaScrollFade(); });
   }
+
+  const CITTA_MIN = 280;
+  const CITTA_MAX_CAP = 640;
+  const CITTA_MAIN_MIN = 560;
+  let cittaWidth = 320;
+  function cittaMax() {
+    const rail = document.getElementById('primaryRail');
+    const railW = rail ? rail.offsetWidth : 52;
+    const room = frame.clientWidth - railW - CITTA_MAIN_MIN;
+    return Math.max(CITTA_MIN, Math.min(CITTA_MAX_CAP, room));
+  }
+  function applyCittaWidth(px) {
+    const max = cittaMax();
+    cittaWidth = Math.round(Math.min(max, Math.max(CITTA_MIN, px)));
+    frame.style.setProperty('--citta-w', cittaWidth + 'px');
+    const handle = document.querySelector('.citta-resize');
+    if (handle) {
+      handle.setAttribute('aria-valuenow', String(cittaWidth));
+      handle.setAttribute('aria-valuemax', String(max));
+    }
+  }
+  function bindCittaResize() {
+    const handle = document.querySelector('.citta-resize');
+    if (!handle || handle.dataset.bound) return;
+    handle.dataset.bound = '1';
+    let drag = null;
+    const end = (e) => {
+      if (!drag || (e && e.pointerId != null && e.pointerId !== drag.id)) return;
+      drag = null;
+      frame.classList.remove('citta-resizing');
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', end);
+      window.removeEventListener('pointercancel', end);
+    };
+    const onMove = (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      applyCittaWidth(drag.w - (e.clientX - drag.x) / drag.scale);
+    };
+    handle.addEventListener('pointerdown', (e) => {
+      if (document.documentElement.dataset.theme !== 'blue') return;
+      if (e.button != null && e.button !== 0) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const scale = frame.getBoundingClientRect().width / frame.offsetWidth || 1;
+      drag = { id: e.pointerId, x: e.clientX, w: cittaWidth, scale };
+      frame.classList.add('citta-resizing');
+      window.addEventListener('pointermove', onMove);
+      window.addEventListener('pointerup', end);
+      window.addEventListener('pointercancel', end);
+      try { handle.setPointerCapture(e.pointerId); } catch (_) {}
+    });
+    handle.addEventListener('keydown', (e) => {
+      if (document.documentElement.dataset.theme !== 'blue') return;
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      e.preventDefault();
+      applyCittaWidth(cittaWidth + (e.key === 'ArrowLeft' ? 24 : -24));
+    });
+  }
+  bindCittaResize();
 
   const dock = $('dock');
   function placeHeaderSearch() {
