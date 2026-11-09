@@ -362,6 +362,81 @@
   html[data-theme="blue"] .two-grid { column-gap: 48px; }
   html[data-theme="blue"] .reminders { gap: 6px; }
   html[data-theme="blue"] .rem { padding: 8px 0; }
+  .rem-check { display: none; }
+  html[data-theme="blue"] #tail-home .rem-check {
+    display: grid;
+    place-items: center;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    border: 1.5px solid #c5cad1;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--green);
+    flex: none;
+    cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .rem-check svg { width: 10px; height: 10px; opacity: 0; }
+  html[data-theme="blue"] #tail-home .rem-check:hover { border-color: var(--green); background: var(--green-tint); }
+  html[data-theme="blue"] #tail-home .rem-check:hover svg { opacity: 1; }
+  html[data-theme="blue"] #tail-home .rem.is-done { display: none; }
+  html:not([data-theme="blue"]) #tail-home .rem.is-added { display: none; }
+  html[data-theme="blue"] #tail-home .btn-soft .todo-mark { width: 12px; height: 12px; flex: none; }
+  .todo-empty { display: none; margin: 0; padding: 12px 0; font-size: 12px; color: var(--muted); }
+  html[data-theme="blue"] #tail-home .todo-empty { display: block; }
+  .todo-scrim[hidden] { display: none !important; }
+  .todo-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 80;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(26, 29, 33, .28);
+    padding: 24px;
+  }
+  .todo-card {
+    width: min(420px, 100%);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: 0 16px 40px rgba(20, 24, 28, .12);
+    color: #1a1d21;
+    font-size: 13px;
+  }
+  .todo-card[hidden] { display: none !important; }
+  .todo-hd { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+  .todo-hd b { font-size: 15px; font-weight: 600; }
+  .todo-x { width: 28px; height: 28px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: #1a1d21; display: grid; place-items: center; cursor: pointer; }
+  .todo-x:hover { background: #f3f4f6; }
+  .todo-x svg { width: 16px; height: 16px; }
+  .todo-body { padding: 14px 16px 4px; display: flex; flex-direction: column; gap: 12px; }
+  .todo-field { display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 0; border: 0; }
+  .todo-field > span, .todo-field legend { font-size: 12px; font-weight: 600; color: #1a1d21; }
+  .todo-field input[type="text"], .todo-field textarea {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font: inherit;
+    font-size: 13px;
+    color: #1a1d21;
+    background: #fff;
+    box-sizing: border-box;
+  }
+  .todo-field textarea { resize: vertical; min-height: 72px; }
+  .todo-field input:focus, .todo-field textarea:focus { outline: 2px solid var(--green); outline-offset: 1px; }
+  .todo-types { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .todo-types label { position: relative; }
+  .todo-types input { position: absolute; opacity: 0; inset: 0; margin: 0; }
+  .todo-types span { display: flex; justify-content: center; border: 1px solid var(--line); border-radius: 8px; padding: 7px 8px; color: var(--muted); font-size: 12px; font-weight: 500; }
+  .todo-types input:checked + span { border-color: var(--green); background: var(--green-tint); color: var(--green-dark); font-weight: 600; }
+  .todo-ft { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 16px 16px; }
+  .todo-cancel, .todo-save { height: 32px; padding: 0 14px; border-radius: 8px; font: inherit; font-size: 13px; font-weight: 500; cursor: pointer; }
+  .todo-cancel { border: 1px solid var(--line); background: #fff; color: #1a1d21; }
+  .todo-save { border: 0; background: var(--green); color: #fff; }
+  .todo-save:hover { background: var(--green-dark); }
+  .todo-confirm p { margin: 0; padding: 16px 16px 0; font-size: 13px; line-height: 1.45; color: #1a1d21; }
   html[data-theme="blue"] #tail-welcome.screen.on { gap: 20px; }
   html[data-theme="blue"] #tail-welcome .pickup + .two { margin-top: 0; }
   html[data-theme="blue"] #tail-home .goal-sec,
@@ -2254,6 +2329,9 @@
   .rem .when.hot { color: var(--green); }
   .rem .col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; padding-right: 4px; }
   .rem .t { font-size: 14px; }
+  .rem button.t { font: inherit; font-size: 14px; line-height: inherit; text-align: left; background: none; border: 0; padding: 0; margin: 0; color: inherit; cursor: default; }
+  html[data-theme="blue"] #tail-home .rem button.t { cursor: pointer; }
+  html[data-theme="blue"] #tail-home .rem button.t:hover { color: var(--green); }
   .rem .meta { display: flex; gap: 6px; align-items: center; flex-wrap: nowrap; white-space: nowrap; font-size: 11px; color: var(--faint); min-width: 0; overflow: hidden; text-overflow: ellipsis; }
   .badge { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 999px; background: var(--green-tint); color: var(--green-dark); white-space: nowrap; flex: none; }
   .badge.email { background: var(--amber-tint); color: var(--amber); }
@@ -6773,21 +6851,25 @@
                   <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act-add" data-action="add-reminder" data-tip="Add a reminder with Citta — tell it what and when" aria-label="Add reminder with Citta"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 3.25v9.5M3.25 8h9.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button></div>
                   <div class="two-main-l">
                     <div class="rem">
+                      <button type="button" class="rem-check" tabindex="-1" aria-label="Mark complete: Heavy-ion Physics — lecture 5"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.6 8.2 6.5 11.1 12.4 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                       <span class="when hot">2:30</span>
                       <div class="col"><span class="t">Heavy-ion Physics — lecture 5</span><span class="meta"><span class="badge">Course · Prof. Roland</span>Room 6-120</span></div>
                       <button type="button" class="btn-soft" data-verb="Prep a 10-min deck" data-tool="deck"></button>
                     </div>
                     <div class="rem">
+                      <button type="button" class="rem-check" tabindex="-1" aria-label="Mark complete: Reply to Prof. Roland about the lab report"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.6 8.2 6.5 11.1 12.4 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                       <span class="when">Today</span>
                       <div class="col"><span class="t">Reply to Prof. Roland about the lab report</span><span class="meta"><span class="badge email">Email</span>Received 9:12</span></div>
                       <button type="button" class="btn-soft" data-verb="Draft reply"></button>
                     </div>
                     <div class="rem">
+                      <button type="button" class="rem-check" tabindex="-1" aria-label="Mark complete: Submit reading report"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.6 8.2 6.5 11.1 12.4 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                       <span class="when">Tomorrow</span>
                       <div class="col"><span class="t">Submit reading report</span><span class="meta"><span class="badge">Course · Prof. Roland</span>820 / 1,500 words</span></div>
                       <button type="button" class="btn-soft" data-verb="Finish with Citta" data-twin-verb="Finish the report" data-tool="doc"></button>
                     </div>
                     <div class="rem">
+                      <button type="button" class="rem-check" tabindex="-1" aria-label="Mark complete: Lab 3 analysis due"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.6 8.2 6.5 11.1 12.4 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                       <span class="when">Fri</span>
                       <div class="col"><span class="t">Lab 3 analysis due</span><span class="meta"><span class="badge yours">Yours</span></span></div>
                       <button type="button" class="btn-soft" data-verb="Open in Numbers" data-tool="numbers"></button>
@@ -7800,6 +7882,23 @@
         <span class="sw" id="dockSwitch" role="button" tabindex="0" aria-label="Switch who you’re working with"><svg class="switch-ico" width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M96 416h832c0.32 0 0.576-0.192 0.896-0.192a30.656 30.656 0 0 0 30.976-30.976c-0.064-0.256 0.128-0.512 0.128-0.832a31.424 31.424 0 0 0-14.912-26.368l-188.48-188.48a30.72 30.72 0 1 0-43.456 43.456L852.544 352H96a32 32 0 0 0 0 64z m832 192H96c-0.32 0-0.576 0.192-0.896 0.192a30.528 30.528 0 0 0-30.976 30.976c0.064 0.256-0.128 0.512-0.128 0.832 0 11.264 6.144 20.672 14.912 26.368l188.48 188.48a30.72 30.72 0 1 0 43.456-43.456L171.456 672H928a32 32 0 0 0 0-64z" fill="currentColor"/></svg></span>
       </button>
 
+      <div class="todo-scrim" id="todoScrim" hidden>
+        <form class="todo-card" id="todoForm">
+          <div class="todo-hd"><b id="todoFormTitle">Add to-do</b><button type="button" class="todo-x" id="todoClose" aria-label="Close"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.25 3.25 12.75 12.75M12.75 3.25 3.25 12.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
+          <div class="todo-body">
+            <label class="todo-field"><span>Title</span><input id="todoTitle" type="text" maxlength="120" required autocomplete="off"></label>
+            <fieldset class="todo-field"><legend>Type</legend><div class="todo-types"><label><input type="radio" name="todoType" value="course"><span>Course</span></label><label><input type="radio" name="todoType" value="email"><span>Email</span></label><label><input type="radio" name="todoType" value="yours" checked><span>Yours</span></label></div></fieldset>
+            <label class="todo-field"><span>When</span><input id="todoWhen" type="text" maxlength="24" placeholder="Today"></label>
+            <label class="todo-field"><span>Notes</span><textarea id="todoNotes" maxlength="240" rows="3"></textarea></label>
+          </div>
+          <div class="todo-ft"><button type="button" class="todo-cancel" id="todoCancel">Cancel</button><button type="submit" class="todo-save">Save</button></div>
+        </form>
+        <form class="todo-card todo-confirm" id="todoConfirm" hidden>
+          <div class="todo-hd"><b>Complete this to-do?</b><button type="button" class="todo-x" id="todoConfirmClose" aria-label="Close"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.25 3.25 12.75 12.75M12.75 3.25 3.25 12.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
+          <p id="todoConfirmText"></p>
+          <div class="todo-ft"><button type="button" class="todo-cancel" id="todoKeep">Cancel</button><button type="button" class="todo-save" id="todoDone">Mark complete</button></div>
+        </form>
+      </div>
       <div class="toast" id="toast" role="status">
         <span id="toastText">Now working with Prof. Roland’s twin · trained on Heavy-ion Physics lectures 1–5</span>
         <button type="button" id="undo">Undo</button>
@@ -8011,10 +8110,12 @@
       rem.className = 'rem';
       rem.dataset.fromCitta = '1';
       rem.innerHTML =
+        `<button type="button" class="rem-check" tabindex="-1" aria-label="Mark complete"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.6 8.2 6.5 11.1 12.4 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>` +
         `<span class="when hot">Today</span>` +
         `<div class="col"><span class="t"></span><span class="meta"><span class="badge yours">Yours</span>Just added</span></div>` +
         `<button type="button" class="btn-soft" data-verb="Open with Citta"></button>`;
       rem.querySelector('.t').textContent = title;
+      rem.querySelector('.rem-check')?.setAttribute('aria-label', `Mark complete: ${title}`);
       const btn = rem.querySelector('.btn-soft');
       const verb = btn.dataset.verb;
       const isCitta = current === 'citta';
@@ -8022,10 +8123,152 @@
         ? `<span class="spark-icon" aria-hidden="true">${SPARK_SOLID}</span>${verb}`
         : `${AIS[current]?.prefix || '·'}  ${verb}`;
       list.prepend(rem);
+      if (list.closest('#tail-home')) paintHomeTodoButtons();
     });
     fit();
     syncCosmosScrollFade();
   }
+
+  const TODO_MARK = '<svg class="todo-mark" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.6 8.2 6.5 11.1 12.4 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  let todoEditing = null;
+  let todoPending = null;
+  function paintHomeTodoButtons() {
+    const blue = document.documentElement.dataset.theme === 'blue';
+    document.querySelectorAll('#tail-home .rem-check, #tail-home .rem button.t').forEach((el) => {
+      el.tabIndex = blue ? 0 : -1;
+    });
+    document.querySelectorAll('#tail-home .btn-soft').forEach((b) => {
+      if (blue) {
+        b.innerHTML = `${TODO_MARK}Check`;
+        return;
+      }
+      const verb = (!blue && current !== 'citta' && b.dataset.twinVerb) || b.dataset.verb || '';
+      if (current === 'citta') b.innerHTML = `<span class="spark-icon" aria-hidden="true">${SPARK_SOLID}</span>${verb}`;
+      else b.textContent = `${AIS[current]?.prefix || '·'}  ${verb}`;
+    });
+  }
+  function todoTypeOf(rem) {
+    const badge = rem.querySelector('.badge');
+    if (!badge) return 'yours';
+    if (badge.classList.contains('email')) return 'email';
+    if (badge.classList.contains('yours')) return 'yours';
+    return 'course';
+  }
+  function todoNotesOf(rem) {
+    const meta = rem.querySelector('.meta');
+    if (!meta) return '';
+    const copy = meta.cloneNode(true);
+    copy.querySelector('.badge')?.remove();
+    return copy.textContent.trim();
+  }
+  function applyTodoBadge(badge, type) {
+    badge.classList.remove('email', 'yours', 'course');
+    if (type === 'email') {
+      badge.classList.add('email');
+      badge.textContent = 'Email';
+    } else if (type === 'yours') {
+      badge.classList.add('yours');
+      badge.textContent = 'Yours';
+    } else {
+      badge.classList.add('course');
+      if (!/Course/.test(badge.textContent)) badge.textContent = 'Course';
+    }
+  }
+  function setTodoNotes(rem, notes) {
+    const meta = rem.querySelector('.meta');
+    const badge = meta?.querySelector('.badge');
+    if (!meta || !badge) return;
+    [...meta.childNodes].forEach((node) => { if (node !== badge) node.remove(); });
+    if (notes) meta.append(document.createTextNode(notes));
+  }
+  function syncTodoEmpty() {
+    const list = document.querySelector('#tail-home .two-main-l');
+    if (!list) return;
+    const left = [...list.querySelectorAll('.rem')].filter((row) => !row.classList.contains('is-done'));
+    let empty = list.querySelector('.todo-empty');
+    if (left.length) {
+      empty?.remove();
+      return;
+    }
+    if (!empty) {
+      empty = document.createElement('p');
+      empty.className = 'todo-empty';
+      empty.textContent = 'Nothing left.';
+      list.appendChild(empty);
+    }
+  }
+  function closeTodo() {
+    document.getElementById('todoScrim').hidden = true;
+    todoEditing = null;
+    todoPending = null;
+  }
+  function openTodoEditor(rem) {
+    todoEditing = rem || null;
+    todoPending = null;
+    document.getElementById('todoForm').hidden = false;
+    document.getElementById('todoConfirm').hidden = true;
+    document.getElementById('todoFormTitle').textContent = rem ? 'Edit to-do' : 'Add to-do';
+    document.getElementById('todoTitle').value = rem ? rem.querySelector('.t').textContent.trim() : '';
+    document.getElementById('todoWhen').value = rem ? rem.querySelector('.when').textContent.trim() : 'Today';
+    document.getElementById('todoNotes').value = rem ? todoNotesOf(rem) : '';
+    const type = rem ? todoTypeOf(rem) : 'yours';
+    const radio = document.querySelector(`#todoForm input[name="todoType"][value="${type}"]`);
+    if (radio) radio.checked = true;
+    document.getElementById('todoScrim').hidden = false;
+    document.getElementById('todoTitle').focus();
+  }
+  function openTodoConfirm(rem) {
+    todoPending = rem;
+    todoEditing = null;
+    document.getElementById('todoForm').hidden = true;
+    document.getElementById('todoConfirm').hidden = false;
+    const title = rem.querySelector('.t')?.textContent.trim() || 'this to-do';
+    document.getElementById('todoConfirmText').textContent = `Mark “${title}” complete? It leaves the list.`;
+    document.getElementById('todoScrim').hidden = false;
+  }
+  function writeTodoRow(rem, title, type, when, notes) {
+    rem.querySelector('.t').textContent = title;
+    const whenEl = rem.querySelector('.when');
+    whenEl.textContent = when || 'Today';
+    whenEl.classList.toggle('hot', /today|^\d/i.test(whenEl.textContent));
+    applyTodoBadge(rem.querySelector('.badge'), type);
+    setTodoNotes(rem, notes);
+    rem.querySelector('.rem-check')?.setAttribute('aria-label', `Mark complete: ${title}`);
+  }
+  function saveTodo(event) {
+    event.preventDefault();
+    const title = document.getElementById('todoTitle').value.trim();
+    if (!title) return;
+    const type = document.querySelector('#todoForm input[name="todoType"]:checked')?.value || 'yours';
+    const when = document.getElementById('todoWhen').value.trim() || 'Today';
+    const notes = document.getElementById('todoNotes').value.trim();
+    const list = document.querySelector('#tail-home .two-main-l');
+    if (todoEditing) {
+      writeTodoRow(todoEditing, title, type, when, notes);
+      showToastMsg('To-do updated');
+    } else if (list) {
+      const rem = document.createElement('div');
+      rem.className = 'rem is-added';
+      rem.innerHTML = `<button type="button" class="rem-check" aria-label="Mark complete"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.6 8.2 6.5 11.1 12.4 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="when"></span><div class="col"><button type="button" class="t"></button><span class="meta"><span class="badge"></span></span></div><button type="button" class="btn-soft" data-verb="Check"></button>`;
+      writeTodoRow(rem, title, type, when, notes);
+      list.prepend(rem);
+      paintHomeTodoButtons();
+      showToastMsg('To-do added');
+    }
+    closeTodo();
+    syncTodoEmpty();
+  }
+  function completeTodo() {
+    if (!todoPending) return;
+    todoPending.classList.add('is-done');
+    showToastMsg('To-do completed');
+    closeTodo();
+    syncTodoEmpty();
+  }
+  document.getElementById('todoForm')?.addEventListener('submit', saveTodo);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && document.getElementById('todoScrim') && !document.getElementById('todoScrim').hidden) closeTodo();
+  });
 
   const CITTA_FILE_ICON = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7.2 3.8h6.4L18.2 8.4V19.2a1.2 1.2 0 0 1-1.2 1.2H7.2A1.2 1.2 0 0 1 6 19.2V5a1.2 1.2 0 0 1 1.2-1.2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M13.4 3.9V8.2h4.4" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M9 12.2h6M9 15.2h6M9 18.2h3.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
   function cittaFileCard(file) {
@@ -8348,6 +8591,7 @@
       if (announce && !blue) { b.classList.remove('flash'); void b.offsetWidth; b.classList.add('flash'); }
       else if (blue) b.classList.remove('flash');
     });
+    paintHomeTodoButtons();
 
     menu.querySelectorAll('.item').forEach((i) => i.setAttribute('aria-checked', String(i.dataset.ai === key)));
 
@@ -9981,8 +10225,24 @@
         return;
       }
 
+      const todoCheck = e.target.closest('#tail-home .rem-check');
+      if (todoCheck && document.documentElement.dataset.theme === 'blue') {
+        openTodoConfirm(todoCheck.closest('.rem'));
+        return;
+      }
+
+      const todoTitle = e.target.closest('#tail-home .rem button.t, #tail-home .rem .t');
+      if (todoTitle && document.documentElement.dataset.theme === 'blue') {
+        openTodoEditor(todoTitle.closest('.rem'));
+        return;
+      }
+
       const soft = e.target.closest('.btn-soft');
       if (soft) {
+        if (document.documentElement.dataset.theme === 'blue' && soft.closest('#tail-home')) {
+          openTodoEditor(soft.closest('.rem'));
+          return;
+        }
         runReminderAction(soft);
         return;
       }
@@ -9997,6 +10257,10 @@
 
       const addRem = e.target.closest('[data-action="add-reminder"]');
       if (addRem) {
+        if (document.documentElement.dataset.theme === 'blue' && addRem.closest('#tail-home')) {
+          openTodoEditor(null);
+          return;
+        }
         flashEl(addRem);
         // Add reminder → open Citta with a starter prompt; no toast overlay.
         setCittaExpanded(true);
@@ -11142,6 +11406,7 @@
     setPickerAvatar(current === 'citta', AIS[current]);
     setCittaPanelIdentity(current === 'citta', AIS[current]);
     syncToolCallPreview();
+    paintHomeTodoButtons();
     decorateLectureBookIcons();
     balancePostColumns();
     try { localStorage.setItem('h2-theme', next); } catch (e) {}
