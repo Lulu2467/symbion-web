@@ -6026,6 +6026,29 @@
   html[data-theme="blue"] #teamHost .panel .mrow:has(> .btn) .mopen small { white-space: normal; overflow-wrap: anywhere; }
   html[data-theme="blue"] #teamHost .panel .mrow:has(> .btn) .btn.go { grid-column: 2; justify-self: end; }
   html[data-theme="blue"] #teamHost .panel .mrow:has(> .btn) .btn:not(.go) { grid-column: 3; }
+  html[data-theme="blue"] #teamHost .panel .manage-list .mrow {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 8px;
+    row-gap: 8px;
+  }
+  html[data-theme="blue"] #teamHost .panel .manage-list .mopen {
+    grid-column: 1 / -1;
+    flex: none;
+    width: 100%;
+    min-width: 0;
+  }
+  html[data-theme="blue"] #teamHost .panel .manage-list .mopen > span:last-child { min-width: 0; }
+  html[data-theme="blue"] #teamHost .panel .manage-list .mopen b,
+  html[data-theme="blue"] #teamHost .panel .manage-list .mopen small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  html[data-theme="blue"] #teamHost .panel .manage-list select { width: auto; max-width: 112px; }
+  html[data-theme="blue"] #teamHost .panel .manage-list .title-in { width: 100%; min-width: 0; }
+  html[data-theme="blue"] #teamHost .panel .manage-list .mini { justify-self: end; }
   html[data-theme="blue"] #teamHost .panel .danger,
   html[data-theme="blue"] #teamHost .panel .danger:hover { color: #d93025; }
   html[data-theme="blue"] #teamHost .msg .act { display: none; }
