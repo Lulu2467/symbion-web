@@ -308,28 +308,30 @@
     background-color: rgba(255, 255, 255, .78);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 0 0 1px rgba(20, 24, 28, .06);
   }
+  html[data-theme="blue"] {
+    --circled-plus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Cpath fill-rule='evenodd' fill='%23000' d='M512 0C229.7 0 0 229.7 0 512s229.7 512 512 512 512-229.7 512-512S794.3 0 512 0z m0 979.5C254.2 979.5 44.5 769.8 44.5 512S254.2 44.5 512 44.5 979.5 254.2 979.5 512 769.8 979.5 512 979.5z'/%3E%3Cpath fill='%23000' d='M779.2 489.7H534.3V244.9c0-12.3-10.1-22.3-22.3-22.3-12.3 0-22.3 10.1-22.3 22.3v244.8H244.9c-12.3 0-22.3 10.1-22.3 22.3 0 12.3 10.1 22.3 22.3 22.3h244.8v244.9c0 12.3 10.1 22.3 22.3 22.3 12.3 0 22.3-10.1 22.3-22.3V534.3h244.8c12.3 0 22.3-10.1 22.4-22.3 0-12.3-10.1-22.3-22.3-22.3z'/%3E%3C/svg%3E");
+  }
   html[data-theme="blue"] .interest.add {
-    color: transparent;
+    color: var(--muted);
     font-size: 0;
     line-height: 0;
-    position: relative;
+    border-width: 0;
+    background: transparent;
   }
-  html[data-theme="blue"] .interest.add::before,
-  html[data-theme="blue"] .interest.add::after {
+  html[data-theme="blue"] .interest.add::before {
     content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    background: var(--muted);
-    border-radius: 1px;
-    transform: translate(-50%, -50%);
+    width: 28px;
+    height: 28px;
+    background: currentColor;
+    -webkit-mask: var(--circled-plus) center / 28px 28px no-repeat;
+    mask: var(--circled-plus) center / 28px 28px no-repeat;
   }
-  html[data-theme="blue"] .interest.add::before { width: 12px; height: 2px; }
-  html[data-theme="blue"] .interest.add::after { width: 2px; height: 12px; }
-  html[data-theme="blue"] .interest.add:hover::before,
-  html[data-theme="blue"] .interest.add:hover::after,
-  html[data-theme="blue"] .interest.add[aria-expanded="true"]::before,
-  html[data-theme="blue"] .interest.add[aria-expanded="true"]::after { background: var(--green-dark); }
+  html[data-theme="blue"] .interest.add:hover,
+  html[data-theme="blue"] .interest.add[aria-expanded="true"] {
+    border-color: transparent;
+    background: transparent;
+    color: var(--green-dark);
+  }
   html[data-theme="blue"] .main { display: flex; flex-direction: column; }
   html[data-theme="blue"] .content {
     flex: 1 0 auto;
@@ -2413,6 +2415,26 @@
   }
   html[data-theme="blue"] #tail-home .todo-inline::placeholder { color: #b0b4ba; }
   html[data-theme="blue"] #tail-home .act-add[data-action="add-reminder"]::after { content: none; }
+  html[data-theme="blue"] .sec .act-add {
+    border-width: 0;
+    background: transparent;
+    color: var(--muted);
+  }
+  html[data-theme="blue"] .sec .act-add svg { display: none; }
+  html[data-theme="blue"] .sec .act-add::before {
+    content: "";
+    width: 28px;
+    height: 28px;
+    background: currentColor;
+    -webkit-mask: var(--circled-plus) center / 28px 28px no-repeat;
+    mask: var(--circled-plus) center / 28px 28px no-repeat;
+  }
+  html[data-theme="blue"] .sec .act-add:hover {
+    border-color: transparent;
+    background: transparent;
+    color: var(--green-dark);
+  }
+  html[data-theme="blue"] .sec .act-add:active::before { transform: scale(.92); }
   html[data-theme="blue"] #tail-home .btn-soft { display: none; }
   html[data-theme="blue"] #tail-home .rem .badge.course,
   html[data-theme="blue"] #tail-home .rem .badge:not(.email):not(.yours) {
