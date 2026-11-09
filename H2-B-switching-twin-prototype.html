@@ -2365,6 +2365,19 @@
   }
   html[data-theme="blue"] #tail-home .rem button.t:hover { color: var(--green); }
   html[data-theme="blue"] #tail-home .btn-soft { display: none; }
+  html[data-theme="blue"] #tail-home .rem .badge.course,
+  html[data-theme="blue"] #tail-home .rem .badge:not(.email):not(.yours) {
+    background: var(--green-tint);
+    color: var(--green-dark);
+  }
+  html[data-theme="blue"] #tail-home .rem .badge.email {
+    background: var(--amber-tint);
+    color: var(--amber);
+  }
+  html[data-theme="blue"] #tail-home .rem .badge.yours {
+    background: #e4e7ec;
+    color: #3d4450;
+  }
   .rem .meta { display: flex; gap: 6px; align-items: center; flex-wrap: nowrap; white-space: nowrap; font-size: 11px; color: var(--faint); min-width: 0; overflow: hidden; text-overflow: ellipsis; }
   .badge { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 999px; background: var(--green-tint); color: var(--green-dark); white-space: nowrap; flex: none; }
   .badge.email { background: var(--amber-tint); color: var(--amber); }
@@ -8229,6 +8242,15 @@
     document.querySelectorAll('#tail-home .rem-check, #tail-home .rem button.t').forEach((el) => {
       el.tabIndex = blue ? 0 : -1;
     });
+    document.querySelectorAll('#tail-home .rem .badge').forEach((badge) => {
+      if (!badge.dataset.label) badge.dataset.label = badge.textContent;
+      if (!blue) {
+        badge.textContent = badge.dataset.label;
+        return;
+      }
+      const type = badge.classList.contains('email') ? 'Email' : badge.classList.contains('yours') ? 'Yours' : 'Course';
+      badge.textContent = type;
+    });
     document.querySelectorAll('#tail-home .btn-soft').forEach((b) => {
       if (blue) {
         b.innerHTML = `${TODO_MARK}Check`;
@@ -8255,16 +8277,10 @@
   }
   function applyTodoBadge(badge, type) {
     badge.classList.remove('email', 'yours', 'course');
-    if (type === 'email') {
-      badge.classList.add('email');
-      badge.textContent = 'Email';
-    } else if (type === 'yours') {
-      badge.classList.add('yours');
-      badge.textContent = 'Yours';
-    } else {
-      badge.classList.add('course');
-      if (!/Course/.test(badge.textContent)) badge.textContent = 'Course';
-    }
+    const name = type === 'email' ? 'Email' : type === 'yours' ? 'Yours' : 'Course';
+    badge.classList.add(type === 'email' || type === 'yours' ? type : 'course');
+    badge.textContent = name;
+    badge.dataset.label = name;
   }
   function setTodoNotes(rem, notes) {
     const meta = rem.querySelector('.meta');
