@@ -380,7 +380,11 @@
   html[data-theme="blue"] #tail-home .rem-check svg { width: 10px; height: 10px; opacity: 0; }
   html[data-theme="blue"] #tail-home .rem-check:hover { border-color: var(--green); background: var(--green-tint); }
   html[data-theme="blue"] #tail-home .rem-check:hover svg { opacity: 1; }
-  html[data-theme="blue"] #tail-home .rem.is-done { display: none; }
+  html[data-theme="blue"] #tail-home .rem.is-done .t { color: var(--muted); text-decoration: line-through; }
+  html[data-theme="blue"] #tail-home .rem.is-done .rem-check { border-color: var(--green); background: var(--green-tint); }
+  html[data-theme="blue"] #tail-home .rem.is-done .rem-check svg { opacity: 1; }
+  html[data-theme="blue"] #tail-home .rem.is-done .when,
+  html[data-theme="blue"] #tail-home .rem.is-done .meta { opacity: .55; }
   html:not([data-theme="blue"]) #tail-home .rem.is-added { display: none; }
   html[data-theme="blue"] #tail-home .btn-soft .todo-mark { width: 12px; height: 12px; flex: none; }
   .todo-empty { display: none; margin: 0; padding: 12px 0; font-size: 12px; color: var(--muted); }
@@ -2363,7 +2367,35 @@
     white-space: pre-line;
     font-variant-numeric: tabular-nums;
   }
-  html[data-theme="blue"] #tail-home .rem button.t:hover { color: var(--green); }
+  html[data-theme="blue"] #tail-home .two-title-l .sub { display: none; }
+  html[data-theme="blue"] #tail-home .rem {
+    margin: 0 -8px;
+    padding: 8px;
+    border-radius: 8px;
+  }
+  html[data-theme="blue"] #tail-home .rem:hover { background: #f6f7f8; }
+  html[data-theme="blue"] #tail-home .rem .when,
+  html[data-theme="blue"] #tail-home .rem .badge { cursor: pointer; }
+  html[data-theme="blue"] #tail-home .rem .meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    white-space: normal;
+    overflow: visible;
+  }
+  html[data-theme="blue"] #tail-home .todo-note { font-size: 12px; line-height: 1.35; color: var(--faint); }
+  html[data-theme="blue"] #tail-home .todo-inline {
+    width: 100%;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    font-size: 14px;
+    color: #1a1d21;
+    background: transparent;
+    outline: none;
+  }
+  html[data-theme="blue"] #tail-home .todo-inline::placeholder { color: #b0b4ba; }
   html[data-theme="blue"] #tail-home .btn-soft { display: none; }
   html[data-theme="blue"] #tail-home .rem .badge.course,
   html[data-theme="blue"] #tail-home .rem .badge:not(.email):not(.yours) {
@@ -8251,6 +8283,39 @@
       const type = badge.classList.contains('email') ? 'Email' : badge.classList.contains('yours') ? 'Yours' : 'Course';
       badge.textContent = type;
     });
+    document.querySelectorAll('#tail-home .rem .meta').forEach((meta) => {
+      const badge = meta.querySelector('.badge');
+      if (!badge) return;
+      let note = meta.querySelector('.todo-note');
+      if (!note) {
+        const text = [...meta.childNodes].filter((node) => node !== badge).map((node) => node.textContent).join('').trim();
+        [...meta.childNodes].forEach((node) => { if (node !== badge) node.remove(); });
+        note = document.createElement('span');
+        note.className = 'todo-note';
+        note.textContent = text;
+        meta.append(note);
+      }
+      note.hidden = !note.textContent;
+    });
+    document.querySelectorAll('#tail-home .rem .when').forEach((when) => {
+      if (!when.dataset.raw) when.dataset.raw = when.textContent.replace(/\s+/g, ' ').trim();
+      if (!blue) {
+        if (!when.dataset.when) when.textContent = when.dataset.raw;
+        return;
+      }
+      if (when.dataset.when) {
+        when.textContent = formatTodoWhen(when.dataset.when);
+        return;
+      }
+      const raw = when.dataset.raw;
+      when.textContent = /^\d{1,2}:\d{2}$/.test(raw) ? `Today\n${raw}` : raw;
+    });
+    const add = document.querySelector('#tail-home [data-action="add-reminder"]');
+    if (add) {
+      if (!add.dataset.tipOriginal) add.dataset.tipOriginal = add.dataset.tip || '';
+      add.dataset.tip = blue ? 'Add a to-do' : add.dataset.tipOriginal;
+      add.setAttribute('aria-label', blue ? 'Add to-do' : 'Add reminder with Citta');
+    }
     document.querySelectorAll('#tail-home .btn-soft').forEach((b) => {
       if (blue) {
         b.innerHTML = `${TODO_MARK}Check`;
@@ -8292,7 +8357,7 @@
   function syncTodoEmpty() {
     const list = document.querySelector('#tail-home .two-main-l');
     if (!list) return;
-    const left = [...list.querySelectorAll('.rem')].filter((row) => !row.classList.contains('is-done'));
+    const left = [...list.querySelectorAll('.rem')];
     let empty = list.querySelector('.todo-empty');
     if (left.length) {
       empty?.remove();
@@ -8392,6 +8457,65 @@
     }
     closeTodo();
     syncTodoEmpty();
+  }
+  function toggleTodoDone(rem) {
+    if (!rem || rem.classList.contains('is-draft')) return;
+    const done = rem.classList.toggle('is-done');
+    const title = rem.querySelector('.t')?.textContent.trim() || 'to-do';
+    const check = rem.querySelector('.rem-check');
+    check?.setAttribute('aria-label', done ? `Mark not done: ${title}` : `Mark complete: ${title}`);
+    check?.setAttribute('aria-pressed', done ? 'true' : 'false');
+  }
+  function commitTodoRow(rem) {
+    const input = rem.querySelector('.todo-inline');
+    const title = input?.value.trim() || '';
+    if (!title) {
+      rem.remove();
+      syncTodoEmpty();
+      return;
+    }
+    const when = rem.querySelector('.when')?.dataset.when || todoStamp(new Date());
+    rem.classList.remove('is-draft');
+    rem.querySelector('.col').innerHTML = '<button type="button" class="t"></button><span class="meta"><span class="badge yours">Yours</span></span>';
+    writeTodoRow(rem, title, 'yours', when, '');
+    paintHomeTodoButtons();
+    syncTodoEmpty();
+  }
+  function startTodoRow() {
+    const list = document.querySelector('#tail-home .two-main-l');
+    if (!list) return;
+    const existing = list.querySelector('.rem.is-draft');
+    if (existing) {
+      existing.querySelector('.todo-inline')?.focus();
+      return;
+    }
+    const rem = document.createElement('div');
+    rem.className = 'rem is-added is-draft';
+    rem.innerHTML = '<button type="button" class="rem-check" aria-label="Mark complete"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.6 8.2 6.5 11.1 12.4 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="when hot"></span><div class="col"><input class="todo-inline" type="text" maxlength="120" placeholder="To-do" aria-label="To-do"><span class="meta"><span class="badge yours">Yours</span></span></div>';
+    const when = todoStamp(new Date());
+    const whenEl = rem.querySelector('.when');
+    whenEl.dataset.when = when;
+    whenEl.textContent = formatTodoWhen(when);
+    const input = rem.querySelector('.todo-inline');
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        commitTodoRow(rem);
+      } else if (e.key === 'Escape') {
+        e.stopPropagation();
+        rem.remove();
+        syncTodoEmpty();
+      }
+    });
+    input.addEventListener('blur', () => {
+      setTimeout(() => {
+        if (!rem.isConnected || !rem.classList.contains('is-draft')) return;
+        commitTodoRow(rem);
+      }, 0);
+    });
+    list.prepend(rem);
+    syncTodoEmpty();
+    input.focus();
   }
   function completeTodo() {
     if (!todoPending) return;
@@ -10362,7 +10486,25 @@
 
       const todoCheck = e.target.closest('#tail-home .rem-check');
       if (todoCheck && document.documentElement.dataset.theme === 'blue') {
-        openTodoConfirm(todoCheck.closest('.rem'));
+        toggleTodoDone(todoCheck.closest('.rem'));
+        return;
+      }
+
+      const todoBadge = e.target.closest('#tail-home .rem .badge');
+      if (todoBadge && document.documentElement.dataset.theme === 'blue') {
+        const rem = todoBadge.closest('.rem');
+        if (!rem.classList.contains('is-draft')) {
+          const order = ['course', 'email', 'yours'];
+          const next = order[(order.indexOf(todoTypeOf(rem)) + 1) % order.length];
+          applyTodoBadge(todoBadge, next);
+        }
+        return;
+      }
+
+      const todoWhen = e.target.closest('#tail-home .rem .when');
+      if (todoWhen && document.documentElement.dataset.theme === 'blue') {
+        const rem = todoWhen.closest('.rem');
+        if (!rem.classList.contains('is-draft')) openTodoEditor(rem);
         return;
       }
 
@@ -10397,7 +10539,7 @@
       const addRem = e.target.closest('[data-action="add-reminder"]');
       if (addRem) {
         if (document.documentElement.dataset.theme === 'blue' && addRem.closest('#tail-home')) {
-          openTodoEditor(null);
+          startTodoRow();
           return;
         }
         flashEl(addRem);
