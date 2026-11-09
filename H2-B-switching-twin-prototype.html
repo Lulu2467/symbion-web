@@ -15106,7 +15106,7 @@ function renderHistory() {
   if (!c) return;
   const count = c.kind === 'group' ? ` (${c.members.length})` : '';
   $('historyTitle').textContent = `"${c.name}" chat history${count}`;
-  const cats = [['links', 'Links'], ['date', 'Date'], ['members', 'Members']];
+  const cats = [['links', 'Links'], ['files', 'Files'], ['date', 'Date'], ['members', 'Members']];
   $('historyCats').innerHTML = cats.map(([id, label]) => `<button type="button" data-history="${id}" aria-pressed="${state.historyKind === id ? 'true' : 'false'}">${label}</button>`).join('');
   const q = state.chatQuery.trim();
   if (state.historyKind === 'members' && !state.historyWho && !q) {
@@ -15119,7 +15119,7 @@ function renderHistory() {
   }
   const list = historyList(c);
   if (!list.length) {
-    const empty = state.historyKind === 'files' ? 'No files in this chat.' : state.historyKind === 'links' ? 'No links in this chat.' : 'Nothing in this chat matches.';
+    const empty = q ? 'Nothing in this chat matches.' : state.historyKind === 'files' ? 'No files in this chat.' : state.historyKind === 'links' ? 'No links in this chat.' : 'Nothing in this chat matches.';
     $('historyBody').innerHTML = `<p class="history-empty">${empty}</p>`;
     return;
   }
