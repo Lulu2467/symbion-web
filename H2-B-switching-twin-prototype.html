@@ -5790,7 +5790,7 @@
   .menu button { display: flex; width: 100%; align-items: center; gap: 8px; text-align: left; padding: 8px 10px; border-radius: 8px; font-size: 13px; font-weight: 500; }
   .menu button:hover { background: var(--green-mist); }
   .menu button svg { width: 16px; height: 16px; color: var(--green-dark); flex: none; }
-  .plus-menu { width: 176px; padding: 6px 0; border: 0; border-radius: 8px; background: #fff; box-shadow: 0 8px 28px rgba(0, 0, 0, .18); }
+  .plus-menu { width: 212px; padding: 6px 0; border: 0; border-radius: 8px; background: #fff; box-shadow: 0 8px 28px rgba(0, 0, 0, .18); z-index: 8; }
   .plus-menu button { gap: 12px; padding: 10px 16px; border-radius: 0; font-size: 14px; font-weight: 400; color: #191919; }
   .plus-menu button:hover { background: #f5f5f5; }
   .plus-menu button svg { width: 18px; height: 18px; color: #191919; }
@@ -6251,7 +6251,8 @@
   }
   html[data-theme="blue"] #teamHost #plus .plus-stroke { display: none; }
   html[data-theme="blue"] #teamHost #plus .plus-glyph { display: block; width: 22px; height: 22px; }
-  html[data-theme="blue"] #teamHost .list-top .icon-btn:hover {
+  html[data-theme="blue"] #teamHost .list-top .icon-btn:hover,
+  html[data-theme="blue"] #teamHost .list-top .icon-btn[aria-expanded="true"] {
     border-color: transparent;
     background: transparent;
     color: #1a1d21;
@@ -7789,7 +7790,11 @@
             <input id="q" type="search" placeholder="Search" autocomplete="off" aria-label="Search joined groups">
           </label>
           <div class="plus-wrap">
-            <button type="button" class="icon-btn" id="plus" aria-label="Create a group"><svg class="plus-stroke" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><svg class="plus-glyph" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M668.734694 532.897959H355.265306c-11.493878 0-20.897959-9.404082-20.897959-20.897959s9.404082-20.897959 20.897959-20.897959h313.469388c11.493878 0 20.897959 9.404082 20.897959 20.897959s-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 689.632653c-11.493878 0-20.897959-9.404082-20.897959-20.897959V355.265306c0-11.493878 9.404082-20.897959 20.897959-20.897959s20.897959 9.404082 20.897959 20.897959v313.469388c0 11.493878-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 929.959184c-230.4 0-417.959184-187.559184-417.959184-417.959184s187.559184-417.959184 417.959184-417.959184 417.959184 187.559184 417.959184 417.959184-187.559184 417.959184-417.959184 417.959184z m0-794.122449c-207.412245 0-376.163265 168.75102-376.163265 376.163265s168.75102 376.163265 376.163265 376.163265 376.163265-168.75102 376.163265-376.163265-168.75102-376.163265-376.163265-376.163265z"/></svg></button>
+            <button type="button" class="icon-btn" id="plus" aria-label="Add a group" aria-haspopup="menu" aria-expanded="false" aria-controls="plusMenu"><svg class="plus-stroke" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><svg class="plus-glyph" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M668.734694 532.897959H355.265306c-11.493878 0-20.897959-9.404082-20.897959-20.897959s9.404082-20.897959 20.897959-20.897959h313.469388c11.493878 0 20.897959 9.404082 20.897959 20.897959s-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 689.632653c-11.493878 0-20.897959-9.404082-20.897959-20.897959V355.265306c0-11.493878 9.404082-20.897959 20.897959-20.897959s20.897959 9.404082 20.897959 20.897959v313.469388c0 11.493878-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 929.959184c-230.4 0-417.959184-187.559184-417.959184-417.959184s187.559184-417.959184 417.959184-417.959184 417.959184 187.559184 417.959184 417.959184-187.559184 417.959184-417.959184 417.959184z m0-794.122449c-207.412245 0-376.163265 168.75102-376.163265 376.163265s168.75102 376.163265 376.163265 376.163265 376.163265-168.75102 376.163265-376.163265-168.75102-376.163265-376.163265-376.163265z"/></svg></button>
+            <div class="menu plus-menu" id="plusMenu" hidden>
+              <button type="button" data-plus="join">Join an existing group</button>
+              <button type="button" data-plus="create">Create a group</button>
+            </div>
           </div>
         </div>
         <div class="rows" id="rows"></div>
@@ -15262,6 +15267,9 @@ function closePopovers() {
   state.msgMode = '';
   $('accountMenu').hidden = true;
   $('accountOpen').setAttribute('aria-expanded', 'false');
+  const plusMenu = $('plusMenu');
+  if (plusMenu) plusMenu.hidden = true;
+  $('plus')?.setAttribute('aria-expanded', 'false');
   state.mention = null;
   $('mention').hidden = true;
 }
@@ -15783,8 +15791,23 @@ $('accountMenu').addEventListener('click', (e) => {
 
 $('plus').addEventListener('click', (e) => {
   e.stopPropagation();
+  const menu = $('plusMenu');
+  if (document.documentElement.dataset.theme !== 'blue' || !menu) {
+    closePopovers();
+    openModal('create');
+    return;
+  }
+  const open = menu.hidden;
   closePopovers();
-  openModal('create');
+  menu.hidden = !open;
+  $('plus').setAttribute('aria-expanded', open ? 'true' : 'false');
+});
+$('plusMenu').addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-plus]');
+  if (!btn) return;
+  closePopovers();
+  if (btn.dataset.plus === 'join') openModal('finder', { reset: true });
+  else openModal('create');
 });
 teamRoot.querySelectorAll('[data-open-modal]').forEach((b) => b.addEventListener('click', () => openModal(b.dataset.openModal)));
 $('q').addEventListener('input', () => { state.query = $('q').value; renderList(); });
@@ -16384,6 +16407,11 @@ document.addEventListener('click', (e) => {
   if (!e.target.closest('#accountMenu') && !e.target.closest('#accountOpen')) {
     $('accountMenu').hidden = true;
     $('accountOpen').setAttribute('aria-expanded', 'false');
+  }
+  if (!e.target.closest('#plusMenu') && !e.target.closest('#plus')) {
+    const plusMenu = $('plusMenu');
+    if (plusMenu) plusMenu.hidden = true;
+    $('plus')?.setAttribute('aria-expanded', 'false');
   }
 });
 document.addEventListener('keydown', (e) => {
