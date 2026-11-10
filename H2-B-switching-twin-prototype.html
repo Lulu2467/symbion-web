@@ -5648,14 +5648,21 @@
     visibility: hidden;
     pointer-events: none;
   }
+  html[data-theme="blue"] #dirHost:has(#postDetail:not([hidden])) .dir-body,
+  html[data-theme="blue"] #dirHost:has(#postDetail:not([hidden])) #postSearchWrap {
+    display: none;
+  }
   html[data-theme="blue"] #dirHost .post-detail {
-    position: absolute;
-    inset: 0;
+    position: relative;
+    inset: auto;
     z-index: 30;
     display: flex;
+    flex: 1 1 auto;
     flex-direction: column;
+    min-height: 0;
+    margin: 0 28px 24px;
     padding: 0;
-    background: #fff;
+    background: transparent;
   }
   html[data-theme="blue"] #dirHost .post-detail-sheet {
     position: relative;
@@ -5663,20 +5670,24 @@
     grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr);
     flex: 1;
     width: 100%;
-    height: auto;
+    height: 100%;
     min-height: 0;
     background: #fff;
-    border-radius: 0;
+    border: 1px solid #eceef1;
+    border-radius: 12px;
     overflow: hidden;
     box-shadow: none;
   }
   html[data-theme="blue"] #dirHost .post-detail-x {
-    position: static;
+    position: absolute;
+    z-index: 2;
+    left: 8px;
+    top: 8px;
     align-self: flex-start;
     flex: none;
     width: 40px;
     height: 40px;
-    margin: 8px 12px 0;
+    margin: 0;
     border: 0;
     border-radius: 8px;
     background: transparent;
@@ -13697,6 +13708,7 @@
     }
     const tab = e.target.closest('[data-dir-tab]');
     if (tab) {
+      closePostDetail();
       if (tab.dataset.dirTab === 'community' && dirTab === 'community' && dirChao) {
         dirChao = '';
         dirChaoTab = 'big';
