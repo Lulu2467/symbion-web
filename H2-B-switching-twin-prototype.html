@@ -7242,105 +7242,6 @@
   html[data-theme="blue"] #teamHost .msg:focus-within .act {
     display: none;
   }
-  .cosmo-fan { display: none; }
-  html[data-theme="blue"] .cosmo-fan {
-    position: relative;
-    display: block;
-    flex: none;
-    width: 100%;
-    height: 520px;
-    perspective: 1400px;
-    perspective-origin: 22% 80%;
-  }
-  html[data-theme="blue"] .cosmo-fan-tilt {
-    position: absolute;
-    left: 36px;
-    bottom: 28px;
-    width: 360px;
-    height: 156px;
-    transform: rotateX(7deg) rotateY(-14deg) rotateZ(-5deg);
-    transform-style: preserve-3d;
-  }
-  html[data-theme="blue"] .cosmo-card {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 16px 18px 0;
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    background: #fff;
-    box-shadow: 0 14px 32px rgba(0, 0, 0, .08);
-    transform-origin: 18% 88%;
-  }
-  html[data-theme="blue"] .cosmo-card.is-front {
-    z-index: 8;
-    align-items: center;
-    padding-top: 0;
-    border-color: var(--green);
-  }
-  html[data-theme="blue"] .cosmo-card.is-back {
-    z-index: calc(6 - var(--i));
-    animation: cosmo-fan 7.2s cubic-bezier(.45, 0, .2, 1) infinite;
-    animation-delay: calc(var(--i) * .07s);
-  }
-  html[data-theme="blue"] .cosmo-card img,
-  html[data-theme="blue"] .cosmo-card .mark {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    flex: none;
-  }
-  html[data-theme="blue"] .cosmo-card img { display: block; object-fit: cover; }
-  html[data-theme="blue"] .cosmo-card .mark {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #f1f2f4;
-    color: #5f6368;
-    font-size: 12px;
-    font-weight: 650;
-    line-height: 1;
-  }
-  html[data-theme="blue"] .cosmo-card b {
-    display: block;
-    font-size: 15px;
-    font-weight: 600;
-    line-height: 20px;
-    color: #1a1d21;
-  }
-  html[data-theme="blue"] .cosmo-card small {
-    display: block;
-    margin-top: 2px;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 16px;
-    color: #656d76;
-  }
-  @keyframes cosmo-fan {
-    0%, 12% {
-      transform: translate3d(0, 12px, -10px);
-      opacity: 0;
-    }
-    34%, 66% {
-      transform: translate3d(calc(var(--i) * 72px), calc(var(--i) * -68px), calc(var(--i) * -8px)) rotateZ(calc(var(--i) * -.6deg));
-      opacity: 1;
-    }
-    92%, 100% {
-      transform: translate3d(0, 12px, -10px);
-      opacity: 0;
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    html[data-theme="blue"] .cosmo-card.is-back {
-      animation: none;
-      opacity: 1;
-      transform: translate3d(calc(var(--i) * 72px), calc(var(--i) * -68px), calc(var(--i) * -8px));
-    }
-  }
 </style>
 </head>
 <body>
@@ -7687,15 +7588,6 @@
 
             <!-- 平时在用：续写工具 + Goal，不再推 Try（试用已过） -->
             <div class="screen on" id="tail-home" data-tail="home">
-            <section class="cosmo-fan" aria-label="Citta in front, other Cosmos fanning out behind">
-              <div class="cosmo-fan-tilt">
-                <article class="cosmo-card is-back" style="--i:4"><span class="mark">JG</span><span><b>Julia R. Greer</b><small>Materials</small></span></article>
-                <article class="cosmo-card is-back" style="--i:3"><span class="mark">HX</span><span><b>Prof. Xu</b><small>AI &amp; decisions</small></span></article>
-                <article class="cosmo-card is-back" style="--i:2"><span class="mark">EP</span><span><b>Prof. Pajer</b><small>Cosmology</small></span></article>
-                <article class="cosmo-card is-back" style="--i:1"><span class="mark">GR</span><span><b>Prof. Roland</b><small>Heavy-ion physics</small></span></article>
-                <article class="cosmo-card is-front"><img src="assets/citta-avatar.png?v=2" width="36" height="36" alt=""><span><b>Citta</b><small>Switch into another Cosmo</small></span></article>
-              </div>
-            </section>
             <section class="week-tools-panel" id="sec-tools-week">
               <div class="week-tools-hd">
                 <h3><span class="tools-title-week">Your tools this week</span><span class="tools-title-usual">Quick start</span></h3>
