@@ -5777,9 +5777,10 @@
     flex: none;
   }
   html[data-theme="blue"] #dirHost .post-detail-stat {
-    display: inline-flex;
+    display: inline-grid;
+    grid-template-columns: 22px 3ch;
+    column-gap: 4px;
     align-items: center;
-    gap: 4px;
     flex: none;
     padding: 0;
     border: 0;
@@ -5788,8 +5789,10 @@
     font-size: 14px;
     font-weight: 400;
     line-height: 1;
+    font-variant-numeric: tabular-nums;
   }
   html[data-theme="blue"] #dirHost .post-detail-stat svg { width: 22px; height: 22px; display: block; }
+  html[data-theme="blue"] #dirHost .post-detail-stat > span { text-align: left; }
   html[data-theme="blue"] #dirHost .post-detail-stat svg.comment-green { display: none; }
   html:not([data-theme="blue"]) #dirHost .post-detail-stat svg.comment-blue { display: none; }
   html[data-theme="blue"] #dirHost #postDetailStar svg.star-green { display: none; }
@@ -5802,6 +5805,13 @@
     display: block;
     fill: #e5484d;
     stroke: #e5484d;
+  }
+  html[data-theme="blue"] #dirHost #postDetailStar.on { color: #f5b400; }
+  html[data-theme="blue"] #dirHost #postDetailStar.on svg.star-blue { display: none; }
+  html[data-theme="blue"] #dirHost #postDetailStar.on svg.star-green {
+    display: block;
+    fill: #f5b400;
+    stroke: #f5b400;
   }
   html[data-theme="blue"] #dirHost .dir-note-pic.tall,
   html[data-theme="blue"] #dirHost .dir-note-pic.mid,
