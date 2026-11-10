@@ -5573,6 +5573,10 @@
 
   html[data-theme="blue"] #dirHost .dir-feed .dir-note { cursor: pointer; }
   html[data-theme="blue"] #dirHost { position: relative; }
+  html[data-theme="blue"] .frame:has(#postDetail:not([hidden])) .dock {
+    visibility: hidden;
+    pointer-events: none;
+  }
   html[data-theme="blue"] #dirHost .post-detail {
     position: absolute;
     inset: 0;
@@ -5700,24 +5704,132 @@
     flex: 1;
     min-height: 0;
     overflow: auto;
-    margin-top: 16px;
-    padding: 14px 18px 8px;
+    margin-top: 12px;
+    padding: 4px 16px 12px;
     border-top: 1px solid #eef0f2;
-    color: #8b919a;
-    font-size: 13px;
-  }
-  html[data-theme="blue"] #dirHost .post-detail-comment {
-    margin: 0 0 12px;
     color: #1a1d21;
     font-size: 14px;
-    line-height: 1.5;
   }
-  html[data-theme="blue"] #dirHost .post-detail-comment b {
-    display: block;
-    margin-bottom: 2px;
+  html[data-theme="blue"] #dirHost .post-detail-empty {
+    margin: 28px 0;
+    color: #8b919a;
     font-size: 13px;
-    font-weight: 650;
+    text-align: center;
   }
+  html[data-theme="blue"] #dirHost .post-cmt {
+    display: grid;
+    grid-template-columns: 36px minmax(0, 1fr);
+    column-gap: 10px;
+    align-items: start;
+    padding: 14px 0 2px;
+  }
+  html[data-theme="blue"] #dirHost .post-cmt.is-reply {
+    grid-template-columns: 24px minmax(0, 1fr);
+    column-gap: 8px;
+    padding: 10px 0 0;
+  }
+  html[data-theme="blue"] #dirHost .post-cmt-av {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+  }
+  html[data-theme="blue"] #dirHost .post-cmt.is-reply .post-cmt-av { width: 24px; height: 24px; font-size: 11px; }
+  html[data-theme="blue"] #dirHost .post-cmt-av img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  html[data-theme="blue"] #dirHost .post-cmt-av.mint { background: #d7efe4; color: #2f7d62; }
+  html[data-theme="blue"] #dirHost .post-cmt-av.sky { background: #d7e6f6; color: #3c6ea8; }
+  html[data-theme="blue"] #dirHost .post-cmt-av.sand { background: #f6e7b8; color: #8a6a2a; }
+  html[data-theme="blue"] #dirHost .post-cmt-head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 20px;
+  }
+  html[data-theme="blue"] #dirHost .post-cmt-head b {
+    color: #5c6370;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+  html[data-theme="blue"] #dirHost .post-cmt-author {
+    height: 16px;
+    padding: 0 5px;
+    border-radius: 4px;
+    background: #f2f3f5;
+    color: #8b919a;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 16px;
+  }
+  html[data-theme="blue"] #dirHost .post-cmt-dots {
+    margin-left: auto;
+    width: 24px;
+    height: 20px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #c5cad1;
+    font-size: 16px;
+    letter-spacing: 1px;
+    line-height: 20px;
+  }
+  html[data-theme="blue"] #dirHost .post-cmt-text {
+    margin: 2px 28px 0 0;
+    color: #1a1d21;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+  }
+  html[data-theme="blue"] #dirHost .post-cmt-meta {
+    margin: 4px 0 0;
+    color: #b0b4ba;
+    font-size: 12px;
+    line-height: 16px;
+  }
+  html[data-theme="blue"] #dirHost .post-cmt-acts {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 6px;
+  }
+  html[data-theme="blue"] #dirHost .post-cmt-like,
+  html[data-theme="blue"] #dirHost .post-cmt-reply {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 20px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #8b919a;
+    font-size: 12px;
+    line-height: 16px;
+  }
+  html[data-theme="blue"] #dirHost .post-cmt-like svg,
+  html[data-theme="blue"] #dirHost .post-cmt-reply svg { width: 14px; height: 14px; display: block; flex: none; }
+  html[data-theme="blue"] #dirHost .post-cmt-like span,
+  html[data-theme="blue"] #dirHost .post-cmt-reply span {
+    min-width: 2em;
+    font-variant-numeric: tabular-nums;
+    text-align: left;
+  }
+  html[data-theme="blue"] #dirHost .post-cmt-like.on { color: #e5484d; }
+  html[data-theme="blue"] #dirHost .post-cmt-like.on svg path { fill: #e5484d; stroke: #e5484d; }
+  html[data-theme="blue"] #dirHost .post-cmt-open {
+    margin: 6px 0 4px 32px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #3b6fd8;
+    font-size: 13px;
+    line-height: 20px;
+  }
+  html[data-theme="blue"] #dirHost .post-cmt-fold[hidden] { display: none; }
   html[data-theme="blue"] #dirHost .post-detail-bar {
     display: flex;
     align-items: center;
@@ -12818,8 +12930,145 @@
     const root = document.getElementById('postDetail');
     if (root) root.hidden = true;
   }
+  const CMT_HEART = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19.2s-6.2-3.9-6.2-8.1A3.4 3.4 0 0 1 12 8.6a3.4 3.4 0 0 1 6.2 2.5c0 4.2-6.2 8.1-6.2 8.1z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+  const CMT_BUBBLE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7.5h12a2 2 0 0 1 2 2v5.2a2 2 0 0 1-2 2H11l-3.6 2.4V16.7H6a2 2 0 0 1-2-2V9.5a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+  function commentPeople(note) {
+    const author = {
+      name: note.name,
+      photo: note.photo || '',
+      initial: note.initial || (note.name || '').slice(0, 1),
+      tone: note.av || 'mint',
+      author: true
+    };
+    const pool = [
+      { name: '骆王宇', photo: 'assets/luo-wangyu.png', initial: '骆', tone: 'mint' },
+      { name: '豆豆', photo: '', initial: '豆', tone: 'sky' },
+      { name: 'Maya', photo: '', initial: 'M', tone: 'sand' }
+    ].filter((person) => person.name !== note.name);
+    return { author, pool };
+  }
+  function commentAvatar(person) {
+    const el = document.createElement('span');
+    el.className = 'post-cmt-av' + (person.photo ? '' : ' ' + (person.tone || 'sky'));
+    if (person.photo) {
+      const img = document.createElement('img');
+      img.alt = '';
+      img.src = person.photo;
+      el.appendChild(img);
+    } else {
+      el.textContent = person.initial || (person.name || '').slice(0, 1);
+    }
+    return el;
+  }
+  function commentAct(kind, count, on) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = kind === 'like' ? 'post-cmt-like' : 'post-cmt-reply';
+    if (kind === 'like') {
+      btn.dataset.cmtLike = '1';
+      btn.dataset.count = String(count || 0);
+      if (on) btn.classList.add('on');
+    }
+    btn.innerHTML = (kind === 'like' ? CMT_HEART : CMT_BUBBLE) + '<span></span>';
+    const label = btn.querySelector('span');
+    if (kind === 'like') label.textContent = count > 0 ? String(count) : '赞';
+    else label.textContent = count > 0 ? String(count) : '回复';
+    return btn;
+  }
+  function commentRow(person, item) {
+    const row = document.createElement('article');
+    row.className = 'post-cmt' + (item.reply ? ' is-reply' : '');
+    row.appendChild(commentAvatar(person));
+    const main = document.createElement('div');
+    const head = document.createElement('div');
+    head.className = 'post-cmt-head';
+    const name = document.createElement('b');
+    name.textContent = person.name;
+    head.appendChild(name);
+    if (person.author) {
+      const badge = document.createElement('span');
+      badge.className = 'post-cmt-author';
+      badge.textContent = '作者';
+      head.appendChild(badge);
+    }
+    const dots = document.createElement('button');
+    dots.type = 'button';
+    dots.className = 'post-cmt-dots';
+    dots.setAttribute('aria-label', 'More');
+    dots.textContent = '···';
+    head.appendChild(dots);
+    const text = document.createElement('p');
+    text.className = 'post-cmt-text';
+    text.textContent = item.text;
+    const meta = document.createElement('p');
+    meta.className = 'post-cmt-meta';
+    meta.textContent = [item.time, item.place].filter(Boolean).join(' ');
+    const acts = document.createElement('div');
+    acts.className = 'post-cmt-acts';
+    acts.append(commentAct('like', item.likes || 0, item.liked), commentAct('reply', item.replies || 0));
+    main.append(head, text, meta, acts);
+    row.appendChild(main);
+    return { row, main };
+  }
+  function paintPostComments(list, note) {
+    list.replaceChildren();
+    const { author, pool } = commentPeople(note);
+    const first = pool[0];
+    const second = pool[1] || pool[0];
+    const third = pool[2] || second;
+    const lead = commentRow(first, {
+      text: note.quote ? '这句话可以单独留在摘要里。' : '这张我留下来了。',
+      time: '3天前',
+      place: '江苏',
+      likes: 0,
+      replies: 5
+    });
+    lead.main.appendChild(commentRow(author, {
+      text: note.quote ? '对，先把这一句定下来。' : '换着看也行。',
+      time: '2天前',
+      place: '浙江',
+      reply: true
+    }).row);
+    const fold = document.createElement('div');
+    fold.className = 'post-cmt-fold';
+    fold.hidden = true;
+    [
+      { person: second, text: '我按这个收进笔记了。', time: '2天前', place: '上海' },
+      { person: third, text: '读起来比整段清楚。', time: '1天前', place: '浙江' },
+      { person: second, text: '我也会换着方式留一句。', time: '1天前', place: '上海' },
+      { person: author, text: '嗯，留一句就够。', time: '1天前', place: '浙江' }
+    ].forEach((item) => {
+      fold.appendChild(commentRow(item.person, { text: item.text, time: item.time, place: item.place, reply: true }).row);
+    });
+    const open = document.createElement('button');
+    open.type = 'button';
+    open.className = 'post-cmt-open';
+    open.dataset.cmtOpen = '4';
+    open.textContent = '展开 4 条回复';
+    lead.main.append(open, fold);
+    const next = commentRow(second, {
+      text: '这张卡片也好读。',
+      time: '3天前',
+      place: '上海'
+    });
+    next.main.appendChild(commentRow(author, {
+      text: '谢谢。',
+      time: '3天前',
+      place: '浙江',
+      reply: true
+    }).row);
+    const last = commentRow(third, {
+      text: '我先把这一页存下来。',
+      time: '5天前',
+      place: '广东',
+      likes: 1,
+      liked: true,
+      replies: 3
+    });
+    list.append(lead.row, next.row, last.row);
+  }
   function syncPostCommentCount() {
-    const n = document.querySelectorAll('#postDetailComments .post-detail-comment').length;
+    const n = document.querySelectorAll('#postDetailComments > .post-cmt').length;
     const el = document.getElementById('postDetailCommentCount');
     if (el) el.textContent = String(n);
   }
@@ -12860,11 +13109,7 @@
     const extra = note.quote && note.quote !== note.title ? note.quote : '';
     body.hidden = !extra;
     body.textContent = extra;
-    comments.replaceChildren();
-    const empty = document.createElement('p');
-    empty.className = 'post-detail-empty';
-    empty.textContent = 'No comments yet.';
-    comments.appendChild(empty);
+    paintPostComments(comments, note);
     const follow = document.getElementById('postDetailFollow');
     follow.classList.remove('on');
     follow.textContent = 'Follow';
@@ -13312,14 +13557,39 @@
     if (!text) return;
     const list = document.getElementById('postDetailComments');
     list.querySelector('.post-detail-empty')?.remove();
-    const row = document.createElement('p');
-    row.className = 'post-detail-comment';
-    const who = document.createElement('b');
-    who.textContent = 'You';
-    row.append(who, document.createTextNode(text));
+    const name = userName() || 'You';
+    const row = commentRow({
+      name: name,
+      initial: userInitials(name) || 'Y',
+      tone: 'mint'
+    }, { text: text, time: '刚刚' }).row;
     list.appendChild(row);
     input.value = '';
     syncPostCommentCount();
+    row.scrollIntoView({ block: 'nearest' });
+  });
+  document.getElementById('postDetailComments')?.addEventListener('click', (e) => {
+    const like = e.target.closest('.post-cmt-like');
+    if (like) {
+      const on = like.classList.toggle('on');
+      let n = parseInt(like.dataset.count, 10) || 0;
+      n = Math.max(0, n + (on ? 1 : -1));
+      like.dataset.count = String(n);
+      const span = like.querySelector('span');
+      if (span) span.textContent = n > 0 ? String(n) : '赞';
+      return;
+    }
+    const reply = e.target.closest('.post-cmt-reply');
+    if (reply) {
+      document.querySelector('#postDetailForm input')?.focus();
+      return;
+    }
+    const open = e.target.closest('.post-cmt-open');
+    if (!open) return;
+    const fold = open.nextElementSibling;
+    if (!fold) return;
+    fold.hidden = !fold.hidden;
+    open.textContent = fold.hidden ? '展开 ' + open.dataset.cmtOpen + ' 条回复' : '收起回复';
   });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closePostDetail();
