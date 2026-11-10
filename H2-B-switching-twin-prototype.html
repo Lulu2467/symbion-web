@@ -6351,6 +6351,21 @@
   html[data-theme="blue"] #teamHost .list-top .search svg { width: 14px; height: 14px; color: #8b919a; }
   html[data-theme="blue"] #teamHost .list-top .search input { font-size: 14px; line-height: 32px; }
   html[data-theme="blue"] #teamHost .list-top .search input::placeholder { color: #8b919a; }
+  #teamHost .search-clear { display: none; }
+  html[data-theme="blue"] #teamHost #q::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; display: none; }
+  html[data-theme="blue"] #teamHost .list-top .search:not(:has(input:placeholder-shown)) .search-clear {
+    display: grid;
+    place-items: center;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #333;
+    cursor: pointer;
+    flex: none;
+  }
+  html[data-theme="blue"] #teamHost .list-top .search-clear svg { width: 16px; height: 16px; color: #333; }
   #teamHost #plus .plus-glyph { display: none; }
   html[data-theme="blue"] #teamHost .list-top .icon-btn {
     width: 32px;
@@ -8099,6 +8114,7 @@
           <label class="search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16.5 20 20.5"/></svg>
             <input id="q" type="search" placeholder="Search" autocomplete="off" aria-label="Search joined groups">
+            <button type="button" class="search-clear" id="qClear" aria-label="Clear search"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M557.3 512l329.3-329.4a32 32 0 1 0-45.2-45.2L512 466.7 182.6 137.4a32 32 0 1 0-45.2 45.2L466.7 512 137.4 841.4a31.9 31.9 0 0 0 0 45.2 31.9 31.9 0 0 0 45.2 0L512 557.3l329.4 329.3a31.9 31.9 0 0 0 45.2 0 31.9 31.9 0 0 0 0-45.2z"/></svg></button>
           </label>
           <div class="plus-wrap">
             <button type="button" class="icon-btn" id="plus" aria-label="Add a group" aria-haspopup="menu" aria-expanded="false" aria-controls="plusMenu"><svg class="plus-stroke" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><svg class="plus-glyph" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M668.734694 532.897959H355.265306c-11.493878 0-20.897959-9.404082-20.897959-20.897959s9.404082-20.897959 20.897959-20.897959h313.469388c11.493878 0 20.897959 9.404082 20.897959 20.897959s-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 689.632653c-11.493878 0-20.897959-9.404082-20.897959-20.897959V355.265306c0-11.493878 9.404082-20.897959 20.897959-20.897959s20.897959 9.404082 20.897959 20.897959v313.469388c0 11.493878-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 929.959184c-230.4 0-417.959184-187.559184-417.959184-417.959184s187.559184-417.959184 417.959184-417.959184 417.959184 187.559184 417.959184 417.959184-187.559184 417.959184-417.959184 417.959184z m0-794.122449c-207.412245 0-376.163265 168.75102-376.163265 376.163265s168.75102 376.163265 376.163265 376.163265 376.163265-168.75102 376.163265-376.163265-168.75102-376.163265-376.163265-376.163265z"/></svg></button>
@@ -16572,6 +16588,11 @@ $('plusMenu').addEventListener('click', (e) => {
 });
 teamRoot.querySelectorAll('[data-open-modal]').forEach((b) => b.addEventListener('click', () => openModal(b.dataset.openModal)));
 $('q').addEventListener('input', () => { state.query = $('q').value; renderList(); });
+$('qClear').addEventListener('click', () => {
+  $('q').value = '';
+  $('q').dispatchEvent(new Event('input', { bubbles: true }));
+  $('q').focus();
+});
 $('rows').addEventListener('scroll', syncTeamEdgeFade, { passive: true });
 $('log').addEventListener('scroll', syncTeamEdgeFade, { passive: true });
 window.addEventListener('resize', syncTeamEdgeFade, { passive: true });
