@@ -5507,18 +5507,35 @@
   }
   html[data-theme="blue"] #dirHost .chao-head { display: flex; align-items: center; gap: 12px; margin-top: 14px; padding-top: 14px; border-top: 1px solid #eef0f2; }
   html[data-theme="blue"] #dirHost .chao-head .chao-copy { flex: 1; min-width: 0; }
-  html[data-theme="blue"] #dirHost .chao-join,
-  html[data-theme="blue"] #dirHost .chao-send {
+  html[data-theme="blue"] #dirHost .chao-join {
     flex: none;
     height: 36px;
     padding: 0 18px;
     border: 0;
     border-radius: 10px;
-    background: #1a1d21;
+    background: var(--green);
     color: #fff;
     font-size: 14px;
     font-weight: 600;
   }
+  html[data-theme="blue"] #dirHost .chao-join:hover { background: var(--green-dark); }
+  html[data-theme="blue"] #dirHost .chao-send {
+    flex: none;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: #d5d8dc;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  html[data-theme="blue"] #dirHost .chao-send:hover { background: #c8ccd1; }
+  html[data-theme="blue"] #dirHost .chao-send.is-ready { background: var(--green); color: #fff; }
+  html[data-theme="blue"] #dirHost .chao-send.is-ready:hover { background: var(--green-dark); }
+  html[data-theme="blue"] #dirHost .chao-send svg { width: 16px; height: 16px; display: block; }
   html[data-theme="blue"] #dirHost .chao-tabs { display: flex; gap: 22px; margin-top: 16px; border-bottom: 1px solid #eef0f2; }
   html[data-theme="blue"] #dirHost .chao-tabs button {
     margin-bottom: -1px;
@@ -13446,7 +13463,23 @@
       const send = document.createElement('button');
       send.type = 'submit';
       send.className = 'chao-send';
-      send.textContent = 'Send';
+      send.setAttribute('aria-label', 'Send');
+      if (document.documentElement.dataset.theme === 'blue') {
+        send.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>';
+      } else {
+        send.textContent = 'Send';
+      }
+      input.addEventListener('input', () => {
+        if (document.documentElement.dataset.theme !== 'blue') return;
+        send.classList.toggle('is-ready', !!input.value.trim());
+      });
+      box.addEventListener('submit', (e) => {
+        if (document.documentElement.dataset.theme !== 'blue') return;
+        e.preventDefault();
+        if (!input.value.trim()) return;
+        input.value = '';
+        send.classList.remove('is-ready');
+      });
       box.append(input, send);
       page.appendChild(box);
     }
