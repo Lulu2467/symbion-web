@@ -389,6 +389,7 @@
   html[data-theme="blue"] #tail-home .rem.is-done .rem-check .todo-tick { opacity: 1; }
   html[data-theme="blue"] #tail-home .rem.is-done .when,
   html[data-theme="blue"] #tail-home .rem.is-done .meta { opacity: .55; }
+  html[data-theme="blue"] #tail-home .rem.is-leaving { opacity: 0; transition: opacity .24s ease; }
   html:not([data-theme="blue"]) #tail-home .rem.is-added { display: none; }
   html[data-theme="blue"] #tail-home .btn-soft .todo-mark { width: 12px; height: 12px; flex: none; }
   .todo-empty { display: none; margin: 0; padding: 12px 0; font-size: 12px; color: var(--muted); }
@@ -9186,6 +9187,41 @@
     paintHomeTodoButtons();
     syncTodoEmpty();
   }
+  const TODO_DONE_HOLD_MS = 5000;
+  function clearTodoDoneTimer(rem) {
+    if (!rem._doneTimer) return;
+    clearTimeout(rem._doneTimer);
+    rem._doneTimer = 0;
+  }
+  function restoreOpenTodo(rem) {
+    const list = rem.parentElement;
+    const anchor = rem._openNext;
+    rem._openNext = null;
+    if (!list) return;
+    if (anchor && anchor.parentElement === list && !anchor.classList.contains('is-done')) {
+      list.insertBefore(rem, anchor);
+      return;
+    }
+    const firstDone = [...list.children].find((el) => el !== rem && el.classList.contains('rem') && el.classList.contains('is-done'));
+    if (firstDone) list.insertBefore(rem, firstDone);
+  }
+  function sinkDoneTodo(rem) {
+    const list = rem.parentElement;
+    if (!list) return;
+    clearTodoDoneTimer(rem);
+    rem.classList.remove('is-leaving');
+    list.appendChild(rem);
+    rem._doneTimer = setTimeout(() => {
+      rem._doneTimer = 0;
+      if (!rem.isConnected || !rem.classList.contains('is-done')) return;
+      rem.classList.add('is-leaving');
+      setTimeout(() => {
+        if (!rem.isConnected || !rem.classList.contains('is-done')) return;
+        rem.remove();
+        syncTodoEmpty();
+      }, 240);
+    }, TODO_DONE_HOLD_MS);
+  }
   function toggleTodoDone(rem) {
     if (!rem || rem.classList.contains('is-draft')) return;
     const done = rem.classList.toggle('is-done');
@@ -9193,6 +9229,14 @@
     const check = rem.querySelector('.rem-check');
     check?.setAttribute('aria-label', done ? `Mark not done: ${title}` : `Mark complete: ${title}`);
     check?.setAttribute('aria-pressed', done ? 'true' : 'false');
+    if (done) {
+      rem._openNext = rem.nextElementSibling;
+      sinkDoneTodo(rem);
+    } else {
+      clearTodoDoneTimer(rem);
+      rem.classList.remove('is-leaving');
+      restoreOpenTodo(rem);
+    }
   }
   function commitTodoRow(rem) {
     const input = rem.querySelector('.todo-inline');
