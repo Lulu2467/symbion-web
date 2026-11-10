@@ -7088,11 +7088,12 @@
     width: fit-content;
     max-width: min(100%, 280px);
     margin: 0;
-    padding: 6px 8px;
+    padding: 1px 0 1px 8px;
     border: 0;
-    border-radius: 4px;
-    background: #eeedf0;
-    color: #8a8a8a;
+    border-left: 2px solid #c8ccd1;
+    border-radius: 0;
+    background: transparent;
+    color: #8b919a;
     font: inherit;
     font-size: 12px;
     font-weight: 400;
@@ -7103,14 +7104,14 @@
   html[data-theme="blue"] #teamHost .qref .qline {
     display: -webkit-box;
     overflow: hidden;
-    color: #8a8a8a;
+    color: #8b919a;
     white-space: normal;
     word-break: break-word;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
   }
-  html[data-theme="blue"] #teamHost .msg.mine .qref { align-self: flex-end; color: #8a8a8a; background: #eeedf0; }
-  html[data-theme="blue"] #teamHost .msg.mine .qref .qline { color: #8a8a8a; }
+  html[data-theme="blue"] #teamHost .msg.mine .qref { align-self: flex-end; color: #8b919a; background: transparent; }
+  html[data-theme="blue"] #teamHost .msg.mine .qref .qline { color: #8b919a; }
   #teamHost .quote-peek { display: none; }
   html[data-theme="blue"] #teamHost .quote-peek:not([hidden]) {
     display: block;
@@ -7120,7 +7121,7 @@
     max-height: 280px;
     overflow: auto;
     padding: 14px 16px;
-    border: 1px solid rgba(20, 24, 28, .06);
+    border: 0;
     border-radius: 12px;
     background: #fff;
     color: #1a1d21;
@@ -7128,7 +7129,7 @@
     line-height: 22px;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
-    box-shadow: 0 8px 24px rgba(20, 24, 28, .08);
+    box-shadow: 0 8px 28px rgba(20, 24, 28, .12);
   }
   html[data-theme="blue"] #teamHost .quote-peek a { color: #576b95; text-decoration: underline; }
   html[data-theme="blue"] #teamHost .quote-bar {
@@ -17488,25 +17489,23 @@ $('msgMenu').addEventListener('click', (e) => {
   runMsgAction(key);
   if (key !== 'forward' && key !== 'back') closePopovers();
 });
-$('log').addEventListener('mouseover', (e) => {
-  const btn = e.target.closest('.qref');
-  if (btn) showQuotePeek(btn);
-});
-$('log').addEventListener('mouseout', (e) => {
-  const btn = e.target.closest('.qref');
-  if (!btn) return;
-  const next = e.relatedTarget;
-  if (next && (btn.contains(next) || $('quotePeek')?.contains(next))) return;
-  clearTimeout(quotePeekTimer);
-  quotePeekTimer = setTimeout(hideQuotePeek, 120);
-});
-$('quotePeek').addEventListener('mouseenter', () => clearTimeout(quotePeekTimer));
-$('quotePeek').addEventListener('mouseleave', () => {
-  clearTimeout(quotePeekTimer);
-  quotePeekTimer = setTimeout(hideQuotePeek, 120);
-});
 $('log').addEventListener('scroll', hideQuotePeek);
+document.addEventListener('click', (e) => {
+  if (e.target.closest('.qref, #quotePeek')) return;
+  hideQuotePeek();
+});
 $('log').addEventListener('click', (e) => {
+  const quoted = e.target.closest('.qref');
+  if (quoted && document.documentElement.dataset.theme === 'blue') {
+    const peek = $('quotePeek');
+    if (peek && !peek.hidden && peek.dataset.from === quoted.dataset.jump) {
+      hideQuotePeek();
+      return;
+    }
+    showQuotePeek(quoted);
+    if (peek) peek.dataset.from = quoted.dataset.jump;
+    return;
+  }
   const who = e.target.closest('[data-person]');
   if (who) { openDirect(who.dataset.person); return; }
   const bubble = e.target.closest('.bubble');
