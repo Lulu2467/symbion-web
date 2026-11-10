@@ -7242,6 +7242,95 @@
   html[data-theme="blue"] #teamHost .msg:focus-within .act {
     display: none;
   }
+  .route-map { display: none; }
+  html[data-theme="blue"] .route-map {
+    position: relative;
+    display: block;
+    flex: none;
+    width: 100%;
+    aspect-ratio: 1080 / 320;
+  }
+  html[data-theme="blue"] .route-map svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+  html[data-theme="blue"] .route-map .wire {
+    fill: none;
+    stroke: #d0d4d8;
+    stroke-width: 1.25;
+    stroke-linecap: round;
+  }
+  html[data-theme="blue"] .route-map .wire.dash { stroke-dasharray: 3 4; }
+  html[data-theme="blue"] .route-map .pulse {
+    fill: none;
+    stroke: var(--green);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 16 100;
+    opacity: 0;
+    animation: route-comet 10s linear infinite;
+  }
+  html[data-theme="blue"] .route-node {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 0 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    color: #1a1d21;
+  }
+  html[data-theme="blue"] .route-node b {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 16px;
+    color: #1a1d21;
+  }
+  html[data-theme="blue"] .route-node small {
+    margin-top: 2px;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 14px;
+    color: var(--green);
+  }
+  html[data-theme="blue"] .route-node.n-task {
+    background: #f6f7f8;
+    border-color: #e6e8eb;
+  }
+  html[data-theme="blue"] .route-node.n-task b {
+    font-size: 12px;
+    font-weight: 600;
+    color: #5f6368;
+  }
+  html[data-theme="blue"] .route-node.n-citta { border-color: var(--green); }
+  html[data-theme="blue"] .route-node.is-hop { animation: route-land 10s linear infinite; }
+  @keyframes route-comet {
+    0% { stroke-dashoffset: 16; opacity: 0; }
+    2% { opacity: 1; }
+    12% { stroke-dashoffset: -100; opacity: 1; }
+    14%, 100% { stroke-dashoffset: -100; opacity: 0; }
+  }
+  @keyframes route-land {
+    0%, 3% { border-color: var(--line); }
+    6%, 14% { border-color: var(--green); }
+    18%, 100% { border-color: var(--line); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html[data-theme="blue"] .route-map .pulse { animation: none; opacity: 0; }
+    html[data-theme="blue"] .route-map .pulse.is-still {
+      opacity: 1;
+      stroke-dasharray: 22 100;
+      stroke-dashoffset: -46;
+    }
+    html[data-theme="blue"] .route-node.is-hop { animation: none; }
+  }
 </style>
 </head>
 <body>
@@ -7588,6 +7677,41 @@
 
             <!-- 平时在用：续写工具 + Goal，不再推 Try（试用已过） -->
             <div class="screen on" id="tail-home" data-tail="home">
+            <section class="route-map" aria-label="Citta connects to other Cosmos and can switch into their digital person">
+              <svg viewBox="0 0 1080 320" aria-hidden="true">
+                <path class="wire" d="M124 142 C140 142, 140 142, 156 142"/>
+                <path class="wire" d="M356 142 C412 142, 412 38, 468 38"/>
+                <path class="wire" d="M356 142 C412 142, 412 150, 468 150"/>
+                <path class="wire" d="M356 142 C412 168, 412 262, 468 262"/>
+                <path class="wire dash" d="M256 176 C246 208, 250 232, 256 250"/>
+                <path class="wire" d="M664 38 C760 28, 790 28, 868 28"/>
+                <path class="wire" d="M664 38 C748 64, 790 92, 868 92"/>
+                <path class="wire" d="M664 150 C748 120, 790 92, 868 92"/>
+                <path class="wire" d="M664 150 C760 150, 800 156, 868 156"/>
+                <path class="wire" d="M664 150 C748 186, 800 220, 868 220"/>
+                <path class="wire dash" d="M664 262 C760 250, 800 220, 868 220"/>
+                <path class="wire dash" d="M664 262 C760 274, 800 284, 868 284"/>
+                <path class="pulse" style="animation-delay:0s" pathLength="100" d="M356 142 C412 142, 412 38, 468 38"/>
+                <path class="pulse" style="animation-delay:1.2s" pathLength="100" d="M664 38 C760 28, 790 28, 868 28"/>
+                <path class="pulse" style="animation-delay:1.6s" pathLength="100" d="M664 38 C748 64, 790 92, 868 92"/>
+                <path class="pulse" style="animation-delay:3.3s" pathLength="100" d="M356 142 C412 142, 412 150, 468 150"/>
+                <path class="pulse is-still" style="animation-delay:4.4s" pathLength="100" d="M664 150 C760 150, 800 156, 868 156"/>
+                <path class="pulse" style="animation-delay:6.4s" pathLength="100" d="M356 142 C412 168, 412 262, 468 262"/>
+                <path class="pulse" style="animation-delay:7.6s" pathLength="100" d="M664 262 C760 274, 800 284, 868 284"/>
+                <path class="pulse" style="animation-delay:8.8s" pathLength="100" d="M256 176 C246 208, 250 232, 256 250"/>
+              </svg>
+              <div class="route-node n-task" style="left:1.11%;top:38.75%;width:10.37%;height:11.25%"><b>Your task</b></div>
+              <div class="route-node n-citta" style="left:14.44%;top:33.75%;width:18.52%;height:21.25%"><b>Citta</b><small>routes &amp; closes the loop</small></div>
+              <div class="route-node n-security is-hop" style="left:15.56%;top:73.75%;width:16.3%;height:16.25%;animation-delay:9.5s"><b>Security agent</b><small>Claude</small></div>
+              <div class="route-node is-hop" style="left:43.33%;top:3.75%;width:18.15%;height:16.25%;animation-delay:.7s"><b>Teaching Manager</b><small>Claude 4.8</small></div>
+              <div class="route-node is-hop" style="left:43.33%;top:38.75%;width:18.15%;height:16.25%;animation-delay:4s"><b>Research Manager</b><small>GPT-5</small></div>
+              <div class="route-node is-hop" style="left:43.33%;top:73.75%;width:18.15%;height:16.25%;animation-delay:7.1s"><b>Study Manager</b><small>Symbion mini</small></div>
+              <div class="route-node is-hop" style="left:80.37%;top:1.25%;width:18.15%;height:15%;animation-delay:1.9s"><b>Writing agent</b><small>GPT-5</small></div>
+              <div class="route-node is-hop" style="left:80.37%;top:21.25%;width:18.15%;height:15%;animation-delay:2.3s"><b>Coding agent</b><small>Claude</small></div>
+              <div class="route-node is-hop" style="left:80.37%;top:41.25%;width:18.15%;height:15%;animation-delay:5.1s"><b>Data agent</b><small>Symbion 1.8</small></div>
+              <div class="route-node" style="left:80.37%;top:61.25%;width:18.15%;height:15%"><b>Design agent</b><small>Gemini</small></div>
+              <div class="route-node is-hop" style="left:80.37%;top:81.25%;width:18.15%;height:15%;animation-delay:8.3s"><b>Verifier agent</b><small>GPT-5 mini</small></div>
+            </section>
             <section class="week-tools-panel" id="sec-tools-week">
               <div class="week-tools-hd">
                 <h3><span class="tools-title-week">Your tools this week</span><span class="tools-title-usual">Quick start</span></h3>
