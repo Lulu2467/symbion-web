@@ -6313,6 +6313,25 @@
   .row-err { min-height: 16px; margin-top: 2px; font-size: 12px; color: #a33b32; }
   .checkline { display: flex; align-items: center; gap: 8px; margin: 8px 0; font-size: 13px; }
   .checkline input { width: 16px; height: 16px; accent-color: var(--green); }
+  .citta-tick { display: none; }
+  html[data-theme="blue"] & .citta-check { position: relative; }
+  html[data-theme="blue"] & .citta-check input {
+    position: absolute;
+    opacity: 0;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+  }
+  html[data-theme="blue"] & .citta-tick {
+    display: block;
+    width: 16px;
+    height: 16px;
+    flex: none;
+    color: #c5cad1;
+  }
+  html[data-theme="blue"] & .citta-tick .citta-tick-mark { opacity: 0; }
+  html[data-theme="blue"] & .citta-check input:checked + .citta-tick { color: var(--green); }
+  html[data-theme="blue"] & .citta-check input:checked + .citta-tick .citta-tick-mark { opacity: 1; }
   .finder-filter { display: flex; align-items: center; gap: 8px; margin: 0 0 10px; padding: 6px 10px; border-radius: 10px; background: var(--green-mist); font-size: 13px; }
   .finder-card { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-top: 1px solid var(--line); }
   .finder-card h3 { margin: 0; font-size: 14px; }
@@ -16424,7 +16443,7 @@ function openModal(kind, extra) {
       <label class="field">${fieldHint('Group slug', 'optional category')}<input id="gslug" list="slugList" placeholder="heavy-ion" autocomplete="off"></label>
       <datalist id="slugList">${slugOptions().map((s) => `<option value="${esc(s)}"></option>`).join('')}</datalist>
       <div class="field email-invite"><span class="email-label">Invite by email</span><div data-email-box>${emailBoxHTML()}</div><button type="button" class="mini" data-add-email aria-label="Add email"><span class="add-plus">＋</span><svg class="plus-glyph" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M668.734694 532.897959H355.265306c-11.493878 0-20.897959-9.404082-20.897959-20.897959s9.404082-20.897959 20.897959-20.897959h313.469388c11.493878 0 20.897959 9.404082 20.897959 20.897959s-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 689.632653c-11.493878 0-20.897959-9.404082-20.897959-20.897959V355.265306c0-11.493878 9.404082-20.897959 20.897959-20.897959s20.897959 9.404082 20.897959 20.897959v313.469388c0 11.493878-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 929.959184c-230.4 0-417.959184-187.559184-417.959184-417.959184s187.559184-417.959184 417.959184-417.959184 417.959184 187.559184 417.959184 417.959184-187.559184 417.959184-417.959184 417.959184z m0-794.122449c-207.412245 0-376.163265 168.75102-376.163265 376.163265s168.75102 376.163265 376.163265 376.163265 376.163265-168.75102 376.163265-376.163265-168.75102-376.163265-376.163265-376.163265z"/></svg></button></div>
-      <label class="checkline"><input id="gcitta" type="checkbox"> Add Citta</label>
+      <label class="checkline citta-check"><input id="gcitta" type="checkbox"><svg class="citta-tick" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M512 0a512 512 0 1 0 512 512A512 512 0 0 0 512 0z m0 955.733A443.733 443.733 0 1 1 955.733 512 443.733 443.733 0 0 1 512 955.733z"/><path class="citta-tick-mark" fill="currentColor" d="M753.323 318.805L439.637 632.491l-168.96-168.619A34.133 34.133 0 1 0 222.208 512l193.195 193.195a34.133 34.133 0 0 0 48.128 0l337.92-337.92a34.133 34.133 0 1 0-48.128-48.128z"/></svg> Add Citta</label>
       <p class="lead">Citta stays the group agent. It is not someone you message directly.</p>`;
     $('gname').focus();
   } else if (kind === 'apply') {
