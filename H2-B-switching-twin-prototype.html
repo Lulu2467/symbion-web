@@ -6442,21 +6442,49 @@
   #teamHost .sheet-head .icon-btn { width: 28px; height: 28px; border: 0; border-radius: 0; background: transparent; color: #656d76; font-size: 20px; line-height: 1; }
   #teamHost .sheet-head .icon-btn:hover { border: 0; background: transparent; color: #1a1d21; }
   #teamHost .sheet-head .sheet-x-blue { display: none; }
-  html[data-theme="blue"] #teamHost .sheet-head .sheet-x-mark { display: none; }
-  html[data-theme="blue"] #teamHost .sheet-head .sheet-x-blue { display: block; width: 20px; height: 20px; }
-  html[data-theme="blue"] #teamHost .modal { background: transparent; }
+  html[data-theme="blue"] #teamHost .sheet-head .sheet-x-mark { display: block; font-size: 18px; font-weight: 400; line-height: 1; }
+  html[data-theme="blue"] #teamHost .sheet-head .sheet-x-blue { display: none; }
+  html[data-theme="blue"] #teamHost .modal { background: rgba(26, 29, 33, .28); }
   html[data-theme="blue"] #teamHost .sheet {
-    border-color: #d5dbe1;
-    box-shadow: 0 24px 64px rgba(20, 24, 28, .32);
+    border-color: var(--line);
+    box-shadow: 0 16px 40px rgba(20, 24, 28, .12);
   }
   html[data-theme="blue"] #teamHost .sheet-head {
+    min-height: 52px;
+    padding: 0 8px 0 16px;
+    border-bottom: 1px solid var(--line);
     cursor: grab;
     user-select: none;
     touch-action: none;
   }
+  html[data-theme="blue"] #teamHost .sheet h2 { font-size: 15px; font-weight: 600; }
+  html[data-theme="blue"] #teamHost .sheet-head .icon-btn { border-radius: 50%; color: #1a1d21; }
+  html[data-theme="blue"] #teamHost .sheet-head .icon-btn:hover { background: #f3f4f6; color: #1a1d21; }
+  html[data-theme="blue"] #teamHost .sheet > .lead { margin: 0; padding: 16px 16px 0; }
+  html[data-theme="blue"] #teamHost #sheetBody { padding: 16px 16px 0; }
+  html[data-theme="blue"] #teamHost .sheet .err:empty { display: none; min-height: 0; padding: 0; }
   html[data-theme="blue"] #teamHost .sheet.is-dragging .sheet-head { cursor: grabbing; }
   html[data-theme="blue"] #teamHost .sheet .err { flex: none; margin: 0; padding: 0 16px; }
-  html[data-theme="blue"] #teamHost .sheet-actions { flex: none; padding: 8px 16px 16px; }
+  html[data-theme="blue"] #teamHost .sheet-actions {
+    flex: none;
+    margin-top: 16px;
+    padding: 12px 16px;
+    border-top: 1px solid var(--line);
+    gap: 8px;
+  }
+  html[data-theme="blue"] #teamHost .sheet-actions .btn {
+    height: 32px;
+    padding: 0 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid var(--line);
+    background: #fff;
+    color: #1a1d21;
+  }
+  html[data-theme="blue"] #teamHost .sheet-actions .btn.go { border: 0; background: var(--green); color: #fff; }
+  html[data-theme="blue"] #teamHost .sheet-actions .btn.go:hover { background: var(--green-dark); }
+  html[data-theme="blue"] #teamHost .sheet-actions .btn.go:disabled { background: #e6e8eb; color: #6b7076; }
   html[data-theme="blue"] #teamHost #sheetBody:has(#finderResults) { display: flex; flex-direction: column; }
   html[data-theme="blue"] #teamHost #sheetBody:has(#finderResults) > .search { order: 1; margin: 2px 0 8px; background: #f4f5f7; border-radius: 10px; }
   html[data-theme="blue"] #teamHost #sheetBody:has(#finderResults) > #finderSlug { order: 2; }
@@ -6563,6 +6591,21 @@
   html[data-theme="blue"] #teamHost .field input,
   html[data-theme="blue"] #teamHost .field textarea,
   html[data-theme="blue"] #teamHost .field select { font-weight: 400; color: #1a1d21; border-color: #e6e8ec; }
+  html[data-theme="blue"] #teamHost .field input,
+  html[data-theme="blue"] #teamHost .field select { height: 32px; padding: 0 10px; border-radius: 8px; font-size: 13px; }
+  html[data-theme="blue"] #teamHost .field textarea {
+    height: 36px;
+    min-height: 36px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 20px;
+    resize: none;
+    overflow: hidden;
+  }
+  html[data-theme="blue"] #teamHost .field input:focus,
+  html[data-theme="blue"] #teamHost .field textarea:focus,
+  html[data-theme="blue"] #teamHost .field select:focus { outline: 2px solid var(--green); outline-offset: 1px; border-color: var(--line); }
   html[data-theme="blue"] #teamHost .field input::placeholder,
   html[data-theme="blue"] #teamHost .field textarea::placeholder { color: #b0b4ba; }
   html[data-theme="blue"] #teamHost [data-add-email] {
@@ -16144,6 +16187,9 @@ function openModal(kind, extra) {
       ? `<div class="copy-preview">${esc(inviteText(c, link))}</div>`
       : '<p class="lead">Ask for a new link.</p>';
   }
+  if (document.documentElement.dataset.theme === 'blue') {
+    requestAnimationFrame(() => $('sheet')?.querySelectorAll('textarea').forEach((el) => resizeTextarea(el)));
+  }
 }
 function closeModal() {
   const back = state.modalBack;
@@ -17069,6 +17115,7 @@ $('sheet').addEventListener('input', (e) => {
     const err = e.target.parentElement.querySelector('.row-err');
     if (err) err.textContent = '';
   }
+  if (document.documentElement.dataset.theme === 'blue' && e.target.matches('textarea')) resizeTextarea(e.target);
 });
 $('sheet').addEventListener('click', (e) => {
   if (e.target.closest('[data-close]')) { closeModal(); return; }
