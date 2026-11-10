@@ -5842,17 +5842,24 @@
     font-size: 13px;
     text-align: center;
   }
+  html[data-theme="blue"] #dirHost .post-cmt-count {
+    margin: 8px 0 2px;
+    color: #9aa0a6;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+  }
   html[data-theme="blue"] #dirHost .post-cmt {
     display: grid;
     grid-template-columns: 36px minmax(0, 1fr);
     column-gap: 10px;
     align-items: start;
-    padding: 14px 0 2px;
+    padding: 16px 0 6px;
   }
   html[data-theme="blue"] #dirHost .post-cmt.is-reply {
     grid-template-columns: 24px minmax(0, 1fr);
     column-gap: 8px;
-    padding: 10px 0 0;
+    padding: 12px 0 2px;
   }
   html[data-theme="blue"] #dirHost .post-cmt-av {
     width: 36px;
@@ -5877,9 +5884,9 @@
     min-height: 20px;
   }
   html[data-theme="blue"] #dirHost .post-cmt-head b {
-    color: #5c6370;
-    font-size: 14px;
-    font-weight: 500;
+    color: #8b919a;
+    font-size: 13px;
+    font-weight: 400;
     line-height: 20px;
   }
   html[data-theme="blue"] #dirHost .post-cmt-author {
@@ -5899,20 +5906,20 @@
     padding: 0;
     border: 0;
     background: transparent;
-    color: #c5cad1;
-    font-size: 16px;
+    color: #c8ccd1;
+    font-size: 14px;
     letter-spacing: 1px;
     line-height: 20px;
   }
   html[data-theme="blue"] #dirHost .post-cmt-text {
-    margin: 2px 28px 0 0;
+    margin: 4px 28px 0 0;
     color: #1a1d21;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 400;
     line-height: 22px;
   }
   html[data-theme="blue"] #dirHost .post-cmt-meta {
-    margin: 4px 0 0;
+    margin: 6px 0 0;
     color: #b0b4ba;
     font-size: 12px;
     line-height: 16px;
@@ -5920,8 +5927,8 @@
   html[data-theme="blue"] #dirHost .post-cmt-acts {
     display: flex;
     align-items: center;
-    gap: 16px;
-    margin-top: 6px;
+    gap: 18px;
+    margin-top: 8px;
   }
   html[data-theme="blue"] #dirHost .post-cmt-like,
   html[data-theme="blue"] #dirHost .post-cmt-reply {
@@ -5949,15 +5956,23 @@
   html[data-theme="blue"] #dirHost .post-cmt-like.on .like-line { display: none; }
   html[data-theme="blue"] #dirHost .post-cmt-like.on .like-fill { display: inline; }
   html[data-theme="blue"] #dirHost .post-cmt-open {
-    margin: 6px 0 4px 32px;
+    margin: 8px 0 2px 32px;
     padding: 0;
     border: 0;
     background: transparent;
-    color: #3b6fd8;
-    font-size: 13px;
-    line-height: 20px;
+    color: #3b5ccc;
+    font-size: 14px;
+    line-height: 22px;
   }
   html[data-theme="blue"] #dirHost .post-cmt-fold[hidden] { display: none; }
+  html[data-theme="blue"] #dirHost .post-cmt-end {
+    margin: 28px 0 16px;
+    color: #c5c8ce;
+    font-size: 12px;
+    letter-spacing: 1px;
+    line-height: 18px;
+    text-align: center;
+  }
   html[data-theme="blue"] #dirHost .post-detail-bar {
     display: flex;
     align-items: center;
@@ -13318,12 +13333,20 @@
       liked: true,
       replies: 3
     });
-    list.append(lead.row, next.row, last.row);
+    const count = document.createElement('p');
+    count.className = 'post-cmt-count';
+    count.id = 'postCmtCount';
+    const end = document.createElement('p');
+    end.className = 'post-cmt-end';
+    end.textContent = '- THE END -';
+    list.append(count, lead.row, next.row, last.row, end);
   }
   function syncPostCommentCount() {
-    const n = document.querySelectorAll('#postDetailComments > .post-cmt').length;
+    const n = document.querySelectorAll('#postDetailComments .post-cmt').length;
     const el = document.getElementById('postDetailCommentCount');
     if (el) el.textContent = String(n);
+    const head = document.getElementById('postCmtCount');
+    if (head) head.textContent = '共 ' + n + ' 条评论';
   }
   function openPostDetail(note) {
     if (document.documentElement.dataset.theme !== 'blue' || !note) return;
@@ -13847,11 +13870,13 @@
       else if (open) open.before(row);
       else parent.appendChild(row);
     } else {
-      list.appendChild(row);
+      const end = list.querySelector('.post-cmt-end');
+      if (end) end.before(row);
+      else list.appendChild(row);
     }
     input.value = '';
     clearPostReply();
-    if (!replying) syncPostCommentCount();
+    syncPostCommentCount();
     row.scrollIntoView({ block: 'nearest' });
   });
   document.getElementById('postDetailComments')?.addEventListener('click', (e) => {
