@@ -11385,7 +11385,6 @@
       if (pickTopic) {
         e.preventDefault();
         e.stopPropagation();
-        if (pickTopic.classList.contains('is-added')) return;
         const wrap = pickTopic.closest('.interest-add-wrap');
         const discover = pickTopic.closest('.discover');
         const scroll = discover?.querySelector('.interest-scroll');
@@ -11393,19 +11392,20 @@
         const pop = wrap?.querySelector('.interest-pop');
         const topic = pickTopic.dataset.addTopic;
         if (!scroll || !topic) return;
-        const chip = document.createElement('button');
-        chip.type = 'button';
-        chip.className = 'interest';
-        chip.setAttribute('aria-pressed', 'false');
-        chip.textContent = topic;
-        scroll.appendChild(chip);
+        let chip = [...scroll.querySelectorAll('.interest')].find((b) => b.textContent.trim() === topic);
+        if (!chip) {
+          chip = document.createElement('button');
+          chip.type = 'button';
+          chip.className = 'interest';
+          chip.setAttribute('aria-pressed', 'false');
+          chip.textContent = topic;
+          scroll.appendChild(chip);
+        }
         discover.querySelectorAll('.interest-scroll .interest').forEach((b) => {
           const on = b === chip;
           b.classList.toggle('on', on);
           b.setAttribute('aria-pressed', String(on));
         });
-        pickTopic.classList.add('is-added');
-        pickTopic.setAttribute('aria-disabled', 'true');
         if (pop) pop.hidden = true;
         if (addBtn) addBtn.setAttribute('aria-expanded', 'false');
         chip.scrollIntoView({ inline: 'nearest', block: 'nearest', behavior: 'smooth' });
@@ -11426,14 +11426,9 @@
         frame.querySelectorAll('.interest-pop').forEach((p) => { p.hidden = true; });
         frame.querySelectorAll('.interest.add').forEach((b) => b.setAttribute('aria-expanded', 'false'));
         if (open) {
-          const discover = addInterest.closest('.discover');
-          const existing = new Set(
-            [...(discover?.querySelectorAll('.interest-scroll .interest') || [])].map((b) => b.textContent.trim())
-          );
           pop.querySelectorAll('[data-add-topic]').forEach((opt) => {
-            const taken = existing.has(opt.dataset.addTopic);
-            opt.classList.toggle('is-added', taken);
-            opt.setAttribute('aria-disabled', String(taken));
+            opt.classList.remove('is-added');
+            opt.removeAttribute('aria-disabled');
           });
           pop.hidden = false;
           addInterest.setAttribute('aria-expanded', 'true');
