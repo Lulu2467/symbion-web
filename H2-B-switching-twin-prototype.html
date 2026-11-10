@@ -5506,7 +5506,7 @@
   html[data-theme="blue"] #dirHost .chao-kicker { margin: 0; color: var(--green); font-size: 13px; font-weight: 650; }
   html[data-theme="blue"] #dirHost .chao-title { margin: 0 0 0 24px; color: #1a1d21; font-size: 22px; font-weight: 650; letter-spacing: -0.02em; line-height: 28px; }
   html[data-theme="blue"] #dirHost .chao-line { margin: 4px 0 0; color: #8b919a; font-size: 13px; }
-  html[data-theme="blue"] #dirHost .chao-title + .chao-line { margin-left: 24px; }
+  html[data-theme="blue"] #dirHost .chao-title + .chao-line { display: none; }
   #dirHost .chao-back .back-blue { display: none; }
   html[data-theme="blue"] #dirHost .chao-back {
     position: absolute;
@@ -5574,12 +5574,12 @@
   html[data-theme="blue"] #dirHost .chao-tabs button[aria-pressed="true"] { border-bottom-color: var(--green); color: var(--green); font-weight: 650; }
   html[data-theme="blue"] #dirHost .chao-note {
     margin: 14px 0 0;
-    padding: 12px 14px;
-    border: 1px solid #e6e8ec;
-    border-radius: 10px;
-    color: #656d76;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #8b919a;
     font-size: 13px;
-    line-height: 1.5;
+    line-height: 20px;
   }
   html[data-theme="blue"] #dirHost .chao-post {
     display: grid;
@@ -5603,20 +5603,28 @@
     display: flex;
     gap: 10px;
     align-items: center;
-    margin-top: auto;
-    padding: 12px 0 14px;
+    margin-top: 16px;
+    padding: 0 0 16px;
   }
   html[data-theme="blue"] #dirHost .chao-box input {
     flex: 1;
     min-width: 0;
-    height: 40px;
-    padding: 0 12px;
-    border: 1px solid #e6e8ec;
-    border-radius: 10px;
-    background: #fff;
+    height: 36px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    outline: none;
+    box-shadow: none;
+    background: transparent;
     color: #1a1d21;
     font-size: 14px;
   }
+  html[data-theme="blue"] #dirHost .chao-box input:focus {
+    outline: none;
+    border: 0;
+    box-shadow: none;
+  }
+  html[data-theme="blue"] #dirHost .chao-box input::placeholder { color: #b0b4ba; }
   html[data-theme="blue"] #dirHost .chao-row,
   html[data-theme="blue"] #dirHost .chao-person {
     display: flex;
