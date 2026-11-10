@@ -333,6 +333,30 @@
     background: transparent;
     color: #656d76;
   }
+  html[data-theme="blue"] .discover .browse-all { display: none; }
+  html[data-theme="blue"] .discover .discover-next {
+    position: relative;
+    border: 0;
+    background: transparent;
+    color: #7a828b;
+  }
+  html[data-theme="blue"] .discover .discover-next::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 18px;
+    height: 18px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    box-sizing: border-box;
+    transform: translate(-50%, -50%);
+  }
+  html[data-theme="blue"] .discover .discover-next .chev-ico {
+    position: relative;
+    width: 12px;
+    height: 12px;
+  }
   html[data-theme="blue"] .main { display: flex; flex-direction: column; }
   html[data-theme="blue"] .content {
     flex: 1 0 auto;
