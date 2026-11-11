@@ -1107,14 +1107,11 @@
     color: var(--green-dark) !important;
     background: transparent !important;
   }
-  @keyframes tool-hop {
-    0% { transform: translateY(0); }
-    40% { transform: translateY(-4px); }
-    70% { transform: translateY(1px); }
+  @keyframes pill-hop {
+    0% { transform: translateY(6px); }
+    45% { transform: translateY(-4px); }
+    72% { transform: translateY(1px); }
     100% { transform: translateY(0); }
-  }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.is-hop {
-    animation: tool-hop .38s ease;
   }
   .tool-recent { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent.is-on {
@@ -1123,11 +1120,6 @@
     gap: 8px;
     padding-top: 10px;
     padding-left: var(--recent-x, 0px);
-    animation: recent-in .2s ease;
-  }
-  @keyframes recent-in {
-    from { opacity: 0; transform: translateY(-4px); }
-    to { opacity: 1; transform: none; }
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill {
     height: 28px;
@@ -1144,6 +1136,7 @@
     white-space: nowrap;
     cursor: pointer;
     box-shadow: 0 6px 16px rgba(20, 24, 28, .08);
+    animation: pill-hop .42s ease;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill:hover {
     border-color: #c8ccd1;
@@ -1226,8 +1219,7 @@
     html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool-prompt { transition: none; }
     html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool-prompt:hover,
     html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool-prompt:focus-visible { transform: none; }
-    html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.is-hop,
-    html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent.is-on { animation: none; }
+    html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill { animation: none; }
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-cases-k {
     margin: 0;
@@ -10742,9 +10734,6 @@
     const pillsWidth = pills.reduce((sum, el) => sum + el.offsetWidth, 0) + Math.max(0, pills.length - 1) * 8;
     const x = Math.max(0, Math.min(left, room - pillsWidth));
     pop.style.setProperty('--recent-x', `${Math.round(x)}px`);
-    tool.classList.remove('is-hop');
-    void tool.offsetWidth;
-    tool.classList.add('is-hop');
   }
   function syncComposerCases() {
     hideToolRecent();
