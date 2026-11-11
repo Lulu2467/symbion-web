@@ -1409,6 +1409,76 @@
     color: #1a1d21;
   }
   html[data-theme="blue"] #tail-home .two-title-l .act-add { display: none; }
+  .rem-board { display: none; }
+  html[data-theme="blue"] #tail-home .rem-board {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 2px 10px 6px;
+  }
+  html[data-theme="blue"] #tail-home .rem-week { display: flex; gap: 2px; }
+  html[data-theme="blue"] #tail-home .rem-day {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    margin: 0;
+    padding: 6px 0 8px;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    color: #8b919a;
+    font: inherit;
+    cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .rem-day span { font-size: 11px; font-weight: 500; line-height: 14px; }
+  html[data-theme="blue"] #tail-home .rem-day b { font-size: 14px; font-weight: 600; line-height: 18px; color: #1a1d21; }
+  html[data-theme="blue"] #tail-home .rem-day.is-on { background: #f3f4f6; }
+  html[data-theme="blue"] #tail-home .rem-day.has-dot::after {
+    content: "";
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #3c7a94;
+  }
+  html[data-theme="blue"] #tail-home .rem-filters {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 999px;
+    background: #f3f4f6;
+  }
+  html[data-theme="blue"] #tail-home .rem-filters button {
+    flex: 1;
+    height: 32px;
+    margin: 0;
+    padding: 0 8px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #5f6368;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .rem-filters button.is-on { background: #1a1d21; color: #fff; }
+  html[data-theme="blue"] #tail-home .rem-group {
+    padding: 10px 16px 2px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 18px;
+    color: #1a1d21;
+  }
+  html[data-theme="blue"] #tail-home .rem-none {
+    margin: 0;
+    padding: 16px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #8b919a;
+  }
   html[data-theme="blue"] #tail-home .two-main-l {
     border: 0;
     border-radius: 0;
@@ -1416,23 +1486,21 @@
     padding: 0;
     box-shadow: none;
   }
-  html[data-theme="blue"] #tail-home .two-main-l .rem:last-of-type { border-bottom-color: transparent; }
   .rem-add { display: none; }
   html[data-theme="blue"] #tail-home .rem-add {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    width: 100%;
-    height: 44px;
-    margin: 2px 0 4px;
-    border: 0;
-    border-radius: 12px;
-    background: transparent;
-    color: #1a1d21;
+    align-self: flex-end;
+    width: 36px;
+    height: 36px;
+    margin: 8px 12px 8px auto;
+    border: 1px solid #e6e8ec;
+    border-radius: 50%;
+    background: #fff;
+    color: transparent;
     font: inherit;
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 0;
     cursor: pointer;
   }
   html[data-theme="blue"] #tail-home .rem-add:hover { background: #f6f7f8; }
@@ -2621,29 +2689,32 @@
   html[data-theme="blue"] #tail-home .two-title-l .sub { display: none; }
   html[data-theme="blue"] #tail-home .rem {
     position: relative;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
     align-items: center;
-    gap: 2px 8px;
+    column-gap: 12px;
+    row-gap: 2px;
     margin: 0;
-    padding: 13px 52px 13px 16px;
+    padding: 10px 16px;
     min-height: 0;
     border-radius: 0;
-    border-bottom: 1px solid #eceef1;
+    border-bottom: 0;
   }
+  html[data-theme="blue"] #tail-home .rem[hidden] { display: none !important; }
   html[data-theme="blue"] #tail-home .rem:hover { background: transparent; }
   html[data-theme="blue"] #tail-home .rem .col { display: contents; }
   html[data-theme="blue"] #tail-home .rem .t,
   html[data-theme="blue"] #tail-home .rem button.t,
   html[data-theme="blue"] #tail-home .rem .todo-inline {
-    order: 1;
-    flex: 1 0 calc(100% - 8px);
+    grid-column: 2;
+    grid-row: 1;
     font-size: 15px;
     font-weight: 600;
     color: #1a1d21;
   }
   html[data-theme="blue"] #tail-home .rem .when {
-    order: 2;
+    grid-column: 2;
+    grid-row: 2;
     width: auto;
     white-space: normal;
     font-size: 13px;
@@ -2652,12 +2723,15 @@
     color: #8b919a;
   }
   html[data-theme="blue"] #tail-home .rem .when.hot { color: #8b919a; }
-  html[data-theme="blue"] #tail-home .rem .meta { order: 3; }
+  html[data-theme="blue"] #tail-home .rem .meta { grid-column: 2; grid-row: 3; }
+  html[data-theme="blue"] #tail-home .rem .meta:has(.todo-note[hidden]) { display: none; }
+  html[data-theme="blue"] #tail-home .rem .badge { display: none; }
   html[data-theme="blue"] #tail-home .rem .rem-check {
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
+    position: static;
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    transform: none;
+    justify-self: center;
   }
   html[data-theme="blue"] #tail-home .rem .when,
   html[data-theme="blue"] #tail-home .rem .badge { cursor: pointer; }
@@ -7886,6 +7960,14 @@
               <div class="two-grid">
                 <div class="two-col">
                   <div class="sec two-title-l"><h3>Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act-add" data-action="add-reminder" data-tip="Add a reminder with Citta — tell it what and when" aria-label="Add reminder with Citta"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 3.25v9.5M3.25 8h9.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button></div>
+                  <div class="rem-board">
+                    <div class="rem-week" role="group" aria-label="This week"></div>
+                    <div class="rem-filters" role="tablist">
+                      <button type="button" class="is-on" data-rem-filter="todo" role="tab" aria-selected="true">To do</button>
+                      <button type="button" data-rem-filter="done" role="tab" aria-selected="false">Completed</button>
+                      <button type="button" data-rem-filter="pending" role="tab" aria-selected="false">Pending</button>
+                    </div>
+                  </div>
                   <div class="two-main-l">
                     <div class="rem">
                       <button type="button" class="rem-check" tabindex="-1" aria-label="Mark complete: Heavy-ion Physics — lecture 5"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path class="todo-tick" fill="currentColor" d="M459.755102 637.387755c-5.22449 0-10.44898-2.089796-14.628571-6.269388l-104.489796-104.489796c-8.359184-8.359184-8.359184-21.420408 0-29.779591 8.359184-8.359184 21.420408-8.359184 29.779592 0l104.489795 104.489796c8.359184 8.359184 8.359184 21.420408 0 29.779591-4.702041 4.179592-9.926531 6.269388-15.15102 6.269388z"/><path class="todo-tick" fill="currentColor" d="M459.755102 637.387755c-5.22449 0-10.44898-2.089796-14.628571-6.269388-8.359184-8.359184-8.359184-21.420408 0-29.779591l208.979591-208.979592c8.359184-8.359184 21.420408-8.359184 29.779592 0 8.359184 8.359184 8.359184 21.420408 0 29.779592l-208.979592 208.979591c-4.702041 4.179592-9.926531 6.269388-15.15102 6.269388z"/><path fill="currentColor" d="M512 929.959184c-230.4 0-417.959184-187.559184-417.959184-417.959184s187.559184-417.959184 417.959184-417.959184 417.959184 187.559184 417.959184 417.959184-187.559184 417.959184-417.959184 417.959184z m0-794.122449c-207.412245 0-376.163265 168.75102-376.163265 376.163265s168.75102 376.163265 376.163265 376.163265 376.163265-168.75102 376.163265-376.163265-168.75102-376.163265-376.163265-376.163265z"/></svg></button>
@@ -9185,6 +9267,8 @@
   let todoEditing = null;
   let todoPending = null;
   let todoCalMonth = null;
+  let remFilter = 'todo';
+  let remDay = '';
   function paintHomeTodoButtons() {
     const blue = document.documentElement.dataset.theme === 'blue';
     document.querySelectorAll('#tail-home .rem-check, #tail-home .rem button.t').forEach((el) => {
@@ -9244,6 +9328,70 @@
       if (current === 'citta') b.innerHTML = `<span class="spark-icon" aria-hidden="true">${SPARK_SOLID}</span>${verb}`;
       else b.textContent = `${AIS[current]?.prefix || '·'}  ${verb}`;
     });
+    syncRemBoard();
+  }
+  function renderRemWeek(host, rems) {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    start.setDate(start.getDate() - ((start.getDay() + 6) % 7));
+    if (!remDay) remDay = todoDateIso(now);
+    const marked = new Set(rems.map((rem) => todoWhenParts(rem).date).filter(Boolean));
+    host.replaceChildren(...Array.from({ length: 7 }, (_, i) => {
+      const date = new Date(start);
+      date.setDate(start.getDate() + i);
+      const iso = todoDateIso(date);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'rem-day' + (iso === remDay ? ' is-on' : '') + (marked.has(iso) ? ' has-dot' : '');
+      btn.dataset.remDay = iso;
+      btn.setAttribute('aria-pressed', iso === remDay ? 'true' : 'false');
+      const name = document.createElement('span');
+      name.textContent = TODO_WEEKDAYS[date.getDay()];
+      const num = document.createElement('b');
+      num.textContent = String(date.getDate());
+      btn.append(name, num);
+      return btn;
+    }));
+  }
+  function syncRemBoard() {
+    const list = document.querySelector('#tail-home .two-main-l');
+    if (!list) return;
+    const blue = document.documentElement.dataset.theme === 'blue';
+    list.querySelectorAll('.rem-group, .rem-none').forEach((el) => el.remove());
+    const rems = [...list.querySelectorAll('.rem')];
+    if (!blue) {
+      rems.forEach((rem) => { rem.hidden = false; });
+      return;
+    }
+    const week = document.querySelector('#tail-home .rem-week');
+    if (week) renderRemWeek(week, rems);
+    const anchor = list.querySelector('.rem-add');
+    const visible = [];
+    rems.forEach((rem) => {
+      const date = todoWhenParts(rem).date;
+      const done = rem.classList.contains('is-done');
+      let show = false;
+      if (remFilter === 'pending') show = !date && !done;
+      else if (remFilter === 'done') show = done && (!date || date === remDay);
+      else show = !!date && date === remDay && !done;
+      rem.hidden = !show;
+      if (show) visible.push(rem);
+    });
+    ['course', 'email', 'yours'].forEach((type) => {
+      const rows = visible.filter((rem) => todoTypeOf(rem) === type);
+      if (!rows.length) return;
+      const head = document.createElement('div');
+      head.className = 'rem-group';
+      head.textContent = type === 'email' ? 'Email' : type === 'yours' ? 'Yours' : 'Course';
+      list.insertBefore(head, anchor);
+      rows.forEach((rem) => list.insertBefore(rem, anchor));
+    });
+    if (!visible.length) {
+      const none = document.createElement('p');
+      none.className = 'rem-none';
+      none.textContent = remFilter === 'pending' ? 'Nothing pending.' : remFilter === 'done' ? 'Nothing completed.' : 'Nothing for this day.';
+      list.insertBefore(none, anchor);
+    }
   }
   function todoTypeOf(rem) {
     const badge = rem.querySelector('.badge');
@@ -9572,6 +9720,12 @@
     const check = rem.querySelector('.rem-check');
     check?.setAttribute('aria-label', done ? `Mark not done: ${title}` : `Mark complete: ${title}`);
     check?.setAttribute('aria-pressed', done ? 'true' : 'false');
+    if (document.documentElement.dataset.theme === 'blue') {
+      clearTodoDoneTimer(rem);
+      rem.classList.remove('is-leaving');
+      syncRemBoard();
+      return;
+    }
     if (done) {
       rem._openNext = rem.nextElementSibling;
       sinkDoneTodo(rem);
@@ -11601,6 +11755,24 @@
       if (pickBtn) {
         setCittaExpanded(true);
         setCittaDraft(pickBtn.textContent.trim());
+        return;
+      }
+
+      const remDayBtn = e.target.closest('#tail-home [data-rem-day]');
+      if (remDayBtn) {
+        remDay = remDayBtn.dataset.remDay;
+        syncRemBoard();
+        return;
+      }
+      const remFilterBtn = e.target.closest('#tail-home [data-rem-filter]');
+      if (remFilterBtn) {
+        remFilter = remFilterBtn.dataset.remFilter;
+        document.querySelectorAll('#tail-home [data-rem-filter]').forEach((btn) => {
+          const on = btn === remFilterBtn;
+          btn.classList.toggle('is-on', on);
+          btn.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        syncRemBoard();
         return;
       }
 
