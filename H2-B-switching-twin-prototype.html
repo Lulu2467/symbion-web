@@ -394,22 +394,26 @@
   html[data-theme="blue"] #tail-home .rem-check {
     display: grid;
     place-items: center;
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 22px;
     padding: 0;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-    color: #c5cad1;
+    border: 1.5px solid #d5d8de;
+    border-radius: 50%;
+    background: #fff;
+    color: #fff;
     flex: none;
     cursor: pointer;
   }
-  html[data-theme="blue"] #tail-home .rem-check svg { width: 18px; height: 18px; opacity: 1; }
+  html[data-theme="blue"] #tail-home .rem-check svg { width: 14px; height: 14px; }
+  html[data-theme="blue"] #tail-home .rem-check svg path:not(.todo-tick) { display: none; }
   html[data-theme="blue"] #tail-home .rem-check .todo-tick { opacity: 0; }
-  html[data-theme="blue"] #tail-home .rem-check:hover { color: var(--green); background: transparent; }
-  html[data-theme="blue"] #tail-home .rem-check:hover .todo-tick { opacity: 1; }
-  html[data-theme="blue"] #tail-home .rem.is-done .t { color: var(--muted); text-decoration: line-through; }
-  html[data-theme="blue"] #tail-home .rem.is-done .rem-check { color: var(--green); background: transparent; }
+  html[data-theme="blue"] #tail-home .rem-check:hover { border-color: #34c759; background: #fff; }
+  html[data-theme="blue"] #tail-home .rem.is-done .t { color: #8b919a; text-decoration: line-through; }
+  html[data-theme="blue"] #tail-home .rem.is-done .rem-check {
+    color: #fff;
+    background: #34c759;
+    border-color: #34c759;
+  }
   html[data-theme="blue"] #tail-home .rem.is-done .rem-check .todo-tick { opacity: 1; }
   html[data-theme="blue"] #tail-home .rem.is-done .when,
   html[data-theme="blue"] #tail-home .rem.is-done .meta { opacity: .55; }
@@ -1385,14 +1389,61 @@
     padding: 8px 16px 12px;
     gap: 14px;
   }
-  html[data-theme="blue"] #tail-home .two-main-l {
-    border: 1px solid var(--line);
-    border-radius: 16px;
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid > .two-col:first-child {
     background: #fff;
-    padding: 4px 8px;
+    border-radius: 22px;
+    box-shadow: 0 12px 36px rgba(20, 24, 28, .08);
+    padding: 18px 6px 8px;
+    gap: 2px;
   }
-  html[data-theme="blue"] #tail-home .rem { min-height: 64px; box-sizing: border-box; }
-  html[data-theme="blue"] #tail-home .rem:last-child { border-bottom-color: transparent; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-title-l {
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    padding: 0 14px 6px;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-title-l h3 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #1a1d21;
+  }
+  html[data-theme="blue"] #tail-home .two-title-l .act-add { display: none; }
+  html[data-theme="blue"] #tail-home .two-main-l {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+  }
+  html[data-theme="blue"] #tail-home .two-main-l .rem:last-of-type { border-bottom-color: transparent; }
+  .rem-add { display: none; }
+  html[data-theme="blue"] #tail-home .rem-add {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    height: 44px;
+    margin: 2px 0 4px;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    color: #1a1d21;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .rem-add:hover { background: #f6f7f8; }
+  html[data-theme="blue"] #tail-home .rem-add::before {
+    content: "";
+    width: 14px;
+    height: 14px;
+    background:
+      linear-gradient(#1a1d21, #1a1d21) center / 14px 1.5px no-repeat,
+      linear-gradient(#1a1d21, #1a1d21) center / 1.5px 14px no-repeat;
+  }
   .tools-title-usual { display: none; }
   html[data-theme="blue"] .tools-title-week { display: none; }
   html[data-theme="blue"] .tools-title-usual { display: inline; }
@@ -1408,7 +1459,7 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) .week-tools-panel { gap: 16px; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .week-card b { font-size: 14px; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .week-card small { font-size: 12px; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) .rem .t { font-size: 13px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .rem .t { font-size: 15px; font-weight: 600; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .sec .sub,
   html[data-theme="blue"] .hub:has(#screen-home.on) .two-title-r .new-badge { font-size: 12px; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .week-tools-panel {
@@ -2569,19 +2620,55 @@
   }
   html[data-theme="blue"] #tail-home .two-title-l .sub { display: none; }
   html[data-theme="blue"] #tail-home .rem {
-    margin: 0 -8px;
-    padding: 8px;
-    border-radius: 8px;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px 8px;
+    margin: 0;
+    padding: 13px 52px 13px 16px;
+    min-height: 0;
+    border-radius: 0;
+    border-bottom: 1px solid #eceef1;
   }
-  html[data-theme="blue"] #tail-home .rem:hover { background: #f6f7f8; }
+  html[data-theme="blue"] #tail-home .rem:hover { background: transparent; }
+  html[data-theme="blue"] #tail-home .rem .col { display: contents; }
+  html[data-theme="blue"] #tail-home .rem .t,
+  html[data-theme="blue"] #tail-home .rem button.t,
+  html[data-theme="blue"] #tail-home .rem .todo-inline {
+    order: 1;
+    flex: 1 0 calc(100% - 8px);
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1d21;
+  }
+  html[data-theme="blue"] #tail-home .rem .when {
+    order: 2;
+    width: auto;
+    white-space: normal;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.3;
+    color: #8b919a;
+  }
+  html[data-theme="blue"] #tail-home .rem .when.hot { color: #8b919a; }
+  html[data-theme="blue"] #tail-home .rem .meta { order: 3; }
+  html[data-theme="blue"] #tail-home .rem .rem-check {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
   html[data-theme="blue"] #tail-home .rem .when,
   html[data-theme="blue"] #tail-home .rem .badge { cursor: pointer; }
   html[data-theme="blue"] #tail-home .rem .meta {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 3px;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
     white-space: normal;
     overflow: visible;
+    font-size: 13px;
+    color: #8b919a;
   }
   html[data-theme="blue"] #tail-home .todo-note { font-size: 12px; line-height: 1.35; color: var(--faint); }
   html[data-theme="blue"] #tail-home .todo-inline {
@@ -2618,18 +2705,16 @@
   }
   html[data-theme="blue"] .sec .act-add:active::before { transform: scale(.92); }
   html[data-theme="blue"] #tail-home .btn-soft { display: none; }
+  html[data-theme="blue"] #tail-home .rem .badge,
   html[data-theme="blue"] #tail-home .rem .badge.course,
+  html[data-theme="blue"] #tail-home .rem .badge.email,
+  html[data-theme="blue"] #tail-home .rem .badge.yours,
   html[data-theme="blue"] #tail-home .rem .badge:not(.email):not(.yours) {
-    background: var(--green-tint);
-    color: var(--green-dark);
-  }
-  html[data-theme="blue"] #tail-home .rem .badge.email {
-    background: var(--amber-tint);
-    color: var(--amber);
-  }
-  html[data-theme="blue"] #tail-home .rem .badge.yours {
-    background: #e4e7ec;
-    color: #3d4450;
+    background: transparent;
+    color: #8b919a;
+    padding: 0;
+    font-size: 13px;
+    font-weight: 400;
   }
   .rem .meta { display: flex; gap: 6px; align-items: center; flex-wrap: nowrap; white-space: nowrap; font-size: 11px; color: var(--faint); min-width: 0; overflow: hidden; text-overflow: ellipsis; }
   .badge { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 999px; background: var(--green-tint); color: var(--green-dark); white-space: nowrap; flex: none; }
@@ -7826,6 +7911,7 @@
                       <div class="col"><button type="button" class="t" tabindex="-1">Lab 3 analysis due</button><span class="meta"><span class="badge yours">Yours</span></span></div>
                       <button type="button" class="btn-soft" data-verb="Open in Numbers" data-tool="numbers"></button>
                     </div>
+                    <button type="button" class="rem-add" data-action="add-reminder" aria-label="Add to-do">Add to-do</button>
                   </div>
                 </div>
                 <div class="two-col">
@@ -9144,12 +9230,11 @@
       const raw = when.dataset.raw;
       when.textContent = /^\d{1,2}:\d{2}$/.test(raw) ? `Today\n${raw}` : raw;
     });
-    const add = document.querySelector('#tail-home [data-action="add-reminder"]');
-    if (add) {
+    document.querySelectorAll('#tail-home [data-action="add-reminder"]').forEach((add) => {
       if (!add.dataset.tipOriginal) add.dataset.tipOriginal = add.dataset.tip || '';
       add.dataset.tip = blue ? 'Add a to-do' : add.dataset.tipOriginal;
       add.setAttribute('aria-label', blue ? 'Add to-do' : 'Add reminder with Citta');
-    }
+    });
     document.querySelectorAll('#tail-home .btn-soft').forEach((b) => {
       if (blue) {
         b.innerHTML = `${TODO_MARK}Check`;
@@ -9201,7 +9286,9 @@
       empty = document.createElement('p');
       empty.className = 'todo-empty';
       empty.textContent = 'Nothing left.';
-      list.appendChild(empty);
+      const anchor = list.querySelector('.rem-add');
+      if (anchor) list.insertBefore(empty, anchor);
+      else list.appendChild(empty);
     }
   }
   function closeTodo() {
@@ -9464,7 +9551,9 @@
     if (!list) return;
     clearTodoDoneTimer(rem);
     rem.classList.remove('is-leaving');
-    list.appendChild(rem);
+    const anchor = list.querySelector('.rem-add');
+    if (anchor) list.insertBefore(rem, anchor);
+    else list.appendChild(rem);
     rem._doneTimer = setTimeout(() => {
       rem._doneTimer = 0;
       if (!rem.isConnected || !rem.classList.contains('is-done')) return;
