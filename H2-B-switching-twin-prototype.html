@@ -630,9 +630,16 @@
     align-items: stretch;
     padding: 12px 10px 14px;
   }
-  html[data-theme="blue"] .rail .r { align-self: center; }
-  html[data-theme="blue"] .rail.is-open .r[data-rail] { align-self: stretch; }
-  html[data-theme="blue"] .rail .div { align-self: stretch; width: auto; margin: 6px 4px; }
+  html[data-theme="blue"] .rail .rail-top { justify-content: flex-end; }
+  html[data-theme="blue"] .rail .r[data-rail] {
+    align-self: stretch;
+    width: 100%;
+    justify-content: flex-start;
+    padding: 0 10px;
+    gap: 10px;
+  }
+  html[data-theme="blue"] .rail .r .rail-lab { display: inline; }
+  html[data-theme="blue"] .rail .div { align-self: stretch; width: auto; margin: 8px 8px; }
   html[data-theme="blue"] .rail .p { display: none; }
   .rail-rec { display: none; }
   html[data-theme="blue"] .rail-rec {
@@ -645,20 +652,24 @@
   html[data-theme="blue"] .rail-rec-card {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     width: 100%;
     min-height: 44px;
     padding: 6px 8px;
     border: 1px solid #e6e8ec;
     border-radius: 12px;
     background: #fff;
+    font: inherit;
+    color: inherit;
+    appearance: none;
     text-align: left;
     cursor: pointer;
   }
   html[data-theme="blue"] .rail-rec-card:hover { border-color: #d5d8de; }
   html[data-theme="blue"] .rail-rec-card .dav {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
+    border: 1px solid #e6e8ec;
     border-radius: 50%;
     overflow: hidden;
     flex: none;
@@ -701,14 +712,14 @@
   html[data-theme="blue"] .rail-me {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 10px;
     margin-top: auto;
-    width: 36px;
-    height: 36px;
-    padding: 0;
+    width: 100%;
+    height: 40px;
+    padding: 0 8px;
     border-radius: 10px;
-    align-self: center;
+    align-self: stretch;
     flex: none;
     color: #1a1d21;
   }
@@ -733,7 +744,7 @@
     line-height: 1;
     flex: none;
   }
-  html[data-theme="blue"] .rail-me-copy { display: none; min-width: 0; text-align: left; }
+  html[data-theme="blue"] .rail-me-copy { display: flex; min-width: 0; text-align: left; }
   html[data-theme="blue"] .rail.is-open .rail-me-copy { display: flex; min-width: 0; }
   html[data-theme="blue"] .rail-me-copy b {
     font-size: 13px;
