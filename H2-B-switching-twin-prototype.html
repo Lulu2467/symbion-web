@@ -1108,22 +1108,24 @@
     background: transparent !important;
   }
   @keyframes pill-hop {
-    0% { transform: translateY(6px); }
+    0% { transform: translateY(0); }
     45% { transform: translateY(-4px); }
     72% { transform: translateY(1px); }
     100% { transform: translateY(0); }
   }
   .tool-recent { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent.is-on {
+    position: absolute;
+    z-index: 3;
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    align-self: flex-start;
     gap: 8px;
     width: max-content;
-    max-width: 100%;
-    margin-top: 8px;
-    margin-left: var(--recent-x, 0px);
+    max-width: calc(100% - 48px);
+    top: var(--recent-y, 0px);
+    left: var(--recent-x, 0px);
+    margin: 0;
     padding: 0;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill {
@@ -10720,6 +10722,7 @@
     pop.classList.remove('is-on');
     pop.replaceChildren();
     pop.style.removeProperty('--recent-x');
+    pop.style.removeProperty('--recent-y');
   }
   function showToolRecent(tool) {
     const blueHome = document.documentElement.dataset.theme === 'blue' && document.getElementById('screen-home')?.classList.contains('on');
@@ -10747,11 +10750,16 @@
     const hostStyle = getComputedStyle(host);
     const padL = parseFloat(hostStyle.paddingLeft) || 0;
     const padR = parseFloat(hostStyle.paddingRight) || 0;
-    const left = (tool.getBoundingClientRect().left - host.getBoundingClientRect().left) / scale - padL;
-    const room = host.clientWidth - padL - padR;
+    const hostBox = host.getBoundingClientRect();
+    const toolBox = tool.getBoundingClientRect();
+    const left = (toolBox.left - hostBox.left) / scale;
+    const roomRight = host.clientWidth - padR;
     const pillsWidth = pop.offsetWidth;
-    const x = Math.max(0, Math.min(left + (tool.offsetWidth - pillsWidth) / 2, Math.max(0, room - pillsWidth)));
+    const x = Math.max(padL, Math.min(left + (tool.offsetWidth - pillsWidth) / 2, Math.max(padL, roomRight - pillsWidth)));
+    const tools = tool.closest('#composerTools');
+    const y = ((tools || tool).getBoundingClientRect().bottom - hostBox.top) / scale + 4;
     pop.style.setProperty('--recent-x', `${Math.round(x)}px`);
+    pop.style.setProperty('--recent-y', `${Math.round(y)}px`);
   }
   function syncComposerCases() {
     hideToolRecent();
