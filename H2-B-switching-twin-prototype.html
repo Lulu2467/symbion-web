@@ -1461,8 +1461,10 @@
     min-height: 0;
   }
   html[data-theme="blue"] #tail-home .rem-card {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    column-gap: 8px;
     box-sizing: border-box;
     background: #fff;
     border: 1px solid var(--line);
@@ -1483,29 +1485,32 @@
   }
   html[data-theme="blue"] #tail-home .two-title-l .act-add { display: none; }
   .rem-board { display: none; }
-  html[data-theme="blue"] #tail-home .rem-board {
+  html[data-theme="blue"] #tail-home .rem-board { display: contents; }
+  html[data-theme="blue"] #tail-home .rem-week {
+    grid-column: 1;
+    grid-row: 1 / -1;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    padding: 0 8px 4px;
+    gap: 2px;
+    width: auto;
+    padding: 0 4px;
   }
-  html[data-theme="blue"] #tail-home .rem-week { display: flex; gap: 2px; width: 100%; }
   html[data-theme="blue"] #tail-home .rem-day {
-    flex: 1;
-    min-width: 0;
+    flex: none;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    gap: 1px;
+    justify-content: flex-start;
+    gap: 6px;
     margin: 0;
-    padding: 4px 0 6px;
+    padding: 4px 8px;
     border: 0;
     border-radius: 10px;
     background: transparent;
     color: #8b919a;
     font: inherit;
     cursor: pointer;
+    white-space: nowrap;
   }
   html[data-theme="blue"] #tail-home .rem-day span { font-size: 11px; font-weight: 500; line-height: 14px; }
   html[data-theme="blue"] #tail-home .rem-day b { font-size: 13px; font-weight: 500; line-height: 18px; color: #5f6368; }
@@ -1519,9 +1524,12 @@
     background: var(--green);
   }
   html[data-theme="blue"] #tail-home .rem-filters {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: start;
     display: flex;
     gap: 6px;
-    padding: 0;
+    padding: 4px 8px 0 0;
     background: transparent;
   }
   html[data-theme="blue"] #tail-home .rem-filters button {
@@ -1558,7 +1566,9 @@
     color: #8b919a;
   }
   html[data-theme="blue"] #tail-home .two-main-l {
-    flex: 1;
+    grid-column: 2;
+    grid-row: 2;
+    min-height: 0;
     border: 0;
     border-radius: 0;
     background: transparent;
