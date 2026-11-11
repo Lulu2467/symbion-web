@@ -1357,7 +1357,42 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x::after {
     transform: translate(-50%, -50%) rotate(-45deg);
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home { margin-top: 24px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home {
+    width: min(1200px, 100%);
+    margin-inline: auto;
+    margin-top: 8px;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    column-gap: 20px;
+    align-items: start;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid > .two-col:nth-child(2) {
+    position: static;
+    overflow: visible;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid > .two-col:nth-child(2) > .cosmos-scroll-wrap.two-main-r {
+    position: static;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    height: auto;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .cosmos-scroll-wrap > .activity {
+    height: auto;
+    overflow: visible;
+    padding: 8px 16px 12px;
+    gap: 14px;
+  }
+  html[data-theme="blue"] #tail-home .two-main-l {
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: #fff;
+    padding: 4px 8px;
+  }
+  html[data-theme="blue"] #tail-home .rem { min-height: 64px; box-sizing: border-box; }
+  html[data-theme="blue"] #tail-home .rem:last-child { border-bottom-color: transparent; }
   .tools-title-usual { display: none; }
   html[data-theme="blue"] .tools-title-week { display: none; }
   html[data-theme="blue"] .tools-title-usual { display: inline; }
