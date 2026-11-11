@@ -4822,6 +4822,14 @@
   #deskHost .kanban-card .todo-cal-grid button { color: #1a1d21; }
   #deskHost .kanban-card .todo-cal-grid button.is-today { color: var(--green); }
   #deskHost .kanban-card .todo-cal-grid button.is-on { color: #fff; }
+  html[data-theme="blue"] .todo-cal-grid button.is-past,
+  html[data-theme="blue"] #deskHost .kanban-card .todo-cal-grid button.is-past {
+    background: transparent;
+    color: #c5c8ce;
+    font-weight: 400;
+    cursor: default;
+    opacity: 1;
+  }
   html[data-theme="blue"] #deskHost { background: #f6f7f8; }
   html[data-theme="blue"] #deskHost .kanban-modal { background: rgba(26, 29, 33, .28); }
   html[data-theme="blue"] #deskHost .desk-scroll { padding: 20px 24px 40px; }
@@ -9645,20 +9653,28 @@
     const firstDow = new Date(year, month, 1).getDay();
     const days = new Date(year, month + 1, 0).getDate();
     const todayIso = todoDateIso(new Date());
+    const blockPast = document.documentElement.dataset.theme === 'blue';
     for (let i = 0; i < firstDow; i += 1) grid.appendChild(document.createElement('span'));
     for (let day = 1; day <= days; day += 1) {
       const btn = document.createElement('button');
       btn.type = 'button';
       const iso = todoDateIso(new Date(year, month, day));
+      const past = blockPast && iso < todayIso;
       btn.textContent = String(day);
       btn.setAttribute('aria-label', iso);
       btn.setAttribute('aria-pressed', iso === date.value ? 'true' : 'false');
       if (iso === todayIso) btn.classList.add('is-today');
       if (iso === date.value) btn.classList.add('is-on');
-      btn.addEventListener('click', () => {
-        date.value = iso;
-        paintTodoCal();
-      });
+      if (past) {
+        btn.classList.add('is-past');
+        btn.disabled = true;
+        btn.setAttribute('aria-disabled', 'true');
+      } else {
+        btn.addEventListener('click', () => {
+          date.value = iso;
+          paintTodoCal();
+        });
+      }
       grid.appendChild(btn);
     }
   }
@@ -15252,19 +15268,27 @@
     const firstDow = new Date(year, month, 1).getDay();
     const days = new Date(year, month + 1, 0).getDate();
     const todayIso = todoDateIso(new Date());
+    const blockPast = document.documentElement.dataset.theme === 'blue';
     for (let i = 0; i < firstDow; i += 1) grid.appendChild(document.createElement('span'));
     for (let day = 1; day <= days; day += 1) {
       const btn = document.createElement('button');
       btn.type = 'button';
       const iso = todoDateIso(new Date(year, month, day));
+      const past = blockPast && iso < todayIso;
       btn.textContent = String(day);
       btn.setAttribute('aria-label', iso);
       if (iso === todayIso) btn.classList.add('is-today');
       if (iso === date.value) btn.classList.add('is-on');
-      btn.addEventListener('click', () => {
-        date.value = iso;
-        paintKanbanCal();
-      });
+      if (past) {
+        btn.classList.add('is-past');
+        btn.disabled = true;
+        btn.setAttribute('aria-disabled', 'true');
+      } else {
+        btn.addEventListener('click', () => {
+          date.value = iso;
+          paintKanbanCal();
+        });
+      }
       grid.appendChild(btn);
     }
   }
