@@ -1119,7 +1119,7 @@
     z-index: 3;
     display: flex;
     flex-wrap: nowrap;
-    align-items: center;
+    align-items: flex-start;
     gap: 8px;
     width: max-content;
     max-width: calc(100% - 48px);
@@ -1149,8 +1149,16 @@
     box-shadow: 0 2px 6px rgba(20, 24, 28, .05);
     animation: pill-hop .42s ease;
   }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill:nth-child(1),
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill:nth-child(3) {
+    margin-top: 8px;
+  }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill:nth-child(2) {
+    margin-top: 0;
     animation-delay: .05s;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill:nth-child(3) {
+    animation-delay: .1s;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill:hover {
     border-color: #c8ccd1;
@@ -1414,7 +1422,7 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home {
     width: min(1200px, 100%);
     margin-inline: auto;
-    margin-top: 8px;
+    margin-top: 40px;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -1503,10 +1511,17 @@
   html[data-theme="blue"] #tail-home .rem-day b { font-size: 13px; font-weight: 500; line-height: 18px; color: #5f6368; }
   html[data-theme="blue"] #tail-home .rem-day.is-on,
   html[data-theme="blue"] #tail-home .rem-filters button.is-on {
-    background: color-mix(in srgb, var(--green-tint) 70%, transparent);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(12px) saturate(1.5);
-    -webkit-backdrop-filter: blur(12px) saturate(1.5);
+    background:
+      radial-gradient(120% 70% at 18% 0%, rgba(255, 255, 255, .95), rgba(255, 255, 255, 0) 48%),
+      linear-gradient(180deg, rgba(255, 255, 255, .42) 0%, rgba(255, 255, 255, 0) 42%, rgba(49, 100, 121, .16) 100%),
+      color-mix(in srgb, var(--green-tint) 82%, white);
+    box-shadow:
+      inset 0 1px 0 #fff,
+      inset 0 -1px 0 rgba(60, 122, 148, .38),
+      inset 0 0 0 1px rgba(255, 255, 255, .9),
+      0 3px 8px rgba(60, 122, 148, .18);
+    backdrop-filter: blur(16px) saturate(1.8) brightness(1.12);
+    -webkit-backdrop-filter: blur(16px) saturate(1.8) brightness(1.12);
   }
   html[data-theme="blue"] #tail-home .rem-day.is-on b { color: var(--green-dark); }
   html[data-theme="blue"] #tail-home .rem-day.has-dot::after {
@@ -10723,11 +10738,11 @@
   }
 
   const RECENT_EDITOR_FILES = {
-    doc: ['Lecture 1 summary', 'Reading report — QGP'],
-    deck: ['Lecture 4 summary', '6 study slides'],
-    numbers: ['Lab 3', 'sPHENIX sample'],
-    symtex: ['Bjorken energy formula', 'Phase diagram labels'],
-    code: ['Particle simulation', 'Sample plot']
+    doc: ['Lecture 1 summary', 'Reading report — QGP', 'Lecture 5 notes'],
+    deck: ['Lecture 4 summary', '6 study slides', 'Quiz deck'],
+    numbers: ['Lab 3', 'sPHENIX sample', 'Plot sheet'],
+    symtex: ['Bjorken energy formula', 'Phase diagram labels', 'Energy draft'],
+    code: ['Particle simulation', 'Sample plot', 'Quiz script']
   };
   let toolRecentTimer = 0;
   function hideToolRecent() {
@@ -10772,7 +10787,7 @@
     const pillsWidth = pop.offsetWidth;
     const x = Math.max(padL, Math.min(left + (tool.offsetWidth - pillsWidth) / 2, Math.max(padL, roomRight - pillsWidth)));
     const tools = tool.closest('#composerTools');
-    const y = ((tools || tool).getBoundingClientRect().bottom - hostBox.top) / scale + 4;
+    const y = ((tools || tool).getBoundingClientRect().bottom - hostBox.top) / scale + 14;
     pop.style.setProperty('--recent-x', `${Math.round(x)}px`);
     pop.style.setProperty('--recent-y', `${Math.round(y)}px`);
   }
