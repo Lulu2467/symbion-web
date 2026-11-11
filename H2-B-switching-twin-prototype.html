@@ -626,7 +626,6 @@
   html[data-theme="blue"] .discover { display: none; }
   html[data-theme="blue"] .presenter [data-screen="tutorial"],
   html[data-theme="blue"] .presenter [data-screen="welcome"] { display: none; }
-  html[data-theme="blue"] .rail.is-open { padding: 12px 10px 14px; }
   html[data-theme="blue"] .rail .p { display: none; }
   .rail-rec { display: none; }
   html[data-theme="blue"] .rail-rec {
@@ -642,31 +641,32 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 24px;
-    height: 24px;
-    min-height: 0;
+    width: 36px;
+    height: 36px;
+    min-height: 36px;
     padding: 0;
     border: 0;
-    border-radius: 50%;
+    border-radius: 10px;
     background: transparent;
     font: inherit;
-    color: inherit;
+    color: #5f6368;
     appearance: none;
     cursor: pointer;
   }
+  html[data-theme="blue"] .rail-rec-card:hover,
+  html[data-theme="blue"] .rail.is-open .rail-rec-card:hover { background: #d4e4ee; }
   html[data-theme="blue"] .rail.is-open .rail-rec-card {
     justify-content: flex-start;
     gap: 10px;
     width: 100%;
-    height: auto;
-    min-height: 44px;
-    padding: 6px 8px;
-    border: 1px solid #e6e8ec;
-    border-radius: 12px;
-    background: #fff;
+    height: 36px;
+    min-height: 36px;
+    padding: 0 10px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
     text-align: left;
   }
-  html[data-theme="blue"] .rail.is-open .rail-rec-card:hover { border-color: #d5d8de; }
   html[data-theme="blue"] .rail-rec-card .dav {
     width: 24px;
     height: 24px;
@@ -683,9 +683,9 @@
     line-height: 1;
   }
   html[data-theme="blue"] .rail.is-open .rail-rec-card .dav {
-    width: 28px;
-    height: 28px;
-    border: 1px solid #e6e8ec;
+    width: 24px;
+    height: 24px;
+    border: 0;
   }
   html[data-theme="blue"] .rail-rec-card .copy { display: none; }
   html[data-theme="blue"] .rail.is-open .rail-rec-card .copy { display: block; min-width: 0; flex: 1; }
@@ -697,24 +697,15 @@
   }
   html[data-theme="blue"] .rail-rec-card b {
     display: block;
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 16px;
-    color: #1a1d21;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #5f6368;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  html[data-theme="blue"] .rail-rec-card small {
-    display: block;
-    margin-top: 2px;
-    font-size: 11px;
-    line-height: 14px;
-    color: #8b919a;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+  html[data-theme="blue"] .rail-rec-card small { display: none; }
   .rail-me { display: none; }
   html[data-theme="blue"] .rail-me {
     display: flex;
@@ -11862,9 +11853,14 @@
       });
     });
 
-    frame.querySelectorAll('.rail .p, .rail-rec-card').forEach((el) => {
+    frame.querySelectorAll('.rail .p').forEach((el) => {
       el.addEventListener('click', () => {
         flashEl(el);
+        showToastMsg(`Rail · ${el.getAttribute('aria-label') || el.textContent.trim()}`);
+      });
+    });
+    frame.querySelectorAll('.rail-rec-card').forEach((el) => {
+      el.addEventListener('click', () => {
         showToastMsg(`Rail · ${el.getAttribute('aria-label') || el.textContent.trim()}`);
       });
     });
