@@ -1107,6 +1107,48 @@
     color: var(--green-dark) !important;
     background: transparent !important;
   }
+  @keyframes tool-hop {
+    0% { transform: translateY(0); }
+    40% { transform: translateY(-4px); }
+    70% { transform: translateY(1px); }
+    100% { transform: translateY(0); }
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.is-hop {
+    animation: tool-hop .38s ease;
+  }
+  .tool-recent { display: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent.is-on {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 10px;
+    padding-left: var(--recent-x, 0px);
+    animation: recent-in .2s ease;
+  }
+  @keyframes recent-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: none; }
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill {
+    height: 28px;
+    margin: 0;
+    padding: 0 12px;
+    border: 1px solid #e6e8ec;
+    border-radius: 999px;
+    background: #fff;
+    color: #1a1d21;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(20, 24, 28, .08);
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill:hover {
+    border-color: #c8ccd1;
+    background: #f6f7f8;
+  }
   .tool i svg.line-ico { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .attach { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .composer .top,
@@ -1184,6 +1226,8 @@
     html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool-prompt { transition: none; }
     html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool-prompt:hover,
     html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool-prompt:focus-visible { transform: none; }
+    html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool.is-hop,
+    html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent.is-on { animation: none; }
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-cases-k {
     margin: 0;
@@ -7857,6 +7901,7 @@
                   <span class="sp"></span>
                   <span class="attach"><button type="button" class="attach-hit">From a Cosmo</button><span class="attach-sep" aria-hidden="true"> · </span><button type="button" class="attach-hit">From Library</button></span>
                 </div>
+                <div class="tool-recent" id="toolRecent"></div>
                 <div class="tool-cases" id="composerCases" hidden>
                   <p class="tool-cases-k" id="composerCasesK"></p>
                   <div class="tool-cases-row" id="composerCasesRow"></div>
@@ -10637,7 +10682,58 @@
     content.classList.add('is-home-pinned');
   }
 
+  const RECENT_EDITOR_FILES = {
+    doc: ['Lecture 1 summary', 'Reading report — QGP'],
+    deck: ['Lecture 4 summary', '6 study slides'],
+    numbers: ['Lab 3', 'sPHENIX sample'],
+    symtex: ['Bjorken energy formula', 'Phase diagram labels'],
+    code: ['Particle simulation', 'Sample plot']
+  };
+  let toolRecentTimer = 0;
+  function hideToolRecent() {
+    clearTimeout(toolRecentTimer);
+    const pop = $('toolRecent');
+    if (!pop) return;
+    pop.classList.remove('is-on');
+    pop.replaceChildren();
+    pop.style.removeProperty('--recent-x');
+  }
+  function showToolRecent(tool) {
+    const blueHome = document.documentElement.dataset.theme === 'blue' && document.getElementById('screen-home')?.classList.contains('on');
+    const pop = $('toolRecent');
+    const host = tool?.closest('.top');
+    const names = RECENT_EDITOR_FILES[tool?.dataset.tool];
+    if (!blueHome || !pop || !host || !names || $('composerTools')?.classList.contains('is-prompts')) {
+      hideToolRecent();
+      return;
+    }
+    clearTimeout(toolRecentTimer);
+    pop.replaceChildren(...names.map((name) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'file-pill';
+      btn.textContent = name;
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showToastMsg(`Opening · ${name}`);
+      });
+      return btn;
+    }));
+    pop.classList.add('is-on');
+    const scale = host.getBoundingClientRect().width / host.offsetWidth || 1;
+    const pad = parseFloat(getComputedStyle(host).paddingLeft) || 0;
+    const left = (tool.getBoundingClientRect().left - host.getBoundingClientRect().left) / scale - pad;
+    const room = host.clientWidth - pad * 2;
+    const pills = [...pop.children];
+    const pillsWidth = pills.reduce((sum, el) => sum + el.offsetWidth, 0) + Math.max(0, pills.length - 1) * 8;
+    const x = Math.max(0, Math.min(left, room - pillsWidth));
+    pop.style.setProperty('--recent-x', `${Math.round(x)}px`);
+    tool.classList.remove('is-hop');
+    void tool.offsetWidth;
+    tool.classList.add('is-hop');
+  }
   function syncComposerCases() {
+    hideToolRecent();
     pinBlueHome();
     const panel = $('composerCases');
     const tools = $('composerTools');
@@ -10864,6 +10960,19 @@
 
   function initComposerTools() {
     document.querySelectorAll('#composerTools .tool').forEach((tool) => {
+      const arm = () => showToolRecent(tool);
+      const away = () => {
+        clearTimeout(toolRecentTimer);
+        toolRecentTimer = setTimeout(() => {
+          const pop = $('toolRecent');
+          if (pop?.matches(':hover') || pop?.contains(document.activeElement) || document.querySelector('#composerTools .tool:hover')) return;
+          hideToolRecent();
+        }, 160);
+      };
+      tool.addEventListener('mouseenter', arm);
+      tool.addEventListener('focus', arm);
+      tool.addEventListener('mouseleave', away);
+      tool.addEventListener('blur', away);
       tool.addEventListener('click', (e) => {
         e.stopPropagation();
         const key = tool.dataset.tool;
@@ -10876,6 +10985,12 @@
         }
         if (next) $('composerInput')?.focus();
       });
+    });
+    const recent = $('toolRecent');
+    recent?.addEventListener('mouseenter', () => clearTimeout(toolRecentTimer));
+    recent?.addEventListener('mouseleave', () => {
+      clearTimeout(toolRecentTimer);
+      toolRecentTimer = setTimeout(hideToolRecent, 160);
     });
     $('composerToolChipClear')?.addEventListener('click', (e) => {
       e.stopPropagation();
