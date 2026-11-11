@@ -624,6 +624,8 @@
   }
   html[data-theme="blue"] .rail .div { background: #e6e6e8; }
   html[data-theme="blue"] .discover { display: none; }
+  html[data-theme="blue"] .presenter [data-screen="tutorial"],
+  html[data-theme="blue"] .presenter [data-screen="welcome"] { display: none; }
   html[data-theme="blue"] .rail.is-open { padding: 12px 10px 14px; }
   html[data-theme="blue"] .rail .p { display: none; }
   .rail-rec { display: none; }
@@ -12754,6 +12756,7 @@
     document.querySelectorAll('[data-theme-pick]').forEach((b) => {
       b.setAttribute('aria-pressed', String(b.dataset.themePick === next));
     });
+    if (next === 'blue' && (screen === 'tutorial' || screen === 'welcome' || screen === 'handoff')) setScreen('home');
     if (next === 'blue' && current === 'lr') setAI('citta', { announce: false });
     paintMenuAvatars();
     setDockAvatar(AIS[current]);
@@ -12772,6 +12775,10 @@
 
   document.querySelectorAll('.presenter [data-screen]').forEach((b) => b.addEventListener('click', () => {
     const target = b.dataset.screen;
+    if (document.documentElement.dataset.theme === 'blue' && (target === 'tutorial' || target === 'welcome' || target === 'handoff')) {
+      setScreen('home');
+      return;
+    }
     if (target === 'handoff') {
       postTutorialTipPending = true;
       setScreen('handoff', { showTip: true });
@@ -15462,7 +15469,9 @@
     const showTip = q.get('tip') === '1';
     if (showTip) postTutorialTipPending = true;
     const step = Number.isFinite(t) ? t : 1;
-    if (s === 'team') openTeam();
+    if (document.documentElement.dataset.theme === 'blue' && (s === 'tutorial' || s === 'welcome' || s === 'handoff')) {
+      setScreen('home');
+    } else if (s === 'team') openTeam();
     else if (s === 'dir') openDir(q.get('dir') || 'cosmo');
     else if (s === 'desk') openDesk(q.get('desk') || 'kanban');
     else if (s === 'symbion') openSymbion(q.get('me') || 'know');
