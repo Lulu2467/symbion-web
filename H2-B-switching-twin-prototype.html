@@ -1509,32 +1509,7 @@
   }
   html[data-theme="blue"] #tail-home .rem-day span { font-size: 11px; font-weight: 500; line-height: 14px; }
   html[data-theme="blue"] #tail-home .rem-day b { font-size: 13px; font-weight: 500; line-height: 18px; color: #5f6368; }
-  html[data-theme="blue"] #tail-home .rem-day.is-on,
-  html[data-theme="blue"] #tail-home .rem-filters button.is-on {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    background: linear-gradient(180deg, rgba(255, 255, 255, .78) 0%, rgba(214, 232, 242, .55) 48%, rgba(60, 122, 148, .28) 100%);
-    box-shadow:
-      inset 0 1px 0 #fff,
-      inset 0 -10px 12px rgba(60, 122, 148, .22),
-      inset 0 0 0 1px rgba(255, 255, 255, .95),
-      0 4px 10px rgba(60, 122, 148, .18);
-    backdrop-filter: blur(18px) saturate(1.8) brightness(1.15);
-    -webkit-backdrop-filter: blur(18px) saturate(1.8) brightness(1.15);
-  }
-  html[data-theme="blue"] #tail-home .rem-day.is-on::before,
-  html[data-theme="blue"] #tail-home .rem-filters button.is-on::before {
-    content: "";
-    position: absolute;
-    left: 8px;
-    right: 8px;
-    top: 2px;
-    height: 42%;
-    border-radius: 999px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, .95), rgba(255, 255, 255, 0));
-    pointer-events: none;
-  }
+  html[data-theme="blue"] #tail-home .rem-day.is-on { background: var(--green-tint); }
   html[data-theme="blue"] #tail-home .rem-day.is-on b { color: var(--green-dark); }
   html[data-theme="blue"] #tail-home .rem-day.has-dot::after {
     content: "";
@@ -1564,6 +1539,7 @@
     cursor: pointer;
   }
   html[data-theme="blue"] #tail-home .rem-filters button.is-on {
+    background: var(--green-tint);
     border-color: transparent;
     color: var(--green-dark);
   }
