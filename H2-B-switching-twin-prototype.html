@@ -1620,6 +1620,13 @@
   html[data-theme="blue"] #tail-home .rem-day.is-on,
   html[data-theme="blue"] #tail-home .rem-day.is-on span,
   html[data-theme="blue"] #tail-home .rem-day.is-on b { color: var(--green-dark); }
+  html[data-theme="blue"] #tail-home .rem-day.is-past,
+  html[data-theme="blue"] #tail-home .rem-day.is-past span,
+  html[data-theme="blue"] #tail-home .rem-day.is-past b,
+  html[data-theme="blue"] #tail-home .rem-day.is-past.is-on,
+  html[data-theme="blue"] #tail-home .rem-day.is-past.is-on span,
+  html[data-theme="blue"] #tail-home .rem-day.is-past.is-on b { color: #b0b5bc; }
+  html[data-theme="blue"] #tail-home .rem-day.is-past.has-dot::after { background: #c5c9ce; }
   html[data-theme="blue"] #tail-home .rem-day::after {
     content: "";
     position: relative;
@@ -9559,6 +9566,7 @@
     const start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     start.setDate(start.getDate() - ((start.getDay() + 6) % 7));
     if (!remDay) remDay = todoDateIso(now);
+    const todayIso = todoDateIso(now);
     const marked = new Set(rems.map((rem) => todoWhenParts(rem).date).filter(Boolean));
     host.replaceChildren(...Array.from({ length: 7 }, (_, i) => {
       const date = new Date(start);
@@ -9566,7 +9574,7 @@
       const iso = todoDateIso(date);
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'rem-day' + (iso === remDay ? ' is-on' : '') + (marked.has(iso) ? ' has-dot' : '');
+      btn.className = 'rem-day' + (iso === remDay ? ' is-on' : '') + (marked.has(iso) ? ' has-dot' : '') + (iso < todayIso ? ' is-past' : '');
       btn.dataset.remDay = iso;
       btn.setAttribute('aria-pressed', iso === remDay ? 'true' : 'false');
       const name = document.createElement('span');
