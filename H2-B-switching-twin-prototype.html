@@ -1107,11 +1107,17 @@
     color: var(--green-dark) !important;
     background: transparent !important;
   }
-  @keyframes pill-hop {
-    0% { transform: translateY(0); }
-    45% { transform: translateY(-4px); }
-    72% { transform: translateY(1px); }
-    100% { transform: translateY(0); }
+  @keyframes pill-open-a {
+    from { opacity: 0; transform: translateY(-14px) scale(.92); }
+    to { opacity: 1; transform: translateX(-10px); }
+  }
+  @keyframes pill-open-b {
+    from { opacity: 0; transform: translateY(-14px) scale(.92); }
+    to { opacity: 1; transform: translateX(12px); }
+  }
+  @keyframes pill-open-c {
+    from { opacity: 0; transform: translateY(-14px) scale(.92); }
+    to { opacity: 1; transform: translateX(-2px) rotate(-1.5deg); }
   }
   .tool-recent { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent.is-on {
@@ -1120,7 +1126,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
     width: max-content;
     max-width: calc(100% - 48px);
     top: var(--recent-y, 0px);
@@ -1147,13 +1153,18 @@
     white-space: nowrap;
     cursor: pointer;
     box-shadow: 0 2px 6px rgba(20, 24, 28, .05);
-    animation: pill-hop .42s ease;
+    transform: translateX(-10px);
+    animation: pill-open-a .38s ease both;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill:nth-child(2) {
-    animation-delay: .05s;
+    transform: translateX(12px);
+    animation-name: pill-open-b;
+    animation-delay: .16s;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill:nth-child(3) {
-    animation-delay: .1s;
+    transform: translateX(-2px) rotate(-1.5deg);
+    animation-name: pill-open-c;
+    animation-delay: .32s;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill:hover {
     border-color: #c8ccd1;
