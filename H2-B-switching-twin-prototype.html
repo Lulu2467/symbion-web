@@ -1595,7 +1595,7 @@
     width: 100%;
     padding: 0;
   }
-  html[data-theme="blue"] #tail-home .rem-week { display: flex; gap: 4px; width: 100%; align-items: stretch; }
+  html[data-theme="blue"] #tail-home .rem-week { display: flex; gap: 4px; width: 100%; align-items: stretch; margin: 2px 0 12px; }
   html[data-theme="blue"] #tail-home .rem-day {
     position: relative;
     flex: 1;
@@ -8473,12 +8473,12 @@
                   <div class="sec two-title-l"><h3 id="homeBoardTitle">Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act-add" data-action="add-reminder" data-tip="Add a reminder with Citta — tell it what and when" aria-label="Add reminder with Citta"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 3.25v9.5M3.25 8h9.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button></div>
                   <div class="rem-card">
                   <div class="rem-board">
-                    <div class="rem-week" role="group" aria-label="This week"></div>
                     <div class="tl" id="homeTimeline">
                       <div class="tl-bar">
                         <button type="button" class="tl-date" id="tlDate" aria-expanded="false"></button>
                         <button type="button" class="tl-zoom" id="tlZoom" aria-pressed="false">Week</button>
                       </div>
+                      <div class="rem-week" role="group" aria-label="This week"></div>
                       <div class="tl-body" id="tlBody"></div>
                     </div>
                     <div class="tl-pop" id="tlCal" hidden></div>
