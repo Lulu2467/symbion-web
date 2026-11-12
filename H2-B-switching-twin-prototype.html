@@ -760,15 +760,15 @@
   html[data-theme="blue"] .rail-me:hover { background: transparent; }
   html[data-theme="blue"] .rail-me-menu {
     position: absolute;
-    left: calc(100% + 10px);
-    bottom: 10px;
+    left: 0;
+    top: 0;
     width: 260px;
     padding: 6px 0;
     background: #fff;
     border: 1px solid #e6e8ec;
     border-radius: 12px;
     box-shadow: 0 10px 28px rgba(20, 24, 28, .12);
-    z-index: 40;
+    z-index: 80;
   }
   html[data-theme="blue"] .rail-me-head {
     display: flex;
@@ -12375,6 +12375,14 @@
       flashEl(railExpand);
       const open = railExpand.getAttribute('aria-expanded') !== 'true';
       setRailOpen(open);
+      const meMenu = document.getElementById('railMeMenu');
+      if (meMenu && !meMenu.hidden) {
+        primaryRail.addEventListener('transitionend', function onRail(ev) {
+          if (ev.propertyName !== 'width') return;
+          primaryRail.removeEventListener('transitionend', onRail);
+          placeRailMeMenu();
+        });
+      }
     });
 
     frame.querySelectorAll('.rail .r[data-rail]').forEach((el) => {
@@ -12422,12 +12430,33 @@
       });
     });
 
+    function placeRailMeMenu() {
+      const menu = document.getElementById('railMeMenu');
+      const av = document.getElementById('railMeAv');
+      const rail = av && av.closest('.rail');
+      const frame = rail && rail.closest('.frame');
+      if (!menu || !av || !rail || !frame || menu.hidden) return;
+      const scale = rail.getBoundingClientRect().width / rail.offsetWidth || 1;
+      const railBox = rail.getBoundingClientRect();
+      const frameBox = frame.getBoundingClientRect();
+      const avBox = av.getBoundingClientRect();
+      const menuW = menu.offsetWidth;
+      const menuH = menu.offsetHeight;
+      const avCenter = (avBox.left - railBox.left) / scale + avBox.width / scale / 2;
+      const minLeft = (frameBox.left - railBox.left) / scale + 8;
+      const maxLeft = (frameBox.right - railBox.left) / scale - menuW - 8;
+      const left = Math.max(minLeft, Math.min(avCenter - menuW / 2, maxLeft));
+      const top = (avBox.top - railBox.top) / scale - menuH - 8;
+      menu.style.left = `${Math.round(left)}px`;
+      menu.style.top = `${Math.round(top)}px`;
+    }
     function setRailMeMenu(open) {
       const menu = document.getElementById('railMeMenu');
       const btn = $('railMe');
       if (!menu || !btn) return;
       menu.hidden = !open;
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open) placeRailMeMenu();
     }
     $('railMe')?.addEventListener('click', (e) => {
       e.stopPropagation();
