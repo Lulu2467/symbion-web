@@ -1666,49 +1666,59 @@
   html[data-theme="blue"] #tail-home .rem-day.is-today b { background: var(--green-dark); color: #fff; }
   html[data-theme="blue"] #tail-home .tl-bar { display: flex; align-items: center; justify-content: space-between; margin: 4px 2px 10px; }
   html[data-theme="blue"] #tail-home .tl-date {
-    border: 0; background: transparent; padding: 0; font: inherit; font-size: 17px; font-weight: 650;
-    letter-spacing: -0.02em; color: var(--green-dark); cursor: pointer;
+    border: 0; background: transparent; padding: 0; font: inherit; font-size: 22px; font-weight: 650;
+    letter-spacing: -0.03em; color: var(--green-dark); cursor: pointer;
   }
   html[data-theme="blue"] #tail-home .tl-zoom {
     height: 28px; padding: 0 12px; border: 0; border-radius: 999px; background: #f2f2f7;
     color: #1d1d1f; font: inherit; font-size: 13px; font-weight: 550; cursor: pointer;
   }
   html[data-theme="blue"] #tail-home .tl-zoom[aria-pressed="true"] { background: var(--green-dark); color: #fff; }
-  html[data-theme="blue"] #tail-home .tl-day { position: relative; display: flex; flex-direction: column; gap: 2px; padding: 4px 0 8px; }
+  html[data-theme="blue"] #tail-home .tl-day { position: relative; display: flex; flex-direction: column; gap: 0; padding: 2px 0 8px; }
   html[data-theme="blue"] #tail-home .tl-day::before {
-    content: ""; position: absolute; left: 67px; top: 18px; bottom: 18px; width: 2px;
-    background: linear-gradient(var(--green), #d5e3ea); border-radius: 2px;
+    content: ""; position: absolute; left: 73px; top: 22px; bottom: 22px; width: 2px;
+    background: linear-gradient(#7aa3b5, #d5e3ea); border-radius: 2px;
   }
   html[data-theme="blue"] #tail-home .tl-item,
-  html[data-theme="blue"] #tail-home .tl-gap,
-  html[data-theme="blue"] #tail-home .tl-now {
-    position: relative; display: grid; grid-template-columns: 52px 32px minmax(0, 1fr) 28px;
-    align-items: center; gap: 8px; min-height: 52px;
+  html[data-theme="blue"] #tail-home .tl-gap {
+    position: relative; display: grid; grid-template-columns: 46px 40px minmax(0, 1fr) 26px;
+    align-items: center; column-gap: 8px; min-height: 64px;
   }
-  html[data-theme="blue"] #tail-home .tl-time { font-size: 12px; font-weight: 550; color: #8b919a; text-align: right; }
+  html[data-theme="blue"] #tail-home .tl-time { font-size: 12px; font-weight: 600; color: #8b919a; text-align: right; }
   html[data-theme="blue"] #tail-home .tl-mark {
-    width: 32px; height: 32px; border-radius: 50%; background: var(--green-tint); color: var(--green-dark);
-    display: flex; align-items: center; justify-content: center; z-index: 1;
+    width: 36px; height: 36px; margin: 0 auto; border-radius: 50%; background: #e7f2f7; color: var(--green-dark);
+    display: flex; align-items: center; justify-content: center; z-index: 1; box-shadow: 0 0 0 4px #fff;
   }
   html[data-theme="blue"] #tail-home .tl-mark svg { width: 16px; height: 16px; display: block; }
-  html[data-theme="blue"] #tail-home .tl-main b { display: block; font-size: 14px; font-weight: 600; color: #1f1f1f; line-height: 1.3; }
-  html[data-theme="blue"] #tail-home .tl-main small { display: block; margin-top: 2px; font-size: 12px; color: #8b919a; }
+  html[data-theme="blue"] #tail-home .tl-item.is-block { align-items: start; min-height: 84px; padding: 6px 0; }
+  html[data-theme="blue"] #tail-home .tl-item.is-block .tl-time { padding-top: 12px; }
+  html[data-theme="blue"] #tail-home .tl-item.is-block .tl-mark {
+    width: 36px; height: 72px; border-radius: 18px; background: #e7eef2;
+  }
+  html[data-theme="blue"] #tail-home .tl-item.is-block .tl-check { margin-top: 14px; }
+  html[data-theme="blue"] #tail-home .tl-main small { display: block; font-size: 12px; font-weight: 500; color: #8b919a; line-height: 1.3; }
+  html[data-theme="blue"] #tail-home .tl-main b { display: block; margin-top: 1px; font-size: 15px; font-weight: 650; color: #1f1f1f; line-height: 1.3; }
+  html[data-theme="blue"] #tail-home .tl-main em { display: block; margin-top: 2px; font-style: normal; font-size: 12px; color: #8b919a; }
   html[data-theme="blue"] #tail-home .tl-item.is-done .tl-main b { color: #8b919a; text-decoration: line-through; }
   html[data-theme="blue"] #tail-home .tl-check {
-    width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid #c5cdd4; background: #fff; color: transparent;
+    width: 22px; height: 22px; margin-left: auto; border-radius: 50%; border: 1.5px solid #8eb0c0; background: #fff; color: transparent;
     display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer;
   }
   html[data-theme="blue"] #tail-home .tl-check svg { width: 12px; height: 12px; }
   html[data-theme="blue"] #tail-home .tl-check[aria-pressed="true"] { background: var(--green-dark); border-color: var(--green-dark); color: #fff; }
-  html[data-theme="blue"] #tail-home .tl-gap { min-height: 36px; }
-  html[data-theme="blue"] #tail-home .tl-gap .tl-mark { width: 8px; height: 8px; margin: 0 auto; background: #d5e3ea; }
-  html[data-theme="blue"] #tail-home .tl-gap p { margin: 0; font-size: 12px; color: #8b919a; }
-  html[data-theme="blue"] #tail-home .tl-gap button {
-    margin-top: 4px; height: 26px; padding: 0 10px; border: 0; border-radius: 999px;
-    background: var(--green-tint); color: var(--green-dark); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer;
+  html[data-theme="blue"] #tail-home .tl-gap { min-height: 52px; }
+  html[data-theme="blue"] #tail-home .tl-gap p {
+    display: flex; align-items: center; gap: 8px; margin: 0; font-size: 13px; color: #8b919a;
   }
-  html[data-theme="blue"] #tail-home .tl-now .tl-time { color: var(--green-dark); font-weight: 650; }
-  html[data-theme="blue"] #tail-home .tl-now .tl-mark { width: 10px; height: 10px; margin: 0 auto; background: var(--green-dark); }
+  html[data-theme="blue"] #tail-home .tl-gap button {
+    height: 26px; padding: 0 10px; border: 0; border-radius: 999px;
+    background: var(--green-tint); color: var(--green-dark); font: inherit; font-size: 12px; font-weight: 650; cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .tl-nowdot {
+    width: 10px; height: 10px; margin: 0 auto; border-radius: 50%; background: var(--green-dark);
+    box-shadow: 0 0 0 3px #fff; z-index: 1;
+  }
+  html[data-theme="blue"] #tail-home .tl-gap.is-now .tl-time { color: var(--green-dark); }
   html[data-theme="blue"] #tail-home .tl-week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; min-height: 280px; padding: 4px 0 8px; }
   html[data-theme="blue"] #tail-home .tl-col { position: relative; display: flex; flex-direction: column; align-items: center; min-height: 260px; }
   html[data-theme="blue"] #tail-home .tl-spine {
@@ -10048,7 +10058,7 @@
         note: todoNotesOf(rem),
         start: parts.time ? tlMins(parts.time) + (tlMins(parts.time) < 7 * 60 ? 12 * 60 : 0) : 0,
         timed: !!parts.time,
-        dur: 45,
+        dur: type === 'course' ? 90 : 45,
         done: rem.classList.contains('is-done'),
       };
     });
@@ -10095,30 +10105,32 @@
     const nowMins = now.getHours() * 60 + now.getMinutes();
     const showNow = remDay === todoDateIso(now);
     const bits = [];
+    const openCopy = (mins) => {
+      const h = Math.floor(mins / 60);
+      const m = mins % 60;
+      if (h && m) return `${h}h ${m}m open`;
+      if (h) return `${h}h open`;
+      return `${m}m open`;
+    };
     const pushGap = (from, to) => {
-      if (to - from < 90) return;
-      bits.push(`<div class="tl-gap"><span class="tl-time"></span><span class="tl-mark"></span><p>${tlClock(from)}–${tlClock(to)} is open.<br><button type="button" data-tl-add="${tlClock(from)}">Add</button></p><span></span></div>`);
+      if (to - from < 70) return;
+      const nowHere = showNow && nowMins > from + 10 && nowMins < to - 10;
+      const time = nowHere ? tlClock(nowMins) : '';
+      const dot = nowHere ? '<span class="tl-nowdot"></span>' : '<span></span>';
+      const at = tlClock(nowHere ? nowMins : from);
+      bits.push(`<div class="tl-gap${nowHere ? ' is-now' : ''}"><span class="tl-time">${time}</span>${dot}<p>${openCopy(to - from)}<button type="button" data-tl-add="${at}">Add</button></p><span></span></div>`);
     };
     let cursor = 7 * 60;
-    let nowPut = false;
     events.forEach((ev, index) => {
-      if (showNow && !nowPut && nowMins < ev.start) {
-        pushGap(cursor, nowMins);
-        bits.push(`<div class="tl-now"><span class="tl-time">${tlClock(nowMins)}</span><span class="tl-mark"></span><span></span><span></span></div>`);
-        cursor = nowMins;
-        nowPut = true;
-      }
       pushGap(cursor, ev.start);
       const end = ev.start + ev.dur;
-      bits.push(`<div class="tl-item${ev.done ? ' is-done' : ''}"><span class="tl-time">${tlClock(ev.start)}</span><span class="tl-mark">${tlIcon(ev.type)}</span><div class="tl-main"><b>${deskEsc(ev.title)}</b><small>${deskEsc(ev.note || `${ev.dur} min`)}</small></div><button type="button" class="tl-check" data-tl-i="${index}" aria-pressed="${ev.done ? 'true' : 'false'}" aria-label="${ev.done ? 'Mark not done' : 'Mark complete'}">${TL_CHECK}</button></div>`);
+      const note = ev.note && !/\d+\s*min$/.test(ev.note) ? `<em>${deskEsc(ev.note)}</em>` : '';
+      const block = ev.dur >= 60 ? ' is-block' : '';
+      bits.push(`<div class="tl-item${block}${ev.done ? ' is-done' : ''}"><span class="tl-time">${tlClock(ev.start)}</span><span class="tl-mark">${tlIcon(ev.type)}</span><div class="tl-main"><small>${tlClock(ev.start)}–${tlClock(end)}</small><b>${deskEsc(ev.title)}</b>${note}</div><button type="button" class="tl-check" data-tl-i="${index}" aria-pressed="${ev.done ? 'true' : 'false'}" aria-label="${ev.done ? 'Mark not done' : 'Mark complete'}">${TL_CHECK}</button></div>`);
       cursor = end;
     });
-    if (showNow && !nowPut) {
-      bits.push(`<div class="tl-now"><span class="tl-time">${tlClock(nowMins)}</span><span class="tl-mark"></span><span></span><span></span></div>`);
-      cursor = Math.max(cursor, nowMins);
-    }
     pushGap(cursor, 22 * 60);
-    if (!events.length) bits.push(`<div class="tl-gap"><span class="tl-time"></span><span class="tl-mark"></span><p>Nothing on this day.<br><button type="button" data-tl-add="09:00">Add</button></p><span></span></div>`);
+    if (!events.length) bits.push(`<div class="tl-gap"><span></span><span></span><p>Nothing on this day.<button type="button" data-tl-add="09:00">Add</button></p><span></span></div>`);
     host.innerHTML = `<div class="tl-day">${bits.join('')}</div>`;
   }
   function paintTlWeek(host) {
