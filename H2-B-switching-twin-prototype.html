@@ -1709,15 +1709,43 @@
     letter-spacing: -0.03em; color: var(--green-dark); cursor: pointer;
   }
   html[data-theme="blue"] #tail-home .tl-zoom {
+    position: relative;
     display: flex; align-items: center; height: 32px; padding: 3px; border-radius: 999px; background: #f2f2f4;
   }
+  html[data-theme="blue"] #tail-home .tl-zoom::before {
+    content: "";
+    position: absolute; top: 3px; bottom: 3px; left: 3px; width: calc(50% - 3px);
+    border-radius: 999px; background: #fff; box-shadow: 0 1px 3px rgba(20, 24, 28, .12);
+    transition: transform .38s cubic-bezier(.2, .8, .2, 1);
+  }
+  html[data-theme="blue"] #tail-home .tl-zoom:has([data-tl-span="plan"][aria-pressed="true"])::before {
+    transform: translateX(100%);
+  }
   html[data-theme="blue"] #tail-home .tl-zoom button {
+    position: relative; z-index: 1; flex: 1;
     height: 26px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent;
     color: #8e8e93; font: inherit; font-size: 14px; font-weight: 550; cursor: pointer;
   }
   html[data-theme="blue"] #tail-home .tl-zoom button[aria-pressed="true"] {
-    background: #fff; color: #1d1d1f; box-shadow: 0 1px 3px rgba(20, 24, 28, .12);
+    background: transparent; color: #1d1d1f; box-shadow: none;
   }
+  html[data-theme="blue"] #tail-home .tl-plan { display: flex; flex-direction: column; gap: 2px; padding: 6px 2px 8px; }
+  html[data-theme="blue"] #tail-home .tl-plan-row {
+    display: flex; align-items: center; gap: 12px; width: 100%; height: 44px; padding: 0 6px;
+    border: 0; border-radius: 10px; background: transparent; text-align: left;
+    font: inherit; font-size: 15px; color: #1d1d1f; cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .tl-plan-mark {
+    flex: none; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid #d0d0d4;
+    display: flex; align-items: center; justify-content: center; color: transparent; background: #fff;
+  }
+  html[data-theme="blue"] #tail-home .tl-plan-row.is-done .tl-plan-mark {
+    border-color: #e2a21a; background: #e2a21a; color: #fff;
+  }
+  html[data-theme="blue"] #tail-home .tl-plan-mark svg { width: 12px; height: 12px; }
+  html[data-theme="blue"] #tail-home .tl-plan-row[data-pop] .tl-plan-mark { animation: tl-plan-pop .28s cubic-bezier(.2, .8, .2, 1); }
+  html[data-theme="blue"] #tail-home .tl-plan-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  @keyframes tl-plan-pop { from { transform: scale(.6); } to { transform: none; } }
   html[data-theme="blue"] #tail-home .tl-day { position: relative; display: flex; flex-direction: column; gap: 0; padding: 2px 0 8px; }
   html[data-theme="blue"] #tail-home .tl-day::before {
     content: ""; position: absolute; left: 73px; top: 22px; bottom: 22px; width: 2px;
@@ -8540,9 +8568,9 @@
                     <div class="tl" id="homeTimeline">
                       <div class="tl-bar">
                         <button type="button" class="tl-date" id="tlDate" aria-expanded="false"></button>
-                        <div class="tl-zoom" id="tlZoom" role="group" aria-label="Day or week">
+                        <div class="tl-zoom" id="tlZoom" role="group" aria-label="Day or plan">
                           <button type="button" data-tl-span="day" aria-pressed="true">Day</button>
-                          <button type="button" data-tl-span="week" aria-pressed="false">Week</button>
+                          <button type="button" data-tl-span="plan" aria-pressed="false">Plan</button>
                         </div>
                       </div>
                       <div class="rem-week" role="group" aria-label="This week"></div>
@@ -10123,6 +10151,9 @@
     return { date: '', time: '' };
   }
   let tlWeek = false;
+  let tlPlan = false;
+  const tlPlanStamp = new WeakMap();
+  let tlPlanJust = null;
   let tlPick = -1;
   let tlCache = [];
   let tlAddTime = '10:00';
@@ -10191,8 +10222,9 @@
       dateBtn.insertAdjacentHTML('beforeend', ' ›');
     }
     document.querySelectorAll('#tlZoom [data-tl-span]').forEach((btn) => {
-      btn.setAttribute('aria-pressed', (btn.dataset.tlSpan === 'week') === !!tlWeek ? 'true' : 'false');
+      btn.setAttribute('aria-pressed', (btn.dataset.tlSpan === 'plan' ? tlPlan : !tlPlan) ? 'true' : 'false');
     });
+    if (tlPlan) { paintTlPlan(host); return; }
     if (tlWeek) { paintTlWeek(host); return; }
     const events = tlEventsFor(remDay);
     const board = document.querySelector('#tail-home .rem-board');
@@ -10234,6 +10266,47 @@
     });
     pushGap(cursor, 22 * 60);
     host.innerHTML = `<div class="tl-day">${bits.join('')}</div>`;
+  }
+  function paintTlPlan(host) {
+    const events = tlEventsFor(remDay);
+    tlCache = events;
+    const board = document.querySelector('#tail-home .rem-board');
+    if (!events.length) {
+      host.innerHTML = '';
+      board?.classList.add('is-blank');
+      return;
+    }
+    board?.classList.remove('is-blank');
+    const open = [];
+    const done = [];
+    events.forEach((ev, i) => (ev.done ? done : open).push(i));
+    const stampOf = (i) => tlPlanStamp.get(events[i].kind === 'rem' ? events[i].rem : events[i].item) || 0;
+    done.sort((a, b) => stampOf(b) - stampOf(a) || events[a].start - events[b].start);
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const before = reduce ? [] : [...host.querySelectorAll('.tl-plan-row')].map((el) => ({ key: el.dataset.k, top: el.getBoundingClientRect().top }));
+    const just = tlPlanJust;
+    tlPlanJust = null;
+    const rows = [...open, ...done].map((i) => {
+      const ev = events[i];
+      const obj = ev.kind === 'rem' ? ev.rem : ev.item;
+      const pop = obj && obj === just && ev.done ? ' data-pop=""' : '';
+      return `<button type="button" class="tl-plan-row${ev.done ? ' is-done' : ''}" data-tl-i="${i}" data-k="${deskEsc(ev.kind + '|' + ev.start + '|' + ev.title)}"${pop}><span class="tl-plan-mark">${TL_CHECK}</span><span class="tl-plan-name">${deskEsc(ev.title)}</span></button>`;
+    }).join('');
+    host.innerHTML = `<div class="tl-plan">${rows}</div>`;
+    if (!before.length) return;
+    const from = new Map(before.map((row) => [row.key, row.top]));
+    host.querySelectorAll('.tl-plan-row').forEach((el) => {
+      const top = from.get(el.dataset.k);
+      if (top == null) return;
+      const dy = top - el.getBoundingClientRect().top;
+      if (Math.abs(dy) < 1) return;
+      el.style.transition = 'none';
+      el.style.transform = `translateY(${dy}px)`;
+      requestAnimationFrame(() => {
+        el.style.transition = 'transform .42s cubic-bezier(.22, 1, .36, 1)';
+        el.style.transform = '';
+      });
+    });
   }
   function paintTlWeek(host) {
     document.querySelector('#tail-home .rem-board')?.classList.remove('is-blank');
@@ -12719,6 +12792,10 @@
         const check = e.target.closest('[data-tl-i]');
         if (check) {
           const ev = tlCache[Number(check.dataset.tlI)];
+          if (tlPlan && ev && !ev.done) {
+            const obj = ev.kind === 'rem' ? ev.rem : ev.item;
+            if (obj) { tlPlanStamp.set(obj, Date.now()); tlPlanJust = obj; }
+          }
           if (ev?.kind === 'rem') toggleTodoDone(ev.rem);
           else if (ev?.item) { ev.item.done = !ev.item.done; paintHomeTimeline(); }
           return;
@@ -12729,8 +12806,8 @@
         if (e.target.closest('#tlDate')) { const pop = document.getElementById('tlCal'); if (pop && !pop.hidden) tlClosePops(); else tlOpenCal(); return; }
         const span = e.target.closest('[data-tl-span]');
         if (span) {
-          const next = span.dataset.tlSpan === 'week';
-          if (next !== tlWeek) { tlWeek = next; tlPick = -1; tlClosePops(); paintHomeTimeline(); }
+          const next = span.dataset.tlSpan === 'plan';
+          if (next !== tlPlan) { tlPlan = next; tlWeek = false; tlPick = -1; tlClosePops(); paintHomeTimeline(); }
           return;
         }
         const jump = e.target.closest('[data-tl-jump]');
