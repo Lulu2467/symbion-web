@@ -1107,17 +1107,9 @@
     color: var(--green-dark) !important;
     background: transparent !important;
   }
-  @keyframes pill-open-a {
-    from { opacity: 0; transform: translateY(-14px) scale(.92); }
-    to { opacity: 1; transform: translateX(-10px); }
-  }
-  @keyframes pill-open-b {
-    from { opacity: 0; transform: translateY(-14px) scale(.92); }
-    to { opacity: 1; transform: translateX(12px); }
-  }
-  @keyframes pill-open-c {
-    from { opacity: 0; transform: translateY(-14px) scale(.92); }
-    to { opacity: 1; transform: translateX(-2px) rotate(-1.5deg); }
+  @keyframes pill-open {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: none; }
   }
   .tool-recent { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent.is-on {
@@ -1125,7 +1117,7 @@
     z-index: 3;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 12px;
     width: max-content;
     max-width: calc(100% - 48px);
@@ -1153,18 +1145,14 @@
     white-space: nowrap;
     cursor: pointer;
     box-shadow: 0 2px 6px rgba(20, 24, 28, .05);
-    transform: translateX(-10px);
-    animation: pill-open-a .38s ease both;
+    transform: none;
+    animation: pill-open .32s ease both;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill:nth-child(2) {
-    transform: translateX(12px);
-    animation-name: pill-open-b;
-    animation-delay: .16s;
+    animation-delay: .08s;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill:nth-child(3) {
-    transform: translateX(-2px) rotate(-1.5deg);
-    animation-name: pill-open-c;
-    animation-delay: .32s;
+    animation-delay: .16s;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill:hover {
     border-color: #c8ccd1;
@@ -10853,7 +10841,7 @@
     const left = (toolBox.left - hostBox.left) / scale;
     const roomRight = host.clientWidth - padR;
     const pillsWidth = pop.offsetWidth;
-    const x = Math.max(padL, Math.min(left + (tool.offsetWidth - pillsWidth) / 2, Math.max(padL, roomRight - pillsWidth)));
+    const x = Math.max(padL, Math.min(left, Math.max(padL, roomRight - pillsWidth)));
     const tools = tool.closest('#composerTools');
     const y = ((tools || tool).getBoundingClientRect().bottom - hostBox.top) / scale + 14;
     pop.style.setProperty('--recent-x', `${Math.round(x)}px`);
