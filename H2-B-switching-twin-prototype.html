@@ -1118,8 +1118,8 @@
     position: absolute;
     z-index: 3;
     display: flex;
-    flex-wrap: nowrap;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
     gap: 8px;
     width: max-content;
     max-width: calc(100% - 48px);
@@ -1149,12 +1149,7 @@
     box-shadow: 0 2px 6px rgba(20, 24, 28, .05);
     animation: pill-hop .42s ease;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill:nth-child(1),
-  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill:nth-child(3) {
-    margin-top: 8px;
-  }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill:nth-child(2) {
-    margin-top: 0;
     animation-delay: .05s;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill:nth-child(3) {
@@ -1422,7 +1417,7 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home {
     width: min(1200px, 100%);
     margin-inline: auto;
-    margin-top: 40px;
+    margin-top: 112px;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -1461,10 +1456,8 @@
     min-height: 0;
   }
   html[data-theme="blue"] #tail-home .rem-card {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    grid-template-rows: auto minmax(0, 1fr);
-    column-gap: 8px;
+    display: flex;
+    flex-direction: column;
     box-sizing: border-box;
     background: #fff;
     border: 1px solid var(--line);
@@ -1485,32 +1478,29 @@
   }
   html[data-theme="blue"] #tail-home .two-title-l .act-add { display: none; }
   .rem-board { display: none; }
-  html[data-theme="blue"] #tail-home .rem-board { display: contents; }
-  html[data-theme="blue"] #tail-home .rem-week {
-    grid-column: 1;
-    grid-row: 1 / -1;
+  html[data-theme="blue"] #tail-home .rem-board {
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    width: auto;
-    padding: 0 4px;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 0 8px 4px;
   }
+  html[data-theme="blue"] #tail-home .rem-week { display: flex; gap: 2px; width: 100%; }
   html[data-theme="blue"] #tail-home .rem-day {
-    flex: none;
+    flex: 1;
+    min-width: 0;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    gap: 6px;
+    gap: 1px;
     margin: 0;
-    padding: 4px 8px;
+    padding: 4px 0 6px;
     border: 0;
     border-radius: 10px;
     background: transparent;
     color: #8b919a;
     font: inherit;
     cursor: pointer;
-    white-space: nowrap;
   }
   html[data-theme="blue"] #tail-home .rem-day span { font-size: 11px; font-weight: 500; line-height: 14px; }
   html[data-theme="blue"] #tail-home .rem-day b { font-size: 13px; font-weight: 500; line-height: 18px; color: #5f6368; }
@@ -1524,12 +1514,9 @@
     background: var(--green);
   }
   html[data-theme="blue"] #tail-home .rem-filters {
-    grid-column: 2;
-    grid-row: 1;
-    align-self: start;
     display: flex;
     gap: 6px;
-    padding: 4px 8px 0 0;
+    padding: 0;
     background: transparent;
   }
   html[data-theme="blue"] #tail-home .rem-filters button {
@@ -1566,9 +1553,7 @@
     color: #8b919a;
   }
   html[data-theme="blue"] #tail-home .two-main-l {
-    grid-column: 2;
-    grid-row: 2;
-    min-height: 0;
+    flex: 1;
     border: 0;
     border-radius: 0;
     background: transparent;
