@@ -1530,32 +1530,49 @@
     width: 100%;
     padding: 0;
   }
-  html[data-theme="blue"] #tail-home .rem-week { display: flex; gap: 8px; width: 100%; align-items: stretch; }
+  html[data-theme="blue"] #tail-home .rem-week { display: flex; gap: 4px; width: 100%; align-items: stretch; }
   html[data-theme="blue"] #tail-home .rem-day {
+    position: relative;
     flex: 1;
     min-width: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2px;
+    gap: 0;
     margin: 0;
-    padding: 8px 0;
+    padding: 6px 0 8px;
     border: 0;
-    border-radius: 12px;
+    border-radius: 14px;
     background: transparent;
     color: #8b919a;
     font: inherit;
     cursor: pointer;
   }
+  html[data-theme="blue"] #tail-home .rem-day span,
+  html[data-theme="blue"] #tail-home .rem-day b { position: relative; z-index: 1; }
   html[data-theme="blue"] #tail-home .rem-day span { font-size: 11px; font-weight: 500; line-height: 14px; }
-  html[data-theme="blue"] #tail-home .rem-day b { font-size: 14px; font-weight: 500; line-height: 18px; color: #1f1f1f; }
-  html[data-theme="blue"] #tail-home .rem-day.is-on { background: var(--green-tint); }
+  html[data-theme="blue"] #tail-home .rem-day b { font-size: 15px; font-weight: 600; line-height: 20px; color: #1f1f1f; }
+  html[data-theme="blue"] #tail-home .rem-day.is-on { background: transparent; }
+  html[data-theme="blue"] #tail-home .rem-day.is-on::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 48px;
+    transform: translateX(-50%);
+    border-radius: 14px;
+    background: var(--green-tint);
+  }
   html[data-theme="blue"] #tail-home .rem-day.is-on,
   html[data-theme="blue"] #tail-home .rem-day.is-on span,
   html[data-theme="blue"] #tail-home .rem-day.is-on b { color: var(--green-dark); }
   html[data-theme="blue"] #tail-home .rem-day::after {
     content: "";
+    position: relative;
+    z-index: 1;
     width: 4px;
     height: 4px;
     margin-top: 2px;
