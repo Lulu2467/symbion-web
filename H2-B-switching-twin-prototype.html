@@ -1433,7 +1433,7 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     column-gap: 20px;
-    align-items: stretch;
+    align-items: start;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid > .two-col:nth-child(2) {
     position: static;
@@ -1450,8 +1450,11 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .cosmos-scroll-wrap > .activity {
     height: auto;
     overflow: visible;
-    padding: 8px 16px 12px;
-    gap: 14px;
+    padding: 16px;
+    gap: 16px;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid > .two-col {
+    gap: 12px;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid > .two-col:first-child {
     background: transparent;
@@ -1459,21 +1462,24 @@
     border-radius: 0;
     box-shadow: none;
     padding: 0;
-    gap: 8px;
+    gap: 12px;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .rem-card,
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .cosmos-scroll-wrap {
-    flex: 1;
+    flex: none;
+    height: auto;
     min-height: 0;
   }
   html[data-theme="blue"] #tail-home .rem-card {
     display: flex;
     flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
     box-sizing: border-box;
     background: #fff;
     border: 1px solid var(--line);
     border-radius: 16px;
-    padding: 12px 8px 8px;
+    padding: 16px;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-title-l {
     height: 28px;
@@ -1493,20 +1499,21 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 10px;
+    gap: 16px;
     width: 100%;
-    padding: 2px 8px 8px;
+    padding: 0;
   }
-  html[data-theme="blue"] #tail-home .rem-week { display: flex; gap: 4px; width: 100%; }
+  html[data-theme="blue"] #tail-home .rem-week { display: flex; gap: 8px; width: 100%; align-items: stretch; }
   html[data-theme="blue"] #tail-home .rem-day {
     flex: 1;
     min-width: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1px;
+    justify-content: center;
+    gap: 2px;
     margin: 0;
-    padding: 6px 0 8px;
+    padding: 8px 0;
     border: 0;
     border-radius: 12px;
     background: transparent;
@@ -1520,13 +1527,15 @@
   html[data-theme="blue"] #tail-home .rem-day.is-on,
   html[data-theme="blue"] #tail-home .rem-day.is-on span,
   html[data-theme="blue"] #tail-home .rem-day.is-on b { color: var(--green-dark); }
-  html[data-theme="blue"] #tail-home .rem-day.has-dot::after {
+  html[data-theme="blue"] #tail-home .rem-day::after {
     content: "";
     width: 4px;
     height: 4px;
+    margin-top: 2px;
     border-radius: 50%;
-    background: var(--green);
+    background: transparent;
   }
+  html[data-theme="blue"] #tail-home .rem-day.has-dot::after { background: var(--green); }
   html[data-theme="blue"] #tail-home .rem-filters {
     display: flex;
     align-items: center;
@@ -1559,21 +1568,26 @@
     box-shadow: 0 1px 2px rgba(31, 35, 40, .08);
   }
   html[data-theme="blue"] #tail-home .rem-group {
-    padding: 12px 12px 2px;
+    padding: 8px 4px 4px;
     font-size: 12px;
     font-weight: 600;
     line-height: 16px;
     color: #5f6368;
   }
+  html[data-theme="blue"] #tail-home .rem-group:first-child { padding-top: 0; }
   html[data-theme="blue"] #tail-home .rem-none {
     margin: 0;
-    padding: 16px;
+    padding: 0 4px;
     font-size: 13px;
-    line-height: 1.4;
+    line-height: 20px;
     color: #8b919a;
   }
   html[data-theme="blue"] #tail-home .two-main-l {
-    flex: 1;
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
     border: 0;
     border-radius: 0;
     background: transparent;
@@ -1588,7 +1602,7 @@
     align-self: flex-end;
     width: 36px;
     height: 36px;
-    margin: auto 12px 8px auto;
+    margin: 16px 0 0 auto;
     border: 1px solid #e6e8ec;
     border-radius: 50%;
     background: #fff;
@@ -2789,8 +2803,8 @@
     column-gap: 8px;
     row-gap: 2px;
     margin: 0;
-    padding: 8px 12px;
-    min-height: 0;
+    padding: 10px 4px;
+    min-height: 44px;
     border-radius: 0;
     border-bottom: 0;
   }
