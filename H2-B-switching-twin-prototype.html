@@ -1755,7 +1755,7 @@
     display: flex; align-items: center; justify-content: center; color: transparent; background: #fff;
   }
   html[data-theme="blue"] #tail-home .tl-plan-row.is-done .tl-plan-mark {
-    border-color: #e2a21a; background: #e2a21a; color: #fff;
+    border-color: var(--green-dark); background: var(--green-dark); color: #fff;
   }
   html[data-theme="blue"] #tail-home .tl-plan-mark svg { width: 12px; height: 12px; }
   /* the check is gone while a disc blooms into a ring, then springs past its size */
@@ -1765,7 +1765,7 @@
   html[data-theme="blue"] #tail-home .tl-plan-row[data-pop] .tl-plan-mark::after {
     content: "";
     position: absolute; left: 50%; top: 50%; width: 22px; height: 22px; margin: -11px 0 0 -11px;
-    box-sizing: border-box; border-radius: 50%; border: 11px solid #e2a21a; pointer-events: none;
+    box-sizing: border-box; border-radius: 50%; border: 11px solid var(--green-dark); pointer-events: none;
     animation: tl-plan-bloom 560ms cubic-bezier(.25, .8, .35, 1) both;
   }
   html[data-theme="blue"] #tail-home .tl-plan-row[data-pop] .tl-plan-mark::before {
@@ -1775,23 +1775,27 @@
     animation: tl-plan-dots 620ms cubic-bezier(.2, .8, .3, 1) 160ms both;
   }
   html[data-theme="blue"] #tail-home .tl-plan-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  html[data-theme="blue"] #tail-home .tl-plan-time {
+    flex: none; margin-left: auto; min-width: 46px; text-align: right;
+    font-size: 13px; font-variant-numeric: tabular-nums; color: #8e8e93;
+  }
   @keyframes tl-plan-heart {
     0%, 28% { transform: scale(0); }
     62% { transform: scale(1.25); }
     100% { transform: scale(1); }
   }
   @keyframes tl-plan-bloom {
-    0% { transform: scale(.15); border-width: 11px; border-color: #e2a21a; }
-    40% { transform: scale(1); border-width: 11px; border-color: #f0c14a; }
+    0% { transform: scale(.15); border-width: 11px; border-color: var(--green-dark); }
+    40% { transform: scale(1); border-width: 11px; border-color: #7aa3b5; }
     75% { border-width: 2px; opacity: 1; }
-    100% { transform: scale(1.12); border-width: 0; opacity: 0; border-color: #f0c14a; }
+    100% { transform: scale(1.12); border-width: 0; opacity: 0; border-color: #7aa3b5; }
   }
   @keyframes tl-plan-dots {
-    0% { opacity: 0; box-shadow: 0 0 #e2a21a, 0 0 #f0c14a, 0 0 #e8c27a, 0 0 #c48a12, 0 0 #f5d78a, 0 0 #d4a017, 0 0 #efc56a; }
+    0% { opacity: 0; box-shadow: 0 0 #316479, 0 0 #3c7a94, 0 0 #5b93aa, 0 0 #7aa3b5, 0 0 #24566a, 0 0 #8eb6c6, 0 0 #4d8498; }
     16% { opacity: 1; }
     100% {
       opacity: 0;
-      box-shadow: 16px -6px 0 0 #e2a21a, 6px -16px 0 0 #f0c14a, -10px -14px 0 0 #e8c27a, -16px 2px 0 0 #c48a12, -6px 14px 0 0 #f5d78a, 8px 12px 0 0 #d4a017, 14px 6px 0 0 #efc56a;
+      box-shadow: 16px -6px 0 0 #316479, 6px -16px 0 0 #3c7a94, -10px -14px 0 0 #5b93aa, -16px 2px 0 0 #7aa3b5, -6px 14px 0 0 #24566a, 8px 12px 0 0 #8eb6c6, 14px 6px 0 0 #4d8498;
     }
   }
   html[data-theme="blue"] #tail-home .tl-day { position: relative; display: flex; flex-direction: column; gap: 0; padding: 2px 0 8px; }
@@ -10340,7 +10344,7 @@
       const ev = events[i];
       const obj = ev.kind === 'rem' ? ev.rem : ev.item;
       const pop = obj && obj === just && ev.done ? ' data-pop=""' : '';
-      return `<button type="button" class="tl-plan-row${ev.done ? ' is-done' : ''}" data-tl-i="${i}" data-k="${deskEsc(ev.kind + '|' + ev.start + '|' + ev.title)}"${pop}><span class="tl-plan-mark">${TL_CHECK}</span><span class="tl-plan-name">${deskEsc(ev.title)}</span></button>`;
+      return `<button type="button" class="tl-plan-row${ev.done ? ' is-done' : ''}" data-tl-i="${i}" data-k="${deskEsc(ev.kind + '|' + ev.start + '|' + ev.title)}"${pop}><span class="tl-plan-mark">${TL_CHECK}</span><span class="tl-plan-name">${deskEsc(ev.title)}</span><span class="tl-plan-time">${tlClock(ev.start)}</span></button>`;
     }).join('');
     host.innerHTML = `<div class="tl-plan">${rows}</div>`;
     if (!before.length) return;
