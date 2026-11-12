@@ -394,6 +394,7 @@
   html[data-theme="blue"] #tail-home .rem-check {
     display: grid;
     place-items: center;
+    box-sizing: border-box;
     width: 22px;
     height: 22px;
     padding: 0;
@@ -404,9 +405,12 @@
     flex: none;
     cursor: pointer;
   }
-  html[data-theme="blue"] #tail-home .rem-check svg { width: 22px; height: 22px; }
+  html[data-theme="blue"] #tail-home .rem-check svg { width: 18px; height: 18px; display: block; }
   html[data-theme="blue"] #tail-home .rem-check svg path:not(.todo-tick) { display: none; }
-  html[data-theme="blue"] #tail-home .rem-check .todo-tick { opacity: 0; }
+  html[data-theme="blue"] #tail-home .rem-check .todo-tick {
+    stroke-dasharray: 18;
+    stroke-dashoffset: 18;
+  }
   html[data-theme="blue"] #tail-home .rem-check:hover { border-color: var(--green); background: #fff; }
   html[data-theme="blue"] #tail-home .rem.is-done .t { color: #8b919a; text-decoration: line-through; }
   html[data-theme="blue"] #tail-home .rem.is-done .rem-check {
@@ -414,7 +418,22 @@
     background: var(--green);
     border-color: var(--green);
   }
-  html[data-theme="blue"] #tail-home .rem.is-done .rem-check .todo-tick { opacity: 1; }
+  html[data-theme="blue"] #tail-home .rem.is-done .rem-check .todo-tick { stroke-dashoffset: 0; }
+  html[data-theme="blue"] #tail-home .rem.is-checking .rem-check { animation: rem-check-pop .38s cubic-bezier(.2, .85, .2, 1); }
+  html[data-theme="blue"] #tail-home .rem.is-checking .rem-check .todo-tick { animation: rem-tick-draw .32s cubic-bezier(.2, .8, .2, 1) .08s both; }
+  @keyframes rem-check-pop {
+    0% { transform: scale(.84); }
+    46% { transform: scale(1.14); }
+    100% { transform: scale(1); }
+  }
+  @keyframes rem-tick-draw {
+    from { stroke-dashoffset: 18; }
+    to { stroke-dashoffset: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html[data-theme="blue"] #tail-home .rem.is-checking .rem-check,
+    html[data-theme="blue"] #tail-home .rem.is-checking .rem-check .todo-tick { animation: none; }
+  }
   html[data-theme="blue"] #tail-home .rem.is-done .when,
   html[data-theme="blue"] #tail-home .rem.is-done .meta { opacity: .55; }
   html[data-theme="blue"] #tail-home .rem.is-leaving { opacity: 0; transition: opacity .24s ease; }
@@ -8138,25 +8157,25 @@
                   </div>
                   <div class="two-main-l">
                     <div class="rem">
-                      <button type="button" class="rem-check" tabindex="-1" aria-label="Mark complete: Heavy-ion Physics — lecture 5"><svg viewBox="0 0 950.86 950.86" aria-hidden="true"><path class="todo-tick" fill="currentColor" d="M607.085714 343.771429L424.228571 526.628571 343.771429 446.171429c-14.628571-7.314286-36.571429-7.314286-51.2 0-14.628571 14.628571-14.628571 43.885714 0 58.514285l102.4 102.4c14.628571 14.628571 36.571429 14.628571 51.2 0L658.285714 394.971429c14.628571-14.628571 14.628571-36.571429 0-51.2-14.628571-14.628571-36.571429-14.628571-51.2 0"/></svg></button>
+                      <button type="button" class="rem-check" tabindex="-1" aria-label="Mark complete: Heavy-ion Physics — lecture 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="todo-tick" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M6.4 12.3 10.2 16.1 17.6 8.4"/></svg></button>
                       <span class="when hot">2:30</span>
                       <div class="col"><button type="button" class="t" tabindex="-1">Heavy-ion Physics — lecture 5</button><span class="meta"><span class="badge">Course · Prof. Roland</span>Room 6-120</span></div>
                       <button type="button" class="btn-soft" data-verb="Prep a 10-min deck" data-tool="deck"></button>
                     </div>
                     <div class="rem">
-                      <button type="button" class="rem-check" tabindex="-1" aria-label="Mark complete: Reply to Prof. Roland about the lab report"><svg viewBox="0 0 950.86 950.86" aria-hidden="true"><path class="todo-tick" fill="currentColor" d="M607.085714 343.771429L424.228571 526.628571 343.771429 446.171429c-14.628571-7.314286-36.571429-7.314286-51.2 0-14.628571 14.628571-14.628571 43.885714 0 58.514285l102.4 102.4c14.628571 14.628571 36.571429 14.628571 51.2 0L658.285714 394.971429c14.628571-14.628571 14.628571-36.571429 0-51.2-14.628571-14.628571-36.571429-14.628571-51.2 0"/></svg></button>
+                      <button type="button" class="rem-check" tabindex="-1" aria-label="Mark complete: Reply to Prof. Roland about the lab report"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="todo-tick" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M6.4 12.3 10.2 16.1 17.6 8.4"/></svg></button>
                       <span class="when">Today</span>
                       <div class="col"><button type="button" class="t" tabindex="-1">Reply to Prof. Roland about the lab report</button><span class="meta"><span class="badge email">Email</span>Received 9:12</span></div>
                       <button type="button" class="btn-soft" data-verb="Draft reply"></button>
                     </div>
                     <div class="rem">
-                      <button type="button" class="rem-check" tabindex="-1" aria-label="Mark complete: Submit reading report"><svg viewBox="0 0 950.86 950.86" aria-hidden="true"><path class="todo-tick" fill="currentColor" d="M607.085714 343.771429L424.228571 526.628571 343.771429 446.171429c-14.628571-7.314286-36.571429-7.314286-51.2 0-14.628571 14.628571-14.628571 43.885714 0 58.514285l102.4 102.4c14.628571 14.628571 36.571429 14.628571 51.2 0L658.285714 394.971429c14.628571-14.628571 14.628571-36.571429 0-51.2-14.628571-14.628571-36.571429-14.628571-51.2 0"/></svg></button>
+                      <button type="button" class="rem-check" tabindex="-1" aria-label="Mark complete: Submit reading report"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="todo-tick" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M6.4 12.3 10.2 16.1 17.6 8.4"/></svg></button>
                       <span class="when">Tomorrow</span>
                       <div class="col"><button type="button" class="t" tabindex="-1">Submit reading report</button><span class="meta"><span class="badge">Course · Prof. Roland</span>820 / 1,500 words</span></div>
                       <button type="button" class="btn-soft" data-verb="Finish with Citta" data-twin-verb="Finish the report" data-tool="doc"></button>
                     </div>
                     <div class="rem">
-                      <button type="button" class="rem-check" tabindex="-1" aria-label="Mark complete: Lab 3 analysis due"><svg viewBox="0 0 950.86 950.86" aria-hidden="true"><path class="todo-tick" fill="currentColor" d="M607.085714 343.771429L424.228571 526.628571 343.771429 446.171429c-14.628571-7.314286-36.571429-7.314286-51.2 0-14.628571 14.628571-14.628571 43.885714 0 58.514285l102.4 102.4c14.628571 14.628571 36.571429 14.628571 51.2 0L658.285714 394.971429c14.628571-14.628571 14.628571-36.571429 0-51.2-14.628571-14.628571-36.571429-14.628571-51.2 0"/></svg></button>
+                      <button type="button" class="rem-check" tabindex="-1" aria-label="Mark complete: Lab 3 analysis due"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="todo-tick" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M6.4 12.3 10.2 16.1 17.6 8.4"/></svg></button>
                       <span class="when">Fri</span>
                       <div class="col"><button type="button" class="t" tabindex="-1">Lab 3 analysis due</button><span class="meta"><span class="badge yours">Yours</span></span></div>
                       <button type="button" class="btn-soft" data-verb="Open in Numbers" data-tool="numbers"></button>
@@ -9413,7 +9432,7 @@
       rem.className = 'rem';
       rem.dataset.fromCitta = '1';
       rem.innerHTML =
-        `<button type="button" class="rem-check" tabindex="-1" aria-label="Mark complete"><svg viewBox="0 0 950.86 950.86" aria-hidden="true"><path class="todo-tick" fill="currentColor" d="M607.085714 343.771429L424.228571 526.628571 343.771429 446.171429c-14.628571-7.314286-36.571429-7.314286-51.2 0-14.628571 14.628571-14.628571 43.885714 0 58.514285l102.4 102.4c14.628571 14.628571 36.571429 14.628571 51.2 0L658.285714 394.971429c14.628571-14.628571 14.628571-36.571429 0-51.2-14.628571-14.628571-36.571429-14.628571-51.2 0"/></svg></button>` +
+        `<button type="button" class="rem-check" tabindex="-1" aria-label="Mark complete"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="todo-tick" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M6.4 12.3 10.2 16.1 17.6 8.4"/></svg></button>` +
         `<span class="when hot">Today</span>` +
         `<div class="col"><span class="t"></span><span class="meta"><span class="badge yours">Yours</span>Just added</span></div>` +
         `<button type="button" class="btn-soft" data-verb="Open with Citta"></button>`;
@@ -9843,7 +9862,7 @@
     } else if (list) {
       const rem = document.createElement('div');
       rem.className = 'rem is-added';
-      rem.innerHTML = `<button type="button" class="rem-check" aria-label="Mark complete"><svg viewBox="0 0 950.86 950.86" aria-hidden="true"><path class="todo-tick" fill="currentColor" d="M607.085714 343.771429L424.228571 526.628571 343.771429 446.171429c-14.628571-7.314286-36.571429-7.314286-51.2 0-14.628571 14.628571-14.628571 43.885714 0 58.514285l102.4 102.4c14.628571 14.628571 36.571429 14.628571 51.2 0L658.285714 394.971429c14.628571-14.628571 14.628571-36.571429 0-51.2-14.628571-14.628571-36.571429-14.628571-51.2 0"/></svg></button><span class="when"></span><div class="col"><button type="button" class="t"></button><span class="meta"><span class="badge"></span></span></div><button type="button" class="btn-soft" data-verb="Check"></button>`;
+      rem.innerHTML = `<button type="button" class="rem-check" aria-label="Mark complete"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="todo-tick" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M6.4 12.3 10.2 16.1 17.6 8.4"/></svg></button><span class="when"></span><div class="col"><button type="button" class="t"></button><span class="meta"><span class="badge"></span></span></div><button type="button" class="btn-soft" data-verb="Check"></button>`;
       writeTodoRow(rem, title, type, when, notes);
       list.prepend(rem);
       paintHomeTodoButtons();
@@ -9900,7 +9919,23 @@
     if (document.documentElement.dataset.theme === 'blue') {
       clearTodoDoneTimer(rem);
       rem.classList.remove('is-leaving');
-      syncRemBoard();
+      if (rem._checkTimer) {
+        clearTimeout(rem._checkTimer);
+        rem._checkTimer = 0;
+      }
+      if (done) {
+        rem.classList.remove('is-checking');
+        void check?.offsetWidth;
+        rem.classList.add('is-checking');
+        rem._checkTimer = setTimeout(() => {
+          rem._checkTimer = 0;
+          rem.classList.remove('is-checking');
+          syncRemBoard();
+        }, 460);
+      } else {
+        rem.classList.remove('is-checking');
+        syncRemBoard();
+      }
       return;
     }
     if (done) {
@@ -9937,7 +9972,7 @@
     }
     const rem = document.createElement('div');
     rem.className = 'rem is-added is-draft';
-    rem.innerHTML = '<button type="button" class="rem-check" aria-label="Mark complete"><svg viewBox="0 0 950.86 950.86" aria-hidden="true"><path class="todo-tick" fill="currentColor" d="M607.085714 343.771429L424.228571 526.628571 343.771429 446.171429c-14.628571-7.314286-36.571429-7.314286-51.2 0-14.628571 14.628571-14.628571 43.885714 0 58.514285l102.4 102.4c14.628571 14.628571 36.571429 14.628571 51.2 0L658.285714 394.971429c14.628571-14.628571 14.628571-36.571429 0-51.2-14.628571-14.628571-36.571429-14.628571-51.2 0"/></svg></button><span class="when hot"></span><div class="col"><input class="todo-inline" type="text" maxlength="120" placeholder="New to-do" aria-label="New to-do"></div>';
+    rem.innerHTML = '<button type="button" class="rem-check" aria-label="Mark complete"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="todo-tick" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M6.4 12.3 10.2 16.1 17.6 8.4"/></svg></button><span class="when hot"></span><div class="col"><input class="todo-inline" type="text" maxlength="120" placeholder="New to-do" aria-label="New to-do"></div>';
     const when = todoStamp(new Date());
     const whenEl = rem.querySelector('.when');
     whenEl.dataset.when = when;
