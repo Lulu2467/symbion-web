@@ -1677,10 +1677,15 @@
     letter-spacing: -0.03em; color: var(--green-dark); cursor: pointer;
   }
   html[data-theme="blue"] #tail-home .tl-zoom {
-    height: 28px; padding: 0 12px; border: 0; border-radius: 999px; background: #f2f2f7;
-    color: #1d1d1f; font: inherit; font-size: 13px; font-weight: 550; cursor: pointer;
+    display: flex; align-items: center; height: 32px; padding: 3px; border-radius: 999px; background: #f2f2f4;
   }
-  html[data-theme="blue"] #tail-home .tl-zoom[aria-pressed="true"] { background: var(--green-dark); color: #fff; }
+  html[data-theme="blue"] #tail-home .tl-zoom button {
+    height: 26px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent;
+    color: #8e8e93; font: inherit; font-size: 14px; font-weight: 550; cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .tl-zoom button[aria-pressed="true"] {
+    background: #fff; color: #1d1d1f; box-shadow: 0 1px 3px rgba(20, 24, 28, .12);
+  }
   html[data-theme="blue"] #tail-home .tl-day { position: relative; display: flex; flex-direction: column; gap: 0; padding: 2px 0 8px; }
   html[data-theme="blue"] #tail-home .tl-day::before {
     content: ""; position: absolute; left: 73px; top: 22px; bottom: 22px; width: 2px;
@@ -8492,7 +8497,10 @@
                     <div class="tl" id="homeTimeline">
                       <div class="tl-bar">
                         <button type="button" class="tl-date" id="tlDate" aria-expanded="false"></button>
-                        <button type="button" class="tl-zoom" id="tlZoom" aria-pressed="false">Week</button>
+                        <div class="tl-zoom" id="tlZoom" role="group" aria-label="Day or week">
+                          <button type="button" data-tl-span="day" aria-pressed="true">Day</button>
+                          <button type="button" data-tl-span="week" aria-pressed="false">Week</button>
+                        </div>
                       </div>
                       <div class="rem-week" role="group" aria-label="This week"></div>
                       <div class="tl-body" id="tlBody"></div>
@@ -10132,7 +10140,6 @@
   function paintHomeTimeline() {
     const host = document.getElementById('tlBody');
     const dateBtn = document.getElementById('tlDate');
-    const zoom = document.getElementById('tlZoom');
     if (!host || document.documentElement.dataset.theme !== 'blue') return;
     if (!remDay) remDay = todoDateIso(new Date());
     if (dateBtn) {
@@ -10140,7 +10147,9 @@
       dateBtn.textContent = tlWeek && date ? `${TODO_MONTHS_LONG[date.getMonth()]} ${date.getFullYear()}` : tlDateLabel(remDay);
       dateBtn.insertAdjacentHTML('beforeend', ' ›');
     }
-    if (zoom) zoom.setAttribute('aria-pressed', tlWeek ? 'true' : 'false');
+    document.querySelectorAll('#tlZoom [data-tl-span]').forEach((btn) => {
+      btn.setAttribute('aria-pressed', (btn.dataset.tlSpan === 'week') === !!tlWeek ? 'true' : 'false');
+    });
     if (tlWeek) { paintTlWeek(host); return; }
     const events = tlEventsFor(remDay);
     tlCache = events;
@@ -12662,7 +12671,12 @@
         const addAt = e.target.closest('[data-tl-add]');
         if (addAt) { tlOpenAdd(addAt.dataset.tlAdd); return; }
         if (e.target.closest('#tlDate')) { const pop = document.getElementById('tlCal'); if (pop && !pop.hidden) tlClosePops(); else tlOpenCal(); return; }
-        if (e.target.closest('#tlZoom')) { tlWeek = !tlWeek; tlPick = -1; tlClosePops(); paintHomeTimeline(); return; }
+        const span = e.target.closest('[data-tl-span]');
+        if (span) {
+          const next = span.dataset.tlSpan === 'week';
+          if (next !== tlWeek) { tlWeek = next; tlPick = -1; tlClosePops(); paintHomeTimeline(); }
+          return;
+        }
         const jump = e.target.closest('[data-tl-jump]');
         if (jump) {
           remDay = jump.dataset.tlJump;
