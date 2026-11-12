@@ -7830,7 +7830,16 @@
   html[data-theme="blue"] #teamHost .sheet-actions .btn.go { border: 0; background: var(--green); color: #fff; }
   html[data-theme="blue"] #teamHost .sheet-actions .btn.go:hover { background: var(--green-dark); }
   html[data-theme="blue"] #teamHost .sheet-actions .btn.go:disabled { background: #e6e8eb; color: #6b7076; }
-  html[data-theme="blue"] #teamHost #sheetBody:has(#finderResults) { display: flex; flex-direction: column; }
+  html[data-theme="blue"] #teamHost .sheet:has(#finderResults) {
+    max-height: min(520px, calc(100% - 64px));
+  }
+  html[data-theme="blue"] #teamHost .sheet:has(#finderResults) .sheet-actions { display: none; }
+  html[data-theme="blue"] #teamHost #sheetBody:has(#finderResults) {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding-bottom: 8px;
+  }
   html[data-theme="blue"] #teamHost #sheetBody:has(#finderResults) > .search { order: 1; margin: 2px 0 8px; background: #f4f5f7; border-radius: 10px; }
   html[data-theme="blue"] #teamHost #sheetBody:has(#finderResults) > #finderSlug { order: 2; }
   html[data-theme="blue"] #teamHost #sheetBody:has(#finderResults) > [data-open-create] {
@@ -7846,7 +7855,11 @@
     font-weight: 600;
   }
   html[data-theme="blue"] #teamHost #sheetBody:has(#finderResults) > [data-open-create]:hover { background: transparent; color: var(--green); }
-  html[data-theme="blue"] #teamHost #sheetBody:has(#finderResults) > #finderResults { order: 4; }
+  html[data-theme="blue"] #teamHost #sheetBody:has(#finderResults) > #finderResults {
+    order: 4;
+    max-height: 320px;
+    overflow: auto;
+  }
   html[data-theme="blue"] #teamHost #finderResults > .lead {
     margin: 8px 0 0;
     padding: 0;
