@@ -1129,7 +1129,7 @@
     background: transparent !important;
   }
   @keyframes pill-open {
-    from { opacity: 0; transform: translateY(-8px); }
+    from { opacity: 0; transform: translateY(-6px) scale(.96); }
     to { opacity: 1; transform: none; }
   }
   .tool-recent { display: none; }
@@ -1139,13 +1139,22 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
+    gap: 8px;
     width: max-content;
     max-width: calc(100% - 48px);
     top: var(--recent-y, 0px);
     left: var(--recent-x, 0px);
     margin: 0;
     padding: 0;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .recent-k {
+    margin: 0 2px 2px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    line-height: 1.2;
+    color: #8b919a;
+    animation: pill-open .26s ease both;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill {
     display: inline-flex;
@@ -1169,12 +1178,9 @@
     transform: none;
     animation: pill-open .32s ease both;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill:nth-child(2) {
-    animation-delay: .08s;
-  }
-  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill:nth-child(3) {
-    animation-delay: .16s;
-  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill:nth-child(2) { animation-delay: .07s; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill:nth-child(3) { animation-delay: .14s; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill:nth-child(4) { animation-delay: .21s; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill:hover {
     border-color: #c8ccd1;
     background: #f6f7f8;
@@ -1256,6 +1262,7 @@
     html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool-prompt { transition: none; }
     html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool-prompt:hover,
     html[data-theme="blue"] .hub:has(#screen-home.on) #composerTools .tool-prompt:focus-visible { transform: none; }
+    html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .recent-k,
     html[data-theme="blue"] .hub:has(#screen-home.on) .tool-recent .file-pill { animation: none; }
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .tool-cases-k {
@@ -11470,7 +11477,11 @@
       return;
     }
     clearTimeout(toolRecentTimer);
-    pop.replaceChildren(...names.map((name) => {
+    const title = document.createElement('p');
+    title.className = 'recent-k';
+    title.textContent = '最近项目';
+    pop.classList.remove('is-on');
+    pop.replaceChildren(title, ...names.map((name) => {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'file-pill';
@@ -11481,6 +11492,7 @@
       });
       return btn;
     }));
+    void pop.offsetWidth;
     pop.classList.add('is-on');
     const scale = host.getBoundingClientRect().width / host.offsetWidth || 1;
     const hostStyle = getComputedStyle(host);
