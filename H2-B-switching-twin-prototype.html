@@ -219,6 +219,42 @@
   html[data-theme="blue"] .osbar-folder.is-open .osbar-folder-menu { display: flex; flex-direction: column; gap: 2px; }
   html[data-theme="blue"] .osbar-folder-menu .osbar-bm { gap: 8px; padding: 8px 10px; border-radius: 8px; justify-content: flex-start; }
   html[data-theme="blue"] .osbar-folder-menu .osbar-bm:hover { background: #ececee; }
+  .osbar-bell { display: none; }
+  html[data-theme="blue"] .osbar-bell { position: relative; display: inline-flex; flex: none; }
+  html[data-theme="blue"] .osbar-bell .osbar-ico { width: 18px; height: 18px; }
+  html[data-theme="blue"] .osbar-bell.is-open > button { background: #d4e4ee; color: #1f1f1f; }
+  html[data-theme="blue"] .osbar-bell-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 320px;
+    max-height: 420px;
+    overflow: auto;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid #e6e6e8;
+    border-radius: 14px;
+    box-shadow: 0 10px 28px rgba(20, 24, 28, .12);
+    z-index: 80;
+  }
+  html[data-theme="blue"] .osbar-bell.is-open .osbar-bell-menu { display: flex; flex-direction: column; gap: 10px; }
+  html[data-theme="blue"] .osbar-bell-menu > b { font-size: 13px; font-weight: 600; color: #8b919a; }
+  html[data-theme="blue"] .osbar-bell-list { display: flex; flex-direction: column; gap: 12px; }
+  html[data-theme="blue"] .osbar-bell-list .act-item { display: flex; gap: 10px; align-items: flex-start; }
+  html[data-theme="blue"] .osbar-bell-list .aav {
+    width: 28px; height: 28px; border-radius: 50%; flex: none;
+    display: flex; align-items: center; justify-content: center;
+    background: #fff; border: 1px solid #e6e6e8; font-size: 11px; font-weight: 600; color: #5f6368;
+  }
+  html[data-theme="blue"] .osbar-bell-list .t { font-size: 13px; font-weight: 500; line-height: 18px; color: #1f1f1f; }
+  html[data-theme="blue"] .osbar-bell-list small { display: block; margin-top: 2px; font-size: 12px; line-height: 16px; color: #8b919a; }
+  html[data-theme="blue"] .osbar-bell-list .act-link {
+    display: inline-flex; align-items: center; margin-top: 2px; padding: 0;
+    border: 0; background: none; font: inherit; font-size: 12px; font-weight: 500; color: var(--green-dark); cursor: pointer;
+  }
+  html[data-theme="blue"] .osbar-bell-list .act-link .ico-ne { width: 12px; height: 12px; margin-left: 4px; }
+  html[data-theme="blue"] .osbar-bell-list .act-link .ico-ne svg { width: 12px; height: 12px; display: block; }
   html[data-theme="blue"] .osbar .sp { flex: 1; min-width: 12px; }
   .osbar-plus { display: none; }
   .osbar-tabs { display: none; }
@@ -8242,6 +8278,10 @@
           </div>
         </div>
         <span class="sp"></span>
+        <div class="osbar-bell" id="osbarBell">
+          <button type="button" class="osbar-nav-btn" aria-label="Reminders" aria-expanded="false" data-osbar="bell"><svg class="osbar-ico" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M808 712l-48-108.8V448c0-102.4-65.6-195.2-160-232-3.2-44.8-41.6-80-88-80s-83.2 35.2-88 80c-96 36.8-160 129.6-160 232v155.2l-48 108.8c-6.4 14.4-4.8 30.4 3.2 43.2 8 12.8 22.4 20.8 38.4 20.8h508.8c16 0 30.4-8 38.4-20.8s9.6-30.4 3.2-43.2z m-547.2 16l51.2-115.2V448c0-88 59.2-166.4 144-192l19.2-6.4-3.2-20.8V224c0-22.4 17.6-40 40-40s40 17.6 40 40v6.4l-3.2 20.8 19.2 6.4c84.8 25.6 144 104 144 192v164.8l51.2 115.2H260.8zM512 880c44.8 0 80-35.2 80-80H432c0 44.8 35.2 80 80 80z"/></svg></button>
+          <div class="osbar-bell-menu" role="region" aria-label="Cosmos"><b>Cosmos</b><div class="osbar-bell-list"></div></div>
+        </div>
         <div class="seg theme-seg" role="group" aria-label="主题色">
           <button type="button" data-theme-pick="green" aria-pressed="true">绿色</button>
           <button type="button" data-theme-pick="blue" aria-pressed="false">蓝色</button>
@@ -13235,8 +13275,30 @@
       }
     }
 
+    function toggleOsbarBell(force) {
+      const wrap = document.getElementById('osbarBell');
+      if (!wrap) return;
+      const open = force == null ? !wrap.classList.contains('is-open') : force;
+      wrap.classList.toggle('is-open', open);
+      const btn = wrap.querySelector('button');
+      if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (!open) return;
+      const list = wrap.querySelector('.osbar-bell-list');
+      const src = document.querySelector('#tail-home .activity');
+      if (list && src) list.innerHTML = src.innerHTML;
+    }
+    document.addEventListener('click', (e) => {
+      const wrap = document.getElementById('osbarBell');
+      if (!wrap || !wrap.classList.contains('is-open') || wrap.contains(e.target)) return;
+      toggleOsbarBell(false);
+    });
+
     frame.querySelectorAll('.osbar button[data-osbar]').forEach((el) => {
       el.addEventListener('click', () => {
+        if (document.documentElement.dataset.theme === 'blue' && el.dataset.osbar === 'bell') {
+          toggleOsbarBell();
+          return;
+        }
         if (document.documentElement.dataset.theme === 'blue' && el.dataset.osbar === 'new') {
           openNewTab();
           return;
