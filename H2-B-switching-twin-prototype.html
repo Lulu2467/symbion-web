@@ -1481,11 +1481,12 @@
   html[data-theme="blue"] #tail-home .rem-board {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    padding: 0 8px 4px;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+    padding: 2px 8px 8px;
   }
-  html[data-theme="blue"] #tail-home .rem-week { display: flex; gap: 2px; width: 100%; }
+  html[data-theme="blue"] #tail-home .rem-week { display: flex; gap: 4px; width: 100%; }
   html[data-theme="blue"] #tail-home .rem-day {
     flex: 1;
     min-width: 0;
@@ -1494,17 +1495,19 @@
     align-items: center;
     gap: 1px;
     margin: 0;
-    padding: 4px 0 6px;
+    padding: 6px 0 8px;
     border: 0;
-    border-radius: 10px;
+    border-radius: 12px;
     background: transparent;
     color: #8b919a;
     font: inherit;
     cursor: pointer;
   }
   html[data-theme="blue"] #tail-home .rem-day span { font-size: 11px; font-weight: 500; line-height: 14px; }
-  html[data-theme="blue"] #tail-home .rem-day b { font-size: 13px; font-weight: 500; line-height: 18px; color: #5f6368; }
+  html[data-theme="blue"] #tail-home .rem-day b { font-size: 14px; font-weight: 600; line-height: 18px; color: #1f1f1f; }
   html[data-theme="blue"] #tail-home .rem-day.is-on { background: var(--green-tint); }
+  html[data-theme="blue"] #tail-home .rem-day.is-on,
+  html[data-theme="blue"] #tail-home .rem-day.is-on span,
   html[data-theme="blue"] #tail-home .rem-day.is-on b { color: var(--green-dark); }
   html[data-theme="blue"] #tail-home .rem-day.has-dot::after {
     content: "";
@@ -1515,16 +1518,22 @@
   }
   html[data-theme="blue"] #tail-home .rem-filters {
     display: flex;
-    gap: 6px;
-    padding: 0;
-    background: transparent;
+    align-items: center;
+    gap: 2px;
+    width: 100%;
+    box-sizing: border-box;
+    height: 40px;
+    margin: 0;
+    padding: 4px;
+    border-radius: 999px;
+    background: #f3f5f7;
   }
   html[data-theme="blue"] #tail-home .rem-filters button {
-    flex: none;
-    height: 28px;
+    flex: 1;
+    height: 32px;
     margin: 0;
     padding: 0 12px;
-    border: 1px solid transparent;
+    border: 0;
     border-radius: 999px;
     background: transparent;
     color: #8b919a;
@@ -1534,16 +1543,15 @@
     cursor: pointer;
   }
   html[data-theme="blue"] #tail-home .rem-filters button.is-on {
-    background: var(--green-tint);
-    border-color: transparent;
-    color: var(--green-dark);
+    background: var(--green);
+    color: #fff;
   }
   html[data-theme="blue"] #tail-home .rem-group {
-    padding: 8px 12px 0;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 16px;
-    color: #8b919a;
+    padding: 10px 12px 2px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 18px;
+    color: #1f1f1f;
   }
   html[data-theme="blue"] #tail-home .rem-none {
     margin: 0;
