@@ -1455,12 +1455,14 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     column-gap: 20px;
-    align-items: stretch;
+    align-items: start;
   }
   #homeKanban { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeKanban {
     display: block;
-    margin-top: 20px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeKanban #deskHost {
     display: block;
@@ -1479,7 +1481,15 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeKanban #desk-email,
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeKanban #desk-ledger,
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeKanban #desk-drive { display: none; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeKanban .desk-card { margin-bottom: 0; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeKanban .desk-card {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeKanban #desk-kanban > h2,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeKanban #desk-kanban > .sub { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid > .two-col:nth-child(2) {
     position: static;
     overflow: visible;
@@ -1541,8 +1551,8 @@
     gap: 12px;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid > .two-col:first-child {
-    height: 0;
-    min-height: 100%;
+    height: auto;
+    min-height: 0;
     background: transparent;
     border: 0;
     border-radius: 0;
@@ -1551,10 +1561,14 @@
     gap: 12px;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .rem-card {
-    flex: 1 1 auto;
+    flex: none;
     height: auto;
     min-height: 0;
-    overflow: hidden;
+    overflow: visible;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .rem-card .two-main-l {
+    flex: none;
+    overflow: visible;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .cosmos-scroll-wrap {
     flex: none;
@@ -8237,6 +8251,7 @@
                     </div>
                     <button type="button" class="rem-add" data-action="add-reminder" aria-label="Add to-do">Add to-do</button>
                   </div>
+                  <div id="homeKanban"></div>
                   </div>
                 </div>
                 <div class="two-col">
@@ -8253,8 +8268,6 @@
                 </div>
               </div>
             </section>
-
-            <div id="homeKanban"></div>
 
             <section class="goal-sec">
               <div class="sec" style="margin-bottom:16px"><h3>Start from a goal</h3><span class="sub">Templates with Citta built in</span><span class="sp"></span><button type="button" class="act" data-action="see-goals">See all</button></div>
@@ -12142,6 +12155,11 @@
       if (remDayBtn) {
         remDay = remDayBtn.dataset.remDay;
         syncRemBoard();
+        const remParts = remDay.split('-').map(Number);
+        if (remParts.length === 3 && remParts.every((n) => n)) {
+          deskFocus = new Date(remParts[0], remParts[1] - 1, remParts[2]);
+          paintDeskBoard();
+        }
         return;
       }
       const remFilterBtn = e.target.closest('#tail-home [data-rem-filter]');
@@ -15209,6 +15227,10 @@
       ensureDesk();
       if (host.parentElement !== slot) slot.appendChild(host);
       host.hidden = false;
+      if (remDay) {
+        const remParts = remDay.split('-').map(Number);
+        if (remParts.length === 3 && remParts.every((n) => n)) deskFocus = new Date(remParts[0], remParts[1] - 1, remParts[2]);
+      }
       paintDeskBoard();
       return;
     }
