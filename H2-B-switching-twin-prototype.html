@@ -241,30 +241,37 @@
     bottom: 0;
     right: auto;
     left: calc(100% + 8px);
-    width: 320px;
-    max-height: 420px;
-    overflow: auto;
-    padding: 12px;
+    width: 440px;
+    max-height: none;
+    overflow: visible;
+    padding: 14px 14px 16px;
     background: #fff;
     border: 1px solid #e6e6e8;
-    border-radius: 14px;
+    border-radius: 16px;
     box-shadow: 0 10px 28px rgba(20, 24, 28, .12);
     z-index: 80;
   }
-  html[data-theme="blue"] .osbar-bell.is-open .osbar-bell-menu { display: flex; flex-direction: column; gap: 10px; }
-  html[data-theme="blue"] .osbar-bell-menu > b { font-size: 13px; font-weight: 600; color: #8b919a; }
-  html[data-theme="blue"] .osbar-bell-list { display: flex; flex-direction: column; gap: 12px; }
-  html[data-theme="blue"] .osbar-bell-list .act-item { display: flex; gap: 10px; align-items: flex-start; }
-  html[data-theme="blue"] .osbar-bell-list .aav {
-    width: 28px; height: 28px; border-radius: 50%; flex: none;
-    display: flex; align-items: center; justify-content: center;
-    background: #fff; border: 1px solid #e6e6e8; font-size: 11px; font-weight: 600; color: #5f6368;
+  html[data-theme="blue"] .osbar-bell.is-open .osbar-bell-menu { display: flex; flex-direction: column; gap: 12px; }
+  html[data-theme="blue"] .osbar-bell-hd { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 4px; }
+  html[data-theme="blue"] .osbar-bell-hd b { font-size: 16px; font-weight: 650; line-height: 22px; color: #1a1d21; }
+  html[data-theme="blue"] .osbar-bell-hd span { flex: none; font-size: 13px; font-weight: 600; line-height: 18px; color: var(--green-dark); }
+  html[data-theme="blue"] .osbar-bell-card {
+    border: 1px solid #eceef1;
+    border-radius: 16px;
+    padding: 16px 14px;
   }
-  html[data-theme="blue"] .osbar-bell-list .t { font-size: 13px; font-weight: 500; line-height: 18px; color: #1f1f1f; }
+  html[data-theme="blue"] .osbar-bell-list { display: flex; flex-direction: column; gap: 18px; }
+  html[data-theme="blue"] .osbar-bell-list .act-item { display: flex; gap: 12px; align-items: flex-start; }
+  html[data-theme="blue"] .osbar-bell-list .aav {
+    width: 32px; height: 32px; border-radius: 50%; flex: none;
+    display: flex; align-items: center; justify-content: center;
+    background: #f3f4f6; border: 0; font-size: 12px; font-weight: 600; color: #8b919a;
+  }
+  html[data-theme="blue"] .osbar-bell-list .t { font-size: 14px; font-weight: 600; line-height: 20px; color: #1a1d21; }
   html[data-theme="blue"] .osbar-bell-list small { display: block; margin-top: 2px; font-size: 12px; line-height: 16px; color: #8b919a; }
   html[data-theme="blue"] .osbar-bell-list .act-link {
     display: inline-flex; align-items: center; margin-top: 2px; padding: 0;
-    border: 0; background: none; font: inherit; font-size: 12px; font-weight: 500; color: var(--green-dark); cursor: pointer;
+    border: 0; background: none; font: inherit; font-size: 12px; font-weight: 500; color: #8b919a; cursor: pointer;
   }
   html[data-theme="blue"] .osbar-bell-list .act-link .ico-ne { width: 12px; height: 12px; margin-left: 4px; }
   html[data-theme="blue"] .osbar-bell-list .act-link .ico-ne svg { width: 12px; height: 12px; display: block; }
@@ -8348,7 +8355,7 @@
           <button type="button" class="p" aria-label="Prof. Roland">GR</button><button type="button" class="p" aria-label="王">王</button><button type="button" class="p" aria-label="Prof. Pajer">EP</button><button type="button" class="p" aria-label="Prof. Xu">HX</button>
           <div class="osbar-bell" id="osbarBell">
             <button type="button" class="osbar-nav-btn" aria-label="Reminders" aria-expanded="false" data-osbar="bell"><svg class="osbar-ico" viewBox="70.28 66.28 881.45 881.45" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M808 712l-48-108.8V448c0-102.4-65.6-195.2-160-232-3.2-44.8-41.6-80-88-80s-83.2 35.2-88 80c-96 36.8-160 129.6-160 232v155.2l-48 108.8c-6.4 14.4-4.8 30.4 3.2 43.2 8 12.8 22.4 20.8 38.4 20.8h508.8c16 0 30.4-8 38.4-20.8s9.6-30.4 3.2-43.2z m-547.2 16l51.2-115.2V448c0-88 59.2-166.4 144-192l19.2-6.4-3.2-20.8V224c0-22.4 17.6-40 40-40s40 17.6 40 40v6.4l-3.2 20.8 19.2 6.4c84.8 25.6 144 104 144 192v164.8l51.2 115.2H260.8zM512 880c44.8 0 80-35.2 80-80H432c0 44.8 35.2 80 80 80z"/></svg></button>
-            <div class="osbar-bell-menu" role="region" aria-label="Cosmos"><b>Cosmos</b><div class="osbar-bell-list"></div></div>
+            <div class="osbar-bell-menu" role="region" aria-label="Cosmos"><div class="osbar-bell-hd"><b>Cosmos</b><span>5 new</span></div><div class="osbar-bell-card"><div class="osbar-bell-list"></div></div></div>
           </div>
           <button type="button" class="rail-me" id="railMe" aria-label="Lulu"><span class="rail-me-av" id="railMeAv" aria-hidden="true">LU</span><span class="rail-me-copy"><b id="railMeName">Lulu</b></span></button>
           <div class="rail-me-menu" id="railMeMenu" role="menu" hidden>
