@@ -1780,6 +1780,16 @@
   }
   html[data-theme="blue"] #tail-home .rem-board.is-cal .tl-month { flex: 1; min-height: 0; grid-template-rows: 28px; grid-auto-rows: 1fr; }
   html[data-theme="blue"] #tail-home .rem-board.is-cal .tl-month button { height: 100%; }
+  html[data-theme="blue"] #tail-home .rem-board.is-add { min-height: 460px; }
+  html[data-theme="blue"] #tail-home .rem-board.is-add #homeTimeline { display: none; }
+  html[data-theme="blue"] #tail-home .rem-board.is-add #tlAdd:not([hidden]) {
+    position: relative; inset: auto; display: flex; flex-direction: column; width: 100%;
+    min-height: 440px; max-height: none; overflow: visible;
+    box-shadow: none; border-radius: 0; padding: 2px 4px 16px; background: transparent;
+  }
+  html[data-theme="blue"] #tail-home .rem-board.is-add #tlAdd .tl-pop-top b {
+    font-size: 22px; font-weight: 650; letter-spacing: -0.03em; color: var(--green-dark);
+  }
   html[data-theme="blue"] #tlCal .tl-pop-top { margin-bottom: 14px; }
   html[data-theme="blue"] #tlCal .tl-pop-top b { font-size: 22px; font-weight: 650; letter-spacing: -0.03em; }
   html[data-theme="blue"] #tlCal .tl-pop-top span { display: flex; align-items: center; gap: 8px; }
@@ -10213,7 +10223,7 @@
     const add = document.getElementById('tlAdd');
     if (cal) cal.hidden = true;
     if (add) add.hidden = true;
-    document.querySelector('#tail-home .rem-board')?.classList.remove('is-cal');
+    document.querySelector('#tail-home .rem-board')?.classList.remove('is-cal', 'is-add');
     document.getElementById('tlDate')?.setAttribute('aria-expanded', 'false');
   }
   function tlOpenCal() {
@@ -10242,7 +10252,9 @@
     }
     pop.innerHTML = `<div class="tl-pop-top"><b>${TODO_MONTHS_LONG[first.getMonth()]} ${first.getFullYear()}</b><span><button type="button" data-tl-today>Today</button> <button type="button" class="tl-x" data-tl-close aria-label="Close">×</button></span></div><div class="tl-month">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((d) => `<i>${d}</i>`).join('')}${cells.join('')}</div>`;
     pop.hidden = false;
-    document.querySelector('#tail-home .rem-board')?.classList.add('is-cal');
+    const board = document.querySelector('#tail-home .rem-board');
+    board?.classList.remove('is-add');
+    board?.classList.add('is-cal');
     document.getElementById('tlDate')?.setAttribute('aria-expanded', 'true');
   }
   function tlOpenAdd(time) {
@@ -10250,7 +10262,9 @@
     const cal = document.getElementById('tlCal');
     if (!pop) return;
     if (cal) cal.hidden = true;
-    document.querySelector('#tail-home .rem-board')?.classList.remove('is-cal');
+    const board = document.querySelector('#tail-home .rem-board');
+    board?.classList.remove('is-cal');
+    board?.classList.add('is-add');
     tlAddTime = time || '10:00';
     const times = ['09:00', '10:00', '14:30', '16:00', '17:00', '20:00'];
     const durs = [[15, '15'], [30, '30'], [45, '45'], [60, '1 hour']];
