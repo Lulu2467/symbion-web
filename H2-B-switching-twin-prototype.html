@@ -9541,10 +9541,19 @@
       return btn;
     }));
   }
-  function syncRemBoard() {
+  function syncRemBoard(animate) {
     const list = document.querySelector('#tail-home .two-main-l');
     if (!list) return;
     const blue = document.documentElement.dataset.theme === 'blue';
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const firstTop = new Map();
+    if (animate && blue && !reduceMotion) {
+      list.querySelectorAll('.rem').forEach((rem) => {
+        if (rem.hidden) return;
+        const box = rem.getBoundingClientRect();
+        if (box.height) firstTop.set(rem, box.top);
+      });
+    }
     list.querySelectorAll('.rem-group, .rem-none').forEach((el) => el.remove());
     const rems = [...list.querySelectorAll('.rem')];
     if (!blue) {
@@ -9561,19 +9570,49 @@
       let show = false;
       if (remFilter === 'pending') show = !date && !done;
       else if (remFilter === 'done') show = done && (!date || date === remDay);
-      else show = !!date && date === remDay && !done;
+      else show = !!date && date === remDay;
       rem.hidden = !show;
       if (show) visible.push(rem);
     });
-    ['course', 'email', 'yours'].forEach((type) => {
-      const rows = visible.filter((rem) => todoTypeOf(rem) === type);
-      if (!rows.length) return;
-      const head = document.createElement('div');
-      head.className = 'rem-group';
-      head.textContent = type === 'email' ? 'Email' : type === 'yours' ? 'Yours' : 'Course';
-      list.insertBefore(head, anchor);
-      rows.forEach((rem) => list.insertBefore(rem, anchor));
-    });
+    const paintGroups = (rows) => {
+      ['course', 'email', 'yours'].forEach((type) => {
+        const group = rows.filter((rem) => todoTypeOf(rem) === type);
+        if (!group.length) return;
+        const head = document.createElement('div');
+        head.className = 'rem-group';
+        head.textContent = type === 'email' ? 'Email' : type === 'yours' ? 'Yours' : 'Course';
+        list.insertBefore(head, anchor);
+        group.forEach((rem) => list.insertBefore(rem, anchor));
+      });
+    };
+    if (remFilter === 'done' || remFilter === 'pending') paintGroups(visible);
+    else {
+      paintGroups(visible.filter((rem) => !rem.classList.contains('is-done')));
+      paintGroups(visible.filter((rem) => rem.classList.contains('is-done')));
+    }
+    if (firstTop.size) {
+      firstTop.forEach((top, rem) => {
+        if (rem.hidden) return;
+        const dy = top - rem.getBoundingClientRect().top;
+        if (Math.abs(dy) < 1) return;
+        rem.style.transition = 'none';
+        rem.style.transform = `translateY(${dy}px)`;
+      });
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          firstTop.forEach((_, rem) => {
+            if (!rem.style.transform) return;
+            rem.style.transition = 'transform .4s cubic-bezier(.22, .8, .24, 1)';
+            rem.style.transform = '';
+            rem.addEventListener('transitionend', function clearShift(ev) {
+              if (ev.propertyName !== 'transform') return;
+              rem.removeEventListener('transitionend', clearShift);
+              rem.style.transition = '';
+            });
+          });
+        });
+      });
+    }
     if (!visible.length) {
       const none = document.createElement('p');
       none.className = 'rem-none';
@@ -9930,12 +9969,9 @@
         rem._checkTimer = setTimeout(() => {
           rem._checkTimer = 0;
           rem.classList.remove('is-checking');
-          syncRemBoard();
         }, 460);
-      } else {
-        rem.classList.remove('is-checking');
-        syncRemBoard();
-      }
+      } else rem.classList.remove('is-checking');
+      syncRemBoard(true);
       return;
     }
     if (done) {
