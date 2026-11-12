@@ -1699,10 +1699,17 @@
   html[data-theme="blue"] #tail-home .rem-day b {
     display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%;
   }
-  html[data-theme="blue"] #tail-home .rem-day.is-on b,
+  html[data-theme="blue"] #tail-home .rem-day.is-on:not(.is-today) b,
   html[data-theme="blue"] #tail-home .rem-day.is-past.is-on b { background: #1d1d1f; color: #fff; }
-  html[data-theme="blue"] #tail-home .rem-day.is-today span { color: var(--green-dark); }
-  html[data-theme="blue"] #tail-home .rem-day.is-today b { background: var(--green-dark); color: #fff; }
+  html[data-theme="blue"] #tail-home .rem-day.is-today span,
+  html[data-theme="blue"] #tail-home .rem-day.is-today:not(.is-on) b { color: var(--green-dark); background: transparent; }
+  html[data-theme="blue"] #tail-home .rem-day.is-today.is-on b { background: var(--green-dark); color: #fff; }
+  html[data-theme="blue"] #tail-home .rem-day.is-pop b { animation: rem-day-pop .32s cubic-bezier(.22, 1, .36, 1); }
+  @keyframes rem-day-pop {
+    0% { transform: scale(.64); }
+    70% { transform: scale(1.08); }
+    100% { transform: none; }
+  }
   html[data-theme="blue"] #tail-home .tl-bar { display: flex; align-items: center; justify-content: space-between; margin: 4px 2px 10px; }
   html[data-theme="blue"] #tail-home .tl-date {
     border: 0; background: transparent; padding: 0; font: inherit; font-size: 22px; font-weight: 650;
@@ -9895,6 +9902,7 @@
   let todoCalMonth = null;
   let remFilter = 'todo';
   let remDay = '';
+  let remDayPop = '';
   function paintHomeTodoButtons() {
     const blue = document.documentElement.dataset.theme === 'blue';
     document.querySelectorAll('#tail-home .rem-check, #tail-home .rem button.t').forEach((el) => {
@@ -9969,7 +9977,7 @@
       const iso = todoDateIso(date);
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'rem-day' + (iso === remDay ? ' is-on' : '') + (iso === todayIso ? ' is-today' : '') + (marked.has(iso) ? ' has-dot' : '') + (iso < todayIso ? ' is-past' : '');
+      btn.className = 'rem-day' + (iso === remDay ? ' is-on' : '') + (iso === todayIso ? ' is-today' : '') + (marked.has(iso) ? ' has-dot' : '') + (iso < todayIso ? ' is-past' : '') + (iso === remDay && iso === remDayPop ? ' is-pop' : '');
       btn.dataset.remDay = iso;
       btn.setAttribute('aria-pressed', iso === remDay ? 'true' : 'false');
       const name = document.createElement('span');
@@ -9979,6 +9987,7 @@
       btn.append(name, num);
       return btn;
     }));
+    remDayPop = '';
   }
   function syncRemBoard(animate) {
     const list = document.querySelector('#tail-home .two-main-l');
@@ -12873,6 +12882,7 @@
         tlWeek = false;
         tlPick = -1;
         tlClosePops();
+        if (remDayBtn.dataset.remDay !== remDay) remDayPop = remDayBtn.dataset.remDay;
         remDay = remDayBtn.dataset.remDay;
         syncRemBoard();
         const remParts = remDay.split('-').map(Number);
