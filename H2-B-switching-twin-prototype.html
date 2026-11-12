@@ -220,14 +220,27 @@
   html[data-theme="blue"] .osbar-folder-menu .osbar-bm { gap: 8px; padding: 8px 10px; border-radius: 8px; justify-content: flex-start; }
   html[data-theme="blue"] .osbar-folder-menu .osbar-bm:hover { background: #ececee; }
   .osbar-bell { display: none; }
-  html[data-theme="blue"] .osbar-bell { position: relative; display: inline-flex; flex: none; }
+  html[data-theme="blue"] .osbar-bell {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    order: 10;
+    margin-top: auto;
+    width: 36px;
+    height: 36px;
+  }
+  html[data-theme="blue"] .rail.is-open .osbar-bell { width: 100%; justify-content: flex-start; padding: 0 8px; }
   html[data-theme="blue"] .osbar-bell .osbar-ico { width: 18px; height: 18px; }
   html[data-theme="blue"] .osbar-bell.is-open > button { background: #d4e4ee; color: #1f1f1f; }
   html[data-theme="blue"] .osbar-bell-menu {
     display: none;
     position: absolute;
-    top: calc(100% + 8px);
-    right: 0;
+    top: auto;
+    bottom: 0;
+    right: auto;
+    left: calc(100% + 8px);
     width: 320px;
     max-height: 420px;
     overflow: auto;
@@ -790,13 +803,13 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    margin-top: auto;
     width: 36px;
     height: 36px;
     padding: 0;
     border-radius: 10px;
     align-self: center;
     flex: none;
+    margin-top: 0;
     color: #1a1d21;
   }
   html[data-theme="blue"] .rail.is-open .rail-me {
@@ -2421,7 +2434,7 @@
   html[data-theme="blue"] #primaryRail > .div { order: 7; }
   html[data-theme="blue"] #primaryRail > .rail-rec { order: 8; }
   html[data-theme="blue"] #primaryRail > .p { order: 9; }
-  html[data-theme="blue"] #primaryRail > .rail-me { order: 10; }
+  html[data-theme="blue"] #primaryRail > .rail-me { order: 11; }
   .rail .r .rail-ico-spark { width: 15px; height: 15px; }
   .rail .r .rail-ico-chev { width: 14px; height: 14px; }
   .rail .r .rail-ico-cosmo { width: 16px; height: 16px; }
@@ -8286,10 +8299,6 @@
           </div>
         </div>
         <span class="sp"></span>
-        <div class="osbar-bell" id="osbarBell">
-          <button type="button" class="osbar-nav-btn" aria-label="Reminders" aria-expanded="false" data-osbar="bell"><svg class="osbar-ico" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M808 712l-48-108.8V448c0-102.4-65.6-195.2-160-232-3.2-44.8-41.6-80-88-80s-83.2 35.2-88 80c-96 36.8-160 129.6-160 232v155.2l-48 108.8c-6.4 14.4-4.8 30.4 3.2 43.2 8 12.8 22.4 20.8 38.4 20.8h508.8c16 0 30.4-8 38.4-20.8s9.6-30.4 3.2-43.2z m-547.2 16l51.2-115.2V448c0-88 59.2-166.4 144-192l19.2-6.4-3.2-20.8V224c0-22.4 17.6-40 40-40s40 17.6 40 40v6.4l-3.2 20.8 19.2 6.4c84.8 25.6 144 104 144 192v164.8l51.2 115.2H260.8zM512 880c44.8 0 80-35.2 80-80H432c0 44.8 35.2 80 80 80z"/></svg></button>
-          <div class="osbar-bell-menu" role="region" aria-label="Cosmos"><b>Cosmos</b><div class="osbar-bell-list"></div></div>
-        </div>
         <div class="seg theme-seg" role="group" aria-label="主题色">
           <button type="button" data-theme-pick="green" aria-pressed="true">绿色</button>
           <button type="button" data-theme-pick="blue" aria-pressed="false">蓝色</button>
@@ -8327,6 +8336,10 @@
             </button>
           </div>
           <button type="button" class="p" aria-label="Prof. Roland">GR</button><button type="button" class="p" aria-label="王">王</button><button type="button" class="p" aria-label="Prof. Pajer">EP</button><button type="button" class="p" aria-label="Prof. Xu">HX</button>
+          <div class="osbar-bell" id="osbarBell">
+            <button type="button" class="osbar-nav-btn" aria-label="Reminders" aria-expanded="false" data-osbar="bell"><svg class="osbar-ico" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M808 712l-48-108.8V448c0-102.4-65.6-195.2-160-232-3.2-44.8-41.6-80-88-80s-83.2 35.2-88 80c-96 36.8-160 129.6-160 232v155.2l-48 108.8c-6.4 14.4-4.8 30.4 3.2 43.2 8 12.8 22.4 20.8 38.4 20.8h508.8c16 0 30.4-8 38.4-20.8s9.6-30.4 3.2-43.2z m-547.2 16l51.2-115.2V448c0-88 59.2-166.4 144-192l19.2-6.4-3.2-20.8V224c0-22.4 17.6-40 40-40s40 17.6 40 40v6.4l-3.2 20.8 19.2 6.4c84.8 25.6 144 104 144 192v164.8l51.2 115.2H260.8zM512 880c44.8 0 80-35.2 80-80H432c0 44.8 35.2 80 80 80z"/></svg></button>
+            <div class="osbar-bell-menu" role="region" aria-label="Cosmos"><b>Cosmos</b><div class="osbar-bell-list"></div></div>
+          </div>
           <button type="button" class="rail-me" id="railMe" aria-label="Lulu"><span class="rail-me-av" id="railMeAv" aria-hidden="true">LU</span><span class="rail-me-copy"><b id="railMeName">Lulu</b></span></button>
           <div class="rail-me-menu" id="railMeMenu" role="menu" hidden>
             <div class="rail-me-head">
@@ -13301,7 +13314,7 @@
       toggleOsbarBell(false);
     });
 
-    frame.querySelectorAll('.osbar button[data-osbar]').forEach((el) => {
+    frame.querySelectorAll('.osbar button[data-osbar], #osbarBell button').forEach((el) => {
       el.addEventListener('click', () => {
         if (document.documentElement.dataset.theme === 'blue' && el.dataset.osbar === 'bell') {
           toggleOsbarBell();
