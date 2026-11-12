@@ -1588,7 +1588,7 @@
     padding: 16px;
   }
   .tl-fab { display: none; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .rem-card:has(.rem-board.is-blank):not(:has(.is-cal)):not(:has(.is-add)) .tl-fab {
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .rem-card:is(:has(.rem-board.is-blank), :has(#tlZoom [data-tl-span="plan"][aria-pressed="true"])):not(:has(.is-cal)):not(:has(.is-add)) .tl-fab {
     position: absolute;
     right: 16px;
     bottom: 16px;
@@ -1743,7 +1743,7 @@
   html[data-theme="blue"] #tail-home .tl-zoom button[aria-pressed="true"] {
     background: transparent; color: #1d1d1f; box-shadow: none;
   }
-  html[data-theme="blue"] #tail-home .tl-plan { display: flex; flex-direction: column; gap: 2px; padding: 6px 2px 8px; }
+  html[data-theme="blue"] #tail-home .tl-plan { display: flex; flex-direction: column; gap: 2px; padding: 6px 2px 72px; }
   html[data-theme="blue"] #tail-home .tl-plan-row {
     display: flex; align-items: center; gap: 12px; width: 100%; height: 44px; padding: 0 6px;
     border: 0; border-radius: 10px; background: transparent; text-align: left;
