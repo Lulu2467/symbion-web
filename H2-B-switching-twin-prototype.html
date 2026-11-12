@@ -1451,7 +1451,42 @@
     height: auto;
     overflow: visible;
     padding: 16px;
-    gap: 16px;
+    gap: 20px;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .act-item {
+    align-items: flex-start;
+    gap: 12px;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .act-item > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    min-width: 0;
+    flex: 1;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .act-item .t {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    color: #1f1f1f;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .act-item small {
+    margin: 0;
+    font-size: 12px;
+    line-height: 16px;
+    color: #8b919a;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .activity .act-item .act-link {
+    padding: 0;
+    height: 16px;
+    font-size: 12px;
+    line-height: 16px;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .act-item .act-link .ico-ne {
+    width: 11px;
+    height: 11px;
+    margin-left: 4px;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid > .two-col {
     gap: 12px;
