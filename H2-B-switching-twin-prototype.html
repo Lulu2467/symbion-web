@@ -1647,6 +1647,124 @@
     background: transparent;
   }
   html[data-theme="blue"] #tail-home .rem-day.has-dot::after { background: var(--green); }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .rem-filters,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-main-l,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeKanban { display: none; }
+  html[data-theme="blue"] #tail-home .rem-board { position: relative; }
+  html[data-theme="blue"] #tail-home .rem-day.is-on::before { content: none; }
+  html[data-theme="blue"] #tail-home .rem-day b {
+    display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%;
+  }
+  html[data-theme="blue"] #tail-home .rem-day.is-on b,
+  html[data-theme="blue"] #tail-home .rem-day.is-past.is-on b { background: #1d1d1f; color: #fff; }
+  html[data-theme="blue"] #tail-home .rem-day.is-today span { color: var(--green-dark); }
+  html[data-theme="blue"] #tail-home .rem-day.is-today b { background: var(--green-dark); color: #fff; }
+  html[data-theme="blue"] #tail-home .tl-bar { display: flex; align-items: center; justify-content: space-between; margin: 4px 2px 10px; }
+  html[data-theme="blue"] #tail-home .tl-date {
+    border: 0; background: transparent; padding: 0; font: inherit; font-size: 17px; font-weight: 650;
+    letter-spacing: -0.02em; color: var(--green-dark); cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .tl-zoom {
+    height: 28px; padding: 0 12px; border: 0; border-radius: 999px; background: #f2f2f7;
+    color: #1d1d1f; font: inherit; font-size: 13px; font-weight: 550; cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .tl-zoom[aria-pressed="true"] { background: var(--green-dark); color: #fff; }
+  html[data-theme="blue"] #tail-home .tl-day { position: relative; display: flex; flex-direction: column; gap: 2px; padding: 4px 0 8px; }
+  html[data-theme="blue"] #tail-home .tl-day::before {
+    content: ""; position: absolute; left: 67px; top: 18px; bottom: 18px; width: 2px;
+    background: linear-gradient(var(--green), #d5e3ea); border-radius: 2px;
+  }
+  html[data-theme="blue"] #tail-home .tl-item,
+  html[data-theme="blue"] #tail-home .tl-gap,
+  html[data-theme="blue"] #tail-home .tl-now {
+    position: relative; display: grid; grid-template-columns: 52px 32px minmax(0, 1fr) 28px;
+    align-items: center; gap: 8px; min-height: 52px;
+  }
+  html[data-theme="blue"] #tail-home .tl-time { font-size: 12px; font-weight: 550; color: #8b919a; text-align: right; }
+  html[data-theme="blue"] #tail-home .tl-mark {
+    width: 32px; height: 32px; border-radius: 50%; background: var(--green-tint); color: var(--green-dark);
+    display: flex; align-items: center; justify-content: center; z-index: 1;
+  }
+  html[data-theme="blue"] #tail-home .tl-mark svg { width: 16px; height: 16px; display: block; }
+  html[data-theme="blue"] #tail-home .tl-main b { display: block; font-size: 14px; font-weight: 600; color: #1f1f1f; line-height: 1.3; }
+  html[data-theme="blue"] #tail-home .tl-main small { display: block; margin-top: 2px; font-size: 12px; color: #8b919a; }
+  html[data-theme="blue"] #tail-home .tl-item.is-done .tl-main b { color: #8b919a; text-decoration: line-through; }
+  html[data-theme="blue"] #tail-home .tl-check {
+    width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid #c5cdd4; background: #fff; color: transparent;
+    display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .tl-check svg { width: 12px; height: 12px; }
+  html[data-theme="blue"] #tail-home .tl-check[aria-pressed="true"] { background: var(--green-dark); border-color: var(--green-dark); color: #fff; }
+  html[data-theme="blue"] #tail-home .tl-gap { min-height: 36px; }
+  html[data-theme="blue"] #tail-home .tl-gap .tl-mark { width: 8px; height: 8px; margin: 0 auto; background: #d5e3ea; }
+  html[data-theme="blue"] #tail-home .tl-gap p { margin: 0; font-size: 12px; color: #8b919a; }
+  html[data-theme="blue"] #tail-home .tl-gap button {
+    margin-top: 4px; height: 26px; padding: 0 10px; border: 0; border-radius: 999px;
+    background: var(--green-tint); color: var(--green-dark); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .tl-now .tl-time { color: var(--green-dark); font-weight: 650; }
+  html[data-theme="blue"] #tail-home .tl-now .tl-mark { width: 10px; height: 10px; margin: 0 auto; background: var(--green-dark); }
+  html[data-theme="blue"] #tail-home .tl-week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; min-height: 280px; padding: 4px 0 8px; }
+  html[data-theme="blue"] #tail-home .tl-col { position: relative; display: flex; flex-direction: column; align-items: center; min-height: 260px; }
+  html[data-theme="blue"] #tail-home .tl-spine {
+    position: absolute; top: 28px; bottom: 28px; width: 3px; border-radius: 3px;
+    background: linear-gradient(var(--green), #d5e3ea);
+  }
+  html[data-theme="blue"] #tail-home .tl-cap, html[data-theme="blue"] #tail-home .tl-foot {
+    position: relative; z-index: 1; width: 26px; height: 26px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; background: var(--green-tint); color: var(--green-dark);
+  }
+  html[data-theme="blue"] #tail-home .tl-foot { margin-top: auto; background: #eef2f4; color: #8b919a; }
+  html[data-theme="blue"] #tail-home .tl-cap svg, html[data-theme="blue"] #tail-home .tl-foot svg { width: 14px; height: 14px; }
+  html[data-theme="blue"] #tail-home .tl-block {
+    position: absolute; left: 50%; transform: translateX(-50%); z-index: 1; width: 34px;
+    border: 0; border-radius: 12px; background: #fff; box-shadow: 0 1px 4px rgba(20, 24, 28, .12); cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .tl-block.is-on { outline: 2px solid var(--green-dark); }
+  html[data-theme="blue"] #tail-home .tl-card {
+    display: flex; align-items: center; gap: 10px; margin-top: 8px; padding: 10px 12px;
+    border-radius: 14px; background: #fff; box-shadow: 0 8px 24px rgba(20, 24, 28, .08); border: 1px solid #eef0f2; cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .tl-card .tl-mark { flex: none; }
+  html[data-theme="blue"] #tail-home .tl-card b { display: block; font-size: 14px; }
+  html[data-theme="blue"] #tail-home .tl-card small { color: #8b919a; font-size: 12px; }
+  html[data-theme="blue"] #tail-home .tl-pop {
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 5; max-height: 86%; overflow: auto;
+    background: #fff; border-radius: 18px 18px 14px 14px; box-shadow: 0 -8px 28px rgba(20, 24, 28, .12);
+    padding: 14px 14px 16px;
+  }
+  html[data-theme="blue"] #tail-home .tl-pop-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  html[data-theme="blue"] #tail-home .tl-pop-top b { font-size: 17px; color: var(--green-dark); }
+  html[data-theme="blue"] #tail-home .tl-pop-top button, html[data-theme="blue"] #tail-home .tl-x {
+    height: 32px; padding: 0 12px; border: 1px solid #e4e6ea; border-radius: 999px; background: #fff;
+    font: inherit; font-size: 13px; cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .tl-x { width: 32px; padding: 0; }
+  html[data-theme="blue"] #tail-home .tl-month { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+  html[data-theme="blue"] #tail-home .tl-month i { text-align: center; font-style: normal; font-size: 11px; color: #8b919a; }
+  html[data-theme="blue"] #tail-home .tl-month button {
+    height: 36px; border: 0; background: transparent; border-radius: 50%; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .tl-month button.is-on { background: #1d1d1f; color: #fff; }
+  html[data-theme="blue"] #tail-home .tl-month button.is-today { background: var(--green-dark); color: #fff; }
+  html[data-theme="blue"] #tail-home .tl-month button.has-dot { box-shadow: inset 0 -6px 0 -3px var(--green); }
+  html[data-theme="blue"] #tail-home .tl-suggest { display: flex; flex-direction: column; gap: 6px; margin: 8px 0 12px; }
+  html[data-theme="blue"] #tail-home .tl-suggest button, html[data-theme="blue"] #tail-home .tl-times button, html[data-theme="blue"] #tail-home .tl-durs button {
+    border: 0; background: #f4f7f8; border-radius: 10px; font: inherit; cursor: pointer; text-align: left;
+  }
+  html[data-theme="blue"] #tail-home .tl-suggest button { padding: 8px 10px; }
+  html[data-theme="blue"] #tail-home .tl-suggest small { display: block; color: #8b919a; font-size: 12px; }
+  html[data-theme="blue"] #tail-home .tl-name {
+    width: 100%; box-sizing: border-box; border: 0; border-bottom: 1px solid #e4e6ea; padding: 8px 0; font: inherit; font-size: 16px; font-weight: 600;
+  }
+  html[data-theme="blue"] #tail-home .tl-label { margin: 12px 0 6px; font-size: 13px; font-weight: 650; }
+  html[data-theme="blue"] #tail-home .tl-times, html[data-theme="blue"] #tail-home .tl-durs { display: flex; flex-wrap: wrap; gap: 6px; }
+  html[data-theme="blue"] #tail-home .tl-times button, html[data-theme="blue"] #tail-home .tl-durs button { padding: 6px 10px; font-size: 13px; }
+  html[data-theme="blue"] #tail-home .tl-times button.is-on, html[data-theme="blue"] #tail-home .tl-durs button.is-on { background: var(--green-dark); color: #fff; }
+  html[data-theme="blue"] #tail-home .tl-create {
+    width: 100%; margin-top: 14px; height: 40px; border: 0; border-radius: 12px; background: var(--green); color: #fff;
+    font: inherit; font-size: 15px; font-weight: 650; cursor: pointer;
+  }
   html[data-theme="blue"] #tail-home .rem-filters {
     display: flex;
     align-items: center;
@@ -8304,6 +8422,15 @@
                   <div class="rem-card">
                   <div class="rem-board">
                     <div class="rem-week" role="group" aria-label="This week"></div>
+                    <div class="tl" id="homeTimeline">
+                      <div class="tl-bar">
+                        <button type="button" class="tl-date" id="tlDate" aria-expanded="false"></button>
+                        <button type="button" class="tl-zoom" id="tlZoom" aria-pressed="false">Week</button>
+                      </div>
+                      <div class="tl-body" id="tlBody"></div>
+                    </div>
+                    <div class="tl-pop" id="tlCal" hidden></div>
+                    <div class="tl-pop tl-add" id="tlAdd" hidden></div>
                     <div class="rem-filters" role="tablist">
                       <button type="button" class="is-on" data-rem-filter="todo" role="tab" aria-selected="true">To do</button>
                       <button type="button" data-rem-filter="done" role="tab" aria-selected="false">Completed</button>
@@ -9687,7 +9814,7 @@
       const iso = todoDateIso(date);
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'rem-day' + (iso === remDay ? ' is-on' : '') + (marked.has(iso) ? ' has-dot' : '') + (iso < todayIso ? ' is-past' : '');
+      btn.className = 'rem-day' + (iso === remDay ? ' is-on' : '') + (iso === todayIso ? ' is-today' : '') + (marked.has(iso) ? ' has-dot' : '') + (iso < todayIso ? ' is-past' : '');
       btn.dataset.remDay = iso;
       btn.setAttribute('aria-pressed', iso === remDay ? 'true' : 'false');
       const name = document.createElement('span');
@@ -9776,6 +9903,7 @@
       none.textContent = remFilter === 'pending' ? 'Nothing pending.' : remFilter === 'done' ? 'Nothing completed.' : 'Nothing for this day.';
       list.insertBefore(none, anchor);
     }
+    paintHomeTimeline();
   }
   function todoTypeOf(rem) {
     const badge = rem.querySelector('.badge');
@@ -9874,6 +10002,209 @@
       return { date: todoDateIso(d), time: '' };
     }
     return { date: '', time: '' };
+  }
+  let tlWeek = false;
+  let tlPick = -1;
+  let tlCache = [];
+  let tlAddTime = '10:00';
+  let tlAddDur = 60;
+  const TL_CLOCK = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 8.2V12l2.2 1.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>';
+  const TL_MAIL = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 7.5h15v9.5h-15z" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m5.2 8.2 6.8 5 6.8-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>';
+  const TL_LIST = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7.5h10M7 12h10M7 16.5h6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>';
+  const TL_MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5.2a6.4 6.4 0 1 0 4.2 9.8 5.4 5.4 0 0 1-4.2-9.8z" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>';
+  const TL_CHECK = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.4 8.2 6.4 11.2 12.6 4.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  function tlIcon(type) { return type === 'email' ? TL_MAIL : type === 'course' ? TL_CLOCK : TL_LIST; }
+  function tlMins(hhmm) {
+    const [h, m] = String(hhmm || '').split(':').map(Number);
+    return (h || 0) * 60 + (m || 0);
+  }
+  function tlClock(mins) {
+    return `${String(Math.floor(mins / 60)).padStart(2, '0')}:${String(mins % 60).padStart(2, '0')}`;
+  }
+  function tlEventsFor(iso) {
+    const list = document.querySelector('#tail-home .two-main-l');
+    const rows = [...(list ? list.querySelectorAll('.rem') : [])].filter((rem) => todoWhenParts(rem).date === iso);
+    const events = rows.map((rem) => {
+      const parts = todoWhenParts(rem);
+      const type = todoTypeOf(rem);
+      return {
+        kind: 'rem', rem, type,
+        title: rem.querySelector('.t')?.textContent.trim() || '',
+        note: todoNotesOf(rem),
+        start: parts.time ? tlMins(parts.time) + (tlMins(parts.time) < 7 * 60 ? 12 * 60 : 0) : 0,
+        timed: !!parts.time,
+        dur: 45,
+        done: rem.classList.contains('is-done'),
+      };
+    });
+    let slot = 9 * 60;
+    events.filter((ev) => !ev.timed).forEach((ev) => {
+      ev.start = slot;
+      slot += 90;
+    });
+    if (true) {
+      let extra = [];
+      try { extra = deskItems.filter((item) => deskCovers(item, iso)); } catch (e) { extra = []; }
+      extra.forEach((item) => {
+        const tm = String(item.type || '').match(/(\d{2}:\d{2})/);
+        events.push({
+          kind: 'desk', item, type: 'yours', title: item.title, note: item.type || '',
+          start: tm ? tlMins(tm[1]) : 11 * 60, timed: true, dur: 60, done: !!item.done,
+        });
+      });
+    }
+    events.sort((a, b) => a.start - b.start);
+    return events;
+  }
+  function tlDateLabel(iso) {
+    const date = todoParseIso(iso);
+    if (!date) return '';
+    return `${TODO_WEEKDAYS[date.getDay()]}, ${TODO_MONTHS[date.getMonth()]} ${date.getDate()}`;
+  }
+  function paintHomeTimeline() {
+    const host = document.getElementById('tlBody');
+    const dateBtn = document.getElementById('tlDate');
+    const zoom = document.getElementById('tlZoom');
+    if (!host || document.documentElement.dataset.theme !== 'blue') return;
+    if (!remDay) remDay = todoDateIso(new Date());
+    if (dateBtn) {
+      const date = todoParseIso(remDay);
+      dateBtn.textContent = tlWeek && date ? `${TODO_MONTHS_LONG[date.getMonth()]} ${date.getFullYear()}` : tlDateLabel(remDay);
+      dateBtn.insertAdjacentHTML('beforeend', ' ›');
+    }
+    if (zoom) zoom.setAttribute('aria-pressed', tlWeek ? 'true' : 'false');
+    if (tlWeek) { paintTlWeek(host); return; }
+    const events = tlEventsFor(remDay);
+    tlCache = events;
+    const now = new Date();
+    const nowMins = now.getHours() * 60 + now.getMinutes();
+    const showNow = remDay === todoDateIso(now);
+    const bits = [];
+    const pushGap = (from, to) => {
+      if (to - from < 90) return;
+      bits.push(`<div class="tl-gap"><span class="tl-time"></span><span class="tl-mark"></span><p>${tlClock(from)}–${tlClock(to)} is open.<br><button type="button" data-tl-add="${tlClock(from)}">Add</button></p><span></span></div>`);
+    };
+    let cursor = 7 * 60;
+    let nowPut = false;
+    events.forEach((ev, index) => {
+      if (showNow && !nowPut && nowMins < ev.start) {
+        pushGap(cursor, nowMins);
+        bits.push(`<div class="tl-now"><span class="tl-time">${tlClock(nowMins)}</span><span class="tl-mark"></span><span></span><span></span></div>`);
+        cursor = nowMins;
+        nowPut = true;
+      }
+      pushGap(cursor, ev.start);
+      const end = ev.start + ev.dur;
+      bits.push(`<div class="tl-item${ev.done ? ' is-done' : ''}"><span class="tl-time">${tlClock(ev.start)}</span><span class="tl-mark">${tlIcon(ev.type)}</span><div class="tl-main"><b>${deskEsc(ev.title)}</b><small>${deskEsc(ev.note || `${ev.dur} min`)}</small></div><button type="button" class="tl-check" data-tl-i="${index}" aria-pressed="${ev.done ? 'true' : 'false'}" aria-label="${ev.done ? 'Mark not done' : 'Mark complete'}">${TL_CHECK}</button></div>`);
+      cursor = end;
+    });
+    if (showNow && !nowPut) {
+      bits.push(`<div class="tl-now"><span class="tl-time">${tlClock(nowMins)}</span><span class="tl-mark"></span><span></span><span></span></div>`);
+      cursor = Math.max(cursor, nowMins);
+    }
+    pushGap(cursor, 22 * 60);
+    if (!events.length) bits.push(`<div class="tl-gap"><span class="tl-time"></span><span class="tl-mark"></span><p>Nothing on this day.<br><button type="button" data-tl-add="09:00">Add</button></p><span></span></div>`);
+    host.innerHTML = `<div class="tl-day">${bits.join('')}</div>`;
+  }
+  function paintTlWeek(host) {
+    const start = todoParseIso(remDay) || new Date();
+    start.setDate(start.getDate() - ((start.getDay() + 6) % 7));
+    const cols = Array.from({ length: 7 }, (_, i) => {
+      const date = new Date(start);
+      date.setDate(start.getDate() + i);
+      const iso = todoDateIso(date);
+      const events = tlEventsFor(iso);
+      const blocks = events.map((ev, index) => {
+        const top = 28 + Math.max(0, Math.min(180, ((ev.start - 7 * 60) / (15 * 60)) * 180));
+        const height = Math.max(28, Math.min(72, ev.dur / 60 * 36));
+        const on = iso === remDay && index === tlPick ? ' is-on' : '';
+        return `<button type="button" class="tl-block${on}" data-tl-day="${iso}" data-tl-pick="${index}" style="top:${top}px;height:${height}px" aria-label="${deskEsc(ev.title)}"></button>`;
+      }).join('');
+      return `<div class="tl-col"><span class="tl-cap">${TL_CLOCK}</span><span class="tl-spine"></span>${blocks}<span class="tl-foot">${TL_MOON}</span></div>`;
+    }).join('');
+    let card = '';
+    if (tlPick >= 0) {
+      const ev = tlEventsFor(remDay)[tlPick];
+      if (ev) card = `<button type="button" class="tl-card" data-tl-open="${remDay}"><span class="tl-mark">${tlIcon(ev.type)}</span><span><small>${tlClock(ev.start)}</small><b>${deskEsc(ev.title)}</b></span></button>`;
+    }
+    host.innerHTML = `<div class="tl-week">${cols}</div>${card}`;
+  }
+  function tlClosePops() {
+    const cal = document.getElementById('tlCal');
+    const add = document.getElementById('tlAdd');
+    if (cal) cal.hidden = true;
+    if (add) add.hidden = true;
+    document.getElementById('tlDate')?.setAttribute('aria-expanded', 'false');
+  }
+  function tlOpenCal() {
+    const pop = document.getElementById('tlCal');
+    const add = document.getElementById('tlAdd');
+    if (!pop) return;
+    if (add) add.hidden = true;
+    const focus = todoParseIso(remDay) || new Date();
+    const first = new Date(focus.getFullYear(), focus.getMonth(), 1);
+    const count = new Date(focus.getFullYear(), focus.getMonth() + 1, 0).getDate();
+    const lead = (first.getDay() + 6) % 7;
+    const todayIso = todoDateIso(new Date());
+    const cells = Array.from({ length: lead }, () => '<i></i>');
+    for (let n = 1; n <= count; n += 1) {
+      const date = new Date(first.getFullYear(), first.getMonth(), n);
+      const iso = todoDateIso(date);
+      const flags = [];
+      if (iso === remDay && iso !== todayIso) flags.push('is-on');
+      if (iso === todayIso) flags.push('is-today');
+      if (tlEventsFor(iso).length) flags.push('has-dot');
+      cells.push(`<button type="button" class="${flags.join(' ')}" data-tl-jump="${iso}">${n}</button>`);
+    }
+    pop.innerHTML = `<div class="tl-pop-top"><b>${TODO_MONTHS_LONG[first.getMonth()]} ${first.getFullYear()}</b><span><button type="button" data-tl-today>Today</button> <button type="button" class="tl-x" data-tl-close aria-label="Close">×</button></span></div><div class="tl-month">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((d) => `<i>${d}</i>`).join('')}${cells.join('')}</div>`;
+    pop.hidden = false;
+    document.getElementById('tlDate')?.setAttribute('aria-expanded', 'true');
+  }
+  function tlOpenAdd(time) {
+    const pop = document.getElementById('tlAdd');
+    const cal = document.getElementById('tlCal');
+    if (!pop) return;
+    if (cal) cal.hidden = true;
+    tlAddTime = time || '10:00';
+    const times = ['09:00', '10:00', '14:30', '16:00', '17:00', '20:00'];
+    const durs = [[15, '15'], [30, '30'], [45, '45'], [60, '1 hour']];
+    const ideas = [
+      ['Reply to email', '10:00', 15],
+      ['Lecture prep', '14:30', 60],
+      ['Lab notes', '16:00', 45],
+    ];
+    pop.innerHTML = `<div class="tl-pop-top"><b>New item</b><button type="button" class="tl-x" data-tl-close aria-label="Close">×</button></div><input class="tl-name" id="tlName" type="text" placeholder="Name" autocomplete="off"><div class="tl-suggest">${ideas.map((idea) => `<button type="button" data-tl-idea="${idea[0]}" data-tl-idea-time="${idea[1]}" data-tl-idea-dur="${idea[2]}"><b>${idea[0]}</b><small>${idea[1]} · ${idea[2]} min</small></button>`).join('')}</div><div class="tl-label">Time</div><div class="tl-times">${times.map((t) => `<button type="button" data-tl-time="${t}" class="${t === tlAddTime ? 'is-on' : ''}">${t}</button>`).join('')}</div><div class="tl-label">Length</div><div class="tl-durs">${durs.map(([n, label]) => `<button type="button" data-tl-dur="${n}" class="${n === tlAddDur ? 'is-on' : ''}">${label}</button>`).join('')}</div><button type="button" class="tl-create" data-tl-create>Create</button>`;
+    pop.hidden = false;
+    document.getElementById('tlName')?.focus();
+  }
+  function tlCreateItem() {
+    const title = document.getElementById('tlName')?.value.trim();
+    if (!title) return;
+    const list = document.querySelector('#tail-home .two-main-l');
+    const sample = list?.querySelector('.rem');
+    if (!list || !sample) return;
+    const rem = sample.cloneNode(true);
+    rem.classList.remove('is-done', 'is-checking', 'is-leaving');
+    rem.hidden = false;
+    delete rem.dataset.fromCitta;
+    const when = rem.querySelector('.when');
+    if (when) {
+      when.dataset.when = `${remDay}T${tlAddTime}`;
+      when.dataset.raw = tlAddTime;
+      when.textContent = tlAddTime;
+    }
+    const titleEl = rem.querySelector('.t');
+    if (titleEl) titleEl.textContent = title;
+    const badge = rem.querySelector('.badge');
+    if (badge) applyTodoBadge(badge, 'yours');
+    const note = rem.querySelector('.todo-note');
+    if (note) note.textContent = `${tlAddDur} min`;
+    rem.querySelector('.rem-check')?.setAttribute('aria-label', `Mark complete: ${title}`);
+    const anchor = list.querySelector('.rem-add');
+    if (anchor) list.insertBefore(rem, anchor);
+    else list.appendChild(rem);
+    tlClosePops();
+    paintHomeTodoButtons();
   }
   function todoParseIso(value) {
     const m = String(value || '').match(/^(\d{4})-(\d{2})-(\d{2})/);
@@ -12237,8 +12568,70 @@
         return;
       }
 
+      const tlHit = e.target.closest('#tail-home [data-tl-i], #tail-home [data-tl-add], #tlDate, #tlZoom, #tlCal button, #tlAdd button, #tlAdd [data-tl-idea], #tail-home [data-tl-day], #tail-home [data-tl-open]');
+      if (tlHit) {
+        const check = e.target.closest('[data-tl-i]');
+        if (check) {
+          const ev = tlCache[Number(check.dataset.tlI)];
+          if (ev?.kind === 'rem') toggleTodoDone(ev.rem);
+          else if (ev?.item) { ev.item.done = !ev.item.done; paintHomeTimeline(); }
+          return;
+        }
+        const addAt = e.target.closest('[data-tl-add]');
+        if (addAt) { tlOpenAdd(addAt.dataset.tlAdd); return; }
+        if (e.target.closest('#tlDate')) { const pop = document.getElementById('tlCal'); if (pop && !pop.hidden) tlClosePops(); else tlOpenCal(); return; }
+        if (e.target.closest('#tlZoom')) { tlWeek = !tlWeek; tlPick = -1; tlClosePops(); paintHomeTimeline(); return; }
+        const jump = e.target.closest('[data-tl-jump]');
+        if (jump) {
+          remDay = jump.dataset.tlJump;
+          tlWeek = false;
+          tlClosePops();
+          syncRemBoard();
+          return;
+        }
+        if (e.target.closest('[data-tl-today]')) {
+          remDay = todoDateIso(new Date());
+          tlWeek = false;
+          tlClosePops();
+          syncRemBoard();
+          return;
+        }
+        if (e.target.closest('[data-tl-close]')) { tlClosePops(); return; }
+        const idea = e.target.closest('[data-tl-idea]');
+        if (idea) {
+          const name = document.getElementById('tlName');
+          if (name) name.value = idea.dataset.tlIdea;
+          tlAddTime = idea.dataset.tlIdeaTime;
+          tlAddDur = Number(idea.dataset.tlIdeaDur);
+          tlOpenAdd(tlAddTime);
+          const filled = document.getElementById('tlName');
+          if (filled) filled.value = idea.dataset.tlIdea;
+          return;
+        }
+        const timeBtn = e.target.closest('[data-tl-time]');
+        if (timeBtn) {
+          const keep = document.getElementById('tlName')?.value || '';
+          tlAddTime = timeBtn.dataset.tlTime;
+          tlOpenAdd(tlAddTime);
+          const name = document.getElementById('tlName');
+          if (name) name.value = keep;
+          return;
+        }
+        const durBtn = e.target.closest('[data-tl-dur]');
+        if (durBtn) { tlAddDur = Number(durBtn.dataset.tlDur); const keep = document.getElementById('tlName')?.value || ''; tlOpenAdd(tlAddTime); const name = document.getElementById('tlName'); if (name) name.value = keep; return; }
+        if (e.target.closest('[data-tl-create]')) { tlCreateItem(); return; }
+        const block = e.target.closest('[data-tl-day]');
+        if (block) { remDay = block.dataset.tlDay; tlPick = Number(block.dataset.tlPick); paintHomeTimeline(); return; }
+        const open = e.target.closest('[data-tl-open]');
+        if (open) { remDay = open.dataset.tlOpen; tlWeek = false; tlPick = -1; syncRemBoard(); return; }
+        return;
+      }
+
       const remDayBtn = e.target.closest('#tail-home [data-rem-day]');
       if (remDayBtn) {
+        tlWeek = false;
+        tlPick = -1;
+        tlClosePops();
         remDay = remDayBtn.dataset.remDay;
         syncRemBoard();
         const remParts = remDay.split('-').map(Number);
