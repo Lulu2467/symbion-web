@@ -8097,6 +8097,9 @@
   html[data-theme="blue"] #teamHost .msg.mine .qref { align-self: flex-end; color: #8b919a; background: transparent; }
   html[data-theme="blue"] #teamHost .msg.mine .qref .qline { color: #8b919a; }
   #teamHost .quote-peek { display: none; }
+  html[data-theme="blue"] #teamHost .qref:active,
+  html[data-theme="blue"] #teamHost .qref.is-on { background: #e7eef2; }
+  html[data-theme="blue"] #teamHost .qref.is-on { border-left-color: var(--green-dark); }
   html[data-theme="blue"] #teamHost .quote-peek:not([hidden]) {
     display: block;
     position: fixed;
@@ -8104,18 +8107,23 @@
     max-width: 360px;
     max-height: 280px;
     overflow: auto;
-    padding: 14px 16px;
+    padding: 10px 12px;
     border: 0;
-    border-radius: 12px;
-    background: #fff;
+    border-radius: 8px;
+    background: #eceef1;
     color: #1a1d21;
-    font-size: 14px;
-    line-height: 22px;
+    font-size: 15px;
+    line-height: 1.45;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
-    box-shadow: 0 8px 28px rgba(20, 24, 28, .12);
+    box-shadow: 0 8px 24px rgba(20, 24, 28, .12);
+    animation: quote-peek-in .18s cubic-bezier(.22, 1, .36, 1);
   }
-  html[data-theme="blue"] #teamHost .quote-peek a { color: #576b95; text-decoration: underline; }
+  @keyframes quote-peek-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: none; }
+  }
+  html[data-theme="blue"] #teamHost .quote-peek a { color: var(--green-dark); text-decoration: underline; }
   html[data-theme="blue"] #teamHost .quote-bar {
     align-items: center;
     margin: 0 2px 8px;
@@ -18166,6 +18174,7 @@ function linkifyQuote(text) {
 function hideQuotePeek() {
   const peek = $('quotePeek');
   if (peek) peek.hidden = true;
+  teamRoot.querySelectorAll('.qref.is-on').forEach((el) => el.classList.remove('is-on'));
 }
 function showQuotePeek(btn) {
   if (document.documentElement.dataset.theme !== 'blue') return;
@@ -18173,6 +18182,8 @@ function showQuotePeek(btn) {
   const peek = $('quotePeek');
   if (!ref || !peek) return;
   clearTimeout(quotePeekTimer);
+  teamRoot.querySelectorAll('.qref.is-on').forEach((el) => el.classList.remove('is-on'));
+  btn.classList.add('is-on');
   peek.innerHTML = linkifyQuote(quotePeekBody(ref));
   peek.hidden = false;
   const r = btn.getBoundingClientRect();
