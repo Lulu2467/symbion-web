@@ -1445,6 +1445,7 @@
     width: min(1200px, 100%);
     margin-inline: auto;
     margin-top: 112px;
+    --home-pair: 468px;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -1497,8 +1498,10 @@
     height: auto;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .cosmos-scroll-wrap > .activity {
-    height: auto;
-    overflow: visible;
+    height: 100%;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
     padding: 16px;
     gap: 20px;
   }
@@ -1554,11 +1557,13 @@
     padding: 0;
     gap: 12px;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .rem-card {
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .rem-card,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid > .two-col:nth-child(2) > .cosmos-scroll-wrap {
     flex: none;
-    height: auto;
-    min-height: 0;
-    overflow: visible;
+    height: var(--home-pair);
+    min-height: var(--home-pair);
+    max-height: var(--home-pair);
+    overflow: hidden;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .rem-card .two-main-l {
     flex: none;
@@ -1566,8 +1571,9 @@
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .cosmos-scroll-wrap {
     flex: none;
-    height: auto;
-    min-height: 0;
+    height: var(--home-pair);
+    min-height: var(--home-pair);
+    max-height: var(--home-pair);
   }
   html[data-theme="blue"] #tail-home .rem-card {
     display: flex;
@@ -1600,8 +1606,13 @@
     align-items: stretch;
     gap: 16px;
     width: 100%;
+    height: 100%;
+    min-height: 0;
     padding: 0;
+    overflow: auto;
   }
+  html[data-theme="blue"] #tail-home .rem-board.is-cal,
+  html[data-theme="blue"] #tail-home .rem-board.is-add { min-height: 0; height: 100%; }
   html[data-theme="blue"] #tail-home .rem-week { display: flex; gap: 4px; width: 100%; align-items: stretch; margin: 2px 0 12px; }
   html[data-theme="blue"] #tail-home .rem-day {
     position: relative;
@@ -1771,20 +1782,20 @@
     left: 8px; right: 8px; bottom: 8px; border-radius: 22px; max-height: none; overflow: visible;
     padding: 16px 12px 18px; box-shadow: 0 12px 40px rgba(20, 24, 28, .16);
   }
-  html[data-theme="blue"] #tail-home .rem-board.is-cal { min-height: 460px; }
+  html[data-theme="blue"] #tail-home .rem-board.is-cal { min-height: 0; }
   html[data-theme="blue"] #tail-home .rem-board.is-cal #homeTimeline { display: none; }
   html[data-theme="blue"] #tail-home .rem-board.is-cal #tlCal:not([hidden]) {
     position: relative; inset: auto; display: flex; flex-direction: column; flex: 1;
-    width: 100%; height: 460px; min-height: 440px; max-height: none; overflow: visible;
+    width: 100%; height: auto; min-height: 0; max-height: none; overflow: visible;
     box-shadow: none; border-radius: 0; padding: 2px 0 8px; background: transparent;
   }
   html[data-theme="blue"] #tail-home .rem-board.is-cal .tl-month { flex: 1; min-height: 0; grid-template-rows: 28px; grid-auto-rows: 1fr; }
   html[data-theme="blue"] #tail-home .rem-board.is-cal .tl-month button { height: 100%; }
-  html[data-theme="blue"] #tail-home .rem-board.is-add { min-height: 460px; }
+  html[data-theme="blue"] #tail-home .rem-board.is-add { min-height: 0; }
   html[data-theme="blue"] #tail-home .rem-board.is-add #homeTimeline { display: none; }
   html[data-theme="blue"] #tail-home .rem-board.is-add #tlAdd:not([hidden]) {
     position: relative; inset: auto; display: flex; flex-direction: column; width: 100%;
-    min-height: 440px; max-height: none; overflow: visible;
+    min-height: 0; max-height: none; overflow: visible;
     box-shadow: none; border-radius: 0; padding: 2px 4px 16px; background: transparent;
   }
   html[data-theme="blue"] #tail-home .rem-board.is-add #tlAdd .tl-pop-top b {
