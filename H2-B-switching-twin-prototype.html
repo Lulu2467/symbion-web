@@ -617,13 +617,22 @@
   html[data-theme="blue"] .course-banner:hover .sp b,
   html[data-theme="blue"] .course-banner:hover .course-back { color: var(--green); }
   html[data-theme="blue"] .rail {
-    background: rgba(255, 255, 255, .46);
+    background: transparent;
     border-right-color: transparent;
     border-top: 0;
     margin-top: -1px;
+    overflow: visible;
+    box-shadow: none;
+  }
+  html[data-theme="blue"] .rail::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: rgba(255, 255, 255, .46);
     backdrop-filter: blur(22px) saturate(1.45);
     -webkit-backdrop-filter: blur(22px) saturate(1.45);
-    box-shadow: none;
+    pointer-events: none;
   }
   /* Open rail spans the same inset as the osbar logo: mark at 20px, word ends at 135px. */
   html[data-theme="blue"] .rail.is-open { width: 228px; }
@@ -787,6 +796,7 @@
     left: 0;
     top: 0;
     width: 260px;
+    min-width: 260px;
     padding: 6px 0;
     background: #fff;
     border: 1px solid #e6e8ec;
