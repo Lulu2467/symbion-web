@@ -1581,11 +1581,32 @@
     align-items: stretch;
     gap: 16px;
     box-sizing: border-box;
+    position: relative;
     background: #fff;
     border: 1px solid var(--line);
     border-radius: 16px;
     padding: 16px;
   }
+  .tl-fab { display: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .rem-card:has(.rem-board.is-blank):not(:has(.is-cal)):not(:has(.is-add)) .tl-fab {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: #1d1d1f;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(20, 24, 28, .22);
+  }
+  html[data-theme="blue"] #tail-home .tl-fab svg { width: 22px; height: 22px; display: block; }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-title-l {
     height: 28px;
     min-height: 28px;
@@ -8514,6 +8535,7 @@
                 <div class="two-col">
                   <div class="sec two-title-l"><h3 id="homeBoardTitle">Reminders</h3><span class="sub">Course · Email · Yours</span><span class="sp"></span><button type="button" class="act-add" data-action="add-reminder" data-tip="Add a reminder with Citta — tell it what and when" aria-label="Add reminder with Citta"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 3.25v9.5M3.25 8h9.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button></div>
                   <div class="rem-card">
+                  <button type="button" class="tl-fab" id="tlFab" aria-label="Add"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M10.15 4.4h3.7v5.75h5.75v3.7h-5.75v5.75h-3.7v-5.75H4.4v-3.7h5.75V4.4z"/></svg></button>
                   <div class="rem-board">
                     <div class="tl" id="homeTimeline">
                       <div class="tl-bar">
@@ -10173,6 +10195,14 @@
     });
     if (tlWeek) { paintTlWeek(host); return; }
     const events = tlEventsFor(remDay);
+    const board = document.querySelector('#tail-home .rem-board');
+    if (!events.length) {
+      tlCache = events;
+      host.innerHTML = '';
+      board?.classList.add('is-blank');
+      return;
+    }
+    board?.classList.remove('is-blank');
     tlCache = events;
     const now = new Date();
     const nowMins = now.getHours() * 60 + now.getMinutes();
@@ -10203,10 +10233,10 @@
       cursor = end;
     });
     pushGap(cursor, 22 * 60);
-    if (!events.length) bits.push(`<div class="tl-gap"><span></span><span></span><p>Nothing on this day.<button type="button" data-tl-add="09:00">Add</button></p><span></span></div>`);
     host.innerHTML = `<div class="tl-day">${bits.join('')}</div>`;
   }
   function paintTlWeek(host) {
+    document.querySelector('#tail-home .rem-board')?.classList.remove('is-blank');
     const start = todoParseIso(remDay) || new Date();
     start.setDate(start.getDate() - ((start.getDay() + 6) % 7));
     const cols = Array.from({ length: 7 }, (_, i) => {
@@ -12684,7 +12714,7 @@
         return;
       }
 
-      const tlHit = e.target.closest('#tail-home [data-tl-i], #tail-home [data-tl-add], #tlDate, #tlZoom, #tlCal button, #tlAdd button, #tlAdd [data-tl-idea], #tail-home [data-tl-day], #tail-home [data-tl-open]');
+      const tlHit = e.target.closest('#tlFab, #tail-home [data-tl-i], #tail-home [data-tl-add], #tlDate, #tlZoom, #tlCal button, #tlAdd button, #tlAdd [data-tl-idea], #tail-home [data-tl-day], #tail-home [data-tl-open]');
       if (tlHit) {
         const check = e.target.closest('[data-tl-i]');
         if (check) {
@@ -12693,6 +12723,7 @@
           else if (ev?.item) { ev.item.done = !ev.item.done; paintHomeTimeline(); }
           return;
         }
+        if (e.target.closest('#tlFab')) { tlOpenAdd('09:00'); return; }
         const addAt = e.target.closest('[data-tl-add]');
         if (addAt) { tlOpenAdd(addAt.dataset.tlAdd); return; }
         if (e.target.closest('#tlDate')) { const pop = document.getElementById('tlCal'); if (pop && !pop.hidden) tlClosePops(); else tlOpenCal(); return; }
