@@ -289,6 +289,7 @@
     display: inline-flex; align-items: center; margin-top: 2px; padding: 0;
     border: 0; background: none; font: inherit; font-size: 12px; font-weight: 500; color: #8b919a; cursor: pointer;
   }
+  html[data-theme="blue"] .osbar-bell-list .act-link:hover { color: #3c7a94; }
   html[data-theme="blue"] .osbar-bell-list .act-link .ico-ne { width: 12px; height: 12px; margin-left: 4px; }
   html[data-theme="blue"] .osbar-bell-list .act-link .ico-ne svg { width: 12px; height: 12px; display: block; }
   html[data-theme="blue"] .osbar .sp { flex: 1; min-width: 12px; }
@@ -6803,16 +6804,35 @@
     margin: 0 0 18px;
   }
   html[data-theme="blue"] #dirHost .dir-follow[hidden] { display: none; }
-  html[data-theme="blue"] #dirHost .dir-card.is-follow { gap: 10px; padding: 16px; }
-  html[data-theme="blue"] #dirHost .dir-card.is-follow .dir-av { width: 48px; height: 48px; font-size: 15px; }
+  html[data-theme="blue"] #dirHost .dir-card.is-follow { gap: 12px; padding: 16px; cursor: default; }
+  html[data-theme="blue"] #dirHost .dir-card.is-follow .dir-av { width: 44px; height: 44px; font-size: 15px; }
   html[data-theme="blue"] #dirHost .dir-card.is-follow .dir-copy b { font-size: 16px; }
+  html[data-theme="blue"] #dirHost .dir-card.is-follow .dir-mod {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 132px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: #f6f7f8;
+    overflow: hidden;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
+  html[data-theme="blue"] #dirHost .dir-card.is-follow .dir-mod.is-text { justify-content: center; padding: 12px 14px; background: #f7f6f3; }
   html[data-theme="blue"] #dirHost .dir-card.is-follow .dir-shot {
     width: 100%;
-    height: 88px;
+    height: 96px;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 0;
     display: block;
   }
+  html[data-theme="blue"] #dirHost .dir-card.is-follow .dir-mod-copy { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px 12px; }
+  html[data-theme="blue"] #dirHost .dir-card.is-follow .dir-mod.is-text .dir-mod-copy { padding: 0; }
   html[data-theme="blue"] #dirHost .dir-card.is-follow .dir-preview,
   html[data-theme="blue"] #dirHost .dir-card.is-follow .dir-quote {
     margin: 0;
@@ -6823,8 +6843,67 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-  html[data-theme="blue"] #dirHost .dir-card.is-follow .dir-preview { color: #1a1d21; font-weight: 500; }
+  html[data-theme="blue"] #dirHost .dir-card.is-follow .dir-preview { color: #1a1d21; font-weight: 600; }
   html[data-theme="blue"] #dirHost .dir-card.is-follow .dir-quote { color: #5f6368; font-weight: 400; }
+  html[data-theme="blue"] #dirHost .dir-card.is-follow .dir-meta { width: 100%; justify-content: space-between; }
+  html[data-theme="blue"] #dirHost .dir-enter {
+    flex: none;
+    height: 32px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--green);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+  }
+  html[data-theme="blue"] #dirHost .dir-enter:hover { background: var(--green-dark); }
+  html[data-theme="blue"] #dirHost .dir-person[hidden] { display: none; }
+  html[data-theme="blue"] #dirHost .dir-person { display: flex; flex-direction: column; align-items: stretch; gap: 16px; }
+  html[data-theme="blue"] #dirHost .dir-back {
+    align-self: flex-start;
+    height: 32px;
+    padding: 0 2px;
+    border: 0;
+    background: transparent;
+    color: #1a1d21;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  html[data-theme="blue"] #dirHost .dir-person-hd { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  html[data-theme="blue"] #dirHost .dir-person-hd .dir-av { width: 44px; height: 44px; }
+  html[data-theme="blue"] #dirHost .dir-person-hd .dir-summon { display: inline-flex; position: static; margin-left: auto; }
+  html[data-theme="blue"] #dirHost .dir-person-mods { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  html[data-theme="blue"] #dirHost .dir-person-mod {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 0;
+    padding: 12px;
+    border: 1px solid #eceef1;
+    border-radius: 12px;
+    background: #fff;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+  }
+  html[data-theme="blue"] #dirHost .dir-person-mod:hover { border-color: #d8dbe0; box-shadow: 0 8px 22px rgba(26, 29, 33, .08); }
+  html[data-theme="blue"] #dirHost .dir-person-mod img { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; display: block; }
+  html[data-theme="blue"] #dirHost .dir-person-mod .dir-quote {
+    margin: 0;
+    padding: 12px;
+    border-radius: 8px;
+    background: #f7f6f3;
+    color: #5f6368;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  html[data-theme="blue"] #dirHost .dir-person-mod b { font-size: 14px; font-weight: 600; line-height: 1.4; color: #1a1d21; }
+  html[data-theme="blue"] #dirHost .dir-person .dir-empty { margin: 8px 0 0; text-align: left; }
   html[data-theme="blue"] #dirHost .dir-av[data-tone="mint"] { background: #d7efe4; color: #2f7d62; }
   .frame.citta-open #dirHost .dir-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .dir-card {
@@ -10041,6 +10120,7 @@
             <div class="dir-body">
               <p class="dir-k" id="dirFollowK" hidden>Following</p>
               <div class="dir-follow" id="dirFollow" hidden></div>
+              <div class="dir-person" id="dirPerson" hidden></div>
               <p class="dir-k" id="dirRecK" hidden>Recommended</p>
               <div class="dir-grid" id="dirGrid"></div>
               <div class="dir-feed" id="dirFeed" hidden></div>
@@ -13114,7 +13194,7 @@
     syncPresenter(s);
   }));
 
-  let screen = 'home', tutorialStep = 1, tutorialDocPhase = null, cittaExpanded = false, newTipSeen = false, postTutorialTipPending = false, teamOpen = false, dirOpen = false, dirTab = 'cosmo', dirQuery = '', dirGroup = 'All', dirSort = 'all', deskOpen = false, settingsOpen = false, settingsSection = 'profile', symbionOpen = false, meTab = 'know';
+  let screen = 'home', tutorialStep = 1, tutorialDocPhase = null, cittaExpanded = false, newTipSeen = false, postTutorialTipPending = false, teamOpen = false, dirOpen = false, dirTab = 'cosmo', dirPersonName = '', dirQuery = '', dirGroup = 'All', dirSort = 'all', deskOpen = false, settingsOpen = false, settingsSection = 'profile', symbionOpen = false, meTab = 'know';
   /** H0 free-browse: coach/spotlight off, stay on tutorial tail so Reminders → Goals remain scrollable. */
   let tutorialExploring = false;
   const frame = $('frame');
@@ -16482,7 +16562,7 @@
   }
 
   const DIR_POSTS = [
-    { title: '分享了一份关于 Agent memory 与长上下文工作流的新研究摘要。', img: 'luo/assets/luo-portrait.png', h: 'tall', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '128' },
+    { title: '护肤从这张近照讲起', img: 'luo/assets/luo-portrait.png', h: 'tall', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '128' },
     { title: '今天的产品笔记', quote: '把复杂能力收进一个更清晰的工作界面。', tone: 'paper', name: '李佳琦', initial: '李', av: 'mint', likes: '54' },
     { title: '新的护肤内容合集已经更新。', img: 'luo/assets/product-sunscreen.jpg', h: 'tall', name: '豆豆', initial: '豆', tone: 'sky', likes: '86' },
     { title: '新的护肤内容合集封面', img: 'luo/assets/luo-hero.png', h: 'mid', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '203' },
@@ -16495,7 +16575,7 @@
     { title: '出门前这一支就够', img: 'luo/assets/product-sunscreen.jpg', h: 'short', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '151' },
     { title: '封面换了，合集还是那一套', img: 'luo/assets/luo-hero.png', h: 'tall', name: '豆豆', initial: '豆', tone: 'sky', likes: '68' },
     { title: '白天这套，晚上就收起来', img: 'luo/assets/product-cetaphil.png', h: 'short', name: '豆豆', initial: '豆', tone: 'sky', likes: '29' },
-    { title: '长文里我标出的那一段', quote: '记忆该跟着任务走，不该堆在对话里。', tone: 'mist', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '88' },
+    { title: '修护顺序我标在这一段', quote: '先清洁，再精华，防晒留到出门前。', tone: 'mist', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '88' },
     { title: '近一点看这张', img: 'luo/assets/luo-portrait.png', h: 'mid', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '112' },
     { title: '讲义这一页，我通常停久一点', img: 'luo/assets/cosmo-roland.jpg', h: 'tall', name: 'Prof. Roland', photo: 'assets/gunther-roland-illustrated.jpg', likes: '51' },
     { title: '敷完等两分钟再看状态', img: 'luo/assets/product-drwu.jpg', h: 'short', name: '豆豆', initial: '豆', tone: 'sky', likes: '77' },
@@ -17076,17 +17156,15 @@
     host.replaceChildren(...rows, sec, joined);
   }
 
-  function dirLatestPost(name) {
-    const who = name === 'Gunther Roland' ? 'Prof. Roland' : name;
-    return DIR_POSTS.find((post) => post.name === who) || null;
+  function followFace(p) {
+    if (p.name === 'Gunther Roland') return { blurb: '重离子物理 · MIT', tags: ['重离子', 'Lecture'] };
+    return { blurb: p.blurb, tags: p.tags };
   }
-  function dirCard(p, rich) {
-    const card = document.createElement('button');
-    card.type = 'button';
-    card.className = 'dir-card' + (rich ? ' is-follow' : '');
-    card.dataset.dirName = p.name;
-    const head = document.createElement('span');
-    head.className = 'dir-head';
+  function followPostsOf(name) {
+    const who = name === 'Gunther Roland' ? 'Prof. Roland' : name;
+    return DIR_POSTS.filter((post) => post.name === who);
+  }
+  function dirAvatar(p) {
     const av = document.createElement('span');
     av.className = 'dir-av';
     if (p.tone) av.dataset.tone = p.tone;
@@ -17100,23 +17178,99 @@
       });
       av.appendChild(img);
     } else av.textContent = p.letter || lectureInitials(p.name);
+    return av;
+  }
+  function dirSummonBtn(name) {
+    const summon = document.createElement('span');
+    summon.className = 'dir-summon';
+    summon.setAttribute('role', 'button');
+    const summoned = document.documentElement.dataset.theme === 'blue' && dirSummoned.has(name);
+    summon.setAttribute('aria-pressed', summoned ? 'true' : 'false');
+    summon.textContent = summoned ? 'Summoned' : 'Summon';
+    return summon;
+  }
+  function dirLatestPost(name) {
+    return followPostsOf(name)[0] || null;
+  }
+  function renderFollowPerson(host) {
+    if (!host) return;
+    const person = dirPeople().find((p) => p.name === dirPersonName);
+    if (!person) {
+      dirPersonName = '';
+      host.hidden = true;
+      host.replaceChildren();
+      return;
+    }
+    const face = followFace(person);
+    host.hidden = false;
+    const back = document.createElement('button');
+    back.type = 'button';
+    back.className = 'dir-back';
+    back.dataset.dirBack = '1';
+    back.textContent = '返回';
+    const hd = document.createElement('div');
+    hd.className = 'dir-person-hd';
+    const copy = document.createElement('span');
+    copy.className = 'dir-copy';
+    const nm = document.createElement('b');
+    nm.textContent = person.name;
+    const small = document.createElement('small');
+    small.textContent = face.blurb;
+    copy.append(nm, small);
+    hd.append(dirAvatar(person), copy, dirSummonBtn(person.name));
+    const posts = followPostsOf(person.name).slice(0, 6);
+    if (!posts.length) {
+      const empty = document.createElement('p');
+      empty.className = 'dir-empty';
+      empty.hidden = false;
+      empty.textContent = '还没有公开内容。';
+      host.replaceChildren(back, hd, empty);
+      return;
+    }
+    const mods = document.createElement('div');
+    mods.className = 'dir-person-mods';
+    posts.forEach((post) => {
+      const mod = document.createElement('button');
+      mod.type = 'button';
+      mod.className = 'dir-person-mod';
+      mod.dataset.postIndex = String(DIR_POSTS.indexOf(post));
+      if (post.img) {
+        const shot = document.createElement('img');
+        shot.alt = '';
+        shot.src = post.img;
+        mod.appendChild(shot);
+      } else if (post.quote) {
+        const quote = document.createElement('p');
+        quote.className = 'dir-quote';
+        quote.textContent = post.quote;
+        mod.appendChild(quote);
+      }
+      const title = document.createElement('b');
+      title.textContent = post.title;
+      mod.appendChild(title);
+      mods.appendChild(mod);
+    });
+    host.replaceChildren(back, hd, mods);
+  }
+  function dirCard(p, rich) {
+    const card = document.createElement(rich ? 'article' : 'button');
+    if (!rich) card.type = 'button';
+    card.className = 'dir-card' + (rich ? ' is-follow' : '');
+    card.dataset.dirName = p.name;
+    const face = rich ? followFace(p) : null;
+    const head = document.createElement('span');
+    head.className = 'dir-head';
     const copy = document.createElement('span');
     copy.className = 'dir-copy';
     const nm = document.createElement('b');
     nm.textContent = p.name;
     const small = document.createElement('small');
-    small.textContent = p.blurb;
+    small.textContent = face ? face.blurb : p.blurb;
     copy.append(nm, small);
-    const summon = document.createElement('span');
-    summon.className = 'dir-summon';
-    summon.setAttribute('role', 'button');
-    const summoned = document.documentElement.dataset.theme === 'blue' && dirSummoned.has(p.name);
-    summon.setAttribute('aria-pressed', summoned ? 'true' : 'false');
-    summon.textContent = summoned ? 'Summoned' : 'Summon';
-    head.append(av, copy, summon);
+    head.append(dirAvatar(p), copy, dirSummonBtn(p.name));
     const tags = document.createElement('span');
     tags.className = 'dir-tags';
-    p.tags.forEach((tag) => {
+    (face ? face.tags : p.tags).forEach((tag) => {
       const chip = document.createElement('i');
       chip.textContent = tag;
       tags.appendChild(chip);
@@ -17130,30 +17284,44 @@
     foot.append(spark, document.createTextNode(p.foot));
     const meta = document.createElement('span');
     meta.className = 'dir-meta';
-    meta.append(tags, foot);
-    card.append(head);
+    meta.appendChild(tags);
     if (rich) {
+      const enter = document.createElement('button');
+      enter.type = 'button';
+      enter.className = 'dir-enter';
+      enter.textContent = '进入';
+      enter.setAttribute('aria-label', '进入 ' + p.name);
+      meta.appendChild(enter);
       const post = dirLatestPost(p.name);
+      const body = document.createElement('button');
+      body.type = 'button';
+      body.className = 'dir-mod' + (post?.img ? '' : ' is-text');
+      if (post) body.dataset.postIndex = String(DIR_POSTS.indexOf(post));
       if (post?.img) {
         const shot = document.createElement('img');
         shot.className = 'dir-shot';
         shot.alt = '';
         shot.src = post.img;
-        card.appendChild(shot);
+        body.appendChild(shot);
       }
+      const modCopy = document.createElement('span');
+      modCopy.className = 'dir-mod-copy';
       if (post?.title) {
         const preview = document.createElement('p');
         preview.className = 'dir-preview';
         preview.textContent = post.title;
-        card.appendChild(preview);
+        modCopy.appendChild(preview);
       }
       if (post?.quote) {
         const quote = document.createElement('p');
         quote.className = 'dir-quote';
         quote.textContent = post.quote;
-        card.appendChild(quote);
+        modCopy.appendChild(quote);
       }
+      if (modCopy.childNodes.length) body.appendChild(modCopy);
+      card.append(head, body);
     }
+    if (!rich) meta.appendChild(foot);
     card.append(meta);
     return card;
   }
@@ -17192,6 +17360,11 @@
     });
     if (!cosmo) {
       if (grid) grid.replaceChildren();
+      const personHost = document.getElementById('dirPerson');
+      if (personHost) {
+        personHost.hidden = true;
+        personHost.replaceChildren();
+      }
       const followHost = document.getElementById('dirFollow');
       if (followHost) {
         followHost.hidden = true;
@@ -17246,6 +17419,24 @@
     });
     if (none) none.hidden = rows.length > 0;
     if (!grid) return;
+    const personHost = document.getElementById('dirPerson');
+    if (dirPersonName) {
+      const followHostEarly = document.getElementById('dirFollow');
+      if (followHostEarly) {
+        followHostEarly.hidden = true;
+        followHostEarly.replaceChildren();
+      }
+      document.getElementById('dirFollowK')?.setAttribute('hidden', '');
+      document.getElementById('dirRecK')?.setAttribute('hidden', '');
+      grid.replaceChildren();
+      if (none) none.hidden = true;
+      renderFollowPerson(personHost);
+      return;
+    }
+    if (personHost) {
+      personHost.hidden = true;
+      personHost.replaceChildren();
+    }
     const followNames = ['Gunther Roland', '骆王宇', '李佳琦'];
     const blue = document.documentElement.dataset.theme === 'blue';
     const followHost = document.getElementById('dirFollow');
@@ -17292,6 +17483,7 @@
       });
     }
     dirOpen = true;
+    dirPersonName = '';
     if (next !== 'community') dirChao = '';
     dirTab = next;
     screen = 'dir';
@@ -17455,12 +17647,33 @@
       renderDir();
       return;
     }
+    const personMod = e.target.closest('.dir-person-mod');
+    if (personMod) {
+      openPostDetail(DIR_POSTS[Number(personMod.dataset.postIndex)]);
+      return;
+    }
+    if (e.target.closest('[data-dir-back]')) {
+      dirPersonName = '';
+      renderDir();
+      return;
+    }
+    const enter = e.target.closest('.dir-enter');
+    if (enter) {
+      dirPersonName = enter.closest('.dir-card')?.dataset.dirName || '';
+      renderDir();
+      return;
+    }
+    const mod = e.target.closest('.dir-mod');
+    if (mod && mod.dataset.postIndex) {
+      openPostDetail(DIR_POSTS[Number(mod.dataset.postIndex)]);
+      return;
+    }
     const summon = e.target.closest('.dir-summon');
     if (summon) {
       e.preventDefault();
       e.stopPropagation();
-      const card = summon.closest('.dir-card');
-      const name = card?.dataset.dirName || '';
+      const card = summon.closest('.dir-card, .dir-person-hd');
+      const name = card?.dataset.dirName || dirPersonName || '';
       if (document.documentElement.dataset.theme !== 'blue') {
         showToastMsg('Summon · ' + name);
         return;
@@ -17471,7 +17684,7 @@
       return;
     }
     const card = e.target.closest('.dir-card');
-    if (card) showToastMsg('Cosmo · ' + card.dataset.dirName);
+    if (card && !card.classList.contains('is-follow')) showToastMsg('Cosmo · ' + card.dataset.dirName);
   });
   document.getElementById('dirHost')?.addEventListener('submit', (e) => {
     const form = e.target.closest('[data-chao-form]');
