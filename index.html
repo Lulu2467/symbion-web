@@ -7080,7 +7080,8 @@
     align-items: center;
     justify-content: center;
     height: 32px;
-    padding: 1px 16px 0;
+    /* Inter 600 optically sits high — extra top padding centers the letters. */
+    padding: 2px 16px 0;
     border: 1px solid #c5d4de;
     border-radius: 999px;
     background: #fff;
@@ -7218,7 +7219,8 @@
     align-items: center;
     justify-content: center;
     height: 32px;
-    padding: 1px 16px 0;
+    /* Inter 600 optically sits high — extra top padding centers the letters. */
+    padding: 2px 16px 0;
     border: 1px solid #c5d4de;
     border-radius: 999px;
     background: #fff;
@@ -8305,9 +8307,10 @@
   .tk-meta time { margin-left: auto; flex: none; }
   .tk-empty { margin: 8px 4px; color: #a4a4a2; font-size: 12px; }
   .gi-modal {
-    position: absolute; inset: 0; z-index: 30; display: flex; align-items: center; justify-content: center;
+    position: fixed; inset: 0; z-index: 80; display: flex; align-items: center; justify-content: center;
     padding: 24px; background: rgba(20, 24, 28, .45);
   }
+  .gi-modal[hidden] { display: none !important; }
   .gi-sheet {
     width: min(680px, 100%); max-height: 100%; overflow: auto; box-sizing: border-box;
     padding: 18px 22px 0; border-radius: 16px; background: #fff; box-shadow: 0 12px 36px rgba(20, 24, 28, .18);
@@ -22102,21 +22105,23 @@ let gi = null;
 function openGroupItem(preset) {
   const c = current();
   if (!c || c.kind !== 'group') return;
-  if (!canReview(c)) { toast('Only the owner or an admin can assign a group task.'); return; }
-  gi = { type: 'Meeting', who: preset && preset.who ? [preset.who] : [], group: c.id, note: '', files: [], picking: false, peopleQuery: '' };
+  if (!(c.members || []).includes(ME)) { toast('Join this group to create an event.'); return; }
+  const who = preset && preset.who ? [preset.who] : [ME];
+  gi = { type: 'Meeting', who, group: c.id, note: '', files: [], picking: false, peopleQuery: '' };
   const modal = $('giModal');
   if (!modal) return;
   ['giStart', 'giStartTime', 'giEnd', 'giEndTime', 'giName', 'giDetails'].forEach((id) => {
     const el = $(id);
     if (el) el.value = '';
   });
-  if (preset && preset.date && $('giStart')) $('giStart').value = preset.date;
+  const today = gIso(new Date());
+  if ($('giStart')) $('giStart').value = (preset && preset.date) || today;
   if (preset && preset.end && $('giEnd')) $('giEnd').value = preset.end;
   if (preset && preset.startTime && $('giStartTime')) $('giStartTime').value = preset.startTime;
   if (preset && preset.endTime && $('giEndTime')) $('giEndTime').value = preset.endTime;
   modal.hidden = false;
   paintGroupItem();
-  $('giStart')?.focus();
+  requestAnimationFrame(() => $('giName')?.focus());
 }
 function closeGroupItem() {
   const modal = $('giModal');
@@ -22177,27 +22182,28 @@ function giCreate() {
   const err = giFormError();
   if (err) { gi.note = err; paintGroupItem(); return; }
   const c = chats.find((item) => item.id === gi.group);
-  if (!c || !canReview(c)) return;
+  if (!c || !(c.members || []).includes(ME)) return;
   const who = gi.who.slice();
   const title = $('giName').value.trim();
   const start = $('giStart').value;
   const files = gi.files.map((file) => ({ name: file.name }));
-    const names = who.map((id) => (people[id] && people[id].name) || id);
-    who.forEach((id) => {
-      const row = {
-        id: uid(), who: id, title, type: gi.type, date: start, end: $('giEnd').value || start,
-        startTime: $('giStartTime').value, endTime: $('giEndTime').value,
-        notes: $('giDetails').value.trim(), files, see: 'group', stage: 'todo'
-      };
-      gItems(c.id).push(row);
-      document.dispatchEvent(new CustomEvent('symbion-group-event', { detail: {
-        id: 'home-' + row.id, who: id, title, date: start, end: row.end,
-        startTime: row.startTime, endTime: row.endTime, notes: row.notes,
-        files: files.map((file) => file.name), people: names, groupName: c.name
-      } }));
-    });
+  const names = who.map((id) => (people[id] && people[id].name) || id);
+  who.forEach((id) => {
+    const row = {
+      id: uid(), who: id, title, type: gi.type, date: start, end: $('giEnd').value || start,
+      startTime: $('giStartTime').value, endTime: $('giEndTime').value,
+      notes: $('giDetails').value.trim(), files, see: 'group', stage: 'todo'
+    };
+    gItems(c.id).push(row);
+    document.dispatchEvent(new CustomEvent('symbion-group-event', { detail: {
+      id: 'home-' + row.id, who: id, title, date: start, end: row.end,
+      startTime: row.startTime, endTime: row.endTime, notes: row.notes,
+      files: files.map((file) => file.name), people: names, groupName: c.name
+    } }));
+  });
   closeGroupItem();
   paintGroupBoard();
+  toast('Created · ' + title);
 }
 function syncWorkspace() {
   const c = current();
