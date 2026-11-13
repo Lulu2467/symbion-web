@@ -825,18 +825,28 @@
   html[data-theme="blue"] .rail-follow {
     display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; order: 5;
   }
-  html[data-theme="blue"] .rail.is-open .rail-follow { align-items: stretch; gap: 8px; }
-  html[data-theme="blue"] .rail-follow-k { display: none; }
-  html[data-theme="blue"] .rail.is-open .rail-follow-k {
-    display: block; margin: 0 10px; font-size: 10px; font-weight: 650;
-    letter-spacing: .08em; color: #9aa0a6;
+  html[data-theme="blue"] .rail.is-open .rail-follow { align-items: stretch; }
+  html[data-theme="blue"] .rail-follow-k {
+    position: relative; display: flex; align-items: center; justify-content: center; box-sizing: border-box;
+    width: 36px; height: 16px; margin: 0; overflow: hidden; flex: none;
+    font-size: 10px; font-weight: 650; letter-spacing: .08em; line-height: 16px; color: transparent;
+    transition: color .18s ease;
   }
+  html[data-theme="blue"] .rail-follow-k::before {
+    content: ""; position: absolute; left: 50%; top: 50%; width: 24px; height: 1px; margin-left: -12px;
+    background: #b0b5bb; transition: opacity .18s ease;
+  }
+  html[data-theme="blue"] .rail.is-open .rail-follow-k {
+    justify-content: flex-start; width: auto; margin: 0 10px; color: #9aa0a6;
+  }
+  html[data-theme="blue"] .rail.is-open .rail-follow-k::before { opacity: 0; }
   html[data-theme="blue"] .rail-follow-row {
-    display: flex; align-items: center; justify-content: center; width: 36px; height: 36px;
-    padding: 0; border: 0; border-radius: 10px; background: transparent; font: inherit; cursor: pointer; color: #3c4043;
+    display: flex; align-items: center; justify-content: center; box-sizing: border-box;
+    width: 36px; height: 36px; padding: 0; border: 0; border-radius: 10px; background: transparent;
+    font: inherit; cursor: pointer; color: #3c4043;
   }
   html[data-theme="blue"] .rail.is-open .rail-follow-row {
-    width: 100%; height: 40px; justify-content: flex-start; gap: 10px; padding: 0 8px;
+    width: 100%; height: 36px; justify-content: flex-start; padding: 0 4px;
   }
   html[data-theme="blue"] .rail-follow-row:hover { background: #d4e4ee; }
   html[data-theme="blue"] .rail-follow-row .av {
@@ -847,11 +857,12 @@
   html[data-theme="blue"] .rail-follow-row .av.is-luo { background: #fde7d6; color: #c56a32; }
   html[data-theme="blue"] .rail-follow-row .av.is-li { background: #ececee; color: #6e7378; }
   html[data-theme="blue"] .rail-follow-row .av.is-dou { background: #e3f3e8; color: #3d8f5c; }
-  html[data-theme="blue"] .rail-follow-row .nm { display: none; }
-  html[data-theme="blue"] .rail.is-open .rail-follow-row .nm {
+  html[data-theme="blue"] .rail-follow-row .nm {
     display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    font-size: 14px; font-weight: 500; line-height: 1.2;
+    font-size: 14px; font-weight: 500; line-height: 1.2; max-width: 0; margin-left: 0; opacity: 0;
+    transition: max-width .18s ease, margin-left .18s ease, opacity .18s ease;
   }
+  html[data-theme="blue"] .rail.is-open .rail-follow-row .nm { max-width: 148px; margin-left: 10px; opacity: 1; }
   .rail-me { display: none; }
   html[data-theme="blue"] .rail-me {
     display: flex;
@@ -1559,7 +1570,7 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home {
     width: min(1200px, 100%);
     margin-inline: auto;
-    margin-top: 112px;
+    margin-top: 8px;
     --home-pair: 468px;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid {
@@ -7642,6 +7653,8 @@
   .menu { position: absolute; top: calc(100% + 6px); right: 0; width: 248px; padding: 6px; background: #fff; border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 10px 28px rgba(20, 24, 28, .12); z-index: 5; }
   .menu button { display: flex; width: 100%; align-items: center; gap: 8px; text-align: left; padding: 8px 10px; border-radius: 8px; font-size: 13px; font-weight: 500; }
   .menu button:hover { background: var(--green-mist); }
+  .menu button:disabled { color: #b2b2b2; cursor: default; }
+  .menu button:disabled:hover { background: transparent; }
   .menu button svg { width: 16px; height: 16px; color: var(--green-dark); flex: none; }
   .plus-menu { width: 212px; padding: 6px 0; border: 0; border-radius: 8px; background: #fff; box-shadow: 0 8px 28px rgba(0, 0, 0, .18); z-index: 8; }
   .plus-menu button { gap: 12px; padding: 10px 16px; border-radius: 0; font-size: 14px; font-weight: 400; color: #191919; }
@@ -8516,15 +8529,20 @@
   html[data-theme="blue"] #teamHost .thread-head,
   html[data-theme="blue"] #teamHost .announce,
   html[data-theme="blue"] #teamHost .log { background: #fff; }
-  #teamHost .notice-req { display: flex; gap: 12px; align-items: flex-start; width: 100%; margin: 0; padding: 14px 16px; border-bottom: 1px solid #ededed; background: #fff; }
-  #teamHost .notice-req .av { width: 40px; height: 40px; border-radius: 4px; flex: none; font-size: 12px; }
-  #teamHost .notice-req .notice-copy { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-  #teamHost .notice-req .notice-top { display: flex; align-items: center; gap: 12px; min-width: 0; }
-  #teamHost .notice-req b { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 15px; font-weight: 500; line-height: 20px; color: #191919; }
-  #teamHost .notice-req time { flex: none; font-size: 12px; line-height: 20px; color: #b2b2b2; }
-  #teamHost .notice-req .notice-where { font-size: 13px; line-height: 18px; color: #1a1d21; }
+  #teamHost .notice-req { display: flex; gap: 14px; align-items: center; width: 100%; margin: 0; padding: 16px 18px; border-bottom: 1px solid #e6e8ec; background: #fff; }
+  #teamHost .notice-req:hover { background: #f6f7f8; }
+  #teamHost .notice-req .av { width: 44px; height: 44px; border-radius: 6px; flex: none; font-size: 13px; }
+  #teamHost .notice-req .notice-copy { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+  #teamHost .notice-req .notice-top { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+  #teamHost .notice-req b { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 15px; font-weight: 500; line-height: 22px; color: #191919; }
+  #teamHost .notice-req time { flex: none; font-size: 12px; line-height: 22px; color: #b2b2b2; }
+  #teamHost .notice-req .notice-where { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; line-height: 18px; color: #656d76; }
+  #teamHost .notice-req .notice-group { color: var(--green); font-weight: 500; }
   #teamHost .notice-req .notice-preview { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; line-height: 18px; color: #8b919a; }
-  #teamHost .notice-req .notice-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px; }
+  #teamHost .notice-req .notice-actions { display: flex; flex: none; align-items: center; gap: 8px; }
+  #teamHost .notice-req .notice-status { flex: none; min-width: 52px; font-size: 13px; line-height: 34px; text-align: right; color: #8b919a; }
+  #teamHost .notice-req .notice-status.is-yes { color: var(--green); font-weight: 500; }
+  #teamHost .notice-req .notice-status.is-no { color: #8b919a; }
   #teamHost .log:has(.notice-req) { gap: 0; padding: 0; }
   html[data-theme="blue"] #teamHost .bubble {
     width: fit-content;
@@ -11492,7 +11510,7 @@
       const today = day.iso === todayIso ? ' is-today' : '';
       return `<div class="nc-day${today}"><small>${TODO_WEEKDAYS[day.date.getDay()]}</small><b>${day.date.getDate()}</b></div>`;
     }).join('');
-    const allRow = `<div class="nc-all"><span class="nc-gutter nc-all-label">All-day</span><div class="nc-all-cols">${packed.map((day) => {
+    const allRow = `<div class="nc-all"><span class="nc-gutter nc-all-label"></span><div class="nc-all-cols">${packed.map((day) => {
       const chips = day.events.filter((ev) => !ev.timed).map((ev) => `<button type="button" class="nc-chip is-${ev.lane}${ev.done ? ' is-done' : ''}${kbBox().open === kbEventKey(ev) ? ' is-open' : ''}" data-i="${ev.i}"><span class="kb-ico">${kbTaskIcon(ev.task)}</span>${deskEsc(ev.title)}</button>`).join('');
       return `<div class="nc-all-cell">${chips}</div>`;
     }).join('')}</div></div>`;
@@ -12948,21 +12966,7 @@
       delete content.dataset.pinKey;
       return;
     }
-    const key = `${window.innerWidth}x${window.innerHeight}`;
-    if (document.getElementById('composer')?.classList.contains('has-cases')) return;
-    if (content.classList.contains('is-home-pinned') && content.dataset.pinKey === key) return;
-    if (content.classList.contains('is-home-pinned')) {
-      content.classList.remove('is-home-pinned');
-      content.style.removeProperty('--home-pin');
-      void content.offsetHeight;
-    }
-    const screen = document.getElementById('screen-home');
-    if (!screen || !content.offsetHeight) return;
-    const scale = content.getBoundingClientRect().height / content.offsetHeight || 1;
-    const pad = parseFloat(getComputedStyle(content).paddingTop) || 0;
-    const extra = (screen.getBoundingClientRect().top - content.getBoundingClientRect().top) / scale - pad;
-    content.style.setProperty('--home-pin', `${Math.max(0, Math.round(extra))}px`);
-    content.dataset.pinKey = key;
+    content.style.setProperty('--home-pin', '0px');
     content.classList.add('is-home-pinned');
   }
 
@@ -19185,7 +19189,7 @@ function slugOptions() {
 }
 function canReview(c) { return c && c.kind === 'group' && (c.owner === ME || c.admins.includes(ME)); }
 function canManage(c) { return canReview(c); }
-function pending(c) { return (c.requests || []).length; }
+function pending(c) { return (c.requests || []).filter((r) => !r.decision).length; }
 function roleOf(chat, id) {
   if (!chat || chat.kind !== 'group') return '';
   if (id === chat.owner) return 'Owner';
@@ -19368,10 +19372,11 @@ function noticeRow() {
   const q = state.query.trim().toLowerCase();
   if (q && !'群通知'.includes(q)) return '';
   const items = noticeItems();
-  const latest = items[0];
+  const waiting = items.filter((item) => !item.req.decision);
+  const latest = waiting[0] || items[0];
   const who = latest ? people[latest.req.who] : null;
-  const line = latest ? `${who.name} 申请加入 ${latest.chat.name}` : '暂无入群申请';
-  const dot = items.length ? '<i class="dot" title="入群申请" aria-label="入群申请"></i>' : '';
+  const line = waiting.length ? `${who.name} 申请加入 ${latest.chat.name}` : (items.length ? '申请都已处理' : '暂无入群申请');
+  const dot = waiting.length ? '<i class="dot" title="入群申请" aria-label="入群申请"></i>' : '';
   return `<div class="row${state.notice ? ' on' : ''}">
       <button type="button" class="row-hit" data-open-notice${state.notice ? ' aria-current="true"' : ''}>
         <span class="face notice-face">${noticeIcon()}${dot}</span>
@@ -19447,6 +19452,7 @@ function renderChrome() {
     $('quoteBar').hidden = true;
     $('infoBtn').setAttribute('aria-label', 'Group notifications');
     $('infoBtn').setAttribute('aria-pressed', 'false');
+    $('threadMore').setAttribute('aria-label', '通知菜单');
     $('threadMore').setAttribute('aria-pressed', 'false');
     $('searchBtn').setAttribute('aria-pressed', 'false');
     $('chatSearch').hidden = true;
@@ -19482,6 +19488,7 @@ function renderChrome() {
     $('infoBtn').setAttribute('aria-label', 'Chat details');
   }
   $('infoBtn').setAttribute('aria-pressed', state.panel ? 'true' : 'false');
+  $('threadMore').setAttribute('aria-label', 'Conversation menu');
   $('threadMore').setAttribute('aria-pressed', document.documentElement.dataset.theme === 'blue' && state.panel ? 'true' : 'false');
   $('searchBtn').setAttribute('aria-pressed', state.chatSearch ? 'true' : 'false');
   $('chatSearch').hidden = !state.chatSearch;
@@ -19604,29 +19611,53 @@ function quoteBlock(ref, blue) {
 function requestCard(item) {
   const p = people[item.req.who];
   const reason = item.req.reason ? `<span class="notice-preview">${esc(item.req.reason)}</span>` : '';
+  const status = item.req.decision === 'yes'
+    ? '<span class="notice-status is-yes">已同意</span>'
+    : item.req.decision === 'no'
+      ? '<span class="notice-status is-no">已拒绝</span>'
+      : `<span class="notice-actions">
+          <button type="button" class="btn" data-decline="${item.req.id}" data-chat="${item.chat.id}">拒绝</button>
+          <button type="button" class="btn go" data-approve="${item.req.id}" data-chat="${item.chat.id}">同意</button>
+        </span>`;
   return `<article class="notice-req">
       <span class="av hue-${p.hue}">${esc(p.short)}</span>
       <div class="notice-copy">
         <span class="notice-top"><b>${esc(p.name)}</b><time>${esc(item.chat.time)}</time></span>
-        <span class="notice-where">申请加入 ${esc(item.chat.name)}</span>
+        <span class="notice-where">申请加入 <span class="notice-group">${esc(item.chat.name)}</span></span>
         ${reason}
-        <span class="notice-actions">
-          <button type="button" class="btn" data-decline="${item.req.id}" data-chat="${item.chat.id}">拒绝</button>
-          <button type="button" class="btn go" data-approve="${item.req.id}" data-chat="${item.chat.id}">同意</button>
-        </span>
       </div>
+      ${status}
     </article>`;
 }
 function decideRequest(chatId, reqId, approve) {
   const c = chats.find((x) => x.id === chatId);
   if (!c || !canReview(c)) return;
-  const i = (c.requests || []).findIndex((r) => r.id === reqId);
-  if (i < 0) return;
-  const req = c.requests[i];
+  const req = (c.requests || []).find((r) => r.id === reqId);
+  if (!req || req.decision) return;
   if (approve && !c.members.includes(req.who)) c.members.push(req.who);
-  c.requests.splice(i, 1);
+  req.decision = approve ? 'yes' : 'no';
   render(false);
   toast(approve ? '已同意，对方已加入群聊。' : '已拒绝。');
+}
+function clearDecided() {
+  let n = 0;
+  joinedGroups().forEach((c) => {
+    if (!canReview(c) || !c.requests) return;
+    const before = c.requests.length;
+    c.requests = c.requests.filter((r) => !r.decision);
+    n += before - c.requests.length;
+  });
+  if (!n) return;
+  render(false);
+  toast('已清空处理记录。');
+}
+function openNoticeMenu(clientX, clientY) {
+  const decided = noticeItems().some((item) => item.req.decision);
+  state.ctx = 'notice';
+  const menu = $('ctx');
+  menu.innerHTML = `<button type="button" role="menuitem" data-ctx="clear-decided"${decided ? '' : ' disabled'}>清空已处理</button>`;
+  menu.style.width = '148px';
+  placeMenu(menu, clientX, clientY);
 }
 function renderLog(scroll) {
   if (state.notice) {
@@ -19720,6 +19751,10 @@ function memberItems(c) {
 }
 
 function renderPanel() {
+  if (state.notice) {
+    $('panel').hidden = true;
+    return;
+  }
   const c = current();
   $('panel').hidden = !state.panel || state.chatSearch;
   if (!state.panel || state.chatSearch) return;
@@ -19870,6 +19905,7 @@ function openCtx(id, clientX, clientY) {
   const c = chats.find((ch) => ch.id === id);
   if (!c) return;
   state.ctx = id;
+  $('ctx').style.width = '';
   const items = [
     [c.pinned ? 'Unpin' : 'Pin', 'pin'],
     [c.unread > 0 ? 'Mark as read' : 'Mark as unread', 'unread'],
@@ -20427,6 +20463,11 @@ $('rows').addEventListener('contextmenu', (e) => {
 });
 $('threadMore').addEventListener('click', (e) => {
   e.stopPropagation();
+  if (state.notice) {
+    const r = e.currentTarget.getBoundingClientRect();
+    openNoticeMenu(r.left, r.bottom + 4);
+    return;
+  }
   if (document.documentElement.dataset.theme === 'blue') {
     $('ctx').hidden = true;
     if (state.panel && state.panelMode !== 'info') state.panelMode = 'info';
@@ -20450,7 +20491,12 @@ document.getElementById('teamHost').addEventListener('click', (e) => {
 });
 $('ctx').addEventListener('click', (e) => {
   const b = e.target.closest('[data-ctx]');
-  if (!b) return;
+  if (!b || b.disabled) return;
+  if (b.dataset.ctx === 'clear-decided') {
+    $('ctx').hidden = true;
+    clearDecided();
+    return;
+  }
   const c = chats.find((x) => x.id === state.ctx);
   $('ctx').hidden = true;
   if (!c) return;
