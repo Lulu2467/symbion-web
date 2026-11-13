@@ -2250,7 +2250,7 @@
   html[data-theme="blue"] #tail-home .kb-ico {
     flex: none; width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
   }
-  html[data-theme="blue"] #tail-home .kb-ico svg { width: 16px; height: 16px; display: block; }
+  html[data-theme="blue"] #tail-home .kb-ico svg { width: 14px; height: 14px; display: block; }
   html[data-theme="blue"] #tail-home .kb-main { min-width: 0; flex: 1; }
   html[data-theme="blue"] #tail-home .kb-main b,
   html[data-theme="blue"] #tail-home .kb-main small {
@@ -2316,7 +2316,7 @@
   html[data-theme="blue"] #tail-home .kb-sched .nc-chip.is-occupied { background: #eef0f2; color: #6e7378; }
   html[data-theme="blue"] #tail-home .kb-sched .nc-ev .kb-ico,
   html[data-theme="blue"] #tail-home .kb-sched .nc-chip .kb-ico {
-    display: inline-flex; width: 12px; height: 12px; margin-right: 3px; vertical-align: -1px; background: transparent;
+    display: inline-flex; width: 14px; height: 14px; margin-right: 3px; vertical-align: -2px; background: transparent; flex: none;
   }
   html[data-theme="blue"] #tail-home .kb-sched .nc-chip { display: flex; align-items: center; min-height: 18px; border-radius: 4px; }
   html[data-theme="blue"] #tail-home .kb-sched .nc-ev { border-radius: 6px; }
@@ -2365,7 +2365,8 @@
     width: 16px; height: 16px; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex: none;
   }
   html[data-theme="blue"] #tail-home .kb-swatch svg,
-  html[data-theme="blue"] #tail-home .kb-chip .kb-ico svg { width: 12px; height: 12px; display: block; }
+  html[data-theme="blue"] #tail-home .kb-sched .kb-ico svg,
+  html[data-theme="blue"] #tail-home .kb-chip .kb-ico svg { width: 14px; height: 14px; display: block; flex: none; }
   html[data-theme="blue"] #tail-home .kb-table {
     display: grid; grid-template-columns: 108px repeat(var(--cols), minmax(64px, 1fr)); min-width: max(100%, calc(108px + var(--cols) * 72px));
   }
@@ -11046,14 +11047,18 @@
       course: 'CO006017 · Data Analysis and Machine Learning',
     }[id] || 'Personal';
   }
+  function kbGlyph(d) {
+    const body = (Array.isArray(d) ? d : [d]).map((p) => `<path d="${p}"/>`).join('');
+    return `<svg viewBox="0 0 1024 1024" fill="currentColor" aria-hidden="true">${body}</svg>`;
+  }
   function kbIcon(id) {
     const paths = {
-      personal: '<circle cx="8" cy="5.4" r="2.1" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M3.3 13c.7-2.2 2.4-3.3 4.7-3.3s4 1.1 4.7 3.3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>',
-      wuhan: '<circle cx="5.6" cy="5.3" r="1.7" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="10.4" cy="5.6" r="1.45" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M1.8 12.6c.5-1.8 1.9-2.7 3.8-2.7 1.1 0 2 .3 2.6.9M8.2 10.2c.6-.4 1.3-.6 2.1-.6 1.7 0 3 .8 3.5 2.4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>',
-      research: '<path d="M6 2.2h4M8 2.2v2.2M5.2 13.2h5.6c.7 0 1.2-.6 1-1.3L10.2 7.2H5.8L4.2 11.9c-.2.7.3 1.3 1 1.3z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M6.2 9.2h3.6" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>',
-      course: '<path d="M2.2 3.4 8 1.8l5.8 1.6v7.2L8 12.2 2.2 10.6z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M8 1.8v10.4" fill="none" stroke="currentColor" stroke-width="1.3"/>',
+      personal: ['M858.5 763.6c-18.9-44.8-46.1-85-80.6-119.5-34.5-34.5-74.7-61.6-119.5-80.6-0.4-0.2-0.8-0.3-1.2-0.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-0.4 0.2-0.8 0.3-1.2 0.5-44.8 18.9-85 46-119.5 80.6-34.5 34.5-61.6 74.7-80.6 119.5C146.9 807.5 137 854 136 901.8c-0.1 4.5 3.5 8.2 8 8.2h60c4.4 0 7.9-3.5 8-7.8 2-77.2 33-149.5 87.8-204.3 56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c0.1 4.4 3.6 7.8 8 7.8h60c4.5 0 8.1-3.7 8-8.2-1-47.8-10.9-94.3-29.5-138.2zM512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534z'],
+      wuhan: ['M824.2 699.9c-25.4-25.4-54.7-45.7-86.4-60.4C783.1 602.8 812 546.8 812 484c0-110.8-92.4-201.7-203.2-200-109.1 1.7-197 90.6-197 200 0 62.8 29 118.8 74.2 155.5-31.7 14.7-60.9 34.9-86.4 60.4C345 754.6 314 826.8 312 903.8c-0.1 4.5 3.5 8.2 8 8.2h56c4.3 0 7.9-3.4 8-7.7 1.9-58 25.4-112.3 66.7-153.5C493.8 707.7 551.1 684 612 684c60.9 0 118.2 23.7 161.3 66.8C814.5 792 838 846.3 840 904.3c0.1 4.3 3.7 7.7 8 7.7h56c4.5 0 8.1-3.7 8-8.2-2-77-33-149.2-87.8-203.9zM612 612c-34.2 0-66.4-13.3-90.5-37.5-24.5-24.5-37.9-57.1-37.5-91.8 0.3-32.8 13.4-64.5 36.3-88 24-24.6 56.1-38.3 90.4-38.7 33.9-0.3 66.8 12.9 91 36.6 24.8 24.3 38.4 56.8 38.4 91.4 0 34.2-13.3 66.3-37.5 90.5-24.2 24.2-56.4 37.5-90.6 37.5z', 'M361.5 510.4c-0.9-8.7-1.4-17.5-1.4-26.4 0-15.9 1.5-31.4 4.3-46.5 0.7-3.6-1.2-7.3-4.5-8.8-13.6-6.1-26.1-14.5-36.9-25.1-25.8-25.2-39.7-59.3-38.7-95.4 0.9-32.1 13.8-62.6 36.3-85.6 24.7-25.3 57.9-39.1 93.2-38.7 31.9 0.3 62.7 12.6 86 34.4 7.9 7.4 14.7 15.6 20.4 24.4 2 3.1 5.9 4.4 9.3 3.2 17.6-6.1 36.2-10.4 55.3-12.4 5.6-0.6 8.8-6.6 6.3-11.6-32.5-64.3-98.9-108.7-175.7-109.9-110.9-1.7-203.3 89.2-203.3 199.9 0 62.8 28.9 118.8 74.2 155.5-31.8 14.7-61.1 35-86.5 60.4-54.8 54.7-85.8 126.9-87.8 204-0.1 4.5 3.5 8.2 8 8.2h56.1c4.3 0 7.9-3.4 8-7.7 1.9-58 25.4-112.3 66.7-153.5 29.4-29.4 65.4-49.8 104.7-59.7 3.9-1 6.5-4.7 6-8.7z'],
+      research: ['M552 472m-40 0a40 40 0 1 0 80 0 40 40 0 1 0-80 0Z', 'M879 824.9L696.3 352V178H768v-68H256v68h71.7v174L145 824.9c-2.8 7.4-4.3 15.2-4.3 23.1 0 35.3 28.7 64 64 64h614.6c7.9 0 15.7-1.5 23.1-4.3 33-12.7 49.4-49.8 36.6-82.8zM395.7 364.7V180h232.6v184.7L719.2 600c-20.7-5.3-42.1-8-63.9-8-61.2 0-119.2 21.5-165.3 60-33.9 28.2-76.3 43.9-121.3 43.9-32.7 0-64.1-8.3-91.8-23.7l118.8-307.5zM210.5 844l41.7-107.8c35.7 18.1 75.4 27.8 116.6 27.8 61.2 0 119.2-21.5 165.3-60 33.9-28.2 76.3-43.9 121.3-43.9 35 0 68.4 9.5 97.6 27.1L813.5 844h-603z'],
+      course: ['M832 64H192c-17.7 0-32 14.3-32 32v832c0 17.7 14.3 32 32 32h640c17.7 0 32-14.3 32-32V96c0-17.7-14.3-32-32-32z m-260 72h96v209.9L621.5 312 572 347.4V136z m220 752H232V136h280v296.9c0 3.3 1 6.6 3 9.3 5.1 7.2 15.1 8.9 22.3 3.7l83.8-59.9 81.4 59.4c2.7 2 6 3.1 9.4 3.1 8.8 0 16-7.2 16-16V136h64v752z'],
     };
-    return `<svg class="kb-glyph" viewBox="0 0 16 16" aria-hidden="true">${paths[id] || paths.personal}</svg>`;
+    return kbGlyph(paths[id] || paths.personal);
   }
   function kbLaneOf(ev) {
     if (ev.kind === 'desk' && ev.item && ev.item.lane) return ev.item.lane;
@@ -11108,13 +11113,13 @@
   }
   function kbTaskIcon(task) {
     const paths = {
-      lecture: '<circle cx="8" cy="8" r="5.2" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 5.4V8l1.8 1.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>',
-      reading: '<path d="M4 3.2h5.2v9.6H4zM8.8 3.2H11.6v9.6H8.8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>',
-      reply: '<path d="M3.2 4.2h9.6v6.2H3.2z" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="m3.6 4.6 4.4 3.2 4.4-3.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>',
-      occupied: '<path d="M4 8h8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>',
-      task: '<path d="M4 5.2h8M4 8h8M4 10.8h5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>',
+      lecture: ['M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64z m0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z', 'M686.7 638.6L544.1 535.5V288c0-4.4-3.6-8-8-8H488c-4.4 0-8 3.6-8 8v275.4c0 2.6 1.2 5 3.3 6.5l165.4 120.6c3.6 2.6 8.6 1.8 11.2-1.7l28.6-39c2.6-3.7 1.8-8.7-1.8-11.2z'],
+      reading: ['M928 161H699.2c-49.1 0-97.1 14.1-138.4 40.7L512 233l-48.8-31.3C422 175.1 373.9 161 324.8 161H96c-17.7 0-32 14.3-32 32v568c0 17.7 14.3 32 32 32h228.8c49.1 0 97.1 14.1 138.4 40.7l44.4 28.6c1.3 0.8 2.8 1.3 4.3 1.3s3-0.4 4.3-1.3l44.4-28.6C602 807.1 650.1 793 699.2 793H928c17.7 0 32-14.3 32-32V193c0-17.7-14.3-32-32-32zM324.8 721H136V233h188.8c35.4 0 69.8 10.1 99.5 29.2l48.8 31.3 6.9 4.5v462c-47.6-25.6-100.8-39-155.2-39z m563.2 0H699.2c-54.4 0-107.6 13.4-155.2 39V298l6.9-4.5 48.8-31.3c29.7-19.1 64.1-29.2 99.5-29.2H888v488z', 'M396.9 361H211.1c-3.9 0-7.1 3.4-7.1 7.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c0.1-4.1-3.1-7.5-7-7.5zM620 368.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c0-4.1-3.2-7.5-7.1-7.5H627.1c-3.9 0-7.1 3.4-7.1 7.5zM396.9 501H211.1c-3.9 0-7.1 3.4-7.1 7.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c0.1-4.1-3.1-7.5-7-7.5zM812.9 501H627.1c-3.9 0-7.1 3.4-7.1 7.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c0.1-4.1-3.1-7.5-7-7.5z'],
+      reply: ['M928 160H96c-17.7 0-32 14.3-32 32v640c0 17.7 14.3 32 32 32h832c17.7 0 32-14.3 32-32V192c0-17.7-14.3-32-32-32z m-40 110.8V792H136V270.8l-27.6-21.5 39.3-50.5 42.8 33.3h643.1l42.8-33.3 39.3 50.5-27.7 21.5z', 'M833.6 232L512 482 190.4 232l-42.8-33.3-39.3 50.5 27.6 21.5 341.6 265.6c20.2 15.7 48.5 15.7 68.7 0L888 270.8l27.6-21.5-39.3-50.5-42.7 33.2z'],
+      occupied: ['M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64z m0 820c-205.4 0-372-166.6-372-372 0-89 31.3-170.8 83.5-234.8l523.3 523.3C682.8 852.7 601 884 512 884z m288.5-137.2L277.2 223.5C341.2 171.3 423 140 512 140c205.4 0 372 166.6 372 372 0 89-31.3 170.8-83.5 234.8z'],
+      task: ['M912 192H328c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h584c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM912 476H328c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h584c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM912 760H328c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h584c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8z', 'M160 228m-56 0a56 56 0 1 0 112 0 56 56 0 1 0-112 0Z', 'M160 512m-56 0a56 56 0 1 0 112 0 56 56 0 1 0-112 0Z', 'M160 796m-56 0a56 56 0 1 0 112 0 56 56 0 1 0-112 0Z'],
     };
-    return `<svg viewBox="0 0 16 16" aria-hidden="true">${paths[task] || paths.task}</svg>`;
+    return kbGlyph(paths[task] || paths.task);
   }
   function kbSeed() {
     const box = kbBox();
@@ -19109,7 +19114,7 @@ function makeInvite(email) {
 }
 
 function noticeIcon() {
-  return '<svg class="notice" viewBox="-96 -96 1216 1216" aria-hidden="true"><path fill="currentColor" d="M460.985121 202.831065H191.459353c-31.00135 0-55.689821 30.864855-55.689821 60.364763v641.132479c0 29.51697 25.166203 53.437659 56.150491 53.437659h494.144792c31.00135 0 65.329757-25.42213 65.329757-54.9391V484.265991h67.377176v420.062316c0 65.278571-64.459603 119.671693-132.706933 119.671693H191.920023c-68.230268 0-123.527667-52.891681-123.527668-118.170252V261.694387c0-65.278571 54.819668-125.097356 123.066998-125.097356H460.985121v66.234034z m102.370995 344.563706c18.614459-0.136495 33.816552 14.570805 33.953046 32.86109 0.153556 18.290284-14.826732 33.23645-33.441191 33.372944H271.394038c-18.597397 0.136495-33.79949-14.570805-33.953046-32.861089-0.136495-18.290284 14.843794-33.23645 33.441191-33.372945H563.373178z m-46.118133-205.595081c18.597397-0.136495 33.79949 14.587867 33.953046 32.878151 0.136495 18.290284-14.843794 33.23645-33.441191 33.372945h-247.56719c-18.614459 0.136495-33.816552-14.570805-33.953046-32.878152-0.153556-18.290284 14.826732-33.219388 33.441191-33.355882h247.56719zM385.264708 733.658797c18.597397-0.136495 33.79949 14.570805 33.953047 32.878151 0.136495 18.290284-14.843794 33.219388-33.441192 33.355882H272.963727c-18.597397 0.153556-33.816552-14.570805-33.953047-32.861089-0.136495-18.290284 14.843794-33.23645 33.441192-33.372944h112.812836z m245.861006-700.217605v110.407118c0.153556 18.290284-14.826732 33.23645-33.441191 33.372944-18.597397 0.136495-33.782428-14.587867-33.935985-32.878151V33.458253c0-18.307346 15.08266-33.134079 33.697119-33.134078 18.597397 0 33.697119 14.843794 33.697119 33.117017z m290.733626 357.957245H809.558358c-18.597397 0-33.697119-14.843794-33.697119-33.134079s15.08266-33.117017 33.697119-33.117016h112.300982c18.597397 0 33.697119 14.826732 33.697119 33.099955 0 18.307346-15.08266 33.134079-33.697119 33.134078z m-62.446307-279.677558a32.724595 32.724595 0 0 1 0.034124 46.851792l-79.491078 78.074946a34.106603 34.106603 0 0 1-47.602513-1.689122 32.707533 32.707533 0 0 1 0-45.111485l79.371645-78.126131a34.106603 34.106603 0 0 1 47.602513 0h0.102371z"/></svg>';
+  return '<svg class="notice" viewBox="-164 -96 1216 1216" aria-hidden="true"><path fill="currentColor" d="M460.985121 202.831065H191.459353c-31.00135 0-55.689821 30.864855-55.689821 60.364763v641.132479c0 29.51697 25.166203 53.437659 56.150491 53.437659h494.144792c31.00135 0 65.329757-25.42213 65.329757-54.9391V484.265991h67.377176v420.062316c0 65.278571-64.459603 119.671693-132.706933 119.671693H191.920023c-68.230268 0-123.527667-52.891681-123.527668-118.170252V261.694387c0-65.278571 54.819668-125.097356 123.066998-125.097356H460.985121v66.234034z m102.370995 344.563706c18.614459-0.136495 33.816552 14.570805 33.953046 32.86109 0.153556 18.290284-14.826732 33.23645-33.441191 33.372944H271.394038c-18.597397 0.136495-33.79949-14.570805-33.953046-32.861089-0.136495-18.290284 14.843794-33.23645 33.441191-33.372945H563.373178z m-46.118133-205.595081c18.597397-0.136495 33.79949 14.587867 33.953046 32.878151 0.136495 18.290284-14.843794 33.23645-33.441191 33.372945h-247.56719c-18.614459 0.136495-33.816552-14.570805-33.953046-32.878152-0.153556-18.290284 14.826732-33.219388 33.441191-33.355882h247.56719zM385.264708 733.658797c18.597397-0.136495 33.79949 14.570805 33.953047 32.878151 0.136495 18.290284-14.843794 33.219388-33.441192 33.355882H272.963727c-18.597397 0.153556-33.816552-14.570805-33.953047-32.861089-0.136495-18.290284 14.843794-33.23645 33.441192-33.372944h112.812836z m245.861006-700.217605v110.407118c0.153556 18.290284-14.826732 33.23645-33.441191 33.372944-18.597397 0.136495-33.782428-14.587867-33.935985-32.878151V33.458253c0-18.307346 15.08266-33.134079 33.697119-33.134078 18.597397 0 33.697119 14.843794 33.697119 33.117017z m290.733626 357.957245H809.558358c-18.597397 0-33.697119-14.843794-33.697119-33.134079s15.08266-33.117017 33.697119-33.117016h112.300982c18.597397 0 33.697119 14.826732 33.697119 33.099955 0 18.307346-15.08266 33.134079-33.697119 33.134078z m-62.446307-279.677558a32.724595 32.724595 0 0 1 0.034124 46.851792l-79.491078 78.074946a34.106603 34.106603 0 0 1-47.602513-1.689122 32.707533 32.707533 0 0 1 0-45.111485l79.371645-78.126131a34.106603 34.106603 0 0 1 47.602513 0h0.102371z"/></svg>';
 }
 function noticeItems() {
   const items = [];
@@ -19698,7 +19703,7 @@ function openModal(kind, extra) {
     $('sheetTitle').textContent = 'Request to join';
     $('sheetLead').textContent = g ? `${g.name} · ${g.number}` : '';
     showGo('Send request');
-    $('sheetBody').innerHTML = g ? `<p class="lead">${esc(g.description || 'No description yet.')}</p><label class="field">${fieldHint('Join request note', 'optional')}<textarea id="joinReason" maxlength="240" placeholder="Tell the group what you want to work on"></textarea></label><p class="lead">You are not a member until the request is approved.</p>` : '';
+    $('sheetBody').innerHTML = g ? `<p class="lead">${esc(g.description || 'No description yet.')}</p><label class="field">${fieldHint('Join request note')}<textarea id="joinReason" maxlength="240" placeholder="Tell the group what you want to work on"></textarea></label><p class="lead">Send this request first. You are not a member until it is approved.</p>` : '';
     $('joinReason')?.focus();
   } else if (kind === 'leave') {
     const c = current();
@@ -19841,11 +19846,10 @@ function finderCard(g) {
   const slug = g.slug ? `<button type="button" class="slug-btn" data-slug-filter="${esc(g.slug)}">${esc(g.slug)}</button>` : '';
   let label = 'Join';
   let disabled = false;
-  let action = 'data-join';
+  let action = 'data-apply';
   if (g.joined) { label = 'Joined'; disabled = true; action = ''; }
   else if (g.requested) { label = 'Requested'; disabled = true; action = ''; }
   else if (g.policy === 'invite') { label = 'Invite-only'; disabled = true; action = ''; }
-  else if (g.policy === 'approval') { label = 'Join'; action = 'data-apply'; }
   const name = g.joined ? `<button type="button" class="text-btn" data-open-found="${g.ref.id}">${esc(g.name)}</button>` : `<b>${esc(g.name)}</b>`;
   const attr = action ? `${action}="${g.ref.id}"` : '';
   const peopleWord = g.count === 1 ? 'member' : 'members';
@@ -19956,9 +19960,15 @@ function confirmModal() {
   if (state.modal === 'create') return createGroup();
   if (state.modal === 'apply') {
     const g = findNotJoined(state.pendingJoinId);
+    const reason = $('joinReason')?.value.trim() || '';
     if (!g || g.requested) return;
+    if (!reason) {
+      $('sheetErr').textContent = 'Write a short note before you send the request.';
+      $('joinReason')?.focus();
+      return;
+    }
     g.requested = true;
-    g.requestReason = $('joinReason')?.value.trim() || '';
+    g.requestReason = reason;
     state.modalBack = 'finder';
     closeModal();
     toast(`Request sent for ${g.name}. It stays off your list until you are approved.`);
@@ -20738,16 +20748,7 @@ $('sheet').addEventListener('click', (e) => {
   const apply = e.target.closest('[data-apply]');
   if (apply) { state.pendingJoinId = apply.dataset.apply; openModal('apply', { back: 'finder' }); return; }
   const join = e.target.closest('[data-join]');
-  if (join) {
-    const g = findNotJoined(join.dataset.join);
-    if (!g || g.policy !== 'anyone') return;
-    const chat = claimGroup(g);
-    state.modalBack = null;
-    closeModal();
-    openChat(chat.id);
-    toast('You joined. The group is in Team, even with no messages.');
-    return;
-  }
+  if (join) { state.pendingJoinId = join.dataset.join; openModal('apply', { back: 'finder' }); return; }
   if (e.target.closest('[data-add-email]')) { addEmailRow($('sheetBody')); return; }
   if (e.target.closest('[data-del-email]')) { removeEmailRow($('sheetBody'), e.target.closest('.email-row')); return; }
 });
