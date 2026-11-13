@@ -2297,7 +2297,29 @@
   html[data-theme="blue"] #tail-home .kb-bar button:hover { background: #f2f2f4; }
   html[data-theme="blue"] #tail-home .kb-bar button[aria-pressed="true"] { background: #fff; box-shadow: 0 1px 2px rgba(20, 24, 28, .12); }
   html[data-theme="blue"] #tail-home .kb-range { font-size: 13px; font-weight: 650; color: #1d1d1f; padding: 0 2px; }
-  html[data-theme="blue"] #tail-home .kb-seg { display: flex; align-items: center; height: 28px; padding: 2px; border-radius: 8px; background: #f2f2f4; }
+  html[data-theme="blue"] #tail-home .kb-seg {
+    position: relative; display: flex; align-items: center; height: 32px; padding: 3px; border-radius: 999px; background: #f2f2f4;
+  }
+  html[data-theme="blue"] #tail-home .kb-seg::before {
+    content: "";
+    position: absolute; top: 3px; bottom: 3px; left: 3px; width: calc((100% - 6px) / 3);
+    border-radius: 999px; background: #fff; box-shadow: 0 1px 3px rgba(20, 24, 28, .12);
+    transform: translateX(calc(var(--kb-i, 1) * 100%));
+    transition: transform .46s cubic-bezier(.22, 1, .36, 1);
+  }
+  html[data-theme="blue"] #tail-home .kb-seg.is-set::before { transition: none; }
+  html[data-theme="blue"] #tail-home .kb-seg[data-span="day"] { --kb-i: 0; }
+  html[data-theme="blue"] #tail-home .kb-seg[data-span="week"] { --kb-i: 1; }
+  html[data-theme="blue"] #tail-home .kb-seg[data-span="month"] { --kb-i: 2; }
+  html[data-theme="blue"] #tail-home .kb-seg button {
+    position: relative; z-index: 1; flex: 1; min-width: 52px; border-radius: 999px; color: #8e8e93;
+    transition: color .18s ease;
+  }
+  html[data-theme="blue"] #tail-home .kb-seg button:hover { background: transparent; }
+  html[data-theme="blue"] #tail-home .kb-seg button[aria-pressed="true"] {
+    background: transparent; box-shadow: none; color: #1d1d1f;
+  }
+  html[data-theme="blue"] #tail-home .kb-pane.is-swap { animation: tl-swap .46s cubic-bezier(.22, 1, .36, 1); }
   html[data-theme="blue"] #tail-home .kb-add { margin-left: 4px; background: var(--green) !important; color: #fff !important; }
   html[data-theme="blue"] #tail-home .kb-split { flex: 1; min-height: 0; display: flex; border-top: 1px solid #ededec; }
   html[data-theme="blue"] #tail-home .kb-pane { flex: 1; min-width: 0; overflow: auto; }
@@ -7575,11 +7597,6 @@
   .row-bot .mute { margin-left: 6px; }
   .face.notice-face { display: flex; align-items: center; justify-content: center; }
   .face.notice-face .notice { width: 44px; height: 44px; display: block; color: #121649; }
-  #teamHost .notice-line { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; width: 100%; margin: 0; padding: 12px 16px; border: 0; border-bottom: 1px solid #ededed; background: transparent; text-align: left; cursor: pointer; }
-  #teamHost .notice-line b { font-size: 15px; font-weight: 500; color: #191919; }
-  #teamHost .notice-line span { font-size: 13px; line-height: 18px; color: #8b919a; }
-  #teamHost .notice-line time { font-size: 12px; color: #b2b2b2; }
-  #teamHost .notice-line:hover { background: #f4f4f4; }
   .pin { width: 12px; height: 12px; color: var(--green); flex: none; }
   .badge { min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; background: var(--green); color: #fff; font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; }
   .row .dot { position: absolute; top: -3px; right: -3px; width: 10px; height: 10px; border-radius: 50%; background: #fa5151; border: 2px solid #fff; box-sizing: content-box; }
@@ -8409,6 +8426,13 @@
   html[data-theme="blue"] #teamHost .thread-head,
   html[data-theme="blue"] #teamHost .announce,
   html[data-theme="blue"] #teamHost .log { background: #fff; }
+  #teamHost .notice-line { display: flex; flex-direction: column; align-items: stretch; gap: 2px; width: 100%; margin: 0; padding: 12px 16px; border: 0; border-bottom: 1px solid #ededed; background: #fff; text-align: left; cursor: pointer; }
+  #teamHost .notice-line .notice-top { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  #teamHost .notice-line b { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 15px; font-weight: 500; line-height: 20px; color: #191919; }
+  #teamHost .notice-line time { flex: none; font-size: 12px; line-height: 20px; color: #b2b2b2; }
+  #teamHost .notice-line .notice-preview { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; line-height: 18px; color: #8b919a; }
+  #teamHost .notice-line:hover { background: #f4f4f4; }
+  #teamHost .log:has(.notice-line) { gap: 0; padding: 0; }
   html[data-theme="blue"] #teamHost .bubble {
     width: fit-content;
     max-width: 100%;
@@ -11229,9 +11253,24 @@
     host.innerHTML = `<div class="kb kb-sched"><div class="kb-bar kb-calbar"><b class="kb-month-title">${kbMonthTitle(days)}</b><span style="flex:1"></span><div class="kb-seg">${spans}</div><button type="button" data-kb="today">Today</button><button type="button" data-kb="prev" aria-label="Previous">‹</button><button type="button" data-kb="next" aria-label="Next">›</button><button type="button" class="kb-plus" data-kb="add" aria-label="New event">+</button></div><div class="kb-split"><div class="kb-pane">${body}</div>${kbLegend()}</div></div>`;
     const scroller = host.querySelector('.nc-scroll');
     if (scroller) scroller.scrollTop = kept != null && kept !== '' ? Number(kept) : 6 * NC_H;
+    const seg = host.querySelector('.kb-seg');
+    const to = box.span;
+    const from = box.spanFrom || to;
+    if (seg) {
+      if (box.swap && from !== to) {
+        seg.classList.add('is-set');
+        seg.dataset.span = from;
+        void seg.offsetWidth;
+        seg.classList.remove('is-set');
+        seg.dataset.span = to;
+      } else seg.dataset.span = to;
+    }
+    if (box.swap) host.querySelector('.kb-pane')?.classList.add('is-swap');
+    box.swap = false;
   }
   function kbAct(act, val) {
     const box = kbBox();
+    const fromSpan = box.span;
     const focus = new Date(box.focus.getFullYear(), box.focus.getMonth(), box.focus.getDate());
     if (act === 'today') box.focus = new Date();
     if (act === 'prev' || act === 'next') {
@@ -11251,6 +11290,8 @@
       ncPlaceDraft(todoDateIso(box.focus), 9 * 60, 60, true);
       return;
     }
+    box.spanFrom = fromSpan;
+    box.swap = act === 'prev' || act === 'next' || act === 'today' || (act === 'span' && val !== fromSpan);
     paintHomeTimeline();
   }
   function kbPlace(id, who, iso) {
@@ -19263,7 +19304,7 @@ function renderLog(scroll) {
   if (state.notice) {
     const items = noticeItems();
     $('log').innerHTML = items.length
-      ? items.map((c) => `<button type="button" class="notice-line" data-open="${c.id}"><b>${esc(c.name)}</b><span>${esc(preview(c))}</span><time>${esc(c.time)}</time></button>`).join('')
+      ? items.map((c) => `<button type="button" class="notice-line" data-open="${c.id}"><span class="notice-top"><b>${esc(c.name)}</b><time>${esc(c.time)}</time></span><span class="notice-preview">${esc(preview(c))}</span></button>`).join('')
       : '<p class="sys">No group notifications</p>';
     return;
   }
