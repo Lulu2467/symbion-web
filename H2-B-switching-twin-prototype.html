@@ -2396,9 +2396,19 @@
   html[data-theme="blue"] #tail-home .kd-title {
     display: flex; align-items: flex-start; gap: 8px; min-height: 40px; padding: 2px 12px 10px; border-bottom: 1px solid #ededec;
   }
+  html[data-theme="blue"] #tail-home .kd-title b,
+  html[data-theme="blue"] #tail-home .kd-name {
+    min-width: 0; width: 100%; font-size: 15px; font-weight: 650; line-height: 20px; color: #1d1d1f;
+  }
   html[data-theme="blue"] #tail-home .kd-title b {
-    min-width: 0; font-size: 15px; font-weight: 650; line-height: 20px; color: #1d1d1f;
     display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  html[data-theme="blue"] #tail-home .kd-name {
+    border: 0; padding: 0; background: transparent; font: inherit; font-size: 15px; font-weight: 650; outline: none;
+  }
+  html[data-theme="blue"] #tail-home .kd-name::placeholder { color: #a1a6ac; font-weight: 500; }
+  html[data-theme="blue"] #tail-home .nc-all-draft {
+    display: block; border-radius: 4px; padding: 2px 6px; font-size: 12px; font-weight: 600; background: #d3e5ef; color: #183347;
   }
   html[data-theme="blue"] #tail-home .kd-mark { width: 18px; height: 18px; margin-top: 1px; display: flex; align-items: center; justify-content: center; flex: none; }
   html[data-theme="blue"] #tail-home .kd-mark svg { width: 16px; height: 16px; }
@@ -10898,7 +10908,7 @@
     if (!draft) {
       draft = document.createElement('div');
       draft.className = 'nc-draft';
-      draft.innerHTML = '<input class="nc-name" placeholder="Event name" aria-label="Event name">';
+      draft.innerHTML = '<b class="nc-draft-title">Event name</b>';
     }
     col.appendChild(draft);
     draft.style.top = `${(start / 60) * NC_H}px`;
@@ -10949,7 +10959,7 @@
   }
   function ncPointerDown(e) {
     if (e.button !== 0) return;
-    if (e.target.closest('.nc-tool, .nc-pop, .nc-name, .kb-bar, .kb-legend')) return;
+    if (e.target.closest('.nc-tool, .nc-pop, .nc-name, .nc-draft, .nc-all-draft, .kb-bar, .kb-legend')) return;
     const sched = e.target.closest('.kb-sched');
     const chip = e.target.closest('.nc-chip');
     if (chip) {
@@ -11018,7 +11028,7 @@
     if (drag.kind === 'create') {
       const dur = drag.moved ? (drag.dropDur || 60) : 60;
       const start = drag.moved ? (drag.dropStart ?? drag.start) : drag.start;
-      ncPlaceDraft(drag.iso, start, dur, true);
+      kbCreateTimed(drag.iso, start, dur);
       return;
     }
     if (!drag.moved) {
@@ -11051,9 +11061,26 @@
     host.addEventListener('pointerup', ncPointerUp);
     host.addEventListener('pointercancel', ncPointerUp);
     host.addEventListener('keydown', (e) => {
-      if (!e.target.classList.contains('nc-name')) return;
-      if (e.key === 'Enter') { e.preventDefault(); ncCommitName(e.target); }
-      if (e.key === 'Escape') { e.target.dataset.done = '1'; e.target.closest('.nc-draft')?.remove(); }
+      if (e.target.classList.contains('nc-name')) {
+        if (e.key === 'Enter') { e.preventDefault(); ncCommitName(e.target); }
+        if (e.key === 'Escape') { e.target.dataset.done = '1'; e.target.closest('.nc-draft')?.remove(); }
+        return;
+      }
+      if (!e.target.classList.contains('kd-name')) return;
+      if (e.key === 'Enter') { e.preventDefault(); kbCommitDraft(true); }
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        if (kbBox().draft) kbBox().draft.title = '';
+        kbCommitDraft(false);
+      }
+    });
+    host.addEventListener('input', (e) => {
+      if (!e.target.classList.contains('kd-name') || !kbBox().draft) return;
+      kbBox().draft.title = e.target.value;
+      const label = document.querySelector('#tlBody .nc-draft-title');
+      if (label) label.textContent = e.target.value || 'Event name';
+      const all = document.querySelector('#tlBody .nc-all-draft');
+      if (all) all.textContent = e.target.value || 'Event name';
     });
     host.addEventListener('focusout', (e) => {
       if (e.target.classList.contains('nc-name')) ncCommitName(e.target);
@@ -11092,41 +11119,12 @@
       if (ev.target.closest('[data-kb-menu="create"]')) kbCreateFromPoint(kbShowMenu.point);
     });
   }
-  function kbAllDayDraft(iso) {
-    const cols = [...document.querySelectorAll('#tlBody .nc-col')];
-    const idx = cols.findIndex((col) => col.dataset.iso === iso);
-    const cell = document.querySelectorAll('#tlBody .nc-all-cell')[idx];
-    if (!cell) return;
-    const input = document.createElement('input');
-    input.className = 'nc-all-name';
-    input.placeholder = 'Event name';
-    input.setAttribute('aria-label', 'Event name');
-    cell.appendChild(input);
-    input.focus();
-    const commit = () => {
-      if (input.dataset.done) return;
-      input.dataset.done = '1';
-      const title = input.value.trim();
-      input.remove();
-      if (!title) return;
-      remDay = iso;
-      tlAddTime = '';
-      tlCreateItem(title);
-      tlAddTime = '10:00';
-      syncRemBoard();
-    };
-    input.addEventListener('keydown', (ev) => {
-      if (ev.key === 'Enter') { ev.preventDefault(); commit(); }
-      if (ev.key === 'Escape') { input.dataset.done = '1'; input.remove(); }
-    });
-    input.addEventListener('focusout', commit);
-  }
   function kbCreateFromPoint(point) {
     kbCloseMenu();
     if (!point) return;
     kbShowMenu.point = null;
-    if (point.allDay) { kbAllDayDraft(point.iso); return; }
-    ncPlaceDraft(point.iso, point.start, 60, true);
+    if (point.allDay) kbCreateAllDay(point.iso);
+    else kbCreateTimed(point.iso, point.start, 60);
   }
   function kbContextMenu(e) {
     if (document.documentElement.dataset.theme !== 'blue') return;
@@ -11385,7 +11383,62 @@
   function kbEventKey(ev) {
     return (ev.iso || "") + "|" + ev.title + "|" + ev.start + "|" + (ev.timed ? 1 : 0) + "|" + (ev.task || "");
   }
-  function kbDetail(ev) {
+  function kbDraftEvent(draft) {
+    return { iso: draft.iso, title: draft.title || "", start: draft.allDay ? 0 : draft.start, dur: draft.dur || 60, timed: !draft.allDay, task: "task", lane: "personal", note: "" };
+  }
+  function kbFinishDraft() {
+    const prev = kbBox().draft;
+    if (!prev || prev.done) return null;
+    prev.done = true;
+    const title = (prev.title || "").trim();
+    const saved = title ? { title, iso: prev.iso, start: prev.allDay ? 0 : prev.start, timed: !prev.allDay } : null;
+    kbBox().draft = null;
+    document.querySelector("#tlBody .nc-draft")?.remove();
+    document.querySelector("#tlBody .nc-all-draft")?.remove();
+    if (!saved) return null;
+    remDay = prev.iso;
+    if (prev.allDay) { tlAddTime = ""; tlCreateItem(title); tlAddTime = "10:00"; }
+    else { tlAddTime = tlClock(prev.start); tlAddDur = prev.dur || 60; tlCreateItem(title); }
+    return saved;
+  }
+  function kbRevealSaved(saved) {
+    if (!saved) return;
+    const ev = [...tlCache].reverse().find((item) => item.title === saved.title && item.iso === saved.iso);
+    if (!ev) return;
+    kbBox().open = kbEventKey(ev);
+    kbPaintSide();
+  }
+  function kbCommitDraft(keepOpen) {
+    const saved = kbFinishDraft();
+    if (!saved) { kbCloseDetail(); return; }
+    syncRemBoard();
+    if (keepOpen) kbRevealSaved(saved);
+  }
+  function kbShowDraft(draft) {
+    kbBox().draft = draft;
+    kbBox().open = null;
+    kbPaintSide();
+    document.querySelector("#tlBody .kd-name")?.focus();
+  }
+  function kbCreateTimed(iso, start, dur) {
+    const saved = kbFinishDraft();
+    if (saved) syncRemBoard();
+    ncPlaceDraft(iso, start, dur || 60, false);
+    kbShowDraft({ iso, start, dur: dur || 60, allDay: false, title: "" });
+  }
+  function kbCreateAllDay(iso) {
+    const saved = kbFinishDraft();
+    if (saved) syncRemBoard();
+    const cols = [...document.querySelectorAll("#tlBody .nc-col")];
+    const cell = document.querySelectorAll("#tlBody .nc-all-cell")[cols.findIndex((col) => col.dataset.iso === iso)];
+    if (!cell) return;
+    const chip = document.createElement("div");
+    chip.className = "nc-all-draft";
+    chip.textContent = "Event name";
+    cell.appendChild(chip);
+    kbShowDraft({ iso, start: 0, dur: 60, allDay: true, title: "" });
+  }
+  function kbDetail(ev, editing) {
     const end = ev.start + (ev.dur || 60);
     const when = ev.timed
       ? '<div class="kd-row">' + kbTaskIcon("lecture") + "<span>" + kbHm(ev.start) + '</span><span class="kd-arrow">→</span><span>' + kbHm(end) + '</span><span class="kd-time">' + kbDurLabel(ev.dur || 60) + "</span></div>"
@@ -11394,9 +11447,14 @@
     const group = ev.lane === "occupied" ? "Occupied" : kbLaneName(ev.lane || "personal");
     const color = kbLaneColor(ev.lane || "personal");
     const off = (icon, label) => '<div class="kd-row is-off">' + (icon === "user" ? kbIcon("personal") : kdIcon(icon)) + "<span>" + label + "</span></div>";
-    return '<aside class="kb-legend kb-detail"><div class="kd-top"><span>Event</span>' + kdIcon("down") + '<span class="kd-more">' + kdIcon("ellipsis") + '</span></div><div class="kd-title"><i class="kd-mark" style="color:' + color + '">' + kbTaskIcon(ev.task || "task") + "</i><b>" + deskEsc(ev.title) + "</b></div>" + when + '<div class="kd-sub">' + deskEsc(kbDetailDate(ev)) + '</div><div class="kd-row"><i class="kd-tog' + (ev.timed ? "" : " is-on") + '"></i><span>All-day</span></div><div class="kd-row">' + kdIcon("earth") + "<span>" + deskEsc(kbTzPlace()) + "</span></div>" + off("sync", "Repeat") + '<div class="kd-gap"></div>' + off("user", "Participants") + off("video", "Conferencing") + off("file", "Add AI meeting notes") + off("location", "Location") + '<div class="kd-gap"></div>' + off("link", "Add links and attachments") + '<div class="kd-gap"></div><div class="kd-label">Description</div>' + note + '<div class="kd-gap"></div><div class="kd-row"><i class="kd-dot" style="background:' + color + '"></i><span>' + deskEsc(group) + '</span></div><div class="kd-row is-off kd-busy"><span>Busy</span><span class="kd-time">Default visibility</span></div>' + off("bell", "Reminders") + "</aside>";
+    const title = editing
+      ? '<input class="kd-name" value="' + deskEsc(ev.title) + '" placeholder="Event name" aria-label="Event name">'
+      : "<b>" + deskEsc(ev.title) + "</b>";
+    return '<aside class="kb-legend kb-detail"><div class="kd-top"><span>Event</span>' + kdIcon("down") + '<span class="kd-more">' + kdIcon("ellipsis") + '</span></div><div class="kd-title"><i class="kd-mark" style="color:' + color + '">' + kbTaskIcon(ev.task || "task") + "</i>" + title + "</div>" + when + '<div class="kd-sub">' + deskEsc(kbDetailDate(ev)) + '</div><div class="kd-row"><i class="kd-tog' + (ev.timed ? "" : " is-on") + '"></i><span>All-day</span></div><div class="kd-row">' + kdIcon("earth") + "<span>" + deskEsc(kbTzPlace()) + "</span></div>" + off("sync", "Repeat") + '<div class="kd-gap"></div>' + off("user", "Participants") + off("video", "Conferencing") + off("file", "Add AI meeting notes") + off("location", "Location") + '<div class="kd-gap"></div>' + off("link", "Add links and attachments") + '<div class="kd-gap"></div><div class="kd-label">Description</div>' + note + '<div class="kd-gap"></div><div class="kd-row"><i class="kd-dot" style="background:' + color + '"></i><span>' + deskEsc(group) + '</span></div><div class="kd-row is-off kd-busy"><span>Busy</span><span class="kd-time">Default visibility</span></div>' + off("bell", "Reminders") + "</aside>";
   }
   function kbSide() {
+    const draft = kbBox().draft;
+    if (draft && !draft.done) return kbDetail(kbDraftEvent(draft), true);
     const key = kbBox().open;
     const ev = key ? tlCache.find((item) => kbEventKey(item) === key) : null;
     return ev ? kbDetail(ev) : kbLegend();
@@ -11413,7 +11471,11 @@
   function kbOpenEvent(index) {
     const ev = tlCache[index];
     if (!ev) return;
-    kbBox().open = kbEventKey(ev);
+    const saved = kbFinishDraft();
+    if (saved) syncRemBoard();
+    const fresh = saved ? [...tlCache].reverse().find((item) => item.title === ev.title && item.iso === ev.iso && item.start === ev.start) : ev;
+    if (!fresh) return;
+    kbBox().open = kbEventKey(fresh);
     kbPaintSide();
   }
   function kbCloseDetail() {
@@ -11425,9 +11487,11 @@
     if (kbBindDetail.done) return;
     kbBindDetail.done = true;
     document.addEventListener("pointerdown", (e) => {
+      if (e.button !== 0) return;
       if (document.documentElement.dataset.theme !== "blue") return;
+      if (e.target.closest(".nc-ev, .nc-chip, .kb-legend, .nc-draft, .nc-all-draft, .kb-plus, .kb-menu")) return;
+      if (kbBox().draft) { kbCommitDraft(false); return; }
       if (kbBox().open == null) return;
-      if (e.target.closest(".nc-ev, .nc-chip, .kb-legend")) return;
       kbCloseDetail();
     });
   }
@@ -11582,7 +11646,7 @@
         box.span = 'week';
         paintHomeTimeline();
       }
-      ncPlaceDraft(todoDateIso(box.focus), 9 * 60, 60, true);
+      kbCreateTimed(todoDateIso(box.focus), 9 * 60, 60);
       return;
     }
     box.spanFrom = fromSpan;
