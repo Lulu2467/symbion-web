@@ -2407,6 +2407,7 @@
   html[data-theme="blue"] #tail-home .kb-sched .nc-chip { display: flex; align-items: center; min-height: 18px; border-radius: 4px; }
   html[data-theme="blue"] #tail-home .kb-sched .nc-ev { border-radius: 6px; }
   html[data-theme="blue"] #tail-home .kb-bar { display: flex; align-items: center; gap: 6px; height: 36px; flex: none; }
+  html[data-theme="blue"] #tail-home .kb-bar.kb-calbar { height: auto; padding: 0 2px 16px; box-sizing: border-box; }
   html[data-theme="blue"] #tail-home .kb-bar button {
     height: 26px; padding: 0 8px; border: 0; border-radius: 6px; background: transparent;
     color: #37352f; font: inherit; font-size: 12px; font-weight: 550; cursor: pointer;
@@ -11955,7 +11956,7 @@
     const title = '<input class="kd-name" value="' + deskEsc(ev.title) + '" placeholder="Event name" aria-label="Event name">';
     const date = '<div class="kd-sub kd-date"><span>' + deskEsc(kbDetailDate(ev)) + '</span><input class="kd-date-input" type="date" value="' + deskEsc(ev.iso || "") + '" aria-label="Date"></div>';
     const all = '<button type="button" class="kd-row kd-allday" data-kd="allday"><i class="kd-tog' + (ev.timed ? "" : " is-on") + '"></i><span>All-day</span></button>';
-    return '<aside class="kb-legend kb-detail"><div class="kd-top"><span class="kd-more">' + kdIcon("ellipsis") + '</span></div><div class="kd-title">' + mark + title + "</div>" + iconMenu + when + date + all + '<div class="kd-row">' + kdIcon("earth") + "<span>" + deskEsc(kbTzPlace()) + "</span></div>" + off("sync", "Repeat") + '<div class="kd-gap"></div>' + off("user", "Participants") + off("video", "Conferencing") + '<div class="kd-gap"></div>' + off("link", "Add links and attachments") + '<div class="kd-gap"></div><div class="kd-label">Description</div>' + note + '<div class="kd-gap"></div><div class="kd-row"><i class="kd-dot" style="background:' + color + '"></i><span>' + deskEsc(group) + '</span></div><div class="kd-row is-off kd-busy"><span>Busy</span><span class="kd-time">Default visibility</span></div>' + off("bell", "Reminders") + "</aside>";
+    return '<aside class="kb-legend kb-detail"><div class="kd-top"><span class="kd-more">' + kdIcon("ellipsis") + '</span></div><div class="kd-title">' + mark + title + "</div>" + iconMenu + when + date + all + '<div class="kd-row">' + kdIcon("earth") + "<span>" + deskEsc(kbTzPlace()) + "</span></div>" + off("sync", "Repeat") + '<div class="kd-gap"></div>' + off("user", "Participants") + off("video", "Conferencing") + '<div class="kd-gap"></div><div class="kd-label">Description</div>' + note + '<div class="kd-gap"></div><div class="kd-row"><i class="kd-dot" style="background:' + color + '"></i><span>' + deskEsc(group) + '</span></div><div class="kd-row is-off kd-busy"><span>Busy</span><span class="kd-time">Default visibility</span></div>' + off("bell", "Reminders") + "</aside>";
   }
   function kbSide() {
     const draft = kbBox().draft;
