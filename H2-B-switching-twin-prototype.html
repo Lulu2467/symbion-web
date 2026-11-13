@@ -10624,8 +10624,9 @@
             <button type="button" class="search-clear" id="qClear" aria-label="Clear search"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M557.3 512l329.3-329.4a32 32 0 1 0-45.2-45.2L512 466.7 182.6 137.4a32 32 0 1 0-45.2 45.2L466.7 512 137.4 841.4a31.9 31.9 0 0 0 0 45.2 31.9 31.9 0 0 0 45.2 0L512 557.3l329.4 329.3a31.9 31.9 0 0 0 45.2 0 31.9 31.9 0 0 0 0-45.2z"/></svg></button>
           </label>
           <div class="plus-wrap">
-            <button type="button" class="icon-btn" id="plus" aria-label="Add a group" aria-haspopup="menu" aria-expanded="false" aria-controls="plusMenu"><svg class="plus-stroke" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><svg class="plus-glyph" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M668.734694 532.897959H355.265306c-11.493878 0-20.897959-9.404082-20.897959-20.897959s9.404082-20.897959 20.897959-20.897959h313.469388c11.493878 0 20.897959 9.404082 20.897959 20.897959s-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 689.632653c-11.493878 0-20.897959-9.404082-20.897959-20.897959V355.265306c0-11.493878 9.404082-20.897959 20.897959-20.897959s20.897959 9.404082 20.897959 20.897959v313.469388c0 11.493878-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 929.959184c-230.4 0-417.959184-187.559184-417.959184-417.959184s187.559184-417.959184 417.959184-417.959184 417.959184 187.559184 417.959184 417.959184-187.559184 417.959184-417.959184 417.959184z m0-794.122449c-207.412245 0-376.163265 168.75102-376.163265 376.163265s168.75102 376.163265 376.163265 376.163265 376.163265-168.75102 376.163265-376.163265-168.75102-376.163265-376.163265-376.163265z"/></svg></button>
+            <button type="button" class="icon-btn" id="plus" aria-label="Add a friend or group" aria-haspopup="menu" aria-expanded="false" aria-controls="plusMenu"><svg class="plus-stroke" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><svg class="plus-glyph" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M668.734694 532.897959H355.265306c-11.493878 0-20.897959-9.404082-20.897959-20.897959s9.404082-20.897959 20.897959-20.897959h313.469388c11.493878 0 20.897959 9.404082 20.897959 20.897959s-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 689.632653c-11.493878 0-20.897959-9.404082-20.897959-20.897959V355.265306c0-11.493878 9.404082-20.897959 20.897959-20.897959s20.897959 9.404082 20.897959 20.897959v313.469388c0 11.493878-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 929.959184c-230.4 0-417.959184-187.559184-417.959184-417.959184s187.559184-417.959184 417.959184-417.959184 417.959184 187.559184 417.959184 417.959184-187.559184 417.959184-417.959184 417.959184z m0-794.122449c-207.412245 0-376.163265 168.75102-376.163265 376.163265s168.75102 376.163265 376.163265 376.163265 376.163265-168.75102 376.163265-376.163265-168.75102-376.163265-376.163265-376.163265z"/></svg></button>
             <div class="menu plus-menu" id="plusMenu" hidden>
+              <button type="button" data-plus="friend">Add a friend</button>
               <button type="button" data-plus="join">Join an existing group</button>
               <button type="button" data-plus="create">Create a group</button>
             </div>
@@ -21052,7 +21053,7 @@ chats.forEach((c) => {
 
 const state = {
   id: 'hip', filter: 'all', query: '',
-  finder: { query: '', slug: '' },
+  finder: { query: '', slug: '' }, friendQuery: '',
   panel: false, panelMode: 'info', chatSearch: false, chatQuery: '', historyKind: '', historyWho: '',
   quote: null, modal: null, modalBack: null, pane: 'chat', wsCard: '', wsQuery: '', wsPreview: '', wsMemberPage: 1, wsAnnPage: 1, wsDocPage: 1, wsEditing: false, wsAnnounceOpen: {}, wsAnnounceCompose: false,
   mention: null, mentionIndex: 0, mentionStart: null,
@@ -22249,7 +22250,15 @@ function openModal(kind, extra) {
   $('modal').hidden = false;
   showGo('');
   cancelBtn().textContent = 'Cancel';
-  if (kind === 'finder') {
+  if (kind === 'friend') {
+    state.friendQuery = '';
+    $('sheetTitle').textContent = 'Add a friend';
+    $('sheetLead').textContent = 'Search by name or email. Adding someone opens a conversation in this list.';
+    cancelBtn().textContent = 'Close';
+    $('sheetBody').innerHTML = `<label class="search"><input id="friendQ" type="search" placeholder="Search name or email" aria-label="Search name or email"></label><div id="friendResults"></div>`;
+    paintFriends();
+    $('friendQ').focus();
+  } else if (kind === 'finder') {
     if (extra.reset) state.finder = { query: '', slug: extra.slug || '' };
     else if (extra.slug) state.finder = { query: '', slug: extra.slug };
     $('sheetTitle').textContent = 'Find and join a group';
@@ -22428,6 +22437,38 @@ function finderCard(g) {
   const peopleWord = g.count === 1 ? 'member' : 'members';
   return `<article class="finder-card"><div class="grow"><h3>${name}</h3><p class="meta">#${esc(g.number)} · ${g.count} ${peopleWord}</p><p>${slug}</p><p>${esc(g.description || 'No description yet.')}</p></div><button type="button" class="btn act${disabled ? '' : ' go'}" ${attr} ${disabled ? 'disabled' : ''}>${label}</button></article>`;
 }
+function friendPeople() {
+  const q = (state.friendQuery || '').trim().toLowerCase();
+  return Object.keys(people).filter((id) => {
+    const p = people[id];
+    if (!p || id === ME || p.agent || p.twin) return false;
+    if (!q) return true;
+    return p.name.toLowerCase().includes(q) || (p.email || '').toLowerCase().includes(q);
+  }).sort((a, b) => people[a].name.localeCompare(people[b].name));
+}
+function paintFriends() {
+  const results = $('friendResults');
+  if (!results) return;
+  const rows = friendPeople();
+  const heading = (state.friendQuery || '').trim() ? 'Search results' : 'People you can add';
+  results.innerHTML = `<p class="lead">${heading}</p>` + (rows.length ? rows.map((id) => {
+    const p = people[id];
+    const dm = chats.find((c) => c.kind === 'dm' && c.person === id && !c.hidden);
+    const btn = dm
+      ? `<button type="button" class="btn act" data-open-friend="${esc(dm.id)}">Message</button>`
+      : `<button type="button" class="btn act go" data-add-friend="${esc(id)}">Add</button>`;
+    return `<article class="finder-card"><div class="grow"><h3><b>${esc(p.name)}</b></h3><p class="meta">${esc(p.email || '')}</p></div>${btn}</article>`;
+  }).join('') : '<p class="finder-empty"><b>No matching people</b><br>Try a name or an email.</p>');
+}
+function addFriend(pid) {
+  const p = people[pid];
+  if (!p || pid === ME || p.agent || p.twin) return;
+  const existed = chats.some((c) => c.kind === 'dm' && c.person === pid);
+  state.modalBack = null;
+  closeModal();
+  openDirect(pid);
+  toast(existed ? `Opened ${p.name}.` : `Added ${p.name}. The conversation is in your list.`);
+}
 function paintFinder() {
   const slug = $('finderSlug');
   const results = $('finderResults');
@@ -22529,7 +22570,7 @@ function leaveGroup(nextOwner) {
 }
 function confirmModal() {
   const c = current();
-  if (state.modal === 'finder') return;
+  if (state.modal === 'finder' || state.modal === 'friend') return;
   if (state.modal === 'create') return createGroup();
   if (state.modal === 'apply') {
     const g = findNotJoined(state.pendingJoinId);
@@ -22727,6 +22768,7 @@ $('plusMenu').addEventListener('click', (e) => {
   if (!btn) return;
   closePopovers();
   if (btn.dataset.plus === 'join') openModal('finder', { reset: true });
+  else if (btn.dataset.plus === 'friend') openModal('friend');
   else openModal('create');
 });
 teamRoot.querySelectorAll('[data-open-modal]').forEach((b) => b.addEventListener('click', () => openModal(b.dataset.openModal)));
@@ -23517,6 +23559,10 @@ $('sheet').addEventListener('input', (e) => {
     state.finder.query = e.target.value;
     paintFinder();
   }
+  if (e.target.id === 'friendQ') {
+    state.friendQuery = e.target.value;
+    paintFriends();
+  }
   if (e.target.classList.contains('email-input') && e.target.closest('#sheet')) {
     const i = Number(e.target.dataset.emailIndex);
     state.emailRows[i] = e.target.value;
@@ -23535,6 +23581,10 @@ $('sheet').addEventListener('click', (e) => {
   if (slug && e.target.closest('#sheet')) { state.finder.slug = slug.dataset.slugFilter; state.finder.query = ''; const q = $('finderQ'); if (q) q.value = ''; paintFinder(); return; }
   const found = e.target.closest('[data-open-found]');
   if (found) { state.modalBack = null; closeModal(); openChat(found.dataset.openFound); return; }
+  const addFriendBtn = e.target.closest('[data-add-friend]');
+  if (addFriendBtn) { addFriend(addFriendBtn.dataset.addFriend); return; }
+  const openFriend = e.target.closest('[data-open-friend]');
+  if (openFriend) { state.modalBack = null; closeModal(); openChat(openFriend.dataset.openFriend); return; }
   const apply = e.target.closest('[data-apply]');
   if (apply) { state.pendingJoinId = apply.dataset.apply; openModal('apply', { back: 'finder' }); return; }
   const join = e.target.closest('[data-join]');
@@ -23558,7 +23608,7 @@ document.addEventListener('paste', (e) => {
   paintEmails(root);
 });
 document.addEventListener('keydown', (e) => {
-  if (e.target.id === 'finderQ' && e.key === 'Enter') e.preventDefault();
+  if ((e.target.id === 'finderQ' || e.target.id === 'friendQ') && e.key === 'Enter') e.preventDefault();
   if (!e.target.classList || !e.target.classList.contains('email-input') || e.key !== 'Enter') return;
   e.preventDefault();
   const root = e.target.closest('#panel') || $('sheetBody');
