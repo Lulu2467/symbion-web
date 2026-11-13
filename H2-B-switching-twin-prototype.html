@@ -933,7 +933,7 @@
     top: 0;
     width: 260px;
     min-width: 260px;
-    padding: 6px 0;
+    padding: 6px;
     background: #fff;
     border: 1px solid #e6e8ec;
     border-radius: 12px;
@@ -986,7 +986,11 @@
     width: 100%;
     align-items: center;
     gap: 10px;
-    padding: 8px 14px;
+    margin: 0;
+    padding: 8px 10px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
     text-align: left;
     color: #1a1d21;
     font-size: 14px;
@@ -999,8 +1003,10 @@
     flex: none;
     color: #5f6368;
   }
-  html[data-theme="blue"] .rail-me-menu button:hover { background: #f4f5f7; }
+  html[data-theme="blue"] .rail-me-menu button:hover { background: #ebf5fa; color: #3c7a94; }
+  html[data-theme="blue"] .rail-me-menu button:hover svg { color: #3c7a94; }
   html[data-theme="blue"] .rail-me-menu button.is-out { color: #d93025; font-weight: 600; }
+  html[data-theme="blue"] .rail-me-menu button.is-out:hover { color: #d93025; }
   html[data-theme="blue"] #screen-home > .course-banner,
   html[data-theme="blue"] #screen-tutorial > .course-banner { display: none; }
   html[data-theme="blue"] #greeting-home .course-banner ~ p[data-live="sub"],
@@ -6860,6 +6866,40 @@
     cursor: pointer;
   }
   html[data-theme="blue"] #dirHost .dir-enter:hover { background: var(--green-dark); }
+  html[data-theme="blue"] #dirHost .dir-msg {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2px 8px;
+    margin: 0;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #f4f7f8;
+  }
+  html[data-theme="blue"] #dirHost .dir-msg-k {
+    font-size: 11px;
+    font-weight: 650;
+    letter-spacing: .04em;
+    color: var(--green);
+  }
+  html[data-theme="blue"] #dirHost .dir-msg-time {
+    justify-self: end;
+    font-size: 12px;
+    line-height: 16px;
+    color: #b2b2b2;
+  }
+  html[data-theme="blue"] #dirHost .dir-msg p {
+    grid-column: 1 / -1;
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #1a1d21;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  html[data-theme="blue"] #dirHost .dir-person-msgs { display: flex; flex-direction: column; gap: 8px; }
+  html[data-theme="blue"] #dirHost .dir-person-msgs .dir-k { margin: 8px 0 0; }
   html[data-theme="blue"] #dirHost .dir-person[hidden] { display: none; }
   html[data-theme="blue"] #dirHost .dir-person { display: flex; flex-direction: column; align-items: stretch; gap: 16px; }
   html[data-theme="blue"] #dirHost .dir-back {
@@ -8177,6 +8217,10 @@
   .mini { font-size: 12px; font-weight: 600; color: var(--green-dark); }
   .mini .plus-glyph { display: none; }
   }
+
+  html[data-theme="blue"] #teamHost .plus-menu { padding: 6px; }
+  html[data-theme="blue"] #teamHost .plus-menu button { border-radius: 8px; }
+  html[data-theme="blue"] #teamHost .plus-menu button:hover { background: #ebf5fa; color: #3c7a94; }
 
   html[data-theme="blue"] #teamHost .panel .mrow:has(> .btn) {
     display: grid;
@@ -17164,6 +17208,27 @@
     const who = name === 'Gunther Roland' ? 'Prof. Roland' : name;
     return DIR_POSTS.filter((post) => post.name === who);
   }
+  function followMessages(name) {
+    if (name === 'Gunther Roland') {
+      return [{ time: '2h', text: 'Lecture 5 这页图先存下来，课上从重离子碰撞讲起。' }];
+    }
+    const topic = Object.values(CHAO).find((item) => item.name === name);
+    return topic ? topic.posts.map((post) => ({ time: post.time, text: post.text })) : [];
+  }
+  function followMsgEl(msg) {
+    const row = document.createElement('div');
+    row.className = 'dir-msg';
+    const k = document.createElement('span');
+    k.className = 'dir-msg-k';
+    k.textContent = '消息';
+    const time = document.createElement('span');
+    time.className = 'dir-msg-time';
+    time.textContent = msg.time;
+    const text = document.createElement('p');
+    text.textContent = msg.text;
+    row.append(k, time, text);
+    return row;
+  }
   function dirAvatar(p) {
     const av = document.createElement('span');
     av.className = 'dir-av';
@@ -17219,7 +17284,8 @@
     copy.append(nm, small);
     hd.append(dirAvatar(person), copy, dirSummonBtn(person.name));
     const posts = followPostsOf(person.name).slice(0, 6);
-    if (!posts.length) {
+    const msgs = followMessages(person.name);
+    if (!posts.length && !msgs.length) {
       const empty = document.createElement('p');
       empty.className = 'dir-empty';
       empty.hidden = false;
@@ -17250,7 +17316,18 @@
       mod.appendChild(title);
       mods.appendChild(mod);
     });
-    host.replaceChildren(back, hd, mods);
+    const parts = [back, hd];
+    if (posts.length) parts.push(mods);
+    if (msgs.length) {
+      const sec = document.createElement('section');
+      sec.className = 'dir-person-msgs';
+      const label = document.createElement('p');
+      label.className = 'dir-k';
+      label.textContent = '消息';
+      sec.append(label, ...msgs.map(followMsgEl));
+      parts.push(sec);
+    }
+    host.replaceChildren(...parts);
   }
   function dirCard(p, rich) {
     const card = document.createElement(rich ? 'article' : 'button');
@@ -17319,7 +17396,8 @@
         modCopy.appendChild(quote);
       }
       if (modCopy.childNodes.length) body.appendChild(modCopy);
-      card.append(head, body);
+      const msg = followMessages(p.name)[0];
+      card.append(head, body, ...(msg ? [followMsgEl(msg)] : []));
     }
     if (!rich) meta.appendChild(foot);
     card.append(meta);
