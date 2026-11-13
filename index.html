@@ -850,12 +850,13 @@
   }
   html[data-theme="blue"] .rail-follow-k .rail-follow-line {
     position: absolute; left: 50%; top: 50%; width: 24px; height: 24px; margin: -12px 0 0 -12px; display: block;
-    background: #e6e8ec; transition: opacity .18s ease;
+    background: transparent;
   }
   html[data-theme="blue"] .rail.is-open .rail-follow-k {
     justify-content: flex-start; width: auto; margin: 0 10px; color: #9aa0a6;
   }
   html[data-theme="blue"] .rail.is-open .rail-follow-k .rail-follow-line { display: none; }
+  html[data-theme="blue"] .rail-follow-row[hidden] { display: none; }
   html[data-theme="blue"] .rail-follow-row {
     display: flex; align-items: center; justify-content: center; box-sizing: border-box;
     width: 36px; height: 36px; padding: 0; border: 0; border-radius: 10px; background: transparent;
@@ -864,6 +865,7 @@
   html[data-theme="blue"] .rail.is-open .rail-follow-row {
     width: 100%; height: 36px; justify-content: flex-start; padding: 0 4px;
   }
+  html[data-theme="blue"] .rail.is-open .rail-follow-row[hidden] { display: none; }
   html[data-theme="blue"] .rail-follow-row:hover { background: #d4e4ee; }
   html[data-theme="blue"] .rail-follow-row .av {
     width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
@@ -6205,24 +6207,26 @@
   .set-top { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
   .set-top p { margin: 0 0 0 auto; color: var(--label); font-size: 11px; font-weight: 700; letter-spacing: .08em; }
   .set-back {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
     border: 0;
     background: transparent;
-    color: var(--green);
-    font-size: 13px;
-    font-weight: 500;
-    padding: 4px 2px;
+    color: #5f6368;
   }
-  .set-back:hover { color: var(--green-dark); }
+  .set-back svg { width: 16px; height: 16px; display: block; }
+  .set-back:hover { color: #1a1d21; }
   html[data-theme="blue"] .set-shell { position: relative; }
-  html[data-theme="blue"] .set-back {
+  html[data-theme="blue"] #setHost .set-back {
     position: absolute;
     top: 18px;
     left: 8px;
     z-index: 2;
-    height: 24px;
-    line-height: 24px;
-    padding: 0 4px;
+    color: #5f6368;
   }
+  html[data-theme="blue"] #setHost .set-back:hover { color: #1a1d21; }
   html[data-theme="blue"] .set-nav h2 { margin: 0 8px 12px 48px; line-height: 24px; }
   .set-card {
     background: #fff;
@@ -6257,6 +6261,16 @@
   .set-note { margin: 6px 0 0; color: var(--label); font-size: 12px; line-height: 1.45; }
   .set-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .set-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  #setHost .set-cosmo { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 8px 0; border-top: 1px solid var(--line); }
+  #setHost .set-cosmo:first-child { border-top: 0; }
+  #setHost .set-cosmo .av { width: 36px; height: 36px; border-radius: 8px; display: grid; place-items: center; font-size: 13px; font-weight: 650; flex: none; }
+  #setHost .set-cosmo .av.is-gr { background: #efe6f8; color: #6d4c9a; font-size: 11px; }
+  #setHost .set-cosmo .av.is-luo { background: #fde7d6; color: #c56a32; }
+  #setHost .set-cosmo .av.is-li { background: #ececee; color: #6e7378; }
+  #setHost .set-cosmo .av.is-dou { background: #e3f3e8; color: #3d8f5c; }
+  #setHost .set-cosmo b { display: block; font-size: 14px; font-weight: 650; color: #1a1d21; }
+  #setHost .set-cosmo small { display: block; margin-top: 2px; color: #8b919a; font-size: 12px; }
+  #setHost .set-cosmo button { margin-left: auto; height: 32px; padding: 0 12px; border: 1px solid #d5dde2; border-radius: 8px; background: #fff; color: #3c7a94; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
   .set-primary, .set-quiet, .set-muted {
     border: 0;
     border-radius: 8px;
@@ -8168,7 +8182,68 @@
   #teamHost .ws-card .ws-chips button { cursor: default; }
   html[data-theme="blue"] #teamHost .ws-btn, html[data-theme="blue"] #teamHost .ws-btn:hover, html[data-theme="blue"] #teamHost .ws-btn[aria-pressed="true"] { color: #3c7a94; }
   html[data-theme="blue"] #teamHost .ws-btn[aria-pressed="true"] { background: #ebf5fa; border-color: #c5d4de; }
-  html[data-theme="blue"] #teamHost .ws-add button, html[data-theme="blue"] #teamHost .ws-save { background: #3c7a94; }
+  html[data-theme="blue"] #teamHost .ws-add button, html[data-theme="blue"] #teamHost .ws-save { background: #3c7a94; color: #fff; }
+  .gi-modal {
+    position: absolute; inset: 0; z-index: 30; display: flex; align-items: center; justify-content: center;
+    padding: 24px; background: rgba(20, 24, 28, .45);
+  }
+  .gi-sheet {
+    width: min(680px, 100%); max-height: 100%; overflow: auto; box-sizing: border-box;
+    padding: 18px 22px 0; border-radius: 16px; background: #fff; box-shadow: 0 12px 36px rgba(20, 24, 28, .18);
+  }
+  .gi-top { display: flex; align-items: center; justify-content: space-between; }
+  .gi-kicker {
+    display: inline-flex; align-items: center; height: 22px; padding: 0 10px; border-radius: 999px;
+    background: #f3f4f6; color: #8b9198; font-size: 11px; font-weight: 700; letter-spacing: .06em;
+  }
+  .gi-x {
+    width: 28px; height: 28px; border: 0; border-radius: 8px; background: transparent; color: #8b9198; font-size: 18px;
+  }
+  .gi-x:hover { background: #f3f4f6; color: #1d1d1f; }
+  .gi-sheet h2 { margin: 12px 0 4px; font-size: 20px; font-weight: 700; letter-spacing: 0; color: #1d1d1f; }
+  .gi-lead { margin: 0; color: #8b9198; font-size: 14px; line-height: 1.45; }
+  .gi-tabs { display: grid; grid-template-columns: repeat(3, 1fr); margin: 18px 0 16px; border-bottom: 1px solid #ededec; }
+  .gi-tabs button {
+    border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; padding: 10px 8px; background: transparent;
+    color: #6e7378; font-size: 14px; font-weight: 650;
+  }
+  .gi-tabs button[aria-selected="true"] { color: #1d1d1f; border-bottom-color: #3c7a94; }
+  .gi-when { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .gi-when > div > b { display: block; margin-bottom: 8px; font-size: 15px; font-weight: 700; color: #1d1d1f; }
+  .gi-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .gi-field { display: block; }
+  .gi-field span { display: block; margin-bottom: 6px; color: #8b9198; font-size: 12px; font-weight: 600; }
+  .gi-field input, .gi-field textarea {
+    width: 100%; box-sizing: border-box; border: 1px solid #e6e8ec; border-radius: 10px; background: #fff; color: #1d1d1f;
+    font: inherit; font-size: 14px;
+  }
+  .gi-field input { height: 40px; padding: 0 10px; }
+  .gi-field textarea { min-height: 88px; padding: 8px 10px; resize: vertical; }
+  .gi-field input:focus, .gi-field textarea:focus { outline: none; border-color: #3c7a94; }
+  .gi-types, .gi-people { display: grid; gap: 10px; margin-top: 16px; }
+  .gi-types { grid-template-columns: repeat(4, 1fr); }
+  .gi-people { grid-template-columns: repeat(3, 1fr); }
+  .gi-types button, .gi-people button {
+    height: 40px; border: 1px solid #e6e8ec; border-radius: 8px; background: #fff; color: #1d1d1f; font-size: 14px; font-weight: 600;
+  }
+  .gi-types button[aria-pressed="true"] { background: #3c7a94; border-color: #3c7a94; color: #fff; }
+  .gi-people button[aria-pressed="true"] { background: #ebf5fa; border-color: #3c7a94; color: #3c7a94; }
+  .gi-panel h3 { margin: 0 0 4px; font-size: 15px; font-weight: 700; color: #1d1d1f; }
+  .gi-panel .hint { margin: 0 0 12px; color: #8b9198; font-size: 13px; }
+  .gi-panel .gi-field + .gi-field { margin-top: 12px; }
+  .gi-note { min-height: 18px; margin: 10px 0 0; color: #d93025; font-size: 12px; }
+  .gi-foot {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    margin: 16px -22px 0; padding: 14px 22px; border-top: 1px solid #ededec;
+  }
+  .gi-foot > span { color: #8b9198; font-size: 13px; }
+  .gi-foot div { display: flex; align-items: center; gap: 8px; }
+  .gi-cancel, .gi-next {
+    height: 32px; padding: 0 14px; border-radius: 8px; font-size: 14px; font-weight: 600;
+  }
+  .gi-cancel { border: 0; background: #f3f4f6; color: #6e7378; }
+  .gi-cancel:hover { background: #ececee; }
+  .gi-next { border: 0; background: transparent; color: #1d1d1f; }
   .thread-head .icon-btn { border: 0; background: transparent; color: #5f6368; }
   .thread-head .icon-btn:hover, .thread-head .icon-btn[aria-expanded="true"], .thread-head .icon-btn[aria-pressed="true"] { border: 0; background: #d4e4ee; color: #1f1f1f; }
   .head-face .mosaic, .head-face .av { width: 36px; height: 36px; border-radius: 4px; border: 0; }
@@ -9289,6 +9364,7 @@
             <button type="button" role="menuitem" data-rail-account="profile"><svg viewBox="9.31 9.31 1005.38 1005.38" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M907.636 589.615a34.91 34.91 0 0 1 69.819 0v256.954a130.91 130.91 0 0 1-130.886 130.886H177.43A130.91 130.91 0 0 1 46.545 846.569V177.43a130.84 130.84 0 0 1 130.7-130.886h289.443a34.91 34.91 0 0 1 0 69.819H177.245a61.021 61.021 0 0 0-60.881 61.067V846.57a61.09 61.09 0 0 0 61.067 61.067H846.57a61.09 61.09 0 0 0 61.067-61.067V589.638z"/><path fill="currentColor" fill-rule="evenodd" d="M410.228 561.385l-18.292 102.167 100.352-19.665 395.87-395.87-82.293-82.292-395.637 395.636z m-57.11-41.635l411.624-411.625a58.182 58.182 0 0 1 82.269 0l98.746 98.746a58.182 58.182 0 0 1 0 82.293L534.11 700.742a34.91 34.91 0 0 1-17.966 9.588L355.28 741.865a34.91 34.91 0 0 1-41.076-40.402l29.207-163.188a34.91 34.91 0 0 1 9.682-18.548z"/></svg>Edit profile</button>
             <button type="button" role="menuitem" data-rail-account="picture"><svg viewBox="-40.96 -40.96 1105.92 1105.92" aria-hidden="true"><path fill="currentColor" d="M870.314316 877.390274 870.314316 877.390274C870.314316 877.390274 870.314316 877.390274 870.314316 877.390274 777.938121 967.974532 651.551687 1024 512 1024 229.239611 1024 0.017919 794.741738 0.017919 511.98135 0.017919 229.22096 229.239611-0.000731 512-0.000731 794.760389-0.000731 1023.982081 229.22096 1023.982081 511.98135 1023.982081 655.190051 965.067572 784.465527 870.314316 877.390274ZM512 950.859703C615.932362 950.859703 711.30731 914.545545 786.495536 854.131659 746.451223 740.398497 639.446968 658.261944 512 658.261944 384.553032 658.261944 277.548777 740.398497 237.504464 854.131659 312.69269 914.545545 408.067638 950.859703 512 950.859703ZM512 73.176136C269.649625 73.176136 73.158216 269.667545 73.158216 512.017919 73.158216 621.545515 113.53166 721.41859 179.869911 798.325613 237.723886 672.597442 364.512591 585.158216 512 585.158216 659.450839 585.158216 786.276114 672.597442 844.130089 798.325613 910.46834 721.45516 950.841784 621.545515 950.841784 512.017919 950.841784 269.667545 754.350375 73.176136 512 73.176136ZM512 548.588068C410.993249 548.588068 329.149257 466.707505 329.149257 365.737325 329.149257 264.730574 410.993249 182.886582 512 182.886582 612.97018 182.886582 694.850743 264.730574 694.850743 365.737325 694.850743 466.707505 612.97018 548.588068 512 548.588068ZM512 256.026879C451.403264 256.026879 402.289554 305.140589 402.289554 365.700754 402.289554 426.297491 451.403264 475.411201 512 475.411201 572.596736 475.411201 621.710446 426.297491 621.710446 365.700754 621.710446 305.140589 572.596736 256.026879 512 256.026879Z"/></svg>Profile picture</button>
             <button type="button" role="menuitem" data-rail-account="friends"><svg viewBox="26.96 37.07 948.33 948.33" aria-hidden="true"><path fill="currentColor" d="M844.032 950.272H245.248c-50.944 0-92.16-41.216-92.16-92.16v-693.76c0-50.944 41.216-92.16 92.16-92.16h598.784c50.944 0 92.16 41.216 92.16 92.16v694.016c0 50.688-41.216 91.904-92.16 91.904zM245.248 133.632c-16.896 0-30.72 13.824-30.72 30.72v694.016c0 16.896 13.824 30.72 30.72 30.72h598.784c16.896 0 30.72-13.824 30.72-30.72V164.352c0-16.896-13.824-30.72-30.72-30.72H245.248z"></path><path fill="currentColor" d="M278.016 307.2H96.768c-16.896 0-30.72-13.824-30.72-30.72s13.824-30.72 30.72-30.72h181.248c16.896 0 30.72 13.824 30.72 30.72s-13.568 30.72-30.72 30.72zM278.016 464.384H96.768c-16.896 0-30.72-13.824-30.72-30.72s13.824-30.72 30.72-30.72h181.248c16.896 0 30.72 13.824 30.72 30.72s-13.568 30.72-30.72 30.72zM278.016 621.824H96.768c-16.896 0-30.72-13.824-30.72-30.72s13.824-30.72 30.72-30.72h181.248c16.896 0 30.72 13.824 30.72 30.72s-13.568 30.72-30.72 30.72zM278.016 779.008H96.768c-16.896 0-30.72-13.824-30.72-30.72s13.824-30.72 30.72-30.72h181.248c16.896 0 30.72 13.824 30.72 30.72s-13.568 30.72-30.72 30.72zM590.592 560.384c-79.104 0-143.104-64.256-143.104-143.36s64.256-143.104 143.104-143.104 143.36 64.256 143.36 143.104c0 79.104-64.256 143.36-143.36 143.36z m0-225.024c-45.056 0-81.664 36.608-81.664 81.664s36.608 81.92 81.664 81.92 81.92-36.608 81.92-81.92-36.608-81.664-81.92-81.664z"></path><path fill="currentColor" d="M787.2 758.016c-16.896 0-30.72-13.824-30.72-30.72 0-91.392-74.24-165.632-165.632-165.632s-165.632 74.24-165.632 165.632c0 16.896-13.824 30.72-30.72 30.72s-30.72-13.824-30.72-30.72c0-125.184 101.888-227.072 227.072-227.072 125.184 0 227.072 101.888 227.072 227.072 0 16.896-13.824 30.72-30.72 30.72z"></path></svg>Friends</button>
+            <button type="button" role="menuitem" data-rail-account="cosmos"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 1.15 9.15 6.05 14.15 7.2 9.15 8.35 8 13.25 6.85 8.35 1.85 7.2 6.85 6.05Z"/></svg>Cosmos</button>
             <button type="button" role="menuitem" data-rail-account="security"><svg viewBox="81.38 81.38 861.24 861.24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M512 85.333333c72.533333 0 139.808 8.362667 200.202667 22.325334 21.258667 4.906667 40.192 10.208 56.586666 15.52 9.301333 3.018667 16.106667 5.472 20.245334 7.114666C831.733333 144.906667 864 192.106667 864 238.624v385.034667c0 43.402667-25.130667 95.52-58.837333 121.109333l-227.626667 172.810667c-36.992 28.085333-94.005333 28.149333-131.072 0l-227.626667-172.810667C185.28 719.285333 160 666.912 160 623.658667V238.624c0-46.826667 32.170667-94.218667 75.157333-108.405333 4.16-1.642667 10.901333-4.074667 20.053334-7.04a684.437333 684.437333 0 0 1 56.586666-15.52C372.192 93.685333 439.466667 85.333333 512 85.333333z m0 64c-67.456 0-129.930667 7.765333-185.781333 20.682667-19.424 4.48-36.586667 9.28-51.274667 14.048-5.056 1.632-9.418667 3.146667-13.056 4.48-2.058667 0.746667-3.349333 1.248-3.84 1.450667a32 32 0 0 1-2.485333 0.885333c-16.074667 5.034667-31.562667 27.626667-31.562667 47.744v385.034667c0 23.498667 16.128 56.917333 33.536 70.133333l227.626667 172.810667c14.176 10.773333 39.530667 10.741333 53.674666 0l227.626667-172.810667C784 680.469333 800 647.306667 800 623.658667V238.624c0-19.84-15.626667-42.506667-32-47.882667l-2.048-0.746666a143.829333 143.829333 0 0 0-3.84-1.450667c-3.637333-1.333333-8-2.848-13.056-4.48a620.778667 620.778667 0 0 0-51.274667-14.048C641.930667 157.098667 579.456 149.333333 512 149.333333z m137.354667 190.72a32 32 0 0 1 45.290666 45.226667l-213.013333 213.333333a32 32 0 0 1-45.226667 0.064l-106.986666-106.549333a32 32 0 1 1 45.162666-45.344l84.341334 83.989333z"/></svg>Security &amp; privacy</button>
             <button type="button" role="menuitem" data-rail-account="settings"><svg viewBox="9.31 15.13 1005.38 1005.38" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M907.636364 791.272727c0 32.093091-26.088727 58.181818-58.181819 58.181818h-674.90909A58.228364 58.228364 0 0 1 116.363636 791.272727V314.181818h733.090909c32.093091 0 58.181818 26.088727 58.181819 58.181818v418.909091zM116.363636 197.818182c0-6.4 5.236364-11.636364 11.636364-11.636364h305.058909c4.096 0 7.936 2.187636 10.030546 5.725091l30.999272 52.456727H116.363636v-46.545454z m733.090909 46.545454H555.170909l-51.968-87.970909A81.780364 81.780364 0 0 0 433.058909 116.363636H128C83.083636 116.363636 46.545455 152.901818 46.545455 197.818182V791.272727c0 70.562909 57.437091 128 128 128h674.90909c70.562909 0 128-57.437091 128-128V372.363636c0-70.562909-57.437091-128-128-128z"/></svg>Account &amp; settings</button>
             <button type="button" role="menuitem" data-rail-account="apps"><svg viewBox="27.21 27.67 968.68 968.68" aria-hidden="true"><path fill="currentColor" d="M271.958852 64.00158c-115.276539 0-208.874831 93.670541-208.874831 208.950693C63.084021 388.337184 156.628127 481.899353 272.016651 481.899353h144.894925c35.347715 0 63.918494-28.762239 63.918495-64.106342V272.894474c-0.01445-115.36685-93.500757-208.892893-208.871219-208.892894zM416.875452 417.793011v0.025288a0.932009 0.932009 0 0 1 0.043349 0.144497H272.016651a145.241719 145.241719 0 1 1 144.858801-145.06471v144.894925zM416.897127 542.227083H272.016651c-115.370462 0-208.896506 93.515206-208.896506 208.885668 0 115.276539 93.562168 208.892893 208.856769 208.892893 115.370462 0 208.856769-93.529656 208.856769-208.900118v-144.894925c-0.018062-35.351327-28.592454-63.983518-63.936556-63.983518z m-0.021675 208.874831a144.721528 144.721528 0 0 1-88.483079 133.504905C310.564987 892.145979 291.59607 895.884854 272.016651 895.884854c-19.564969 0-38.519436-3.738874-56.354047-11.28526A144.880476 144.880476 0 0 1 272.016651 606.167252h144.920212a0.093923 0.093923 0 0 0-0.043349 0v144.920212zM751.101914 542.227083h-144.894925A63.965456 63.965456 0 0 0 542.227083 606.206989v144.894925c0 115.370462 93.515206 208.896506 208.885668 208.896506 115.276539 0 208.892893-93.60913 208.892893-208.885669-0.003612-115.370462-93.533269-208.885668-208.90373-208.885668zM884.686293 807.448736a144.927437 144.927437 0 0 1-278.519041-56.354047V606.167252h144.920212A144.996074 144.996074 0 0 1 884.686293 807.448736zM606.206989 481.899353h144.894925c115.370462 0 208.896506-93.562168 208.896506-208.950693 0-115.276539-93.60913-208.921793-208.885669-208.921792-115.370462 0-208.885668 93.497144-208.885668 208.867606v144.894925c0 35.347715 28.632191 64.109954 63.979906 64.109954z m-0.039737-209.004879A144.949112 144.949112 0 1 1 751.101914 417.959184H606.167252a0.520191 0.520191 0 0 1 0-0.144498V272.894474z"/></svg>Connected apps</button>
@@ -9931,6 +10007,8 @@
                 <p class="set-kicker">GENERAL</p>
                 <button type="button" data-set="profile" aria-current="page">Profile</button>
                 <button type="button" data-set="picture">Profile picture</button>
+                <p class="set-kicker">COSMOS</p>
+                <button type="button" data-set="cosmos">Cosmos</button>
                 <p class="set-kicker">CONNECTIONS</p>
                 <button type="button" data-set="apps">Connected apps</button>
                 <p class="set-kicker">PREFERENCES</p>
@@ -9947,7 +10025,7 @@
                 <button type="button" data-set="agents">Agents</button>
               </nav>
               <div class="set-main">
-                <div class="set-top"><button type="button" class="set-back" data-set-act="back">Back</button><p>SETTINGS</p></div>
+                <div class="set-top"><button type="button" class="set-back" data-set-act="back" aria-label="Back"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path d="M679.13916 138.387837c10.304693 0 20.602224 3.941775 28.457122 11.791557 15.733333 15.733333 15.733333 41.172725 0 56.906058L397.262304 517.418406l314.834478 314.836525c15.733333 15.733333 15.733333 41.171702 0 56.905034s-41.171702 15.733333-56.905034 0L311.900148 545.868365c-15.734356-15.733333-15.734356-41.172725 0-56.906058L650.683061 150.179394C658.532843 142.335752 668.830373 138.387837 679.13916 138.387837L679.13916 138.387837zM679.13916 138.387837" fill="#272636"/></svg></button><p>SETTINGS</p></div>
                 <div class="set-card" data-set-panel="profile">
                   <h3>Profile</h3>
                   <p class="sub">Manage your identity and basic account information.</p>
@@ -10019,6 +10097,11 @@
                       </div>
                     </div>
                   </div>
+                </div>
+                <div class="set-card" data-set-panel="cosmos" hidden>
+                  <h3>Cosmos</h3>
+                  <p class="sub">People you follow. Unfollow takes them off the rail and out of Following.</p>
+                  <div id="setCosmos"></div>
                 </div>
                 <div class="set-card" data-set-panel="apps" hidden>
                   <h3>Connected apps</h3>
@@ -10495,6 +10578,55 @@
         <section class="workspace" id="workspace" hidden aria-label="Workspace">
           <div id="workspaceBody"></div>
         </section>
+        <div class="gi-modal" id="giModal" hidden>
+          <div class="gi-sheet" role="dialog" aria-modal="true" aria-labelledby="giTitle">
+            <div class="gi-top"><span class="gi-kicker">CREATE</span><button type="button" class="gi-x" data-gi="close" aria-label="Close">×</button></div>
+            <h2 id="giTitle">New group item</h2>
+            <p class="gi-lead">This stays in this group. It does not show anyone's private schedule.</p>
+            <div class="gi-tabs" role="tablist">
+              <button type="button" role="tab" data-gi-step="1" aria-selected="true">Time &amp; type</button>
+              <button type="button" role="tab" data-gi-step="2" aria-selected="false">Name &amp; details</button>
+              <button type="button" role="tab" data-gi-step="3" aria-selected="false">Who receives it</button>
+            </div>
+            <div class="gi-panel" data-gi-panel="1">
+              <div class="gi-when">
+                <div><b>Start</b><div class="gi-pair">
+                  <label class="gi-field"><span>Start date</span><input id="giStart" type="date"></label>
+                  <label class="gi-field"><span>Start time</span><input id="giStartTime" type="time"></label>
+                </div></div>
+                <div><b>End</b><div class="gi-pair">
+                  <label class="gi-field"><span>End date</span><input id="giEnd" type="date"></label>
+                  <label class="gi-field"><span>End time</span><input id="giEndTime" type="time"></label>
+                </div></div>
+              </div>
+              <div class="gi-types">
+                <button type="button" data-gi-type="Document" aria-pressed="false">Document</button>
+                <button type="button" data-gi-type="Task" aria-pressed="true">Task</button>
+                <button type="button" data-gi-type="Meeting" aria-pressed="false">Meeting</button>
+                <button type="button" data-gi-type="Pod" aria-pressed="false">Pod</button>
+              </div>
+            </div>
+            <div class="gi-panel" data-gi-panel="2" hidden>
+              <h3>Name &amp; details</h3>
+              <p class="hint">Name the item. Details stay in this group.</p>
+              <label class="gi-field"><span>Name</span><input id="giName" type="text" maxlength="80" autocomplete="off"></label>
+              <label class="gi-field"><span>Details</span><textarea id="giDetails" rows="3" maxlength="240"></textarea></label>
+            </div>
+            <div class="gi-panel" data-gi-panel="3" hidden>
+              <h3>Who receives it</h3>
+              <p class="hint">They see it here. It does not land on a private schedule.</p>
+              <div class="gi-people" id="giPeople"></div>
+            </div>
+            <p class="gi-note" id="giNote"></p>
+            <div class="gi-foot">
+              <span id="giStepLabel">Step 1 of 3</span>
+              <div>
+                <button type="button" class="gi-cancel" data-gi="cancel">Cancel</button>
+                <button type="button" class="gi-next" id="giNext" data-gi="next">Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="log" id="log"></div>
         <div class="quote-peek" id="quotePeek" hidden></div>
         <div class="mention" id="mention" hidden role="listbox" aria-label="Mention someone"></div>
@@ -16172,6 +16304,7 @@
       else if (act === 'picture') openSettings('picture');
       else if (act === 'security') openSettings('security');
       else if (act === 'apps') openSettings('apps');
+      else if (act === 'cosmos') openSettings('cosmos');
       else if (act === 'signout') showToastMsg('Sign out waits for the account service.');
     });
     document.addEventListener('click', (e) => {
@@ -18387,7 +18520,7 @@
       personHost.hidden = true;
       personHost.replaceChildren();
     }
-    const followNames = ['Gunther Roland', '骆王宇', '李佳琦'];
+    const followNames = cosmoDirNames();
     const blue = document.documentElement.dataset.theme === 'blue';
     const followHost = document.getElementById('dirFollow');
     const followK = document.getElementById('dirFollowK');
@@ -19740,6 +19873,45 @@
       else r.removeAttribute('aria-current');
     });
   }
+  const COSMO_MANAGE = [
+    { rail: 'Prof. Gunther Roland', dir: 'Gunther Roland', short: 'GR', cls: 'is-gr', blurb: '重离子物理 · MIT' },
+    { rail: '骆王宇', dir: '骆王宇', short: '骆', cls: 'is-luo', blurb: '护肤博主' },
+    { rail: '李佳琦', dir: '李佳琦', short: '李', cls: 'is-li', blurb: '产品笔记' },
+    { rail: '豆豆', dir: '', short: '豆', cls: 'is-dou', blurb: 'On your rail' }
+  ];
+  const cosmoOn = new Set(COSMO_MANAGE.map((row) => row.rail));
+  function cosmoDirNames() {
+    return COSMO_MANAGE.filter((row) => cosmoOn.has(row.rail) && row.dir).map((row) => row.dir);
+  }
+  function paintCosmoRail() {
+    document.querySelectorAll('.rail-follow-row').forEach((row) => {
+      row.hidden = !cosmoOn.has(row.dataset.follow || '');
+    });
+  }
+  function paintCosmoManage() {
+    const host = document.getElementById('setCosmos');
+    if (!host) return;
+    host.replaceChildren(...COSMO_MANAGE.map((row) => {
+      const line = document.createElement('div');
+      line.className = 'set-cosmo';
+      const av = document.createElement('span');
+      av.className = 'av ' + row.cls;
+      av.textContent = row.short;
+      const copy = document.createElement('span');
+      const name = document.createElement('b');
+      name.textContent = row.rail;
+      const blurb = document.createElement('small');
+      blurb.textContent = row.blurb;
+      copy.append(name, blurb);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.dataset.cosmo = row.rail;
+      const on = cosmoOn.has(row.rail);
+      btn.textContent = on ? 'Unfollow' : 'Follow';
+      line.append(av, copy, btn);
+      return line;
+    }));
+  }
   function showSettings(section) {
     const host = document.getElementById('setHost');
     if (!host) return;
@@ -19752,6 +19924,7 @@
       panel.hidden = panel.dataset.setPanel !== settingsSection;
     });
     host.querySelector('.set-main')?.scrollTo({ top: 0 });
+    if (settingsSection === 'cosmos') paintCosmoManage();
   }
   function fillSettingsName() {
     const name = document.getElementById('setName');
@@ -19778,6 +19951,16 @@
       if (nav) {
         showSettings(nav.dataset.set);
         syncHash();
+        return;
+      }
+      const cosmoBtn = event.target.closest('[data-cosmo]');
+      if (cosmoBtn) {
+        const name = cosmoBtn.dataset.cosmo;
+        if (cosmoOn.has(name)) cosmoOn.delete(name);
+        else cosmoOn.add(name);
+        paintCosmoRail();
+        paintCosmoManage();
+        if (dirOpen) renderDir();
         return;
       }
       const pic = event.target.closest('button[data-pic]');
@@ -21484,18 +21667,128 @@ function renderWorkspace() {
   const members = (c.members || []).map((id) => `<option value="${esc(id)}"${id === draft.who ? ' selected' : ''}>${esc(person(id)?.name || id)}</option>`).join('');
   const kinds = WS_KINDS.map((kind) => `<option${kind === draft.kind ? ' selected' : ''}>${kind}</option>`).join('');
   const chips = draft.items.map((item, i) => `<button type="button" data-ws-remove="${i}">${esc(item.kind)} · ${esc(item.name)} ×</button>`).join('');
-  const form = manage ? `<form class="ws-form" id="wsForm">
+  const legacyForm = `<form class="ws-form" id="wsForm">
     <label>Task<input name="title" maxlength="80" value="${esc(draft.title)}" autocomplete="off"></label>
     <label>Assign to<select name="who">${members}</select></label>
     <label>Add to this task<div class="ws-add"><select name="kind">${kinds}</select><input name="item" maxlength="80" placeholder="File, meeting, or note" value="${esc(draft.itemName)}" autocomplete="off"><button type="button" data-ws="add-item">Add</button></div></label>
     ${chips ? `<div class="ws-chips">${chips}</div>` : ''}
     <button type="submit" class="ws-save">Add task</button>
-  </form>` : '<p class="ws-note">Only the owner and admins can add tasks.</p>';
+  </form>`;
+  const form = manage ? (document.documentElement.dataset.theme === 'blue' ? '<button type="button" class="ws-save" data-ws="new">Add task</button>' : legacyForm) : '<p class="ws-note">Only the owner and admins can add tasks.</p>';
   const cards = tasks.length ? tasks.map((task) => {
     const bits = (task.items || []).map((item) => `<i>${esc(item.kind)} · ${esc(item.name)}</i>`).join('');
-    return `<article class="ws-card"><b>${esc(task.title)}</b><small>${esc(person(task.who)?.name || task.who)}</small>${bits ? `<div class="ws-chips">${bits}</div>` : ''}</article>`;
+    const when = [task.start, task.startTime].filter(Boolean).join(' ');
+    const end = [task.end, task.endTime].filter(Boolean).join(' ');
+    const span = when ? (end ? `${when} – ${end}` : when) : '';
+    const names = (task.recipients || (task.who ? [task.who] : [])).map((id) => person(id)?.name || id).filter(Boolean).join(', ');
+    const meta = [task.kind, span].filter(Boolean).join(' · ');
+    return `<article class="ws-card"><b>${esc(task.title)}</b>${meta ? `<small>${esc(meta)}</small>` : ''}<small>${esc(names || person(task.who)?.name || task.who || '')}</small>${task.details ? `<small>${esc(task.details)}</small>` : ''}${bits ? `<div class="ws-chips">${bits}</div>` : ''}</article>`;
   }).join('') : '<p class="ws-empty">还没有任务。</p>';
   host.innerHTML = form + cards;
+}
+let gi = null;
+function openGroupItem() {
+  const c = current();
+  if (!c || c.kind !== 'group' || !canReview(c) || document.documentElement.dataset.theme !== 'blue') return;
+  gi = { step: 1, type: 'Task', who: [], group: c.id, note: '' };
+  const modal = $('giModal');
+  if (!modal) return;
+  ['giStart', 'giStartTime', 'giEnd', 'giEndTime', 'giName', 'giDetails'].forEach((id) => {
+    const el = $(id);
+    if (el) el.value = '';
+  });
+  modal.hidden = false;
+  paintGroupItem();
+  $('giStart')?.focus();
+}
+function closeGroupItem() {
+  const modal = $('giModal');
+  if (modal) modal.hidden = true;
+  gi = null;
+}
+function giRangeError() {
+  const start = $('giStart')?.value || '';
+  const end = $('giEnd')?.value || '';
+  const st = $('giStartTime')?.value || '';
+  const et = $('giEndTime')?.value || '';
+  if (start && end && end < start) return 'End date is before the start.';
+  if (start && end && start === end && st && et && et <= st) return 'End time is before the start.';
+  return '';
+}
+function giStepError(step) {
+  if (step === 1) return $('giStart')?.value ? giRangeError() : 'Choose a start date.';
+  if (step === 2) return $('giName')?.value.trim() ? '' : 'Name this item.';
+  if (step === 3) return gi && gi.who.length ? '' : 'Choose who receives it.';
+  return '';
+}
+function paintGroupItem() {
+  if (!gi) return;
+  const modal = $('giModal');
+  if (!modal) return;
+  modal.querySelectorAll('[data-gi-step]').forEach((btn) => {
+    btn.setAttribute('aria-selected', String(Number(btn.dataset.giStep) === gi.step));
+  });
+  modal.querySelectorAll('[data-gi-panel]').forEach((panel) => {
+    panel.hidden = Number(panel.dataset.giPanel) !== gi.step;
+  });
+  modal.querySelectorAll('[data-gi-type]').forEach((btn) => {
+    btn.setAttribute('aria-pressed', String(btn.dataset.giType === gi.type));
+  });
+  const c = chats.find((item) => item.id === gi.group);
+  const peopleBox = $('giPeople');
+  if (peopleBox && c) {
+    peopleBox.innerHTML = (c.members || []).filter((id) => people[id] && !people[id].agent).map((id) => {
+      const on = gi.who.includes(id);
+      return `<button type="button" data-gi-who="${esc(id)}" aria-pressed="${on ? 'true' : 'false'}">${esc(person(id).name)}</button>`;
+    }).join('');
+  }
+  const note = $('giNote');
+  if (note) note.textContent = gi.note || '';
+  const next = $('giNext');
+  if (next) next.textContent = gi.step === 3 ? 'Create' : 'Next';
+  const label = $('giStepLabel');
+  if (label) label.textContent = `Step ${gi.step} of 3`;
+}
+function giGo(step) {
+  if (!gi) return;
+  if (step > gi.step) {
+    for (let n = gi.step; n < step; n += 1) {
+      const err = giStepError(n);
+      if (err) { gi.note = err; paintGroupItem(); return; }
+    }
+  }
+  gi.note = '';
+  gi.step = step;
+  paintGroupItem();
+}
+function giCreate() {
+  if (!gi) return;
+  const err = giStepError(1) || giStepError(2) || giStepError(3);
+  if (err) {
+    gi.note = err;
+    gi.step = giStepError(1) ? 1 : giStepError(2) ? 2 : 3;
+    paintGroupItem();
+    return;
+  }
+  const c = chats.find((item) => item.id === gi.group);
+  if (!c || !canReview(c)) return;
+  if (!c.tasks) c.tasks = [];
+  const who = gi.who.slice();
+  c.tasks.unshift({
+    id: 't' + Date.now(),
+    title: $('giName').value.trim(),
+    details: $('giDetails').value.trim(),
+    kind: gi.type,
+    who: who[0],
+    recipients: who,
+    start: $('giStart').value,
+    startTime: $('giStartTime').value,
+    end: $('giEnd').value,
+    endTime: $('giEndTime').value,
+    items: []
+  });
+  closeGroupItem();
+  renderWorkspace();
 }
 function syncWorkspace() {
   const on = !!state.workspace && !state.notice && current()?.kind === 'group';
@@ -22164,6 +22457,7 @@ $('workspaceBtn')?.addEventListener('click', () => {
   render(false);
 });
 $('workspace')?.addEventListener('click', (e) => {
+  if (e.target.closest('[data-ws="new"]')) { openGroupItem(); return; }
   const add = e.target.closest('[data-ws="add-item"]');
   const remove = e.target.closest('[data-ws-remove]');
   if (!add && !remove) return;
@@ -22182,6 +22476,32 @@ $('workspace')?.addEventListener('click', (e) => {
     draft.items.splice(Number(remove.dataset.wsRemove), 1);
   }
   renderWorkspace();
+});
+$('giModal')?.addEventListener('click', (e) => {
+  if (e.target.id === 'giModal' || e.target.closest('[data-gi="close"]') || e.target.closest('[data-gi="cancel"]')) {
+    closeGroupItem();
+    return;
+  }
+  const step = e.target.closest('[data-gi-step]');
+  if (step) { giGo(Number(step.dataset.giStep)); return; }
+  const type = e.target.closest('[data-gi-type]');
+  if (type && gi) { gi.type = type.dataset.giType; gi.note = ''; paintGroupItem(); return; }
+  const who = e.target.closest('[data-gi-who]');
+  if (who && gi) {
+    const id = who.dataset.giWho;
+    gi.who = gi.who.includes(id) ? gi.who.filter((item) => item !== id) : gi.who.concat(id);
+    gi.note = '';
+    paintGroupItem();
+    return;
+  }
+  if (e.target.closest('[data-gi="next"]')) {
+    if (!gi) return;
+    if (gi.step < 3) giGo(gi.step + 1);
+    else giCreate();
+  }
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && $('giModal') && !$('giModal').hidden) closeGroupItem();
 });
 $('workspace')?.addEventListener('submit', (e) => {
   const form = e.target.closest('#wsForm');
