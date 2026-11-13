@@ -2670,7 +2670,30 @@
   html[data-theme="blue"] #tail-home .kb-rule {
     display: flex; align-items: center; gap: 10px; min-height: 32px; padding: 0 12px; font-size: 13px; color: #1d1d1f;
   }
-  html[data-theme="blue"] #tail-home .kb-rule span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  html[data-theme="blue"] #tail-home .kb-legend .kb-todo-k {
+    display: flex; align-items: center; gap: 4px; width: 100%; margin: 8px 0 2px; padding: 0 12px;
+    border: 0; background: transparent; font: inherit; text-align: left; cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .kb-todo-k svg { width: 12px; height: 12px; flex: none; }
+  html[data-theme="blue"] #tail-home .kb-todos[hidden] { display: none; }
+  html[data-theme="blue"] #tail-home .kb-todo {
+    display: flex; align-items: center; gap: 8px; min-height: 32px; padding: 0 12px;
+  }
+  html[data-theme="blue"] #tail-home .kb-tick {
+    width: 16px; height: 16px; flex: none; display: inline-flex; align-items: center; justify-content: center;
+    padding: 0; border: 1.5px solid #c5c8cc; border-radius: 50%; background: #fff; color: #fff; cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .kb-tick svg { width: 12px; height: 12px; opacity: 0; }
+  html[data-theme="blue"] #tail-home .kb-todo.is-done .kb-tick { border-color: #3c7a94; background: #3c7a94; }
+  html[data-theme="blue"] #tail-home .kb-todo.is-done .kb-tick svg { opacity: 1; }
+  html[data-theme="blue"] #tail-home .kb-todo.is-new .kb-tick { border-style: dashed; cursor: default; }
+  html[data-theme="blue"] #tail-home .kb-todo-name {
+    flex: 1; min-width: 0; border: 0; padding: 0; background: transparent; font: inherit; font-size: 13px;
+    color: #1d1d1f; outline: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  html[data-theme="blue"] #tail-home .kb-todo.is-done .kb-todo-name { color: #8b9198; text-decoration: line-through; }
+  html[data-theme="blue"] #tail-home .kb-todo-name::placeholder { color: #a1a6ac; }
+  html[data-theme="blue"] #tail-home .kb-todo-when { flex: none; font-size: 12px; color: #8b9198; }
   html[data-theme="blue"] #tail-home .kb-swatch {
     width: 18px; height: 18px; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex: none;
   }
@@ -11420,6 +11443,15 @@
         if (e.key === 'Escape') { e.target.dataset.done = '1'; e.target.closest('.nc-draft')?.remove(); }
         return;
       }
+      if (e.target.matches('[data-todo-add]') && e.key === 'Enter') {
+        e.preventDefault();
+        const text = e.target.value.trim();
+        if (!text) return;
+        kbTodos().push({ id: 'todo-' + Date.now(), text, when: '', done: false });
+        kbPaintSide();
+        document.querySelector('#tlBody [data-todo-add]')?.focus();
+        return;
+      }
       if (!e.target.classList.contains('kd-name')) return;
       if (kbBox().draft) {
         if (e.key === 'Enter') { e.preventDefault(); kbCommitDraft(true); }
@@ -11435,12 +11467,29 @@
     host.addEventListener('input', (e) => {
       if (e.target.classList.contains('kd-name')) kbLiveTitle(e.target.value);
       if (e.target.classList.contains('kd-clock')) kbApplyClock(e.target);
+      if (e.target.matches('[data-todo-name]')) {
+        const item = kbTodos().find((row) => row.id === e.target.dataset.todoName);
+        if (item) item.text = e.target.value;
+      }
       if (e.target.classList.contains('kd-note')) kbApplyNote(e.target.value);
     });
     host.addEventListener('change', (e) => {
       if (e.target.classList.contains('kd-date-input')) kbApplyDate(e.target.value);
     });
     host.addEventListener('click', (e) => {
+      if (e.target.closest('[data-todo-toggle]')) {
+        const box = kbBox();
+        box.todoOpen = box.todoOpen === false;
+        kbPaintSide();
+        return;
+      }
+      const todoCheck = e.target.closest('[data-todo-check]');
+      if (todoCheck) {
+        const item = kbTodos().find((row) => row.id === todoCheck.dataset.todoCheck);
+        if (item) item.done = !item.done;
+        kbPaintSide();
+        return;
+      }
       const choice = e.target.closest('[data-kd-task]');
       if (choice) { kbApplyTask(choice.dataset.kdTask); return; }
       const visChoice = e.target.closest('[data-kd-vis]');
@@ -11962,11 +12011,29 @@
     const time = item.time ? `<small>${item.time}</small>` : '';
     return `<button type="button" class="kb-chip is-${item.lane}" data-kb-id="${deskEsc(item.id)}"><span class="kb-ico">${kbTaskIcon(item.task)}</span><b>${deskEsc(item.title)}</b>${time}</button>`;
   }
+  function kbTodos() {
+    const box = kbBox();
+    if (box.todos) return box.todos;
+    box.todoOpen = true;
+    box.todos = [...document.querySelectorAll('#tail-home .two-main-l .rem')].map((rem, index) => ({
+      id: 'todo-' + index,
+      text: rem.querySelector('.t')?.textContent.trim() || '',
+      when: rem.querySelector('.when')?.textContent.trim() || '',
+      done: false,
+    })).filter((row) => row.text);
+    return box.todos;
+  }
+  function kbTodoList() {
+    const open = kbBox().todoOpen !== false;
+    const chev = open ? 'M4.2 6.2 8 10l3.8-3.8' : 'M6.2 4.2 10 8 6.2 11.8';
+    const tick = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.6 8.2 6.5 11.1 12.4 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    const rows = kbTodos().map((item) => '<div class="kb-todo' + (item.done ? ' is-done' : '') + '"><button type="button" class="kb-tick" data-todo-check="' + item.id + '" aria-pressed="' + item.done + '" aria-label="Mark complete">' + tick + '</button><input class="kb-todo-name" data-todo-name="' + item.id + '" value="' + deskEsc(item.text) + '" aria-label="To-do">' + (item.when ? '<span class="kb-todo-when">' + deskEsc(item.when) + '</span>' : '') + '</div>').join('');
+    const add = '<div class="kb-todo is-new"><span class="kb-tick" aria-hidden="true"></span><input class="kb-todo-name" data-todo-add placeholder="Add a to-do" aria-label="Add a to-do"></div>';
+    return '<button type="button" class="kb-k kb-todo-k" data-todo-toggle aria-expanded="' + open + '"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="' + chev + '" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>to-do-list</button><div class="kb-todos"' + (open ? '' : ' hidden') + '>' + rows + add + '</div>';
+  }
   function kbLegend() {
     const groups = ['personal', 'wuhan', 'research', 'course'].map((id) => `<div class="kb-rule"><i class="kb-swatch is-${id}">${kbIcon(id)}</i><span>${deskEsc(kbLaneName(id))}</span></div>`).join('');
-    const tasks = [['lecture', 'Lecture'], ['reading', 'Reading'], ['reply', 'Reply'], ['task', 'Task']];
-    const taskRows = tasks.map(([id, name]) => `<div class="kb-rule"><i class="kb-swatch is-task">${kbTaskIcon(id)}</i><span>${name}</span></div>`).join('');
-    return `<aside class="kb-legend"><b>分类</b><div class="kb-k">群组</div>${groups}<div class="kb-k">to-do-list</div>${taskRows}</aside>`;
+    return `<aside class="kb-legend"><b>分类</b><div class="kb-k">群组</div>${groups}${kbTodoList()}</aside>`;
   }
   function kdIcon(name) {
     const paths = {"earth":["M854.4 800.9c0.2-0.3 0.5-0.6 0.7-0.9C920.6 722.1 960 621.7 960 512s-39.4-210.1-104.8-288c-0.2-0.3-0.5-0.5-0.7-0.8-1.1-1.3-2.1-2.5-3.2-3.7-0.4-0.5-0.8-0.9-1.2-1.4-1.4-1.6-2.7-3.1-4.1-4.7l-0.1-0.1c-1.5-1.7-3.1-3.4-4.6-5.1l-0.1-0.1c-3.2-3.4-6.4-6.8-9.7-10.1l-0.1-0.1-4.8-4.8-0.3-0.3c-1.5-1.5-3-2.9-4.5-4.3-0.5-0.5-1-1-1.6-1.5-1-1-2-1.9-3-2.8-0.3-0.3-0.7-0.6-1-1C736.4 109.2 629.5 64 512 64s-224.4 45.2-304.3 119.2c-0.3 0.3-0.7 0.6-1 1-1 0.9-2 1.9-3 2.9-0.5 0.5-1 1-1.6 1.5-1.5 1.4-3 2.9-4.5 4.3l-0.3 0.3-4.8 4.8-0.1 0.1c-3.3 3.3-6.5 6.7-9.7 10.1l-0.1 0.1c-1.6 1.7-3.1 3.4-4.6 5.1l-0.1 0.1c-1.4 1.5-2.8 3.1-4.1 4.7-0.4 0.5-0.8 0.9-1.2 1.4-1.1 1.2-2.1 2.5-3.2 3.7-0.2 0.3-0.5 0.5-0.7 0.8C103.4 301.9 64 402.3 64 512s39.4 210.1 104.8 288c0.2 0.3 0.5 0.6 0.7 0.9 1 1.2 2.1 2.5 3.1 3.7 0.4 0.5 0.8 0.9 1.2 1.4 1.4 1.6 2.7 3.1 4.1 4.7 0 0.1 0.1 0.1 0.1 0.2 1.5 1.7 3 3.4 4.6 5l0.1 0.1c3.2 3.4 6.4 6.8 9.6 10.1l0.1 0.1c1.6 1.6 3.1 3.2 4.7 4.7l0.3 0.3c3.3 3.3 6.7 6.5 10.1 9.6 80.1 74 187 119.2 304.5 119.2s224.4-45.2 304.3-119.2c3.4-3.1 6.7-6.3 10-9.6l0.3-0.3c1.6-1.6 3.2-3.1 4.7-4.7l0.1-0.1c3.3-3.3 6.5-6.7 9.6-10.1l0.1-0.1c1.5-1.7 3.1-3.3 4.6-5 0-0.1 0.1-0.1 0.1-0.2 1.4-1.5 2.8-3.1 4.1-4.7 0.4-0.5 0.8-0.9 1.2-1.4 1.2-1.3 2.3-2.5 3.3-3.7z m4.1-142.6c-13.8 32.6-32 62.8-54.2 90.2-24.9-21.5-52.2-40.3-81.5-55.9 11.6-46.9 18.8-98.4 20.7-152.6H887c-3 40.9-12.6 80.6-28.5 118.3zM887 484H743.5c-1.9-54.2-9.1-105.7-20.7-152.6 29.3-15.6 56.6-34.4 81.5-55.9 22.2 27.4 40.4 57.6 54.2 90.2C874.4 403.4 884 443.1 887 484zM658.3 165.5c39.7 16.8 75.8 40 107.6 69.2-18.5 15.8-38.4 29.7-59.4 41.8-15.7-45-35.8-84.1-59.2-115.4 3.7 1.4 7.4 2.9 11 4.4z m-90.6 700.6c-9.2 7.2-18.4 12.7-27.7 16.4V697c39.9 2.8 78.6 11.6 115.7 26.2-8.3 24.6-17.9 47.3-29 67.8-17.4 32.4-37.8 58.3-59 75.1z m59-633.1c11 20.6 20.7 43.3 29 67.8-37.1 14.6-75.8 23.4-115.7 26.2V141.6c9.2 3.7 18.5 9.1 27.7 16.4 21.2 16.7 41.6 42.6 59 75zM540 640.9V540h147.5c-1.6 44.2-7.1 87.1-16.3 127.8l-0.3 1.2c-41.1-15.6-85.1-25.3-130.9-28.1z m0-156.9V383.1c45.8-2.8 89.8-12.5 130.9-28.1l0.3 1.2c9.2 40.7 14.7 83.5 16.3 127.8H540z m-56 56v100.9c-45.8 2.8-89.8 12.5-130.9 28.1l-0.3-1.2c-9.2-40.7-14.7-83.5-16.3-127.8H484z m-147.5-56c1.6-44.2 7.1-87.1 16.3-127.8l0.3-1.2c41.1 15.6 85 25.3 130.9 28.1V484H336.5zM484 697v185.4c-9.2-3.7-18.5-9.1-27.7-16.4-21.2-16.7-41.7-42.7-59.1-75.1-11-20.6-20.7-43.3-29-67.8 37.2-14.6 75.9-23.3 115.8-26.1z m0-370c-39.9-2.8-78.6-11.6-115.7-26.2 8.3-24.6 17.9-47.3 29-67.8 17.4-32.4 37.8-58.4 59.1-75.1 9.2-7.2 18.4-12.7 27.7-16.4V327zM365.7 165.5c3.7-1.5 7.3-3 11-4.4-23.4 31.3-43.5 70.4-59.2 115.4-21-12-40.9-26-59.4-41.8 31.8-29.2 67.9-52.4 107.6-69.2zM165.5 365.7c13.8-32.6 32-62.8 54.2-90.2 24.9 21.5 52.2 40.3 81.5 55.9-11.6 46.9-18.8 98.4-20.7 152.6H137c3-40.9 12.6-80.6 28.5-118.3zM137 540h143.5c1.9 54.2 9.1 105.7 20.7 152.6-29.3 15.6-56.6 34.4-81.5 55.9-22.2-27.4-40.4-57.6-54.2-90.2C149.6 620.6 140 580.9 137 540z m228.7 318.5c-39.7-16.8-75.8-40-107.6-69.2 18.5-15.8 38.4-29.7 59.4-41.8 15.7 45 35.8 84.1 59.2 115.4-3.7-1.4-7.4-2.9-11-4.4z m292.6 0c-3.7 1.5-7.3 3-11 4.4 23.4-31.3 43.5-70.4 59.2-115.4 21 12 40.9 26 59.4 41.8-31.8 29.2-67.9 52.4-107.6 69.2z"],"sync":["M168 504.2c1-43.7 10-86.1 26.9-126 17.3-41 42.1-77.7 73.7-109.4S337 212.3 378 195c42.4-17.9 87.4-27 133.9-27s91.5 9.1 133.8 27c40.9 17.3 77.7 42.1 109.3 73.8 9.9 9.9 19.2 20.4 27.8 31.4l-60.2 47c-5.3 4.1-3.5 12.5 3 14.1l175.7 43c5 1.2 9.9-2.6 9.9-7.7l0.8-180.9c0-6.7-7.7-10.5-12.9-6.3l-56.4 44.1C765.8 155.1 646.2 92 511.8 92 282.7 92 96.3 275.6 92 503.8c-0.1 4.5 3.5 8.2 8 8.2h60c4.4 0 7.9-3.5 8-7.8zM924 512h-60c-4.4 0-7.9 3.5-8 7.8-1 43.7-10 86.1-26.9 126-17.3 41-42.1 77.8-73.7 109.4S687 811.7 646 829c-42.4 17.9-87.4 27-133.9 27s-91.5-9.1-133.9-27c-40.9-17.3-77.7-42.1-109.3-73.8-9.9-9.9-19.2-20.4-27.8-31.4l60.2-47c5.3-4.1 3.5-12.5-3-14.1l-175.7-43c-5-1.2-9.9 2.6-9.9 7.7l-0.7 181c0 6.7 7.7 10.5 12.9 6.3l56.4-44.1C258.2 868.9 377.8 932 512.2 932c229.2 0 415.5-183.7 419.8-411.8 0.1-4.5-3.5-8.2-8-8.2z"],"location":["M854.6 289.1c-18.8-43.4-45.7-82.3-79.9-115.7-34.2-33.4-73.9-59.5-118.2-77.8C610.7 76.6 562.1 67 512 67c-50.1 0-98.7 9.6-144.5 28.5-44.3 18.3-84 44.5-118.2 77.8-34.2 33.4-61.1 72.4-79.9 115.7-19.5 45-29.4 92.8-29.4 142 0 70.6 16.9 140.9 50.1 208.7 26.7 54.5 64 107.6 111 158.1 80.3 86.2 164.5 138.9 188.4 153 6.9 4.1 14.7 6.1 22.4 6.1 7.8 0 15.5-2 22.4-6.1 23.9-14.1 108.1-66.8 188.4-153 47-50.4 84.3-103.6 111-158.1C867.1 572 884 501.8 884 431.1c0-49.2-9.9-97-29.4-142zM512 880.2c-65.9-41.9-300-207.8-300-449.1 0-77.9 31.1-151.1 87.6-206.3C356.3 169.5 431.7 139 512 139s155.7 30.5 212.4 85.9C780.9 280 812 353.2 812 431.1c0 241.3-234.1 407.2-300 449.1z","M512 263c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176z m79.2 255.2C570 539.3 541.9 551 512 551c-29.9 0-58-11.7-79.2-32.8C411.7 497 400 468.9 400 439c0-29.9 11.7-58 32.8-79.2C454 338.6 482.1 327 512 327c29.9 0 58 11.6 79.2 32.8C612.4 381 624 409.1 624 439c0 29.9-11.6 58-32.8 79.2z"],"video":["M912 302.3L784 376V224c0-35.3-28.7-64-64-64H128c-35.3 0-64 28.7-64 64v576c0 35.3 28.7 64 64 64h592c35.3 0 64-28.7 64-64V648l128 73.7c21.3 12.3 48-3.1 48-27.6V330c0-24.6-26.7-40-48-27.7zM712 792H136V232h576v560z m176-167l-104-59.8V458.9L888 399v226z","M208 360h112c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H208c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8z"],"link":["M574 665.4c-3.1-3.1-8.2-3.1-11.3 0L446.5 781.6c-53.8 53.8-144.6 59.5-204 0-59.5-59.5-53.8-150.2 0-204l116.2-116.2c3.1-3.1 3.1-8.2 0-11.3l-39.8-39.8c-3.1-3.1-8.2-3.1-11.3 0L191.4 526.5c-84.6 84.6-84.6 221.5 0 306s221.5 84.6 306 0l116.2-116.2c3.1-3.1 3.1-8.2 0-11.3L574 665.4zM832.6 191.4c-84.6-84.6-221.5-84.6-306 0L410.3 307.6c-3.1 3.1-3.1 8.2 0 11.3l39.7 39.7c3.1 3.1 8.2 3.1 11.3 0l116.2-116.2c53.8-53.8 144.6-59.5 204 0 59.5 59.5 53.8 150.2 0 204L665.3 562.6c-3.1 3.1-3.1 8.2 0 11.3l39.8 39.8c3.1 3.1 8.2 3.1 11.3 0l116.2-116.2c84.5-84.6 84.5-221.5 0-306.1z","M610.1 372.3c-3.1-3.1-8.2-3.1-11.3 0L372.3 598.7c-3.1 3.1-3.1 8.2 0 11.3l39.6 39.6c3.1 3.1 8.2 3.1 11.3 0l226.4-226.4c3.1-3.1 3.1-8.2 0-11.3l-39.5-39.6z"],"bell":["M816 768h-24V428c0-141.1-104.3-257.7-240-277.1V112c0-22.1-17.9-40-40-40s-40 17.9-40 40v38.9c-135.7 19.4-240 136-240 277.1v340h-24c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h216c0 61.8 50.2 112 112 112s112-50.2 112-112h216c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM512 888c-26.5 0-48-21.5-48-48h96c0 26.5-21.5 48-48 48zM304 768V428c0-55.6 21.6-107.8 60.9-147.1S456.4 220 512 220c55.6 0 107.8 21.6 147.1 60.9S720 372.4 720 428v340H304z"],"file":["M854.6 288.6L639.4 73.4c-6-6-14.1-9.4-22.6-9.4H192c-17.7 0-32 14.3-32 32v832c0 17.7 14.3 32 32 32h640c17.7 0 32-14.3 32-32V311.3c0-8.5-3.4-16.7-9.4-22.7zM790.2 326H602V137.8L790.2 326z m1.8 562H232V136h302v216c0 23.2 18.8 42 42 42h216v494z","M504 618H320c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h184c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8zM312 490v48c0 4.4 3.6 8 8 8h384c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H320c-4.4 0-8 3.6-8 8z"],"ellipsis":["M232 511m-56 0a56 56 0 1 0 112 0 56 56 0 1 0-112 0Z","M512 511m-56 0a56 56 0 1 0 112 0 56 56 0 1 0-112 0Z","M792 511m-56 0a56 56 0 1 0 112 0 56 56 0 1 0-112 0Z"],"down":["M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3 0.1-12.7-6.4-12.7z"]};
