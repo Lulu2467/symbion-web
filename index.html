@@ -20259,14 +20259,20 @@
     const host = document.getElementById('setHost');
     if (!host) return;
     settingsSection = section || 'profile';
+    let currentNav = null;
     host.querySelectorAll('nav.set-nav button[data-set]').forEach((btn) => {
-      if (btn.dataset.set === settingsSection) btn.setAttribute('aria-current', 'page');
-      else btn.removeAttribute('aria-current');
+      if (btn.dataset.set === settingsSection) {
+        btn.setAttribute('aria-current', 'page');
+        currentNav = btn;
+      } else btn.removeAttribute('aria-current');
     });
     host.querySelectorAll('[data-set-panel]').forEach((panel) => {
       panel.hidden = panel.dataset.setPanel !== settingsSection;
     });
     host.querySelector('.set-main')?.scrollTo({ top: 0 });
+    if (currentNav) {
+      try { currentNav.scrollIntoView({ block: 'nearest', inline: 'nearest' }); } catch (_) {}
+    }
     if (settingsSection === 'cosmos') paintCosmoManage();
     if (settingsSection === 'friends') paintSetFriends();
     if (settingsSection === 'history') paintSetHistory();
