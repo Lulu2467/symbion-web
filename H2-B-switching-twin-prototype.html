@@ -6995,18 +6995,19 @@
   html[data-theme="blue"] #dirHost .dir-card.is-follow .dir-meta { width: 100%; justify-content: space-between; }
   html[data-theme="blue"] #dirHost .dir-enter {
     flex: none;
+    box-sizing: border-box;
     height: 32px;
     padding: 0 12px;
-    border: 0;
+    border: 1px solid #d5dde2;
     border-radius: 8px;
-    background: var(--green);
-    color: #fff;
+    background: #fff;
+    color: #3c7a94;
     font-size: 13px;
     font-weight: 600;
     line-height: 1;
     cursor: pointer;
   }
-  html[data-theme="blue"] #dirHost .dir-enter:hover { background: var(--green-dark); }
+  html[data-theme="blue"] #dirHost .dir-enter:hover { background: #f4f8fa; border-color: #c5d4de; }
   html[data-theme="blue"] #dirHost .dir-msg {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -7129,17 +7130,18 @@
     align-items: center;
   }
   html[data-theme="blue"] #dirHost .dir-summon {
+    box-sizing: border-box;
     height: 32px;
     padding: 0 12px;
-    border: 0;
+    border: 1px solid #d5dde2;
     border-radius: 8px;
-    background: var(--green);
-    color: #fff;
+    background: #fff;
+    color: #3c7a94;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
   }
-  html[data-theme="blue"] #dirHost .dir-summon:hover { background: var(--green-dark); }
+  html[data-theme="blue"] #dirHost .dir-summon:hover { background: #f4f8fa; border-color: #c5d4de; }
   .dir-card:hover .dir-summon,
   .dir-card:focus-visible .dir-summon { display: inline-flex; }
   .dir-card.is-follow:hover .dir-summon,
@@ -7151,9 +7153,10 @@
   .dir-card.is-follow:focus-visible .dir-head { padding-right: 0; }
   html[data-theme="blue"] #dirHost .dir-summon[aria-pressed="true"] {
     display: inline-flex;
-    background: #fff;
-    color: #1a1d21;
-    box-shadow: inset 0 0 0 1px #cfd3d8;
+    background: #f4f7f8;
+    color: #6e7378;
+    border-color: #e3e6e8;
+    box-shadow: none;
   }
   html[data-theme="blue"] #dirHost .dir-card:has(.dir-summon[aria-pressed="true"]) .dir-head {
     padding-right: 108px;
