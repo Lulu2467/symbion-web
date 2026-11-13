@@ -2628,6 +2628,18 @@
   html[data-theme="blue"] #tail-home .kd-row > .kb-ico svg { width: 16px; height: 16px; flex: none; color: #8b9198; }
   html[data-theme="blue"] #tail-home .kd-row.is-off,
   html[data-theme="blue"] #tail-home .kd-row.is-off svg { color: #c5c5c7; }
+  html[data-theme="blue"] #tail-home button.kd-act {
+    width: 100%; border: 0; background: transparent; font: inherit; text-align: left; cursor: pointer; color: #1d1d1f;
+  }
+  html[data-theme="blue"] #tail-home button.kd-act:hover { background: #f6f7f8; }
+  html[data-theme="blue"] #tail-home .kd-act.is-set span { color: #3c7a94; }
+  html[data-theme="blue"] #tail-home .kd-file {
+    display: flex; align-items: center; gap: 8px; min-height: 28px; margin: 0 16px 4px 40px; color: #1d1d1f; font-size: 13px;
+  }
+  html[data-theme="blue"] #tail-home .kd-file span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  html[data-theme="blue"] #tail-home .kd-file button {
+    margin-left: auto; width: 24px; height: 24px; padding: 0; border: 0; background: transparent; color: #8b9198; cursor: pointer; font-size: 14px;
+  }
   html[data-theme="blue"] #tail-home .kd-row span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   html[data-theme="blue"] #tail-home .kd-sub { padding: 0 16px 8px 40px; font-size: 13px; line-height: 18px; color: #1d1d1f; }
   html[data-theme="blue"] #tail-home .kd-arrow { color: #8b9198; }
@@ -2645,7 +2657,8 @@
   html[data-theme="blue"] #tail-home .kd-tog.is-on::after { left: 14px; }
   html[data-theme="blue"] #tail-home .kd-busy { position: relative; padding-left: 40px; }
   html[data-theme="blue"] #tail-home .kd-vis {
-    margin-left: auto; display: inline-flex; align-items: center; gap: 4px; height: 28px; padding: 0 8px;
+    margin-left: auto; display: inline-flex; align-items: center; justify-content: space-between; gap: 4px;
+    min-width: 148px; height: 28px; padding: 0 8px; box-sizing: border-box;
     border: 1px solid #e6e8ec; border-radius: 8px; background: #f6f7f8; color: #1d1d1f;
     font: inherit; font-size: 13px; cursor: pointer;
   }
@@ -11569,6 +11582,10 @@
         if (opened) kbShowEventMenu(opened, r.left, r.bottom + 6);
         return;
       }
+      const fileRemove = e.target.closest("[data-kd-file-remove]");
+      if (fileRemove) { kbRemoveFile(Number(fileRemove.dataset.kdFileRemove)); return; }
+      if (e.target.closest('[data-kd="file"]')) { kbPickFiles(); return; }
+      if (e.target.closest('[data-kd="meet"]')) { kbToggleMeet(); return; }
       if (e.target.closest('[data-kd="allday"]')) kbToggleAllDay();
     });
     host.addEventListener('focusout', (e) => {
@@ -11636,7 +11653,7 @@
     return tint ? `background:${tint[2]};color:${tint[3]};` : '';
   }
   function kbEventSnap(ev) {
-    return { title: ev.title, iso: ev.iso, start: ev.start, dur: ev.dur || 60, timed: !!ev.timed, task: ev.task || 'task', lane: ev.lane || 'personal', color: ev.color || '', block: !!ev.block, tz: ev.tz || '', repeat: ev.repeat || '', repeatN: ev.repeatN || 0, repeatUnit: ev.repeatUnit || '' };
+    return { title: ev.title, iso: ev.iso, start: ev.start, dur: ev.dur || 60, timed: !!ev.timed, task: ev.task || 'task', lane: ev.lane || 'personal', color: ev.color || '', block: !!ev.block, tz: ev.tz || '', repeat: ev.repeat || '', repeatN: ev.repeatN || 0, repeatUnit: ev.repeatUnit || '', files: kbFileList(ev), meet: ev.meet || '' };
   }
   function kbWriteEvent(ev, patch) {
     if (ev.kind === 'rem' && ev.rem) {
@@ -11646,6 +11663,8 @@
       if (patch.repeat != null) ev.rem.dataset.repeat = patch.repeat;
       if (patch.repeatN != null) ev.rem.dataset.repeatN = String(patch.repeatN || '');
       if (patch.repeatUnit != null) ev.rem.dataset.repeatUnit = patch.repeatUnit;
+      if (patch.files) ev.rem.dataset.files = JSON.stringify(patch.files);
+      if (patch.meet != null) ev.rem.dataset.meet = patch.meet || '';
     } else if (ev.kind === 'extra') {
       const item = kbBox().extra.find((row) => row.id === ev.extraId);
       if (item) Object.assign(item, patch);
@@ -11682,7 +11701,7 @@
     const snap = kbEventSnap(ev);
     kbBox().extra.push({
       id: `ev-${Date.now()}`, title: snap.title, date: snap.iso, start: snap.timed ? snap.start : 0,
-      timed: snap.timed, dur: snap.dur, lane: snap.lane, task: snap.task, color: snap.color, block: snap.block, tz: snap.tz || '',
+      timed: snap.timed, dur: snap.dur, lane: snap.lane, task: snap.task, color: snap.color, block: snap.block, tz: snap.tz || '', files: snap.files || [], meet: snap.meet || '',
     });
     kbCloseMenu();
     paintHomeTimeline();
@@ -11693,7 +11712,7 @@
     const snap = clip.snap;
     kbBox().extra.push({
       id: `ev-${Date.now()}`, title: snap.title, date: point.iso, start: point.allDay ? 0 : (point.start || 0),
-      timed: !point.allDay, dur: snap.dur || 60, lane: snap.lane, task: snap.task, color: snap.color, block: snap.block, tz: snap.tz || '',
+      timed: !point.allDay, dur: snap.dur || 60, lane: snap.lane, task: snap.task, color: snap.color, block: snap.block, tz: snap.tz || '', files: snap.files || [], meet: snap.meet || '',
     });
     if (clip.cut) kbBox().clip = null;
     kbCloseMenu();
@@ -12311,7 +12330,7 @@
     return (ev.iso || "") + "|" + ev.title + "|" + ev.start + "|" + (ev.timed ? 1 : 0) + "|" + (ev.task || "");
   }
   function kbDraftEvent(draft) {
-    return { iso: draft.iso, title: draft.title || "", start: draft.allDay ? 0 : draft.start, dur: draft.dur || 60, timed: !draft.allDay, task: draft.task || "task", lane: "personal", note: draft.note || "", visibility: draft.visibility || "default", tz: draft.tz || "", repeat: draft.repeat || "", repeatN: draft.repeatN || 0, repeatUnit: draft.repeatUnit || "" };
+    return { iso: draft.iso, title: draft.title || "", start: draft.allDay ? 0 : draft.start, dur: draft.dur || 60, timed: !draft.allDay, task: draft.task || "task", lane: "personal", note: draft.note || "", visibility: draft.visibility || "default", tz: draft.tz || "", repeat: draft.repeat || "", repeatN: draft.repeatN || 0, repeatUnit: draft.repeatUnit || "", files: draft.files || [], meet: draft.meet || "" };
   }
   function kbNoteText(ev) {
     const note = String(ev.note || "");
@@ -12518,7 +12537,7 @@
     remDay = prev.iso;
     if (prev.allDay) { tlAddTime = ""; tlCreateItem(title); tlAddTime = "10:00"; }
     else { tlAddTime = tlClock(prev.start); tlAddDur = prev.dur || 60; tlCreateItem(title); }
-    if (prev.note || prev.task || prev.visibility || prev.tz || prev.repeat) {
+    if (prev.note || prev.task || prev.visibility || prev.tz || prev.repeat || (prev.files && prev.files.length) || prev.meet) {
       const list = document.querySelector("#tail-home .two-main-l");
       const rem = [...(list ? list.querySelectorAll(".rem") : [])].reverse().find((row) => row.querySelector(".t")?.textContent.trim() === title);
       if (rem) {
@@ -12527,6 +12546,8 @@
         if (prev.visibility) rem.dataset.visibility = prev.visibility;
         if (prev.tz) rem.dataset.tz = prev.tz;
         if (prev.repeat) { rem.dataset.repeat = prev.repeat; rem.dataset.repeatN = String(prev.repeatN || ""); rem.dataset.repeatUnit = prev.repeatUnit || ""; }
+        if (prev.files && prev.files.length) rem.dataset.files = JSON.stringify(prev.files);
+        if (prev.meet) rem.dataset.meet = prev.meet;
       }
     }
     return saved;
@@ -12588,7 +12609,8 @@
       }
     }
     kbCloseVisMenu();
-    kbPaintSide();
+    const label = document.querySelector("#tlBody .kd-vis span");
+    if (label) label.textContent = kbVisLabel(value);
   }
   function kbCloseVisMenu() {
     document.querySelector(".kd-vis-menu")?.remove();
@@ -12656,6 +12678,73 @@
     cell.appendChild(chip);
     kbShowDraft({ iso, start: 0, dur: 60, allDay: true, title: "" });
   }
+  function kbParseFiles(raw) {
+    if (Array.isArray(raw)) return raw.filter((name) => typeof name === "string" && name);
+    if (!raw) return [];
+    try {
+      const list = JSON.parse(raw);
+      return Array.isArray(list) ? list.filter((name) => typeof name === "string" && name) : [];
+    } catch (e) { return []; }
+  }
+  function kbFileList(ev) { return kbParseFiles(ev && ev.files); }
+  function kbMeetLink() { return "meet.symbion.app/" + Math.random().toString(36).slice(2, 8); }
+  function kbAddFiles(names) {
+    const draft = kbBox().draft;
+    if (draft && !draft.done) {
+      const next = kbParseFiles(draft.files);
+      names.forEach((name) => { if (name && !next.includes(name)) next.push(name); });
+      draft.files = next;
+      kbPaintSide();
+      return;
+    }
+    const ev = kbOpenEv();
+    if (!ev) return;
+    const next = kbFileList(ev);
+    names.forEach((name) => { if (name && !next.includes(name)) next.push(name); });
+    kbWriteEvent(ev, { files: next });
+    kbPaintSide();
+  }
+  function kbRemoveFile(index) {
+    const draft = kbBox().draft;
+    if (draft && !draft.done) {
+      draft.files = kbParseFiles(draft.files).filter((_, i) => i !== index);
+      kbPaintSide();
+      return;
+    }
+    const ev = kbOpenEv();
+    if (!ev) return;
+    kbWriteEvent(ev, { files: kbFileList(ev).filter((_, i) => i !== index) });
+    kbPaintSide();
+  }
+  function kbToggleMeet() {
+    const draft = kbBox().draft;
+    if (draft && !draft.done) {
+      draft.meet = draft.meet ? "" : kbMeetLink();
+      kbPaintSide();
+      return;
+    }
+    const ev = kbOpenEv();
+    if (!ev) return;
+    kbWriteEvent(ev, { meet: ev.meet ? "" : kbMeetLink() });
+    kbPaintSide();
+  }
+  function kbPickFiles() {
+    let input = document.getElementById("kbFilePick");
+    if (!input) {
+      input = document.createElement("input");
+      input.type = "file";
+      input.id = "kbFilePick";
+      input.multiple = true;
+      input.hidden = true;
+      input.addEventListener("change", () => {
+        const names = [...input.files].map((file) => file.name);
+        input.value = "";
+        if (names.length) kbAddFiles(names);
+      });
+      document.body.appendChild(input);
+    }
+    input.click();
+  }
   function kbDetail(ev) {
     const end = ev.start + (ev.dur || 60);
     const when = ev.timed
@@ -12665,6 +12754,10 @@
     const group = ev.lane === "occupied" ? "Busy" : kbLaneName(ev.lane || "personal");
     const color = kbLaneColor(ev.lane || "personal");
     const off = (icon, label) => '<div class="kd-row is-off">' + (icon === "user" ? kbIcon("personal") : kdIcon(icon)) + "<span>" + label + "</span></div>";
+    const files = kbFileList(ev);
+    const fileRow = '<button type="button" class="kd-row kd-act" data-kd="file">' + kdIcon("file") + "<span>Upload file</span></button>";
+    const fileChips = files.map((name, i) => '<div class="kd-file"><span>' + deskEsc(name) + '</span><button type="button" data-kd-file-remove="' + i + '" aria-label="Remove file">×</button></div>').join("");
+    const meetRow = '<button type="button" class="kd-row kd-act' + (ev.meet ? " is-set" : "") + '" data-kd="meet">' + kdIcon("video") + "<span>" + deskEsc(ev.meet || "Meeting") + "</span></button>";
     const picked = ev.task || "task";
     const iconMenu = kbBox().iconOpen ? '<div class="kd-icons" role="listbox" aria-label="Icons">' + KB_ICON_CHOICES.map(([id, name]) => '<button type="button" role="option" data-kd-task="' + id + '" class="' + (id === picked ? "is-on" : "") + '" aria-label="' + name + '" aria-selected="' + (id === picked ? "true" : "false") + '">' + kbTaskIcon(id) + "</button>").join("") + "</div>" : "";
     const mark = '<button type="button" class="kd-mark' + (kbBox().iconOpen ? " is-open" : "") + '" data-kd="icon" style="color:' + color + '" aria-label="Choose icon" aria-expanded="' + (kbBox().iconOpen ? "true" : "false") + '">' + kbTaskIcon(picked) + "</button>";
@@ -12672,7 +12765,7 @@
     const date = '<div class="kd-sub kd-date"><span>' + deskEsc(kbDetailDate(ev)) + '</span><input class="kd-date-input" type="date" value="' + deskEsc(ev.iso || "") + '" aria-label="Date"></div>';
     const all = '<button type="button" class="kd-row kd-allday" data-kd="allday"><i class="kd-tog' + (ev.timed ? "" : " is-on") + '"></i><span>All-day</span></button>';
     const repeatRow = '<div class="kd-row kd-repeat' + (ev.repeat ? " is-set" : "") + '" data-kd="repeat" role="button" tabindex="0">' + kdIcon("sync") + "<span>" + deskEsc(kbRepeatLabel(ev)) + '</span><svg class="kd-repeat-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.2 6.2 8 10l3.8-3.8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
-    return '<aside class="kb-legend kb-detail"><div class="kd-title">' + mark + title + "</div>" + iconMenu + when + date + all + '<div class="kd-row kd-tz" data-kd="tz" role="button" tabindex="0">' + kdIcon("earth") + "<span>" + deskEsc(kbTzLabel(ev)) + "</span></div>" + repeatRow + '<div class="kd-gap"></div>' + off("user", "Participants") + off("video", "Conferencing") + '<div class="kd-gap"></div><div class="kd-label">Description</div>' + note + '<div class="kd-gap"></div><div class="kd-row"><i class="kd-dot" style="background:' + color + '"></i><span>' + deskEsc(group) + '</span></div>' + kbVisRow(ev) + off("bell", "Reminders") + "</aside>";
+    return '<aside class="kb-legend kb-detail"><div class="kd-title">' + mark + title + "</div>" + iconMenu + when + date + all + '<div class="kd-row kd-tz" data-kd="tz" role="button" tabindex="0">' + kdIcon("earth") + "<span>" + deskEsc(kbTzLabel(ev)) + "</span></div>" + repeatRow + '<div class="kd-gap"></div>' + off("user", "Participants") + fileRow + fileChips + meetRow + '<div class="kd-gap"></div><div class="kd-label">Description</div>' + note + '<div class="kd-gap"></div><div class="kd-row"><i class="kd-dot" style="background:' + color + '"></i><span>' + deskEsc(group) + '</span></div>' + kbVisRow(ev) + off("bell", "Reminders") + "</aside>";
   }
   function kbSide() {
     const draft = kbBox().draft;
@@ -12785,12 +12878,12 @@
     return `${TODO_MONTHS_LONG[a.getMonth()]} ${a.getFullYear()} – ${TODO_MONTHS_LONG[b.getMonth()]} ${b.getFullYear()}`;
   }
   function kbCollectDay(iso) {
-    const events = tlEventsFor(iso).map((ev) => ({ ...ev, iso, lane: kbLaneOf(ev), task: kbTaskOf(ev), color: ev.rem?.dataset?.color || ev.item?.color || '', block: ev.rem?.dataset?.block === '1' || !!ev.item?.block, visibility: ev.rem?.dataset?.visibility || ev.item?.visibility || 'default', tz: ev.rem?.dataset?.tz || ev.item?.tz || '', repeat: ev.rem?.dataset?.repeat || ev.item?.repeat || '', repeatN: Number(ev.rem?.dataset?.repeatN || ev.item?.repeatN || 0) || 0, repeatUnit: ev.rem?.dataset?.repeatUnit || ev.item?.repeatUnit || '' }));
+    const events = tlEventsFor(iso).map((ev) => ({ ...ev, iso, lane: kbLaneOf(ev), task: kbTaskOf(ev), color: ev.rem?.dataset?.color || ev.item?.color || '', block: ev.rem?.dataset?.block === '1' || !!ev.item?.block, visibility: ev.rem?.dataset?.visibility || ev.item?.visibility || 'default', tz: ev.rem?.dataset?.tz || ev.item?.tz || '', repeat: ev.rem?.dataset?.repeat || ev.item?.repeat || '', repeatN: Number(ev.rem?.dataset?.repeatN || ev.item?.repeatN || 0) || 0, repeatUnit: ev.rem?.dataset?.repeatUnit || ev.item?.repeatUnit || '', files: kbParseFiles(ev.rem?.dataset?.files || ev.item?.files), meet: ev.rem?.dataset?.meet || ev.item?.meet || '' }));
     kbBox().extra.filter((item) => item.date === iso).forEach((item) => {
       events.push({
         kind: 'extra', extraId: item.id, title: item.title, note: '',
         start: item.start || 0, timed: !!item.timed, dur: item.dur || 60, done: false,
-        iso, lane: item.lane || 'personal', task: item.task || 'task', color: item.color || '', block: !!item.block, visibility: item.visibility || 'default', tz: item.tz || '', repeat: item.repeat || '', repeatN: item.repeatN || 0, repeatUnit: item.repeatUnit || '',
+        iso, lane: item.lane || 'personal', task: item.task || 'task', color: item.color || '', block: !!item.block, visibility: item.visibility || 'default', tz: item.tz || '', repeat: item.repeat || '', repeatN: item.repeatN || 0, repeatUnit: item.repeatUnit || '', files: item.files || [], meet: item.meet || '',
       });
     });
     events.forEach((ev) => { ev.i = tlCache.length; tlCache.push(ev); });
