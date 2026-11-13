@@ -6248,6 +6248,17 @@
   .set-nav button[data-set] + button[data-set] { margin-top: 4px; }
   .set-nav button[data-set]:hover { background: #f3f5f7; }
   .set-nav button[data-set][aria-current="page"] { background: var(--green-tint); color: var(--green); font-weight: 500; }
+  .set-nav button.set-signout { color: #c62828; }
+  .set-nav button.set-signout:hover { background: #fceeee; color: #b71c1c; }
+  .set-nav button.set-signout[aria-current="page"] { background: #fceeee; color: #b71c1c; }
+  .set-friend-list, .set-history-list { display: grid; gap: 8px; margin-top: 12px; }
+  .set-friend-list .set-line, .set-history-list .set-line {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px;
+    padding: 10px 0; border-bottom: 1px solid #eef0f2;
+  }
+  .set-friend-list .set-line b, .set-history-list .set-line b { flex: 1; min-width: 120px; font-size: 13px; font-weight: 600; }
+  .set-friend-list .set-line span, .set-history-list .set-line span { color: var(--muted); font-size: 12px; }
+  .set-friend-list .set-line .set-quiet { margin-left: auto; }
   .set-main { flex: 1; min-width: 0; overflow: auto; padding: 22px 28px 40px; }
   .set-top { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
   .set-top p { margin: 0 0 0 auto; color: var(--label); font-size: 11px; font-weight: 700; letter-spacing: .08em; }
@@ -8307,116 +8318,123 @@
   .tk-meta time { margin-left: auto; flex: none; }
   .tk-empty { margin: 8px 4px; color: #a4a4a2; font-size: 12px; }
   .gi-modal {
-    position: fixed; inset: 0; z-index: 80; display: flex; align-items: center; justify-content: center;
-    padding: 24px; background: transparent; pointer-events: none;
+    position: fixed; inset: 0; z-index: 80; display: flex; align-items: flex-start; justify-content: center;
+    padding: 48px 24px 24px; background: transparent; pointer-events: none;
   }
   .gi-modal[hidden] { display: none !important; }
   .gi-sheet {
-    width: min(680px, 100%); max-height: 100%; overflow: auto; box-sizing: border-box;
-    padding: 18px 22px 0; border-radius: 16px; background: #fff;
-    border: 1px solid #e6e8ec; box-shadow: 0 18px 48px rgba(20, 24, 28, .16);
+    width: min(560px, 100%); max-height: calc(100vh - 72px); overflow: auto; box-sizing: border-box;
+    padding: 8px 8px 0; border-radius: 12px; background: #fff;
+    border: 1px solid #e6e8ec; box-shadow: 0 12px 40px rgba(26, 29, 33, .12);
     pointer-events: auto;
   }
-  .gi-top { display: flex; align-items: center; justify-content: space-between; }
-  .gi-kicker {
-    display: inline-flex; align-items: center; height: 22px; padding: 0 10px; border-radius: 999px;
-    background: #f3f4f6; color: #8b9198; font-size: 11px; font-weight: 700; letter-spacing: .06em;
-  }
+  .gi-top { display: flex; justify-content: flex-end; padding: 4px 8px 0; }
   .gi-x {
     width: 28px; height: 28px; border: 0; border-radius: 8px; background: transparent; color: #8b9198; font-size: 18px;
   }
-  .gi-x:hover { background: #f3f4f6; color: #1d1d1f; }
-  .gi-sheet h2 { margin: 12px 0 4px; font-size: 20px; font-weight: 700; letter-spacing: 0; color: #1d1d1f; }
-  .gi-lead { margin: 0; color: #8b9198; font-size: 14px; line-height: 1.45; }
-  .gi-tabs { display: grid; grid-template-columns: repeat(3, 1fr); margin: 18px 0 16px; border-bottom: 1px solid #ededec; }
-  .gi-tabs button {
-    border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; padding: 10px 8px; background: transparent;
-    color: #6e7378; font-size: 14px; font-weight: 650;
+  .gi-x:hover { background: #f3f5f7; color: #1f1f1f; }
+  .gi-panel { padding: 0 12px 4px; }
+  .gi-title {
+    width: 100%; box-sizing: border-box; margin: 0 0 8px; padding: 8px 4px 14px;
+    border: 0; background: transparent; color: #1f1f1f;
+    font: inherit; font-size: 22px; font-weight: 600; line-height: 1.3; letter-spacing: -0.01em;
   }
-  .gi-tabs button[aria-selected="true"] { color: #1d1d1f; border-bottom-color: #3c7a94; }
-  .gi-when { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
-  .gi-when > div > b { display: block; margin-bottom: 8px; font-size: 15px; font-weight: 700; color: #1d1d1f; }
-  .gi-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .gi-field { display: block; }
-  .gi-field span { display: block; margin-bottom: 6px; color: #8b9198; font-size: 12px; font-weight: 600; }
-  .gi-field input, .gi-field textarea {
-    width: 100%; box-sizing: border-box; border: 1px solid #e6e8ec; border-radius: 10px; background: #fff; color: #1d1d1f;
-    font: inherit; font-size: 14px;
+  .gi-title::placeholder { color: #b0b4ba; font-weight: 500; }
+  .gi-title:focus { outline: none; }
+  .gi-rule { height: 1px; margin: 4px 0; background: #eef0f2; border: 0; }
+  .gi-row {
+    display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; align-items: start;
+    padding: 10px 4px; color: #1f1f1f;
   }
-  .gi-field input { height: 40px; padding: 0 10px; }
-  .gi-field textarea { min-height: 88px; padding: 8px 10px; resize: vertical; }
-  .gi-field input:focus, .gi-field textarea:focus { outline: none; border-color: #3c7a94; }
-  .gi-types, .gi-people { display: grid; gap: 10px; margin-top: 16px; }
-  .gi-types { grid-template-columns: repeat(4, 1fr); }
-  .gi-people { grid-template-columns: repeat(3, 1fr); }
-  .gi-types button, .gi-people button {
-    height: 40px; border: 1px solid #e6e8ec; border-radius: 8px; background: #fff; color: #1d1d1f; font-size: 14px; font-weight: 600;
+  .gi-ico {
+    width: 28px; height: 28px; display: grid; place-items: center; color: #8b9198; flex: none;
   }
-  .gi-types button[aria-pressed="true"] { background: #3c7a94; border-color: #3c7a94; color: #fff; }
-  .gi-people button[aria-pressed="true"] { background: #ebf5fa; border-color: #3c7a94; color: #3c7a94; }
-  .gi-panel h3 { margin: 0 0 4px; font-size: 15px; font-weight: 700; color: #1d1d1f; }
-  .gi-panel .hint { margin: 0 0 12px; color: #8b9198; font-size: 13px; }
-  .gi-panel .gi-field + .gi-field { margin-top: 12px; }
-  .gi-note { min-height: 18px; margin: 10px 0 0; color: #d93025; font-size: 12px; }
-  .gi-foot {
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    margin: 16px -22px 0; padding: 14px 22px; border-top: 1px solid #ededec;
+  .gi-ico svg { width: 18px; height: 18px; display: block; }
+  .gi-row-body { min-width: 0; display: flex; flex-direction: column; gap: 8px; padding-top: 3px; }
+  .gi-row-line { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 28px; }
+  .gi-link {
+    border: 0; background: transparent; padding: 0; color: #3c7a94;
+    font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; text-align: left;
   }
-  .gi-foot > span { color: #8b9198; font-size: 13px; }
-  .gi-foot div { display: flex; align-items: center; gap: 8px; }
-  .gi-cancel, .gi-next {
-    height: 32px; padding: 0 14px; border-radius: 8px; font-size: 14px; font-weight: 600;
+  .gi-link:hover { color: #316479; }
+  .gi-quiet {
+    border: 0; background: transparent; padding: 0; color: #71777d;
+    font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; text-align: left;
   }
-  .gi-cancel { border: 0; background: #f3f4f6; color: #6e7378; }
-  .gi-cancel:hover { background: #ececee; }
-  .gi-next { border: 0; background: #3c7a94; color: #fff; }
-  .gi-next:hover { background: #316479; }
-  .gi-block { margin-top: 16px; }
-  .gi-block-hd { display: flex; align-items: center; justify-content: space-between; min-height: 36px; }
-  .gi-block-hd b { font-size: 15px; font-weight: 700; color: #1d1d1f; }
-  .gi-add {
-    height: 32px; padding: 0 10px; border: 0; border-radius: 8px; background: transparent;
-    color: #3c7a94; font-size: 14px; font-weight: 600;
+  .gi-quiet:hover { color: #3c7a94; }
+  .gi-quiet.is-set { color: #3c7a94; }
+  .gi-when-line {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
   }
-  .gi-add:hover { background: #ebf5fa; }
-  .gi-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .gi-when-line input[type="date"],
+  .gi-when-line input[type="time"] {
+    height: 30px; box-sizing: border-box; border: 0; border-radius: 6px; padding: 0 8px;
+    background: #f6f7f8; color: #1f1f1f; font: inherit; font-size: 13px; font-weight: 500;
+  }
+  .gi-when-line input:focus { outline: 2px solid rgba(60, 122, 148, .25); outline-offset: 0; }
+  .gi-when-line .gi-dash { color: #b0b4ba; font-size: 13px; }
+  .gi-types { display: flex; flex-wrap: wrap; gap: 6px; }
+  .gi-types button {
+    height: 28px; padding: 0 10px; border: 0; border-radius: 8px; background: #f6f7f8;
+    color: #71777d; font-size: 12px; font-weight: 650; cursor: pointer;
+  }
+  .gi-types button[aria-pressed="true"] { background: #ebf5fa; color: #3c7a94; }
+  .gi-people { display: grid; gap: 0; }
+  .gi-chips { display: flex; flex-wrap: wrap; gap: 6px; }
   .gi-chips:empty { display: none; }
   .gi-chip {
-    display: inline-flex; align-items: center; gap: 6px; height: 32px; max-width: 100%;
-    padding: 0 6px 0 10px; border-radius: 8px; background: #f3f5f7; color: #1d1d1f; font-size: 13px;
+    display: inline-flex; align-items: center; gap: 4px; height: 28px; max-width: 100%;
+    padding: 0 4px 0 10px; border-radius: 8px; background: #f6f7f8; color: #1f1f1f; font-size: 13px;
   }
   .gi-chip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .gi-chip button {
-    width: 20px; height: 20px; border: 0; border-radius: 6px; background: transparent; color: #6e7378; font-size: 14px; line-height: 1;
+    width: 20px; height: 20px; border: 0; border-radius: 6px; background: transparent; color: #8b9198; font-size: 14px; line-height: 1;
   }
-  .gi-chip button:hover { background: #e6e8ec; color: #1d1d1f; }
-  .gi-pick { margin-top: 8px; border: 1px solid #e6e8ec; border-radius: 10px; overflow: hidden; }
+  .gi-chip button:hover { background: #e6e8ec; color: #1f1f1f; }
+  .gi-pick { border: 1px solid #e6e8ec; border-radius: 10px; overflow: hidden; background: #fff; }
+  .gi-pick[hidden], .gi-file-pick[hidden] { display: none !important; }
   .gi-pick input {
-    width: 100%; height: 40px; box-sizing: border-box; border: 0; border-bottom: 1px solid #e6e8ec;
-    padding: 0 12px; font: inherit; font-size: 14px; color: #1d1d1f;
+    width: 100%; height: 36px; box-sizing: border-box; border: 0; border-bottom: 1px solid #eef0f2;
+    padding: 0 12px; font: inherit; font-size: 13px; color: #1f1f1f; background: #fff;
   }
   .gi-pick input:focus { outline: none; }
-  .gi-pick .gi-people { grid-template-columns: 1fr; margin: 0; max-height: 200px; overflow: auto; }
-  .gi-pick .gi-people button { width: 100%; border: 0; border-radius: 0; text-align: left; }
-  .gi-act {
-    display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px;
-    margin-top: 8px; padding: 0 12px; border: 1px solid #e6e8ec; border-radius: 10px;
-    background: #fff; color: #1d1d1f; font-size: 14px; font-weight: 600; text-align: left; cursor: pointer;
-  }
-  .gi-act:hover { background: #f7f9fa; }
-  .gi-act.is-set { border-color: #9eb8c6; background: #ebf5fa; color: #3c7a94; }
-  .gi-act svg { width: 18px; height: 18px; flex: none; }
-  .gi-act em { margin-left: auto; font-style: normal; font-size: 12px; font-weight: 500; color: #8b9198; }
-  .gi-act.is-set em { color: #3c7a94; }
-  .gi-file-pick { display: grid; gap: 0; margin-top: 8px; border: 1px solid #e6e8ec; border-radius: 10px; overflow: hidden; }
-  .gi-file-pick[hidden] { display: none !important; }
+  .gi-pick .gi-people { max-height: 180px; overflow: auto; }
+  .gi-pick .gi-people button,
   .gi-file-pick button {
-    width: 100%; min-height: 40px; padding: 0 12px; border: 0; border-bottom: 1px solid #eef0f2;
-    background: #fff; color: #1d1d1f; font-size: 14px; text-align: left; cursor: pointer;
+    width: 100%; min-height: 36px; padding: 8px 12px; border: 0; border-bottom: 1px solid #eef0f2;
+    background: #fff; color: #1f1f1f; font-size: 13px; text-align: left; cursor: pointer;
   }
+  .gi-pick .gi-people button:last-child,
   .gi-file-pick button:last-child { border-bottom: 0; }
-  .gi-file-pick button:hover { background: #f7f9fa; }
+  .gi-pick .gi-people button:hover,
+  .gi-file-pick button:hover { background: #f6f7f8; }
+  .gi-pick .gi-people button[aria-pressed="true"] { background: #ebf5fa; color: #3c7a94; }
+  .gi-file-pick { border: 1px solid #e6e8ec; border-radius: 10px; overflow: hidden; }
   .gi-file-pick button small { display: block; color: #8b9198; font-size: 12px; }
+  .gi-desc {
+    width: 100%; min-height: 72px; box-sizing: border-box; border: 0; padding: 0;
+    background: transparent; color: #1f1f1f; font: inherit; font-size: 14px; line-height: 1.45; resize: vertical;
+  }
+  .gi-desc::placeholder { color: #b0b4ba; }
+  .gi-desc:focus { outline: none; }
+  .gi-note { min-height: 16px; margin: 0; padding: 0 16px; color: #d93025; font-size: 12px; }
+  .gi-foot {
+    display: flex; align-items: center; justify-content: flex-end; gap: 8px;
+    margin-top: 8px; padding: 12px 16px; border-top: 1px solid #eef0f2; background: #fff;
+    position: sticky; bottom: 0;
+  }
+  .gi-cancel, .gi-next {
+    height: 32px; padding: 0 14px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;
+  }
+  .gi-cancel { border: 1px solid #e6e8ec; background: #fff; color: #71777d; }
+  .gi-cancel:hover { background: #f6f7f8; }
+  .gi-next { border: 0; background: var(--green); color: #fff; }
+  .gi-next:hover { background: var(--green-dark); }
+  .gi-panel .hint { margin: 0; padding: 8px 12px; color: #8b9198; font-size: 13px; }
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+  }
   .thread-head .icon-btn { border: 0; background: transparent; color: #5f6368; }
   .thread-head .icon-btn:hover, .thread-head .icon-btn[aria-expanded="true"], .thread-head .icon-btn[aria-pressed="true"] { border: 0; background: #d4e4ee; color: #1f1f1f; }
   .head-face .mosaic, .head-face .av { width: 36px; height: 36px; border-radius: 4px; border: 0; }
@@ -10180,10 +10198,13 @@
               <nav class="set-nav" aria-label="Account settings">
                 <h2>Account Hub</h2>
                 <p class="set-kicker">GENERAL</p>
-                <button type="button" data-set="profile" aria-current="page">Profile</button>
+                <button type="button" data-set="profile" aria-current="page">Edit profile</button>
                 <button type="button" data-set="picture">Profile picture</button>
+                <button type="button" data-set="friends">Friends</button>
                 <p class="set-kicker">COSMOS</p>
                 <button type="button" data-set="cosmos">Cosmos</button>
+                <p class="set-kicker">ACCOUNT</p>
+                <button type="button" data-set="settings">Account &amp; settings</button>
                 <p class="set-kicker">CONNECTIONS</p>
                 <button type="button" data-set="apps">Connected apps</button>
                 <p class="set-kicker">PREFERENCES</p>
@@ -10192,12 +10213,16 @@
                 <button type="button" data-set="chat">Chat display</button>
                 <button type="button" data-set="neo">Citta in NeoSchool</button>
                 <p class="set-kicker">SECURITY</p>
-                <button type="button" data-set="security">Security</button>
+                <button type="button" data-set="security">Security &amp; privacy</button>
                 <p class="set-kicker">ADVANCED</p>
                 <button type="button" data-set="bugs"><span>Bug Report mode</span><em>Product test</em></button>
                 <p class="set-kicker">RELATED</p>
+                <button type="button" data-set="about">About Symbion</button>
+                <button type="button" data-set="history">Recent history</button>
                 <button type="button" data-set="tokens">Tokens &amp; plan</button>
                 <button type="button" data-set="agents">Agents</button>
+                <p class="set-kicker">SESSION</p>
+                <button type="button" data-set="signout" class="set-signout">Sign out</button>
               </nav>
               <div class="set-main">
                 <div class="set-top"><button type="button" class="set-back" data-set-act="back" aria-label="Back"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path d="M679.13916 138.387837c10.304693 0 20.602224 3.941775 28.457122 11.791557 15.733333 15.733333 15.733333 41.172725 0 56.906058L397.262304 517.418406l314.834478 314.836525c15.733333 15.733333 15.733333 41.171702 0 56.905034s-41.171702 15.733333-56.905034 0L311.900148 545.868365c-15.734356-15.733333-15.734356-41.172725 0-56.906058L650.683061 150.179394C658.532843 142.335752 668.830373 138.387837 679.13916 138.387837L679.13916 138.387837zM679.13916 138.387837" fill="#272636"/></svg></button><p>SETTINGS</p></div>
@@ -10365,8 +10390,42 @@
                   <div class="set-actions"><button type="button" class="set-primary" data-set-act="save-neo">Save Citta preference</button></div>
                   <p class="set-note" id="setNeoNote">Saved preference: Use existing layout.</p>
                 </div>
+                <div class="set-card" data-set-panel="friends" hidden>
+                  <h3>Friends</h3>
+                  <p class="sub">Find people by name or email and start a conversation.</p>
+                  <label><span>SEARCH</span><input id="setFriendQ" type="search" placeholder="Name or email" autocomplete="off" aria-label="Search friends"></label>
+                  <div id="setFriendResults" class="set-friend-list"></div>
+                </div>
+                <div class="set-card" data-set-panel="settings" hidden>
+                  <h3>Account &amp; settings</h3>
+                  <p class="sub">Shortcuts into the same places as the account menu.</p>
+                  <div class="set-actions">
+                    <button type="button" class="set-quiet" data-set="profile">Edit profile</button>
+                    <button type="button" class="set-quiet" data-set="picture">Profile picture</button>
+                    <button type="button" class="set-quiet" data-set="security">Security &amp; privacy</button>
+                    <button type="button" class="set-quiet" data-set="apps">Connected apps</button>
+                    <button type="button" class="set-quiet" data-set="cosmos">Cosmos</button>
+                    <button type="button" class="set-quiet" data-set="friends">Friends</button>
+                    <button type="button" class="set-quiet" data-set="about">About Symbion</button>
+                    <button type="button" class="set-quiet" data-set="history">Recent history</button>
+                  </div>
+                  <p class="set-note">Account Hub keeps every account-menu destination in one place.</p>
+                </div>
+                <div class="set-card" data-set-panel="about" hidden>
+                  <h3>About Symbion</h3>
+                  <p class="sub">Product identity for this prototype.</p>
+                  <div class="set-line"><b>Product</b><span>Symbion</span></div>
+                  <div class="set-line"><b>Build</b><span>H2 · Switching Twin</span></div>
+                  <div class="set-line"><b>Theme</b><span>Home v2 · Blue</span></div>
+                  <p class="set-note">This page is a UX prototype. Live version and legal links wait for the account service.</p>
+                </div>
+                <div class="set-card" data-set-panel="history" hidden>
+                  <h3>Recent history</h3>
+                  <p class="sub">Recent places and actions from this session.</p>
+                  <div id="setHistory" class="set-history-list"></div>
+                </div>
                 <div class="set-card" data-set-panel="security" hidden>
-                  <h3>Security</h3>
+                  <h3>Security &amp; privacy</h3>
                   <p class="sub">Review this session and account-wide sign-out controls.</p>
                   <h3>Where you’re signed in</h3>
                   <div class="set-line"><b>This device</b><span>sid_9f527aee…</span></div>
@@ -10402,6 +10461,16 @@
                     <button type="button" class="set-plan" data-plan="pro" aria-pressed="false"><b>Pro</b><small>2M tokens · $129/month · 4.8M effective</small></button>
                     <button type="button" class="set-plan" data-plan="purchase" aria-pressed="false"><b>Purchase</b><small>$39/month on the Plus plan. Checkout waits for the account service.</small></button>
                   </div>
+                </div>
+                <div class="set-card" data-set-panel="signout" hidden>
+                  <h3>Sign out</h3>
+                  <p class="sub">End this browser session. You can sign back in anytime.</p>
+                  <div class="set-line"><b>Signed in as</b><span id="setSignoutWho">Lulu · 2849182439@qq.com</span></div>
+                  <div class="set-actions">
+                    <button type="button" class="set-quiet set-signout" data-set-act="confirm-signout">Sign out</button>
+                    <button type="button" class="set-quiet" data-set="profile">Stay signed in</button>
+                  </div>
+                  <p class="set-note">Live sign-out waits for the account service. This prototype only shows the confirmation.</p>
                 </div>
                 <div class="set-card" data-set-panel="agents" hidden>
                   <h3>Hire a course tutor</h3>
@@ -10758,61 +10827,74 @@
         <div class="desk-bubble" id="gBubble" hidden></div>
         <div class="gi-modal" id="giModal" hidden>
           <div class="gi-sheet" role="dialog" aria-modal="true" aria-labelledby="giTitle">
-            <div class="gi-top"><span class="gi-kicker">EVENT</span><button type="button" class="gi-x" data-gi="close" aria-label="Close">×</button></div>
-            <h2 id="giTitle">Create event</h2>
-            <p class="gi-lead">This stays in this group. It does not show anyone's private schedule.</p>
+            <div class="gi-top"><button type="button" class="gi-x" data-gi="close" aria-label="Close">×</button></div>
             <div class="gi-panel">
-              <label class="gi-field"><span>Name</span><input id="giName" type="text" maxlength="80" autocomplete="off"></label>
-              <div class="gi-when">
-                <div><b>Start</b><div class="gi-pair">
-                  <label class="gi-field"><span>Start date</span><input id="giStart" type="date"></label>
-                  <label class="gi-field"><span>Start time</span><input id="giStartTime" type="time"></label>
-                </div></div>
-                <div><b>End</b><div class="gi-pair">
-                  <label class="gi-field"><span>End date</span><input id="giEnd" type="date"></label>
-                  <label class="gi-field"><span>End time</span><input id="giEndTime" type="time"></label>
-                </div></div>
-              </div>
-              <div class="gi-types">
-                <button type="button" data-gi-type="Meeting" aria-pressed="true">Meeting</button>
-                <button type="button" data-gi-type="Task" aria-pressed="false">Task</button>
-                <button type="button" data-gi-type="Document" aria-pressed="false">Document</button>
-                <button type="button" data-gi-type="Pod" aria-pressed="false">Pod</button>
-              </div>
-              <div class="gi-block">
-                <div class="gi-block-hd"><b>People</b><button type="button" class="gi-add" data-gi="people">Add people</button></div>
-                <div class="gi-chips" id="giWhoChips"></div>
-                <div class="gi-pick" id="giPick" hidden>
-                  <input id="giPeopleQ" type="search" placeholder="Search name" aria-label="Search people">
-                  <div class="gi-people" id="giPeople"></div>
+              <input class="gi-title" id="giName" type="text" maxlength="80" autocomplete="off" placeholder="Add a title" aria-label="Event title">
+              <p id="giTitle" class="visually-hidden">Create event</p>
+              <div class="gi-row">
+                <span class="gi-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M16 11a3 3 0 1 0-2-5.2A3 3 0 1 0 8 11"/><path d="M4 19c.6-2.6 2.8-4 5.5-4 .7 0 1.3.1 1.9.3"/><path d="M14 15c2.8 0 5 1.4 5.6 4"/></svg></span>
+                <div class="gi-row-body">
+                  <div class="gi-row-line"><button type="button" class="gi-link" data-gi="people">Add people</button></div>
+                  <div class="gi-chips" id="giWhoChips"></div>
+                  <div class="gi-pick" id="giPick" hidden>
+                    <input id="giPeopleQ" type="search" placeholder="Search name" aria-label="Search people">
+                    <div class="gi-people" id="giPeople"></div>
+                  </div>
                 </div>
               </div>
-              <div class="gi-block">
-                <div class="gi-block-hd"><b>Meeting</b></div>
-                <button type="button" class="gi-act" id="giMeetBtn" data-gi="meet" aria-pressed="false">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6h8A2.5 2.5 0 0 1 16 8.5v7a2.5 2.5 0 0 1-2.5 2.5h-8A2.5 2.5 0 0 1 3 15.5v-7z"/><path d="m16 10 5-2.5v9L16 14"/></svg>
-                  <span id="giMeetLabel">Add meeting</span>
-                  <em id="giMeetHint">Video link</em>
-                </button>
-              </div>
-              <div class="gi-block">
-                <div class="gi-block-hd"><b>Files</b><button type="button" class="gi-add" data-gi="file-menu">Add file</button></div>
-                <div class="gi-chips" id="giFiles"></div>
-                <div class="gi-file-pick" id="giFilePick" hidden>
-                  <button type="button" data-gi="file">Upload from computer</button>
-                  <div id="giGroupFiles"></div>
+              <hr class="gi-rule">
+              <div class="gi-row">
+                <span class="gi-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 1.5"/></svg></span>
+                <div class="gi-row-body">
+                  <div class="gi-when-line">
+                    <input id="giStart" type="date" aria-label="Start date">
+                    <input id="giStartTime" type="time" aria-label="Start time">
+                    <span class="gi-dash">—</span>
+                    <input id="giEndTime" type="time" aria-label="End time">
+                    <input id="giEnd" type="date" aria-label="End date">
+                  </div>
+                  <div class="gi-types" role="group" aria-label="Type">
+                    <button type="button" data-gi-type="Meeting" aria-pressed="true">Meeting</button>
+                    <button type="button" data-gi-type="Task" aria-pressed="false">Task</button>
+                    <button type="button" data-gi-type="Document" aria-pressed="false">Document</button>
+                    <button type="button" data-gi-type="Pod" aria-pressed="false">Pod</button>
+                  </div>
                 </div>
-                <input id="giFile" type="file" multiple hidden>
               </div>
-              <label class="gi-field"><span>Details</span><textarea id="giDetails" rows="3" maxlength="240"></textarea></label>
+              <hr class="gi-rule">
+              <div class="gi-row">
+                <span class="gi-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6h8A2.5 2.5 0 0 1 16 8.5v7a2.5 2.5 0 0 1-2.5 2.5h-8A2.5 2.5 0 0 1 3 15.5v-7z"/><path d="m16 10 5-2.5v9L16 14"/></svg></span>
+                <div class="gi-row-body">
+                  <div class="gi-row-line">
+                    <button type="button" class="gi-quiet" id="giMeetBtn" data-gi="meet" aria-pressed="false"><span id="giMeetLabel">Add meeting</span></button>
+                    <button type="button" class="gi-link" id="giMeetHint" data-gi="meet" hidden>Remove</button>
+                  </div>
+                </div>
+              </div>
+              <div class="gi-row">
+                <span class="gi-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 7V4.5A1.5 1.5 0 0 1 9.5 3h8A1.5 1.5 0 0 1 19 4.5v13A1.5 1.5 0 0 1 17.5 19H14"/><path d="M5 8h9.5A1.5 1.5 0 0 1 16 9.5v10A1.5 1.5 0 0 1 14.5 21H5.5A1.5 1.5 0 0 1 4 19.5v-10A1.5 1.5 0 0 1 5.5 8H5z"/></svg></span>
+                <div class="gi-row-body">
+                  <div class="gi-row-line"><button type="button" class="gi-link" data-gi="file-menu">Add attachment</button></div>
+                  <div class="gi-chips" id="giFiles"></div>
+                  <div class="gi-file-pick" id="giFilePick" hidden>
+                    <button type="button" data-gi="file">Upload from computer</button>
+                    <div id="giGroupFiles"></div>
+                  </div>
+                  <input id="giFile" type="file" multiple hidden>
+                </div>
+              </div>
+              <hr class="gi-rule">
+              <div class="gi-row">
+                <span class="gi-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 7h14M5 12h14M5 17h8"/></svg></span>
+                <div class="gi-row-body">
+                  <textarea class="gi-desc" id="giDetails" rows="3" maxlength="240" placeholder="Add description" aria-label="Description"></textarea>
+                </div>
+              </div>
             </div>
             <p class="gi-note" id="giNote"></p>
             <div class="gi-foot">
-              <span></span>
-              <div>
-                <button type="button" class="gi-cancel" data-gi="cancel">Cancel</button>
-                <button type="button" class="gi-next" id="giNext" data-gi="next">Create</button>
-              </div>
+              <button type="button" class="gi-cancel" data-gi="cancel">Cancel</button>
+              <button type="button" class="gi-next" id="giNext" data-gi="next">Create</button>
             </div>
           </div>
         </div>
@@ -16520,12 +16602,16 @@
       if (!btn) return;
       const act = btn.dataset.railAccount;
       setRailMeMenu(false);
-      if (act === 'profile' || act === 'settings') openSettings('profile');
+      if (act === 'profile') openSettings('profile');
+      else if (act === 'settings') openSettings('settings');
       else if (act === 'picture') openSettings('picture');
+      else if (act === 'friends') openSettings('friends');
       else if (act === 'security') openSettings('security');
       else if (act === 'apps') openSettings('apps');
       else if (act === 'cosmos') openSettings('cosmos');
-      else if (act === 'signout') showToastMsg('Sign out waits for the account service.');
+      else if (act === 'about') openSettings('about');
+      else if (act === 'history') openSettings('history');
+      else if (act === 'signout') openSettings('signout');
     });
     document.addEventListener('click', (e) => {
       const menu = document.getElementById('railMeMenu');
@@ -20132,11 +20218,48 @@
       return line;
     }));
   }
+  function setEsc(text) {
+    return String(text ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+  const SET_FRIENDS = [
+    { id: 'maya', name: 'Maya Chen', email: 'maya@symbion.test' },
+    { id: 'chris', name: 'Chris Dalton', email: 'chris@symbion.test' },
+    { id: 'alex', name: 'Alex Rivera', email: 'alex@symbion.test' },
+    { id: 'priya', name: 'Priya Nair', email: 'priya@symbion.test' },
+    { id: 'elena', name: 'Elena Voss', email: 'elena@symbion.test' },
+    { id: 'jonah', name: 'Jonah Blake', email: 'jonah@symbion.test' }
+  ];
+  function paintSetFriends() {
+    const results = document.getElementById('setFriendResults');
+    const box = document.getElementById('setFriendQ');
+    if (!results) return;
+    const q = (box?.value || '').trim().toLowerCase();
+    if (!q) {
+      results.innerHTML = '<p class="set-note">Type a name or an email to add someone.</p>';
+      return;
+    }
+    const rows = SET_FRIENDS.filter((p) => p.name.toLowerCase().includes(q) || p.email.toLowerCase().includes(q));
+    results.innerHTML = rows.length
+      ? rows.map((p) => `<div class="set-line"><b>${setEsc(p.name)}</b><span>${setEsc(p.email)}</span><button type="button" class="set-quiet" data-set-friend="${setEsc(p.id)}">Add</button></div>`).join('')
+      : '<p class="set-note">No matching people. Try another name or email.</p>';
+  }
+  function paintSetHistory() {
+    const host = document.getElementById('setHistory');
+    if (!host) return;
+    const rows = [
+      { title: 'Account Hub', detail: 'Opened from the account menu' },
+      { title: 'Community · Heavy-ion Physics', detail: 'Workspace / Kanban' },
+      { title: 'Home', detail: 'Daily desk' },
+      { title: 'Cosmos', detail: 'Following list' },
+      { title: 'Create event', detail: 'Group workspace draft' }
+    ];
+    host.innerHTML = rows.map((row) => `<div class="set-line"><b>${setEsc(row.title)}</b><span>${setEsc(row.detail)}</span></div>`).join('');
+  }
   function showSettings(section) {
     const host = document.getElementById('setHost');
     if (!host) return;
     settingsSection = section || 'profile';
-    host.querySelectorAll('button[data-set]').forEach((btn) => {
+    host.querySelectorAll('nav.set-nav button[data-set]').forEach((btn) => {
       if (btn.dataset.set === settingsSection) btn.setAttribute('aria-current', 'page');
       else btn.removeAttribute('aria-current');
     });
@@ -20145,6 +20268,12 @@
     });
     host.querySelector('.set-main')?.scrollTo({ top: 0 });
     if (settingsSection === 'cosmos') paintCosmoManage();
+    if (settingsSection === 'friends') paintSetFriends();
+    if (settingsSection === 'history') paintSetHistory();
+    if (settingsSection === 'signout') {
+      const who = document.getElementById('setSignoutWho');
+      if (who) who.textContent = `${userName() || 'Lulu'} · 2849182439@qq.com`;
+    }
   }
   function fillSettingsName() {
     const name = document.getElementById('setName');
@@ -20167,6 +20296,12 @@
     if (!host || settingsBound) return;
     settingsBound = true;
     host.addEventListener('click', (event) => {
+      const friendAdd = event.target.closest('[data-set-friend]');
+      if (friendAdd) {
+        const row = SET_FRIENDS.find((p) => p.id === friendAdd.dataset.setFriend);
+        showToastMsg(row ? `Added ${row.name}.` : 'Friend added.');
+        return;
+      }
       const nav = event.target.closest('button[data-set]');
       if (nav) {
         showSettings(nav.dataset.set);
@@ -20288,7 +20423,7 @@
         if (save) save.disabled = true;
         showToastMsg('Announcement times follow this device.');
       } else if (act === 'reset') showToastMsg('Onboarding reset waits for the account service.');
-      else if (act === 'logout') showToastMsg('Sign out waits for the account service.');
+      else if (act === 'logout' || act === 'confirm-signout') showToastMsg('Sign out waits for the account service.');
       else if (act === 'signout-all') showToastMsg('Sign out everywhere waits for the account service.');
       else if (act === 'connect') showToastMsg('Google Workspace isn’t connected yet.');
       else if (act === 'refresh-connectors') showToastMsg('No connectors yet.');
@@ -20318,6 +20453,7 @@
         if (detail) detail.textContent = on ? 'Right-click reporting is available.' : 'Right-click reporting is off on this device.';
       }
     });
+    document.getElementById('setFriendQ')?.addEventListener('input', () => paintSetFriends());
     document.getElementById('setZone')?.addEventListener('change', (event) => {
       const save = document.getElementById('setZoneSave');
       if (save) save.disabled = event.target.value === settingsZoneSaved;
@@ -22217,7 +22353,7 @@ function paintGroupItem() {
     meetBtn.classList.toggle('is-set', on);
     meetBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
     if (meetLabel) meetLabel.textContent = on ? gi.meet : 'Add meeting';
-    if (meetHint) meetHint.textContent = on ? 'Remove' : 'Video link';
+    if (meetHint) meetHint.hidden = !on;
   }
   const filePick = $('giFilePick');
   if (filePick) filePick.hidden = !gi.filePick;
