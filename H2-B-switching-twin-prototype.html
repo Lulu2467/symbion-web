@@ -21457,10 +21457,8 @@ function paintGroupBoard() {
   peopleIds.sort((a, b) => (a === ME ? -1 : b === ME ? 1 : 0));
   const lanes = peopleIds.map((id) => {
     const cells = days.map((d) => `<div class="desk-cell" data-g-slot="${gIso(d)}"></div>`).join('');
-    const hits = gItems(c.id).filter((item) => item.who === id && isos.some((iso) => gCovers(item, iso)))
-      .map((item) => ({ item, outside: false }))
-      .concat(gOutside(id, c).filter((item) => isos.some((iso) => gCovers(item, iso))).map((item) => ({ item, outside: true })))
-      .map((row) => ({ ...row, span: gSpanOf(row.item, isos) })).filter((row) => row.span);
+    const hits = gItems(c.id).filter((item) => item.who === id && gCanSee(item, c) && isos.some((iso) => gCovers(item, iso)))
+      .map((item) => ({ item, outside: false, span: gSpanOf(item, isos) })).filter((row) => row.span);
     hits.sort((a, b) => a.span.left - b.span.left);
     const rowEnds = [];
     hits.forEach((row) => {
@@ -21479,10 +21477,7 @@ function paintGroupBoard() {
   }).join('');
   let boardHtml = `<div class="desk-board"><div class="desk-week head" style="--cols:${cols}"><span>Member</span>${head}</div>${lanes}</div>`;
   if (gCanvas === 'list') {
-    const rows = gItems(c.id).filter((item) => isos.some((iso) => gCovers(item, iso))).map((item) => ({ item, outside: false }));
-    peopleIds.forEach((id) => {
-      gOutside(id, c).filter((item) => isos.some((iso) => gCovers(item, iso))).forEach((item) => rows.push({ item, outside: true }));
-    });
+    const rows = gItems(c.id).filter((item) => gCanSee(item, c) && isos.some((iso) => gCovers(item, iso))).map((item) => ({ item, outside: false }));
     boardHtml = '<div class="desk-list">' + (rows.map((row) => {
       const open = !row.outside && gCanSee(row.item, c);
       const attr = row.outside ? 'data-g-busy="1"' : `data-g-item="${row.item.id}"`;
@@ -21496,11 +21491,6 @@ function paintGroupBoard() {
     for (let n = 1; n <= count; n += 1) {
       const iso = gIso(new Date(first.getFullYear(), first.getMonth(), n));
       const hits = gItems(c.id).filter((item) => gCovers(item, iso) && gCanSee(item, c)).map((item) => ({ item, outside: false }));
-      if (canReview(c)) {
-        peopleIds.forEach((id) => {
-          gOutside(id, c).filter((item) => gCovers(item, iso)).forEach((item) => hits.push({ item, outside: true }));
-        });
-      }
       cells.push('<div class="desk-cal-day' + (hits.length ? ' has' : '') + '"><button type="button">' + n + '</button>' + hits.map((row) => '<button type="button" class="desk-task' + (row.outside ? ' g-occupied' : ' type-' + esc(row.item.type).toLowerCase()) + '" ' + (row.outside ? 'data-g-busy="1"' : 'data-g-item="' + row.item.id + '"') + '>' + esc(row.outside ? 'Occupied' : row.item.title) + '</button>').join('') + '</div>');
     }
     boardHtml = '<div class="desk-cal">' + ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((d) => '<i>' + d + '</i>').join('') + cells.join('') + '</div>';
