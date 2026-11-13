@@ -2094,6 +2094,7 @@
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .tl-bar,
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .rem-week { display: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .rem-board:has(.kb),
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .rem-board:has(.nc) {
     flex: 1 1 auto;
     min-height: 0;
@@ -2101,12 +2102,14 @@
     gap: 0;
     overflow: hidden;
   }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .tl:has(.kb),
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .tl:has(.nc) {
     flex: 1 1 auto;
     min-height: 0;
     display: flex;
     flex-direction: column;
   }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home #tlBody:has(.kb),
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home #tlBody:has(.nc) {
     flex: 1 1 auto;
     min-height: 0;
@@ -2204,6 +2207,54 @@
     margin-top: 8px; height: 26px; padding: 0 8px; border: 0; border-radius: 6px; background: #f1f1ef;
     font: inherit; font-size: 12px; font-weight: 560; color: #37352f; cursor: pointer;
   }
+  html[data-theme="blue"] #tail-home .kb { flex: 1; min-height: 0; overflow: auto; padding: 2px 2px 8px; }
+  html[data-theme="blue"] #tail-home .kb-day {
+    margin: 12px 4px 4px; font-size: 12px; font-weight: 600; letter-spacing: .04em; color: #8b9198;
+  }
+  html[data-theme="blue"] #tail-home .kb-day:first-child { margin-top: 2px; }
+  html[data-theme="blue"] #tail-home .kb-row {
+    display: flex; align-items: center; gap: 12px; width: 100%; min-height: 52px; padding: 8px 8px;
+    border-radius: 10px;
+  }
+  html[data-theme="blue"] #tail-home .kb-ico {
+    flex: none; width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  }
+  html[data-theme="blue"] #tail-home .kb-ico svg { width: 16px; height: 16px; display: block; }
+  html[data-theme="blue"] #tail-home .kb-main { min-width: 0; flex: 1; }
+  html[data-theme="blue"] #tail-home .kb-main b,
+  html[data-theme="blue"] #tail-home .kb-main small {
+    display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  html[data-theme="blue"] #tail-home .kb-main b { font-size: 15px; font-weight: 600; line-height: 20px; color: #1d1d1f; }
+  html[data-theme="blue"] #tail-home .kb-main small { margin-top: 2px; font-size: 12px; line-height: 16px; font-weight: 500; }
+  html[data-theme="blue"] #tail-home .kb-time {
+    flex: none; min-width: 64px; text-align: right; font-size: 13px; font-variant-numeric: tabular-nums; color: #6e7378;
+  }
+  html[data-theme="blue"] #tail-home .kb-row.is-personal .kb-ico { background: #e7f2f7; color: #316479; }
+  html[data-theme="blue"] #tail-home .kb-row.is-personal .kb-main small { color: #316479; }
+  html[data-theme="blue"] #tail-home .kb-row.is-wuhan .kb-ico { background: #e5f4ec; color: #1f6b4a; }
+  html[data-theme="blue"] #tail-home .kb-row.is-wuhan .kb-main small { color: #1f6b4a; }
+  html[data-theme="blue"] #tail-home .kb-row.is-research .kb-ico { background: #f3eaf8; color: #6a4c93; }
+  html[data-theme="blue"] #tail-home .kb-row.is-research .kb-main small { color: #6a4c93; }
+  html[data-theme="blue"] #tail-home .kb-row.is-course .kb-ico { background: #fbf0dc; color: #9a5b12; }
+  html[data-theme="blue"] #tail-home .kb-row.is-course .kb-main small { color: #9a5b12; }
+  #deskHost .desk-task .kb-ico { display: none; }
+  html[data-theme="blue"] #deskHost .desk-task.is-personal { background: #e7f2f7; color: #316479; }
+  html[data-theme="blue"] #deskHost .desk-task.is-wuhan { background: #e5f4ec; color: #1f6b4a; }
+  html[data-theme="blue"] #deskHost .desk-task.is-research { background: #f3eaf8; color: #6a4c93; }
+  html[data-theme="blue"] #deskHost .desk-task.is-course { background: #fbf0dc; color: #9a5b12; }
+  html[data-theme="blue"] #deskHost .desk-task.is-personal em { color: #316479; }
+  html[data-theme="blue"] #deskHost .desk-task.is-wuhan em { color: #1f6b4a; }
+  html[data-theme="blue"] #deskHost .desk-task.is-research em { color: #6a4c93; }
+  html[data-theme="blue"] #deskHost .desk-task.is-course em { color: #9a5b12; }
+  html[data-theme="blue"] #deskHost .desk-task.is-personal,
+  html[data-theme="blue"] #deskHost .desk-task.is-wuhan,
+  html[data-theme="blue"] #deskHost .desk-task.is-research,
+  html[data-theme="blue"] #deskHost .desk-task.is-course { display: flex; align-items: flex-start; gap: 4px; }
+  html[data-theme="blue"] #deskHost .desk-task .kb-ico {
+    display: flex; width: 14px; height: 14px; flex: none; margin-top: 1px; background: transparent; color: inherit;
+  }
+  html[data-theme="blue"] #deskHost .desk-task .kb-ico svg { width: 14px; height: 14px; }
   .rem-add { display: none; }
   html[data-theme="blue"] #tail-home .rem-add {
     display: flex;
@@ -10787,12 +10838,80 @@
       }
     }
   }
+  function kbLaneName(id) {
+    return {
+      personal: 'Personal',
+      wuhan: 'Wuhan Branch Team',
+      research: 'Research_Test',
+      course: 'CO006017 · Data Analysis and Machine Learning',
+    }[id] || 'Personal';
+  }
+  function kbIcon(id) {
+    const paths = {
+      personal: '<circle cx="8" cy="5.4" r="2.1" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M3.3 13c.7-2.2 2.4-3.3 4.7-3.3s4 1.1 4.7 3.3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>',
+      wuhan: '<circle cx="5.6" cy="5.3" r="1.7" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="10.4" cy="5.6" r="1.45" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M1.8 12.6c.5-1.8 1.9-2.7 3.8-2.7 1.1 0 2 .3 2.6.9M8.2 10.2c.6-.4 1.3-.6 2.1-.6 1.7 0 3 .8 3.5 2.4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>',
+      research: '<path d="M6 2.2h4M8 2.2v2.2M5.2 13.2h5.6c.7 0 1.2-.6 1-1.3L10.2 7.2H5.8L4.2 11.9c-.2.7.3 1.3 1 1.3z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M6.2 9.2h3.6" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>',
+      course: '<path d="M2.2 3.4 8 1.8l5.8 1.6v7.2L8 12.2 2.2 10.6z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M8 1.8v10.4" fill="none" stroke="currentColor" stroke-width="1.3"/>',
+    };
+    return `<svg class="kb-glyph" viewBox="0 0 16 16" aria-hidden="true">${paths[id] || paths.personal}</svg>`;
+  }
+  function kbLaneOf(ev) {
+    if (ev.kind === 'desk' && ev.item && ev.item.lane) return ev.item.lane;
+    if (ev.type === 'email') return 'wuhan';
+    if (ev.type === 'yours') return 'personal';
+    if (ev.type === 'course') return 'course';
+    return 'research';
+  }
+  function kbHomeOn(iso) {
+    const list = document.querySelector('#tail-home .two-main-l');
+    if (!list) return [];
+    return [...list.querySelectorAll('.rem')].flatMap((rem) => {
+      const parts = todoWhenParts(rem);
+      if (parts.date !== iso) return [];
+      const type = todoTypeOf(rem);
+      const lane = type === 'email' ? 'wuhan' : type === 'yours' ? 'personal' : type === 'course' ? 'course' : 'research';
+      let time = 'All day';
+      if (parts.time) {
+        let mins = tlMins(parts.time);
+        if (mins < 7 * 60) mins += 12 * 60;
+        time = ncAmpm(mins);
+      }
+      return [{ lane, title: rem.querySelector('.t')?.textContent.trim() || '', time }];
+    });
+  }
+  function kbDayLabel(iso) {
+    const today = todoDateIso(new Date());
+    if (iso === today) return 'Today';
+    const base = todoParseIso(today);
+    const next = new Date(base.getFullYear(), base.getMonth(), base.getDate() + 1);
+    if (iso === todoDateIso(next)) return 'Tomorrow';
+    const date = todoParseIso(iso);
+    return `${TODO_WEEKDAYS[date.getDay()]} ${TODO_MONTHS[date.getMonth()]} ${date.getDate()}`;
+  }
+  function paintKb(host) {
+    const start = new Date();
+    start.setHours(0, 0, 0, 0);
+    const blocks = [];
+    for (let n = 0; n < 8; n += 1) {
+      const date = new Date(start.getFullYear(), start.getMonth(), start.getDate() + n);
+      const iso = todoDateIso(date);
+      const events = tlEventsFor(iso).slice().sort((a, b) => Number(a.timed) - Number(b.timed) || a.start - b.start);
+      if (!events.length) continue;
+      const rows = events.map((ev) => {
+        const lane = kbLaneOf(ev);
+        const when = ev.timed ? ncAmpm(ev.start) : 'All day';
+        return `<div class="kb-row is-${lane}"><span class="kb-ico">${kbIcon(lane)}</span><span class="kb-main"><b>${deskEsc(ev.title)}</b><small>${deskEsc(kbLaneName(lane))}</small></span><span class="kb-time">${when}</span></div>`;
+      }).join('');
+      blocks.push(`<div class="kb-day">${kbDayLabel(iso)}</div>${rows}`);
+    }
+    host.innerHTML = `<div class="kb kb-list">${blocks.join('') || '<div class="kb-day">Nothing scheduled</div>'}</div>`;
+  }
   function paintHomeTimeline() {
     const host = document.getElementById('tlBody');
     const dateBtn = document.getElementById('tlDate');
     if (!host || document.documentElement.dataset.theme !== 'blue') return;
     if (!remDay) remDay = todoDateIso(new Date());
-    paintNotionCal(host);
+    paintKb(host);
     return;
     if (dateBtn) {
       const date = todoParseIso(remDay);
@@ -16265,7 +16384,7 @@
   let deskSection = 'kanban';
   let deskSpan = 'week';
   let deskCanvas = 'timeline';
-  let deskFocus = new Date(2026, 10, 5);
+  let deskFocus = new Date();
   let deskNavHidden = false;
   let deskTeamOpen = true;
   let deskGroup = 'wuhan';
@@ -16356,7 +16475,8 @@
       const rows = deskItems.filter((item) => days.some((d) => deskCovers(item, deskIso(d))));
       host.innerHTML = rows.length ? `<div class="desk-list">${rows.map((item) => {
         const lane = DESK_LANES.find((l) => l.id === item.lane);
-        return `<button type="button"><span>${deskEsc(item.title)}<em style="display:block;font-style:normal;color:#71777d;font-weight:500">${deskEsc(lane ? lane.name : '')} · ${deskEsc(item.type)}</em></span><small>${deskEsc(item.date)}</small></button>`;
+        const tone = item.lane || 'personal';
+        return `<button type="button" class="desk-task is-${tone}"><span class="kb-ico">${kbIcon(tone)}</span><span>${deskEsc(item.title)}<em style="display:block;font-style:normal;font-weight:500">${deskEsc(lane ? lane.name : '')}</em></span><small>${deskEsc(item.date)}</small></button>`;
       }).join('')}</div>` : '<p class="desk-empty">Nothing in this range.</p>';
       return;
     }
@@ -16393,8 +16513,14 @@
       const cells = days.map((d) => {
         const iso = deskIso(d);
         const hits = deskItems.filter((item) => item.lane === lane.id && deskCovers(item, iso));
+        const homeHits = kbHomeOn(iso).filter((item) => item.lane === lane.id && !hits.some((have) => have.title === item.title));
         const today = blueBoard && iso === todayIso ? ' is-today' : '';
-        return `<div class="desk-cell${today}">${hits.map((item) => `<button type="button" class="desk-task">${deskEsc(item.title)}<em>${deskEsc(item.type)}</em></button>`).join('')}</div>`;
+        const chips = hits.concat(homeHits).map((item) => {
+          const tone = item.lane || lane.id;
+          const when = item.time || item.type || '';
+          return `<button type="button" class="desk-task is-${tone}"><span class="kb-ico">${kbIcon(tone)}</span><span>${deskEsc(item.title)}<em>${deskEsc(when)}</em></span></button>`;
+        }).join('');
+        return `<div class="desk-cell${today}">${chips}</div>`;
       }).join('');
       return `<div class="desk-week lane"><div class="desk-lane-name">${deskEsc(lane.name)}</div>${cells}</div>`;
     }).join('');
