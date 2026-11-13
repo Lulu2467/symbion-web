@@ -2159,7 +2159,7 @@
   html[data-theme="blue"] #tail-home .nc-col {
     position: relative;
     border-left: 1px solid #ededec;
-    background-image: repeating-linear-gradient(to bottom, transparent 0, transparent 47px, #ededec 47px, #ededec 48px);
+    background-image: repeating-linear-gradient(to bottom, transparent 0, transparent 39px, #ededec 39px, #ededec 40px);
   }
   html[data-theme="blue"] #tail-home .nc-ev,
   html[data-theme="blue"] #tail-home .nc-draft {
@@ -2255,7 +2255,40 @@
     display: flex; width: 14px; height: 14px; flex: none; margin-top: 1px; background: transparent; color: inherit;
   }
   html[data-theme="blue"] #deskHost .desk-task .kb-ico svg { width: 14px; height: 14px; }
-  html[data-theme="blue"] #tail-home .kb-sched { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  html[data-theme="blue"] #tail-home .kb-sched { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; padding: 0; }
+  html[data-theme="blue"] #tail-home .kb-calbar { height: 32px; padding: 0 2px; }
+  html[data-theme="blue"] #tail-home .kb-month-title { font-size: 16px; font-weight: 700; color: #1d1d1f; letter-spacing: -.02em; }
+  html[data-theme="blue"] #tail-home .kb-calbar button[aria-pressed="true"] { background: transparent; box-shadow: none; font-weight: 700; }
+  html[data-theme="blue"] #tail-home .kb-plus { width: 26px; padding: 0; font-size: 16px; line-height: 1; }
+  html[data-theme="blue"] #tail-home .kb-pane:has(.nc) { overflow: hidden; display: flex; flex-direction: column; }
+  html[data-theme="blue"] #tail-home .kb-sched .nc-day.is-today small,
+  html[data-theme="blue"] #tail-home .kb-sched .nc-day.is-today b { color: #eb5757; background: transparent; }
+  html[data-theme="blue"] #tail-home .kb-sched .nc-day b { width: auto; height: auto; border-radius: 0; font-size: 16px; }
+  html[data-theme="blue"] #tail-home .kb-sched .nc-day { gap: 0; padding: 2px 0 4px; }
+  html[data-theme="blue"] #tail-home .kb-sched .nc-tz,
+  html[data-theme="blue"] #tail-home .kb-sched .nc-all-label {
+    display: flex; align-items: center; justify-content: flex-end; padding-right: 6px;
+    font-size: 10px; color: #a4a4a2; white-space: nowrap;
+  }
+  html[data-theme="blue"] #tail-home .kb-sched .nc.is-day .nc-days,
+  html[data-theme="blue"] #tail-home .kb-sched .nc.is-day .nc-all-cols,
+  html[data-theme="blue"] #tail-home .kb-sched .nc.is-day .nc-cols { grid-template-columns: minmax(0, 1fr); }
+  html[data-theme="blue"] #tail-home .kb-sched .nc-ev.is-personal,
+  html[data-theme="blue"] #tail-home .kb-sched .nc-chip.is-personal { background: #e7f2f7; color: #316479; }
+  html[data-theme="blue"] #tail-home .kb-sched .nc-ev.is-wuhan,
+  html[data-theme="blue"] #tail-home .kb-sched .nc-chip.is-wuhan { background: #e5f4ec; color: #1f6b4a; }
+  html[data-theme="blue"] #tail-home .kb-sched .nc-ev.is-research,
+  html[data-theme="blue"] #tail-home .kb-sched .nc-chip.is-research { background: #f3eaf8; color: #6a4c93; }
+  html[data-theme="blue"] #tail-home .kb-sched .nc-ev.is-course,
+  html[data-theme="blue"] #tail-home .kb-sched .nc-chip.is-course { background: #fbf0dc; color: #9a5b12; }
+  html[data-theme="blue"] #tail-home .kb-sched .nc-ev.is-occupied,
+  html[data-theme="blue"] #tail-home .kb-sched .nc-chip.is-occupied { background: #eef0f2; color: #6e7378; }
+  html[data-theme="blue"] #tail-home .kb-sched .nc-ev .kb-ico,
+  html[data-theme="blue"] #tail-home .kb-sched .nc-chip .kb-ico {
+    display: inline-flex; width: 12px; height: 12px; margin-right: 3px; vertical-align: -1px; background: transparent;
+  }
+  html[data-theme="blue"] #tail-home .kb-sched .nc-chip { display: flex; align-items: center; min-height: 18px; border-radius: 4px; }
+  html[data-theme="blue"] #tail-home .kb-sched .nc-ev { border-radius: 6px; }
   html[data-theme="blue"] #tail-home .kb-bar { display: flex; align-items: center; gap: 6px; height: 36px; flex: none; }
   html[data-theme="blue"] #tail-home .kb-bar button {
     height: 26px; padding: 0 8px; border: 0; border-radius: 6px; background: transparent;
@@ -7540,6 +7573,13 @@
   .row-top time:not(:empty) { margin-left: 12px; }
   .row-bot em { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-style: normal; font-size: 13px; line-height: 18px; color: #b2b2b2; font-weight: 400; }
   .row-bot .mute { margin-left: 6px; }
+  .face.notice-face { display: flex; align-items: center; justify-content: center; }
+  .face.notice-face .notice { width: 44px; height: 44px; display: block; color: #121649; }
+  #teamHost .notice-line { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; width: 100%; margin: 0; padding: 12px 16px; border: 0; border-bottom: 1px solid #ededed; background: transparent; text-align: left; cursor: pointer; }
+  #teamHost .notice-line b { font-size: 15px; font-weight: 500; color: #191919; }
+  #teamHost .notice-line span { font-size: 13px; line-height: 18px; color: #8b919a; }
+  #teamHost .notice-line time { font-size: 12px; color: #b2b2b2; }
+  #teamHost .notice-line:hover { background: #f4f4f4; }
   .pin { width: 12px; height: 12px; color: var(--green); flex: none; }
   .badge { min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; background: var(--green); color: #fff; font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; }
   .row .dot { position: absolute; top: -3px; right: -3px; width: 10px; height: 10px; border-radius: 50%; background: #fa5151; border: 2px solid #fff; box-sizing: content-box; }
@@ -8410,6 +8450,13 @@
   }
   html[data-theme="blue"] #teamHost .msg.mine .qref { align-self: flex-end; color: #8b919a; background: transparent; }
   html[data-theme="blue"] #teamHost .msg.mine .qref .qline { color: #8b919a; }
+  html[data-theme="blue"] #teamHost .qref:hover,
+  html[data-theme="blue"] #teamHost .qref.is-on,
+  html[data-theme="blue"] #teamHost .msg.mine .qref:hover,
+  html[data-theme="blue"] #teamHost .msg.mine .qref.is-on {
+    background: #eceef1;
+    border-radius: 4px;
+  }
   #teamHost .quote-peek { display: none; }
   html[data-theme="blue"] #teamHost .quote-peek:not([hidden]) {
     display: block;
@@ -8421,13 +8468,13 @@
     padding: 10px 12px;
     border: 0;
     border-radius: 8px;
-    background: #eceef1;
+    background: #fff;
     color: #1a1d21;
     font-size: 15px;
     line-height: 1.45;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
-    box-shadow: 0 8px 24px rgba(20, 24, 28, .12);
+    box-shadow: 0 8px 28px rgba(20, 24, 28, .16), 0 2px 8px rgba(20, 24, 28, .08);
     animation: quote-peek-in .18s cubic-bezier(.22, 1, .36, 1);
   }
   @keyframes quote-peek-in {
@@ -10625,7 +10672,7 @@
     if (!date) return '';
     return `${TODO_WEEKDAYS[date.getDay()]}, ${TODO_MONTHS[date.getMonth()]} ${date.getDate()}`;
   }
-  const NC_H = 48;
+  const NC_H = 40;
   function tlEventDur(rem, type) {
     const set = Number(rem?.dataset.dur);
     if (set) return set;
@@ -10760,14 +10807,7 @@
   }
   function ncPointerDown(e) {
     if (e.button !== 0) return;
-    if (e.target.closest('.kb-sched')) {
-      const chip = e.target.closest('.kb-chip');
-      if (!chip) return;
-      kbBox().drag = { id: chip.dataset.kbId, x: e.clientX, y: e.clientY, moved: false };
-      e.currentTarget.setPointerCapture(e.pointerId);
-      return;
-    }
-    if (e.target.closest('.nc-tool, .nc-pop, .nc-name')) return;
+    if (e.target.closest('.nc-tool, .nc-pop, .nc-name, .kb-bar, .kb-legend')) return;
     const chip = e.target.closest('.nc-chip');
     if (chip) { ncTogglePop(chip); return; }
     const resize = e.target.closest('.nc-resize');
@@ -10791,11 +10831,6 @@
     if (ncDrag.kind === 'create') ncPlaceDraft(ncDrag.iso, ncDrag.start, 60, false);
   }
   function ncPointerMove(e) {
-    const kdrag = kbBox().drag;
-    if (kdrag) {
-      if (Math.abs(e.clientX - kdrag.x) + Math.abs(e.clientY - kdrag.y) > 4) kdrag.moved = true;
-      return;
-    }
     if (!ncDrag) return;
     if (Math.abs(e.clientX - ncDrag.x) + Math.abs(e.clientY - ncDrag.y) > 4) ncDrag.moved = true;
     const point = ncPoint(e);
@@ -10829,16 +10864,6 @@
     ncDrag.el.style.width = 'calc(100% - 4px)';
   }
   function ncPointerUp(e) {
-    const kdrag = kbBox().drag;
-    if (kdrag) {
-      kbBox().drag = null;
-      if (kdrag.moved && e) {
-        const cell = document.elementFromPoint(e.clientX, e.clientY)?.closest('[data-kb-cell]');
-        if (cell) kbPlace(kdrag.id, cell.dataset.who, cell.dataset.iso);
-        kbBox().suppress = true;
-      }
-      return;
-    }
     const drag = ncDrag;
     ncDrag = null;
     if (!drag) return;
@@ -10851,6 +10876,17 @@
     if (!drag.moved) { ncTogglePop(drag.el); return; }
     const ev = tlCache[drag.index];
     if (!ev) return;
+    if (ev.kind === 'extra') {
+      const item = kbBox().extra.find((row) => row.id === ev.extraId);
+      if (item) {
+        item.date = drag.iso;
+        item.timed = true;
+        item.start = drag.dropStart ?? drag.start;
+        item.dur = drag.dropDur || drag.dur;
+      }
+      syncRemBoard();
+      return;
+    }
     tlWriteWhen(ev, drag.iso, drag.dropStart ?? drag.start, drag.dropDur || drag.dur);
     remDay = drag.iso;
     syncRemBoard();
@@ -11057,7 +11093,7 @@
       return Array.from({ length: count }, (_, i) => new Date(first.getFullYear(), first.getMonth(), i + 1));
     }
     const start = new Date(focus);
-    start.setDate(focus.getDate() - ((focus.getDay() + 6) % 7));
+    start.setDate(focus.getDate() - focus.getDay());
     return Array.from({ length: 7 }, (_, i) => new Date(start.getFullYear(), start.getMonth(), start.getDate() + i));
   }
   function kbRangeText(days) {
@@ -11117,17 +11153,82 @@
     if (!rows.length) return '<div class="kb-day">Nothing scheduled</div>';
     return `<div class="kb-lines">${rows.map((item) => `<div class="kb-line"><span class="who">${deskEsc(names[item.who] || item.who)}</span>${kbChip(item)}<span class="kb-time">${item.time || kbDayLabel(item.date)}</span></div>`).join('')}</div>`;
   }
+  function kbHm(mins) {
+    const h = Math.floor(mins / 60);
+    const m = mins % 60;
+    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+  }
+  function kbTz() {
+    const off = -new Date().getTimezoneOffset() / 60;
+    const sign = off >= 0 ? '+' : '';
+    return `GMT${sign}${Number.isInteger(off) ? off : off.toFixed(1)}`;
+  }
+  function kbMonthTitle(days) {
+    const a = days[0];
+    const b = days[days.length - 1];
+    if (a.getMonth() === b.getMonth() && a.getFullYear() === b.getFullYear()) return `${TODO_MONTHS_LONG[a.getMonth()]} ${a.getFullYear()}`;
+    if (a.getFullYear() === b.getFullYear()) return `${TODO_MONTHS_LONG[a.getMonth()]} – ${TODO_MONTHS_LONG[b.getMonth()]} ${b.getFullYear()}`;
+    return `${TODO_MONTHS_LONG[a.getMonth()]} ${a.getFullYear()} – ${TODO_MONTHS_LONG[b.getMonth()]} ${b.getFullYear()}`;
+  }
+  function kbTimeGrid(days) {
+    kbSeed();
+    const todayIso = todoDateIso(new Date());
+    const nowMins = new Date().getHours() * 60 + new Date().getMinutes();
+    tlCache = [];
+    const packed = days.map((date) => {
+      const iso = todoDateIso(date);
+      const events = tlEventsFor(iso).map((ev) => ({ ...ev, iso, lane: kbLaneOf(ev), task: kbTaskOf(ev) }));
+      kbBox().extra.filter((item) => item.date === iso).forEach((item) => {
+        events.push({
+          kind: 'extra', extraId: item.id, title: item.title, note: '',
+          start: item.start || 0, timed: !!item.timed, dur: item.dur || 60, done: false,
+          iso, lane: item.lane || 'personal', task: item.task || 'task',
+        });
+      });
+      events.forEach((ev) => { ev.i = tlCache.length; tlCache.push(ev); });
+      return { date, iso, events };
+    });
+    const heads = packed.map((day) => {
+      const today = day.iso === todayIso ? ' is-today' : '';
+      return `<div class="nc-day${today}"><small>${TODO_WEEKDAYS[day.date.getDay()]}</small><b>${day.date.getDate()}</b></div>`;
+    }).join('');
+    const allRow = `<div class="nc-all"><span class="nc-gutter nc-all-label">All-day</span><div class="nc-all-cols">${packed.map((day) => {
+      const chips = day.events.filter((ev) => !ev.timed).map((ev) => `<button type="button" class="nc-chip is-${ev.lane}${ev.done ? ' is-done' : ''}" data-i="${ev.i}"><span class="kb-ico">${kbTaskIcon(ev.task)}</span>${deskEsc(ev.title)}</button>`).join('');
+      return `<div class="nc-all-cell">${chips}</div>`;
+    }).join('')}</div></div>`;
+    const showNow = packed.some((day) => day.iso === todayIso);
+    const labels = Array.from({ length: 24 }, (_, h) => {
+      if (showNow && Math.abs(h * 60 - nowMins) < 24) return '';
+      return `<span style="top:${h * NC_H}px">${kbHm(h * 60)}</span>`;
+    }).join('');
+    const nowLabel = showNow ? `<span class="nc-now-label" style="top:${(nowMins / 60) * NC_H}px">${kbHm(nowMins)}</span>` : '';
+    const cols = packed.map((day) => {
+      const placed = ncLanes(day.events.filter((ev) => ev.timed));
+      const blocks = placed.map((item) => {
+        const ev = item.ev;
+        const top = (ev.start / 60) * NC_H;
+        const height = Math.max(22, (ev.dur / 60) * NC_H - 2);
+        const width = 100 / item.lanes;
+        const left = item.lane * width;
+        const time = height >= 36 ? `<small>${kbHm(ev.start)}–${kbHm(ev.start + ev.dur)}</small>` : '';
+        return `<div class="nc-ev is-${ev.lane}${ev.done ? ' is-done' : ''}" data-i="${ev.i}" data-iso="${day.iso}" data-start="${ev.start}" data-dur="${ev.dur}" style="top:${top}px;height:${height}px;left:calc(${left}% + 2px);width:calc(${width}% - 5px)"><b><span class="kb-ico">${kbTaskIcon(ev.task)}</span>${deskEsc(ev.title)}</b>${time}<i class="nc-resize"></i></div>`;
+      }).join('');
+      const line = day.iso === todayIso ? `<div class="nc-now" style="top:${(nowMins / 60) * NC_H}px"></div>` : '';
+      return `<div class="nc-col${day.iso === todayIso ? ' is-today' : ''}" data-iso="${day.iso}">${blocks}${line}</div>`;
+    }).join('');
+    const mode = days.length === 1 ? 'is-day' : 'is-week';
+    return `<div class="nc ${mode}"><div class="nc-head"><span class="nc-gutter nc-tz">${kbTz()}</span><div class="nc-days">${heads}</div></div>${allRow}<div class="nc-scroll"><div class="nc-time" style="height:${24 * NC_H}px">${labels}${nowLabel}</div><div class="nc-cols" style="height:${24 * NC_H}px">${cols}</div></div></div>`;
+  }
   function paintKb(host) {
+    ncBind(host);
     const box = kbBox();
-    const items = kbItems();
     const days = kbDays();
     const spans = ['day', 'week', 'month'].map((id) => `<button type="button" data-kb="span" data-kb-val="${id}" aria-pressed="${box.span === id}">${id[0].toUpperCase()}${id.slice(1)}</button>`).join('');
-    const canvases = [['timeline', 'Timeline'], ['calendar', 'Calendar'], ['list', 'List']].map(([id, label]) => `<button type="button" data-kb="canvas" data-kb-val="${id}" aria-pressed="${box.canvas === id}">${label}</button>`).join('');
-    let body = '';
-    if (box.canvas === 'list') body = kbList(items, days);
-    else if (box.canvas === 'calendar') body = kbMonth(items);
-    else body = kbTimeline(items, days);
-    host.innerHTML = `<div class="kb kb-sched"><div class="kb-bar"><button type="button" data-kb="prev" aria-label="Previous">‹</button><span class="kb-range">${kbRangeText(days)}</span><button type="button" data-kb="next" aria-label="Next">›</button><button type="button" data-kb="today">Today</button><div class="kb-seg">${spans}</div><span style="flex:1"></span><div class="kb-seg">${canvases}</div><button type="button" class="kb-add" data-kb="add">New item</button></div><div class="kb-split"><div class="kb-pane">${body}</div>${kbLegend()}</div></div>`;
+    const body = box.span === 'month' ? kbMonth(kbItems()) : kbTimeGrid(days);
+    const kept = host.dataset.ncTop;
+    host.innerHTML = `<div class="kb kb-sched"><div class="kb-bar kb-calbar"><b class="kb-month-title">${kbMonthTitle(days)}</b><span style="flex:1"></span><div class="kb-seg">${spans}</div><button type="button" data-kb="today">Today</button><button type="button" data-kb="prev" aria-label="Previous">‹</button><button type="button" data-kb="next" aria-label="Next">›</button><button type="button" class="kb-plus" data-kb="add" aria-label="New event">+</button></div><div class="kb-split"><div class="kb-pane">${body}</div>${kbLegend()}</div></div>`;
+    const scroller = host.querySelector('.nc-scroll');
+    if (scroller) scroller.scrollTop = kept != null && kept !== '' ? Number(kept) : 6 * NC_H;
   }
   function kbAct(act, val) {
     const box = kbBox();
@@ -11142,7 +11243,13 @@
     if (act === 'span') box.span = val;
     if (act === 'canvas') box.canvas = val;
     if (act === 'add') {
-      box.extra.push({ id: `new-${Date.now()}`, who: 'jess', title: 'New item', lane: 'personal', task: 'task', date: todoDateIso(new Date()), time: '' });
+      const iso = todoDateIso(box.focus);
+      if (!document.querySelector(`#tlBody .nc-col[data-iso="${iso}"]`)) {
+        box.span = 'week';
+        paintHomeTimeline();
+      }
+      ncPlaceDraft(todoDateIso(box.focus), 9 * 60, 60, true);
+      return;
     }
     paintHomeTimeline();
   }
@@ -18707,7 +18814,7 @@ const state = {
   panel: false, panelMode: 'info', chatSearch: false, chatQuery: '', historyKind: '', historyWho: '',
   quote: null, modal: null, modalBack: null,
   mention: null, mentionIndex: 0, mentionStart: null,
-  memberQ: '', announceOpen: false, ctx: null, msgId: '', msgMode: '', msgX: 0, msgY: 0, pendingRecord: null, pendingJoinId: null,
+  memberQ: '', announceOpen: false, notice: false, ctx: null, msgId: '', msgMode: '', msgX: 0, msgY: 0, pendingRecord: null, pendingJoinId: null,
   emailRows: [''], emailErrors: [''], emailWhere: ''
 };
 
@@ -18910,6 +19017,37 @@ function makeInvite(email) {
   return { id: uid(), email: email.toLowerCase(), status: 'pending', by: ME };
 }
 
+function noticeIcon() {
+  return '<svg class="notice" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M460.985121 202.831065H191.459353c-31.00135 0-55.689821 30.864855-55.689821 60.364763v641.132479c0 29.51697 25.166203 53.437659 56.150491 53.437659h494.144792c31.00135 0 65.329757-25.42213 65.329757-54.9391V484.265991h67.377176v420.062316c0 65.278571-64.459603 119.671693-132.706933 119.671693H191.920023c-68.230268 0-123.527667-52.891681-123.527668-118.170252V261.694387c0-65.278571 54.819668-125.097356 123.066998-125.097356H460.985121v66.234034z m102.370995 344.563706c18.614459-0.136495 33.816552 14.570805 33.953046 32.86109 0.153556 18.290284-14.826732 33.23645-33.441191 33.372944H271.394038c-18.597397 0.136495-33.79949-14.570805-33.953046-32.861089-0.136495-18.290284 14.843794-33.23645 33.441191-33.372945H563.373178z m-46.118133-205.595081c18.597397-0.136495 33.79949 14.587867 33.953046 32.878151 0.136495 18.290284-14.843794 33.23645-33.441191 33.372945h-247.56719c-18.614459 0.136495-33.816552-14.570805-33.953046-32.878152-0.153556-18.290284 14.826732-33.219388 33.441191-33.355882h247.56719zM385.264708 733.658797c18.597397-0.136495 33.79949 14.570805 33.953047 32.878151 0.136495 18.290284-14.843794 33.219388-33.441192 33.355882H272.963727c-18.597397 0.153556-33.816552-14.570805-33.953047-32.861089-0.136495-18.290284 14.843794-33.23645 33.441192-33.372944h112.812836z m245.861006-700.217605v110.407118c0.153556 18.290284-14.826732 33.23645-33.441191 33.372944-18.597397 0.136495-33.782428-14.587867-33.935985-32.878151V33.458253c0-18.307346 15.08266-33.134079 33.697119-33.134078 18.597397 0 33.697119 14.843794 33.697119 33.117017z m290.733626 357.957245H809.558358c-18.597397 0-33.697119-14.843794-33.697119-33.134079s15.08266-33.117017 33.697119-33.117016h112.300982c18.597397 0 33.697119 14.826732 33.697119 33.099955 0 18.307346-15.08266 33.134079-33.697119 33.134078z m-62.446307-279.677558a32.724595 32.724595 0 0 1 0.034124 46.851792l-79.491078 78.074946a34.106603 34.106603 0 0 1-47.602513-1.689122 32.707533 32.707533 0 0 1 0-45.111485l79.371645-78.126131a34.106603 34.106603 0 0 1 47.602513 0h0.102371z"/></svg>';
+}
+function noticeItems() {
+  return joinedGroups().filter(needsDot).sort((a, b) => b.updated - a.updated);
+}
+function noticeRow() {
+  const q = state.query.trim().toLowerCase();
+  if (q && !'群通知'.includes(q)) return '';
+  const items = noticeItems();
+  const latest = items[0];
+  const line = latest ? `${latest.name}: ${preview(latest)}` : 'No group notifications';
+  const dot = items.length ? '<i class="dot" title="Group notifications" aria-label="Group notifications"></i>' : '';
+  return `<div class="row${state.notice ? ' on' : ''}">
+      <button type="button" class="row-hit" data-open-notice${state.notice ? ' aria-current="true"' : ''}>
+        <span class="face notice-face">${noticeIcon()}${dot}</span>
+        <span class="row-body">
+          <span class="row-top"><strong>群通知</strong><time>${esc(latest ? latest.time : '')}</time></span>
+          <span class="row-bot"><em>${esc(line)}</em></span>
+        </span>
+      </button>
+    </div>`;
+}
+function openNotice() {
+  state.notice = true;
+  state.panel = false;
+  state.chatSearch = false;
+  state.quote = null;
+  closePopovers();
+  render(false);
+}
 function renderList() {
   const rows = visible();
   const n = joinedGroups().length;
@@ -18922,8 +19060,9 @@ function renderList() {
       ? `<i class="dot" title="${esc(label)}" aria-label="${esc(label)}"></i>`
       : '';
     const mute = c.muted ? '<svg class="mute" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 22a2.1 2.1 0 0 0 2.05-1.6h-4.1A2.1 2.1 0 0 0 12 22Zm6.4-4.6c.5.4.2 1.1-.4 1.1H6c-.6 0-.9-.7-.4-1.1L7 15.8V11a5 5 0 0 1 3.2-4.7V5.2a1.8 1.8 0 1 1 3.6 0v1.1A5 5 0 0 1 17 11v4.8l1.4 1.6Z"/><path fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" d="M5 6.2 18.2 19"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M5 6.2 18.2 19"/></svg>' : '';
-    return `<div class="row${c.id === state.id ? ' on' : ''}">
-      <button type="button" class="row-hit" data-open="${c.id}"${c.id === state.id ? ' aria-current="true"' : ''}>
+    const on = !state.notice && c.id === state.id;
+    return `<div class="row${on ? ' on' : ''}">
+      <button type="button" class="row-hit" data-open="${c.id}"${on ? ' aria-current="true"' : ''}>
         <span class="face">${face(c)}${dot}</span>
         <span class="row-body">
           <span class="row-top"><strong>${esc(c.name)}</strong><time>${esc(c.time)}</time></span>
@@ -18932,7 +19071,8 @@ function renderList() {
       </button>
     </div>`;
   };
-  $('rows').innerHTML = (rows.length ? `${groups.map(rowHTML).join('')}${qActive(state) ? '' : dms.map(rowHTML).join('')}` : `<p class="empty">${state.query ? 'No joined group matches that name, number, or slug.' : 'No conversations in this view.'}</p>`);
+  const body = `${noticeRow()}${groups.map(rowHTML).join('')}${qActive(state) ? '' : dms.map(rowHTML).join('')}`;
+  $('rows').innerHTML = body.trim() ? body : `<p class="empty">${state.query ? 'No joined group matches that name, number, or slug.' : 'No conversations in this view.'}</p>`;
   syncTeamEdgeFade();
 }
 function qActive() { return state.query.trim().length > 0; }
@@ -18953,6 +19093,25 @@ function syncTeamSend() {
   btn.classList.toggle('is-ready', $('compose').value.trim().length > 0);
 }
 function renderChrome() {
+  const composer = $('composer');
+  if (composer) composer.hidden = !!state.notice;
+  if (state.notice) {
+    $('title').textContent = '群通知';
+    $('headFace').hidden = true;
+    $('headFace').innerHTML = '';
+    $('sub').hidden = true;
+    $('back').hidden = true;
+    $('announce').hidden = true;
+    $('quoteBar').hidden = true;
+    $('infoBtn').setAttribute('aria-label', 'Group notifications');
+    $('infoBtn').setAttribute('aria-pressed', 'false');
+    $('threadMore').setAttribute('aria-pressed', 'false');
+    $('searchBtn').setAttribute('aria-pressed', 'false');
+    $('chatSearch').hidden = true;
+    teamRoot.querySelector('.thread').classList.remove('history-on');
+    $('panel').hidden = true;
+    return;
+  }
   const c = current();
   $('title').textContent = c.name;
   const faceEl = $('headFace');
@@ -19046,6 +19205,7 @@ function renderHistory() {
   $('historyBody').innerHTML = people + head + list.map(historyHit).join('');
 }
 let quotePeekTimer = 0;
+let quotePeekPinned = false;
 function quotePeekBody(ref) {
   if (!ref) return '';
   if (ref.file && ref.text) return `${ref.text}\n${ref.file.name}`;
@@ -19057,7 +19217,12 @@ function linkifyQuote(text) {
 }
 function hideQuotePeek() {
   const peek = $('quotePeek');
-  if (peek) peek.hidden = true;
+  if (peek) {
+    peek.hidden = true;
+    delete peek.dataset.from;
+  }
+  quotePeekPinned = false;
+  clearTimeout(quotePeekTimer);
   teamRoot.querySelectorAll('.qref.is-on').forEach((el) => el.classList.remove('is-on'));
 }
 function showQuotePeek(btn) {
@@ -19095,6 +19260,13 @@ function quoteBlock(ref, blue) {
   return `<button type="button" class="qref" data-jump="${ref.id}"><span class="qline">${esc(line)}</span></button>`;
 }
 function renderLog(scroll) {
+  if (state.notice) {
+    const items = noticeItems();
+    $('log').innerHTML = items.length
+      ? items.map((c) => `<button type="button" class="notice-line" data-open="${c.id}"><b>${esc(c.name)}</b><span>${esc(preview(c))}</span><time>${esc(c.time)}</time></button>`).join('')
+      : '<p class="sys">No group notifications</p>';
+    return;
+  }
   const c = current();
   const list = shownMessages(c);
   if (!list.length) {
@@ -19262,6 +19434,7 @@ function render(scroll) {
 function openChat(id) {
   const c = chats.find((x) => x.id === id);
   if (!c) return;
+  state.notice = false;
   if (state.id !== id) {
     c.unread = 0;
     state.chatSearch = false;
@@ -19870,6 +20043,7 @@ $('rows').addEventListener('click', (e) => {
   }
   const slug = e.target.closest('[data-slug-filter]');
   if (slug) { openModal('finder', { reset: true, slug: slug.dataset.slugFilter }); return; }
+  if (e.target.closest('[data-open-notice]')) { openNotice(); return; }
   const row = e.target.closest('[data-open]');
   if (row) openChat(row.dataset.open);
 });
@@ -20159,19 +20333,43 @@ $('msgMenu').addEventListener('click', (e) => {
   if (key !== 'forward' && key !== 'back') closePopovers();
 });
 $('log').addEventListener('scroll', hideQuotePeek);
+$('log').addEventListener('mouseover', (e) => {
+  const quoted = e.target.closest('.qref');
+  if (!quoted || document.documentElement.dataset.theme !== 'blue') return;
+  clearTimeout(quotePeekTimer);
+  if (quotePeekPinned && $('quotePeek')?.dataset.from !== quoted.dataset.jump) return;
+  showQuotePeek(quoted);
+  const peek = $('quotePeek');
+  if (peek) peek.dataset.from = quoted.dataset.jump;
+});
+$('log').addEventListener('mouseout', (e) => {
+  const quoted = e.target.closest('.qref');
+  if (!quoted || quotePeekPinned) return;
+  const next = e.relatedTarget;
+  if (next && (quoted.contains(next) || next.closest?.('#quotePeek'))) return;
+  clearTimeout(quotePeekTimer);
+  quotePeekTimer = setTimeout(hideQuotePeek, 160);
+});
+$('quotePeek').addEventListener('mouseenter', () => clearTimeout(quotePeekTimer));
+$('quotePeek').addEventListener('mouseleave', () => {
+  if (!quotePeekPinned) hideQuotePeek();
+});
 document.addEventListener('click', (e) => {
   if (e.target.closest('.qref, #quotePeek')) return;
   hideQuotePeek();
 });
 $('log').addEventListener('click', (e) => {
+  const noticeOpen = e.target.closest('.notice-line');
+  if (noticeOpen) { openChat(noticeOpen.dataset.open); return; }
   const quoted = e.target.closest('.qref');
   if (quoted && document.documentElement.dataset.theme === 'blue') {
     const peek = $('quotePeek');
-    if (peek && !peek.hidden && peek.dataset.from === quoted.dataset.jump) {
+    if (quotePeekPinned && peek && !peek.hidden && peek.dataset.from === quoted.dataset.jump) {
       hideQuotePeek();
       return;
     }
     showQuotePeek(quoted);
+    quotePeekPinned = true;
     if (peek) peek.dataset.from = quoted.dataset.jump;
     return;
   }
