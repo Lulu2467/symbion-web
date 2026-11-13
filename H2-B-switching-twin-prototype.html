@@ -13158,7 +13158,7 @@
     const spans = ['day', 'week', 'month'].map((id) => `<button type="button" data-kb="span" data-kb-val="${id}" aria-pressed="${box.span === id}">${id[0].toUpperCase()}${id.slice(1)}</button>`).join('');
     const body = box.span === 'month' ? kbMonth() : kbTimeGrid(days);
     const kept = host.dataset.ncTop;
-    host.innerHTML = `<div class="kb kb-sched"><div class="kb-bar kb-calbar"><b class="kb-month-title">${kbMonthTitle(days)}</b><div class="kb-seg">${spans}</div><button type="button" data-kb="today">Today</button><button type="button" data-kb="prev" aria-label="Previous">‹</button><button type="button" data-kb="next" aria-label="Next">›</button></div><div class="kb-split"><div class="kb-pane">${body}</div>${kbSide()}</div></div>`;
+    host.innerHTML = `<div class="kb kb-sched"><div class="kb-bar kb-calbar"><b class="kb-month-title">${kbMonthTitle(days)}</b><div class="kb-seg" data-span="${box.span}">${spans}</div><button type="button" data-kb="today">Today</button><button type="button" data-kb="prev" aria-label="Previous">‹</button><button type="button" data-kb="next" aria-label="Next">›</button></div><div class="kb-split"><div class="kb-pane">${body}</div>${kbSide()}</div></div>`;
     const scroller = host.querySelector('.nc-scroll');
     if (scroller) scroller.scrollTop = kept != null && kept !== '' ? Number(kept) : 8 * NC_H;
     const seg = host.querySelector('.kb-seg');
