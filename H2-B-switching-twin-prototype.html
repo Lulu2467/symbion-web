@@ -12809,7 +12809,7 @@
       const today = day.iso === todayIso ? ' is-today' : '';
       return `<div class="nc-day${today}"><small>${TODO_WEEKDAYS[day.date.getDay()]}</small><b>${day.date.getDate()}</b></div>`;
     }).join('');
-    const allRow = `<div class="nc-all"><span class="nc-gutter nc-all-label"></span><div class="nc-all-cols">${packed.map((day) => {
+    const allRow = `<div class="nc-all"><span class="nc-gutter nc-all-label">All day</span><div class="nc-all-cols">${packed.map((day) => {
       const chips = day.events.filter((ev) => !ev.timed).map((ev) => `<button type="button" class="nc-chip is-${ev.lane}${ev.done ? ' is-done' : ''}${kbBox().open === kbEventKey(ev) ? ' is-open' : ''}" data-i="${ev.i}" style="${kbHueCss(ev)}"><span class="kb-ico">${kbTaskIcon(ev.task)}</span>${deskEsc(ev.title)}</button>`).join('');
       return `<div class="nc-all-cell">${chips}</div>`;
     }).join('')}</div></div>`;
