@@ -2591,27 +2591,25 @@
   }
   html[data-theme="blue"] #tail-home .kd-tz:hover,
   html[data-theme="blue"] #tail-home .kd-tz.is-open { background: #f3f4f6; }
-  html[data-theme="blue"] #tail-home .kd-tz-input {
-    flex: 1; min-width: 0; border: 0; background: transparent; font: inherit; font-size: 13px; color: #1d1d1f; outline: none;
-  }
-  html[data-theme="blue"] #tail-home .kd-tz-go {
-    margin-left: auto; width: 22px; height: 22px; padding: 0; border: 0; border-radius: 50%;
-    background: transparent; color: #8b9198; font: inherit; font-size: 14px; cursor: pointer; flex: none;
+  html[data-theme="blue"] #tail-home .kd-tz > span { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  html[data-theme="blue"] #tail-home .kd-tz-chev {
+    margin-left: auto; width: 14px; height: 14px; color: #8b9198; flex: none;
   }
   html[data-theme="blue"] .kd-tz-menu {
     position: fixed; z-index: 80; width: 320px; max-height: 280px; overflow: auto; padding: 6px;
-    background: #2c2c2e; color: #fff; border-radius: 12px; box-shadow: 0 10px 28px rgba(0, 0, 0, .28);
+    background: #fff; color: #1d1d1f; border: 1px solid #e6e8ec; border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(20, 25, 26, .12);
   }
   html[data-theme="blue"] .kd-tz-menu button {
     display: block; width: 100%; min-height: 32px; padding: 6px 10px; border: 0; border-radius: 6px;
-    background: transparent; color: #fff; font: inherit; font-size: 13px; text-align: left; cursor: pointer;
+    background: transparent; color: #1d1d1f; font: inherit; font-size: 13px; text-align: left; cursor: pointer;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
   html[data-theme="blue"] .kd-tz-menu button:hover,
-  html[data-theme="blue"] .kd-tz-menu button.is-on { background: rgba(255, 255, 255, .1); }
-  html[data-theme="blue"] .kd-tz-menu .kd-tz-rule { height: 1px; margin: 4px 8px; background: rgba(255, 255, 255, .12); }
+  html[data-theme="blue"] .kd-tz-menu button.is-on { background: #f3f4f6; color: #3c7a94; }
+  html[data-theme="blue"] .kd-tz-menu .kd-tz-rule { height: 1px; margin: 4px 8px; background: #ededec; }
   html[data-theme="blue"] .kd-tz-menu::-webkit-scrollbar { width: 8px; }
-  html[data-theme="blue"] .kd-tz-menu::-webkit-scrollbar-thumb { background: #6e6e73; border-radius: 8px; }
+  html[data-theme="blue"] .kd-tz-menu::-webkit-scrollbar-thumb { background: #d0d4d9; border-radius: 8px; }
   html[data-theme="blue"] #tail-home .kd-repeat {
     width: auto; margin: 8px 16px; padding: 0 8px; border-radius: 8px; background: #f3f4f6;
     color: #8b9198; cursor: pointer; box-sizing: border-box;
@@ -11955,7 +11953,8 @@
         return;
       }
       const tzRow = e.target.closest('[data-kd="tz"]');
-      if (tzRow && !e.target.closest('.kd-tz-input, .kd-tz-go')) {
+      if (tzRow) {
+        if (kbBox().tzOpen) { kbCloseTzMenu(true); return; }
         const opened = kbOpenEv() || (kbBox().draft && !kbBox().draft.done ? kbDraftEvent(kbBox().draft) : null);
         if (opened) kbShowTzMenu(tzRow, opened);
         return;
@@ -12585,6 +12584,10 @@
   function kbCloseTzMenu(repaint) {
     const open = !!document.querySelector(".kd-tz-menu, #tlBody .kd-tz.is-open");
     kbBox().tzOpen = false;
+    document.querySelectorAll("#tlBody .kd-tz.is-open").forEach((el) => {
+      el.classList.remove("is-open");
+      el.setAttribute("aria-expanded", "false");
+    });
     document.querySelector(".kd-tz-menu")?.remove();
     if (repaint && open) kbPaintSide();
   }
@@ -12615,44 +12618,23 @@
     kbCloseTzMenu(false);
     kbBox().tzOpen = true;
     row.classList.add("is-open");
+    row.setAttribute("aria-expanded", "true");
     const current = (ev && ev.tz) || "";
-    const span = row.querySelector("span");
-    const input = document.createElement("input");
-    input.className = "kd-tz-input";
-    input.value = kbTzLabel(ev);
-    input.setAttribute("aria-label", "Time zone");
-    if (span) span.replaceWith(input);
-    const go = document.createElement("button");
-    go.type = "button";
-    go.className = "kd-tz-go";
-    go.setAttribute("aria-label", "Use time zone");
-    go.textContent = "→";
-    row.appendChild(go);
     const menu = document.createElement("div");
     menu.className = "kd-tz-menu";
+    menu.setAttribute("role", "listbox");
+    menu.setAttribute("aria-label", "Time zone");
     menu.innerHTML = kbTzMenuHtml("", current);
     kbMenuHost().appendChild(menu);
     kbPlaceTzMenu(menu, row);
-    input.focus();
-    input.select();
-    const refill = () => { menu.innerHTML = kbTzMenuHtml(input.value === kbTzLabel(ev) ? "" : input.value, current); };
-    input.addEventListener("input", refill);
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") { e.preventDefault(); kbCloseTzMenu(true); return; }
-      if (e.key === "Enter") {
-        e.preventDefault();
-        const hit = menu.querySelector("[data-kd-tz]");
-        if (hit) kbApplyTz(hit.dataset.kdTz);
-      }
-    });
+    const on = menu.querySelector("button.is-on") || menu.querySelector("[data-kd-tz]");
+    try { on?.focus({ preventScroll: true }); } catch (_) { on?.focus(); }
     menu.addEventListener("click", (e) => {
       const hit = e.target.closest("[data-kd-tz]");
       if (hit) kbApplyTz(hit.dataset.kdTz);
     });
-    go.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const hit = menu.querySelector("[data-kd-tz]");
-      if (hit) kbApplyTz(hit.dataset.kdTz);
+    menu.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") { e.preventDefault(); kbCloseTzMenu(true); row.focus(); }
     });
   }
   function kbOrd(n) {
@@ -13199,7 +13181,7 @@
     const peopleRow = ev.invite ? '<div class="kd-row">' + kbIcon("personal") + "<span>" + deskEsc((ev.people && ev.people.length) ? ev.people.join(", ") : "You") + "</span></div>" : off("user", "Participants");
     const all = '<button type="button" class="kd-row kd-allday" data-kd="allday"><i class="kd-tog' + (ev.timed ? "" : " is-on") + '"></i><span>All-day</span></button>';
     const repeatRow = '<div class="kd-row kd-repeat' + (ev.repeat ? " is-set" : "") + '" data-kd="repeat" role="button" tabindex="0">' + kdIcon("sync") + "<span>" + deskEsc(kbRepeatLabel(ev)) + '</span><svg class="kd-repeat-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.2 6.2 8 10l3.8-3.8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
-    return '<aside class="kb-legend kb-detail"><div class="kd-title">' + mark + title + "</div>" + iconMenu + when + date + rsvpRow + all + '<div class="kd-row kd-tz" data-kd="tz" role="button" tabindex="0">' + kdIcon("earth") + "<span>" + deskEsc(kbTzLabel(ev)) + "</span></div>" + repeatRow + '<div class="kd-gap"></div>' + peopleRow + fileRow + fileChips + meetRow + '<div class="kd-gap"></div><div class="kd-label">Description</div>' + note + '<div class="kd-gap"></div><div class="kd-row"><i class="kd-dot" style="background:' + color + '"></i><span>' + deskEsc(group) + '</span></div>' + kbVisRow(ev) + off("bell", "Reminders") + "</aside>";
+    return '<aside class="kb-legend kb-detail"><div class="kd-title">' + mark + title + "</div>" + iconMenu + when + date + rsvpRow + all + '<div class="kd-row kd-tz" data-kd="tz" role="button" tabindex="0" aria-haspopup="listbox" aria-expanded="false" aria-label="Time zone">' + kdIcon("earth") + "<span>" + deskEsc(kbTzLabel(ev)) + '</span><svg class="kd-tz-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.2 6.2 8 10l3.8-3.8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>' + repeatRow + '<div class="kd-gap"></div>' + peopleRow + fileRow + fileChips + meetRow + '<div class="kd-gap"></div><div class="kd-label">Description</div>' + note + '<div class="kd-gap"></div><div class="kd-row"><i class="kd-dot" style="background:' + color + '"></i><span>' + deskEsc(group) + '</span></div>' + kbVisRow(ev) + off("bell", "Reminders") + "</aside>";
   }
   function kbSide() {
     const draft = kbBox().draft;
