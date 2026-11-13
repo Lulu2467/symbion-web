@@ -11181,7 +11181,7 @@
     const groups = ['personal', 'wuhan', 'research', 'course'].map((id) => `<div class="kb-rule"><i class="kb-swatch is-${id}">${kbIcon(id)}</i><span>${deskEsc(kbLaneName(id))}</span></div>`).join('');
     const tasks = [['lecture', 'Lecture'], ['reading', 'Reading'], ['reply', 'Reply'], ['occupied', 'Occupied'], ['task', 'Task']];
     const taskRows = tasks.map(([id, name]) => `<div class="kb-rule"><i class="kb-swatch is-task">${kbTaskIcon(id)}</i><span>${name}</span></div>`).join('');
-    return `<aside class="kb-legend"><b>分类</b><div class="kb-k">群组</div>${groups}<div class="kb-k">任务</div>${taskRows}</aside>`;
+    return `<aside class="kb-legend"><b>分类</b><div class="kb-k">群组</div>${groups}<div class="kb-k">to-do-list</div>${taskRows}</aside>`;
   }
   function kbTimeline(items, days) {
     const today = todoDateIso(new Date());
