@@ -2255,6 +2255,83 @@
     display: flex; width: 14px; height: 14px; flex: none; margin-top: 1px; background: transparent; color: inherit;
   }
   html[data-theme="blue"] #deskHost .desk-task .kb-ico svg { width: 14px; height: 14px; }
+  html[data-theme="blue"] #tail-home .kb-sched { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  html[data-theme="blue"] #tail-home .kb-bar { display: flex; align-items: center; gap: 6px; height: 36px; flex: none; }
+  html[data-theme="blue"] #tail-home .kb-bar button {
+    height: 26px; padding: 0 8px; border: 0; border-radius: 6px; background: transparent;
+    color: #37352f; font: inherit; font-size: 12px; font-weight: 550; cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .kb-bar button:hover { background: #f2f2f4; }
+  html[data-theme="blue"] #tail-home .kb-bar button[aria-pressed="true"] { background: #fff; box-shadow: 0 1px 2px rgba(20, 24, 28, .12); }
+  html[data-theme="blue"] #tail-home .kb-range { font-size: 13px; font-weight: 650; color: #1d1d1f; padding: 0 2px; }
+  html[data-theme="blue"] #tail-home .kb-seg { display: flex; align-items: center; height: 28px; padding: 2px; border-radius: 8px; background: #f2f2f4; }
+  html[data-theme="blue"] #tail-home .kb-add { margin-left: 4px; background: var(--green) !important; color: #fff !important; }
+  html[data-theme="blue"] #tail-home .kb-split { flex: 1; min-height: 0; display: flex; border-top: 1px solid #ededec; }
+  html[data-theme="blue"] #tail-home .kb-pane { flex: 1; min-width: 0; overflow: auto; }
+  html[data-theme="blue"] #tail-home .kb-legend {
+    width: 176px; flex: none; overflow: auto; border-left: 1px solid #ededec; padding: 10px 10px 12px;
+  }
+  html[data-theme="blue"] #tail-home .kb-legend b { display: block; font-size: 12px; font-weight: 650; color: #1d1d1f; }
+  html[data-theme="blue"] #tail-home .kb-legend .kb-k { margin: 10px 0 4px; font-size: 11px; font-weight: 600; letter-spacing: .04em; color: #8b9198; }
+  html[data-theme="blue"] #tail-home .kb-rule { display: flex; align-items: center; gap: 6px; min-height: 22px; font-size: 12px; color: #37352f; }
+  html[data-theme="blue"] #tail-home .kb-rule span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  html[data-theme="blue"] #tail-home .kb-swatch {
+    width: 16px; height: 16px; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex: none;
+  }
+  html[data-theme="blue"] #tail-home .kb-swatch svg,
+  html[data-theme="blue"] #tail-home .kb-chip .kb-ico svg { width: 12px; height: 12px; display: block; }
+  html[data-theme="blue"] #tail-home .kb-table {
+    display: grid; grid-template-columns: 108px repeat(var(--cols), minmax(64px, 1fr)); min-width: max(100%, calc(108px + var(--cols) * 72px));
+  }
+  html[data-theme="blue"] #tail-home .kb-h,
+  html[data-theme="blue"] #tail-home .kb-name,
+  html[data-theme="blue"] #tail-home .kb-cell { border-right: 1px solid #f0f0ee; border-bottom: 1px solid #f0f0ee; }
+  html[data-theme="blue"] #tail-home .kb-h,
+  html[data-theme="blue"] #tail-home .kb-corner {
+    position: sticky; top: 0; z-index: 2; min-height: 36px; background: #f7f7f5;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 11px; color: #86868b;
+  }
+  html[data-theme="blue"] #tail-home .kb-corner { align-items: flex-start; padding-left: 8px; font-weight: 600; color: #6e7378; z-index: 3; }
+  html[data-theme="blue"] #tail-home .kb-h b {
+    min-width: 20px; height: 20px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; color: #1d1d1f;
+  }
+  html[data-theme="blue"] #tail-home .kb-h.is-today b { background: #37352f; color: #fff; }
+  html[data-theme="blue"] #tail-home .kb-name,
+  html[data-theme="blue"] #tail-home .kb-corner { position: sticky; left: 0; background: #fff; }
+  html[data-theme="blue"] #tail-home .kb-name {
+    z-index: 1; display: flex; align-items: center; padding: 0 8px; font-size: 13px; font-weight: 550; color: #1d1d1f; background: #fff;
+  }
+  html[data-theme="blue"] #tail-home .kb-cell { min-height: 42px; padding: 3px; display: flex; flex-direction: column; gap: 3px; }
+  html[data-theme="blue"] #tail-home .kb-cell.is-today { background: rgba(55, 53, 47, .03); }
+  html[data-theme="blue"] #tail-home .kb-chip {
+    display: flex; align-items: center; gap: 3px; width: 100%; min-height: 20px; padding: 1px 4px;
+    border: 0; border-radius: 4px; text-align: left; font: inherit; cursor: grab;
+  }
+  html[data-theme="blue"] #tail-home .kb-chip b,
+  html[data-theme="blue"] #tail-home .kb-chip small {
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; font-weight: 600; line-height: 14px;
+  }
+  html[data-theme="blue"] #tail-home .kb-chip small { font-weight: 500; opacity: .8; }
+  html[data-theme="blue"] #tail-home .kb-chip.is-personal { background: #e7f2f7; color: #316479; }
+  html[data-theme="blue"] #tail-home .kb-chip.is-wuhan { background: #e5f4ec; color: #1f6b4a; }
+  html[data-theme="blue"] #tail-home .kb-chip.is-research { background: #f3eaf8; color: #6a4c93; }
+  html[data-theme="blue"] #tail-home .kb-chip.is-course { background: #fbf0dc; color: #9a5b12; }
+  html[data-theme="blue"] #tail-home .kb-chip.is-occupied { background: #eef0f2; color: #6e7378; }
+  html[data-theme="blue"] #tail-home .kb-swatch.is-personal { background: #e7f2f7; color: #316479; }
+  html[data-theme="blue"] #tail-home .kb-swatch.is-wuhan { background: #e5f4ec; color: #1f6b4a; }
+  html[data-theme="blue"] #tail-home .kb-swatch.is-research { background: #f3eaf8; color: #6a4c93; }
+  html[data-theme="blue"] #tail-home .kb-swatch.is-course { background: #fbf0dc; color: #9a5b12; }
+  html[data-theme="blue"] #tail-home .kb-swatch.is-occupied { background: #eef0f2; color: #6e7378; }
+  html[data-theme="blue"] #tail-home .kb-swatch.is-task { background: #f4f4f5; color: #37352f; }
+  html[data-theme="blue"] #tail-home .kb-month { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+  html[data-theme="blue"] #tail-home .kb-month .kb-h { position: static; min-height: 24px; }
+  html[data-theme="blue"] #tail-home .kb-month .kb-cell { min-height: 64px; }
+  html[data-theme="blue"] #tail-home .kb-lines { display: flex; flex-direction: column; }
+  html[data-theme="blue"] #tail-home .kb-line {
+    display: flex; align-items: center; gap: 8px; min-height: 36px; padding: 4px 8px; border-bottom: 1px solid #f0f0ee; font-size: 13px;
+  }
+  html[data-theme="blue"] #tail-home .kb-line .who { width: 108px; flex: none; color: #1d1d1f; font-weight: 550; }
   .rem-add { display: none; }
   html[data-theme="blue"] #tail-home .rem-add {
     display: flex;
@@ -8000,10 +8077,10 @@
   #teamHost .sheet-head .sheet-x-blue { display: none; }
   html[data-theme="blue"] #teamHost .sheet-head .sheet-x-mark { display: block; font-size: 18px; font-weight: 400; line-height: 1; }
   html[data-theme="blue"] #teamHost .sheet-head .sheet-x-blue { display: none; }
-  html[data-theme="blue"] #teamHost .modal { background: rgba(26, 29, 33, .28); }
+  html[data-theme="blue"] #teamHost .modal { background: transparent; }
   html[data-theme="blue"] #teamHost .sheet {
     border-color: var(--line);
-    box-shadow: 0 16px 40px rgba(20, 24, 28, .12);
+    box-shadow: 0 8px 28px rgba(20, 24, 28, .16), 0 2px 8px rgba(20, 24, 28, .08);
   }
   html[data-theme="blue"] #teamHost .sheet-head {
     min-height: 52px;
@@ -10683,6 +10760,13 @@
   }
   function ncPointerDown(e) {
     if (e.button !== 0) return;
+    if (e.target.closest('.kb-sched')) {
+      const chip = e.target.closest('.kb-chip');
+      if (!chip) return;
+      kbBox().drag = { id: chip.dataset.kbId, x: e.clientX, y: e.clientY, moved: false };
+      e.currentTarget.setPointerCapture(e.pointerId);
+      return;
+    }
     if (e.target.closest('.nc-tool, .nc-pop, .nc-name')) return;
     const chip = e.target.closest('.nc-chip');
     if (chip) { ncTogglePop(chip); return; }
@@ -10707,6 +10791,11 @@
     if (ncDrag.kind === 'create') ncPlaceDraft(ncDrag.iso, ncDrag.start, 60, false);
   }
   function ncPointerMove(e) {
+    const kdrag = kbBox().drag;
+    if (kdrag) {
+      if (Math.abs(e.clientX - kdrag.x) + Math.abs(e.clientY - kdrag.y) > 4) kdrag.moved = true;
+      return;
+    }
     if (!ncDrag) return;
     if (Math.abs(e.clientX - ncDrag.x) + Math.abs(e.clientY - ncDrag.y) > 4) ncDrag.moved = true;
     const point = ncPoint(e);
@@ -10739,7 +10828,17 @@
     ncDrag.el.style.left = '2px';
     ncDrag.el.style.width = 'calc(100% - 4px)';
   }
-  function ncPointerUp() {
+  function ncPointerUp(e) {
+    const kdrag = kbBox().drag;
+    if (kdrag) {
+      kbBox().drag = null;
+      if (kdrag.moved && e) {
+        const cell = document.elementFromPoint(e.clientX, e.clientY)?.closest('[data-kb-cell]');
+        if (cell) kbPlace(kdrag.id, cell.dataset.who, cell.dataset.iso);
+        kbBox().suppress = true;
+      }
+      return;
+    }
     const drag = ncDrag;
     ncDrag = null;
     if (!drag) return;
@@ -10888,23 +10987,175 @@
     const date = todoParseIso(iso);
     return `${TODO_WEEKDAYS[date.getDay()]} ${TODO_MONTHS[date.getMonth()]} ${date.getDate()}`;
   }
-  function paintKb(host) {
+  function kbBox() {
+    if (!kbBox.v) kbBox.v = { span: 'week', canvas: 'timeline', focus: new Date(), extra: [], over: {}, drag: null, suppress: false, seeded: false };
+    return kbBox.v;
+  }
+  function kbMembers() {
+    return [
+      ['jess', 'Jess'], ['chris', 'Chris Dalton'], ['maya', 'Maya Chen'], ['alex', 'Alex Okonkwo'],
+      ['priya', 'Priya Shah'], ['jonah', 'Jonah Park'], ['elena', 'Elena Voss'], ['samir', 'Samir Adeyemi'],
+      ['hannah', 'Hannah Cho'], ['noah', 'Noah Berg'], ['iris', 'Iris Lang'],
+    ];
+  }
+  function kbTaskOf(ev) {
+    const title = String(ev.title || '').toLowerCase();
+    if (title.includes('lecture')) return 'lecture';
+    if (title.includes('read')) return 'reading';
+    if (ev.type === 'email') return 'reply';
+    return 'task';
+  }
+  function kbTaskIcon(task) {
+    const paths = {
+      lecture: '<circle cx="8" cy="8" r="5.2" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 5.4V8l1.8 1.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>',
+      reading: '<path d="M4 3.2h5.2v9.6H4zM8.8 3.2H11.6v9.6H8.8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>',
+      reply: '<path d="M3.2 4.2h9.6v6.2H3.2z" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="m3.6 4.6 4.4 3.2 4.4-3.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>',
+      occupied: '<path d="M4 8h8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>',
+      task: '<path d="M4 5.2h8M4 8h8M4 10.8h5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>',
+    };
+    return `<svg viewBox="0 0 16 16" aria-hidden="true">${paths[task] || paths.task}</svg>`;
+  }
+  function kbSeed() {
+    const box = kbBox();
+    if (box.seeded) return;
+    box.seeded = true;
+    const iso = (offset) => todoDateIso(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + offset));
+    box.extra.push(
+      { id: 'seed-chris', who: 'chris', title: 'Lecture 5', lane: 'course', task: 'lecture', date: iso(-2), time: '' },
+      { id: 'seed-maya', who: 'maya', title: 'Occupied', lane: 'occupied', task: 'occupied', date: iso(0), time: '' },
+      { id: 'seed-alex', who: 'alex', title: 'Occupied', lane: 'occupied', task: 'occupied', date: iso(-3), time: '' },
+    );
+  }
+  function kbItems() {
+    kbSeed();
+    const box = kbBox();
+    const items = [];
     const start = new Date();
     start.setHours(0, 0, 0, 0);
-    const blocks = [];
-    for (let n = 0; n < 8; n += 1) {
+    for (let n = -21; n < 42; n += 1) {
       const date = new Date(start.getFullYear(), start.getMonth(), start.getDate() + n);
       const iso = todoDateIso(date);
-      const events = tlEventsFor(iso).slice().sort((a, b) => Number(a.timed) - Number(b.timed) || a.start - b.start);
-      if (!events.length) continue;
-      const rows = events.map((ev) => {
-        const lane = kbLaneOf(ev);
-        const when = ev.timed ? ncAmpm(ev.start) : 'All day';
-        return `<div class="kb-row is-${lane}"><span class="kb-ico">${kbIcon(lane)}</span><span class="kb-main"><b>${deskEsc(ev.title)}</b><small>${deskEsc(kbLaneName(lane))}</small></span><span class="kb-time">${when}</span></div>`;
-      }).join('');
-      blocks.push(`<div class="kb-day">${kbDayLabel(iso)}</div>${rows}`);
+      tlEventsFor(iso).forEach((ev, index) => {
+        const key = `me|${iso}|${index}|${ev.title}`;
+        const over = box.over[key] || {};
+        items.push({
+          id: key, who: over.who || 'jess', title: ev.title,
+          lane: kbLaneOf(ev), task: kbTaskOf(ev),
+          date: over.date || iso, time: ev.timed ? ncAmpm(ev.start) : '',
+        });
+      });
     }
-    host.innerHTML = `<div class="kb kb-list">${blocks.join('') || '<div class="kb-day">Nothing scheduled</div>'}</div>`;
+    return items.concat(box.extra);
+  }
+  function kbDays() {
+    const box = kbBox();
+    const focus = new Date(box.focus.getFullYear(), box.focus.getMonth(), box.focus.getDate());
+    if (box.span === 'day') return [focus];
+    if (box.span === 'month') {
+      const first = new Date(focus.getFullYear(), focus.getMonth(), 1);
+      const count = new Date(focus.getFullYear(), focus.getMonth() + 1, 0).getDate();
+      return Array.from({ length: count }, (_, i) => new Date(first.getFullYear(), first.getMonth(), i + 1));
+    }
+    const start = new Date(focus);
+    start.setDate(focus.getDate() - ((focus.getDay() + 6) % 7));
+    return Array.from({ length: 7 }, (_, i) => new Date(start.getFullYear(), start.getMonth(), start.getDate() + i));
+  }
+  function kbRangeText(days) {
+    const a = days[0];
+    const b = days[days.length - 1];
+    const left = a.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const right = b.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    return a.getTime() === b.getTime() ? a.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : `${left} – ${right}`;
+  }
+  function kbChip(item) {
+    const time = item.time ? `<small>${item.time}</small>` : '';
+    return `<button type="button" class="kb-chip is-${item.lane}" data-kb-id="${deskEsc(item.id)}"><span class="kb-ico">${kbTaskIcon(item.task)}</span><b>${deskEsc(item.title)}</b>${time}</button>`;
+  }
+  function kbLegend() {
+    const groups = ['personal', 'wuhan', 'research', 'course'].map((id) => `<div class="kb-rule"><i class="kb-swatch is-${id}">${kbIcon(id)}</i><span>${deskEsc(kbLaneName(id))}</span></div>`).join('');
+    const tasks = [['lecture', 'Lecture'], ['reading', 'Reading'], ['reply', 'Reply'], ['occupied', 'Occupied'], ['task', 'Task']];
+    const taskRows = tasks.map(([id, name]) => `<div class="kb-rule"><i class="kb-swatch is-task">${kbTaskIcon(id)}</i><span>${name}</span></div>`).join('');
+    return `<aside class="kb-legend"><b>分类</b><div class="kb-k">群组</div>${groups}<div class="kb-k">任务</div>${taskRows}</aside>`;
+  }
+  function kbTimeline(items, days) {
+    const today = todoDateIso(new Date());
+    const head = days.map((date) => {
+      const iso = todoDateIso(date);
+      const wd = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][(date.getDay() + 6) % 7];
+      return `<div class="kb-h${iso === today ? ' is-today' : ''}"><b>${date.getDate()}</b><i>${wd}</i></div>`;
+    }).join('');
+    const rows = kbMembers().map(([id, name]) => {
+      const cells = days.map((date) => {
+        const iso = todoDateIso(date);
+        const chips = items.filter((item) => item.who === id && item.date === iso).map(kbChip).join('');
+        return `<div class="kb-cell${iso === today ? ' is-today' : ''}" data-kb-cell data-who="${id}" data-iso="${iso}">${chips}</div>`;
+      }).join('');
+      return `<div class="kb-name">${deskEsc(name)}</div>${cells}`;
+    }).join('');
+    return `<div class="kb-table" style="--cols:${days.length}"><div class="kb-h kb-corner">Member</div>${head}${rows}</div>`;
+  }
+  function kbMonth(items) {
+    const focus = kbBox().focus;
+    const first = new Date(focus.getFullYear(), focus.getMonth(), 1);
+    const count = new Date(focus.getFullYear(), focus.getMonth() + 1, 0).getDate();
+    const lead = (first.getDay() + 6) % 7;
+    const today = todoDateIso(new Date());
+    const names = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((name) => `<div class="kb-h">${name}</div>`).join('');
+    const blanks = Array.from({ length: lead }, () => '<div class="kb-cell"></div>').join('');
+    const cells = Array.from({ length: count }, (_, n) => {
+      const date = new Date(first.getFullYear(), first.getMonth(), n + 1);
+      const iso = todoDateIso(date);
+      const chips = items.filter((item) => item.date === iso).map(kbChip).join('');
+      return `<div class="kb-cell${iso === today ? ' is-today' : ''}" data-kb-cell data-who="jess" data-iso="${iso}"><b>${n + 1}</b>${chips}</div>`;
+    }).join('');
+    return `<div class="kb-month">${names}${blanks}${cells}</div>`;
+  }
+  function kbList(items, days) {
+    const ids = new Set(days.map((date) => todoDateIso(date)));
+    const names = Object.fromEntries(kbMembers());
+    const rows = items.filter((item) => ids.has(item.date)).sort((a, b) => a.date.localeCompare(b.date) || a.who.localeCompare(b.who));
+    if (!rows.length) return '<div class="kb-day">Nothing scheduled</div>';
+    return `<div class="kb-lines">${rows.map((item) => `<div class="kb-line"><span class="who">${deskEsc(names[item.who] || item.who)}</span>${kbChip(item)}<span class="kb-time">${item.time || kbDayLabel(item.date)}</span></div>`).join('')}</div>`;
+  }
+  function paintKb(host) {
+    const box = kbBox();
+    const items = kbItems();
+    const days = kbDays();
+    const spans = ['day', 'week', 'month'].map((id) => `<button type="button" data-kb="span" data-kb-val="${id}" aria-pressed="${box.span === id}">${id[0].toUpperCase()}${id.slice(1)}</button>`).join('');
+    const canvases = [['timeline', 'Timeline'], ['calendar', 'Calendar'], ['list', 'List']].map(([id, label]) => `<button type="button" data-kb="canvas" data-kb-val="${id}" aria-pressed="${box.canvas === id}">${label}</button>`).join('');
+    let body = '';
+    if (box.canvas === 'list') body = kbList(items, days);
+    else if (box.canvas === 'calendar') body = kbMonth(items);
+    else body = kbTimeline(items, days);
+    host.innerHTML = `<div class="kb kb-sched"><div class="kb-bar"><button type="button" data-kb="prev" aria-label="Previous">‹</button><span class="kb-range">${kbRangeText(days)}</span><button type="button" data-kb="next" aria-label="Next">›</button><button type="button" data-kb="today">Today</button><div class="kb-seg">${spans}</div><span style="flex:1"></span><div class="kb-seg">${canvases}</div><button type="button" class="kb-add" data-kb="add">New item</button></div><div class="kb-split"><div class="kb-pane">${body}</div>${kbLegend()}</div></div>`;
+  }
+  function kbAct(act, val) {
+    const box = kbBox();
+    const focus = new Date(box.focus.getFullYear(), box.focus.getMonth(), box.focus.getDate());
+    if (act === 'today') box.focus = new Date();
+    if (act === 'prev' || act === 'next') {
+      const dir = act === 'prev' ? -1 : 1;
+      if (box.span === 'month' || box.canvas === 'calendar') focus.setMonth(focus.getMonth() + dir);
+      else focus.setDate(focus.getDate() + dir * (box.span === 'day' ? 1 : 7));
+      box.focus = focus;
+    }
+    if (act === 'span') box.span = val;
+    if (act === 'canvas') box.canvas = val;
+    if (act === 'add') {
+      box.extra.push({ id: `new-${Date.now()}`, who: 'jess', title: 'New item', lane: 'personal', task: 'task', date: todoDateIso(new Date()), time: '' });
+    }
+    paintHomeTimeline();
+  }
+  function kbPlace(id, who, iso) {
+    const box = kbBox();
+    const extra = box.extra.find((item) => item.id === id);
+    if (extra) { extra.who = who; extra.date = iso; }
+    else box.over[id] = { ...(box.over[id] || {}), who, date: iso };
+    paintHomeTimeline();
+  }
+  function kbAdd(who, iso) {
+    kbBox().extra.push({ id: `new-${Date.now()}`, who, title: 'New item', lane: 'personal', task: 'task', date: iso, time: '' });
+    paintHomeTimeline();
   }
   function paintHomeTimeline() {
     const host = document.getElementById('tlBody');
@@ -13484,6 +13735,17 @@
         return;
       }
 
+      const kbBtn = e.target.closest('#tail-home [data-kb]');
+      if (kbBtn) {
+        kbAct(kbBtn.dataset.kb, kbBtn.dataset.kbVal || '');
+        return;
+      }
+      const kbCell = e.target.closest('#tail-home [data-kb-cell]');
+      if (kbCell && !e.target.closest('.kb-chip')) {
+        if (kbBox().suppress) { kbBox().suppress = false; return; }
+        kbAdd(kbCell.dataset.who, kbCell.dataset.iso);
+        return;
+      }
       const tlHit = e.target.closest('#tlFab, #tail-home [data-tl-i], #tail-home [data-tl-add], #tlDate, #tlZoom, #tlCal button, #tlAdd button, #tlAdd [data-tl-idea], #tail-home [data-tl-day], #tail-home [data-tl-open], #tail-home [data-nc]');
       if (tlHit) {
         const nav = e.target.closest('[data-nc]');
