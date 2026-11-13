@@ -8287,6 +8287,23 @@
   .ws-kanban .desk-views { gap: 0; padding: 2px; border-radius: 9px; background: #f3f5f7; }
   .ws-kanban .desk-views button[aria-pressed="true"] { background: #fff; color: var(--green-dark); }
   .ws-kanban .desk-new > button { background: var(--green); color: #fff; border-radius: 8px; padding: 6px 12px; }
+  .tk-board { display: grid; grid-template-columns: repeat(4, minmax(180px, 1fr)); gap: 12px; align-items: stretch; }
+  .tk-col { min-width: 0; min-height: 360px; padding: 10px; border-radius: 12px; background: #f6f7f8; }
+  .tk-col.is-over { background: #ebf5fa; }
+  .tk-col h4 { display: flex; align-items: center; gap: 8px; margin: 0 0 10px; font-size: 13px; font-weight: 650; color: #1f1f1f; }
+  .tk-col h4 span { min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: #fff; color: #71777d; font-size: 11px; font-weight: 650; display: inline-flex; align-items: center; justify-content: center; }
+  .tk-list { display: flex; flex-direction: column; gap: 8px; min-height: 48px; }
+  .tk-card { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; padding: 12px; border: 1px solid #e6e8ec; border-radius: 10px; background: #fff; text-align: left; color: #1f1f1f; cursor: grab; }
+  .tk-card.is-dragging { opacity: .45; }
+  .tk-card[draggable="false"] { cursor: default; }
+  .tk-card b { font-size: 14px; font-weight: 650; line-height: 1.35; }
+  .tk-card p { margin: 0; max-width: 100%; color: #71777d; font-size: 12px; line-height: 1.4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tk-type { color: #3c7a94; font-size: 11px; font-weight: 700; }
+  .tk-meta { display: flex; align-items: center; gap: 6px; width: 100%; min-width: 0; color: #71777d; font-size: 12px; }
+  .tk-meta .av { width: 20px; height: 20px; border-radius: 6px; font-size: 9px; flex: none; }
+  .tk-meta > span:nth-child(2) { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tk-meta time { margin-left: auto; flex: none; }
+  .tk-empty { margin: 8px 4px; color: #a4a4a2; font-size: 12px; }
   .gi-modal {
     position: absolute; inset: 0; z-index: 30; display: flex; align-items: center; justify-content: center;
     padding: 24px; background: rgba(20, 24, 28, .45);
@@ -21421,17 +21438,17 @@ function syncTeamSend() {
 }
 const groupItems = {
   hip: [
-    { id: 'g1', who: 'chris', title: 'Lecture 5', type: 'Meeting', date: '2026-11-11', end: '2026-11-11', startTime: '14:30', endTime: '16:00', notes: 'Room 6-120', see: 'group' },
-    { id: 'g2', who: 'jess', title: 'Reading report', type: 'Task', date: '2026-11-12', end: '2026-11-12', startTime: '09:00', endTime: '11:00', notes: '1,500 words', see: 'recipients' },
-    { id: 'g3', who: 'maya', title: 'Quiz draft', type: 'Document', date: '2026-11-12', end: '2026-11-13', startTime: '15:00', endTime: '10:00', notes: 'Short answers', fileName: 'quiz.pdf', see: 'admins' },
-    { id: 'g4', who: 'alex', title: 'Jet notes', type: 'Task', date: '2026-11-10', end: '2026-11-10', startTime: '10:00', endTime: '11:30', notes: 'Stay under the cap', see: 'recipients' }
+    { id: 'g1', who: 'chris', title: 'Lecture 5', type: 'Meeting', date: '2026-11-11', end: '2026-11-11', startTime: '14:30', endTime: '16:00', notes: 'Room 6-120', see: 'group', stage: 'progress' },
+    { id: 'g2', who: 'jess', title: 'Reading report', type: 'Task', date: '2026-11-12', end: '2026-11-12', startTime: '09:00', endTime: '11:00', notes: '1,500 words', see: 'recipients', stage: 'todo' },
+    { id: 'g3', who: 'maya', title: 'Quiz draft', type: 'Document', date: '2026-11-12', end: '2026-11-13', startTime: '15:00', endTime: '10:00', notes: 'Short answers', fileName: 'quiz.pdf', see: 'admins', stage: 'review' },
+    { id: 'g4', who: 'alex', title: 'Jet notes', type: 'Task', date: '2026-11-10', end: '2026-11-10', startTime: '10:00', endTime: '11:30', notes: 'Stay under the cap', see: 'recipients', stage: 'done' }
   ],
   notes: [
-    { id: 'nkb', who: 'chris', title: 'Outline', type: 'Document', date: '2026-11-11', end: '2026-11-11', startTime: '10:00', endTime: '11:00', notes: 'Phase diagram page', see: 'group' },
-    { id: 'nkb2', who: 'jess', title: 'Quiz answers', type: 'Task', date: '2026-11-13', end: '2026-11-13', startTime: '16:00', endTime: '17:00', notes: 'After class', see: 'group' }
+    { id: 'nkb', who: 'chris', title: 'Outline', type: 'Document', date: '2026-11-11', end: '2026-11-11', startTime: '10:00', endTime: '11:00', notes: 'Phase diagram page', see: 'group', stage: 'todo' },
+    { id: 'nkb2', who: 'jess', title: 'Quiz answers', type: 'Task', date: '2026-11-13', end: '2026-11-13', startTime: '16:00', endTime: '17:00', notes: 'After class', see: 'group', stage: 'progress' }
   ],
   qgp: [
-    { id: 'qkb', who: 'elena', title: 'Chapter 3', type: 'Meeting', date: '2026-11-12', end: '2026-11-12', startTime: '19:00', endTime: '20:00', notes: 'Phase diagram', see: 'group' }
+    { id: 'qkb', who: 'elena', title: 'Chapter 3', type: 'Meeting', date: '2026-11-12', end: '2026-11-12', startTime: '19:00', endTime: '20:00', notes: 'Phase diagram', see: 'group', stage: 'review' }
   ]
 };
 const personalBusy = [
@@ -21442,7 +21459,8 @@ const personalBusy = [
 ];
 let gFocus = new Date(2026, 10, 11);
 let gSpan = 'week';
-let gCanvas = 'timeline';
+let gCanvas = 'board';
+const G_STAGES = [['todo', 'To do'], ['progress', 'In progress'], ['review', 'In review'], ['done', 'Done']];
 let gStep = 1;
 let gType = 'Meeting';
 let gPub = 'group';
@@ -21486,6 +21504,28 @@ function gWhen(item) {
 function gCanSee(item, c) {
   if (canReview(c) || item.who === ME || item.see === 'group') return true;
   return false;
+}
+function gStage(item) {
+  return G_STAGES.some(([id]) => id === item.stage) ? item.stage : 'todo';
+}
+function gCanMove(item, c) { return canReview(c) || item.who === ME; }
+function gDayLabel(iso) {
+  if (!iso) return '';
+  return new Date(iso + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+function gTaskCard(item, c) {
+  const p = people[item.who];
+  const file = (item.files && item.files[0] && item.files[0].name) || item.fileName || '';
+  const when = [gDayLabel(item.date), item.startTime ? gWhen(item) : ''].filter(Boolean).join(' · ');
+  return `<button type="button" class="tk-card" data-g-item="${esc(item.id)}" draggable="${gCanMove(item, c) ? 'true' : 'false'}"><span class="tk-type">${esc(item.type || 'Task')}</span><b>${esc(item.title)}</b>${item.notes ? '<p>' + esc(item.notes) + '</p>' : ''}${file ? '<p>' + esc(file) + '</p>' : ''}<span class="tk-meta"><span class="av hue-${p ? p.hue : 'slate'}">${esc(p ? p.short : '')}</span><span>${esc(p ? p.name : '')}</span><time>${esc(when)}</time></span></button>`;
+}
+function gTaskBoard(c) {
+  const rows = gItems(c.id).filter((item) => gCanSee(item, c));
+  return '<div class="tk-board">' + G_STAGES.map(([id, label]) => {
+    const cards = rows.filter((item) => gStage(item) === id);
+    const body = cards.map((item) => gTaskCard(item, c)).join('') || '<p class="tk-empty">No tasks</p>';
+    return `<section class="tk-col" data-g-col="${id}"><h4>${label}<span>${cards.length}</span></h4><div class="tk-list">${body}</div></section>`;
+  }).join('') + '</div>';
 }
 function gOutside(personId, c) {
   if (!canReview(c) || personId === ME) return [];
@@ -21560,7 +21600,7 @@ function paintGroupBoard() {
     }).join('');
     return `<div class="desk-week lane" style="--cols:${cols}"><div class="desk-lane-name">${esc(people[id].name)}</div><div class="desk-track" data-g-track="${id}" style="--cols:${cols};min-height:${Math.max(56, rowEnds.length * 32 + 16)}px">${cells}${bars}</div></div>`;
   }).join('');
-  let boardHtml = `<div class="desk-board"><div class="desk-week head" style="--cols:${cols}"><span>Member</span>${head}</div>${lanes}</div>`;
+  let boardHtml = gCanvas === 'board' ? gTaskBoard(c) : `<div class="desk-board"><div class="desk-week head" style="--cols:${cols}"><span>Member</span>${head}</div>${lanes}</div>`;
   if (gCanvas === 'list') {
     const rows = gItems(c.id).filter((item) => gCanSee(item, c) && isos.some((iso) => gCovers(item, iso))).map((item) => ({ item, outside: false }));
     boardHtml = '<div class="desk-list">' + (rows.map((row) => {
@@ -21625,7 +21665,7 @@ function paintGroupBoard() {
   host.innerHTML = `<div class="ws-kanban">
       <h3>Kanban</h3>
       <div class="desk-tools">
-        <div class="desk-when">
+        ${gCanvas === 'board' ? '' : `<div class="desk-when">
           <button type="button" data-g-act="prev" aria-label="Previous">‹</button>
           <span class="desk-range">${gRangeLabel()}</span>
           <button type="button" data-g-act="next" aria-label="Next">›</button>
@@ -21635,12 +21675,13 @@ function paintGroupBoard() {
             <button type="button" data-g-span="week" aria-pressed="${gSpan === 'week'}">Week</button>
             <button type="button" data-g-span="month" aria-pressed="${gSpan === 'month'}">Month</button>
           </div>
-        </div>
+        </div>`}
         <div class="desk-tools-end">
           <div class="desk-views" role="group" aria-label="Canvas">
-            <button type="button" data-g-canvas="timeline" aria-pressed="${gCanvas === 'timeline'}">Timeline</button>
+            <button type="button" data-g-canvas="board" aria-pressed="${gCanvas === 'board'}">Kanban</button>
             <button type="button" data-g-canvas="calendar" aria-pressed="${gCanvas === 'calendar'}">Calendar</button>
             <button type="button" data-g-canvas="list" aria-pressed="${gCanvas === 'list'}">List</button>
+            <button type="button" data-g-canvas="timeline" aria-pressed="${gCanvas === 'timeline'}">Timeline</button>
           </div>
           <div class="desk-new"><button type="button" data-g-act="new">Create event</button></div>
         </div>
@@ -22146,7 +22187,7 @@ function giCreate() {
       const row = {
         id: uid(), who: id, title, type: gi.type, date: start, end: $('giEnd').value || start,
         startTime: $('giStartTime').value, endTime: $('giEndTime').value,
-        notes: $('giDetails').value.trim(), files, see: 'group'
+        notes: $('giDetails').value.trim(), files, see: 'group', stage: 'todo'
       };
       gItems(c.id).push(row);
       document.dispatchEvent(new CustomEvent('symbion-group-event', { detail: {
@@ -22990,6 +23031,33 @@ $('workspace').addEventListener('click', (e) => {
   const step = gSpan === 'month' ? 0 : (gSpan === 'day' ? 1 : 7);
   if (gSpan === 'month') gFocus = new Date(gFocus.getFullYear(), gFocus.getMonth() + (act.dataset.gAct === 'next' ? 1 : -1), 1);
   else gFocus = gAddDays(gFocus, act.dataset.gAct === 'next' ? step : -step);
+  paintGroupBoard();
+});
+$('workspace').addEventListener('dragstart', (e) => {
+  const card = e.target.closest('.tk-card');
+  if (!card || card.getAttribute('draggable') !== 'true') { e.preventDefault(); return; }
+  e.dataTransfer.setData('text/plain', card.dataset.gItem);
+  e.dataTransfer.effectAllowed = 'move';
+  card.classList.add('is-dragging');
+});
+$('workspace').addEventListener('dragend', () => {
+  $('workspace').querySelectorAll('.is-dragging, .is-over').forEach((el) => el.classList.remove('is-dragging', 'is-over'));
+});
+$('workspace').addEventListener('dragover', (e) => {
+  const col = e.target.closest('[data-g-col]');
+  if (!col) return;
+  e.preventDefault();
+  $('workspace').querySelectorAll('.tk-col.is-over').forEach((el) => { if (el !== col) el.classList.remove('is-over'); });
+  col.classList.add('is-over');
+});
+$('workspace').addEventListener('drop', (e) => {
+  const col = e.target.closest('[data-g-col]');
+  if (!col) return;
+  e.preventDefault();
+  const c = current();
+  const row = c && gItems(c.id).find((item) => item.id === e.dataTransfer.getData('text/plain'));
+  if (!row || !gCanSee(row, c) || !gCanMove(row, c)) return;
+  row.stage = col.dataset.gCol;
   paintGroupBoard();
 });
 $('workspace').addEventListener('pointerdown', (e) => {
