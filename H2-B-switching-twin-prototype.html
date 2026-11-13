@@ -6527,6 +6527,7 @@
   .dir-row { display: flex; align-items: center; justify-content: space-between; gap: 28px; }
   .dir-row + .dir-row { margin-top: 16px; }
   html[data-theme="blue"] #dirHost #dirTools { margin-top: 32px; }
+  html[data-theme="blue"] #dirHost .dir-body { padding-top: 20px; }
   .dir-tabs { display: flex; align-items: center; gap: 28px; }
   .dir-tab {
     position: relative;
@@ -6657,12 +6658,7 @@
     color: #1a1d21;
     font-weight: 500;
   }
-  html[data-theme="blue"] #dirHost .dir-top {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    column-gap: 28px;
-    align-items: center;
-  }
+  html[data-theme="blue"] #dirHost .dir-top { display: none; }
   html[data-theme="blue"] #dirHost .dir-row {
     display: grid;
     grid-template-columns: subgrid;
