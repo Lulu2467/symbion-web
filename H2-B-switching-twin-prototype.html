@@ -22431,19 +22431,23 @@ function finderCard(g) {
 }
 function friendPeople() {
   const q = (state.friendQuery || '').trim().toLowerCase();
+  if (!q) return [];
   return Object.keys(people).filter((id) => {
     const p = people[id];
     if (!p || id === ME || p.agent || p.twin) return false;
-    if (!q) return true;
     return p.name.toLowerCase().includes(q) || (p.email || '').toLowerCase().includes(q);
   }).sort((a, b) => people[a].name.localeCompare(people[b].name));
 }
 function paintFriends() {
   const results = $('friendResults');
   if (!results) return;
+  const q = (state.friendQuery || '').trim();
+  if (!q) {
+    results.innerHTML = '<p class="finder-empty">Type a name or an email to add someone.</p>';
+    return;
+  }
   const rows = friendPeople();
-  const heading = (state.friendQuery || '').trim() ? 'Search results' : 'People you can add';
-  results.innerHTML = `<p class="lead">${heading}</p>` + (rows.length ? rows.map((id) => {
+  results.innerHTML = '<p class="lead">Search results</p>' + (rows.length ? rows.map((id) => {
     const p = people[id];
     const dm = chats.find((c) => c.kind === 'dm' && c.person === id && !c.hidden);
     const btn = dm
