@@ -255,22 +255,21 @@
   html[data-theme="blue"] .osbar-bell-hd { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 4px; }
   html[data-theme="blue"] .osbar-bell-hd b { font-size: 16px; font-weight: 650; line-height: 22px; color: #1a1d21; }
   html[data-theme="blue"] .osbar-bell-x {
-    width: 16px;
-    height: 16px;
+    width: 32px;
+    height: 32px;
     margin: 0;
     padding: 0;
     border: 0;
-    border-radius: 999px;
+    border-radius: 8px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     flex: none;
     background: transparent;
     color: #71777d;
-    font-size: 13px;
-    line-height: 1;
     cursor: pointer;
   }
+  html[data-theme="blue"] .osbar-bell-x svg { width: 22px; height: 22px; display: block; }
   html[data-theme="blue"] .osbar-bell-x:hover { background: #ececee; color: #1f1f1f; }
   html[data-theme="blue"] .osbar-bell-card {
     border: 1px solid #eceef1;
@@ -444,10 +443,24 @@
     padding-bottom: 20px;
     gap: 20px;
   }
+  html[data-theme="blue"] .frame:has(#screen-home.on):not(.team-on):not(.desk-on):not(.dir-on):not(.set-on):not(.symbion-on) {
+    display: flex;
+    flex-direction: column;
+  }
+  html[data-theme="blue"] .frame:has(#screen-home.on):not(.team-on):not(.desk-on):not(.dir-on):not(.set-on):not(.symbion-on) .body {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+  html[data-theme="blue"] .frame:has(#screen-home.on):not(.team-on):not(.desk-on):not(.dir-on):not(.set-on):not(.symbion-on) .main {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
   html[data-theme="blue"] .content.is-home-pinned:has(#screen-home.on) {
+    flex: 1 1 auto;
+    min-height: 0;
     justify-content: flex-start;
-    padding-top: 16px;
-    padding-bottom: 16px;
+    padding-top: 56px;
+    padding-bottom: 24px;
     gap: 8px;
   }
   html[data-theme="blue"] .main:has(.content.is-home-pinned) { overflow-anchor: none; }
@@ -1071,6 +1084,10 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) {
     width: 100%;
     margin-inline: auto;
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #greeting-home,
   html[data-theme="blue"] .hub:has(#screen-home.on) #composer {
@@ -1581,11 +1598,25 @@
     margin-inline: auto;
     margin-top: 0;
     --home-pair: 336px;
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home > .two {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid {
+    flex: 1 1 auto;
+    min-height: 0;
+    height: auto;
     grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
     column-gap: 0;
-    align-items: start;
+    align-items: stretch;
   }
   #homeKanban { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeKanban {
@@ -1682,7 +1713,7 @@
     gap: 12px;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid > .two-col:first-child {
-    height: auto;
+    height: 100%;
     min-height: 0;
     background: transparent;
     border: 0;
@@ -1691,7 +1722,13 @@
     padding: 0;
     gap: 8px;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .rem-card,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .rem-card {
+    flex: 1 1 auto;
+    height: auto;
+    min-height: var(--home-pair);
+    max-height: none;
+    overflow: hidden;
+  }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid > .two-col:nth-child(2) > .cosmos-scroll-wrap {
     flex: none;
     height: var(--home-pair);
@@ -1765,6 +1802,20 @@
     padding: 0;
     overflow: auto;
   }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .rem-board {
+    flex: 1 1 auto;
+    height: auto;
+    overflow: hidden;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home #homeTimeline,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home #tlBody,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home #tlBody > .kb {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home #tlBody > .kb { overflow: hidden; }
   html[data-theme="blue"] #tail-home .rem-board.is-cal,
   html[data-theme="blue"] #tail-home .rem-board.is-add { min-height: 0; height: 100%; }
   html[data-theme="blue"] #tail-home .rem-week { display: flex; gap: 4px; width: 100%; align-items: stretch; margin: 2px 0 12px; }
@@ -8897,7 +8948,7 @@
           <button type="button" class="p" aria-label="Prof. Roland">GR</button><button type="button" class="p" aria-label="王">王</button><button type="button" class="p" aria-label="Prof. Pajer">EP</button><button type="button" class="p" aria-label="Prof. Xu">HX</button>
           <div class="osbar-bell" id="osbarBell">
             <button type="button" class="osbar-nav-btn" aria-label="Reminders" aria-expanded="false" data-osbar="bell"><svg class="osbar-ico" viewBox="70.28 66.28 881.45 881.45" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M808 712l-48-108.8V448c0-102.4-65.6-195.2-160-232-3.2-44.8-41.6-80-88-80s-83.2 35.2-88 80c-96 36.8-160 129.6-160 232v155.2l-48 108.8c-6.4 14.4-4.8 30.4 3.2 43.2 8 12.8 22.4 20.8 38.4 20.8h508.8c16 0 30.4-8 38.4-20.8s9.6-30.4 3.2-43.2z m-547.2 16l51.2-115.2V448c0-88 59.2-166.4 144-192l19.2-6.4-3.2-20.8V224c0-22.4 17.6-40 40-40s40 17.6 40 40v6.4l-3.2 20.8 19.2 6.4c84.8 25.6 144 104 144 192v164.8l51.2 115.2H260.8zM512 880c44.8 0 80-35.2 80-80H432c0 44.8 35.2 80 80 80z"/></svg></button>
-            <div class="osbar-bell-menu" role="region" aria-label="Cosmos"><div class="osbar-bell-hd"><b>Cosmos</b><button type="button" class="osbar-bell-x" data-osbar="bell-close" aria-label="Close">×</button></div><div class="osbar-bell-card"><div class="osbar-bell-list"></div></div></div>
+            <div class="osbar-bell-menu" role="region" aria-label="Cosmos"><div class="osbar-bell-hd"><b>Cosmos</b><button type="button" class="osbar-bell-x" data-osbar="bell-close" aria-label="Close"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.25 3.25 12.75 12.75M12.75 3.25 3.25 12.75" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button></div><div class="osbar-bell-card"><div class="osbar-bell-list"></div></div></div>
           </div>
           <button type="button" class="rail-me" id="railMe" aria-label="Lulu"><span class="rail-me-av" id="railMeAv" aria-hidden="true">LU</span><span class="rail-me-copy"><b id="railMeName">Lulu</b></span></button>
           <div class="rail-me-menu" id="railMeMenu" role="menu" hidden>
@@ -18896,6 +18947,13 @@
     frame.style.width = `${layoutW}px`;
     if (fsRoot) fsRoot.classList.toggle('is-fs', fs);
 
+    const homeFill = document.documentElement.dataset.theme === 'blue'
+      && document.getElementById('screen-home')?.classList.contains('on')
+      && !frame.classList.contains('team-on')
+      && !frame.classList.contains('desk-on')
+      && !frame.classList.contains('dir-on')
+      && !frame.classList.contains('set-on')
+      && !frame.classList.contains('symbion-on');
     if (fs) {
       // Pin chrome: frame layout height = viewport / scale so visual fills 100vh;
       // .main is the only scrollport (see fullscreen CSS).
@@ -18904,6 +18962,16 @@
       stageEl.style.height = '100%';
       stageEl.style.overflow = 'hidden';
       frame.style.height = `${layoutH}px`;
+    } else if (homeFill) {
+      const presenterH = document.querySelector('.presenter')?.offsetHeight || 0;
+      const availH = Math.max(480, window.innerHeight - presenterH - 72);
+      const layoutH = Math.max(640, Math.round(availH / (s || 1)));
+      const nextH = `${layoutH}px`;
+      if (frame.style.height !== nextH) frame.style.height = nextH;
+      const frameH = Math.max(frame.offsetHeight, frame.scrollHeight);
+      scaler.style.marginBottom = `${frameH * (s - 1)}px`;
+      stageEl.style.height = '';
+      stageEl.style.overflow = 'visible';
     } else {
       frame.style.height = '';
       // transform leaves full layout height; negative margin collapses unused space.
