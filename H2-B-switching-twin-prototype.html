@@ -2604,22 +2604,22 @@
   html[data-theme="blue"] #tail-home .kd-repeat svg { color: #8b9198; }
   html[data-theme="blue"] #tail-home .kd-repeat-chev { margin-left: auto; width: 14px; height: 14px; }
   html[data-theme="blue"] .kd-repeat-menu {
-    position: fixed; z-index: 80; width: 260px; padding: 6px; background: #2c2c2e; color: #fff;
-    border-radius: 12px; box-shadow: 0 10px 28px rgba(0, 0, 0, .28);
+    position: fixed; z-index: 80; width: 260px; padding: 6px; background: #fff; color: #1d1d1f;
+    border: 1px solid #e6e8ec; border-radius: 12px; box-shadow: 0 8px 24px rgba(20, 25, 26, .12);
   }
   html[data-theme="blue"] .kd-repeat-menu button {
     display: flex; align-items: center; gap: 8px; width: 100%; min-height: 32px; padding: 0 10px;
-    border: 0; border-radius: 6px; background: transparent; color: #fff; font: inherit; font-size: 13px;
+    border: 0; border-radius: 6px; background: transparent; color: #1d1d1f; font: inherit; font-size: 13px;
     text-align: left; cursor: pointer;
   }
   html[data-theme="blue"] .kd-repeat-menu button:hover,
-  html[data-theme="blue"] .kd-repeat-menu button.is-on { background: rgba(255, 255, 255, .1); }
-  html[data-theme="blue"] .kd-repeat-menu button i { color: #b5b5b8; font-style: normal; }
-  html[data-theme="blue"] .kd-repeat-menu .kd-repeat-rule { height: 1px; margin: 4px 8px; background: rgba(255, 255, 255, .12); }
-  html[data-theme="blue"] .kd-repeat-custom { display: flex; align-items: center; gap: 8px; padding: 8px 10px; color: #fff; font-size: 13px; }
+  html[data-theme="blue"] .kd-repeat-menu button.is-on { background: #f3f4f6; }
+  html[data-theme="blue"] .kd-repeat-menu button i { margin-left: auto; color: #8b9198; font-style: normal; }
+  html[data-theme="blue"] .kd-repeat-menu .kd-repeat-rule { height: 1px; margin: 4px 8px; background: #ededec; }
+  html[data-theme="blue"] .kd-repeat-custom { display: flex; align-items: center; gap: 8px; padding: 8px 10px; color: #1d1d1f; font-size: 13px; }
   html[data-theme="blue"] .kd-repeat-n,
   html[data-theme="blue"] .kd-repeat-unit {
-    height: 28px; border: 0; border-radius: 6px; background: #3a3a3c; color: #fff; font: inherit; font-size: 13px;
+    height: 28px; border: 1px solid #e6e8ec; border-radius: 6px; background: #f6f7f8; color: #1d1d1f; font: inherit; font-size: 13px;
   }
   html[data-theme="blue"] .kd-repeat-n { width: 52px; padding: 0 6px; }
   html[data-theme="blue"] .kd-repeat-unit { padding: 0 6px; }
@@ -11560,7 +11560,7 @@
     document.querySelector('.kb-menu')?.remove();
   }
   function kbPlaceMenu(menu, x, y) {
-    document.body.appendChild(menu);
+    kbMenuHost().appendChild(menu);
     const box = menu.getBoundingClientRect();
     const left = Math.max(8, Math.min(x, window.innerWidth - box.width - 8));
     let top = y;
@@ -12127,6 +12127,9 @@
     }
     kbCloseTzMenu(true);
   }
+  function kbMenuHost() {
+    return document.getElementById("fsRoot") || document.body;
+  }
   function kbPlaceTzMenu(menu, row) {
     const r = row.getBoundingClientRect();
     const box = menu.getBoundingClientRect();
@@ -12157,7 +12160,7 @@
     const menu = document.createElement("div");
     menu.className = "kd-tz-menu";
     menu.innerHTML = kbTzMenuHtml("", current);
-    document.body.appendChild(menu);
+    kbMenuHost().appendChild(menu);
     kbPlaceTzMenu(menu, row);
     input.focus();
     input.select();
@@ -12254,7 +12257,7 @@
     const menu = document.createElement("div");
     menu.className = "kd-repeat-menu";
     menu.innerHTML = kbRepeatMenuHtml(ev);
-    document.body.appendChild(menu);
+    kbMenuHost().appendChild(menu);
     kbPlaceTzMenu(menu, row);
     menu.addEventListener("click", (e) => {
       const hit = e.target.closest("[data-kd-repeat]");
@@ -12571,7 +12574,7 @@
       const on = key === id;
       return '<button type="button" role="menuitemradio" data-kd-vis="' + key + '" aria-checked="' + on + '">' + (on ? check : '<span class="kd-vis-check"></span>') + "<span>" + label + "</span>" + (key === "default" ? help : "") + "</button>";
     }).join("");
-    document.body.appendChild(menu);
+    kbMenuHost().appendChild(menu);
     const box = btn.getBoundingClientRect();
     const width = menu.offsetWidth;
     const height = menu.offsetHeight;
