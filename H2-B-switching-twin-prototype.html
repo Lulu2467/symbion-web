@@ -1098,8 +1098,8 @@
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker .switch-ico { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker .picker-chev {
-    width: 16px;
-    height: 10px;
+    width: 10px;
+    height: 6px;
     flex: none;
     display: block;
     color: #1f2328;
@@ -2081,6 +2081,128 @@
     background: transparent;
     padding: 0;
     box-shadow: none;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .rem-card > .two-main-l {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    overflow: hidden;
+    flex: none;
+    opacity: 0;
+    pointer-events: none;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .tl-bar,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .rem-week { display: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .rem-board:has(.nc) {
+    flex: 1 1 auto;
+    min-height: 0;
+    height: auto;
+    gap: 0;
+    overflow: hidden;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .tl:has(.nc) {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home #tlBody:has(.nc) {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    overflow: hidden;
+  }
+  html[data-theme="blue"] #tail-home .nc {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    color: #37352f;
+    user-select: none;
+  }
+  html[data-theme="blue"] #tail-home .nc-tool { display: flex; align-items: center; gap: 2px; height: 36px; flex: none; }
+  html[data-theme="blue"] #tail-home .nc-tool button {
+    height: 28px; padding: 0 8px; border: 0; border-radius: 6px; background: transparent;
+    color: #37352f; font: inherit; font-size: 13px; font-weight: 500; cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .nc-tool button:hover { background: #efefef; }
+  html[data-theme="blue"] #tail-home .nc-title { margin-left: 4px; font-size: 15px; font-weight: 600; }
+  html[data-theme="blue"] #tail-home .nc-head,
+  html[data-theme="blue"] #tail-home .nc-all { display: flex; flex: none; }
+  html[data-theme="blue"] #tail-home .nc-gutter { width: 56px; flex: none; }
+  html[data-theme="blue"] #tail-home .nc-days,
+  html[data-theme="blue"] #tail-home .nc-all-cols,
+  html[data-theme="blue"] #tail-home .nc-cols { flex: 1; min-width: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+  html[data-theme="blue"] #tail-home .nc-head { border-bottom: 1px solid #ededec; }
+  html[data-theme="blue"] #tail-home .nc-day { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 2px 0 8px; }
+  html[data-theme="blue"] #tail-home .nc-day small { font-size: 11px; font-weight: 560; letter-spacing: .06em; color: #91918e; }
+  html[data-theme="blue"] #tail-home .nc-day b {
+    width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; font-size: 16px; font-weight: 560; line-height: 1;
+  }
+  html[data-theme="blue"] #tail-home .nc-day.is-today b { background: #37352f; color: #fff; }
+  html[data-theme="blue"] #tail-home .nc-all { border-bottom: 1px solid #ededec; padding: 4px 0; }
+  html[data-theme="blue"] #tail-home .nc-all-cell { min-width: 0; display: flex; flex-direction: column; gap: 2px; padding: 0 2px; }
+  html[data-theme="blue"] #tail-home .nc-scroll { flex: 1; min-height: 0; overflow: auto; display: flex; }
+  html[data-theme="blue"] #tail-home .nc-time { position: relative; width: 56px; flex: none; }
+  html[data-theme="blue"] #tail-home .nc-time span,
+  html[data-theme="blue"] #tail-home .nc-now-label {
+    position: absolute; right: 8px; transform: translateY(-50%);
+    font-size: 11px; line-height: 1; color: #a4a4a2; white-space: nowrap;
+  }
+  html[data-theme="blue"] #tail-home .nc-now-label { color: #eb5757; font-weight: 600; z-index: 2; }
+  html[data-theme="blue"] #tail-home .nc-col {
+    position: relative;
+    border-left: 1px solid #ededec;
+    background-image: repeating-linear-gradient(to bottom, transparent 0, transparent 47px, #ededec 47px, #ededec 48px);
+  }
+  html[data-theme="blue"] #tail-home .nc-ev,
+  html[data-theme="blue"] #tail-home .nc-draft {
+    position: absolute; z-index: 1; overflow: hidden; border-radius: 4px; padding: 1px 5px;
+    font-size: 12px; line-height: 15px; font-weight: 600; cursor: grab;
+  }
+  html[data-theme="blue"] #tail-home .nc-ev b,
+  html[data-theme="blue"] #tail-home .nc-chip {
+    display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600;
+  }
+  html[data-theme="blue"] #tail-home .nc-ev small { display: block; font-size: 11px; font-weight: 500; opacity: .75; }
+  html[data-theme="blue"] #tail-home .nc-ev.is-done,
+  html[data-theme="blue"] #tail-home .nc-chip.is-done { opacity: .45; }
+  html[data-theme="blue"] #tail-home .nc-ev.is-done b { text-decoration: line-through; }
+  html[data-theme="blue"] #tail-home .nc-ev.is-course,
+  html[data-theme="blue"] #tail-home .nc-chip.is-course,
+  html[data-theme="blue"] #tail-home .nc-draft { background: #d3e5ef; color: #183347; }
+  html[data-theme="blue"] #tail-home .nc-ev.is-email,
+  html[data-theme="blue"] #tail-home .nc-chip.is-email { background: #dbeddb; color: #1c3829; }
+  html[data-theme="blue"] #tail-home .nc-ev.is-yours,
+  html[data-theme="blue"] #tail-home .nc-chip.is-yours { background: #e8deee; color: #412454; }
+  html[data-theme="blue"] #tail-home .nc-chip {
+    position: relative; border: 0; border-radius: 4px; padding: 2px 6px; text-align: left;
+    font: inherit; font-size: 12px; cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .nc-resize { position: absolute; left: 0; right: 0; bottom: 0; height: 6px; cursor: ns-resize; }
+  html[data-theme="blue"] #tail-home .nc-now {
+    position: absolute; left: 0; right: 0; z-index: 3; height: 0; border-top: 2px solid #eb5757; pointer-events: none;
+  }
+  html[data-theme="blue"] #tail-home .nc-now::before {
+    content: ""; position: absolute; left: -4px; top: -5px; width: 8px; height: 8px; border-radius: 50%; background: #eb5757;
+  }
+  html[data-theme="blue"] #tail-home .nc-name {
+    width: 100%; height: 100%; border: 0; padding: 0; background: transparent; color: inherit;
+    font: inherit; font-size: 12px; font-weight: 600; outline: none;
+  }
+  html[data-theme="blue"] #tail-home .nc-pop {
+    position: absolute; z-index: 6; top: calc(100% + 4px); left: 0; min-width: 180px;
+    padding: 8px 10px; border-radius: 8px; background: #fff; color: #37352f;
+    box-shadow: 0 8px 24px rgba(15, 15, 15, .12); border: 1px solid #ececec; cursor: default;
+  }
+  html[data-theme="blue"] #tail-home .nc-pop b { font-size: 13px; font-weight: 650; white-space: normal; }
+  html[data-theme="blue"] #tail-home .nc-pop small { display: block; margin-top: 2px; color: #787774; font-size: 12px; font-weight: 500; opacity: 1; }
+  html[data-theme="blue"] #tail-home .nc-pop button {
+    margin-top: 8px; height: 26px; padding: 0 8px; border: 0; border-radius: 6px; background: #f1f1ef;
+    font: inherit; font-size: 12px; font-weight: 560; color: #37352f; cursor: pointer;
   }
   .rem-add { display: none; }
   html[data-theme="blue"] #tail-home .rem-add {
@@ -10347,7 +10469,7 @@
         note: todoNotesOf(rem),
         start: parts.time ? tlMins(parts.time) + (tlMins(parts.time) < 7 * 60 ? 12 * 60 : 0) : 0,
         timed: !!parts.time,
-        dur: type === 'course' ? 90 : 45,
+        dur: tlEventDur(rem, type),
         done: rem.classList.contains('is-done'),
       };
     });
@@ -10363,7 +10485,7 @@
         const tm = String(item.type || '').match(/(\d{2}:\d{2})/);
         events.push({
           kind: 'desk', item, type: 'yours', title: item.title, note: item.type || '',
-          start: tm ? tlMins(tm[1]) : 11 * 60, timed: true, dur: 60, done: !!item.done,
+          start: tm ? tlMins(tm[1]) : 11 * 60, timed: true, dur: item.dur || 60, done: !!item.done,
         });
       });
     }
@@ -10375,11 +10497,303 @@
     if (!date) return '';
     return `${TODO_WEEKDAYS[date.getDay()]}, ${TODO_MONTHS[date.getMonth()]} ${date.getDate()}`;
   }
+  const NC_H = 48;
+  function tlEventDur(rem, type) {
+    const set = Number(rem?.dataset.dur);
+    if (set) return set;
+    const noted = String(todoNotesOf(rem) || '').match(/(\d+)\s*min/);
+    if (noted) return Number(noted[1]);
+    return type === 'course' ? 90 : 45;
+  }
+  function ncAmpm(mins) {
+    const h = Math.floor(mins / 60);
+    const m = mins % 60;
+    const h12 = h % 12 || 12;
+    const ap = h >= 12 ? 'PM' : 'AM';
+    return m ? `${h12}:${String(m).padStart(2, '0')} ${ap}` : `${h12} ${ap}`;
+  }
+  function ncHour(h) {
+    if (h === 0 || h === 24) return '12 AM';
+    if (h === 12) return '12 PM';
+    return h < 12 ? `${h} AM` : `${h - 12} PM`;
+  }
+  function ncSnap(mins) {
+    return Math.max(0, Math.min(24 * 60 - 15, Math.round(mins / 15) * 15));
+  }
+  function ncWeekStart(iso) {
+    const date = todoParseIso(iso) || new Date();
+    const start = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    start.setDate(start.getDate() - ((start.getDay() + 6) % 7));
+    return start;
+  }
+  function ncTitle(start) {
+    const end = new Date(start);
+    end.setDate(start.getDate() + 6);
+    const a = TODO_MONTHS_LONG[start.getMonth()];
+    const b = TODO_MONTHS_LONG[end.getMonth()];
+    if (start.getMonth() === end.getMonth()) return `${a} ${start.getFullYear()}`;
+    if (start.getFullYear() === end.getFullYear()) return `${a} – ${b} ${end.getFullYear()}`;
+    return `${a} ${start.getFullYear()} – ${b} ${end.getFullYear()}`;
+  }
+  function ncLanes(events) {
+    const items = events.map((ev) => ({ ev, lane: 0, lanes: 1 })).sort((a, b) => a.ev.start - b.ev.start || b.ev.dur - a.ev.dur);
+    let cluster = [];
+    let clusterEnd = -1;
+    const flush = () => {
+      if (!cluster.length) return;
+      const count = Math.max(...cluster.map((item) => item.lane)) + 1;
+      cluster.forEach((item) => { item.lanes = count; });
+      cluster = [];
+    };
+    items.forEach((item) => {
+      const end = item.ev.start + item.ev.dur;
+      if (cluster.length && item.ev.start >= clusterEnd) flush();
+      const used = new Set(cluster.filter((other) => other.ev.start + other.ev.dur > item.ev.start).map((other) => other.lane));
+      let lane = 0;
+      while (used.has(lane)) lane += 1;
+      item.lane = lane;
+      cluster.push(item);
+      clusterEnd = cluster.length === 1 ? end : Math.max(clusterEnd, end);
+    });
+    flush();
+    return items;
+  }
+  function tlWriteWhen(ev, iso, startMins, dur) {
+    const clock = tlClock(startMins);
+    if (ev.kind === 'desk' && ev.item) {
+      ev.item.date = iso;
+      ev.item.type = clock;
+      ev.item.dur = dur;
+      return;
+    }
+    const when = ev.rem?.querySelector('.when');
+    if (when) {
+      when.dataset.when = `${iso}T${clock}`;
+      when.dataset.raw = clock;
+      when.textContent = clock;
+    }
+    if (ev.rem) ev.rem.dataset.dur = String(dur);
+  }
+  function ncPlaceDraft(iso, start, dur, focus) {
+    const col = document.querySelector(`#tlBody .nc-col[data-iso="${iso}"]`);
+    if (!col) return null;
+    let draft = document.querySelector('#tlBody .nc-draft');
+    if (!draft) {
+      draft = document.createElement('div');
+      draft.className = 'nc-draft';
+      draft.innerHTML = '<input class="nc-name" placeholder="Event name" aria-label="Event name">';
+    }
+    col.appendChild(draft);
+    draft.style.top = `${(start / 60) * NC_H}px`;
+    draft.style.height = `${Math.max(22, (dur / 60) * NC_H)}px`;
+    draft.style.left = '2px';
+    draft.style.width = 'calc(100% - 4px)';
+    draft.dataset.iso = iso;
+    draft.dataset.start = String(start);
+    draft.dataset.dur = String(dur);
+    if (focus) draft.querySelector('.nc-name')?.focus();
+    return draft;
+  }
+  function ncCommitName(input) {
+    if (!input || input.dataset.done) return;
+    const draft = input.closest('.nc-draft');
+    const title = input.value.trim();
+    input.dataset.done = '1';
+    if (!draft || !title) { draft?.remove(); return; }
+    remDay = draft.dataset.iso;
+    tlAddTime = tlClock(Number(draft.dataset.start));
+    tlAddDur = Number(draft.dataset.dur) || 60;
+    draft.remove();
+    tlCreateItem(title);
+    syncRemBoard();
+  }
+  function ncTogglePop(el) {
+    const old = document.querySelector('#tlBody .nc-pop');
+    const same = old && old.parentElement === el;
+    old?.remove();
+    if (same) return;
+    const ev = tlCache[Number(el.dataset.i)];
+    if (!ev) return;
+    const pop = document.createElement('div');
+    pop.className = 'nc-pop';
+    const end = ev.timed ? ev.start + ev.dur : ev.start;
+    const when = ev.timed ? `${ncAmpm(ev.start)} – ${ncAmpm(end)}` : 'All day';
+    pop.innerHTML = `<b>${deskEsc(ev.title)}</b><small>${when}</small><button type="button" data-tl-i="${el.dataset.i}">${ev.done ? 'Mark not done' : 'Mark done'}</button>`;
+    el.appendChild(pop);
+  }
+  let ncDrag = null;
+  function ncPoint(e) {
+    const cols = [...document.querySelectorAll('#tlBody .nc-col')];
+    let col = cols[0];
+    cols.forEach((item) => { if (e.clientX >= item.getBoundingClientRect().left) col = item; });
+    const rect = col.getBoundingClientRect();
+    const mins = ((e.clientY - rect.top) / NC_H) * 60;
+    return { iso: col?.dataset.iso || remDay, mins };
+  }
+  function ncPointerDown(e) {
+    if (e.button !== 0) return;
+    if (e.target.closest('.nc-tool, .nc-pop, .nc-name')) return;
+    const chip = e.target.closest('.nc-chip');
+    if (chip) { ncTogglePop(chip); return; }
+    const resize = e.target.closest('.nc-resize');
+    const block = resize ? resize.closest('.nc-ev') : e.target.closest('.nc-ev');
+    const col = e.target.closest('.nc-col');
+    if (!block && !col) return;
+    const point = ncPoint(e);
+    ncDrag = {
+      kind: resize ? 'resize' : block ? 'move' : 'create',
+      el: block,
+      iso: block?.dataset.iso || point.iso,
+      index: block ? Number(block.dataset.i) : -1,
+      start: block ? Number(block.dataset.start) : ncSnap(point.mins),
+      dur: block ? Number(block.dataset.dur) : 60,
+      x: e.clientX,
+      y: e.clientY,
+      grab: block ? point.mins - Number(block.dataset.start) : 0,
+      moved: false,
+    };
+    e.currentTarget.setPointerCapture(e.pointerId);
+    if (ncDrag.kind === 'create') ncPlaceDraft(ncDrag.iso, ncDrag.start, 60, false);
+  }
+  function ncPointerMove(e) {
+    if (!ncDrag) return;
+    if (Math.abs(e.clientX - ncDrag.x) + Math.abs(e.clientY - ncDrag.y) > 4) ncDrag.moved = true;
+    const point = ncPoint(e);
+    if (ncDrag.kind === 'create') {
+      const anchor = ncDrag.start;
+      const at = ncSnap(point.mins);
+      const start = Math.min(anchor, at);
+      const dur = Math.max(30, Math.abs(at - anchor) || 30);
+      ncDrag.iso = point.iso;
+      ncDrag.dropStart = start;
+      ncDrag.dropDur = dur;
+      ncPlaceDraft(point.iso, start, dur, false);
+      return;
+    }
+    if (!ncDrag.moved) return;
+    if (ncDrag.kind === 'resize') {
+      const dur = Math.max(15, ncSnap(point.mins) - ncDrag.start);
+      ncDrag.dropStart = ncDrag.start;
+      ncDrag.dropDur = dur;
+      ncDrag.el.style.height = `${Math.max(18, (dur / 60) * NC_H)}px`;
+      return;
+    }
+    const start = ncSnap(point.mins - ncDrag.grab);
+    ncDrag.iso = point.iso;
+    ncDrag.dropStart = start;
+    ncDrag.dropDur = ncDrag.dur;
+    const col = document.querySelector(`#tlBody .nc-col[data-iso="${point.iso}"]`);
+    if (col && ncDrag.el.parentElement !== col) col.appendChild(ncDrag.el);
+    ncDrag.el.style.top = `${(start / 60) * NC_H}px`;
+    ncDrag.el.style.left = '2px';
+    ncDrag.el.style.width = 'calc(100% - 4px)';
+  }
+  function ncPointerUp() {
+    const drag = ncDrag;
+    ncDrag = null;
+    if (!drag) return;
+    if (drag.kind === 'create') {
+      const dur = drag.moved ? (drag.dropDur || 60) : 60;
+      const start = drag.moved ? (drag.dropStart ?? drag.start) : drag.start;
+      ncPlaceDraft(drag.iso, start, dur, true);
+      return;
+    }
+    if (!drag.moved) { ncTogglePop(drag.el); return; }
+    const ev = tlCache[drag.index];
+    if (!ev) return;
+    tlWriteWhen(ev, drag.iso, drag.dropStart ?? drag.start, drag.dropDur || drag.dur);
+    remDay = drag.iso;
+    syncRemBoard();
+  }
+  function ncBind(host) {
+    if (host.dataset.ncBound) return;
+    host.dataset.ncBound = '1';
+    host.addEventListener('pointerdown', ncPointerDown);
+    host.addEventListener('pointermove', ncPointerMove);
+    host.addEventListener('pointerup', ncPointerUp);
+    host.addEventListener('pointercancel', ncPointerUp);
+    host.addEventListener('keydown', (e) => {
+      if (!e.target.classList.contains('nc-name')) return;
+      if (e.key === 'Enter') { e.preventDefault(); ncCommitName(e.target); }
+      if (e.key === 'Escape') { e.target.dataset.done = '1'; e.target.closest('.nc-draft')?.remove(); }
+    });
+    host.addEventListener('focusout', (e) => {
+      if (e.target.classList.contains('nc-name')) ncCommitName(e.target);
+    });
+    host.addEventListener('scroll', (e) => {
+      if (e.target.classList.contains('nc-scroll')) host.dataset.ncTop = String(e.target.scrollTop);
+    }, true);
+  }
+  function paintNotionCal(host) {
+    ncBind(host);
+    const start = ncWeekStart(remDay);
+    const todayIso = todoDateIso(new Date());
+    const now = new Date();
+    const nowMins = now.getHours() * 60 + now.getMinutes();
+    tlCache = [];
+    const days = Array.from({ length: 7 }, (_, i) => {
+      const date = new Date(start);
+      date.setDate(start.getDate() + i);
+      const iso = todoDateIso(date);
+      const events = tlEventsFor(iso).map((ev) => ({ ...ev, iso }));
+      events.forEach((ev) => { ev.i = tlCache.length; tlCache.push(ev); });
+      return { date, iso, events };
+    });
+    const heads = days.map((day) => {
+      const today = day.iso === todayIso ? ' is-today' : '';
+      return `<div class="nc-day${today}"><small>${TODO_WEEKDAYS[day.date.getDay()].toUpperCase()}</small><b>${day.date.getDate()}</b></div>`;
+    }).join('');
+    const anyAll = days.some((day) => day.events.some((ev) => !ev.timed));
+    const allRow = anyAll ? `<div class="nc-all"><span class="nc-gutter"></span><div class="nc-all-cols">${days.map((day) => {
+      const chips = day.events.filter((ev) => !ev.timed).map((ev) => `<button type="button" class="nc-chip is-${ev.type}${ev.done ? ' is-done' : ''}" data-i="${ev.i}">${deskEsc(ev.title)}</button>`).join('');
+      return `<div class="nc-all-cell">${chips}</div>`;
+    }).join('')}</div></div>` : '';
+    const showNow = days.some((day) => day.iso === todayIso);
+    const labels = Array.from({ length: 24 }, (_, h) => {
+      if (showNow && Math.abs(h * 60 - nowMins) < 28) return '';
+      return `<span style="top:${h * NC_H}px">${ncHour(h)}</span>`;
+    }).join('');
+    const nowLabel = days.some((day) => day.iso === todayIso) ? `<span class="nc-now-label" style="top:${(nowMins / 60) * NC_H}px">${ncAmpm(nowMins)}</span>` : '';
+    const cols = days.map((day) => {
+      const placed = ncLanes(day.events.filter((ev) => ev.timed));
+      const blocks = placed.map((item) => {
+        const ev = item.ev;
+        const top = (ev.start / 60) * NC_H;
+        const height = Math.max(18, (ev.dur / 60) * NC_H - 2);
+        const width = 100 / item.lanes;
+        const left = item.lane * width;
+        const time = height >= 34 ? `<small>${ncAmpm(ev.start)}</small>` : '';
+        return `<div class="nc-ev is-${ev.type}${ev.done ? ' is-done' : ''}" data-i="${ev.i}" data-iso="${day.iso}" data-start="${ev.start}" data-dur="${ev.dur}" style="top:${top}px;height:${height}px;left:calc(${left}% + 1px);width:calc(${width}% - 3px)"><b>${deskEsc(ev.title)}</b>${time}<i class="nc-resize"></i></div>`;
+      }).join('');
+      const line = day.iso === todayIso ? `<div class="nc-now" style="top:${(nowMins / 60) * NC_H}px"></div>` : '';
+      return `<div class="nc-col${day.iso === todayIso ? ' is-today' : ''}" data-iso="${day.iso}">${blocks}${line}</div>`;
+    }).join('');
+    const kept = host.dataset.ncTop;
+    host.innerHTML = `<div class="nc"><div class="nc-tool"><button type="button" data-nc="today">Today</button><button type="button" data-nc="prev" aria-label="Previous week">‹</button><button type="button" data-nc="next" aria-label="Next week">›</button><button type="button" class="nc-title" data-nc="month">${ncTitle(start)}</button></div><div class="nc-head"><span class="nc-gutter"></span><div class="nc-days">${heads}</div></div>${allRow}<div class="nc-scroll"><div class="nc-time" style="height:${24 * NC_H}px">${labels}${nowLabel}</div><div class="nc-cols" style="height:${24 * NC_H}px">${cols}</div></div></div>`;
+    const scroller = host.querySelector('.nc-scroll');
+    if (scroller) {
+      if (kept != null && kept !== '') scroller.scrollTop = Number(kept);
+      else {
+        const nowTop = (nowMins / 60) * NC_H;
+        const upcoming = [...scroller.querySelectorAll('.nc-ev')].find((el) => Number(el.dataset.start) >= nowMins - 30 && Number(el.dataset.start) <= nowMins + 240);
+        let top = Math.max(0, nowTop - NC_H);
+        if (upcoming) {
+          const evBottom = upcoming.offsetTop + upcoming.offsetHeight + 8;
+          const minTop = Math.max(0, evBottom - scroller.clientHeight);
+          const maxTop = Math.max(0, nowTop - 28);
+          top = Math.min(Math.max(top, minTop), Math.max(maxTop, minTop));
+        }
+        scroller.scrollTop = top;
+      }
+    }
+  }
   function paintHomeTimeline() {
     const host = document.getElementById('tlBody');
     const dateBtn = document.getElementById('tlDate');
     if (!host || document.documentElement.dataset.theme !== 'blue') return;
     if (!remDay) remDay = todoDateIso(new Date());
+    paintNotionCal(host);
+    return;
     if (dateBtn) {
       const date = todoParseIso(remDay);
       dateBtn.textContent = tlWeek && date ? `${TODO_MONTHS_LONG[date.getMonth()]} ${date.getFullYear()}` : tlDateLabel(remDay);
@@ -10555,8 +10969,8 @@
     pop.hidden = false;
     document.getElementById('tlName')?.focus();
   }
-  function tlCreateItem() {
-    const title = document.getElementById('tlName')?.value.trim();
+  function tlCreateItem(titleArg) {
+    const title = String(titleArg || document.getElementById('tlName')?.value || '').trim();
     if (!title) return;
     const list = document.querySelector('#tail-home .two-main-l');
     const sample = list?.querySelector('.rem');
@@ -12951,8 +13365,24 @@
         return;
       }
 
-      const tlHit = e.target.closest('#tlFab, #tail-home [data-tl-i], #tail-home [data-tl-add], #tlDate, #tlZoom, #tlCal button, #tlAdd button, #tlAdd [data-tl-idea], #tail-home [data-tl-day], #tail-home [data-tl-open]');
+      const tlHit = e.target.closest('#tlFab, #tail-home [data-tl-i], #tail-home [data-tl-add], #tlDate, #tlZoom, #tlCal button, #tlAdd button, #tlAdd [data-tl-idea], #tail-home [data-tl-day], #tail-home [data-tl-open], #tail-home [data-nc]');
       if (tlHit) {
+        const nav = e.target.closest('[data-nc]');
+        if (nav) {
+          const act = nav.dataset.nc;
+          const date = todoParseIso(remDay) || new Date();
+          if (act === 'prev' || act === 'next') date.setDate(date.getDate() + (act === 'prev' ? -7 : 7));
+          if (act === 'prev' || act === 'next' || act === 'today') {
+            remDay = act === 'today' ? todoDateIso(new Date()) : todoDateIso(date);
+            tlClosePops();
+            syncRemBoard();
+          } else if (act === 'month') {
+            const pop = document.getElementById('tlCal');
+            if (pop && !pop.hidden) tlClosePops();
+            else tlOpenCal();
+          }
+          return;
+        }
         const check = e.target.closest('[data-tl-i]');
         if (check) {
           const ev = tlCache[Number(check.dataset.tlI)];
