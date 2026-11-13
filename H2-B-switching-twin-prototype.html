@@ -2448,7 +2448,6 @@
   html[data-theme="blue"] #tail-home .kd-top {
     display: flex; align-items: center; height: 36px; padding: 0 12px; font-size: 13px; font-weight: 650; color: #1d1d1f;
   }
-  html[data-theme="blue"] #tail-home .kd-top > svg { width: 12px; height: 12px; margin-left: 4px; }
   html[data-theme="blue"] #tail-home .kd-more { margin-left: auto; display: flex; color: #8b9198; }
   html[data-theme="blue"] #tail-home .kd-more svg { width: 16px; height: 16px; }
   html[data-theme="blue"] #tail-home .kd-title {
@@ -2487,8 +2486,24 @@
   html[data-theme="blue"] #tail-home .nc-all-draft {
     display: block; border-radius: 4px; padding: 2px 6px; font-size: 12px; font-weight: 600; background: #d3e5ef; color: #183347;
   }
-  html[data-theme="blue"] #tail-home .kd-mark { width: 18px; height: 18px; margin-top: 1px; display: flex; align-items: center; justify-content: center; flex: none; }
+  html[data-theme="blue"] #tail-home .kd-mark {
+    width: 28px; height: 28px; margin-top: 0; display: flex; align-items: center; justify-content: center; flex: none;
+    border: 0; padding: 0; border-radius: 6px; background: transparent; color: inherit; cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .kd-mark:hover,
+  html[data-theme="blue"] #tail-home .kd-mark.is-open { background: #f3f4f6; }
   html[data-theme="blue"] #tail-home .kd-mark svg { width: 16px; height: 16px; }
+  html[data-theme="blue"] #tail-home .kd-icons {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px;
+    margin: 0 12px 8px; padding: 6px; background: #f6f7f8; border-radius: 8px;
+  }
+  html[data-theme="blue"] #tail-home .kd-icons button {
+    height: 28px; border: 0; border-radius: 6px; background: transparent; color: #5f6368;
+    display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .kd-icons button.is-on,
+  html[data-theme="blue"] #tail-home .kd-icons button:hover { background: #fff; color: #3c7a94; }
+  html[data-theme="blue"] #tail-home .kd-icons svg { width: 16px; height: 16px; }
   html[data-theme="blue"] #tail-home .kd-row {
     display: flex; align-items: center; gap: 10px; min-height: 32px; padding: 0 12px; font-size: 13px; color: #1d1d1f;
   }
@@ -11316,6 +11331,17 @@
       if (e.target.classList.contains('kd-date-input')) kbApplyDate(e.target.value);
     });
     host.addEventListener('click', (e) => {
+      const choice = e.target.closest('[data-kd-task]');
+      if (choice) { kbApplyTask(choice.dataset.kdTask); return; }
+      if (e.target.closest('[data-kd="icon"]')) {
+        kbBox().iconOpen = !kbBox().iconOpen;
+        kbPaintSide();
+        return;
+      }
+      if (kbBox().iconOpen && !e.target.closest('.kd-icons')) {
+        kbBox().iconOpen = false;
+        kbPaintSide();
+      }
       if (e.target.closest('[data-kd="allday"]')) kbToggleAllDay();
     });
     host.addEventListener('focusout', (e) => {
@@ -11514,7 +11540,20 @@
       ['hannah', 'Hannah Cho'], ['noah', 'Noah Berg'], ['iris', 'Iris Lang'],
     ];
   }
+  const KB_ICON_CHOICES = [
+    ['task', 'Task'],
+    ['calendar', 'Calendar'],
+    ['lecture', 'Lecture'],
+    ['reading', 'Reading'],
+    ['reply', 'Mail'],
+    ['note', 'Note'],
+    ['lab', 'Lab'],
+    ['flag', 'Flag'],
+    ['bell', 'Reminder'],
+  ];
   function kbTaskOf(ev) {
+    const chosen = ev.rem?.dataset?.task || ev.item?.task;
+    if (chosen) return chosen;
     const title = String(ev.title || '').toLowerCase();
     if (title.includes('lecture')) return 'lecture';
     if (title.includes('read')) return 'reading';
@@ -11522,8 +11561,13 @@
     return 'task';
   }
   function kbTaskIcon(task) {
+    if (task === 'bell') return kdIcon('bell');
     const paths = {
       lecture: ['M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64z m0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z', 'M686.7 638.6L544.1 535.5V288c0-4.4-3.6-8-8-8H488c-4.4 0-8 3.6-8 8v275.4c0 2.6 1.2 5 3.3 6.5l165.4 120.6c3.6 2.6 8.6 1.8 11.2-1.7l28.6-39c2.6-3.7 1.8-8.7-1.8-11.2z'],
+      calendar: ['M880 184H712v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H384v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H144c-17.7 0-32 14.3-32 32v664c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V216c0-17.7-14.3-32-32-32z m-40 656H184V460h656v380zM184 392V256h128v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h256v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h128v136H184z'],
+      flag: ['M880 305H624V192c0-17.7-14.3-32-32-32H184v-40c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v784c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8V640h248v113c0 17.7 14.3 32 32 32h416c17.7 0 32-14.3 32-32V337c0-17.7-14.3-32-32-32z'],
+      lab: ['M218.9 636.3l42.6 26.6c0.1 0.1 0.3 0.2 0.4 0.3l12.7 8 0.3 0.3c28.3 16.4 60.5 25.1 94.1 25.1 44.9 0 87.2-15.7 121-43.8 45.9-38.4 103.8-59.9 164.9-59.9 52.3 0 102.2 15.7 144.6 44.5l7.9 5-111.6-289V179.8h63.5c4.4 0 8-3.6 8-8V120c0-4.4-3.6-8-8-8H264.7c-4.4 0-8 3.6-8 8v51.9c0 4.4 3.6 8 8 8h63.5v173.6L218.9 636.3z m333-203.1c22 0 39.9 17.9 39.9 39.9S573.9 513 551.9 513 512 495.1 512 473.1s17.9-39.9 39.9-39.9zM878 825.1l-29.9-77.4-85.7-53.5-0.1 0.1c-0.7-0.5-1.5-1-2.2-1.5l-8.1-5-0.3-0.3c-29-17.5-62.3-26.8-97-26.8-44.9 0-87.2 15.7-121 43.8-45.9 38.4-103.8 59.9-164.9 59.9-53 0-103.5-16.1-146.2-45.6l-28.9-18.1L146 825.1c-2.8 7.4-4.3 15.2-4.3 23 0 35.2 28.6 63.8 63.8 63.8h612.9c7.9 0 15.7-1.5 23-4.3 33-12.6 49.4-49.6 36.6-82.5z'],
+      note: ['M846 792H142c-4.4 0-8 3.6-8 8v40c0 4.4 3.6 8 8 8h704c4.4 0 8-3.6 8-8v-40c0-4.4-3.6-8-8-8zM194.7 726.4l157.4-41.5c4.1-1.1 7.8-3.2 10.8-6.2l357.5-357.5c9.4-9.4 9.4-24.6 0-33.9L614.3 181c-9.4-9.4-24.6-9.4-33.9 0L222.9 538.5c-3 3-5.2 6.7-6.2 10.8l-41.5 157.4c-3.2 12 7.6 22.8 19.5 19.7z m62.5-91.8l16.6-63.2c0.7-2.7 2.2-5.3 4.2-7.3l312.3-312.4c3.1-3.1 8.2-3.1 11.3 0l48.1 48.1c3.1 3.1 3.1 8.2 0 11.3L337.3 623.5c-2 2-4.5 3.4-7.2 4.2L267 644.4c-5.9 1.5-11.3-3.9-9.8-9.8z'],
       reading: ['M928 161H699.2c-49.1 0-97.1 14.1-138.4 40.7L512 233l-48.8-31.3C422 175.1 373.9 161 324.8 161H96c-17.7 0-32 14.3-32 32v568c0 17.7 14.3 32 32 32h228.8c49.1 0 97.1 14.1 138.4 40.7l44.4 28.6c1.3 0.8 2.8 1.3 4.3 1.3s3-0.4 4.3-1.3l44.4-28.6C602 807.1 650.1 793 699.2 793H928c17.7 0 32-14.3 32-32V193c0-17.7-14.3-32-32-32zM324.8 721H136V233h188.8c35.4 0 69.8 10.1 99.5 29.2l48.8 31.3 6.9 4.5v462c-47.6-25.6-100.8-39-155.2-39z m563.2 0H699.2c-54.4 0-107.6 13.4-155.2 39V298l6.9-4.5 48.8-31.3c29.7-19.1 64.1-29.2 99.5-29.2H888v488z', 'M396.9 361H211.1c-3.9 0-7.1 3.4-7.1 7.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c0.1-4.1-3.1-7.5-7-7.5zM620 368.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c0-4.1-3.2-7.5-7.1-7.5H627.1c-3.9 0-7.1 3.4-7.1 7.5zM396.9 501H211.1c-3.9 0-7.1 3.4-7.1 7.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c0.1-4.1-3.1-7.5-7-7.5zM812.9 501H627.1c-3.9 0-7.1 3.4-7.1 7.5v45c0 4.1 3.2 7.5 7.1 7.5h185.7c3.9 0 7.1-3.4 7.1-7.5v-45c0.1-4.1-3.1-7.5-7-7.5z'],
       reply: ['M928 160H96c-17.7 0-32 14.3-32 32v640c0 17.7 14.3 32 32 32h832c17.7 0 32-14.3 32-32V192c0-17.7-14.3-32-32-32z m-40 110.8V792H136V270.8l-27.6-21.5 39.3-50.5 42.8 33.3h643.1l42.8-33.3 39.3 50.5-27.7 21.5z', 'M833.6 232L512 482 190.4 232l-42.8-33.3-39.3 50.5 27.6 21.5 341.6 265.6c20.2 15.7 48.5 15.7 68.7 0L888 270.8l27.6-21.5-39.3-50.5-42.7 33.2z'],
       occupied: ['M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64z m0 820c-205.4 0-372-166.6-372-372 0-89 31.3-170.8 83.5-234.8l523.3 523.3C682.8 852.7 601 884 512 884z m288.5-137.2L277.2 223.5C341.2 171.3 423 140 512 140c205.4 0 372 166.6 372 372 0 89-31.3 170.8-83.5 234.8z'],
@@ -11620,7 +11664,7 @@
     return (ev.iso || "") + "|" + ev.title + "|" + ev.start + "|" + (ev.timed ? 1 : 0) + "|" + (ev.task || "");
   }
   function kbDraftEvent(draft) {
-    return { iso: draft.iso, title: draft.title || "", start: draft.allDay ? 0 : draft.start, dur: draft.dur || 60, timed: !draft.allDay, task: "task", lane: "personal", note: draft.note || "" };
+    return { iso: draft.iso, title: draft.title || "", start: draft.allDay ? 0 : draft.start, dur: draft.dur || 60, timed: !draft.allDay, task: draft.task || "task", lane: "personal", note: draft.note || "" };
   }
   function kbNoteText(ev) {
     const note = String(ev.note || "");
@@ -11825,10 +11869,13 @@
     remDay = prev.iso;
     if (prev.allDay) { tlAddTime = ""; tlCreateItem(title); tlAddTime = "10:00"; }
     else { tlAddTime = tlClock(prev.start); tlAddDur = prev.dur || 60; tlCreateItem(title); }
-    if (prev.note) {
+    if (prev.note || prev.task) {
       const list = document.querySelector("#tail-home .two-main-l");
       const rem = [...(list ? list.querySelectorAll(".rem") : [])].reverse().find((row) => row.querySelector(".t")?.textContent.trim() === title);
-      if (rem) { rem.dataset.dur = String(prev.dur || 60); setTodoNotes(rem, prev.note); }
+      if (rem) {
+        if (prev.note) { rem.dataset.dur = String(prev.dur || 60); setTodoNotes(rem, prev.note); }
+        if (prev.task) rem.dataset.task = prev.task;
+      }
     }
     return saved;
   }
@@ -11845,9 +11892,33 @@
     syncRemBoard();
     if (keepOpen) kbRevealSaved(saved);
   }
+  function kbApplyTask(task) {
+    if (!KB_ICON_CHOICES.some(([id]) => id === task)) return;
+    const draft = kbBox().draft;
+    if (draft && !draft.done) {
+      draft.task = task;
+    } else {
+      const ev = kbOpenEv();
+      if (!ev) return;
+      ev.task = task;
+      if (ev.rem) ev.rem.dataset.task = task;
+      if (ev.item) ev.item.task = task;
+      if (ev.extraId) {
+        const item = kbBox().extra.find((row) => row.id === ev.extraId);
+        if (item) item.task = task;
+      }
+      kbBox().open = kbEventKey(ev);
+      document.querySelectorAll("#tlBody .nc-ev.is-open .kb-ico, #tlBody .nc-chip.is-open .kb-ico").forEach((el) => {
+        el.innerHTML = kbTaskIcon(task);
+      });
+    }
+    kbBox().iconOpen = false;
+    kbPaintSide();
+  }
   function kbShowDraft(draft) {
     kbBox().draft = draft;
     kbBox().open = null;
+    kbBox().iconOpen = false;
     kbPaintSide();
     document.querySelector("#tlBody .kd-name")?.focus();
   }
@@ -11878,10 +11949,13 @@
     const group = ev.lane === "occupied" ? "Occupied" : kbLaneName(ev.lane || "personal");
     const color = kbLaneColor(ev.lane || "personal");
     const off = (icon, label) => '<div class="kd-row is-off">' + (icon === "user" ? kbIcon("personal") : kdIcon(icon)) + "<span>" + label + "</span></div>";
+    const picked = ev.task || "task";
+    const iconMenu = kbBox().iconOpen ? '<div class="kd-icons" role="listbox" aria-label="Icons">' + KB_ICON_CHOICES.map(([id, name]) => '<button type="button" role="option" data-kd-task="' + id + '" class="' + (id === picked ? "is-on" : "") + '" aria-label="' + name + '" aria-selected="' + (id === picked ? "true" : "false") + '">' + kbTaskIcon(id) + "</button>").join("") + "</div>" : "";
+    const mark = '<button type="button" class="kd-mark' + (kbBox().iconOpen ? " is-open" : "") + '" data-kd="icon" style="color:' + color + '" aria-label="Choose icon" aria-expanded="' + (kbBox().iconOpen ? "true" : "false") + '">' + kbTaskIcon(picked) + "</button>";
     const title = '<input class="kd-name" value="' + deskEsc(ev.title) + '" placeholder="Event name" aria-label="Event name">';
     const date = '<div class="kd-sub kd-date"><span>' + deskEsc(kbDetailDate(ev)) + '</span><input class="kd-date-input" type="date" value="' + deskEsc(ev.iso || "") + '" aria-label="Date"></div>';
     const all = '<button type="button" class="kd-row kd-allday" data-kd="allday"><i class="kd-tog' + (ev.timed ? "" : " is-on") + '"></i><span>All-day</span></button>';
-    return '<aside class="kb-legend kb-detail"><div class="kd-top"><span>Event</span>' + kdIcon("down") + '<span class="kd-more">' + kdIcon("ellipsis") + '</span></div><div class="kd-title"><i class="kd-mark" style="color:' + color + '">' + kbTaskIcon(ev.task || "task") + "</i>" + title + "</div>" + when + date + all + '<div class="kd-row">' + kdIcon("earth") + "<span>" + deskEsc(kbTzPlace()) + "</span></div>" + off("sync", "Repeat") + '<div class="kd-gap"></div>' + off("user", "Participants") + off("video", "Conferencing") + off("file", "Add AI meeting notes") + off("location", "Location") + '<div class="kd-gap"></div>' + off("link", "Add links and attachments") + '<div class="kd-gap"></div><div class="kd-label">Description</div>' + note + '<div class="kd-gap"></div><div class="kd-row"><i class="kd-dot" style="background:' + color + '"></i><span>' + deskEsc(group) + '</span></div><div class="kd-row is-off kd-busy"><span>Busy</span><span class="kd-time">Default visibility</span></div>' + off("bell", "Reminders") + "</aside>";
+    return '<aside class="kb-legend kb-detail"><div class="kd-top"><span class="kd-more">' + kdIcon("ellipsis") + '</span></div><div class="kd-title">' + mark + title + "</div>" + iconMenu + when + date + all + '<div class="kd-row">' + kdIcon("earth") + "<span>" + deskEsc(kbTzPlace()) + "</span></div>" + off("sync", "Repeat") + '<div class="kd-gap"></div>' + off("user", "Participants") + off("video", "Conferencing") + off("location", "Location") + '<div class="kd-gap"></div>' + off("link", "Add links and attachments") + '<div class="kd-gap"></div><div class="kd-label">Description</div>' + note + '<div class="kd-gap"></div><div class="kd-row"><i class="kd-dot" style="background:' + color + '"></i><span>' + deskEsc(group) + '</span></div><div class="kd-row is-off kd-busy"><span>Busy</span><span class="kd-time">Default visibility</span></div>' + off("bell", "Reminders") + "</aside>";
   }
   function kbSide() {
     const draft = kbBox().draft;
@@ -11902,6 +11976,7 @@
   function kbOpenEvent(index) {
     const ev = tlCache[index];
     if (!ev) return;
+    kbBox().iconOpen = false;
     const saved = kbFinishDraft();
     if (saved) syncRemBoard();
     const fresh = saved ? [...tlCache].reverse().find((item) => item.title === ev.title && item.iso === ev.iso && item.start === ev.start) : ev;
@@ -11910,7 +11985,8 @@
     kbPaintSide();
   }
   function kbCloseDetail() {
-    if (kbBox().open == null) return;
+    kbBox().iconOpen = false;
+    if (kbBox().open == null && !(kbBox().draft && !kbBox().draft.done)) return;
     kbBox().open = null;
     kbPaintSide();
   }
