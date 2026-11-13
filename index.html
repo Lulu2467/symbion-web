@@ -2454,6 +2454,28 @@
   }
   html[data-theme="blue"] #tail-home .kb-sched .nc-chip { display: flex; align-items: center; min-height: 18px; border-radius: 4px; }
   html[data-theme="blue"] #tail-home .kb-sched .nc-ev { border-radius: 6px; }
+  html[data-theme="blue"] #tail-home .kb-sched .nc-ev.is-invite,
+  html[data-theme="blue"] #tail-home .kb-sched .nc-chip.is-invite,
+  html[data-theme="blue"] #tail-home .kb-chip.is-invite {
+    background: #fff; color: #316479; box-shadow: inset 0 0 0 1px #3c7a94;
+  }
+  html[data-theme="blue"] #tail-home .kb-sched .nc-ev.is-declined,
+  html[data-theme="blue"] #tail-home .kb-sched .nc-chip.is-declined,
+  html[data-theme="blue"] #tail-home .kb-chip.is-declined { opacity: .45; }
+  html[data-theme="blue"] #tail-home .kd-rsvp { display: flex; gap: 8px; padding: 0 16px 8px; }
+  html[data-theme="blue"] #tail-home .kd-rsvp button {
+    flex: 1; height: 32px; border: 1px solid #e6e8ec; border-radius: 8px; background: #fff;
+    color: #1d1d1f; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .kd-rsvp button[data-kd-rsvp="yes"][aria-pressed="true"] {
+    background: #3c7a94; border-color: #3c7a94; color: #fff;
+  }
+  html[data-theme="blue"] #tail-home .kd-rsvp button[data-kd-rsvp="no"][aria-pressed="true"] {
+    background: #fdecea; border-color: #f3c1bc; color: #d93025;
+  }
+  html[data-theme="blue"] #tail-home .kd-rsvp button[data-kd-rsvp="maybe"][aria-pressed="true"] {
+    background: #f3f5f7; border-color: #d0d4d8; color: #1d1d1f;
+  }
   html[data-theme="blue"] #tail-home .kb-bar { display: flex; align-items: center; gap: 6px; height: 36px; flex: none; }
   html[data-theme="blue"] #tail-home .kb-bar.kb-calbar { height: auto; padding: 0 2px 16px; box-sizing: border-box; justify-content: flex-end; }
   html[data-theme="blue"] #tail-home .kb-bar.kb-calbar .kb-month-title { margin-right: auto; }
@@ -8919,7 +8941,9 @@
   html[data-theme="blue"] #teamHost .sheet:has(#finderResults) {
     max-height: min(520px, calc(100% - 64px));
   }
-  html[data-theme="blue"] #teamHost .sheet:has(#finderResults) .sheet-actions { display: none; }
+  html[data-theme="blue"] #teamHost .sheet:has(#finderResults) .sheet-actions,
+  html[data-theme="blue"] #teamHost .sheet:has(#friendResults) .sheet-actions { display: none; }
+  html[data-theme="blue"] #teamHost #sheetBody:has(#friendResults) { padding-bottom: 16px; }
   html[data-theme="blue"] #teamHost #sheetBody:has(#finderResults) {
     display: flex;
     flex-direction: column;
@@ -11831,6 +11855,17 @@
       if (e.target.closest('[data-kd="file"]')) { kbPickFiles(); return; }
       if (e.target.closest('[data-kd="meet"]')) { kbToggleMeet(); return; }
       if (e.target.closest('[data-kd="allday"]')) kbToggleAllDay();
+      const rsvp = e.target.closest('[data-kd-rsvp]');
+      if (rsvp) {
+        const opened = kbOpenEv();
+        if (opened && opened.invite) {
+          kbWriteEvent(opened, { rsvp: rsvp.dataset.kdRsvp });
+          const key = kbBox().open;
+          paintHomeTimeline();
+          kbBox().open = key;
+          kbPaintSide();
+        }
+      }
     });
     host.addEventListener('focusout', (e) => {
       if (e.target.classList.contains('nc-name')) ncCommitName(e.target);
@@ -12573,6 +12608,24 @@
   function kbEventKey(ev) {
     return (ev.iso || "") + "|" + ev.title + "|" + ev.start + "|" + (ev.timed ? 1 : 0) + "|" + (ev.task || "");
   }
+  function kbEvClass(ev) {
+    return `is-${ev.lane}${ev.done ? " is-done" : ""}${ev.invite && ev.rsvp !== "yes" ? " is-invite" : ""}${ev.rsvp === "no" ? " is-declined" : ""}${kbBox().open === kbEventKey(ev) ? " is-open" : ""}`;
+  }
+  document.addEventListener("symbion-group-event", (e) => {
+    const item = e.detail || {};
+    if (item.who !== "jess") return;
+    const box = kbBox();
+    if (box.extra.some((row) => row.id === item.id)) return;
+    const start = item.startTime ? tlMins(item.startTime) : 0;
+    const endMin = item.endTime ? tlMins(item.endTime) : start + 60;
+    const dur = item.startTime && endMin > start ? endMin - start : 60;
+    box.extra.push({
+      id: item.id, who: "jess", title: item.title || "Event", lane: "personal", task: "calendar",
+      date: item.date, start, timed: !!item.startTime, dur, files: item.files || [], note: item.notes || "",
+      invite: true, rsvp: "pending", people: item.people || [], groupName: item.groupName || "",
+    });
+    if (document.getElementById("tlBody")) paintHomeTimeline();
+  });
   function kbDraftEvent(draft) {
     return { iso: draft.iso, title: draft.title || "", start: draft.allDay ? 0 : draft.start, dur: draft.dur || 60, timed: !draft.allDay, task: draft.task || "task", lane: "personal", note: draft.note || "", visibility: draft.visibility || "default", tz: draft.tz || "", repeat: draft.repeat || "", repeatN: draft.repeatN || 0, repeatUnit: draft.repeatUnit || "", files: draft.files || [], meet: draft.meet || "" };
   }
@@ -12995,7 +13048,7 @@
       ? '<div class="kd-row">' + kbTaskIcon("lecture") + '<input class="kd-clock" data-kd="start" type="time" value="' + kbHm(ev.start) + '" aria-label="Start"><span class="kd-arrow">→</span><input class="kd-clock" data-kd="end" type="time" value="' + kbHm(end) + '" aria-label="End"><span class="kd-dur">' + kbDurLabel(ev.dur || 60) + "</span></div>"
       : "";
     const note = '<textarea class="kd-note" data-kd="note" placeholder="Add description" aria-label="Description">' + deskEsc(kbNoteText(ev)) + "</textarea>";
-    const group = ev.lane === "occupied" ? "Busy" : kbLaneName(ev.lane || "personal");
+    const group = ev.invite && ev.groupName ? ev.groupName : ev.lane === "occupied" ? "Busy" : kbLaneName(ev.lane || "personal");
     const color = kbLaneColor(ev.lane || "personal");
     const off = (icon, label) => '<div class="kd-row is-off">' + (icon === "user" ? kbIcon("personal") : kdIcon(icon)) + "<span>" + label + "</span></div>";
     const files = kbFileList(ev);
@@ -13007,9 +13060,11 @@
     const mark = '<button type="button" class="kd-mark' + (kbBox().iconOpen ? " is-open" : "") + '" data-kd="icon" style="color:' + color + '" aria-label="Choose icon" aria-expanded="' + (kbBox().iconOpen ? "true" : "false") + '">' + kbTaskIcon(picked) + "</button>";
     const title = '<input class="kd-name" value="' + deskEsc(ev.title) + '" placeholder="Event name" aria-label="Event name">';
     const date = '<div class="kd-sub kd-date"><span>' + deskEsc(kbDetailDate(ev)) + '</span><input class="kd-date-input" type="date" value="' + deskEsc(ev.iso || "") + '" aria-label="Date"></div>';
+    const rsvpRow = ev.invite ? '<div class="kd-rsvp" role="group" aria-label="Respond"><button type="button" data-kd-rsvp="yes" aria-pressed="' + (ev.rsvp === "yes") + '">Accept</button><button type="button" data-kd-rsvp="no" aria-pressed="' + (ev.rsvp === "no") + '">Decline</button><button type="button" data-kd-rsvp="maybe" aria-pressed="' + (ev.rsvp === "maybe") + '">Maybe</button></div>' : "";
+    const peopleRow = ev.invite ? '<div class="kd-row">' + kbIcon("personal") + "<span>" + deskEsc((ev.people && ev.people.length) ? ev.people.join(", ") : "You") + "</span></div>" : off("user", "Participants");
     const all = '<button type="button" class="kd-row kd-allday" data-kd="allday"><i class="kd-tog' + (ev.timed ? "" : " is-on") + '"></i><span>All-day</span></button>';
     const repeatRow = '<div class="kd-row kd-repeat' + (ev.repeat ? " is-set" : "") + '" data-kd="repeat" role="button" tabindex="0">' + kdIcon("sync") + "<span>" + deskEsc(kbRepeatLabel(ev)) + '</span><svg class="kd-repeat-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.2 6.2 8 10l3.8-3.8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
-    return '<aside class="kb-legend kb-detail"><div class="kd-title">' + mark + title + "</div>" + iconMenu + when + date + all + '<div class="kd-row kd-tz" data-kd="tz" role="button" tabindex="0">' + kdIcon("earth") + "<span>" + deskEsc(kbTzLabel(ev)) + "</span></div>" + repeatRow + '<div class="kd-gap"></div>' + off("user", "Participants") + fileRow + fileChips + meetRow + '<div class="kd-gap"></div><div class="kd-label">Description</div>' + note + '<div class="kd-gap"></div><div class="kd-row"><i class="kd-dot" style="background:' + color + '"></i><span>' + deskEsc(group) + '</span></div>' + kbVisRow(ev) + off("bell", "Reminders") + "</aside>";
+    return '<aside class="kb-legend kb-detail"><div class="kd-title">' + mark + title + "</div>" + iconMenu + when + date + rsvpRow + all + '<div class="kd-row kd-tz" data-kd="tz" role="button" tabindex="0">' + kdIcon("earth") + "<span>" + deskEsc(kbTzLabel(ev)) + "</span></div>" + repeatRow + '<div class="kd-gap"></div>' + peopleRow + fileRow + fileChips + meetRow + '<div class="kd-gap"></div><div class="kd-label">Description</div>' + note + '<div class="kd-gap"></div><div class="kd-row"><i class="kd-dot" style="background:' + color + '"></i><span>' + deskEsc(group) + '</span></div>' + kbVisRow(ev) + off("bell", "Reminders") + "</aside>";
   }
   function kbSide() {
     const draft = kbBox().draft;
@@ -13091,7 +13146,7 @@
       const iso = todoDateIso(date);
       const chips = kbCollectDay(iso).map((ev) => {
         const time = ev.timed ? `<small>${kbHm(ev.start)}</small>` : '';
-        return `<button type="button" class="kb-chip is-${ev.lane}${ev.done ? ' is-done' : ''}${kbBox().open === kbEventKey(ev) ? ' is-open' : ''}" data-i="${ev.i}" style="${kbHueCss(ev)}"><span class="kb-ico">${kbTaskIcon(ev.task)}</span><b>${deskEsc(ev.title)}</b>${time}</button>`;
+        return `<button type="button" class="kb-chip ${kbEvClass(ev)}" data-i="${ev.i}" style="${kbHueCss(ev)}"><span class="kb-ico">${kbTaskIcon(ev.task)}</span><b>${deskEsc(ev.title)}</b>${time}</button>`;
       }).join('');
       return `<div class="kb-cell${iso === today ? ' is-today' : ''}" data-kb-cell data-who="jess" data-iso="${iso}"><b>${n + 1}</b>${chips}</div>`;
     }).join('');
@@ -13127,7 +13182,7 @@
       events.push({
         kind: 'extra', extraId: item.id, title: item.title, note: '',
         start: item.start || 0, timed: !!item.timed, dur: item.dur || 60, done: false,
-        iso, lane: item.lane || 'personal', task: item.task || 'task', color: item.color || '', block: !!item.block, visibility: item.visibility || 'default', tz: item.tz || '', repeat: item.repeat || '', repeatN: item.repeatN || 0, repeatUnit: item.repeatUnit || '', files: item.files || [], meet: item.meet || '',
+        iso, lane: item.lane || 'personal', task: item.task || 'task', color: item.color || '', block: !!item.block, visibility: item.visibility || 'default', tz: item.tz || '', repeat: item.repeat || '', repeatN: item.repeatN || 0, repeatUnit: item.repeatUnit || '', files: item.files || [], meet: item.meet || '', note: item.note || '', invite: !!item.invite, rsvp: item.rsvp || '', people: item.people || [], groupName: item.groupName || '',
       });
     });
     events.forEach((ev) => { ev.i = tlCache.length; tlCache.push(ev); });
@@ -13147,7 +13202,7 @@
       return `<div class="nc-day${today}"><small>${TODO_WEEKDAYS[day.date.getDay()]}</small><b>${day.date.getDate()}</b></div>`;
     }).join('');
     const allRow = `<div class="nc-all"><span class="nc-gutter nc-all-label">All day</span><div class="nc-all-cols">${packed.map((day) => {
-      const chips = day.events.filter((ev) => !ev.timed).map((ev) => `<button type="button" class="nc-chip is-${ev.lane}${ev.done ? ' is-done' : ''}${kbBox().open === kbEventKey(ev) ? ' is-open' : ''}" data-i="${ev.i}" style="${kbHueCss(ev)}"><span class="kb-ico">${kbTaskIcon(ev.task)}</span>${deskEsc(ev.title)}</button>`).join('');
+      const chips = day.events.filter((ev) => !ev.timed).map((ev) => `<button type="button" class="nc-chip ${kbEvClass(ev)}" data-i="${ev.i}" style="${kbHueCss(ev)}"><span class="kb-ico">${kbTaskIcon(ev.task)}</span>${deskEsc(ev.title)}</button>`).join('');
       return `<div class="nc-all-cell">${chips}</div>`;
     }).join('')}</div></div>`;
     const showNow = packed.some((day) => day.iso === todayIso);
@@ -13165,7 +13220,7 @@
         const width = 100 / item.lanes;
         const left = item.lane * width;
         const time = height >= 36 ? `<small>${kbHm(ev.start)}–${kbHm(ev.start + ev.dur)}</small>` : '';
-        return `<div class="nc-ev is-${ev.lane}${ev.done ? ' is-done' : ''}${kbBox().open === kbEventKey(ev) ? ' is-open' : ''}" data-i="${ev.i}" data-iso="${day.iso}" data-start="${ev.start}" data-dur="${ev.dur}" style="top:${top}px;height:${height}px;left:calc(${left}% + 2px);width:calc(${width}% - 5px);${kbHueCss(ev)}"><b><span class="kb-ico">${kbTaskIcon(ev.task)}</span>${deskEsc(ev.title)}</b>${time}<i class="nc-resize"></i></div>`;
+        return `<div class="nc-ev ${kbEvClass(ev)}" data-i="${ev.i}" data-iso="${day.iso}" data-start="${ev.start}" data-dur="${ev.dur}" style="top:${top}px;height:${height}px;left:calc(${left}% + 2px);width:calc(${width}% - 5px);${kbHueCss(ev)}"><b><span class="kb-ico">${kbTaskIcon(ev.task)}</span>${deskEsc(ev.title)}</b>${time}<i class="nc-resize"></i></div>`;
       }).join('');
       const line = day.iso === todayIso ? `<div class="nc-now" style="top:${(nowMins / 60) * NC_H}px"></div>` : '';
       return `<div class="nc-col${day.iso === todayIso ? ' is-today' : ''}" data-iso="${day.iso}">${blocks}${line}</div>`;
@@ -22086,13 +22141,20 @@ function giCreate() {
   const title = $('giName').value.trim();
   const start = $('giStart').value;
   const files = gi.files.map((file) => ({ name: file.name }));
-  who.forEach((id) => {
-    gItems(c.id).push({
-      id: uid(), who: id, title, type: gi.type, date: start, end: $('giEnd').value || start,
-      startTime: $('giStartTime').value, endTime: $('giEndTime').value,
-      notes: $('giDetails').value.trim(), files, see: 'group'
+    const names = who.map((id) => (people[id] && people[id].name) || id);
+    who.forEach((id) => {
+      const row = {
+        id: uid(), who: id, title, type: gi.type, date: start, end: $('giEnd').value || start,
+        startTime: $('giStartTime').value, endTime: $('giEndTime').value,
+        notes: $('giDetails').value.trim(), files, see: 'group'
+      };
+      gItems(c.id).push(row);
+      document.dispatchEvent(new CustomEvent('symbion-group-event', { detail: {
+        id: 'home-' + row.id, who: id, title, date: start, end: row.end,
+        startTime: row.startTime, endTime: row.endTime, notes: row.notes,
+        files: files.map((file) => file.name), people: names, groupName: c.name
+      } }));
     });
-  });
   closeGroupItem();
   paintGroupBoard();
 }
@@ -22250,7 +22312,6 @@ function openModal(kind, extra) {
     state.friendQuery = '';
     $('sheetTitle').textContent = 'Add a friend';
     $('sheetLead').textContent = 'Search by name or email. Adding someone opens a conversation in this list.';
-    cancelBtn().textContent = 'Close';
     $('sheetBody').innerHTML = `<label class="search"><input id="friendQ" type="search" placeholder="Search name or email" aria-label="Search name or email"></label><div id="friendResults"></div>`;
     paintFriends();
     $('friendQ').focus();
