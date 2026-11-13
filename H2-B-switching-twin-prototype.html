@@ -1097,6 +1097,17 @@
     white-space: nowrap;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker .switch-ico { display: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker .picker-chev {
+    width: 16px;
+    height: 10px;
+    flex: none;
+    display: block;
+    color: #1f2328;
+    transition: transform .2s ease, color .15s ease;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker:hover .picker-chev,
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker[aria-expanded="true"] .picker-chev { color: var(--green); }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker[aria-expanded="true"] .picker-chev { transform: rotate(180deg); }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker::after { content: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .send {
     margin-left: 0;
@@ -2551,6 +2562,7 @@
   .picker .pav.citta-portrait img { border-radius: 8px; }
   .picker .pname { font-size: 14px; font-weight: 600; color: var(--ink); }
   .picker .switch-ico { width: 14px; height: 14px; flex: none; display: block; color: var(--green); }
+  .picker .picker-chev { display: none; }
   .picker .twin-badge { display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,.55); color: var(--green-dark); font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 999px; }
   .picker .twin-badge .spark-icon { width: 11px; height: 11px; }
   .tpl .use .spark-icon {
@@ -8559,6 +8571,7 @@
                   <span class="k">WORKING WITH</span>
                   <button type="button" class="picker" id="picker" aria-haspopup="menu" aria-expanded="false">
                     <span class="pav citta-portrait" id="pickerAv"><img src="assets/citta-avatar.png?v=2" width="26" height="26" alt=""></span>
+                    <svg class="picker-chev" viewBox="146 293 732 414" aria-hidden="true"><path fill="currentColor" d="M877.4656 317.201067a34.133333 34.133333 0 0 1 0 48.264533l-341.333333 341.333333a34.133333 34.133333 0 0 1-48.264534 0l-341.333333-341.333333a34.133333 34.133333 0 0 1 48.264533-48.264533L512 634.402133l317.201067-317.201066a34.133333 34.133333 0 0 1 48.264533 0z"/></svg>
                     <span class="pname" id="pickerName">Citta</span>
                     <span class="twin-badge" id="pickerBadge" hidden><span class="spark-icon" aria-hidden="true"></span> Twin</span>
                     <svg class="switch-ico" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M96 416h832c0.32 0 0.576-0.192 0.896-0.192a30.656 30.656 0 0 0 30.976-30.976c-0.064-0.256 0.128-0.512 0.128-0.832a31.424 31.424 0 0 0-14.912-26.368l-188.48-188.48a30.72 30.72 0 1 0-43.456 43.456L852.544 352H96a32 32 0 0 0 0 64z m832 192H96c-0.32 0-0.576 0.192-0.896 0.192a30.528 30.528 0 0 0-30.976 30.976c0.064 0.256-0.128 0.512-0.128 0.832 0 11.264 6.144 20.672 14.912 26.368l188.48 188.48a30.72 30.72 0 1 0 43.456-43.456L171.456 672H928a32 32 0 0 0 0-64z" fill="currentColor"/></svg>
