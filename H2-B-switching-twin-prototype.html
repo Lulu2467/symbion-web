@@ -8322,7 +8322,35 @@
   }
   .gi-cancel { border: 0; background: #f3f4f6; color: #6e7378; }
   .gi-cancel:hover { background: #ececee; }
-  .gi-next { border: 0; background: transparent; color: #1d1d1f; }
+  .gi-next { border: 0; background: #3c7a94; color: #fff; }
+  .gi-next:hover { background: #316479; }
+  .gi-block { margin-top: 16px; }
+  .gi-block-hd { display: flex; align-items: center; justify-content: space-between; min-height: 36px; }
+  .gi-block-hd b { font-size: 15px; font-weight: 700; color: #1d1d1f; }
+  .gi-add {
+    height: 32px; padding: 0 10px; border: 0; border-radius: 8px; background: transparent;
+    color: #3c7a94; font-size: 14px; font-weight: 600;
+  }
+  .gi-add:hover { background: #ebf5fa; }
+  .gi-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .gi-chips:empty { display: none; }
+  .gi-chip {
+    display: inline-flex; align-items: center; gap: 6px; height: 32px; max-width: 100%;
+    padding: 0 6px 0 10px; border-radius: 8px; background: #f3f5f7; color: #1d1d1f; font-size: 13px;
+  }
+  .gi-chip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .gi-chip button {
+    width: 20px; height: 20px; border: 0; border-radius: 6px; background: transparent; color: #6e7378; font-size: 14px; line-height: 1;
+  }
+  .gi-chip button:hover { background: #e6e8ec; color: #1d1d1f; }
+  .gi-pick { margin-top: 8px; border: 1px solid #e6e8ec; border-radius: 10px; overflow: hidden; }
+  .gi-pick input {
+    width: 100%; height: 40px; box-sizing: border-box; border: 0; border-bottom: 1px solid #e6e8ec;
+    padding: 0 12px; font: inherit; font-size: 14px; color: #1d1d1f;
+  }
+  .gi-pick input:focus { outline: none; }
+  .gi-pick .gi-people { grid-template-columns: 1fr; margin: 0; max-height: 200px; overflow: auto; }
+  .gi-pick .gi-people button { width: 100%; border: 0; border-radius: 0; text-align: left; }
   .thread-head .icon-btn { border: 0; background: transparent; color: #5f6368; }
   .thread-head .icon-btn:hover, .thread-head .icon-btn[aria-expanded="true"], .thread-head .icon-btn[aria-pressed="true"] { border: 0; background: #d4e4ee; color: #1f1f1f; }
   .head-face .mosaic, .head-face .av { width: 36px; height: 36px; border-radius: 4px; border: 0; }
@@ -10662,15 +10690,11 @@
         <div class="desk-bubble" id="gBubble" hidden></div>
         <div class="gi-modal" id="giModal" hidden>
           <div class="gi-sheet" role="dialog" aria-modal="true" aria-labelledby="giTitle">
-            <div class="gi-top"><span class="gi-kicker">CREATE</span><button type="button" class="gi-x" data-gi="close" aria-label="Close">×</button></div>
-            <h2 id="giTitle">New group item</h2>
+            <div class="gi-top"><span class="gi-kicker">EVENT</span><button type="button" class="gi-x" data-gi="close" aria-label="Close">×</button></div>
+            <h2 id="giTitle">Create event</h2>
             <p class="gi-lead">This stays in this group. It does not show anyone's private schedule.</p>
-            <div class="gi-tabs" role="tablist">
-              <button type="button" role="tab" data-gi-step="1" aria-selected="true">Time &amp; type</button>
-              <button type="button" role="tab" data-gi-step="2" aria-selected="false">Name &amp; details</button>
-              <button type="button" role="tab" data-gi-step="3" aria-selected="false">Who receives it</button>
-            </div>
-            <div class="gi-panel" data-gi-panel="1">
+            <div class="gi-panel">
+              <label class="gi-field"><span>Name</span><input id="giName" type="text" maxlength="80" autocomplete="off"></label>
               <div class="gi-when">
                 <div><b>Start</b><div class="gi-pair">
                   <label class="gi-field"><span>Start date</span><input id="giStart" type="date"></label>
@@ -10682,29 +10706,32 @@
                 </div></div>
               </div>
               <div class="gi-types">
+                <button type="button" data-gi-type="Meeting" aria-pressed="true">Meeting</button>
+                <button type="button" data-gi-type="Task" aria-pressed="false">Task</button>
                 <button type="button" data-gi-type="Document" aria-pressed="false">Document</button>
-                <button type="button" data-gi-type="Task" aria-pressed="true">Task</button>
-                <button type="button" data-gi-type="Meeting" aria-pressed="false">Meeting</button>
                 <button type="button" data-gi-type="Pod" aria-pressed="false">Pod</button>
               </div>
-            </div>
-            <div class="gi-panel" data-gi-panel="2" hidden>
-              <h3>Name &amp; details</h3>
-              <p class="hint">Name the item. Details stay in this group.</p>
-              <label class="gi-field"><span>Name</span><input id="giName" type="text" maxlength="80" autocomplete="off"></label>
+              <div class="gi-block">
+                <div class="gi-block-hd"><b>People</b><button type="button" class="gi-add" data-gi="people">Add people</button></div>
+                <div class="gi-chips" id="giWhoChips"></div>
+                <div class="gi-pick" id="giPick" hidden>
+                  <input id="giPeopleQ" type="search" placeholder="Search name" aria-label="Search people">
+                  <div class="gi-people" id="giPeople"></div>
+                </div>
+              </div>
+              <div class="gi-block">
+                <div class="gi-block-hd"><b>Files</b><button type="button" class="gi-add" data-gi="file">Add file</button></div>
+                <div class="gi-chips" id="giFiles"></div>
+                <input id="giFile" type="file" multiple hidden>
+              </div>
               <label class="gi-field"><span>Details</span><textarea id="giDetails" rows="3" maxlength="240"></textarea></label>
-            </div>
-            <div class="gi-panel" data-gi-panel="3" hidden>
-              <h3>Who receives it</h3>
-              <p class="hint">They see it here. It does not land on a private schedule.</p>
-              <div class="gi-people" id="giPeople"></div>
             </div>
             <p class="gi-note" id="giNote"></p>
             <div class="gi-foot">
-              <span id="giStepLabel">Step 1 of 3</span>
+              <span></span>
               <div>
                 <button type="button" class="gi-cancel" data-gi="cancel">Cancel</button>
-                <button type="button" class="gi-next" id="giNext" data-gi="next">Next</button>
+                <button type="button" class="gi-next" id="giNext" data-gi="next">Create</button>
               </div>
             </div>
           </div>
@@ -21557,7 +21584,7 @@ function paintGroupBoard() {
             <button type="button" data-g-canvas="calendar" aria-pressed="${gCanvas === 'calendar'}">Calendar</button>
             <button type="button" data-g-canvas="list" aria-pressed="${gCanvas === 'list'}">List</button>
           </div>
-          <div class="desk-new"><button type="button" data-g-act="new">New item</button></div>
+          <div class="desk-new"><button type="button" data-g-act="new">Create event</button></div>
         </div>
       </div>
       ${boardHtml}
@@ -21977,7 +22004,7 @@ function openGroupItem(preset) {
   const c = current();
   if (!c || c.kind !== 'group') return;
   if (!canReview(c)) { toast('Only the owner or an admin can assign a group task.'); return; }
-  gi = { step: 1, type: 'Task', who: preset && preset.who ? [preset.who] : [], group: c.id, note: '' };
+  gi = { type: 'Meeting', who: preset && preset.who ? [preset.who] : [], group: c.id, note: '', files: [], picking: false, peopleQuery: '' };
   const modal = $('giModal');
   if (!modal) return;
   ['giStart', 'giStartTime', 'giEnd', 'giEndTime', 'giName', 'giDetails'].forEach((id) => {
@@ -22006,71 +22033,61 @@ function giRangeError() {
   if (start && end && start === end && st && et && et <= st) return 'End time is before the start.';
   return '';
 }
-function giStepError(step) {
-  if (step === 1) return $('giStart')?.value ? giRangeError() : 'Choose a start date.';
-  if (step === 2) return $('giName')?.value.trim() ? '' : 'Name this item.';
-  if (step === 3) return gi && gi.who.length ? '' : 'Choose who receives it.';
+function giFormError() {
+  if (!$('giName')?.value.trim()) return 'Name this event.';
+  if (!$('giStart')?.value) return 'Choose a start date.';
+  if (giRangeError()) return giRangeError();
+  if (!gi || !gi.who.length) return 'Add at least one person.';
   return '';
 }
 function paintGroupItem() {
   if (!gi) return;
   const modal = $('giModal');
   if (!modal) return;
-  modal.querySelectorAll('[data-gi-step]').forEach((btn) => {
-    btn.setAttribute('aria-selected', String(Number(btn.dataset.giStep) === gi.step));
-  });
-  modal.querySelectorAll('[data-gi-panel]').forEach((panel) => {
-    panel.hidden = Number(panel.dataset.giPanel) !== gi.step;
-  });
   modal.querySelectorAll('[data-gi-type]').forEach((btn) => {
     btn.setAttribute('aria-pressed', String(btn.dataset.giType === gi.type));
   });
   const c = chats.find((item) => item.id === gi.group);
+  const members = c ? (c.members || []).filter((id) => people[id] && !people[id].agent && !people[id].twin) : [];
+  const chips = $('giWhoChips');
+  if (chips) {
+    chips.innerHTML = gi.who.filter((id) => people[id]).map((id) => `<span class="gi-chip"><span>${esc(person(id).name)}</span><button type="button" data-gi-who="${esc(id)}" aria-label="Remove ${esc(person(id).name)}">×</button></span>`).join('');
+  }
+  const pick = $('giPick');
+  if (pick) pick.hidden = !gi.picking;
   const peopleBox = $('giPeople');
-  if (peopleBox && c) {
-    peopleBox.innerHTML = (c.members || []).filter((id) => people[id] && !people[id].agent).map((id) => {
+  const query = (gi.peopleQuery || '').trim().toLowerCase();
+  if (peopleBox) {
+    const rows = members.filter((id) => !query || person(id).name.toLowerCase().includes(query));
+    peopleBox.innerHTML = rows.length ? rows.map((id) => {
       const on = gi.who.includes(id);
       return `<button type="button" data-gi-who="${esc(id)}" aria-pressed="${on ? 'true' : 'false'}">${esc(person(id).name)}</button>`;
-    }).join('');
+    }).join('') : '<p class="hint">No matching people.</p>';
+  }
+  const q = $('giPeopleQ');
+  if (q && q.value !== gi.peopleQuery) q.value = gi.peopleQuery;
+  const files = $('giFiles');
+  if (files) {
+    files.innerHTML = gi.files.map((file) => `<span class="gi-chip"><span>${esc(file.name)}</span><button type="button" data-gi-file="${esc(file.name)}" aria-label="Remove ${esc(file.name)}">×</button></span>`).join('');
   }
   const note = $('giNote');
   if (note) note.textContent = gi.note || '';
-  const next = $('giNext');
-  if (next) next.textContent = gi.step === 3 ? 'Create' : 'Next';
-  const label = $('giStepLabel');
-  if (label) label.textContent = `Step ${gi.step} of 3`;
-}
-function giGo(step) {
-  if (!gi) return;
-  if (step > gi.step) {
-    for (let n = gi.step; n < step; n += 1) {
-      const err = giStepError(n);
-      if (err) { gi.note = err; paintGroupItem(); return; }
-    }
-  }
-  gi.note = '';
-  gi.step = step;
-  paintGroupItem();
 }
 function giCreate() {
   if (!gi) return;
-  const err = giStepError(1) || giStepError(2) || giStepError(3);
-  if (err) {
-    gi.note = err;
-    gi.step = giStepError(1) ? 1 : giStepError(2) ? 2 : 3;
-    paintGroupItem();
-    return;
-  }
+  const err = giFormError();
+  if (err) { gi.note = err; paintGroupItem(); return; }
   const c = chats.find((item) => item.id === gi.group);
   if (!c || !canReview(c)) return;
   const who = gi.who.slice();
   const title = $('giName').value.trim();
   const start = $('giStart').value;
+  const files = gi.files.map((file) => ({ name: file.name }));
   who.forEach((id) => {
     gItems(c.id).push({
       id: uid(), who: id, title, type: gi.type, date: start, end: $('giEnd').value || start,
       startTime: $('giStartTime').value, endTime: $('giEndTime').value,
-      notes: $('giDetails').value.trim(), see: 'group'
+      notes: $('giDetails').value.trim(), files, see: 'group'
     });
   });
   closeGroupItem();
@@ -22966,23 +22983,51 @@ $('giModal')?.addEventListener('click', (e) => {
     closeGroupItem();
     return;
   }
-  const step = e.target.closest('[data-gi-step]');
-  if (step) { giGo(Number(step.dataset.giStep)); return; }
+  if (!gi) return;
   const type = e.target.closest('[data-gi-type]');
-  if (type && gi) { gi.type = type.dataset.giType; gi.note = ''; paintGroupItem(); return; }
+  if (type) { gi.type = type.dataset.giType; gi.note = ''; paintGroupItem(); return; }
+  if (e.target.closest('[data-gi="people"]')) { gi.picking = !gi.picking; paintGroupItem(); $('giPeopleQ')?.focus(); return; }
+  if (e.target.closest('[data-gi="file"]')) { $('giFile')?.click(); return; }
+  const dropFile = e.target.closest('[data-gi-file]');
+  if (dropFile) {
+    gi.files = gi.files.filter((file) => file.name !== dropFile.dataset.giFile);
+    gi.note = '';
+    paintGroupItem();
+    return;
+  }
   const who = e.target.closest('[data-gi-who]');
-  if (who && gi) {
+  if (who) {
     const id = who.dataset.giWho;
     gi.who = gi.who.includes(id) ? gi.who.filter((item) => item !== id) : gi.who.concat(id);
     gi.note = '';
     paintGroupItem();
     return;
   }
-  if (e.target.closest('[data-gi="next"]')) {
-    if (!gi) return;
-    if (gi.step < 3) giGo(gi.step + 1);
-    else giCreate();
+  if (e.target.closest('[data-gi="next"]')) giCreate();
+});
+$('giModal')?.addEventListener('input', (e) => {
+  if (!gi || e.target.id !== 'giPeopleQ') return;
+  gi.peopleQuery = e.target.value;
+  const box = $('giPeople');
+  const c = chats.find((item) => item.id === gi.group);
+  const members = c ? (c.members || []).filter((id) => people[id] && !people[id].agent && !people[id].twin) : [];
+  const query = gi.peopleQuery.trim().toLowerCase();
+  const rows = members.filter((id) => !query || person(id).name.toLowerCase().includes(query));
+  if (box) {
+    box.innerHTML = rows.length ? rows.map((id) => {
+      const on = gi.who.includes(id);
+      return `<button type="button" data-gi-who="${esc(id)}" aria-pressed="${on ? 'true' : 'false'}">${esc(person(id).name)}</button>`;
+    }).join('') : '<p class="hint">No matching people.</p>';
   }
+});
+$('giFile')?.addEventListener('change', () => {
+  if (!gi) return;
+  [...($('giFile').files || [])].forEach((file) => {
+    if (!gi.files.some((item) => item.name === file.name)) gi.files.push({ name: file.name });
+  });
+  $('giFile').value = '';
+  gi.note = '';
+  paintGroupItem();
 });
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && $('giModal') && !$('giModal').hidden) closeGroupItem();
