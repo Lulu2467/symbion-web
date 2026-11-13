@@ -2301,17 +2301,18 @@
     background: #d3e5ef; color: #183347; font: inherit; font-size: 12px; font-weight: 600; outline: none;
   }
   html[data-theme="blue"] .kb-menu {
-    position: fixed; z-index: 80; min-width: 196px; padding: 6px; border-radius: 12px;
-    background: #2c2c2e; color: #fff; box-shadow: 0 8px 28px rgba(0, 0, 0, .28);
+    position: fixed; z-index: 80; min-width: 196px; padding: 6px; border-radius: 8px;
+    background: #fff; color: #1a1a1a; border: 1px solid #e5e5e5;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
   }
   html[data-theme="blue"] .kb-menu button {
-    display: flex; align-items: center; width: 100%; height: 32px; padding: 0 10px; border: 0; border-radius: 8px;
-    background: transparent; color: #fff; font: inherit; font-size: 13px; font-weight: 500; cursor: pointer;
+    display: flex; align-items: center; width: 100%; height: 32px; padding: 0 10px; border: 0; border-radius: 4px;
+    background: transparent; color: #1a1a1a; font: inherit; font-size: 13px; font-weight: 400; cursor: pointer;
   }
-  html[data-theme="blue"] .kb-menu button:hover { background: rgba(255, 255, 255, .08); }
-  html[data-theme="blue"] .kb-menu button kbd { margin-left: auto; padding-left: 16px; color: #d0d0d2; font: inherit; font-size: 12px; }
+  html[data-theme="blue"] .kb-menu button:hover { background: #f3f3f3; }
+  html[data-theme="blue"] .kb-menu button kbd { margin-left: auto; padding-left: 16px; color: #8a8a8a; font: inherit; font-size: 12px; }
   html[data-theme="blue"] .kb-menu button:disabled,
-  html[data-theme="blue"] .kb-menu button:disabled kbd { color: #6e6e73; cursor: default; }
+  html[data-theme="blue"] .kb-menu button:disabled kbd { color: #b0b0b0; cursor: default; }
   html[data-theme="blue"] .kb-menu button:disabled:hover { background: transparent; }
   html[data-theme="blue"] .kb-menu.is-event { width: 248px; padding: 8px; }
   html[data-theme="blue"] .kb-menu button:not(.kb-hue) svg { width: 16px; height: 16px; margin-right: 8px; flex: none; }
@@ -2321,20 +2322,48 @@
     display: flex; align-items: center; justify-content: center;
   }
   html[data-theme="blue"] .kb-menu .kb-hue svg { width: 10px; height: 10px; margin: 0; display: block; }
-  html[data-theme="blue"] .kb-menu .kb-hue:hover { background: inherit; filter: brightness(1.08); }
-  html[data-theme="blue"] .kb-menu-rule { height: 1px; margin: 4px 6px; background: rgba(255, 255, 255, .12); }
+  html[data-theme="blue"] .kb-menu .kb-hue:hover { filter: brightness(1.08); }
+  html[data-theme="blue"] .kb-menu-rule { height: 1px; margin: 4px 6px; background: #ececec; }
   html[data-theme="blue"] .kb-menu .kb-block {
     display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 10px;
-    color: #fff; font-size: 13px; font-weight: 500; cursor: pointer;
+    color: #1a1a1a; font-size: 13px; font-weight: 400; cursor: pointer;
   }
-  html[data-theme="blue"] .kb-menu .kb-block input { width: 14px; height: 14px; margin: 0; accent-color: #8e8e93; }
+  html[data-theme="blue"] .kb-menu .kb-block input { width: 14px; height: 14px; margin: 0; accent-color: #6e6e73; }
   html[data-theme="blue"] .kb-menu .kb-help {
     margin-left: auto; width: 16px; height: 16px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    color: #8e8e93; font-style: normal; font-size: 11px; border: 1px solid #8e8e93;
+    color: #8e8e93; font-style: normal; font-size: 11px; border: 1px solid #c8c8c8;
   }
   html[data-theme="blue"] .kb-menu button.is-danger,
-  html[data-theme="blue"] .kb-menu button.is-danger kbd { color: #ff6b6b; }
+  html[data-theme="blue"] .kb-menu button.is-danger kbd { color: #d93025; }
+  html[data-theme="blue"] .kb-menu.is-event {
+    width: 288px; padding: 6px; border: 1px solid #e5e5e5; border-radius: 8px;
+    background: #fff; color: #1a1a1a; box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+  }
+  html[data-theme="blue"] .kb-menu.is-event button {
+    height: 36px; padding: 0 10px; border-radius: 4px; color: #1a1a1a; font-size: 14px; font-weight: 400;
+  }
+  html[data-theme="blue"] .kb-menu.is-event button:hover { background: #f3f3f3; }
+  html[data-theme="blue"] .kb-menu.is-event button kbd { color: #8a8a8a; font-size: 13px; }
+  html[data-theme="blue"] .kb-menu.is-event button:not(.kb-hue) svg { width: 16px; height: 16px; margin-right: 10px; color: #3c3c3c; }
+  html[data-theme="blue"] .kb-menu.is-event .kb-swatches { justify-content: space-between; gap: 0; padding: 8px 8px 10px; }
+  html[data-theme="blue"] .kb-menu.is-event .kb-hue { width: 18px; height: 18px; }
+  html[data-theme="blue"] .kb-menu.is-event .kb-hue:hover { filter: brightness(1.08); }
+  html[data-theme="blue"] .kb-menu.is-event .kb-menu-rule { margin: 4px 8px; background: #ececec; }
+  html[data-theme="blue"] .kb-menu.is-event .kb-block {
+    height: 36px; padding: 0 10px; color: #1a1a1a; font-size: 14px; font-weight: 400;
+  }
+  html[data-theme="blue"] .kb-menu.is-event .kb-block input {
+    appearance: none; width: 15px; height: 15px; margin: 0; border: 1.4px solid #8a8a8a; border-radius: 3px;
+    background: #fff; accent-color: transparent;
+  }
+  html[data-theme="blue"] .kb-menu.is-event .kb-block input:checked {
+    border-color: #1a1a1a; background: #1a1a1a url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.2 8.2 6.4 11.2 12.8 4.6' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+  }
+  html[data-theme="blue"] .kb-menu.is-event .kb-help { color: #6e6e73; border-color: #c8c8c8; }
+  html[data-theme="blue"] .kb-menu.is-event button.is-danger,
+  html[data-theme="blue"] .kb-menu.is-event button.is-danger kbd,
+  html[data-theme="blue"] .kb-menu.is-event button.is-danger svg { color: #d93025; }
   html[data-theme="blue"] #tail-home .nc-pop {
     position: absolute; z-index: 6; top: calc(100% + 4px); left: 0; min-width: 180px;
     padding: 8px 10px; border-radius: 8px; background: #fff; color: #37352f;
@@ -2422,6 +2451,9 @@
   html[data-theme="blue"] #tail-home .kb-sched .nc-chip.is-course { background: #fbf0dc; color: #9a5b12; }
   html[data-theme="blue"] #tail-home .kb-sched .nc-ev.is-occupied,
   html[data-theme="blue"] #tail-home .kb-sched .nc-chip.is-occupied { background: #eef0f2; color: #6e7378; }
+  html[data-theme="blue"] #tail-home .kb-sched .nc-ev.is-occupied .kb-ico,
+  html[data-theme="blue"] #tail-home .kb-sched .nc-chip.is-occupied .kb-ico,
+  html[data-theme="blue"] #tail-home .kb-chip.is-occupied .kb-ico { display: none; }
   html[data-theme="blue"] #tail-home .kb-sched .nc-ev .kb-ico,
   html[data-theme="blue"] #tail-home .kb-sched .nc-chip .kb-ico {
     display: inline-flex; width: 14px; height: 14px; margin-right: 3px; vertical-align: -2px; background: transparent; flex: none;
@@ -2561,6 +2593,34 @@
   html[data-theme="blue"] .kd-tz-menu .kd-tz-rule { height: 1px; margin: 4px 8px; background: rgba(255, 255, 255, .12); }
   html[data-theme="blue"] .kd-tz-menu::-webkit-scrollbar { width: 8px; }
   html[data-theme="blue"] .kd-tz-menu::-webkit-scrollbar-thumb { background: #6e6e73; border-radius: 8px; }
+  html[data-theme="blue"] #tail-home .kd-repeat {
+    width: calc(100% - 16px); margin: 2px 8px; padding: 0 10px; border-radius: 8px; background: #f3f4f6;
+    color: #8b9198; cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .kd-repeat.is-set { color: #1d1d1f; }
+  html[data-theme="blue"] #tail-home .kd-repeat.is-open { background: #eceef1; }
+  html[data-theme="blue"] #tail-home .kd-repeat svg { color: #8b9198; }
+  html[data-theme="blue"] #tail-home .kd-repeat-chev { margin-left: auto; width: 14px; height: 14px; }
+  html[data-theme="blue"] .kd-repeat-menu {
+    position: fixed; z-index: 80; width: 260px; padding: 6px; background: #2c2c2e; color: #fff;
+    border-radius: 12px; box-shadow: 0 10px 28px rgba(0, 0, 0, .28);
+  }
+  html[data-theme="blue"] .kd-repeat-menu button {
+    display: flex; align-items: center; gap: 8px; width: 100%; min-height: 32px; padding: 0 10px;
+    border: 0; border-radius: 6px; background: transparent; color: #fff; font: inherit; font-size: 13px;
+    text-align: left; cursor: pointer;
+  }
+  html[data-theme="blue"] .kd-repeat-menu button:hover,
+  html[data-theme="blue"] .kd-repeat-menu button.is-on { background: rgba(255, 255, 255, .1); }
+  html[data-theme="blue"] .kd-repeat-menu button i { color: #b5b5b8; font-style: normal; }
+  html[data-theme="blue"] .kd-repeat-menu .kd-repeat-rule { height: 1px; margin: 4px 8px; background: rgba(255, 255, 255, .12); }
+  html[data-theme="blue"] .kd-repeat-custom { display: flex; align-items: center; gap: 8px; padding: 8px 10px; color: #fff; font-size: 13px; }
+  html[data-theme="blue"] .kd-repeat-n,
+  html[data-theme="blue"] .kd-repeat-unit {
+    height: 28px; border: 0; border-radius: 6px; background: #3a3a3c; color: #fff; font: inherit; font-size: 13px;
+  }
+  html[data-theme="blue"] .kd-repeat-n { width: 52px; padding: 0 6px; }
+  html[data-theme="blue"] .kd-repeat-unit { padding: 0 6px; }
   html[data-theme="blue"] #tail-home .kd-row > svg,
   html[data-theme="blue"] #tail-home .kd-row > .kb-ico svg { width: 16px; height: 16px; flex: none; color: #8b9198; }
   html[data-theme="blue"] #tail-home .kd-row.is-off,
@@ -7068,8 +7128,13 @@
   }
   .dir-card:hover .dir-summon,
   .dir-card:focus-visible .dir-summon { display: inline-flex; }
+  .dir-card.is-follow:hover .dir-summon,
+  .dir-card.is-follow:focus-visible .dir-summon,
+  .dir-card.is-follow .dir-summon { display: none; }
   .dir-card:hover .dir-head,
   .dir-card:focus-visible .dir-head { padding-right: 76px; }
+  .dir-card.is-follow:hover .dir-head,
+  .dir-card.is-follow:focus-visible .dir-head { padding-right: 0; }
   html[data-theme="blue"] #dirHost .dir-summon[aria-pressed="true"] {
     display: inline-flex;
     background: #fff;
@@ -11278,48 +11343,35 @@
     if (e.button !== 0) return;
     if (e.target.closest('.nc-tool, .nc-pop, .nc-name, .nc-draft, .nc-all-draft, .kb-bar, .kb-legend')) return;
     const sched = e.target.closest('.kb-sched');
-    const chip = e.target.closest('.nc-chip');
-    if (chip) {
+    const chip = e.target.closest('.nc-chip, .kb-chip');
+    if (chip && chip.dataset.i != null && chip.dataset.i !== '') {
       if (sched) kbOpenEvent(Number(chip.dataset.i));
       else ncTogglePop(chip);
       return;
     }
     const resize = e.target.closest('.nc-resize');
     const block = resize ? resize.closest('.nc-ev') : e.target.closest('.nc-ev');
-    const col = e.target.closest('.nc-col');
     if (sched && kbBox().open != null && !block) { kbCloseDetail(); return; }
-    if (!block && !col) return;
+    if (!block) return;
     const point = ncPoint(e);
     ncDrag = {
-      kind: resize ? 'resize' : block ? 'move' : 'create',
+      kind: resize ? 'resize' : 'move',
       el: block,
-      iso: block?.dataset.iso || point.iso,
-      index: block ? Number(block.dataset.i) : -1,
-      start: block ? Number(block.dataset.start) : ncSnap(point.mins),
-      dur: block ? Number(block.dataset.dur) : 60,
+      iso: block.dataset.iso || point.iso,
+      index: Number(block.dataset.i),
+      start: Number(block.dataset.start),
+      dur: Number(block.dataset.dur),
       x: e.clientX,
       y: e.clientY,
-      grab: block ? point.mins - Number(block.dataset.start) : 0,
+      grab: point.mins - Number(block.dataset.start),
       moved: false,
     };
     e.currentTarget.setPointerCapture(e.pointerId);
-    if (ncDrag.kind === 'create') ncPlaceDraft(ncDrag.iso, ncDrag.start, 60, false);
   }
   function ncPointerMove(e) {
     if (!ncDrag) return;
     if (Math.abs(e.clientX - ncDrag.x) + Math.abs(e.clientY - ncDrag.y) > 4) ncDrag.moved = true;
     const point = ncPoint(e);
-    if (ncDrag.kind === 'create') {
-      const anchor = ncDrag.start;
-      const at = ncSnap(point.mins);
-      const start = Math.min(anchor, at);
-      const dur = Math.max(30, Math.abs(at - anchor) || 30);
-      ncDrag.iso = point.iso;
-      ncDrag.dropStart = start;
-      ncDrag.dropDur = dur;
-      ncPlaceDraft(point.iso, start, dur, false);
-      return;
-    }
     if (!ncDrag.moved) return;
     if (ncDrag.kind === 'resize') {
       const dur = Math.max(15, ncSnap(point.mins) - ncDrag.start);
@@ -11342,12 +11394,6 @@
     const drag = ncDrag;
     ncDrag = null;
     if (!drag) return;
-    if (drag.kind === 'create') {
-      const dur = drag.moved ? (drag.dropDur || 60) : 60;
-      const start = drag.moved ? (drag.dropStart ?? drag.start) : drag.start;
-      kbCreateTimed(drag.iso, start, dur);
-      return;
-    }
     if (!drag.moved) {
       if (drag.el && drag.el.closest('.kb-sched')) kbOpenEvent(Number(drag.el.dataset.i));
       else ncTogglePop(drag.el);
@@ -11419,6 +11465,13 @@
         return;
       }
       if (kbBox().tzOpen && !e.target.closest('.kd-tz, .kd-tz-menu')) kbCloseTzMenu(true);
+      const repeatRow = e.target.closest('[data-kd="repeat"]');
+      if (repeatRow) {
+        const opened = kbOpenEv() || (kbBox().draft && !kbBox().draft.done ? kbDraftEvent(kbBox().draft) : null);
+        if (opened) kbShowRepeatMenu(repeatRow, opened);
+        return;
+      }
+      if (kbBox().repeatOpen && !e.target.closest('.kd-repeat, .kd-repeat-menu')) kbCloseRepeatMenu(true);
       if (kbBox().visOpen) kbCloseVisMenu();
       if (e.target.closest('[data-kd="icon"]')) {
         kbBox().iconOpen = !kbBox().iconOpen;
@@ -11445,6 +11498,7 @@
       if (e.target.classList.contains('nc-scroll')) host.dataset.ncTop = String(e.target.scrollTop);
       kbCloseMenu();
       kbCloseTzMenu(false);
+      kbCloseRepeatMenu(false);
     }, true);
     host.addEventListener('contextmenu', kbContextMenu);
     kbBindMenu();
@@ -11485,9 +11539,9 @@
     ['gray', '#bdbdbd', '#eef0f2', '#6e7378'],
   ];
   const KB_EDIT_ICO = {
-    cut: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="5" cy="11.5" r="1.6" stroke="currentColor" stroke-width="1.4"/><circle cx="5" cy="4.5" r="1.6" stroke="currentColor" stroke-width="1.4"/><path d="M6.4 5.6 13 12M6.4 10.4 13 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>',
-    copy: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5.5" y="5.5" width="7" height="7" rx="1.2" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 5.5V4.2A1.2 1.2 0 0 0 9.3 3H4.2A1.2 1.2 0 0 0 3 4.2v5.1a1.2 1.2 0 0 0 1.2 1.2h1.3" stroke="currentColor" stroke-width="1.4"/></svg>',
-    duplicate: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="6" y="6" width="7" height="7" rx="1.2" stroke="currentColor" stroke-width="1.4"/><path d="M10 6V3.2A1.2 1.2 0 0 0 8.8 2H3.2A1.2 1.2 0 0 0 2 3.2v5.6A1.2 1.2 0 0 0 3.2 10H6" stroke="currentColor" stroke-width="1.4"/></svg>',
+    cut: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2.4" y="2.4" width="11.2" height="11.2" rx="1.6" stroke="currentColor" stroke-width="1.3" stroke-dasharray="2.1 1.7"/></svg>',
+    copy: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5.6" y="5.6" width="7.4" height="7.4" rx="1.4" stroke="currentColor" stroke-width="1.3"/><path d="M10.2 5.6V3.8A1.3 1.3 0 0 0 8.9 2.5H3.8A1.3 1.3 0 0 0 2.5 3.8v5.1A1.3 1.3 0 0 0 3.8 10.2H5.6" stroke="currentColor" stroke-width="1.3"/></svg>',
+    duplicate: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1.8" y="2.2" width="8.4" height="8.4" rx="1.4" stroke="currentColor" stroke-width="1.3"/><rect x="7.6" y="7.6" width="6.4" height="6.4" rx="1.4" fill="#fff" stroke="currentColor" stroke-width="1.3"/><path d="M10.8 9.2v3.2M9.2 10.8h3.2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>',
     delete: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 4.5h9M6.2 4.5V3.2h3.6V4.5M5 4.5l.4 8h5.2l.4-8" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/></svg>',
   };
   function kbTintOf(id) {
@@ -11502,13 +11556,16 @@
     return tint ? `background:${tint[2]};color:${tint[3]};` : '';
   }
   function kbEventSnap(ev) {
-    return { title: ev.title, iso: ev.iso, start: ev.start, dur: ev.dur || 60, timed: !!ev.timed, task: ev.task || 'task', lane: ev.lane || 'personal', color: ev.color || '', block: !!ev.block, tz: ev.tz || '' };
+    return { title: ev.title, iso: ev.iso, start: ev.start, dur: ev.dur || 60, timed: !!ev.timed, task: ev.task || 'task', lane: ev.lane || 'personal', color: ev.color || '', block: !!ev.block, tz: ev.tz || '', repeat: ev.repeat || '', repeatN: ev.repeatN || 0, repeatUnit: ev.repeatUnit || '' };
   }
   function kbWriteEvent(ev, patch) {
     if (ev.kind === 'rem' && ev.rem) {
       if (patch.color != null) ev.rem.dataset.color = patch.color;
       if (patch.block != null) ev.rem.dataset.block = patch.block ? '1' : '';
       if (patch.tz != null) ev.rem.dataset.tz = patch.tz;
+      if (patch.repeat != null) ev.rem.dataset.repeat = patch.repeat;
+      if (patch.repeatN != null) ev.rem.dataset.repeatN = String(patch.repeatN || '');
+      if (patch.repeatUnit != null) ev.rem.dataset.repeatUnit = patch.repeatUnit;
     } else if (ev.kind === 'extra') {
       const item = kbBox().extra.find((row) => row.id === ev.extraId);
       if (item) Object.assign(item, patch);
@@ -11545,7 +11602,7 @@
     const snap = kbEventSnap(ev);
     kbBox().extra.push({
       id: `ev-${Date.now()}`, title: snap.title, date: snap.iso, start: snap.timed ? snap.start : 0,
-      timed: snap.timed, dur: snap.dur, lane: snap.lane, task: snap.task, color: snap.color, block: snap.block,
+      timed: snap.timed, dur: snap.dur, lane: snap.lane, task: snap.task, color: snap.color, block: snap.block, tz: snap.tz || '',
     });
     kbCloseMenu();
     paintHomeTimeline();
@@ -11556,7 +11613,7 @@
     const snap = clip.snap;
     kbBox().extra.push({
       id: `ev-${Date.now()}`, title: snap.title, date: point.iso, start: point.allDay ? 0 : (point.start || 0),
-      timed: !point.allDay, dur: snap.dur || 60, lane: snap.lane, task: snap.task, color: snap.color, block: snap.block,
+      timed: !point.allDay, dur: snap.dur || 60, lane: snap.lane, task: snap.task, color: snap.color, block: snap.block, tz: snap.tz || '',
     });
     if (clip.cut) kbBox().clip = null;
     kbCloseMenu();
@@ -11620,26 +11677,45 @@
       if (ev.target.closest('[data-kb-menu="paste"]')) kbPasteAt(kbShowMenu.point);
     });
   }
+  function kbCreateMonth(iso) {
+    const saved = kbFinishDraft();
+    if (saved) syncRemBoard();
+    const cell = document.querySelector(`#tlBody .kb-month [data-iso="${iso}"]`);
+    if (!cell) return;
+    const chip = document.createElement("div");
+    chip.className = "kb-chip nc-all-draft";
+    chip.textContent = "Event name";
+    cell.appendChild(chip);
+    kbShowDraft({ iso, start: 0, dur: 60, allDay: true, title: "" });
+  }
   function kbCreateFromPoint(point) {
     kbCloseMenu();
     if (!point) return;
     kbShowMenu.point = null;
-    if (point.allDay) kbCreateAllDay(point.iso);
+    if (point.month) kbCreateMonth(point.iso);
+    else if (point.allDay) kbCreateAllDay(point.iso);
     else kbCreateTimed(point.iso, point.start, 60);
   }
   function kbContextMenu(e) {
     if (document.documentElement.dataset.theme !== 'blue') return;
-    if (!e.target.closest('.kb-sched .nc')) return;
+    if (!e.target.closest('.kb-sched')) return;
     if (e.target.closest('.kb-legend, .kb-bar')) return;
-    const hit = e.target.closest('.nc-ev, .nc-chip');
-    if (hit) {
+    const hit = e.target.closest('.nc-ev, .nc-chip, .kb-chip');
+    if (hit && hit.dataset.i != null && hit.dataset.i !== '') {
       e.preventDefault();
       const ev = tlCache[Number(hit.dataset.i)];
       if (!ev) return;
-      kbOpenEvent(Number(hit.dataset.i), { menu: false });
+      kbOpenEvent(Number(hit.dataset.i));
       kbShowEventMenu(tlCache[Number(hit.dataset.i)] || ev, e.clientX, e.clientY);
       return;
     }
+    const monthCell = e.target.closest('.kb-month [data-kb-cell]');
+    if (monthCell && monthCell.dataset.iso) {
+      e.preventDefault();
+      kbShowMenu(e.clientX, e.clientY, { iso: monthCell.dataset.iso, allDay: true, month: true });
+      return;
+    }
+    if (!e.target.closest('.kb-sched .nc')) return;
     e.preventDefault();
     const point = kbMenuPoint(e);
     if (!point) return;
@@ -11846,8 +11922,8 @@
     const iso = (offset) => todoDateIso(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + offset));
     box.extra.push(
       { id: 'seed-chris', who: 'chris', title: 'Lecture 5', lane: 'course', task: 'lecture', date: iso(-2), time: '' },
-      { id: 'seed-maya', who: 'maya', title: 'Occupied', lane: 'occupied', task: 'occupied', date: iso(0), time: '' },
-      { id: 'seed-alex', who: 'alex', title: 'Occupied', lane: 'occupied', task: 'occupied', date: iso(-3), time: '' },
+      { id: 'seed-maya', who: 'maya', title: 'Busy', lane: 'occupied', task: 'occupied', date: iso(0), time: '' },
+      { id: 'seed-alex', who: 'alex', title: 'Busy', lane: 'occupied', task: 'occupied', date: iso(-3), time: '' },
     );
   }
   function kbItems() {
@@ -11897,7 +11973,7 @@
   }
   function kbLegend() {
     const groups = ['personal', 'wuhan', 'research', 'course'].map((id) => `<div class="kb-rule"><i class="kb-swatch is-${id}">${kbIcon(id)}</i><span>${deskEsc(kbLaneName(id))}</span></div>`).join('');
-    const tasks = [['lecture', 'Lecture'], ['reading', 'Reading'], ['reply', 'Reply'], ['occupied', 'Occupied'], ['task', 'Task']];
+    const tasks = [['lecture', 'Lecture'], ['reading', 'Reading'], ['reply', 'Reply'], ['task', 'Task']];
     const taskRows = tasks.map(([id, name]) => `<div class="kb-rule"><i class="kb-swatch is-task">${kbTaskIcon(id)}</i><span>${name}</span></div>`).join('');
     return `<aside class="kb-legend"><b>分类</b><div class="kb-k">群组</div>${groups}<div class="kb-k">to-do-list</div>${taskRows}</aside>`;
   }
@@ -11939,18 +12015,19 @@
     if (kbTzCatalog.list) return kbTzCatalog.list;
     let zones = ["UTC", "Asia/Shanghai", "America/Los_Angeles", "America/New_York", "Europe/London", "Europe/Brussels", "Asia/Kolkata", "Asia/Tokyo", "Asia/Singapore", "Pacific/Honolulu", "Pacific/Midway", "Pacific/Pago_Pago", "Pacific/Niue", "America/Adak"];
     try { if (Intl.supportedValuesOf) zones = Intl.supportedValuesOf("timeZone"); } catch (e) {}
-    const zh = (() => { try { return new Intl.DisplayNames(["zh-CN"], { type: "timeZone" }); } catch (e) { return null; } })();
     const now = new Date();
     kbTzCatalog.list = zones.map((id) => {
       const city = id === "UTC" ? "UTC" : id.split("/").pop().replace(/_/g, " ");
       let offset = "GMT+00:00";
-      try {
-        const part = new Intl.DateTimeFormat("en-US", { timeZone: id, timeZoneName: "shortOffset", hour: "2-digit" }).formatToParts(now).find((p) => p.type === "timeZoneName");
-        offset = kbTzPad(String(part?.value || "GMT").replace("UTC", "GMT"));
-      } catch (e) {}
       let cn = city;
-      try { cn = (zh && zh.of(id)) || city; } catch (e) {}
-      return { id, city, offset, cn, text: offset + " " + cn + " – " + city };
+      try {
+        const parts = new Intl.DateTimeFormat("zh-CN", { timeZone: id, timeZoneName: "long", hour: "2-digit" }).formatToParts(now);
+        const off = new Intl.DateTimeFormat("en-US", { timeZone: id, timeZoneName: "shortOffset", hour: "2-digit" }).formatToParts(now).find((p) => p.type === "timeZoneName");
+        offset = kbTzPad(String(off?.value || "GMT").replace("UTC", "GMT"));
+        cn = parts.find((p) => p.type === "timeZoneName")?.value || city;
+      } catch (e) {}
+      const alias = ({ Shanghai: "上海 北京", "Los Angeles": "洛杉矶", "New York": "纽约", London: "伦敦", Brussels: "布鲁塞尔", Kolkata: "加尔各答", Tokyo: "东京", Seoul: "首尔", Singapore: "新加坡", Bangkok: "曼谷", Dubai: "迪拜", Paris: "巴黎", Berlin: "柏林", Rome: "罗马", Moscow: "莫斯科", Chicago: "芝加哥", Denver: "丹佛", Phoenix: "凤凰城", Toronto: "多伦多", Vancouver: "温哥华", Sydney: "悉尼", Melbourne: "墨尔本", Auckland: "奥克兰", Honolulu: "檀香山", "Hong Kong": "香港", Taipei: "台北", Jakarta: "雅加达", "Kuala Lumpur": "吉隆坡", Manila: "马尼拉" })[city] || "";
+      return { id, city, offset, cn, alias, text: offset + " " + cn + " – " + city };
     }).sort((a, b) => kbTzMinutes(a.offset) - kbTzMinutes(b.offset) || a.city.localeCompare(b.city));
     return kbTzCatalog.list;
   }
@@ -11963,7 +12040,7 @@
     const all = kbTzCatalog();
     const q = String(query || "").trim().toLowerCase();
     if (!q) return all;
-    return all.filter((row) => (row.offset + " " + row.cn + " " + row.city + " " + row.id).toLowerCase().includes(q));
+    return all.filter((row) => (row.offset + " " + row.cn + " " + row.city + " " + row.alias + " " + row.id).toLowerCase().includes(q));
   }
   function kbTzMenuHtml(query, current) {
     const q = String(query || "").trim();
@@ -12043,11 +12120,96 @@
       if (hit) kbApplyTz(hit.dataset.kdTz);
     });
   }
+  function kbOrd(n) {
+    const v = n % 100;
+    if (v >= 11 && v <= 13) return n + "th";
+    return n + (["th", "st", "nd", "rd"][n % 10] || "th");
+  }
+  function kbRepeatOptions(ev) {
+    const date = todoParseIso(ev && ev.iso) || new Date();
+    const wd = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][date.getDay()];
+    const day = date.getDate();
+    const nth = Math.floor((day - 1) / 7) + 1;
+    const nthWord = ["", "1st", "2nd", "3rd", "4th", "5th"][nth] || kbOrd(nth);
+    const mon = TODO_MONTHS[date.getMonth()];
+    return [
+      ["daily", "Every day", ""],
+      ["weekday", "Every weekday", "Mon – Fri"],
+      ["weekly", "Every week", "on " + wd],
+      ["biweekly", "Every 2 weeks", "on " + wd],
+      ["monthly", "Every month", "on the " + kbOrd(day)],
+      ["monthly-nth", "Every month", "on the " + nthWord + " " + wd],
+      ["yearly", "Every year", "on " + mon + " " + day],
+    ];
+  }
+  function kbRepeatLabel(ev) {
+    if (!ev || !ev.repeat) return "Repeat";
+    if (ev.repeat === "custom") {
+      const n = Math.max(1, Number(ev.repeatN) || 1);
+      const unit = ev.repeatUnit || "week";
+      return "Every " + (n === 1 ? unit : n + " " + unit + "s");
+    }
+    const opt = kbRepeatOptions(ev).find((row) => row[0] === ev.repeat);
+    return opt ? (opt[2] ? opt[1] + " " + opt[2] : opt[1]) : "Repeat";
+  }
+  function kbRepeatMenuHtml(ev) {
+    const current = (ev && ev.repeat) || "";
+    const rows = kbRepeatOptions(ev).map(([id, name, hint]) => '<button type="button" data-kd-repeat="' + id + '"' + (id === current ? ' class="is-on"' : "") + "><span>" + name + "</span>" + (hint ? "<i>" + hint + "</i>" : "") + "</button>").join("");
+    const clear = current ? '<button type="button" data-kd-repeat="">Does not repeat</button><div class="kd-repeat-rule"></div>' : "";
+    return clear + rows + '<div class="kd-repeat-rule"></div><button type="button" data-kd-repeat="custom">Custom...</button>';
+  }
+  function kbCloseRepeatMenu(repaint) {
+    const open = !!document.querySelector(".kd-repeat-menu, #tlBody .kd-repeat.is-open");
+    kbBox().repeatOpen = false;
+    document.querySelector(".kd-repeat-menu")?.remove();
+    if (repaint && open) kbPaintSide();
+  }
+  function kbApplyRepeat(id, n, unit) {
+    const patch = { repeat: id || "", repeatN: id === "custom" ? Math.max(1, Number(n) || 1) : 0, repeatUnit: id === "custom" ? (unit || "week") : "" };
+    const draft = kbBox().draft;
+    if (draft && !draft.done) Object.assign(draft, patch);
+    else {
+      const ev = kbOpenEv();
+      if (ev) kbWriteEvent(ev, patch);
+    }
+    kbCloseRepeatMenu(true);
+  }
+  function kbRepeatCustom(menu, ev) {
+    const n = (ev && ev.repeatN) || 1;
+    const unit = (ev && ev.repeatUnit) || "week";
+    menu.innerHTML = '<div class="kd-repeat-custom"><span>Every</span><input class="kd-repeat-n" type="number" min="1" max="99" value="' + n + '" aria-label="Interval"><select class="kd-repeat-unit" aria-label="Unit"><option value="day">day</option><option value="week">week</option><option value="month">month</option><option value="year">year</option></select></div><button type="button" data-kd-repeat-done>Done</button>';
+    const pick = menu.querySelector(".kd-repeat-unit");
+    if (pick) pick.value = unit;
+    menu.querySelector("[data-kd-repeat-done]")?.addEventListener("click", () => {
+      const every = Math.max(1, Math.min(99, Number(menu.querySelector(".kd-repeat-n")?.value) || 1));
+      kbApplyRepeat("custom", every, menu.querySelector(".kd-repeat-unit")?.value || "week");
+    });
+  }
+  function kbShowRepeatMenu(row, ev) {
+    kbCloseTzMenu(false);
+    kbCloseRepeatMenu(false);
+    kbBox().repeatOpen = true;
+    row.classList.add("is-open");
+    const menu = document.createElement("div");
+    menu.className = "kd-repeat-menu";
+    menu.innerHTML = kbRepeatMenuHtml(ev);
+    document.body.appendChild(menu);
+    kbPlaceTzMenu(menu, row);
+    menu.addEventListener("click", (e) => {
+      const hit = e.target.closest("[data-kd-repeat]");
+      if (!hit) return;
+      if (hit.dataset.kdRepeat === "custom") { kbRepeatCustom(menu, ev); return; }
+      kbApplyRepeat(hit.dataset.kdRepeat);
+    });
+    menu.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") kbCloseRepeatMenu(true);
+    });
+  }
   function kbEventKey(ev) {
     return (ev.iso || "") + "|" + ev.title + "|" + ev.start + "|" + (ev.timed ? 1 : 0) + "|" + (ev.task || "");
   }
   function kbDraftEvent(draft) {
-    return { iso: draft.iso, title: draft.title || "", start: draft.allDay ? 0 : draft.start, dur: draft.dur || 60, timed: !draft.allDay, task: draft.task || "task", lane: "personal", note: draft.note || "", visibility: draft.visibility || "default", tz: draft.tz || "" };
+    return { iso: draft.iso, title: draft.title || "", start: draft.allDay ? 0 : draft.start, dur: draft.dur || 60, timed: !draft.allDay, task: draft.task || "task", lane: "personal", note: draft.note || "", visibility: draft.visibility || "default", tz: draft.tz || "", repeat: draft.repeat || "", repeatN: draft.repeatN || 0, repeatUnit: draft.repeatUnit || "" };
   }
   function kbNoteText(ev) {
     const note = String(ev.note || "");
@@ -12058,6 +12220,8 @@
     return key ? tlCache.find((item) => kbEventKey(item) === key) || null : null;
   }
   function kbSetBlockTitle(title) {
+    const month = document.querySelector("#tlBody .kb-chip.is-open b");
+    if (month) { month.textContent = title; return; }
     const el = document.querySelector("#tlBody .nc-ev.is-open b, #tlBody .nc-chip.is-open");
     if (!el) return;
     const text = [...el.childNodes].find((node) => node.nodeType === 3);
@@ -12252,7 +12416,7 @@
     remDay = prev.iso;
     if (prev.allDay) { tlAddTime = ""; tlCreateItem(title); tlAddTime = "10:00"; }
     else { tlAddTime = tlClock(prev.start); tlAddDur = prev.dur || 60; tlCreateItem(title); }
-    if (prev.note || prev.task || prev.visibility || prev.tz) {
+    if (prev.note || prev.task || prev.visibility || prev.tz || prev.repeat) {
       const list = document.querySelector("#tail-home .two-main-l");
       const rem = [...(list ? list.querySelectorAll(".rem") : [])].reverse().find((row) => row.querySelector(".t")?.textContent.trim() === title);
       if (rem) {
@@ -12260,6 +12424,7 @@
         if (prev.task) rem.dataset.task = prev.task;
         if (prev.visibility) rem.dataset.visibility = prev.visibility;
         if (prev.tz) rem.dataset.tz = prev.tz;
+        if (prev.repeat) { rem.dataset.repeat = prev.repeat; rem.dataset.repeatN = String(prev.repeatN || ""); rem.dataset.repeatUnit = prev.repeatUnit || ""; }
       }
     }
     return saved;
@@ -12395,7 +12560,7 @@
       ? '<div class="kd-row">' + kbTaskIcon("lecture") + '<input class="kd-clock" data-kd="start" type="time" value="' + kbHm(ev.start) + '" aria-label="Start"><span class="kd-arrow">→</span><input class="kd-clock" data-kd="end" type="time" value="' + kbHm(end) + '" aria-label="End"><span class="kd-dur">' + kbDurLabel(ev.dur || 60) + "</span></div>"
       : "";
     const note = '<textarea class="kd-note" data-kd="note" placeholder="Add description" aria-label="Description">' + deskEsc(kbNoteText(ev)) + "</textarea>";
-    const group = ev.lane === "occupied" ? "Occupied" : kbLaneName(ev.lane || "personal");
+    const group = ev.lane === "occupied" ? "Busy" : kbLaneName(ev.lane || "personal");
     const color = kbLaneColor(ev.lane || "personal");
     const off = (icon, label) => '<div class="kd-row is-off">' + (icon === "user" ? kbIcon("personal") : kdIcon(icon)) + "<span>" + label + "</span></div>";
     const picked = ev.task || "task";
@@ -12404,7 +12569,8 @@
     const title = '<input class="kd-name" value="' + deskEsc(ev.title) + '" placeholder="Event name" aria-label="Event name">';
     const date = '<div class="kd-sub kd-date"><span>' + deskEsc(kbDetailDate(ev)) + '</span><input class="kd-date-input" type="date" value="' + deskEsc(ev.iso || "") + '" aria-label="Date"></div>';
     const all = '<button type="button" class="kd-row kd-allday" data-kd="allday"><i class="kd-tog' + (ev.timed ? "" : " is-on") + '"></i><span>All-day</span></button>';
-    return '<aside class="kb-legend kb-detail"><div class="kd-top"><button type="button" class="kd-more" data-kd="more" aria-label="Edit event">' + kdIcon("ellipsis") + '</button></div><div class="kd-title">' + mark + title + "</div>" + iconMenu + when + date + all + '<div class="kd-row kd-tz" data-kd="tz" role="button" tabindex="0">' + kdIcon("earth") + "<span>" + deskEsc(kbTzLabel(ev)) + "</span></div>" + off("sync", "Repeat") + '<div class="kd-gap"></div>' + off("user", "Participants") + off("video", "Conferencing") + '<div class="kd-gap"></div><div class="kd-label">Description</div>' + note + '<div class="kd-gap"></div><div class="kd-row"><i class="kd-dot" style="background:' + color + '"></i><span>' + deskEsc(group) + '</span></div>' + kbVisRow(ev) + off("bell", "Reminders") + "</aside>";
+    const repeatRow = '<div class="kd-row kd-repeat' + (ev.repeat ? " is-set" : "") + '" data-kd="repeat" role="button" tabindex="0">' + kdIcon("sync") + "<span>" + deskEsc(kbRepeatLabel(ev)) + '</span><svg class="kd-repeat-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.2 6.2 8 10l3.8-3.8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
+    return '<aside class="kb-legend kb-detail"><div class="kd-top"><button type="button" class="kd-more" data-kd="more" aria-label="Edit event">' + kdIcon("ellipsis") + '</button></div><div class="kd-title">' + mark + title + "</div>" + iconMenu + when + date + all + '<div class="kd-row kd-tz" data-kd="tz" role="button" tabindex="0">' + kdIcon("earth") + "<span>" + deskEsc(kbTzLabel(ev)) + "</span></div>" + repeatRow + '<div class="kd-gap"></div>' + off("user", "Participants") + off("video", "Conferencing") + '<div class="kd-gap"></div><div class="kd-label">Description</div>' + note + '<div class="kd-gap"></div><div class="kd-row"><i class="kd-dot" style="background:' + color + '"></i><span>' + deskEsc(group) + '</span></div>' + kbVisRow(ev) + off("bell", "Reminders") + "</aside>";
   }
   function kbSide() {
     const draft = kbBox().draft;
@@ -12417,12 +12583,12 @@
     const aside = document.querySelector("#tlBody .kb-legend");
     if (aside) aside.outerHTML = kbSide();
     const key = kbBox().open;
-    document.querySelectorAll("#tlBody .nc-ev, #tlBody .nc-chip").forEach((el) => {
+    document.querySelectorAll("#tlBody .nc-ev, #tlBody .nc-chip, #tlBody .kb-chip").forEach((el) => {
       const ev = tlCache[Number(el.dataset.i)];
       el.classList.toggle("is-open", !!(key && ev && kbEventKey(ev) === key));
     });
   }
-  function kbOpenEvent(index, opts) {
+  function kbOpenEvent(index) {
     const ev = tlCache[index];
     if (!ev) return;
     kbBox().iconOpen = false;
@@ -12433,14 +12599,6 @@
     if (!fresh) return;
     kbBox().open = kbEventKey(fresh);
     kbPaintSide();
-    if (opts && opts.menu === false) return;
-    const anchor = document.querySelector(`#tlBody [data-i="${fresh.i}"]`);
-    if (!anchor) return;
-    const r = anchor.getBoundingClientRect();
-    setTimeout(() => {
-      const live = tlCache[fresh.i];
-      if (live && kbBox().open === kbEventKey(live)) kbShowEventMenu(live, r.left, r.bottom + 6);
-    }, 0);
   }
   function kbCloseDetail() {
     kbBox().iconOpen = false;
@@ -12455,8 +12613,8 @@
     document.addEventListener("pointerdown", (e) => {
       if (e.button !== 0) return;
       if (document.documentElement.dataset.theme !== "blue") return;
-      if (!e.target.closest(".kd-tz, .kd-tz-menu")) kbCloseTzMenu(false);
-      if (e.target.closest(".nc-ev, .nc-chip, .kb-legend, .nc-draft, .nc-all-draft, .kb-plus, .kb-menu, .kd-vis-menu, .kd-tz-menu")) return;
+      if (!e.target.closest(".kd-tz, .kd-tz-menu, .kd-repeat, .kd-repeat-menu, .kb-legend")) { kbCloseTzMenu(false); kbCloseRepeatMenu(false); }
+      if (e.target.closest(".nc-ev, .nc-chip, .kb-chip, .kb-legend, .nc-draft, .nc-all-draft, .kb-plus, .kb-menu, .kd-vis-menu, .kd-tz-menu, .kd-repeat-menu")) return;
       if (kbBox().draft) { kbCommitDraft(false); return; }
       if (kbBox().open == null) return;
       kbCloseDetail();
@@ -12479,7 +12637,9 @@
     }).join('');
     return `<div class="kb-table" style="--cols:${days.length}"><div class="kb-h kb-corner">Member</div>${head}${rows}</div>`;
   }
-  function kbMonth(items) {
+  function kbMonth() {
+    kbSeed();
+    tlCache = [];
     const focus = kbBox().focus;
     const first = new Date(focus.getFullYear(), focus.getMonth(), 1);
     const count = new Date(focus.getFullYear(), focus.getMonth() + 1, 0).getDate();
@@ -12490,7 +12650,10 @@
     const cells = Array.from({ length: count }, (_, n) => {
       const date = new Date(first.getFullYear(), first.getMonth(), n + 1);
       const iso = todoDateIso(date);
-      const chips = items.filter((item) => item.date === iso).map(kbChip).join('');
+      const chips = kbCollectDay(iso).map((ev) => {
+        const time = ev.timed ? `<small>${kbHm(ev.start)}</small>` : '';
+        return `<button type="button" class="kb-chip is-${ev.lane}${ev.done ? ' is-done' : ''}${kbBox().open === kbEventKey(ev) ? ' is-open' : ''}" data-i="${ev.i}" style="${kbHueCss(ev)}"><span class="kb-ico">${kbTaskIcon(ev.task)}</span><b>${deskEsc(ev.title)}</b>${time}</button>`;
+      }).join('');
       return `<div class="kb-cell${iso === today ? ' is-today' : ''}" data-kb-cell data-who="jess" data-iso="${iso}"><b>${n + 1}</b>${chips}</div>`;
     }).join('');
     return `<div class="kb-month">${names}${blanks}${cells}</div>`;
@@ -12519,6 +12682,18 @@
     if (a.getFullYear() === b.getFullYear()) return `${TODO_MONTHS_LONG[a.getMonth()]} – ${TODO_MONTHS_LONG[b.getMonth()]} ${b.getFullYear()}`;
     return `${TODO_MONTHS_LONG[a.getMonth()]} ${a.getFullYear()} – ${TODO_MONTHS_LONG[b.getMonth()]} ${b.getFullYear()}`;
   }
+  function kbCollectDay(iso) {
+    const events = tlEventsFor(iso).map((ev) => ({ ...ev, iso, lane: kbLaneOf(ev), task: kbTaskOf(ev), color: ev.rem?.dataset?.color || ev.item?.color || '', block: ev.rem?.dataset?.block === '1' || !!ev.item?.block, visibility: ev.rem?.dataset?.visibility || ev.item?.visibility || 'default', tz: ev.rem?.dataset?.tz || ev.item?.tz || '', repeat: ev.rem?.dataset?.repeat || ev.item?.repeat || '', repeatN: Number(ev.rem?.dataset?.repeatN || ev.item?.repeatN || 0) || 0, repeatUnit: ev.rem?.dataset?.repeatUnit || ev.item?.repeatUnit || '' }));
+    kbBox().extra.filter((item) => item.date === iso).forEach((item) => {
+      events.push({
+        kind: 'extra', extraId: item.id, title: item.title, note: '',
+        start: item.start || 0, timed: !!item.timed, dur: item.dur || 60, done: false,
+        iso, lane: item.lane || 'personal', task: item.task || 'task', color: item.color || '', block: !!item.block, visibility: item.visibility || 'default', tz: item.tz || '', repeat: item.repeat || '', repeatN: item.repeatN || 0, repeatUnit: item.repeatUnit || '',
+      });
+    });
+    events.forEach((ev) => { ev.i = tlCache.length; tlCache.push(ev); });
+    return events;
+  }
   function kbTimeGrid(days) {
     kbSeed();
     const todayIso = todoDateIso(new Date());
@@ -12526,16 +12701,7 @@
     tlCache = [];
     const packed = days.map((date) => {
       const iso = todoDateIso(date);
-      const events = tlEventsFor(iso).map((ev) => ({ ...ev, iso, lane: kbLaneOf(ev), task: kbTaskOf(ev), color: ev.rem?.dataset?.color || ev.item?.color || '', block: ev.rem?.dataset?.block === '1' || !!ev.item?.block, visibility: ev.rem?.dataset?.visibility || ev.item?.visibility || 'default', tz: ev.rem?.dataset?.tz || ev.item?.tz || '' }));
-      kbBox().extra.filter((item) => item.date === iso).forEach((item) => {
-        events.push({
-          kind: 'extra', extraId: item.id, title: item.title, note: '',
-          start: item.start || 0, timed: !!item.timed, dur: item.dur || 60, done: false,
-          iso, lane: item.lane || 'personal', task: item.task || 'task', color: item.color || '', block: !!item.block, visibility: item.visibility || 'default', tz: item.tz || '',
-        });
-      });
-      events.forEach((ev) => { ev.i = tlCache.length; tlCache.push(ev); });
-      return { date, iso, events };
+      return { date, iso, events: kbCollectDay(iso) };
     });
     const heads = packed.map((day) => {
       const today = day.iso === todayIso ? ' is-today' : '';
@@ -12574,7 +12740,7 @@
     const box = kbBox();
     const days = kbDays();
     const spans = ['day', 'week', 'month'].map((id) => `<button type="button" data-kb="span" data-kb-val="${id}" aria-pressed="${box.span === id}">${id[0].toUpperCase()}${id.slice(1)}</button>`).join('');
-    const body = box.span === 'month' ? kbMonth(kbItems()) : kbTimeGrid(days);
+    const body = box.span === 'month' ? kbMonth() : kbTimeGrid(days);
     const kept = host.dataset.ncTop;
     host.innerHTML = `<div class="kb kb-sched"><div class="kb-bar kb-calbar"><b class="kb-month-title">${kbMonthTitle(days)}</b><span style="flex:1"></span><div class="kb-seg">${spans}</div><button type="button" data-kb="today">Today</button><button type="button" data-kb="prev" aria-label="Previous">‹</button><button type="button" data-kb="next" aria-label="Next">›</button><button type="button" class="kb-plus" data-kb="add" aria-label="New event">+</button></div><div class="kb-split"><div class="kb-pane">${body}</div>${kbSide()}</div></div>`;
     const scroller = host.querySelector('.nc-scroll');
@@ -15210,7 +15376,7 @@
         return;
       }
       const kbCell = e.target.closest('#tail-home [data-kb-cell]');
-      if (kbCell && !e.target.closest('.kb-chip')) {
+      if (kbCell && !e.target.closest('.kb-chip') && !kbCell.closest('.kb-month')) {
         if (kbBox().suppress) { kbBox().suppress = false; return; }
         kbAdd(kbCell.dataset.who, kbCell.dataset.iso);
         return;
@@ -17869,7 +18035,8 @@
     const small = document.createElement('small');
     small.textContent = face ? face.blurb : p.blurb;
     copy.append(nm, small);
-    head.append(dirAvatar(p), copy, dirSummonBtn(p.name));
+    head.append(dirAvatar(p), copy);
+    if (!rich) head.append(dirSummonBtn(p.name));
     const tags = document.createElement('span');
     tags.className = 'dir-tags';
     (face ? face.tags : p.tags).forEach((tag) => {
@@ -17897,15 +18064,8 @@
       const post = dirLatestPost(p.name);
       const body = document.createElement('button');
       body.type = 'button';
-      body.className = 'dir-mod' + (post?.img ? '' : ' is-text');
+      body.className = 'dir-mod is-text';
       if (post) body.dataset.postIndex = String(DIR_POSTS.indexOf(post));
-      if (post?.img) {
-        const shot = document.createElement('img');
-        shot.className = 'dir-shot';
-        shot.alt = '';
-        shot.src = post.img;
-        body.appendChild(shot);
-      }
       const modCopy = document.createElement('span');
       modCopy.className = 'dir-mod-copy';
       if (post?.title) {
@@ -17923,8 +18083,10 @@
       if (modCopy.childNodes.length) body.appendChild(modCopy);
       const msg = followMessages(p.name)[0];
       card.append(head, body, ...(msg ? [followMsgEl(msg)] : []));
+    } else {
+      meta.appendChild(foot);
+      card.append(head);
     }
-    if (!rich) meta.appendChild(foot);
     card.append(meta);
     return card;
   }
