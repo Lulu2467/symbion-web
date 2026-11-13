@@ -2514,7 +2514,7 @@
   html[data-theme="blue"] #tail-home .kd-more:hover { background: #f3f4f6; color: #1a1d21; }
   html[data-theme="blue"] #tail-home .kd-more svg { width: 16px; height: 16px; }
   html[data-theme="blue"] #tail-home .kd-title {
-    display: flex; align-items: flex-start; gap: 8px; min-height: 40px; padding: 2px 12px 10px; border-bottom: 1px solid #ededec;
+    display: flex; align-items: flex-start; gap: 8px; min-height: 40px; padding: 14px 12px 10px; border-bottom: 1px solid #ededec;
   }
   html[data-theme="blue"] #tail-home .kd-title b,
   html[data-theme="blue"] #tail-home .kd-name {
@@ -11934,6 +11934,7 @@
     ['lab', 'Lab'],
     ['flag', 'Flag'],
     ['bell', 'Reminder'],
+    ['occupied', 'Busy'],
   ];
   function kbTaskOf(ev) {
     const chosen = ev.rem?.dataset?.task || ev.item?.task;
@@ -12635,7 +12636,7 @@
     const date = '<div class="kd-sub kd-date"><span>' + deskEsc(kbDetailDate(ev)) + '</span><input class="kd-date-input" type="date" value="' + deskEsc(ev.iso || "") + '" aria-label="Date"></div>';
     const all = '<button type="button" class="kd-row kd-allday" data-kd="allday"><i class="kd-tog' + (ev.timed ? "" : " is-on") + '"></i><span>All-day</span></button>';
     const repeatRow = '<div class="kd-row kd-repeat' + (ev.repeat ? " is-set" : "") + '" data-kd="repeat" role="button" tabindex="0">' + kdIcon("sync") + "<span>" + deskEsc(kbRepeatLabel(ev)) + '</span><svg class="kd-repeat-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.2 6.2 8 10l3.8-3.8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
-    return '<aside class="kb-legend kb-detail"><div class="kd-top"><button type="button" class="kd-more" data-kd="more" aria-label="Edit event">' + kdIcon("ellipsis") + '</button></div><div class="kd-title">' + mark + title + "</div>" + iconMenu + when + date + all + '<div class="kd-row kd-tz" data-kd="tz" role="button" tabindex="0">' + kdIcon("earth") + "<span>" + deskEsc(kbTzLabel(ev)) + "</span></div>" + repeatRow + '<div class="kd-gap"></div>' + off("user", "Participants") + off("video", "Conferencing") + '<div class="kd-gap"></div><div class="kd-label">Description</div>' + note + '<div class="kd-gap"></div><div class="kd-row"><i class="kd-dot" style="background:' + color + '"></i><span>' + deskEsc(group) + '</span></div>' + kbVisRow(ev) + off("bell", "Reminders") + "</aside>";
+    return '<aside class="kb-legend kb-detail"><div class="kd-title">' + mark + title + "</div>" + iconMenu + when + date + all + '<div class="kd-row kd-tz" data-kd="tz" role="button" tabindex="0">' + kdIcon("earth") + "<span>" + deskEsc(kbTzLabel(ev)) + "</span></div>" + repeatRow + '<div class="kd-gap"></div>' + off("user", "Participants") + off("video", "Conferencing") + '<div class="kd-gap"></div><div class="kd-label">Description</div>' + note + '<div class="kd-gap"></div><div class="kd-row"><i class="kd-dot" style="background:' + color + '"></i><span>' + deskEsc(group) + '</span></div>' + kbVisRow(ev) + off("bell", "Reminders") + "</aside>";
   }
   function kbSide() {
     const draft = kbBox().draft;
