@@ -5787,6 +5787,37 @@
   .desk-lane-name { font-weight: 650; background: #fff; }
   .desk-lane-name small { display: block; font-weight: 450; color: #8b9198; }
   .desk-cell { background: #fff; min-height: 72px; }
+  .desk-when { display: inline-flex; align-items: center; gap: 2px; }
+  .desk-when > .desk-views { margin-left: 10px; }
+  .desk-tools-end { display: inline-flex; align-items: center; gap: 8px; margin-left: auto; }
+  .desk-track { position: relative; display: grid; grid-column: 2 / -1; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); min-height: 72px; }
+  .desk-track .desk-cell { min-height: 100%; padding: 0; }
+  .desk-bar {
+    position: absolute; z-index: 1; box-sizing: border-box; min-width: 72px; height: 30px;
+    overflow: hidden; white-space: nowrap; padding: 2px 6px; font-size: 12px; line-height: 1.15;
+  }
+  .desk-drag {
+    position: absolute; top: 8px; height: 28px; z-index: 0; pointer-events: none;
+    border: 1px solid var(--green); border-radius: 8px; background: var(--green-tint);
+  }
+  .desk-cursor, .desk-bubble { position: absolute; z-index: 7; pointer-events: none; }
+  .desk-cursor {
+    padding: 3px 8px; border-radius: 999px; background: #1a1d21; color: #fff;
+    font-size: 12px; font-weight: 650; white-space: nowrap;
+  }
+  .desk-bubble {
+    width: 220px; padding: 10px 12px; border-radius: 12px; background: #fff;
+    border: 1px solid #e6e8ec; box-shadow: 0 10px 28px rgba(20,24,28,.12); color: #1c1f1d;
+  }
+  .desk-bubble b { display: block; font-size: 13px; }
+  .desk-bubble span { display: block; margin-top: 4px; color: #71777d; font-size: 12px; line-height: 1.4; }
+  .desk-task.type-document { background: #f3f8fb; color: #245a78; }
+  .desk-task.type-task { background: #f3faf7; color: #1f6b52; }
+  .desk-task.type-meeting { background: #fffaf5; color: #9a5b16; }
+  .desk-task.type-pod { background: #f7f5fb; color: #5c4d86; }
+  .desk-cal .desk-task { min-height: 0; margin-top: 4px; }
+  .desk-cal-day { min-height: 64px; border-radius: 8px; background: #fafbfc; padding: 6px; }
+  .g-occupied { background: #eef1f4 !important; color: #8b9198 !important; }
   .desk-task {
     display: block; width: 100%; text-align: left; border: 0; border-radius: 8px;
     background: var(--green-tint); color: var(--green-dark); padding: 6px 8px; font-size: 12px; font-weight: 650;
@@ -6344,6 +6375,13 @@
   #setHost [hidden] { display: none !important; }
   #setHost .set-primary { color: #fff; }
   #setHost .set-nav button[data-set][aria-current="page"] { background: var(--green-tint); color: var(--green); }
+  html[data-theme="blue"] #setHost .set-nav button[data-set]:hover {
+    background: #f6f7f8; color: #1d1d1f;
+  }
+  html[data-theme="blue"] #setHost .set-nav button[data-set][aria-current="page"],
+  html[data-theme="blue"] #setHost .set-nav button[data-set][aria-current="page"]:hover {
+    background: #f6f7f8; color: #3c7a94; font-weight: 650;
+  }
   .set-badge {
     display: inline-flex;
     align-items: center;
@@ -8151,38 +8189,82 @@
   .thread-head p, .from { margin: 2px 0 0; font-size: 12px; color: var(--muted); }
   .from { color: var(--green-dark); font-weight: 500; }
   .head-actions { margin-left: auto; display: flex; gap: 2px; }
-  #teamHost .ws-btn {
-    flex: none; height: 32px; padding: 0 12px; border: 1px solid #d5dde2; border-radius: 8px;
-    background: #fff; color: var(--green); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+  .mode-switch { display: inline-flex; gap: 6px; margin-left: 4px; }
+  .mode-switch[hidden] { display: none !important; }
+  .mode-switch button {
+    height: 28px; padding: 0 10px; border-radius: 8px; border: 1px solid #e6e8ec;
+    background: #fff; font-size: 13px; font-weight: 600; color: #3c434a;
   }
-  #teamHost .ws-btn:hover, #teamHost .ws-btn[aria-pressed="true"] { background: var(--green-tint); }
-  #teamHost .workspace { flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 16px; padding: 16px; background: #fff; }
-  #teamHost .workspace[hidden], #teamHost .log[hidden], #teamHost .composer[hidden] { display: none; }
-  #teamHost .ws-note, #teamHost .ws-empty { margin: 0; color: #8b919a; font-size: 13px; line-height: 1.45; }
-  #teamHost .ws-form, #teamHost .ws-card { display: grid; gap: 8px; padding: 16px; border: 1px solid #eceef1; border-radius: 12px; background: #fff; }
-  #teamHost .ws-form label { display: grid; gap: 4px; color: #8b919a; font-size: 12px; font-weight: 600; }
-  #teamHost .ws-form input, #teamHost .ws-form select {
-    height: 32px; box-sizing: border-box; border: 1px solid #e6e8ec; border-radius: 8px; padding: 0 8px;
-    background: #fff; color: #1a1d21; font: inherit; font-size: 14px; font-weight: 400;
+  .ws-page { flex: 1; min-height: 0; overflow: auto; padding: 16px 18px 32px; background: #f7f8fa; }
+  .ws-page[hidden], .log[hidden], .composer[hidden] { display: none !important; }
+  .ws-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
+  .ws-cards button {
+    display: flex; align-items: center; gap: 12px; width: 100%; min-height: 72px; text-align: left;
+    background: #fff; border: 1px solid #e6e8ec; border-radius: 12px; padding: 14px 16px; color: #1f1f1f;
   }
-  #teamHost .ws-add { display: flex; align-items: center; gap: 8px; }
-  #teamHost .ws-add input { flex: 1; min-width: 0; }
-  #teamHost .ws-add button, #teamHost .ws-save {
-    height: 32px; padding: 0 12px; border: 0; border-radius: 8px; background: var(--green); color: #fff;
-    font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; flex: none;
+  .ws-cards button[aria-pressed="true"] { border-color: #9ec3d4; background: #f3f8fb; }
+  .ws-card-ico { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; flex: none; }
+  .ws-card-ico svg { width: 18px; height: 18px; display: block; }
+  .ws-cards button[data-ws-card="info"] .ws-card-ico { background: #eef3f8; color: #245a78; }
+  .ws-cards button[data-ws-card="announcements"] .ws-card-ico { background: #fff4e8; color: #9a5b16; }
+  .ws-cards button[data-ws-card="documents"] .ws-card-ico { background: #eef8f3; color: #1f6b52; }
+  .ws-cards b { display: block; font-size: 14px; font-weight: 650; }
+  .ws-panel { margin: 0 0 16px; padding: 14px 16px; background: #fff; border: 1px solid #e6e8ec; border-radius: 12px; }
+  .ws-panel h3 { margin: 0 0 8px; font-size: 15px; }
+  .ws-panel p { margin: 0 0 8px; color: #3c434a; font-size: 13px; line-height: 1.5; }
+  .ws-ann { display: flex; gap: 8px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid #eef0f2; }
+  .ws-ann > div { flex: 1; min-width: 0; }
+  .ws-ann .ws-ann-text { line-height: 1.5; max-height: 4.5em; margin: 0; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+  .ws-ann.is-open .ws-ann-text { max-height: none; display: block; -webkit-line-clamp: unset; }
+  .ws-ann .meta { margin: 4px 0 0; color: #71777d; font-size: 12px; }
+  .ws-ann-more { width: 28px; height: 28px; flex: none; padding: 0; border: 0; border-radius: 8px; background: transparent; color: #71777d; }
+  .ws-ann-more svg { width: 16px; height: 16px; display: block; margin: 0 auto; }
+  .ws-ann.is-open .ws-ann-more svg { transform: rotate(180deg); }
+  .ws-ann-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .ws-ann-head h3 { margin: 0; }
+  .ws-ann-new, .ws-ann-actions button, .ws-pager button {
+    height: 28px; padding: 0 10px; border-radius: 8px; border: 1px solid #e6e8ec; background: #fff; font-size: 13px; font-weight: 600; color: #3c434a;
   }
-  #teamHost .ws-save { justify-self: start; }
-  #teamHost .ws-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  #teamHost .ws-chips button, #teamHost .ws-card i {
-    display: inline-flex; align-items: center; height: 28px; padding: 0 8px; border: 0; border-radius: 999px;
-    background: #f1f2f4; color: #656d76; font-style: normal; font-size: 12px; cursor: pointer;
+  .ws-ann-actions .ws-ann-post { background: #1f1f1f; color: #fff; border-color: #1f1f1f; }
+  .ws-head-tools { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+  .ws-ann-form { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+  .ws-ann-form input, .ws-ann-form textarea, .ws-edit-name, .ws-edit-desc, .ws-find {
+    width: 100%; border: 1px solid #e6e8ec; border-radius: 8px; background: #fff; font: inherit; color: #1a1d21;
   }
-  #teamHost .ws-card b { font-size: 14px; font-weight: 650; color: #1a1d21; }
-  #teamHost .ws-card small { color: #8b919a; font-size: 12px; }
-  #teamHost .ws-card .ws-chips button { cursor: default; }
-  html[data-theme="blue"] #teamHost .ws-btn, html[data-theme="blue"] #teamHost .ws-btn:hover, html[data-theme="blue"] #teamHost .ws-btn[aria-pressed="true"] { color: #3c7a94; }
-  html[data-theme="blue"] #teamHost .ws-btn[aria-pressed="true"] { background: #ebf5fa; border-color: #c5d4de; }
-  html[data-theme="blue"] #teamHost .ws-add button, html[data-theme="blue"] #teamHost .ws-save { background: #3c7a94; color: #fff; }
+  .ws-ann-form input, .ws-edit-name, .ws-find { height: 32px; padding: 0 8px; }
+  .ws-ann-form textarea { min-height: 72px; padding: 6px 8px; resize: vertical; }
+  .ws-ann-actions { display: flex; gap: 8px; }
+  .ws-ann-title { display: block; margin: 0 0 2px; font-size: 13px; font-weight: 650; }
+  .ws-info { display: flex; gap: 14px; align-items: flex-start; }
+  .ws-info .mosaic, .ws-face .mosaic, .ws-face .group-photo { width: 56px; height: 56px; border-radius: 8px; }
+  .ws-info h3 { margin: 0 0 4px; font-size: 16px; }
+  .ws-info-copy { flex: 1; min-width: 0; }
+  .ws-face { position: relative; width: 56px; height: 56px; flex: none; cursor: pointer; }
+  .ws-edit-desc { height: 52px; padding: 6px 8px; font-size: 13px; resize: none; }
+  .ws-edit-btn { width: 28px; height: 28px; margin-left: auto; flex: none; padding: 0; border: 0; border-radius: 8px; background: transparent; color: #71777d; }
+  .ws-edit-btn svg { width: 16px; height: 16px; display: block; margin: 0 auto; }
+  .ws-save { height: 28px; margin-top: 8px; padding: 0 12px; border: 0; border-radius: 8px; background: #1f1f1f; color: #fff; font-size: 13px; font-weight: 600; }
+  .ws-pager { display: flex; align-items: center; gap: 6px; }
+  .ws-pager button { width: 28px; padding: 0; }
+  .ws-pager button:disabled { color: #c4c4c4; }
+  .ws-pager span { min-width: 36px; text-align: center; color: #71777d; font-size: 12px; }
+  .ws-members { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 16px; margin-top: 14px; }
+  .ws-member { display: flex; align-items: center; gap: 8px; min-width: 0; }
+  .ws-member .av { width: 28px; height: 28px; border-radius: 6px; font-size: 10px; flex: none; }
+  .ws-member b { display: block; font-size: 13px; font-weight: 600; }
+  .ws-member small { display: block; color: #71777d; font-size: 11px; font-weight: 500; }
+  .ws-files { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+  .ws-files button {
+    display: flex; flex-direction: column; align-items: flex-start; gap: 4px; width: 100%; min-height: 72px; padding: 10px 12px;
+    border: 1px solid #e6e8ec; border-radius: 10px; background: #f7f8fa; text-align: left; font-size: 13px; color: #1f1f1f;
+  }
+  .ws-files button span { width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 650; }
+  .ws-files button small { color: #71777d; font-size: 12px; }
+  .ws-kanban h3 { margin: 0 0 10px; font-size: 16px; font-weight: 650; color: #1f1f1f; }
+  .ws-kanban .desk-tools { width: 100%; margin-bottom: 10px; }
+  .ws-kanban .desk-views { gap: 0; padding: 2px; border-radius: 9px; background: #f3f5f7; }
+  .ws-kanban .desk-views button[aria-pressed="true"] { background: #fff; color: var(--green-dark); }
+  .ws-kanban .desk-new > button { background: var(--green); color: #fff; border-radius: 8px; padding: 6px 12px; }
   .gi-modal {
     position: absolute; inset: 0; z-index: 30; display: flex; align-items: center; justify-content: center;
     padding: 24px; background: rgba(20, 24, 28, .45);
@@ -10555,7 +10637,9 @@
             <div class="subline" id="sub"></div>
             <button type="button" class="from" id="back" hidden></button>
           </div>
-          <button type="button" class="ws-btn" id="workspaceBtn" hidden aria-pressed="false">Workspace</button>
+          <div class="mode-switch" id="modeSwitch" hidden>
+            <button type="button" id="paneToggle">Workspace</button>
+          </div>
           <div class="head-actions">
             <button type="button" class="icon-btn" id="threadMore" aria-label="Conversation menu" aria-haspopup="menu"><svg class="thread-dots" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/></svg><span class="thread-dots-txt">⋯</span></button>
             <button type="button" class="icon-btn" id="searchBtn" aria-label="Search in chat" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16.5 20 20.5"/></svg></button>
@@ -10575,9 +10659,9 @@
           <div class="history-body" id="historyBody"></div>
         </div>
         <button type="button" class="announce clip" id="announce" hidden></button>
-        <section class="workspace" id="workspace" hidden aria-label="Workspace">
-          <div id="workspaceBody"></div>
-        </section>
+        <div class="ws-page" id="workspace" hidden></div>
+        <div class="desk-cursor" id="gCursor" hidden></div>
+        <div class="desk-bubble" id="gBubble" hidden></div>
         <div class="gi-modal" id="giModal" hidden>
           <div class="gi-sheet" role="dialog" aria-modal="true" aria-labelledby="giTitle">
             <div class="gi-top"><span class="gi-kicker">CREATE</span><button type="button" class="gi-x" data-gi="close" aria-label="Close">×</button></div>
@@ -20965,7 +21049,7 @@ const state = {
   id: 'hip', filter: 'all', query: '',
   finder: { query: '', slug: '' },
   panel: false, panelMode: 'info', chatSearch: false, chatQuery: '', historyKind: '', historyWho: '',
-  quote: null, modal: null, modalBack: null,
+  quote: null, modal: null, modalBack: null, pane: 'chat', wsCard: '', wsQuery: '', wsPreview: '', wsMemberPage: 1, wsAnnPage: 1, wsDocPage: 1, wsEditing: false, wsAnnounceOpen: {}, wsAnnounceCompose: false,
   mention: null, mentionIndex: 0, mentionStart: null,
   memberQ: '', announceOpen: false, notice: false, ctx: null, msgId: '', msgMode: '', msgX: 0, msgY: 0, pendingRecord: null, pendingJoinId: null,
   emailRows: [''], emailErrors: [''], emailWhere: ''
@@ -21252,6 +21336,269 @@ function syncTeamSend() {
   if (!btn) return;
   btn.classList.toggle('is-ready', $('compose').value.trim().length > 0);
 }
+const groupItems = {
+  hip: [
+    { id: 'g1', who: 'chris', title: 'Lecture 5', type: 'Meeting', date: '2026-11-11', end: '2026-11-11', startTime: '14:30', endTime: '16:00', notes: 'Room 6-120', see: 'group' },
+    { id: 'g2', who: 'jess', title: 'Reading report', type: 'Task', date: '2026-11-12', end: '2026-11-12', startTime: '09:00', endTime: '11:00', notes: '1,500 words', see: 'recipients' },
+    { id: 'g3', who: 'maya', title: 'Quiz draft', type: 'Document', date: '2026-11-12', end: '2026-11-13', startTime: '15:00', endTime: '10:00', notes: 'Short answers', fileName: 'quiz.pdf', see: 'admins' },
+    { id: 'g4', who: 'alex', title: 'Jet notes', type: 'Task', date: '2026-11-10', end: '2026-11-10', startTime: '10:00', endTime: '11:30', notes: 'Stay under the cap', see: 'recipients' }
+  ],
+  notes: [
+    { id: 'nkb', who: 'chris', title: 'Outline', type: 'Document', date: '2026-11-11', end: '2026-11-11', startTime: '10:00', endTime: '11:00', notes: 'Phase diagram page', see: 'group' },
+    { id: 'nkb2', who: 'jess', title: 'Quiz answers', type: 'Task', date: '2026-11-13', end: '2026-11-13', startTime: '16:00', endTime: '17:00', notes: 'After class', see: 'group' }
+  ],
+  qgp: [
+    { id: 'qkb', who: 'elena', title: 'Chapter 3', type: 'Meeting', date: '2026-11-12', end: '2026-11-12', startTime: '19:00', endTime: '20:00', notes: 'Phase diagram', see: 'group' }
+  ]
+};
+const personalBusy = [
+  { id: 'busy-chris', who: 'chris', date: '2026-11-13', end: '2026-11-13', startTime: '09:00', endTime: '10:00' },
+  { id: 'busy-maya', who: 'maya', date: '2026-11-10', end: '2026-11-10', startTime: '09:00', endTime: '10:30' },
+  { id: 'busy-alex', who: 'alex', date: '2026-11-11', end: '2026-11-11', startTime: '13:00', endTime: '14:30' },
+  { id: 'busy-priya', who: 'priya', date: '2026-11-12', end: '2026-11-12', startTime: '11:00', endTime: '12:00' }
+];
+let gFocus = new Date(2026, 10, 11);
+let gSpan = 'week';
+let gCanvas = 'timeline';
+let gStep = 1;
+let gType = 'Meeting';
+let gPub = 'group';
+let gSee = 'group';
+let gPlace = 'local';
+let gPicked = [];
+let gFileName = '';
+function gItems(id) { if (!groupItems[id]) groupItems[id] = []; return groupItems[id]; }
+function gMonday(date) {
+  const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  d.setDate(d.getDate() - ((d.getDay() + 6) % 7));
+  return d;
+}
+function gAddDays(date, n) { const d = new Date(date.getFullYear(), date.getMonth(), date.getDate()); d.setDate(d.getDate() + n); return d; }
+function gIso(date) { return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`; }
+function gDays() {
+  if (gSpan === 'day') return [new Date(gFocus.getFullYear(), gFocus.getMonth(), gFocus.getDate())];
+  if (gSpan === 'month') {
+    const start = new Date(gFocus.getFullYear(), gFocus.getMonth(), 1);
+    const count = new Date(gFocus.getFullYear(), gFocus.getMonth() + 1, 0).getDate();
+    return Array.from({ length: count }, (_, i) => gAddDays(start, i));
+  }
+  const start = gMonday(gFocus);
+  return Array.from({ length: 7 }, (_, i) => gAddDays(start, i));
+}
+function gRangeLabel() {
+  if (gSpan === 'day') return gFocus.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
+  if (gSpan === 'month') return gFocus.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  const start = gMonday(gFocus);
+  const end = gAddDays(start, 6);
+  const fmt = (d) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  return `${fmt(start)} – ${fmt(end)}, ${end.getFullYear()}`;
+}
+function gMinutes(time) { if (!time) return 0; const [h, m] = time.split(':').map(Number); return (h || 0) * 60 + (m || 0); }
+function gClock(mins) { const m = Math.max(0, Math.min(1435, mins)); return `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`; }
+function gCovers(item, iso) { return iso >= item.date && iso <= (item.end || item.date); }
+function gWhen(item) {
+  if (item.startTime && item.endTime) return `${item.startTime}–${item.endTime}`;
+  return 'All day';
+}
+function gCanSee(item, c) {
+  if (canReview(c) || item.who === ME || item.see === 'group') return true;
+  return false;
+}
+function gOutside(personId, c) {
+  if (!canReview(c) || personId === ME) return [];
+  const rows = [];
+  Object.keys(groupItems).forEach((gid) => {
+    if (gid === c.id) return;
+    gItems(gid).forEach((item) => { if (item.who === personId) rows.push(item); });
+  });
+  personalBusy.forEach((item) => { if (item.who === personId) rows.push(item); });
+  return rows;
+}
+function gSpanOf(item, isos) {
+  let startIdx = isos.indexOf(item.date);
+  const endIso = item.end || item.date;
+  let endIdx = isos.indexOf(endIso);
+  let startM = item.startTime ? gMinutes(item.startTime) : 0;
+  let endM = item.endTime ? gMinutes(item.endTime) : (endIso === item.date ? Math.min(1440, startM + 60) : 1440);
+  if (startIdx < 0 && item.date < isos[0]) { startIdx = 0; startM = 0; }
+  if (endIdx < 0 && endIso > isos[isos.length - 1]) { endIdx = isos.length - 1; endM = 1440; }
+  if (startIdx < 0 || endIdx < 0) return null;
+  if (endIdx === startIdx && endM <= startM) endM = Math.min(1440, startM + 30);
+  const left = (startIdx + startM / 1440) / isos.length;
+  const right = (endIdx + endM / 1440) / isos.length;
+  return { left: left * 100, width: Math.max((right - left) * 100, 0.4) };
+}
+function gPoint(track, clientX) {
+  const rect = track.getBoundingClientRect();
+  const slots = [...track.querySelectorAll('[data-g-slot]')];
+  const x = Math.min(Math.max(clientX - rect.left, 0), Math.max(rect.width - 0.5, 0));
+  const ratio = rect.width ? x / rect.width : 0;
+  const index = Math.min(slots.length - 1, Math.floor(ratio * slots.length));
+  const mins = Math.round(((ratio * slots.length) - index) * 1440 / 5) * 5;
+  return { ratio, iso: slots[index].dataset.gSlot, mins: Math.max(0, Math.min(1435, mins)), who: track.dataset.gWho };
+}
+function wsPageOf(list, size, key) {
+  const pages = Math.max(1, Math.ceil(list.length / size));
+  const page = Math.min(Math.max(1, state[key] || 1), pages);
+  state[key] = page;
+  return { page, pages, rows: list.slice((page - 1) * size, page * size) };
+}
+function wsPager(page, pages, key) {
+  if (pages <= 1) return '';
+  return `<div class="ws-pager"><button type="button" data-ws-page="${key}" data-ws-dir="prev" aria-label="Previous page"${page <= 1 ? ' disabled' : ''}>‹</button><span>${page} / ${pages}</span><button type="button" data-ws-page="${key}" data-ws-dir="next" aria-label="Next page"${page >= pages ? ' disabled' : ''}>›</button></div>`;
+}
+function paintGroupBoard() {
+  const host = $('workspace');
+  const c = current();
+  if (!host || !c || c.kind !== 'group') return;
+  const days = gDays();
+  const isos = days.map(gIso);
+  const cols = days.length;
+  const head = days.map((d) => `<span>${d.getDate()} ${d.toLocaleDateString('en-US', { weekday: 'short' })}</span>`).join('');
+  const peopleIds = c.members.filter((id) => people[id] && !people[id].agent && !people[id].twin);
+  peopleIds.sort((a, b) => (a === ME ? -1 : b === ME ? 1 : 0));
+  const lanes = peopleIds.map((id) => {
+    const cells = days.map((d) => `<div class="desk-cell" data-g-slot="${gIso(d)}"></div>`).join('');
+    const hits = gItems(c.id).filter((item) => item.who === id && isos.some((iso) => gCovers(item, iso)))
+      .map((item) => ({ item, outside: false }))
+      .concat(gOutside(id, c).filter((item) => isos.some((iso) => gCovers(item, iso))).map((item) => ({ item, outside: true })))
+      .map((row) => ({ ...row, span: gSpanOf(row.item, isos) })).filter((row) => row.span);
+    hits.sort((a, b) => a.span.left - b.span.left);
+    const rowEnds = [];
+    hits.forEach((row) => {
+      let level = rowEnds.findIndex((end) => end <= row.span.left + 0.2);
+      if (level < 0) { level = rowEnds.length; rowEnds.push(0); }
+      rowEnds[level] = row.span.left + row.span.width;
+      row.level = level;
+    });
+    const bars = hits.map((row) => {
+      const open = !row.outside && gCanSee(row.item, c);
+      const label = open ? row.item.title : 'Occupied';
+      const attr = row.outside ? 'data-g-busy="1"' : `data-g-item="${row.item.id}"`;
+      return `<button type="button" class="desk-task desk-bar${open ? ' type-' + esc(row.item.type).toLowerCase() : ' g-occupied'}" ${attr} style="left:${row.span.left}%;width:${row.span.width}%;top:${8 + row.level * 32}px">${esc(label)}</button>`;
+    }).join('');
+    return `<div class="desk-week lane" style="--cols:${cols}"><div class="desk-lane-name">${esc(people[id].name)}</div><div class="desk-track" data-g-track="${id}" style="--cols:${cols};min-height:${Math.max(56, rowEnds.length * 32 + 16)}px">${cells}${bars}</div></div>`;
+  }).join('');
+  let boardHtml = `<div class="desk-board"><div class="desk-week head" style="--cols:${cols}"><span>Member</span>${head}</div>${lanes}</div>`;
+  if (gCanvas === 'list') {
+    const rows = gItems(c.id).filter((item) => isos.some((iso) => gCovers(item, iso))).map((item) => ({ item, outside: false }));
+    peopleIds.forEach((id) => {
+      gOutside(id, c).filter((item) => isos.some((iso) => gCovers(item, iso))).forEach((item) => rows.push({ item, outside: true }));
+    });
+    boardHtml = '<div class="desk-list">' + (rows.map((row) => {
+      const open = !row.outside && gCanSee(row.item, c);
+      const attr = row.outside ? 'data-g-busy="1"' : `data-g-item="${row.item.id}"`;
+      return '<button type="button" class="' + (open ? 'type-' + esc(row.item.type).toLowerCase() : 'g-occupied') + '" ' + attr + '><span>' + esc(open ? row.item.title : 'Occupied') + '<em style="display:block;font-style:normal;color:#71777d;font-weight:500">' + esc(people[row.item.who].name) + ' · ' + esc(gWhen(row.item)) + '</em></span><small>' + esc(row.item.date) + '</small></button>';
+    }).join('') || '<p class="desk-empty">Nothing in this range.</p>') + '</div>';
+  } else if (gCanvas === 'calendar') {
+    const first = new Date(gFocus.getFullYear(), gFocus.getMonth(), 1);
+    const count = new Date(gFocus.getFullYear(), gFocus.getMonth() + 1, 0).getDate();
+    const lead = (first.getDay() + 6) % 7;
+    const cells = Array.from({ length: lead }, () => '<i></i>');
+    for (let n = 1; n <= count; n += 1) {
+      const iso = gIso(new Date(first.getFullYear(), first.getMonth(), n));
+      const hits = gItems(c.id).filter((item) => gCovers(item, iso) && gCanSee(item, c)).map((item) => ({ item, outside: false }));
+      if (canReview(c)) {
+        peopleIds.forEach((id) => {
+          gOutside(id, c).filter((item) => gCovers(item, iso)).forEach((item) => hits.push({ item, outside: true }));
+        });
+      }
+      cells.push('<div class="desk-cal-day' + (hits.length ? ' has' : '') + '"><button type="button">' + n + '</button>' + hits.map((row) => '<button type="button" class="desk-task' + (row.outside ? ' g-occupied' : ' type-' + esc(row.item.type).toLowerCase()) + '" ' + (row.outside ? 'data-g-busy="1"' : 'data-g-item="' + row.item.id + '"') + '>' + esc(row.outside ? 'Occupied' : row.item.title) + '</button>').join('') + '</div>');
+    }
+    boardHtml = '<div class="desk-cal">' + ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((d) => '<i>' + d + '</i>').join('') + cells.join('') + '</div>';
+  }
+  const files = [];
+  (c.messages || []).forEach((m) => { if (m.file) files.push({ name: m.file.name, size: m.file.size || '', by: people[m.who] ? people[m.who].name : '' }); });
+  (c.files || []).forEach((f) => { if (!files.some((x) => x.name === f.name)) files.push(f); });
+  gItems(c.id).forEach((item) => { if (item.fileName && gCanSee(item, c) && !files.some((f) => f.name === item.fileName)) files.push({ name: item.fileName, size: 'Shared file', by: people[item.who] ? people[item.who].name : '' }); });
+  const q = state.wsQuery.trim().toLowerCase();
+  const shownFiles = files.filter((f) => !q || f.name.toLowerCase().includes(q));
+  const owner = people[c.owner];
+  let panel = '';
+  if (state.wsCard === 'info') {
+    const humans = c.members.filter((id) => people[id] && !people[id].agent && !people[id].twin);
+    const memberPage = wsPageOf(humans, 8, 'wsMemberPage');
+    const memberHtml = memberPage.rows.map((id) => {
+      const p = people[id];
+      return `<div class="ws-member"><span class="av hue-${p.hue}">${esc(p.short)}</span><span><b>${esc(p.name)}</b><small>${esc(roleOf(c, id))}</small></span></div>`;
+    }).join('');
+    const pager = wsPager(memberPage.page, memberPage.pages, 'members');
+    const editIcon = '<button type="button" class="ws-edit-btn" data-ws-edit aria-label="Edit group"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 20h4l10.5-10.5a2.1 2.1 0 0 0-3-3L5 17v3Z"/><path d="m13.5 6.5 3 3"/></svg></button>';
+    const head = canReview(c) && state.wsEditing
+      ? `<label class="ws-face">${face(c)}<input id="wsPhoto" type="file" accept="image/*" hidden aria-label="Group photo"></label><div class="ws-info-copy"><input class="ws-edit-name" id="wsName" maxlength="40" value="${esc(c.name)}" aria-label="Group name"><textarea class="ws-edit-desc" id="wsDesc" maxlength="240" aria-label="Group description">${esc(c.description || '')}</textarea><button type="button" class="ws-save" data-ws-save>Save</button></div>`
+      : `${face(c)}<div class="ws-info-copy"><h3>${esc(c.name)}</h3><p>${esc(c.description || '这个群还没有简介。')}</p></div>${canReview(c) ? editIcon : ''}`;
+    panel = `<section class="ws-panel"><div class="ws-info">${head}${pager}</div><div class="ws-members">${memberHtml}</div></section>`;
+  } else if (state.wsCard === 'announcements') {
+    const list = (c.announcements && c.announcements.length)
+      ? c.announcements
+      : (c.announce ? [{ id: 'a0', who: c.owner, text: c.announce }] : []);
+    const annPage = wsPageOf(list, 3, 'wsAnnPage');
+    const rows = annPage.rows.map((item) => {
+      const open = !!state.wsAnnounceOpen[item.id];
+      const who = people[item.who] ? people[item.who].name : '';
+      const title = item.title ? `<b class="ws-ann-title">${esc(item.title)}</b>` : '';
+      return `<article class="ws-ann${open ? ' is-open' : ''}"><div>${title}<p class="ws-ann-text">${esc(item.text)}</p><p class="meta">${esc(who)}</p></div><button type="button" class="ws-ann-more" data-ws-ann="${esc(item.id)}" aria-label="${open ? 'Collapse announcement' : 'Expand announcement'}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></article>`;
+    }).join('');
+    const postBtn = canReview(c) ? '<button type="button" class="ws-ann-new" data-ws-ann-new>New announcement</button>' : '';
+    const form = canReview(c) && state.wsAnnounceCompose
+      ? `<div class="ws-ann-form"><input id="wsAnnTitle" maxlength="80" placeholder="Title" aria-label="Title"><textarea id="wsAnnBody" maxlength="2000" placeholder="Announcement" aria-label="Announcement"></textarea><div class="ws-ann-actions"><button type="button" class="ws-ann-post" data-ws-ann-post>Post</button><button type="button" data-ws-ann-cancel>Cancel</button></div></div>`
+      : '';
+    panel = `<section class="ws-panel"><div class="ws-ann-head"><h3>Announcements</h3><div class="ws-head-tools">${wsPager(annPage.page, annPage.pages, 'ann')}${postBtn}</div></div>${form}${rows || '<p class="meta">No announcements yet.</p>'}</section>`;
+  } else if (state.wsCard === 'documents') {
+    const docPage = wsPageOf(shownFiles, 8, 'wsDocPage');
+    const fileRows = docPage.rows.map((f) => `<button type="button" data-ws-file="${esc(f.name)}"><span>${esc(f.name)}</span><small>${esc(f.by)}${f.size ? ' · ' + esc(f.size) : ''}</small></button>`).join('') || '<p class="meta">No shared files yet.</p>';
+    panel = `<section class="ws-panel"><div class="ws-ann-head"><h3>Documents</h3><div class="ws-head-tools">${wsPager(docPage.page, docPage.pages, 'docs')}</div></div><input class="ws-find" id="wsDocQ" type="search" placeholder="Search shared files" value="${esc(state.wsQuery)}" aria-label="Search shared files"><div class="ws-files">${fileRows}</div></section>`;
+  }
+  host.innerHTML = `<div class="ws-cards">
+      <button type="button" data-ws-card="info" aria-pressed="${state.wsCard === 'info'}"><span class="ws-card-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 11v5M12 8h.01"/></svg></span><b>Info</b></button>
+      <button type="button" data-ws-card="announcements" aria-pressed="${state.wsCard === 'announcements'}"><span class="ws-card-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 10v4h3l7 4V6L8 10H5z"/><path d="M16.5 9.2a3.2 3.2 0 0 1 0 5.6"/></svg></span><b>Announcements</b></button>
+      <button type="button" data-ws-card="documents" aria-pressed="${state.wsCard === 'documents'}"><span class="ws-card-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3.5h7l5 5V20a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 20V5A1.5 1.5 0 0 1 7 3.5z"/><path d="M14 3.8V9h5M8 13h8M8 17h5"/></svg></span><b>Documents</b></button>
+    </div>
+    ${panel}
+    <div class="ws-kanban">
+      <h3>Kanban</h3>
+      <div class="desk-tools">
+        <div class="desk-when">
+          <button type="button" data-g-act="prev" aria-label="Previous">‹</button>
+          <span class="desk-range">${gRangeLabel()}</span>
+          <button type="button" data-g-act="next" aria-label="Next">›</button>
+          <button type="button" data-g-act="today">Today</button>
+          <div class="desk-views" role="group" aria-label="Range">
+            <button type="button" data-g-span="day" aria-pressed="${gSpan === 'day'}">Day</button>
+            <button type="button" data-g-span="week" aria-pressed="${gSpan === 'week'}">Week</button>
+            <button type="button" data-g-span="month" aria-pressed="${gSpan === 'month'}">Month</button>
+          </div>
+        </div>
+        <div class="desk-tools-end">
+          <div class="desk-views" role="group" aria-label="Canvas">
+            <button type="button" data-g-canvas="timeline" aria-pressed="${gCanvas === 'timeline'}">Timeline</button>
+            <button type="button" data-g-canvas="calendar" aria-pressed="${gCanvas === 'calendar'}">Calendar</button>
+            <button type="button" data-g-canvas="list" aria-pressed="${gCanvas === 'list'}">List</button>
+          </div>
+          <div class="desk-new"><button type="button" data-g-act="new">New item</button></div>
+        </div>
+      </div>
+      ${boardHtml}
+    </div>`;
+  host.querySelectorAll('.ws-ann').forEach((row) => {
+    const text = row.querySelector('.ws-ann-text');
+    const btn = row.querySelector('.ws-ann-more');
+    if (!text || !btn) return;
+    if (row.classList.contains('is-open')) { btn.hidden = false; return; }
+    const probe = text.cloneNode(true);
+    probe.style.maxHeight = 'none';
+    probe.style.webkitLineClamp = 'unset';
+    probe.style.display = 'block';
+    probe.style.position = 'absolute';
+    probe.style.visibility = 'hidden';
+    probe.style.width = text.clientWidth + 'px';
+    text.parentElement.appendChild(probe);
+    const full = probe.scrollHeight;
+    probe.remove();
+    btn.hidden = full <= text.clientHeight + 1;
+  });
+}
+
 function renderChrome() {
   const composer = $('composer');
   if (composer) composer.hidden = !!state.notice;
@@ -21271,9 +21618,9 @@ function renderChrome() {
     $('chatSearch').hidden = true;
     teamRoot.querySelector('.thread').classList.remove('history-on');
     $('panel').hidden = true;
-    const wsOff = $('workspaceBtn');
-    if (wsOff) { wsOff.hidden = true; wsOff.setAttribute('aria-pressed', 'false'); }
-    state.workspace = false;
+    const modeOff = $('modeSwitch');
+    if (modeOff) modeOff.hidden = true;
+    state.pane = 'chat';
     return;
   }
   const c = current();
@@ -21307,13 +21654,15 @@ function renderChrome() {
   $('threadMore').setAttribute('aria-label', 'Conversation menu');
   $('threadMore').setAttribute('aria-pressed', document.documentElement.dataset.theme === 'blue' && state.panel ? 'true' : 'false');
   $('searchBtn').setAttribute('aria-pressed', state.chatSearch ? 'true' : 'false');
-  const wsBtn = $('workspaceBtn');
-  const wsOn = c.kind === 'group' && !!state.workspace;
-  if (c.kind !== 'group') state.workspace = false;
-  if (wsBtn) {
-    wsBtn.hidden = c.kind !== 'group';
-    wsBtn.setAttribute('aria-pressed', wsOn ? 'true' : 'false');
+  if (c.kind !== 'group') state.pane = 'chat';
+  const onWorkspace = c.kind === 'group' && state.pane === 'workspace';
+  const mode = $('modeSwitch');
+  if (mode) {
+    mode.hidden = c.kind !== 'group';
+    const toggle = $('paneToggle');
+    if (toggle) toggle.textContent = onWorkspace ? 'Chat' : 'Workspace';
   }
+  if (onWorkspace) $('announce').hidden = true;
   $('chatSearch').hidden = !state.chatSearch;
   teamRoot.querySelector('.thread').classList.toggle('history-on', state.chatSearch);
   $('panel').hidden = !state.panel || state.chatSearch;
@@ -21641,62 +21990,22 @@ function switches(c) {
   return `<div class="rowline"><span>Mute</span><button type="button" class="switch" data-switch="muted" aria-pressed="${c.muted ? 'true' : 'false'}" aria-label="Mute"><i></i></button></div>
     <div class="rowline"><span>Pin</span><button type="button" class="switch" data-switch="pinned" aria-pressed="${c.pinned ? 'true' : 'false'}" aria-label="Pin"><i></i></button></div>`;
 }
-const WS_KINDS = ['File', 'Meeting', 'Document', 'Pod'];
-function ensureWsDraft(c) {
-  if (!state.wsDraft || state.wsDraft.group !== c.id) {
-    state.wsDraft = { group: c.id, title: '', who: (c.members && c.members[0]) || '', kind: 'File', itemName: '', items: [] };
-  }
-  return state.wsDraft;
-}
-function captureWsDraft() {
-  const form = $('wsForm');
-  if (!form || !state.wsDraft) return;
-  state.wsDraft.title = form.elements.title.value;
-  state.wsDraft.who = form.elements.who.value;
-  state.wsDraft.kind = form.elements.kind.value;
-  state.wsDraft.itemName = form.elements.item.value;
-}
-function renderWorkspace() {
-  const host = $('workspaceBody');
-  const c = current();
-  if (!host || !c || c.kind !== 'group') return;
-  captureWsDraft();
-  const draft = ensureWsDraft(c);
-  const manage = canReview(c);
-  const tasks = c.tasks || [];
-  const members = (c.members || []).map((id) => `<option value="${esc(id)}"${id === draft.who ? ' selected' : ''}>${esc(person(id)?.name || id)}</option>`).join('');
-  const kinds = WS_KINDS.map((kind) => `<option${kind === draft.kind ? ' selected' : ''}>${kind}</option>`).join('');
-  const chips = draft.items.map((item, i) => `<button type="button" data-ws-remove="${i}">${esc(item.kind)} · ${esc(item.name)} ×</button>`).join('');
-  const legacyForm = `<form class="ws-form" id="wsForm">
-    <label>Task<input name="title" maxlength="80" value="${esc(draft.title)}" autocomplete="off"></label>
-    <label>Assign to<select name="who">${members}</select></label>
-    <label>Add to this task<div class="ws-add"><select name="kind">${kinds}</select><input name="item" maxlength="80" placeholder="File, meeting, or note" value="${esc(draft.itemName)}" autocomplete="off"><button type="button" data-ws="add-item">Add</button></div></label>
-    ${chips ? `<div class="ws-chips">${chips}</div>` : ''}
-    <button type="submit" class="ws-save">Add task</button>
-  </form>`;
-  const form = manage ? (document.documentElement.dataset.theme === 'blue' ? '<button type="button" class="ws-save" data-ws="new">Add task</button>' : legacyForm) : '<p class="ws-note">Only the owner and admins can add tasks.</p>';
-  const cards = tasks.length ? tasks.map((task) => {
-    const bits = (task.items || []).map((item) => `<i>${esc(item.kind)} · ${esc(item.name)}</i>`).join('');
-    const when = [task.start, task.startTime].filter(Boolean).join(' ');
-    const end = [task.end, task.endTime].filter(Boolean).join(' ');
-    const span = when ? (end ? `${when} – ${end}` : when) : '';
-    const names = (task.recipients || (task.who ? [task.who] : [])).map((id) => person(id)?.name || id).filter(Boolean).join(', ');
-    const meta = [task.kind, span].filter(Boolean).join(' · ');
-    return `<article class="ws-card"><b>${esc(task.title)}</b>${meta ? `<small>${esc(meta)}</small>` : ''}<small>${esc(names || person(task.who)?.name || task.who || '')}</small>${task.details ? `<small>${esc(task.details)}</small>` : ''}${bits ? `<div class="ws-chips">${bits}</div>` : ''}</article>`;
-  }).join('') : '<p class="ws-empty">还没有任务。</p>';
-  host.innerHTML = form + cards;
-}
 let gi = null;
-function openGroupItem() {
+function openGroupItem(preset) {
   const c = current();
-  if (!c || c.kind !== 'group' || !canReview(c) || document.documentElement.dataset.theme !== 'blue') return;
-  gi = { step: 1, type: 'Task', who: [], group: c.id, note: '' };
+  if (!c || c.kind !== 'group') return;
+  if (!canReview(c)) { toast('Only the owner or an admin can assign a group task.'); return; }
+  gi = { step: 1, type: 'Task', who: preset && preset.who ? [preset.who] : [], group: c.id, note: '' };
   const modal = $('giModal');
   if (!modal) return;
   ['giStart', 'giStartTime', 'giEnd', 'giEndTime', 'giName', 'giDetails'].forEach((id) => {
     const el = $(id);
     if (el) el.value = '';
   });
+  if (preset && preset.date && $('giStart')) $('giStart').value = preset.date;
+  if (preset && preset.end && $('giEnd')) $('giEnd').value = preset.end;
+  if (preset && preset.startTime && $('giStartTime')) $('giStartTime').value = preset.startTime;
+  if (preset && preset.endTime && $('giEndTime')) $('giEndTime').value = preset.endTime;
   modal.hidden = false;
   paintGroupItem();
   $('giStart')?.focus();
@@ -21772,33 +22081,29 @@ function giCreate() {
   }
   const c = chats.find((item) => item.id === gi.group);
   if (!c || !canReview(c)) return;
-  if (!c.tasks) c.tasks = [];
   const who = gi.who.slice();
-  c.tasks.unshift({
-    id: 't' + Date.now(),
-    title: $('giName').value.trim(),
-    details: $('giDetails').value.trim(),
-    kind: gi.type,
-    who: who[0],
-    recipients: who,
-    start: $('giStart').value,
-    startTime: $('giStartTime').value,
-    end: $('giEnd').value,
-    endTime: $('giEndTime').value,
-    items: []
+  const title = $('giName').value.trim();
+  const start = $('giStart').value;
+  who.forEach((id) => {
+    gItems(c.id).push({
+      id: uid(), who: id, title, type: gi.type, date: start, end: $('giEnd').value || start,
+      startTime: $('giStartTime').value, endTime: $('giEndTime').value,
+      notes: $('giDetails').value.trim(), see: 'group'
+    });
   });
   closeGroupItem();
-  renderWorkspace();
+  paintGroupBoard();
 }
 function syncWorkspace() {
-  const on = !!state.workspace && !state.notice && current()?.kind === 'group';
+  const c = current();
+  const on = !state.notice && c && c.kind === 'group' && state.pane === 'workspace';
   const pane = $('workspace');
   if (pane) pane.hidden = !on;
   const log = $('log');
   if (log) log.hidden = on;
   const composer = $('composer');
   if (composer && !state.notice) composer.hidden = on;
-  if (on) renderWorkspace();
+  if (on) paintGroupBoard();
 }
 function render(scroll) {
   if (!chats.length) {
@@ -21824,8 +22129,10 @@ function openChat(id) {
     c.unread = 0;
     state.chatSearch = false;
     state.chatQuery = '';
-    state.workspace = false;
-    state.wsDraft = null;
+    state.pane = 'chat';
+    state.wsCard = '';
+    state.wsEditing = false;
+    state.wsAnnounceCompose = false;
     state.historyKind = '';
     state.historyWho = '';
     const box = $('chatQ');
@@ -22446,36 +22753,186 @@ $('rows').addEventListener('contextmenu', (e) => {
   e.preventDefault();
   openCtx(row.dataset.open || row.dataset.more, e.clientX, e.clientY);
 });
-$('workspaceBtn')?.addEventListener('click', () => {
-  const c = current();
-  if (!c || c.kind !== 'group') return;
-  state.workspace = !state.workspace;
-  if (state.workspace) {
+let gDrag = null;
+function gPlaceTip(el, x, y) {
+  const host = teamRoot.querySelector('.thread');
+  if (!host) return;
+  const rect = host.getBoundingClientRect();
+  const sx = rect.width / host.offsetWidth || 1;
+  const sy = rect.height / host.offsetHeight || 1;
+  el.style.left = `${Math.max(8, (x - rect.left) / sx + 12)}px`;
+  el.style.top = `${Math.max(8, (y - rect.top) / sy + 16)}px`;
+}
+$('modeSwitch').addEventListener('click', () => {
+  if ($('modeSwitch').hidden) return;
+  state.pane = state.pane === 'workspace' ? 'chat' : 'workspace';
+  if (state.pane === 'workspace') {
     state.panel = false;
     state.chatSearch = false;
   }
   render(false);
 });
-$('workspace')?.addEventListener('click', (e) => {
-  if (e.target.closest('[data-ws="new"]')) { openGroupItem(); return; }
-  const add = e.target.closest('[data-ws="add-item"]');
-  const remove = e.target.closest('[data-ws-remove]');
-  if (!add && !remove) return;
+$('workspace').addEventListener('input', (e) => {
+  if (e.target.id !== 'wsDocQ') return;
+  state.wsQuery = e.target.value;
+  state.wsDocPage = 1;
+  const start = e.target.selectionStart;
+  paintGroupBoard();
+  const box = $('wsDocQ');
+  if (box) { box.focus(); box.setSelectionRange(start, start); }
+});
+$('workspace').addEventListener('change', (e) => {
+  if (e.target.id !== 'wsPhoto') return;
+  const file = e.target.files && e.target.files[0];
   const c = current();
-  if (!c || !canReview(c)) return;
-  captureWsDraft();
-  const draft = ensureWsDraft(c);
-  if (add) {
-    const name = draft.itemName.trim();
-    if (!name) return;
-    draft.items.push({ kind: draft.kind, name });
-    draft.itemName = '';
-    const box = $('wsForm');
-    if (box) box.elements.item.value = '';
-  } else {
-    draft.items.splice(Number(remove.dataset.wsRemove), 1);
+  if (!file || !canReview(c)) return;
+  const reader = new FileReader();
+  reader.onload = () => { c.photo = reader.result; renderList(); paintGroupBoard(); };
+  reader.readAsDataURL(file);
+});
+$('workspace').addEventListener('click', (e) => {
+  if (e.target.closest('[data-ws-edit]')) {
+    if (!canReview(current())) return;
+    state.wsEditing = true;
+    paintGroupBoard();
+    return;
   }
-  renderWorkspace();
+  if (e.target.closest('[data-ws-save]')) {
+    const c = current();
+    if (!canReview(c)) return;
+    const name = $('wsName').value.trim();
+    if (!name) { toast('Group name is required.'); return; }
+    c.name = name;
+    c.description = $('wsDesc').value.trim();
+    state.wsEditing = false;
+    renderList();
+    renderChrome();
+    paintGroupBoard();
+    return;
+  }
+  if (e.target.closest('[data-ws-ann-new]')) {
+    if (!canReview(current())) return;
+    state.wsAnnounceCompose = !state.wsAnnounceCompose;
+    paintGroupBoard();
+    return;
+  }
+  if (e.target.closest('[data-ws-ann-cancel]')) {
+    state.wsAnnounceCompose = false;
+    paintGroupBoard();
+    return;
+  }
+  if (e.target.closest('[data-ws-ann-post]')) {
+    const c = current();
+    if (!canReview(c)) return;
+    const title = ($('wsAnnTitle') && $('wsAnnTitle').value || '').trim();
+    const text = ($('wsAnnBody') && $('wsAnnBody').value || '').trim();
+    if (!title || !text) { toast('Title and announcement are required.'); return; }
+    if (!c.announcements) c.announcements = c.announce ? [{ id: 'a0', who: c.owner, text: c.announce }] : [];
+    c.announcements.unshift({ id: uid(), who: ME, title, text });
+    c.announce = title;
+    state.wsAnnounceCompose = false;
+    state.wsAnnPage = 1;
+    renderChrome();
+    return;
+  }
+  const ann = e.target.closest('[data-ws-ann]');
+  if (ann) {
+    const id = ann.dataset.wsAnn;
+    state.wsAnnounceOpen[id] = !state.wsAnnounceOpen[id];
+    paintGroupBoard();
+    return;
+  }
+  const pageBtn = e.target.closest('[data-ws-page]');
+  if (pageBtn && !pageBtn.disabled) {
+    const delta = pageBtn.dataset.wsDir === 'next' ? 1 : -1;
+    if (pageBtn.dataset.wsPage === 'members') state.wsMemberPage += delta;
+    if (pageBtn.dataset.wsPage === 'ann') state.wsAnnPage += delta;
+    if (pageBtn.dataset.wsPage === 'docs') state.wsDocPage += delta;
+    paintGroupBoard();
+    return;
+  }
+  const card = e.target.closest('[data-ws-card]');
+  if (card) {
+    state.wsCard = state.wsCard === card.dataset.wsCard ? '' : card.dataset.wsCard;
+    if (state.wsCard !== 'announcements') state.wsAnnounceCompose = false;
+    paintGroupBoard();
+    return;
+  }
+  const fileBtn = e.target.closest('[data-ws-file]');
+  if (fileBtn) { toast('Open file · ' + fileBtn.dataset.wsFile); return; }
+  const span = e.target.closest('[data-g-span]');
+  if (span) { gSpan = span.dataset.gSpan; paintGroupBoard(); return; }
+  const canvas = e.target.closest('[data-g-canvas]');
+  if (canvas) { gCanvas = canvas.dataset.gCanvas; paintGroupBoard(); return; }
+  const busy = e.target.closest('[data-g-busy]');
+  if (busy) { toast('This time is taken.'); return; }
+  const item = e.target.closest('[data-g-item]');
+  if (item) {
+    const row = gItems(current().id).find((x) => x.id === item.dataset.gItem);
+    if (!row) return;
+    if (!gCanSee(row, current())) { toast('This group time is taken.'); return; }
+    if (row.type === 'Document' && row.fileName) { toast('Open file · ' + row.fileName); return; }
+    toast(row.title + ' · ' + row.type + ' · ' + gWhen(row) + ' · ' + people[row.who].name);
+    return;
+  }
+  const act = e.target.closest('[data-g-act]');
+  if (!act) return;
+  if (act.dataset.gAct === 'new') { openGroupItem(); return; }
+  if (act.dataset.gAct === 'today') { gFocus = new Date(); paintGroupBoard(); return; }
+  const step = gSpan === 'month' ? 0 : (gSpan === 'day' ? 1 : 7);
+  if (gSpan === 'month') gFocus = new Date(gFocus.getFullYear(), gFocus.getMonth() + (act.dataset.gAct === 'next' ? 1 : -1), 1);
+  else gFocus = gAddDays(gFocus, act.dataset.gAct === 'next' ? step : -step);
+  paintGroupBoard();
+});
+$('workspace').addEventListener('pointerdown', (e) => {
+  const track = e.target.closest('[data-g-track]');
+  if (!track || e.target.closest('[data-g-item]') || e.target.closest('[data-g-busy]')) { gDrag = null; return; }
+  gDrag = { track, start: gPoint(track, e.clientX), x: e.clientX, moved: false };
+});
+$('workspace').addEventListener('pointermove', (e) => {
+  const bubble = $('gBubble');
+  const cursor = $('gCursor');
+  const card = e.target.closest('[data-g-item]');
+  if (card && !gDrag && bubble) {
+    const row = gItems(current().id).find((x) => x.id === card.dataset.gItem);
+    if (row && gCanSee(row, current())) {
+      if (cursor) cursor.hidden = true;
+      bubble.hidden = false;
+      bubble.innerHTML = '<b>' + esc(row.title) + '</b><span>' + esc(row.type) + ' · ' + esc(gWhen(row)) + '</span><span>' + esc(people[row.who].name) + ' · ' + esc(current().name) + '</span>' + (row.notes ? '<span>' + esc(row.notes) + '</span>' : '');
+      gPlaceTip(bubble, e.clientX, e.clientY);
+    }
+    return;
+  }
+  if (bubble) bubble.hidden = true;
+  const track = (gDrag && gDrag.track) || e.target.closest('[data-g-track]');
+  if (!track || !cursor) { if (cursor) cursor.hidden = true; return; }
+  const point = gPoint(track, e.clientX);
+  const day = new Date(point.iso + 'T00:00:00');
+  cursor.hidden = false;
+  cursor.textContent = day.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric' }) + ' · ' + gClock(point.mins);
+  gPlaceTip(cursor, e.clientX, e.clientY);
+  if (!gDrag) return;
+  if (Math.abs(e.clientX - gDrag.x) > 4) gDrag.moved = true;
+  if (!gDrag.moved) return;
+  const preview = gDrag.track.querySelector('.desk-drag') || gDrag.track.appendChild(Object.assign(document.createElement('div'), { className: 'desk-drag' }));
+  const end = gPoint(track, e.clientX);
+  const from = Math.min(gDrag.start.ratio, end.ratio);
+  preview.style.left = (from * 100) + '%';
+  preview.style.width = Math.max((Math.max(gDrag.start.ratio, end.ratio) - from) * 100, 0.6) + '%';
+});
+$('workspace').addEventListener('pointerup', (e) => {
+  if (!gDrag) return;
+  const drag = gDrag;
+  gDrag = null;
+  const ghost = drag.track.querySelector('.desk-drag');
+  if (ghost) ghost.remove();
+  if (!drag.moved) return;
+  const end = gPoint(drag.track, e.clientX);
+  const pair = drag.start.iso < end.iso || (drag.start.iso === end.iso && drag.start.mins <= end.mins) ? [drag.start, end] : [end, drag.start];
+  const startAt = pair[0];
+  const finish = pair[1];
+  if (startAt.iso === finish.iso && finish.mins - startAt.mins < 15) finish.mins = Math.min(1435, startAt.mins + 30);
+  openGroupItem({ who: drag.start.who, date: startAt.iso, end: finish.iso === startAt.iso ? '' : finish.iso, startTime: gClock(startAt.mins), endTime: gClock(finish.mins) });
 });
 $('giModal')?.addEventListener('click', (e) => {
   if (e.target.id === 'giModal' || e.target.closest('[data-gi="close"]') || e.target.closest('[data-gi="cancel"]')) {
@@ -22502,21 +22959,6 @@ $('giModal')?.addEventListener('click', (e) => {
 });
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && $('giModal') && !$('giModal').hidden) closeGroupItem();
-});
-$('workspace')?.addEventListener('submit', (e) => {
-  const form = e.target.closest('#wsForm');
-  if (!form) return;
-  e.preventDefault();
-  const c = current();
-  if (!c || !canReview(c)) return;
-  captureWsDraft();
-  const draft = ensureWsDraft(c);
-  const title = draft.title.trim();
-  if (!title) return;
-  if (!c.tasks) c.tasks = [];
-  c.tasks.unshift({ id: 't' + Date.now(), title, who: draft.who, items: draft.items.slice() });
-  state.wsDraft = null;
-  renderWorkspace();
 });
 $('threadMore').addEventListener('click', (e) => {
   e.stopPropagation();
