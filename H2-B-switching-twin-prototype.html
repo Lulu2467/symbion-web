@@ -2358,6 +2358,47 @@
     width: 176px; flex: none; overflow: auto; border-left: 1px solid #ededec; padding: 10px 10px 12px;
   }
   html[data-theme="blue"] #tail-home .kb-legend b { display: block; font-size: 12px; font-weight: 650; color: #1d1d1f; }
+  html[data-theme="blue"] #tail-home .kb-detail { width: 300px; padding: 0 0 12px; background: #fff; }
+  html[data-theme="blue"] #tail-home .kd-top {
+    display: flex; align-items: center; height: 36px; padding: 0 12px; font-size: 13px; font-weight: 650; color: #1d1d1f;
+  }
+  html[data-theme="blue"] #tail-home .kd-top > svg { width: 12px; height: 12px; margin-left: 4px; }
+  html[data-theme="blue"] #tail-home .kd-more { margin-left: auto; display: flex; color: #8b9198; }
+  html[data-theme="blue"] #tail-home .kd-more svg { width: 16px; height: 16px; }
+  html[data-theme="blue"] #tail-home .kd-title {
+    display: flex; align-items: flex-start; gap: 8px; min-height: 40px; padding: 2px 12px 10px; border-bottom: 1px solid #ededec;
+  }
+  html[data-theme="blue"] #tail-home .kd-title b {
+    min-width: 0; font-size: 15px; font-weight: 650; line-height: 20px; color: #1d1d1f;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  html[data-theme="blue"] #tail-home .kd-mark { width: 18px; height: 18px; margin-top: 1px; display: flex; align-items: center; justify-content: center; flex: none; }
+  html[data-theme="blue"] #tail-home .kd-mark svg { width: 16px; height: 16px; }
+  html[data-theme="blue"] #tail-home .kd-row {
+    display: flex; align-items: center; gap: 10px; min-height: 32px; padding: 0 12px; font-size: 13px; color: #1d1d1f;
+  }
+  html[data-theme="blue"] #tail-home .kd-row > svg,
+  html[data-theme="blue"] #tail-home .kd-row > .kb-ico svg { width: 16px; height: 16px; flex: none; color: #8b9198; }
+  html[data-theme="blue"] #tail-home .kd-row.is-off,
+  html[data-theme="blue"] #tail-home .kd-row.is-off svg { color: #c5c5c7; }
+  html[data-theme="blue"] #tail-home .kd-row span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  html[data-theme="blue"] #tail-home .kd-sub { padding: 0 12px 4px 38px; font-size: 13px; line-height: 18px; color: #1d1d1f; }
+  html[data-theme="blue"] #tail-home .kd-arrow { color: #8b9198; }
+  html[data-theme="blue"] #tail-home .kd-time { margin-left: auto; flex: none; color: #8b9198; font-size: 12px; }
+  html[data-theme="blue"] #tail-home .kd-gap { height: 8px; border-top: 1px solid #ededec; margin-top: 4px; }
+  html[data-theme="blue"] #tail-home .kd-label { padding: 8px 12px 2px; font-size: 12px; color: #8b9198; }
+  html[data-theme="blue"] #tail-home .kd-note { min-height: 28px; padding: 0 12px 8px; font-size: 13px; line-height: 18px; color: #1d1d1f; }
+  html[data-theme="blue"] #tail-home .kd-dot { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+  html[data-theme="blue"] #tail-home .kd-tog { width: 28px; height: 16px; border-radius: 8px; background: #e6e6e8; position: relative; flex: none; }
+  html[data-theme="blue"] #tail-home .kd-tog::after {
+    content: ""; position: absolute; top: 2px; left: 2px; width: 12px; height: 12px; border-radius: 50%; background: #fff;
+    box-shadow: 0 1px 2px rgba(20, 24, 28, .25);
+  }
+  html[data-theme="blue"] #tail-home .kd-tog.is-on { background: #3c7a94; }
+  html[data-theme="blue"] #tail-home .kd-tog.is-on::after { left: 14px; }
+  html[data-theme="blue"] #tail-home .kd-busy { padding-left: 38px; }
+  html[data-theme="blue"] #tail-home .kb-sched .nc-ev.is-open,
+  html[data-theme="blue"] #tail-home .kb-sched .nc-chip.is-open { box-shadow: inset 0 0 0 1.5px currentColor; }
   html[data-theme="blue"] #tail-home .kb-legend .kb-k { margin: 10px 0 4px; font-size: 11px; font-weight: 600; letter-spacing: .04em; color: #8b9198; }
   html[data-theme="blue"] #tail-home .kb-rule { display: flex; align-items: center; gap: 6px; min-height: 22px; font-size: 12px; color: #37352f; }
   html[data-theme="blue"] #tail-home .kb-rule span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -10874,11 +10915,17 @@
   function ncPointerDown(e) {
     if (e.button !== 0) return;
     if (e.target.closest('.nc-tool, .nc-pop, .nc-name, .kb-bar, .kb-legend')) return;
+    const sched = e.target.closest('.kb-sched');
     const chip = e.target.closest('.nc-chip');
-    if (chip) { ncTogglePop(chip); return; }
+    if (chip) {
+      if (sched) kbOpenEvent(Number(chip.dataset.i));
+      else ncTogglePop(chip);
+      return;
+    }
     const resize = e.target.closest('.nc-resize');
     const block = resize ? resize.closest('.nc-ev') : e.target.closest('.nc-ev');
     const col = e.target.closest('.nc-col');
+    if (sched && kbBox().open != null && !block) { kbCloseDetail(); return; }
     if (!block && !col) return;
     const point = ncPoint(e);
     ncDrag = {
@@ -10939,7 +10986,11 @@
       ncPlaceDraft(drag.iso, start, dur, true);
       return;
     }
-    if (!drag.moved) { ncTogglePop(drag.el); return; }
+    if (!drag.moved) {
+      if (drag.el && drag.el.closest('.kb-sched')) kbOpenEvent(Number(drag.el.dataset.i));
+      else ncTogglePop(drag.el);
+      return;
+    }
     const ev = tlCache[drag.index];
     if (!ev) return;
     if (ev.kind === 'extra') {
@@ -11183,6 +11234,78 @@
     const taskRows = tasks.map(([id, name]) => `<div class="kb-rule"><i class="kb-swatch is-task">${kbTaskIcon(id)}</i><span>${name}</span></div>`).join('');
     return `<aside class="kb-legend"><b>分类</b><div class="kb-k">群组</div>${groups}<div class="kb-k">to-do-list</div>${taskRows}</aside>`;
   }
+  function kdIcon(name) {
+    const paths = {"earth":["M854.4 800.9c0.2-0.3 0.5-0.6 0.7-0.9C920.6 722.1 960 621.7 960 512s-39.4-210.1-104.8-288c-0.2-0.3-0.5-0.5-0.7-0.8-1.1-1.3-2.1-2.5-3.2-3.7-0.4-0.5-0.8-0.9-1.2-1.4-1.4-1.6-2.7-3.1-4.1-4.7l-0.1-0.1c-1.5-1.7-3.1-3.4-4.6-5.1l-0.1-0.1c-3.2-3.4-6.4-6.8-9.7-10.1l-0.1-0.1-4.8-4.8-0.3-0.3c-1.5-1.5-3-2.9-4.5-4.3-0.5-0.5-1-1-1.6-1.5-1-1-2-1.9-3-2.8-0.3-0.3-0.7-0.6-1-1C736.4 109.2 629.5 64 512 64s-224.4 45.2-304.3 119.2c-0.3 0.3-0.7 0.6-1 1-1 0.9-2 1.9-3 2.9-0.5 0.5-1 1-1.6 1.5-1.5 1.4-3 2.9-4.5 4.3l-0.3 0.3-4.8 4.8-0.1 0.1c-3.3 3.3-6.5 6.7-9.7 10.1l-0.1 0.1c-1.6 1.7-3.1 3.4-4.6 5.1l-0.1 0.1c-1.4 1.5-2.8 3.1-4.1 4.7-0.4 0.5-0.8 0.9-1.2 1.4-1.1 1.2-2.1 2.5-3.2 3.7-0.2 0.3-0.5 0.5-0.7 0.8C103.4 301.9 64 402.3 64 512s39.4 210.1 104.8 288c0.2 0.3 0.5 0.6 0.7 0.9 1 1.2 2.1 2.5 3.1 3.7 0.4 0.5 0.8 0.9 1.2 1.4 1.4 1.6 2.7 3.1 4.1 4.7 0 0.1 0.1 0.1 0.1 0.2 1.5 1.7 3 3.4 4.6 5l0.1 0.1c3.2 3.4 6.4 6.8 9.6 10.1l0.1 0.1c1.6 1.6 3.1 3.2 4.7 4.7l0.3 0.3c3.3 3.3 6.7 6.5 10.1 9.6 80.1 74 187 119.2 304.5 119.2s224.4-45.2 304.3-119.2c3.4-3.1 6.7-6.3 10-9.6l0.3-0.3c1.6-1.6 3.2-3.1 4.7-4.7l0.1-0.1c3.3-3.3 6.5-6.7 9.6-10.1l0.1-0.1c1.5-1.7 3.1-3.3 4.6-5 0-0.1 0.1-0.1 0.1-0.2 1.4-1.5 2.8-3.1 4.1-4.7 0.4-0.5 0.8-0.9 1.2-1.4 1.2-1.3 2.3-2.5 3.3-3.7z m4.1-142.6c-13.8 32.6-32 62.8-54.2 90.2-24.9-21.5-52.2-40.3-81.5-55.9 11.6-46.9 18.8-98.4 20.7-152.6H887c-3 40.9-12.6 80.6-28.5 118.3zM887 484H743.5c-1.9-54.2-9.1-105.7-20.7-152.6 29.3-15.6 56.6-34.4 81.5-55.9 22.2 27.4 40.4 57.6 54.2 90.2C874.4 403.4 884 443.1 887 484zM658.3 165.5c39.7 16.8 75.8 40 107.6 69.2-18.5 15.8-38.4 29.7-59.4 41.8-15.7-45-35.8-84.1-59.2-115.4 3.7 1.4 7.4 2.9 11 4.4z m-90.6 700.6c-9.2 7.2-18.4 12.7-27.7 16.4V697c39.9 2.8 78.6 11.6 115.7 26.2-8.3 24.6-17.9 47.3-29 67.8-17.4 32.4-37.8 58.3-59 75.1z m59-633.1c11 20.6 20.7 43.3 29 67.8-37.1 14.6-75.8 23.4-115.7 26.2V141.6c9.2 3.7 18.5 9.1 27.7 16.4 21.2 16.7 41.6 42.6 59 75zM540 640.9V540h147.5c-1.6 44.2-7.1 87.1-16.3 127.8l-0.3 1.2c-41.1-15.6-85.1-25.3-130.9-28.1z m0-156.9V383.1c45.8-2.8 89.8-12.5 130.9-28.1l0.3 1.2c9.2 40.7 14.7 83.5 16.3 127.8H540z m-56 56v100.9c-45.8 2.8-89.8 12.5-130.9 28.1l-0.3-1.2c-9.2-40.7-14.7-83.5-16.3-127.8H484z m-147.5-56c1.6-44.2 7.1-87.1 16.3-127.8l0.3-1.2c41.1 15.6 85 25.3 130.9 28.1V484H336.5zM484 697v185.4c-9.2-3.7-18.5-9.1-27.7-16.4-21.2-16.7-41.7-42.7-59.1-75.1-11-20.6-20.7-43.3-29-67.8 37.2-14.6 75.9-23.3 115.8-26.1z m0-370c-39.9-2.8-78.6-11.6-115.7-26.2 8.3-24.6 17.9-47.3 29-67.8 17.4-32.4 37.8-58.4 59.1-75.1 9.2-7.2 18.4-12.7 27.7-16.4V327zM365.7 165.5c3.7-1.5 7.3-3 11-4.4-23.4 31.3-43.5 70.4-59.2 115.4-21-12-40.9-26-59.4-41.8 31.8-29.2 67.9-52.4 107.6-69.2zM165.5 365.7c13.8-32.6 32-62.8 54.2-90.2 24.9 21.5 52.2 40.3 81.5 55.9-11.6 46.9-18.8 98.4-20.7 152.6H137c3-40.9 12.6-80.6 28.5-118.3zM137 540h143.5c1.9 54.2 9.1 105.7 20.7 152.6-29.3 15.6-56.6 34.4-81.5 55.9-22.2-27.4-40.4-57.6-54.2-90.2C149.6 620.6 140 580.9 137 540z m228.7 318.5c-39.7-16.8-75.8-40-107.6-69.2 18.5-15.8 38.4-29.7 59.4-41.8 15.7 45 35.8 84.1 59.2 115.4-3.7-1.4-7.4-2.9-11-4.4z m292.6 0c-3.7 1.5-7.3 3-11 4.4 23.4-31.3 43.5-70.4 59.2-115.4 21 12 40.9 26 59.4 41.8-31.8 29.2-67.9 52.4-107.6 69.2z"],"sync":["M168 504.2c1-43.7 10-86.1 26.9-126 17.3-41 42.1-77.7 73.7-109.4S337 212.3 378 195c42.4-17.9 87.4-27 133.9-27s91.5 9.1 133.8 27c40.9 17.3 77.7 42.1 109.3 73.8 9.9 9.9 19.2 20.4 27.8 31.4l-60.2 47c-5.3 4.1-3.5 12.5 3 14.1l175.7 43c5 1.2 9.9-2.6 9.9-7.7l0.8-180.9c0-6.7-7.7-10.5-12.9-6.3l-56.4 44.1C765.8 155.1 646.2 92 511.8 92 282.7 92 96.3 275.6 92 503.8c-0.1 4.5 3.5 8.2 8 8.2h60c4.4 0 7.9-3.5 8-7.8zM924 512h-60c-4.4 0-7.9 3.5-8 7.8-1 43.7-10 86.1-26.9 126-17.3 41-42.1 77.8-73.7 109.4S687 811.7 646 829c-42.4 17.9-87.4 27-133.9 27s-91.5-9.1-133.9-27c-40.9-17.3-77.7-42.1-109.3-73.8-9.9-9.9-19.2-20.4-27.8-31.4l60.2-47c5.3-4.1 3.5-12.5-3-14.1l-175.7-43c-5-1.2-9.9 2.6-9.9 7.7l-0.7 181c0 6.7 7.7 10.5 12.9 6.3l56.4-44.1C258.2 868.9 377.8 932 512.2 932c229.2 0 415.5-183.7 419.8-411.8 0.1-4.5-3.5-8.2-8-8.2z"],"location":["M854.6 289.1c-18.8-43.4-45.7-82.3-79.9-115.7-34.2-33.4-73.9-59.5-118.2-77.8C610.7 76.6 562.1 67 512 67c-50.1 0-98.7 9.6-144.5 28.5-44.3 18.3-84 44.5-118.2 77.8-34.2 33.4-61.1 72.4-79.9 115.7-19.5 45-29.4 92.8-29.4 142 0 70.6 16.9 140.9 50.1 208.7 26.7 54.5 64 107.6 111 158.1 80.3 86.2 164.5 138.9 188.4 153 6.9 4.1 14.7 6.1 22.4 6.1 7.8 0 15.5-2 22.4-6.1 23.9-14.1 108.1-66.8 188.4-153 47-50.4 84.3-103.6 111-158.1C867.1 572 884 501.8 884 431.1c0-49.2-9.9-97-29.4-142zM512 880.2c-65.9-41.9-300-207.8-300-449.1 0-77.9 31.1-151.1 87.6-206.3C356.3 169.5 431.7 139 512 139s155.7 30.5 212.4 85.9C780.9 280 812 353.2 812 431.1c0 241.3-234.1 407.2-300 449.1z","M512 263c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176z m79.2 255.2C570 539.3 541.9 551 512 551c-29.9 0-58-11.7-79.2-32.8C411.7 497 400 468.9 400 439c0-29.9 11.7-58 32.8-79.2C454 338.6 482.1 327 512 327c29.9 0 58 11.6 79.2 32.8C612.4 381 624 409.1 624 439c0 29.9-11.6 58-32.8 79.2z"],"video":["M912 302.3L784 376V224c0-35.3-28.7-64-64-64H128c-35.3 0-64 28.7-64 64v576c0 35.3 28.7 64 64 64h592c35.3 0 64-28.7 64-64V648l128 73.7c21.3 12.3 48-3.1 48-27.6V330c0-24.6-26.7-40-48-27.7zM712 792H136V232h576v560z m176-167l-104-59.8V458.9L888 399v226z","M208 360h112c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H208c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8z"],"link":["M574 665.4c-3.1-3.1-8.2-3.1-11.3 0L446.5 781.6c-53.8 53.8-144.6 59.5-204 0-59.5-59.5-53.8-150.2 0-204l116.2-116.2c3.1-3.1 3.1-8.2 0-11.3l-39.8-39.8c-3.1-3.1-8.2-3.1-11.3 0L191.4 526.5c-84.6 84.6-84.6 221.5 0 306s221.5 84.6 306 0l116.2-116.2c3.1-3.1 3.1-8.2 0-11.3L574 665.4zM832.6 191.4c-84.6-84.6-221.5-84.6-306 0L410.3 307.6c-3.1 3.1-3.1 8.2 0 11.3l39.7 39.7c3.1 3.1 8.2 3.1 11.3 0l116.2-116.2c53.8-53.8 144.6-59.5 204 0 59.5 59.5 53.8 150.2 0 204L665.3 562.6c-3.1 3.1-3.1 8.2 0 11.3l39.8 39.8c3.1 3.1 8.2 3.1 11.3 0l116.2-116.2c84.5-84.6 84.5-221.5 0-306.1z","M610.1 372.3c-3.1-3.1-8.2-3.1-11.3 0L372.3 598.7c-3.1 3.1-3.1 8.2 0 11.3l39.6 39.6c3.1 3.1 8.2 3.1 11.3 0l226.4-226.4c3.1-3.1 3.1-8.2 0-11.3l-39.5-39.6z"],"bell":["M816 768h-24V428c0-141.1-104.3-257.7-240-277.1V112c0-22.1-17.9-40-40-40s-40 17.9-40 40v38.9c-135.7 19.4-240 136-240 277.1v340h-24c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h216c0 61.8 50.2 112 112 112s112-50.2 112-112h216c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM512 888c-26.5 0-48-21.5-48-48h96c0 26.5-21.5 48-48 48zM304 768V428c0-55.6 21.6-107.8 60.9-147.1S456.4 220 512 220c55.6 0 107.8 21.6 147.1 60.9S720 372.4 720 428v340H304z"],"file":["M854.6 288.6L639.4 73.4c-6-6-14.1-9.4-22.6-9.4H192c-17.7 0-32 14.3-32 32v832c0 17.7 14.3 32 32 32h640c17.7 0 32-14.3 32-32V311.3c0-8.5-3.4-16.7-9.4-22.7zM790.2 326H602V137.8L790.2 326z m1.8 562H232V136h302v216c0 23.2 18.8 42 42 42h216v494z","M504 618H320c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h184c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8zM312 490v48c0 4.4 3.6 8 8 8h384c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H320c-4.4 0-8 3.6-8 8z"],"ellipsis":["M232 511m-56 0a56 56 0 1 0 112 0 56 56 0 1 0-112 0Z","M512 511m-56 0a56 56 0 1 0 112 0 56 56 0 1 0-112 0Z","M792 511m-56 0a56 56 0 1 0 112 0 56 56 0 1 0-112 0Z"],"down":["M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3 0.1-12.7-6.4-12.7z"]};
+    return paths[name] ? kbGlyph(paths[name]) : "";
+  }
+  function kbLaneColor(id) {
+    return { personal: "#316479", wuhan: "#1f6b4a", research: "#6a4c93", course: "#9a5b12", occupied: "#6e7378" }[id] || "#316479";
+  }
+  function kbDurLabel(mins) {
+    const h = Math.floor(mins / 60);
+    const m = mins % 60;
+    if (h && m) return h + " h " + m + " min";
+    if (h) return h + " h";
+    return m + " min";
+  }
+  function kbDetailDate(ev) {
+    const date = todoParseIso(ev.iso);
+    if (!date) return "";
+    return TODO_WEEKDAYS[date.getDay()] + " " + TODO_MONTHS[date.getMonth()] + " " + date.getDate();
+  }
+  function kbTzPlace() {
+    const label = kbTz();
+    return label === "GMT+8" ? "GMT+8 Shanghai" : label;
+  }
+  function kbEventKey(ev) {
+    return (ev.iso || "") + "|" + ev.title + "|" + ev.start + "|" + (ev.timed ? 1 : 0) + "|" + (ev.task || "");
+  }
+  function kbDetail(ev) {
+    const end = ev.start + (ev.dur || 60);
+    const when = ev.timed
+      ? '<div class="kd-row">' + kbTaskIcon("lecture") + "<span>" + kbHm(ev.start) + '</span><span class="kd-arrow">→</span><span>' + kbHm(end) + '</span><span class="kd-time">' + kbDurLabel(ev.dur || 60) + "</span></div>"
+      : "";
+    const note = ev.note ? '<div class="kd-note">' + deskEsc(ev.note) + "</div>" : '<div class="kd-note"></div>';
+    const group = ev.lane === "occupied" ? "Occupied" : kbLaneName(ev.lane || "personal");
+    const color = kbLaneColor(ev.lane || "personal");
+    const off = (icon, label) => '<div class="kd-row is-off">' + (icon === "user" ? kbIcon("personal") : kdIcon(icon)) + "<span>" + label + "</span></div>";
+    return '<aside class="kb-legend kb-detail"><div class="kd-top"><span>Event</span>' + kdIcon("down") + '<span class="kd-more">' + kdIcon("ellipsis") + '</span></div><div class="kd-title"><i class="kd-mark" style="color:' + color + '">' + kbTaskIcon(ev.task || "task") + "</i><b>" + deskEsc(ev.title) + "</b></div>" + when + '<div class="kd-sub">' + deskEsc(kbDetailDate(ev)) + '</div><div class="kd-row"><i class="kd-tog' + (ev.timed ? "" : " is-on") + '"></i><span>All-day</span></div><div class="kd-row">' + kdIcon("earth") + "<span>" + deskEsc(kbTzPlace()) + "</span></div>" + off("sync", "Repeat") + '<div class="kd-gap"></div>' + off("user", "Participants") + off("video", "Conferencing") + off("file", "Add AI meeting notes") + off("location", "Location") + '<div class="kd-gap"></div>' + off("link", "Add links and attachments") + '<div class="kd-gap"></div><div class="kd-label">Description</div>' + note + '<div class="kd-gap"></div><div class="kd-row"><i class="kd-dot" style="background:' + color + '"></i><span>' + deskEsc(group) + '</span></div><div class="kd-row is-off kd-busy"><span>Busy</span><span class="kd-time">Default visibility</span></div>' + off("bell", "Reminders") + "</aside>";
+  }
+  function kbSide() {
+    const key = kbBox().open;
+    const ev = key ? tlCache.find((item) => kbEventKey(item) === key) : null;
+    return ev ? kbDetail(ev) : kbLegend();
+  }
+  function kbPaintSide() {
+    const aside = document.querySelector("#tlBody .kb-legend");
+    if (aside) aside.outerHTML = kbSide();
+    const key = kbBox().open;
+    document.querySelectorAll("#tlBody .nc-ev, #tlBody .nc-chip").forEach((el) => {
+      const ev = tlCache[Number(el.dataset.i)];
+      el.classList.toggle("is-open", !!(key && ev && kbEventKey(ev) === key));
+    });
+  }
+  function kbOpenEvent(index) {
+    const ev = tlCache[index];
+    if (!ev) return;
+    kbBox().open = kbEventKey(ev);
+    kbPaintSide();
+  }
+  function kbCloseDetail() {
+    if (kbBox().open == null) return;
+    kbBox().open = null;
+    kbPaintSide();
+  }
+  function kbBindDetail() {
+    if (kbBindDetail.done) return;
+    kbBindDetail.done = true;
+    document.addEventListener("pointerdown", (e) => {
+      if (document.documentElement.dataset.theme !== "blue") return;
+      if (kbBox().open == null) return;
+      if (e.target.closest(".nc-ev, .nc-chip, .kb-legend")) return;
+      kbCloseDetail();
+    });
+  }
   function kbTimeline(items, days) {
     const today = todoDateIso(new Date());
     const head = days.map((date) => {
@@ -11263,7 +11386,7 @@
       return `<div class="nc-day${today}"><small>${TODO_WEEKDAYS[day.date.getDay()]}</small><b>${day.date.getDate()}</b></div>`;
     }).join('');
     const allRow = `<div class="nc-all"><span class="nc-gutter nc-all-label">All-day</span><div class="nc-all-cols">${packed.map((day) => {
-      const chips = day.events.filter((ev) => !ev.timed).map((ev) => `<button type="button" class="nc-chip is-${ev.lane}${ev.done ? ' is-done' : ''}" data-i="${ev.i}"><span class="kb-ico">${kbTaskIcon(ev.task)}</span>${deskEsc(ev.title)}</button>`).join('');
+      const chips = day.events.filter((ev) => !ev.timed).map((ev) => `<button type="button" class="nc-chip is-${ev.lane}${ev.done ? ' is-done' : ''}${kbBox().open === kbEventKey(ev) ? ' is-open' : ''}" data-i="${ev.i}"><span class="kb-ico">${kbTaskIcon(ev.task)}</span>${deskEsc(ev.title)}</button>`).join('');
       return `<div class="nc-all-cell">${chips}</div>`;
     }).join('')}</div></div>`;
     const showNow = packed.some((day) => day.iso === todayIso);
@@ -11281,7 +11404,7 @@
         const width = 100 / item.lanes;
         const left = item.lane * width;
         const time = height >= 36 ? `<small>${kbHm(ev.start)}–${kbHm(ev.start + ev.dur)}</small>` : '';
-        return `<div class="nc-ev is-${ev.lane}${ev.done ? ' is-done' : ''}" data-i="${ev.i}" data-iso="${day.iso}" data-start="${ev.start}" data-dur="${ev.dur}" style="top:${top}px;height:${height}px;left:calc(${left}% + 2px);width:calc(${width}% - 5px)"><b><span class="kb-ico">${kbTaskIcon(ev.task)}</span>${deskEsc(ev.title)}</b>${time}<i class="nc-resize"></i></div>`;
+        return `<div class="nc-ev is-${ev.lane}${ev.done ? ' is-done' : ''}${kbBox().open === kbEventKey(ev) ? ' is-open' : ''}" data-i="${ev.i}" data-iso="${day.iso}" data-start="${ev.start}" data-dur="${ev.dur}" style="top:${top}px;height:${height}px;left:calc(${left}% + 2px);width:calc(${width}% - 5px)"><b><span class="kb-ico">${kbTaskIcon(ev.task)}</span>${deskEsc(ev.title)}</b>${time}<i class="nc-resize"></i></div>`;
       }).join('');
       const line = day.iso === todayIso ? `<div class="nc-now" style="top:${(nowMins / 60) * NC_H}px"></div>` : '';
       return `<div class="nc-col${day.iso === todayIso ? ' is-today' : ''}" data-iso="${day.iso}">${blocks}${line}</div>`;
@@ -11290,13 +11413,14 @@
     return `<div class="nc ${mode}"><div class="nc-head"><span class="nc-gutter nc-tz">${kbTz()}</span><div class="nc-days">${heads}</div></div>${allRow}<div class="nc-scroll"><div class="nc-time" style="height:${24 * NC_H}px">${labels}${nowLabel}</div><div class="nc-cols" style="height:${24 * NC_H}px">${cols}</div></div></div>`;
   }
   function paintKb(host) {
+    kbBindDetail();
     ncBind(host);
     const box = kbBox();
     const days = kbDays();
     const spans = ['day', 'week', 'month'].map((id) => `<button type="button" data-kb="span" data-kb-val="${id}" aria-pressed="${box.span === id}">${id[0].toUpperCase()}${id.slice(1)}</button>`).join('');
     const body = box.span === 'month' ? kbMonth(kbItems()) : kbTimeGrid(days);
     const kept = host.dataset.ncTop;
-    host.innerHTML = `<div class="kb kb-sched"><div class="kb-bar kb-calbar"><b class="kb-month-title">${kbMonthTitle(days)}</b><span style="flex:1"></span><div class="kb-seg">${spans}</div><button type="button" data-kb="today">Today</button><button type="button" data-kb="prev" aria-label="Previous">‹</button><button type="button" data-kb="next" aria-label="Next">›</button><button type="button" class="kb-plus" data-kb="add" aria-label="New event">+</button></div><div class="kb-split"><div class="kb-pane">${body}</div>${kbLegend()}</div></div>`;
+    host.innerHTML = `<div class="kb kb-sched"><div class="kb-bar kb-calbar"><b class="kb-month-title">${kbMonthTitle(days)}</b><span style="flex:1"></span><div class="kb-seg">${spans}</div><button type="button" data-kb="today">Today</button><button type="button" data-kb="prev" aria-label="Previous">‹</button><button type="button" data-kb="next" aria-label="Next">›</button><button type="button" class="kb-plus" data-kb="add" aria-label="New event">+</button></div><div class="kb-split"><div class="kb-pane">${body}</div>${kbSide()}</div></div>`;
     const scroller = host.querySelector('.nc-scroll');
     if (scroller) scroller.scrollTop = kept != null && kept !== '' ? Number(kept) : 6 * NC_H;
     const seg = host.querySelector('.kb-seg');
