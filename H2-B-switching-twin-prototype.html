@@ -446,7 +446,9 @@
   }
   html[data-theme="blue"] .content.is-home-pinned:has(#screen-home.on) {
     justify-content: flex-start;
-    padding-top: calc(var(--page-gutter) + var(--home-pin, 0px));
+    padding-top: 24px;
+    padding-bottom: 16px;
+    gap: 16px;
   }
   html[data-theme="blue"] .main:has(.content.is-home-pinned) { overflow-anchor: none; }
   html[data-theme="blue"] .screen { gap: 20px; }
@@ -1086,6 +1088,12 @@
     text-align: center;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #greeting-home .hello { align-items: center; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #greeting-home .hello h2 {
+    font-size: 28px;
+    line-height: 32px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
   html[data-theme="blue"] .hub:has(#screen-home.on) #greeting-home .eyebrow,
   html[data-theme="blue"] .hub:has(#screen-home.on) #greeting-home .course-banner,
   html[data-theme="blue"] .hub:has(#screen-home.on) #screen-home .course-banner,
@@ -1571,7 +1579,7 @@
     width: min(1200px, 100%);
     margin-inline: auto;
     margin-top: 8px;
-    --home-pair: 468px;
+    --home-pair: 372px;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid {
     grid-template-columns: minmax(0, 1fr);
@@ -2404,9 +2412,28 @@
     display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
   }
   html[data-theme="blue"] #tail-home .kd-name {
-    border: 0; padding: 0; background: transparent; font: inherit; font-size: 15px; font-weight: 650; outline: none;
+    border: 0; padding: 0; background: transparent; font: inherit; font-size: 15px; font-weight: 650; outline: none; cursor: text;
   }
   html[data-theme="blue"] #tail-home .kd-name::placeholder { color: #a1a6ac; font-weight: 500; }
+  html[data-theme="blue"] #tail-home .kd-clock {
+    width: 54px; border: 0; padding: 0; background: transparent; color: inherit; font: inherit;
+    font-size: 13px; font-weight: 500; outline: none; cursor: text;
+  }
+  html[data-theme="blue"] #tail-home .kd-clock::-webkit-calendar-picker-indicator { opacity: 0; width: 0; }
+  html[data-theme="blue"] #tail-home .kd-allday {
+    width: 100%; border: 0; background: transparent; font: inherit; color: inherit; text-align: left; cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .kd-allday:hover,
+  html[data-theme="blue"] #tail-home .kd-date:hover { background: #f6f7f8; }
+  html[data-theme="blue"] #tail-home .kd-date { position: relative; cursor: pointer; }
+  html[data-theme="blue"] #tail-home .kd-date-input {
+    position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; border: 0;
+  }
+  html[data-theme="blue"] #tail-home textarea.kd-note {
+    display: block; width: 100%; box-sizing: border-box; border: 0; resize: none; background: transparent;
+    font: inherit; font-size: 13px; line-height: 18px; color: #1d1d1f; outline: none; cursor: text;
+  }
+  html[data-theme="blue"] #tail-home textarea.kd-note::placeholder { color: #a1a6ac; }
   html[data-theme="blue"] #tail-home .nc-all-draft {
     display: block; border-radius: 4px; padding: 2px 6px; font-size: 12px; font-weight: 600; background: #d3e5ef; color: #183347;
   }
@@ -10824,7 +10851,7 @@
     if (!date) return '';
     return `${TODO_WEEKDAYS[date.getDay()]}, ${TODO_MONTHS[date.getMonth()]} ${date.getDate()}`;
   }
-  const NC_H = 40;
+  const NC_H = 32;
   function tlEventDur(rem, type) {
     const set = Number(rem?.dataset.dur);
     if (set) return set;
@@ -11067,20 +11094,27 @@
         return;
       }
       if (!e.target.classList.contains('kd-name')) return;
-      if (e.key === 'Enter') { e.preventDefault(); kbCommitDraft(true); }
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        if (kbBox().draft) kbBox().draft.title = '';
-        kbCommitDraft(false);
+      if (kbBox().draft) {
+        if (e.key === 'Enter') { e.preventDefault(); kbCommitDraft(true); }
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          kbBox().draft.title = '';
+          kbCommitDraft(false);
+        }
+        return;
       }
+      if (e.key === 'Enter') { e.preventDefault(); e.target.blur(); }
     });
     host.addEventListener('input', (e) => {
-      if (!e.target.classList.contains('kd-name') || !kbBox().draft) return;
-      kbBox().draft.title = e.target.value;
-      const label = document.querySelector('#tlBody .nc-draft-title');
-      if (label) label.textContent = e.target.value || 'Event name';
-      const all = document.querySelector('#tlBody .nc-all-draft');
-      if (all) all.textContent = e.target.value || 'Event name';
+      if (e.target.classList.contains('kd-name')) kbLiveTitle(e.target.value);
+      if (e.target.classList.contains('kd-clock')) kbApplyClock(e.target);
+      if (e.target.classList.contains('kd-note')) kbApplyNote(e.target.value);
+    });
+    host.addEventListener('change', (e) => {
+      if (e.target.classList.contains('kd-date-input')) kbApplyDate(e.target.value);
+    });
+    host.addEventListener('click', (e) => {
+      if (e.target.closest('[data-kd="allday"]')) kbToggleAllDay();
     });
     host.addEventListener('focusout', (e) => {
       if (e.target.classList.contains('nc-name')) ncCommitName(e.target);
@@ -11384,7 +11418,197 @@
     return (ev.iso || "") + "|" + ev.title + "|" + ev.start + "|" + (ev.timed ? 1 : 0) + "|" + (ev.task || "");
   }
   function kbDraftEvent(draft) {
-    return { iso: draft.iso, title: draft.title || "", start: draft.allDay ? 0 : draft.start, dur: draft.dur || 60, timed: !draft.allDay, task: "task", lane: "personal", note: "" };
+    return { iso: draft.iso, title: draft.title || "", start: draft.allDay ? 0 : draft.start, dur: draft.dur || 60, timed: !draft.allDay, task: "task", lane: "personal", note: draft.note || "" };
+  }
+  function kbNoteText(ev) {
+    const note = String(ev.note || "");
+    return /^\d+\s*min$/.test(note) ? "" : note;
+  }
+  function kbOpenEv() {
+    const key = kbBox().open;
+    return key ? tlCache.find((item) => kbEventKey(item) === key) || null : null;
+  }
+  function kbSetBlockTitle(title) {
+    const el = document.querySelector("#tlBody .nc-ev.is-open b, #tlBody .nc-chip.is-open");
+    if (!el) return;
+    const text = [...el.childNodes].find((node) => node.nodeType === 3);
+    if (text) text.nodeValue = title;
+    else el.append(title);
+  }
+  function kbLiveTitle(value) {
+    const draft = kbBox().draft;
+    if (draft && !draft.done) {
+      draft.title = value;
+      const label = document.querySelector("#tlBody .nc-draft-title");
+      if (label) label.textContent = value || "Event name";
+      const all = document.querySelector("#tlBody .nc-all-draft");
+      if (all) all.textContent = value || "Event name";
+      return;
+    }
+    const ev = kbOpenEv();
+    if (!ev) return;
+    if (ev.rem) {
+      const node = ev.rem.querySelector(".t");
+      if (node) node.textContent = value;
+    }
+    if (ev.item) ev.item.title = value;
+    if (ev.extraId) {
+      const item = kbBox().extra.find((row) => row.id === ev.extraId);
+      if (item) item.title = value;
+    }
+    ev.title = value;
+    kbBox().open = kbEventKey(ev);
+    kbSetBlockTitle(value);
+  }
+  function kbApplyClock(input) {
+    if (!input.value) return;
+    const mins = tlMins(input.value);
+    const draft = kbBox().draft;
+    const live = draft && !draft.done;
+    const ev = live ? null : kbOpenEv();
+    const src = live ? draft : ev;
+    if (!src) return;
+    let start = src.start || 0;
+    let dur = src.dur || 60;
+    const end = start + dur;
+    if (input.dataset.kd === "start") {
+      start = mins;
+      dur = Math.max(15, end - start);
+    } else dur = Math.max(15, mins - start);
+    if (live) {
+      draft.start = start;
+      draft.dur = dur;
+      if (!draft.allDay) {
+        ncPlaceDraft(draft.iso, start, dur, false);
+        const label = document.querySelector("#tlBody .nc-draft-title");
+        if (label) label.textContent = draft.title || "Event name";
+      }
+    } else {
+      tlWriteWhen(ev, ev.iso, start, dur);
+      ev.start = start;
+      ev.dur = dur;
+      ev.timed = true;
+      kbBox().open = kbEventKey(ev);
+      const block = document.querySelector("#tlBody .nc-ev.is-open");
+      if (block) {
+        block.style.top = (start / 60) * NC_H + "px";
+        block.style.height = Math.max(22, (dur / 60) * NC_H) + "px";
+        block.dataset.start = String(start);
+        block.dataset.dur = String(dur);
+        const small = block.querySelector("small");
+        if (small) small.textContent = kbHm(start) + "–" + kbHm(start + dur);
+      }
+    }
+    const startInput = document.querySelector(".kd-clock[data-kd='start']");
+    const endInput = document.querySelector(".kd-clock[data-kd='end']");
+    if (startInput && document.activeElement !== startInput) startInput.value = kbHm(start);
+    if (endInput && document.activeElement !== endInput) endInput.value = kbHm(start + dur);
+    const durEl = document.querySelector(".kd-dur");
+    if (durEl) durEl.textContent = kbDurLabel(dur);
+  }
+  function kbApplyNote(value) {
+    const draft = kbBox().draft;
+    if (draft && !draft.done) { draft.note = value; return; }
+    const ev = kbOpenEv();
+    if (!ev) return;
+    ev.note = value;
+    if (ev.rem) {
+      ev.rem.dataset.dur = String(ev.dur || ev.rem.dataset.dur || 60);
+      setTodoNotes(ev.rem, value);
+    }
+    if (ev.item) ev.item.note = value;
+  }
+  function kbApplyDate(iso) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return;
+    const draft = kbBox().draft;
+    if (draft && !draft.done) {
+      draft.iso = iso;
+      if (draft.allDay) {
+        const cols = [...document.querySelectorAll("#tlBody .nc-col")];
+        const cell = document.querySelectorAll("#tlBody .nc-all-cell")[cols.findIndex((col) => col.dataset.iso === iso)];
+        const chip = document.querySelector("#tlBody .nc-all-draft");
+        if (cell && chip) cell.appendChild(chip);
+      } else {
+        ncPlaceDraft(iso, draft.start, draft.dur || 60, false);
+        const label = document.querySelector("#tlBody .nc-draft-title");
+        if (label) label.textContent = draft.title || "Event name";
+      }
+      const span = document.querySelector("#tlBody .kd-date span");
+      if (span) span.textContent = kbDetailDate({ iso });
+      return;
+    }
+    const ev = kbOpenEv();
+    if (!ev) return;
+    const rem = ev.rem;
+    const extraId = ev.extraId;
+    if (rem) {
+      const when = rem.querySelector(".when");
+      const parts = todoWhenParts(rem);
+      if (when) when.dataset.when = parts.time ? iso + "T" + parts.time : iso;
+    }
+    if (ev.item) ev.item.date = iso;
+    if (extraId) {
+      const item = kbBox().extra.find((row) => row.id === extraId);
+      if (item) item.date = iso;
+    }
+    syncRemBoard();
+    const fresh = tlCache.find((item) => (rem && item.rem === rem) || (extraId && item.extraId === extraId));
+    if (!fresh) return;
+    kbBox().open = kbEventKey(fresh);
+    kbPaintSide();
+  }
+  function kbPlaceAllDraft(draft) {
+    if (draft.allDay) {
+      document.querySelector("#tlBody .nc-draft")?.remove();
+      const cols = [...document.querySelectorAll("#tlBody .nc-col")];
+      const cell = document.querySelectorAll("#tlBody .nc-all-cell")[cols.findIndex((col) => col.dataset.iso === draft.iso)];
+      if (!cell) return;
+      let chip = document.querySelector("#tlBody .nc-all-draft");
+      if (!chip) {
+        chip = document.createElement("div");
+        chip.className = "nc-all-draft";
+        cell.appendChild(chip);
+      }
+      chip.textContent = draft.title || "Event name";
+      return;
+    }
+    document.querySelector("#tlBody .nc-all-draft")?.remove();
+    ncPlaceDraft(draft.iso, draft.start || 9 * 60, draft.dur || 60, false);
+    const label = document.querySelector("#tlBody .nc-draft-title");
+    if (label) label.textContent = draft.title || "Event name";
+  }
+  function kbToggleAllDay() {
+    const draft = kbBox().draft;
+    if (draft && !draft.done) {
+      draft.allDay = !draft.allDay;
+      if (!draft.allDay && !draft.start) draft.start = 9 * 60;
+      kbPlaceAllDraft(draft);
+      kbPaintSide();
+      const input = document.querySelector("#tlBody .kd-name");
+      if (input) { input.focus(); input.setSelectionRange(input.value.length, input.value.length); }
+      return;
+    }
+    const ev = kbOpenEv();
+    if (!ev) return;
+    const rem = ev.rem;
+    const extraId = ev.extraId;
+    const on = !!ev.timed;
+    if (extraId) {
+      const item = kbBox().extra.find((row) => row.id === extraId);
+      if (item) { item.timed = !on; if (!item.timed) item.start = item.start || 9 * 60; }
+    } else if (rem) {
+      const when = rem.querySelector(".when");
+      if (on && when) {
+        when.dataset.when = ev.iso;
+        when.dataset.raw = "";
+        when.textContent = "All day";
+      } else tlWriteWhen(ev, ev.iso, ev.timed ? ev.start : 9 * 60, ev.dur || 60);
+    } else return;
+    syncRemBoard();
+    const fresh = tlCache.find((item) => (rem && item.rem === rem) || (extraId && item.extraId === extraId));
+    if (!fresh) return;
+    kbBox().open = kbEventKey(fresh);
+    kbPaintSide();
   }
   function kbFinishDraft() {
     const prev = kbBox().draft;
@@ -11399,6 +11623,11 @@
     remDay = prev.iso;
     if (prev.allDay) { tlAddTime = ""; tlCreateItem(title); tlAddTime = "10:00"; }
     else { tlAddTime = tlClock(prev.start); tlAddDur = prev.dur || 60; tlCreateItem(title); }
+    if (prev.note) {
+      const list = document.querySelector("#tail-home .two-main-l");
+      const rem = [...(list ? list.querySelectorAll(".rem") : [])].reverse().find((row) => row.querySelector(".t")?.textContent.trim() === title);
+      if (rem) { rem.dataset.dur = String(prev.dur || 60); setTodoNotes(rem, prev.note); }
+    }
     return saved;
   }
   function kbRevealSaved(saved) {
@@ -11438,23 +11667,23 @@
     cell.appendChild(chip);
     kbShowDraft({ iso, start: 0, dur: 60, allDay: true, title: "" });
   }
-  function kbDetail(ev, editing) {
+  function kbDetail(ev) {
     const end = ev.start + (ev.dur || 60);
     const when = ev.timed
-      ? '<div class="kd-row">' + kbTaskIcon("lecture") + "<span>" + kbHm(ev.start) + '</span><span class="kd-arrow">→</span><span>' + kbHm(end) + '</span><span class="kd-time">' + kbDurLabel(ev.dur || 60) + "</span></div>"
+      ? '<div class="kd-row">' + kbTaskIcon("lecture") + '<input class="kd-clock" data-kd="start" type="time" value="' + kbHm(ev.start) + '" aria-label="Start"><span class="kd-arrow">→</span><input class="kd-clock" data-kd="end" type="time" value="' + kbHm(end) + '" aria-label="End"><span class="kd-dur">' + kbDurLabel(ev.dur || 60) + "</span></div>"
       : "";
-    const note = ev.note ? '<div class="kd-note">' + deskEsc(ev.note) + "</div>" : '<div class="kd-note"></div>';
+    const note = '<textarea class="kd-note" data-kd="note" placeholder="Add description" aria-label="Description">' + deskEsc(kbNoteText(ev)) + "</textarea>";
     const group = ev.lane === "occupied" ? "Occupied" : kbLaneName(ev.lane || "personal");
     const color = kbLaneColor(ev.lane || "personal");
     const off = (icon, label) => '<div class="kd-row is-off">' + (icon === "user" ? kbIcon("personal") : kdIcon(icon)) + "<span>" + label + "</span></div>";
-    const title = editing
-      ? '<input class="kd-name" value="' + deskEsc(ev.title) + '" placeholder="Event name" aria-label="Event name">'
-      : "<b>" + deskEsc(ev.title) + "</b>";
-    return '<aside class="kb-legend kb-detail"><div class="kd-top"><span>Event</span>' + kdIcon("down") + '<span class="kd-more">' + kdIcon("ellipsis") + '</span></div><div class="kd-title"><i class="kd-mark" style="color:' + color + '">' + kbTaskIcon(ev.task || "task") + "</i>" + title + "</div>" + when + '<div class="kd-sub">' + deskEsc(kbDetailDate(ev)) + '</div><div class="kd-row"><i class="kd-tog' + (ev.timed ? "" : " is-on") + '"></i><span>All-day</span></div><div class="kd-row">' + kdIcon("earth") + "<span>" + deskEsc(kbTzPlace()) + "</span></div>" + off("sync", "Repeat") + '<div class="kd-gap"></div>' + off("user", "Participants") + off("video", "Conferencing") + off("file", "Add AI meeting notes") + off("location", "Location") + '<div class="kd-gap"></div>' + off("link", "Add links and attachments") + '<div class="kd-gap"></div><div class="kd-label">Description</div>' + note + '<div class="kd-gap"></div><div class="kd-row"><i class="kd-dot" style="background:' + color + '"></i><span>' + deskEsc(group) + '</span></div><div class="kd-row is-off kd-busy"><span>Busy</span><span class="kd-time">Default visibility</span></div>' + off("bell", "Reminders") + "</aside>";
+    const title = '<input class="kd-name" value="' + deskEsc(ev.title) + '" placeholder="Event name" aria-label="Event name">';
+    const date = '<div class="kd-sub kd-date"><span>' + deskEsc(kbDetailDate(ev)) + '</span><input class="kd-date-input" type="date" value="' + deskEsc(ev.iso || "") + '" aria-label="Date"></div>';
+    const all = '<button type="button" class="kd-row kd-allday" data-kd="allday"><i class="kd-tog' + (ev.timed ? "" : " is-on") + '"></i><span>All-day</span></button>';
+    return '<aside class="kb-legend kb-detail"><div class="kd-top"><span>Event</span>' + kdIcon("down") + '<span class="kd-more">' + kdIcon("ellipsis") + '</span></div><div class="kd-title"><i class="kd-mark" style="color:' + color + '">' + kbTaskIcon(ev.task || "task") + "</i>" + title + "</div>" + when + date + all + '<div class="kd-row">' + kdIcon("earth") + "<span>" + deskEsc(kbTzPlace()) + "</span></div>" + off("sync", "Repeat") + '<div class="kd-gap"></div>' + off("user", "Participants") + off("video", "Conferencing") + off("file", "Add AI meeting notes") + off("location", "Location") + '<div class="kd-gap"></div>' + off("link", "Add links and attachments") + '<div class="kd-gap"></div><div class="kd-label">Description</div>' + note + '<div class="kd-gap"></div><div class="kd-row"><i class="kd-dot" style="background:' + color + '"></i><span>' + deskEsc(group) + '</span></div><div class="kd-row is-off kd-busy"><span>Busy</span><span class="kd-time">Default visibility</span></div>' + off("bell", "Reminders") + "</aside>";
   }
   function kbSide() {
     const draft = kbBox().draft;
-    if (draft && !draft.done) return kbDetail(kbDraftEvent(draft), true);
+    if (draft && !draft.done) return kbDetail(kbDraftEvent(draft));
     const key = kbBox().open;
     const ev = key ? tlCache.find((item) => kbEventKey(item) === key) : null;
     return ev ? kbDetail(ev) : kbLegend();
@@ -11611,7 +11840,7 @@
     const kept = host.dataset.ncTop;
     host.innerHTML = `<div class="kb kb-sched"><div class="kb-bar kb-calbar"><b class="kb-month-title">${kbMonthTitle(days)}</b><span style="flex:1"></span><div class="kb-seg">${spans}</div><button type="button" data-kb="today">Today</button><button type="button" data-kb="prev" aria-label="Previous">‹</button><button type="button" data-kb="next" aria-label="Next">›</button><button type="button" class="kb-plus" data-kb="add" aria-label="New event">+</button></div><div class="kb-split"><div class="kb-pane">${body}</div>${kbSide()}</div></div>`;
     const scroller = host.querySelector('.nc-scroll');
-    if (scroller) scroller.scrollTop = kept != null && kept !== '' ? Number(kept) : 6 * NC_H;
+    if (scroller) scroller.scrollTop = kept != null && kept !== '' ? Number(kept) : 8 * NC_H;
     const seg = host.querySelector('.kb-seg');
     const to = box.span;
     const from = box.spanFrom || to;
@@ -11650,7 +11879,7 @@
       return;
     }
     box.spanFrom = fromSpan;
-    box.swap = act === 'prev' || act === 'next' || act === 'today' || (act === 'span' && val !== fromSpan);
+    box.swap = act === 'span' && val !== fromSpan;
     paintHomeTimeline();
   }
   function kbPlace(id, who, iso) {
