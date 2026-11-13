@@ -1532,8 +1532,8 @@
     --home-pair: 468px;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: 20px;
+    grid-template-columns: minmax(0, 1fr);
+    column-gap: 0;
     align-items: start;
   }
   #homeKanban { display: none; }
@@ -1570,8 +1570,7 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeKanban #desk-kanban > h2,
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeKanban #desk-kanban > .sub { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid > .two-col:nth-child(2) {
-    position: static;
-    overflow: visible;
+    display: none;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-grid > .two-col:nth-child(2) > .cosmos-scroll-wrap.two-main-r {
     position: static;
