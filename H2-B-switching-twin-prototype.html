@@ -7062,10 +7062,13 @@
   html[data-theme="blue"] #dirHost .dir-enter {
     flex: none;
     box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     height: 32px;
-    padding: 0 12px;
-    border: 1px solid #d5dde2;
-    border-radius: 8px;
+    padding: 0 16px;
+    border: 1px solid #c5d4de;
+    border-radius: 999px;
     background: #fff;
     color: #3c7a94;
     font-size: 13px;
@@ -7073,7 +7076,7 @@
     line-height: 1;
     cursor: pointer;
   }
-  html[data-theme="blue"] #dirHost .dir-enter:hover { background: #f4f8fa; border-color: #c5d4de; }
+  html[data-theme="blue"] #dirHost .dir-enter:hover { background: #ebf5fa; border-color: #9eb8c6; }
   html[data-theme="blue"] #dirHost .dir-msg {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -7197,17 +7200,19 @@
   }
   html[data-theme="blue"] #dirHost .dir-summon {
     box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
     height: 32px;
-    padding: 0 12px;
-    border: 1px solid #d5dde2;
-    border-radius: 8px;
+    padding: 0 16px;
+    border: 1px solid #c5d4de;
+    border-radius: 999px;
     background: #fff;
     color: #3c7a94;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
   }
-  html[data-theme="blue"] #dirHost .dir-summon:hover { background: #f4f8fa; border-color: #c5d4de; }
+  html[data-theme="blue"] #dirHost .dir-summon:hover { background: #ebf5fa; border-color: #9eb8c6; }
   .dir-card:hover .dir-summon,
   .dir-card:focus-visible .dir-summon { display: inline-flex; }
   .dir-card.is-follow:hover .dir-summon,
