@@ -836,14 +836,14 @@
     padding: 0; border: 0; border-radius: 10px; background: transparent; font: inherit; cursor: pointer; color: #3c4043;
   }
   html[data-theme="blue"] .rail.is-open .rail-follow-row {
-    width: 100%; height: 36px; justify-content: flex-start; gap: 10px; padding: 0 10px;
+    width: 100%; height: 40px; justify-content: flex-start; gap: 10px; padding: 0 8px;
   }
   html[data-theme="blue"] .rail-follow-row:hover { background: #d4e4ee; }
   html[data-theme="blue"] .rail-follow-row .av {
-    width: 18px; height: 18px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
-    font-size: 10px; font-weight: 650; line-height: 1; flex: none;
+    width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 650; line-height: 1; flex: none;
   }
-  html[data-theme="blue"] .rail-follow-row .av.is-gr { background: #efe6f8; color: #6d4c9a; font-size: 7px; }
+  html[data-theme="blue"] .rail-follow-row .av.is-gr { background: #efe6f8; color: #6d4c9a; font-size: 11px; letter-spacing: -0.04em; }
   html[data-theme="blue"] .rail-follow-row .av.is-luo { background: #fde7d6; color: #c56a32; }
   html[data-theme="blue"] .rail-follow-row .av.is-li { background: #ececee; color: #6e7378; }
   html[data-theme="blue"] .rail-follow-row .av.is-dou { background: #e3f3e8; color: #3d8f5c; }
@@ -2227,6 +2227,23 @@
     width: 100%; height: 100%; border: 0; padding: 0; background: transparent; color: inherit;
     font: inherit; font-size: 12px; font-weight: 600; outline: none;
   }
+  html[data-theme="blue"] #tail-home .nc-all-name {
+    display: block; width: 100%; height: 22px; margin-top: 2px; padding: 2px 6px; border: 0; border-radius: 4px;
+    background: #d3e5ef; color: #183347; font: inherit; font-size: 12px; font-weight: 600; outline: none;
+  }
+  html[data-theme="blue"] .kb-menu {
+    position: fixed; z-index: 80; min-width: 196px; padding: 6px; border-radius: 12px;
+    background: #2c2c2e; color: #fff; box-shadow: 0 8px 28px rgba(0, 0, 0, .28);
+  }
+  html[data-theme="blue"] .kb-menu button {
+    display: flex; align-items: center; width: 100%; height: 32px; padding: 0 10px; border: 0; border-radius: 8px;
+    background: transparent; color: #fff; font: inherit; font-size: 13px; font-weight: 500; cursor: pointer;
+  }
+  html[data-theme="blue"] .kb-menu button:hover { background: rgba(255, 255, 255, .08); }
+  html[data-theme="blue"] .kb-menu button kbd { margin-left: auto; padding-left: 16px; color: #d0d0d2; font: inherit; font-size: 12px; }
+  html[data-theme="blue"] .kb-menu button:disabled,
+  html[data-theme="blue"] .kb-menu button:disabled kbd { color: #6e6e73; cursor: default; }
+  html[data-theme="blue"] .kb-menu button:disabled:hover { background: transparent; }
   html[data-theme="blue"] #tail-home .nc-pop {
     position: absolute; z-index: 6; top: calc(100% + 4px); left: 0; min-width: 180px;
     padding: 8px 10px; border-radius: 8px; background: #fff; color: #37352f;
@@ -11025,7 +11042,97 @@
     });
     host.addEventListener('scroll', (e) => {
       if (e.target.classList.contains('nc-scroll')) host.dataset.ncTop = String(e.target.scrollTop);
+      kbCloseMenu();
     }, true);
+    host.addEventListener('contextmenu', kbContextMenu);
+    kbBindMenu();
+  }
+  function kbMenuPoint(e) {
+    const cols = [...document.querySelectorAll('#tlBody .nc-col')];
+    if (!cols.length) return null;
+    let col = cols[0];
+    cols.forEach((item) => { if (e.clientX >= item.getBoundingClientRect().left) col = item; });
+    const iso = col.dataset.iso;
+    if (e.target.closest('.nc-all, .nc-head')) return { iso, allDay: true };
+    const rect = col.getBoundingClientRect();
+    return { iso, allDay: false, start: ncSnap(((e.clientY - rect.top) / NC_H) * 60) };
+  }
+  function kbCloseMenu() {
+    document.querySelector('.kb-menu')?.remove();
+  }
+  function kbShowMenu(x, y, point) {
+    kbCloseMenu();
+    const menu = document.createElement('div');
+    menu.className = 'kb-menu';
+    menu.innerHTML = '<button type="button" data-kb-menu="create">Create event<kbd>C</kbd></button><button type="button" data-kb-menu="paste" disabled>Paste event<kbd>Ctrl V</kbd></button>';
+    document.body.appendChild(menu);
+    const box = menu.getBoundingClientRect();
+    menu.style.left = `${Math.max(8, Math.min(x, window.innerWidth - box.width - 8))}px`;
+    menu.style.top = `${Math.max(8, Math.min(y, window.innerHeight - box.height - 8))}px`;
+    kbShowMenu.point = point;
+    menu.addEventListener('click', (ev) => {
+      if (ev.target.closest('[data-kb-menu="create"]')) kbCreateFromPoint(kbShowMenu.point);
+    });
+  }
+  function kbAllDayDraft(iso) {
+    const cols = [...document.querySelectorAll('#tlBody .nc-col')];
+    const idx = cols.findIndex((col) => col.dataset.iso === iso);
+    const cell = document.querySelectorAll('#tlBody .nc-all-cell')[idx];
+    if (!cell) return;
+    const input = document.createElement('input');
+    input.className = 'nc-all-name';
+    input.placeholder = 'Event name';
+    input.setAttribute('aria-label', 'Event name');
+    cell.appendChild(input);
+    input.focus();
+    const commit = () => {
+      if (input.dataset.done) return;
+      input.dataset.done = '1';
+      const title = input.value.trim();
+      input.remove();
+      if (!title) return;
+      remDay = iso;
+      tlAddTime = '';
+      tlCreateItem(title);
+      tlAddTime = '10:00';
+      syncRemBoard();
+    };
+    input.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Enter') { ev.preventDefault(); commit(); }
+      if (ev.key === 'Escape') { input.dataset.done = '1'; input.remove(); }
+    });
+    input.addEventListener('focusout', commit);
+  }
+  function kbCreateFromPoint(point) {
+    kbCloseMenu();
+    if (!point) return;
+    kbShowMenu.point = null;
+    if (point.allDay) { kbAllDayDraft(point.iso); return; }
+    ncPlaceDraft(point.iso, point.start, 60, true);
+  }
+  function kbContextMenu(e) {
+    if (document.documentElement.dataset.theme !== 'blue') return;
+    if (!e.target.closest('.kb-sched .nc')) return;
+    if (e.target.closest('.kb-legend, .kb-bar')) return;
+    e.preventDefault();
+    const point = kbMenuPoint(e);
+    if (!point) return;
+    kbShowMenu(e.clientX, e.clientY, point);
+  }
+  function kbBindMenu() {
+    if (kbBindMenu.done) return;
+    kbBindMenu.done = true;
+    document.addEventListener('pointerdown', (e) => {
+      if (!e.target.closest('.kb-menu')) kbCloseMenu();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (!document.querySelector('.kb-menu')) return;
+      if (e.key === 'Escape') { kbCloseMenu(); kbShowMenu.point = null; return; }
+      if ((e.key === 'c' || e.key === 'C') && !e.metaKey && !e.ctrlKey && !e.altKey) {
+        e.preventDefault();
+        kbCreateFromPoint(kbShowMenu.point);
+      }
+    });
   }
   function paintNotionCal(host) {
     ncBind(host);
@@ -11669,16 +11776,22 @@
     delete rem.dataset.fromCitta;
     const when = rem.querySelector('.when');
     if (when) {
-      when.dataset.when = `${remDay}T${tlAddTime}`;
-      when.dataset.raw = tlAddTime;
-      when.textContent = tlAddTime;
+      if (tlAddTime) {
+        when.dataset.when = `${remDay}T${tlAddTime}`;
+        when.dataset.raw = tlAddTime;
+        when.textContent = tlAddTime;
+      } else {
+        when.dataset.when = remDay;
+        when.dataset.raw = '';
+        when.textContent = 'All day';
+      }
     }
     const titleEl = rem.querySelector('.t');
     if (titleEl) titleEl.textContent = title;
     const badge = rem.querySelector('.badge');
     if (badge) applyTodoBadge(badge, 'yours');
     const note = rem.querySelector('.todo-note');
-    if (note) note.textContent = `${tlAddDur} min`;
+    if (note) note.textContent = tlAddTime ? `${tlAddDur} min` : '';
     rem.querySelector('.rem-check')?.setAttribute('aria-label', `Mark complete: ${title}`);
     const anchor = list.querySelector('.rem-add');
     if (anchor) list.insertBefore(rem, anchor);
@@ -12871,6 +12984,8 @@
     pop.style.removeProperty('--recent-y');
   }
   function showToolRecent(tool) {
+    hideToolRecent();
+    return;
     const blueHome = document.documentElement.dataset.theme === 'blue' && document.getElementById('screen-home')?.classList.contains('on');
     const pop = $('toolRecent');
     const host = tool?.closest('.top');
@@ -12928,11 +13043,12 @@
     composer?.classList.remove('has-cases');
     tools.querySelectorAll('.tool-prompt').forEach((node) => node.remove());
     const blueHome = document.documentElement.dataset.theme === 'blue' && document.getElementById('screen-home')?.classList.contains('on');
-    const cases = blueHome && selectedComposerTool ? COMPOSER_CASES[selectedComposerTool] : null;
-    const show = !!cases;
+    const files = blueHome && selectedComposerTool ? RECENT_EDITOR_FILES[selectedComposerTool] : null;
+    const show = !!files;
     tools.classList.toggle('is-prompts', show);
     if (!show) return;
-    cases.forEach((prompt) => {
+    files.forEach((name) => {
+      const prompt = `Continue ${name}`;
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'tool-prompt';
