@@ -848,14 +848,14 @@
     font-size: 10px; font-weight: 650; letter-spacing: .08em; line-height: 16px; color: transparent;
     transition: color .18s ease;
   }
-  html[data-theme="blue"] .rail-follow-k::before {
-    content: ""; position: absolute; left: 50%; top: 50%; width: 24px; height: 1px; margin-left: -12px;
+  html[data-theme="blue"] .rail-follow-k .rail-follow-line {
+    position: absolute; left: 50%; top: 50%; width: 24px; height: 24px; margin: -12px 0 0 -12px; display: block;
     background: #e6e8ec; transition: opacity .18s ease;
   }
   html[data-theme="blue"] .rail.is-open .rail-follow-k {
     justify-content: flex-start; width: auto; margin: 0 10px; color: #9aa0a6;
   }
-  html[data-theme="blue"] .rail.is-open .rail-follow-k::before { opacity: 0; }
+  html[data-theme="blue"] .rail.is-open .rail-follow-k .rail-follow-line { display: none; }
   html[data-theme="blue"] .rail-follow-row {
     display: flex; align-items: center; justify-content: center; box-sizing: border-box;
     width: 36px; height: 36px; padding: 0; border: 0; border-radius: 10px; background: transparent;
@@ -2461,7 +2461,8 @@
   html[data-theme="blue"] #tail-home .kb-sched .nc-chip { display: flex; align-items: center; min-height: 18px; border-radius: 4px; }
   html[data-theme="blue"] #tail-home .kb-sched .nc-ev { border-radius: 6px; }
   html[data-theme="blue"] #tail-home .kb-bar { display: flex; align-items: center; gap: 6px; height: 36px; flex: none; }
-  html[data-theme="blue"] #tail-home .kb-bar.kb-calbar { height: auto; padding: 0 2px 16px; box-sizing: border-box; }
+  html[data-theme="blue"] #tail-home .kb-bar.kb-calbar { height: auto; padding: 0 2px 16px; box-sizing: border-box; justify-content: flex-end; }
+  html[data-theme="blue"] #tail-home .kb-bar.kb-calbar .kb-month-title { margin-right: auto; }
   html[data-theme="blue"] #tail-home .kb-bar button {
     height: 26px; padding: 0 8px; border: 0; border-radius: 6px; background: transparent;
     color: #37352f; font: inherit; font-size: 12px; font-weight: 550; cursor: pointer;
@@ -3131,8 +3132,8 @@
   html[data-theme="blue"] .rail .r[data-rail="community"] .rail-ico-chat { display: block; }
   html[data-theme="blue"] #primaryRail > .rail-top { order: 1; }
   html[data-theme="blue"] #primaryRail > .r[data-rail="home"] { order: 2; }
-  html[data-theme="blue"] #primaryRail > .r[data-rail="community"] { order: 3; }
-  html[data-theme="blue"] #primaryRail > .r[data-rail="cosmo"] { order: 4; }
+  html[data-theme="blue"] #primaryRail > .r[data-rail="cosmo"] { order: 3; }
+  html[data-theme="blue"] #primaryRail > .r[data-rail="community"] { order: 4; }
   html[data-theme="blue"] #primaryRail > .r[data-rail="desk"] { order: 5; }
   html[data-theme="blue"] #primaryRail > .r[data-rail="settings"] { order: 6; }
   html[data-theme="blue"] #primaryRail > .div { order: 7; }
@@ -9201,7 +9202,7 @@
           <button type="button" class="r" data-rail="home" aria-label="Home"><svg class="rail-ico" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M923.733333 394.666667c-85.333333-70.4-206.933333-174.933333-362.666666-309.333334C533.333333 61.866667 490.666667 61.866667 462.933333 85.333333c-155.733333 134.4-277.333333 238.933333-362.666666 309.333334-14.933333 14.933333-25.6 34.133333-25.6 53.333333 0 38.4 32 70.4 70.4 70.4H192v358.4c0 29.866667 23.466667 53.333333 53.333333 53.333333H405.333333c29.866667 0 53.333333-23.466667 53.333334-53.333333v-206.933333h106.666666v206.933333c0 29.866667 23.466667 53.333333 53.333334 53.333333h160c29.866667 0 53.333333-23.466667 53.333333-53.333333V518.4h46.933333c38.4 0 70.4-32 70.4-70.4 0-21.333333-10.666667-40.533333-25.6-53.333333z m-44.8 59.733333h-57.6c-29.866667 0-53.333333 23.466667-53.333333 53.333333v358.4h-138.666667V661.333333c0-29.866667-23.466667-53.333333-53.333333-53.333333h-128c-29.866667 0-53.333333 23.466667-53.333333 53.333333v206.933334H256V507.733333c0-29.866667-23.466667-53.333333-53.333333-53.333333H145.066667c-4.266667 0-6.4-2.133333-6.4-6.4 0-2.133333 2.133333-4.266667 2.133333-6.4 85.333333-70.4 206.933333-174.933333 362.666667-309.333333 4.266667-4.266667 10.666667-4.266667 14.933333 0 155.733333 134.4 277.333333 238.933333 362.666667 309.333333 2.133333 2.133333 2.133333 2.133333 2.133333 4.266667 2.133333 6.4-2.133333 8.533333-4.266667 8.533333z"/></svg><span class="rail-lab">Home</span></button>
           <button type="button" class="r" data-rail="cosmo" aria-label="Cosmo"><svg class="rail-ico rail-ico-spark rail-ico-spark-solid" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M538.112 38.4c-15.36-44.544-39.936-44.544-55.296 0l-84.992 250.88c-14.848 44.544-64 93.184-108.032 108.544L40.448 482.816c-44.544 15.36-44.544 39.936 0 55.296l247.808 86.016c44.544 15.36 93.184 64.512 108.544 108.544l86.528 251.392c15.36 44.544 39.936 44.544 55.296 0l84.48-249.856c14.848-44.544 63.488-93.184 108.032-108.544l252.928-86.528c44.544-15.36 44.544-39.936 0-54.784l-248.832-83.968c-44.544-14.848-93.184-63.488-108.544-108.032-1.536-0.512-88.576-253.952-88.576-253.952z" fill="currentColor"/></svg><svg class="rail-ico rail-ico-spark rail-ico-spark-line" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M510.464 950.784c-14.336 0-40.96-6.656-55.808-50.688l-69.12-200.192c-8.704-25.088-39.424-55.808-64.512-64.512l-197.12-68.608c-44.032-15.36-50.688-41.984-50.688-56.32 0-14.336 6.656-40.96 50.688-55.808L322.56 387.072c25.6-8.704 55.808-38.912 64.512-64l67.584-200.192c14.848-44.032 41.472-50.688 55.808-50.688 14.336 0 40.96 6.656 55.808 50.688l69.632 201.728c8.704 25.088 39.424 55.296 64 64l198.656 67.072c44.032 14.848 50.688 41.472 51.2 55.808 0 14.336-6.656 40.96-50.688 55.808l-201.728 69.12c-25.088 8.704-55.296 38.912-64 64l-67.072 199.168c-14.848 44.544-41.472 51.2-55.808 51.2zM181.76 510.976l163.328 56.832c46.08 15.872 92.672 62.976 108.544 109.056l56.832 164.864 55.296-164.352c15.36-46.08 62.464-93.184 108.544-109.056l166.4-56.832-163.328-55.296c-46.08-15.872-93.184-62.464-109.056-108.544l-57.344-166.912-56.32 165.376c-15.872 46.08-62.464 93.184-108.544 108.544l-164.352 56.32z"/></svg><span class="rail-lab">Cosmo</span></button>
           <div class="rail-follow" aria-label="Following">
-            <div class="rail-follow-k">FOLLOWING</div>
+            <div class="rail-follow-k"><svg class="rail-follow-line" viewBox="0 0 1024 1024" aria-hidden="true"><path d="M84.309333 490.666667h812.714667c11.221333 0 20.309333 9.557333 20.309333 21.333333s-9.088 21.333333-20.309333 21.333333H84.309333A20.864 20.864 0 0 1 64 512c0-11.776 9.088-21.333333 20.309333-21.333333z" fill="#bfbfbf"/></svg>FOLLOWING</div>
             <button type="button" class="rail-follow-row" data-follow="Prof. Gunther Roland" aria-label="Prof. Gunther Roland"><span class="av is-gr">GR</span><span class="nm">Prof. Gunther Roland</span></button>
             <button type="button" class="rail-follow-row" data-follow="骆王宇" aria-label="骆王宇"><span class="av is-luo">骆</span><span class="nm">骆王宇</span></button>
             <button type="button" class="rail-follow-row" data-follow="李佳琦" aria-label="李佳琦"><span class="av is-li">李</span><span class="nm">李佳琦</span></button>
@@ -12806,7 +12807,7 @@
     const spans = ['day', 'week', 'month'].map((id) => `<button type="button" data-kb="span" data-kb-val="${id}" aria-pressed="${box.span === id}">${id[0].toUpperCase()}${id.slice(1)}</button>`).join('');
     const body = box.span === 'month' ? kbMonth() : kbTimeGrid(days);
     const kept = host.dataset.ncTop;
-    host.innerHTML = `<div class="kb kb-sched"><div class="kb-bar kb-calbar"><b class="kb-month-title">${kbMonthTitle(days)}</b><span style="flex:1"></span><div class="kb-seg">${spans}</div><button type="button" data-kb="today">Today</button><button type="button" data-kb="prev" aria-label="Previous">‹</button><button type="button" data-kb="next" aria-label="Next">›</button><button type="button" class="kb-plus" data-kb="add" aria-label="New event">+</button></div><div class="kb-split"><div class="kb-pane">${body}</div>${kbSide()}</div></div>`;
+    host.innerHTML = `<div class="kb kb-sched"><div class="kb-bar kb-calbar"><b class="kb-month-title">${kbMonthTitle(days)}</b><div class="kb-seg">${spans}</div><button type="button" data-kb="today">Today</button><button type="button" data-kb="prev" aria-label="Previous">‹</button><button type="button" data-kb="next" aria-label="Next">›</button></div><div class="kb-split"><div class="kb-pane">${body}</div>${kbSide()}</div></div>`;
     const scroller = host.querySelector('.nc-scroll');
     if (scroller) scroller.scrollTop = kept != null && kept !== '' ? Number(kept) : 8 * NC_H;
     const seg = host.querySelector('.kb-seg');
