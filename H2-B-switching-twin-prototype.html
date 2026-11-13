@@ -8124,6 +8124,38 @@
   .thread-head p, .from { margin: 2px 0 0; font-size: 12px; color: var(--muted); }
   .from { color: var(--green-dark); font-weight: 500; }
   .head-actions { margin-left: auto; display: flex; gap: 2px; }
+  #teamHost .ws-btn {
+    flex: none; height: 32px; padding: 0 12px; border: 1px solid #d5dde2; border-radius: 8px;
+    background: #fff; color: var(--green); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+  }
+  #teamHost .ws-btn:hover, #teamHost .ws-btn[aria-pressed="true"] { background: var(--green-tint); }
+  #teamHost .workspace { flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 16px; padding: 16px; background: #fff; }
+  #teamHost .workspace[hidden], #teamHost .log[hidden], #teamHost .composer[hidden] { display: none; }
+  #teamHost .ws-note, #teamHost .ws-empty { margin: 0; color: #8b919a; font-size: 13px; line-height: 1.45; }
+  #teamHost .ws-form, #teamHost .ws-card { display: grid; gap: 8px; padding: 16px; border: 1px solid #eceef1; border-radius: 12px; background: #fff; }
+  #teamHost .ws-form label { display: grid; gap: 4px; color: #8b919a; font-size: 12px; font-weight: 600; }
+  #teamHost .ws-form input, #teamHost .ws-form select {
+    height: 32px; box-sizing: border-box; border: 1px solid #e6e8ec; border-radius: 8px; padding: 0 8px;
+    background: #fff; color: #1a1d21; font: inherit; font-size: 14px; font-weight: 400;
+  }
+  #teamHost .ws-add { display: flex; align-items: center; gap: 8px; }
+  #teamHost .ws-add input { flex: 1; min-width: 0; }
+  #teamHost .ws-add button, #teamHost .ws-save {
+    height: 32px; padding: 0 12px; border: 0; border-radius: 8px; background: var(--green); color: #fff;
+    font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; flex: none;
+  }
+  #teamHost .ws-save { justify-self: start; }
+  #teamHost .ws-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  #teamHost .ws-chips button, #teamHost .ws-card i {
+    display: inline-flex; align-items: center; height: 28px; padding: 0 8px; border: 0; border-radius: 999px;
+    background: #f1f2f4; color: #656d76; font-style: normal; font-size: 12px; cursor: pointer;
+  }
+  #teamHost .ws-card b { font-size: 14px; font-weight: 650; color: #1a1d21; }
+  #teamHost .ws-card small { color: #8b919a; font-size: 12px; }
+  #teamHost .ws-card .ws-chips button { cursor: default; }
+  html[data-theme="blue"] #teamHost .ws-btn, html[data-theme="blue"] #teamHost .ws-btn:hover, html[data-theme="blue"] #teamHost .ws-btn[aria-pressed="true"] { color: #3c7a94; }
+  html[data-theme="blue"] #teamHost .ws-btn[aria-pressed="true"] { background: #ebf5fa; border-color: #c5d4de; }
+  html[data-theme="blue"] #teamHost .ws-add button, html[data-theme="blue"] #teamHost .ws-save { background: #3c7a94; }
   .thread-head .icon-btn { border: 0; background: transparent; color: #5f6368; }
   .thread-head .icon-btn:hover, .thread-head .icon-btn[aria-expanded="true"], .thread-head .icon-btn[aria-pressed="true"] { border: 0; background: #d4e4ee; color: #1f1f1f; }
   .head-face .mosaic, .head-face .av { width: 36px; height: 36px; border-radius: 4px; border: 0; }
@@ -10427,6 +10459,7 @@
             <div class="subline" id="sub"></div>
             <button type="button" class="from" id="back" hidden></button>
           </div>
+          <button type="button" class="ws-btn" id="workspaceBtn" hidden aria-pressed="false">Workspace</button>
           <div class="head-actions">
             <button type="button" class="icon-btn" id="threadMore" aria-label="Conversation menu" aria-haspopup="menu"><svg class="thread-dots" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/></svg><span class="thread-dots-txt">⋯</span></button>
             <button type="button" class="icon-btn" id="searchBtn" aria-label="Search in chat" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16.5 20 20.5"/></svg></button>
@@ -10446,6 +10479,9 @@
           <div class="history-body" id="historyBody"></div>
         </div>
         <button type="button" class="announce clip" id="announce" hidden></button>
+        <section class="workspace" id="workspace" hidden aria-label="Workspace">
+          <div id="workspaceBody"></div>
+        </section>
         <div class="log" id="log"></div>
         <div class="quote-peek" id="quotePeek" hidden></div>
         <div class="mention" id="mention" hidden role="listbox" aria-label="Mention someone"></div>
@@ -20959,6 +20995,9 @@ function renderChrome() {
     $('chatSearch').hidden = true;
     teamRoot.querySelector('.thread').classList.remove('history-on');
     $('panel').hidden = true;
+    const wsOff = $('workspaceBtn');
+    if (wsOff) { wsOff.hidden = true; wsOff.setAttribute('aria-pressed', 'false'); }
+    state.workspace = false;
     return;
   }
   const c = current();
@@ -20992,6 +21031,13 @@ function renderChrome() {
   $('threadMore').setAttribute('aria-label', 'Conversation menu');
   $('threadMore').setAttribute('aria-pressed', document.documentElement.dataset.theme === 'blue' && state.panel ? 'true' : 'false');
   $('searchBtn').setAttribute('aria-pressed', state.chatSearch ? 'true' : 'false');
+  const wsBtn = $('workspaceBtn');
+  const wsOn = c.kind === 'group' && !!state.workspace;
+  if (c.kind !== 'group') state.workspace = false;
+  if (wsBtn) {
+    wsBtn.hidden = c.kind !== 'group';
+    wsBtn.setAttribute('aria-pressed', wsOn ? 'true' : 'false');
+  }
   $('chatSearch').hidden = !state.chatSearch;
   teamRoot.querySelector('.thread').classList.toggle('history-on', state.chatSearch);
   $('panel').hidden = !state.panel || state.chatSearch;
@@ -21319,6 +21365,55 @@ function switches(c) {
   return `<div class="rowline"><span>Mute</span><button type="button" class="switch" data-switch="muted" aria-pressed="${c.muted ? 'true' : 'false'}" aria-label="Mute"><i></i></button></div>
     <div class="rowline"><span>Pin</span><button type="button" class="switch" data-switch="pinned" aria-pressed="${c.pinned ? 'true' : 'false'}" aria-label="Pin"><i></i></button></div>`;
 }
+const WS_KINDS = ['File', 'Meeting', 'Document', 'Pod'];
+function ensureWsDraft(c) {
+  if (!state.wsDraft || state.wsDraft.group !== c.id) {
+    state.wsDraft = { group: c.id, title: '', who: (c.members && c.members[0]) || '', kind: 'File', itemName: '', items: [] };
+  }
+  return state.wsDraft;
+}
+function captureWsDraft() {
+  const form = $('wsForm');
+  if (!form || !state.wsDraft) return;
+  state.wsDraft.title = form.elements.title.value;
+  state.wsDraft.who = form.elements.who.value;
+  state.wsDraft.kind = form.elements.kind.value;
+  state.wsDraft.itemName = form.elements.item.value;
+}
+function renderWorkspace() {
+  const host = $('workspaceBody');
+  const c = current();
+  if (!host || !c || c.kind !== 'group') return;
+  captureWsDraft();
+  const draft = ensureWsDraft(c);
+  const manage = canReview(c);
+  const tasks = c.tasks || [];
+  const members = (c.members || []).map((id) => `<option value="${esc(id)}"${id === draft.who ? ' selected' : ''}>${esc(person(id)?.name || id)}</option>`).join('');
+  const kinds = WS_KINDS.map((kind) => `<option${kind === draft.kind ? ' selected' : ''}>${kind}</option>`).join('');
+  const chips = draft.items.map((item, i) => `<button type="button" data-ws-remove="${i}">${esc(item.kind)} · ${esc(item.name)} ×</button>`).join('');
+  const form = manage ? `<form class="ws-form" id="wsForm">
+    <label>Task<input name="title" maxlength="80" value="${esc(draft.title)}" autocomplete="off"></label>
+    <label>Assign to<select name="who">${members}</select></label>
+    <label>Add to this task<div class="ws-add"><select name="kind">${kinds}</select><input name="item" maxlength="80" placeholder="File, meeting, or note" value="${esc(draft.itemName)}" autocomplete="off"><button type="button" data-ws="add-item">Add</button></div></label>
+    ${chips ? `<div class="ws-chips">${chips}</div>` : ''}
+    <button type="submit" class="ws-save">Add task</button>
+  </form>` : '<p class="ws-note">Only the owner and admins can add tasks.</p>';
+  const cards = tasks.length ? tasks.map((task) => {
+    const bits = (task.items || []).map((item) => `<i>${esc(item.kind)} · ${esc(item.name)}</i>`).join('');
+    return `<article class="ws-card"><b>${esc(task.title)}</b><small>${esc(person(task.who)?.name || task.who)}</small>${bits ? `<div class="ws-chips">${bits}</div>` : ''}</article>`;
+  }).join('') : '<p class="ws-empty">还没有任务。</p>';
+  host.innerHTML = form + cards;
+}
+function syncWorkspace() {
+  const on = !!state.workspace && !state.notice && current()?.kind === 'group';
+  const pane = $('workspace');
+  if (pane) pane.hidden = !on;
+  const log = $('log');
+  if (log) log.hidden = on;
+  const composer = $('composer');
+  if (composer && !state.notice) composer.hidden = on;
+  if (on) renderWorkspace();
+}
 function render(scroll) {
   if (!chats.length) {
     $('gcount').textContent = '0 groups';
@@ -21332,6 +21427,7 @@ function render(scroll) {
   renderLog(scroll);
   renderHistory();
   renderPanel();
+  syncWorkspace();
 }
 
 function openChat(id) {
@@ -21342,6 +21438,8 @@ function openChat(id) {
     c.unread = 0;
     state.chatSearch = false;
     state.chatQuery = '';
+    state.workspace = false;
+    state.wsDraft = null;
     state.historyKind = '';
     state.historyWho = '';
     const box = $('chatQ');
@@ -21961,6 +22059,51 @@ $('rows').addEventListener('contextmenu', (e) => {
   if (!row) return;
   e.preventDefault();
   openCtx(row.dataset.open || row.dataset.more, e.clientX, e.clientY);
+});
+$('workspaceBtn')?.addEventListener('click', () => {
+  const c = current();
+  if (!c || c.kind !== 'group') return;
+  state.workspace = !state.workspace;
+  if (state.workspace) {
+    state.panel = false;
+    state.chatSearch = false;
+  }
+  render(false);
+});
+$('workspace')?.addEventListener('click', (e) => {
+  const add = e.target.closest('[data-ws="add-item"]');
+  const remove = e.target.closest('[data-ws-remove]');
+  if (!add && !remove) return;
+  const c = current();
+  if (!c || !canReview(c)) return;
+  captureWsDraft();
+  const draft = ensureWsDraft(c);
+  if (add) {
+    const name = draft.itemName.trim();
+    if (!name) return;
+    draft.items.push({ kind: draft.kind, name });
+    draft.itemName = '';
+    const box = $('wsForm');
+    if (box) box.elements.item.value = '';
+  } else {
+    draft.items.splice(Number(remove.dataset.wsRemove), 1);
+  }
+  renderWorkspace();
+});
+$('workspace')?.addEventListener('submit', (e) => {
+  const form = e.target.closest('#wsForm');
+  if (!form) return;
+  e.preventDefault();
+  const c = current();
+  if (!c || !canReview(c)) return;
+  captureWsDraft();
+  const draft = ensureWsDraft(c);
+  const title = draft.title.trim();
+  if (!title) return;
+  if (!c.tasks) c.tasks = [];
+  c.tasks.unshift({ id: 't' + Date.now(), title, who: draft.who, items: draft.items.slice() });
+  state.wsDraft = null;
+  renderWorkspace();
 });
 $('threadMore').addEventListener('click', (e) => {
   e.stopPropagation();
