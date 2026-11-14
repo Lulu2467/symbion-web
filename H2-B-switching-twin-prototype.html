@@ -8441,8 +8441,10 @@
   }
   .gi-top { display: flex; justify-content: flex-end; padding: 4px 8px 0; }
   .gi-x {
-    width: 28px; height: 28px; border: 0; border-radius: 8px; background: transparent; color: #8b9198; font-size: 18px;
+    width: 28px; height: 28px; padding: 0; border: 0; border-radius: 8px; background: transparent; color: #8b9198;
+    display: grid; place-items: center; line-height: 0; cursor: pointer;
   }
+  .gi-x svg { width: 16px; height: 16px; display: block; }
   .gi-x:hover { background: #f3f5f7; color: #1f1f1f; }
   .gi-panel { padding: 0 12px 4px; }
   .gi-title {
@@ -10970,7 +10972,7 @@
         <div class="desk-bubble" id="gBubble" hidden></div>
         <div class="gi-modal" id="giModal" hidden>
           <div class="gi-sheet" role="dialog" aria-modal="true" aria-labelledby="giTitle">
-            <div class="gi-top"><button type="button" class="gi-x" data-gi="close" aria-label="Close">×</button></div>
+            <div class="gi-top"><button type="button" class="gi-x" data-gi="close" aria-label="Close"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.25 3.25 12.75 12.75M12.75 3.25 3.25 12.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
             <div class="gi-panel">
               <input class="gi-title" id="giName" type="text" maxlength="80" autocomplete="off" placeholder="Add a title" aria-label="Event title">
               <p id="giTitle" class="visually-hidden">Create event</p>
