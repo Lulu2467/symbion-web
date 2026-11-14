@@ -8693,18 +8693,18 @@
   }
   .ws-kanban .desk-new > button svg { width: 22px; height: 22px; display: block; }
   .ws-kanban .desk-new > button:hover { background: #f2f2f4; color: #3c7a94; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #teamHost .ws-page:has(.ws-home-cal) {
+  .ws-page:has(.ws-home-cal) {
     display: flex;
     flex-direction: column;
     overflow: hidden;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #teamHost .ws-kanban:has(.ws-home-cal) {
+  .ws-kanban:has(.ws-home-cal) {
     flex: 1 1 auto;
     min-height: 0;
     display: flex;
     flex-direction: column;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #teamHost .ws-home-cal {
+  .ws-home-cal {
     width: auto;
     max-width: none;
     margin: 0;
@@ -8712,17 +8712,15 @@
     min-height: 0;
     display: flex;
     flex-direction: column;
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 16px 16px 0;
     overflow: hidden;
-    box-sizing: border-box;
+    background: #fff;
   }
-  html[data-theme="blue"] #teamHost .ws-home-cal .tl-body,
-  html[data-theme="blue"] #teamHost .ws-home-cal .tl-body > .kb,
-  html[data-theme="blue"] #teamHost .ws-home-cal .kb-sched,
-  html[data-theme="blue"] #teamHost .ws-home-cal .kb-pane:has(.nc) {
+  .ws-home-cal .tl-body,
+  .ws-home-cal .tl-body > .kb,
+  .ws-home-cal .kb-sched,
+  .ws-home-cal .kb-split,
+  .ws-home-cal .kb-pane:has(.nc),
+  .ws-home-cal .nc {
     flex: 1 1 auto;
     min-height: 0;
     display: flex;
@@ -8730,7 +8728,11 @@
     overflow: hidden;
     width: 100%;
   }
-  html[data-theme="blue"] #teamHost .ws-home-cal .tl-body > .kb { padding: 2px 2px 8px; }
+  .ws-home-cal .kb-split { flex-direction: row; }
+  .ws-home-cal .nc-head,
+  .ws-home-cal .nc-all { flex: none; }
+  .ws-home-cal .nc-scroll { flex: 1 1 auto; min-height: 0; overflow: auto; }
+  .ws-home-cal .tl-body > .kb { padding: 2px 2px 8px; }
   .g-list { display: flex; flex-direction: column; gap: 16px; }
   .g-day h4 { margin: 0 0 8px; font-size: 12px; font-weight: 650; color: #8b9198; }
   .g-row { display: flex; align-items: flex-start; gap: 12px; width: 100%; padding: 12px 14px; border: 1px solid #e6e8ec; border-radius: 12px; background: #fff; text-align: left; color: #1f1f1f; }
