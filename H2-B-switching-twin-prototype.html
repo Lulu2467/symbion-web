@@ -8434,6 +8434,7 @@
     width: 28px; height: 28px; display: grid; place-items: center; color: #8b9198; flex: none;
   }
   .gi-ico svg { width: 18px; height: 18px; display: block; }
+  .gi-ico .gi-people-ico { width: 16px; height: 16px; }
   .gi-row-body { min-width: 0; display: flex; flex-direction: column; gap: 8px; padding-top: 3px; }
   .gi-row-line { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 28px; }
   .gi-link {
@@ -8441,6 +8442,9 @@
     font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; text-align: left;
   }
   .gi-link:hover { color: #316479; }
+  .gi-link[data-gi="people"] { display: inline-flex; align-items: center; gap: 4px; }
+  .gi-chev { width: 14px; height: 14px; flex: none; color: #8b9198; transform: rotate(180deg); transition: transform .18s ease; }
+  .gi-link[aria-expanded="true"] .gi-chev { transform: rotate(-90deg); color: #3c7a94; }
   .gi-quiet {
     border: 0; background: transparent; padding: 0; color: #71777d;
     font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; text-align: left;
@@ -8504,10 +8508,16 @@
     padding: 0 12px; font: inherit; font-size: 13px; color: #1f1f1f; background: #fff;
   }
   .gi-pick input:focus { outline: none; }
-  .gi-pick .gi-people { max-height: 180px; overflow: auto; }
+  .gi-pick input::-webkit-search-cancel-button,
+  .gi-pick input::-webkit-search-decoration,
+  .gi-pick input::-webkit-search-results-button { -webkit-appearance: none; appearance: none; display: none; }
+  .gi-pick .gi-people { max-height: 180px; overflow: auto; scrollbar-width: thin; scrollbar-color: #c5c9ce transparent; }
+  .gi-pick .gi-people::-webkit-scrollbar { width: 8px; }
+  .gi-pick .gi-people::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
+  .gi-pick .gi-people::-webkit-scrollbar-thumb { background: #c5c9ce; border-radius: 8px; }
   .gi-pick .gi-people button,
   .gi-file-pick button {
-    width: 100%; min-height: 36px; padding: 8px 12px; border: 0; border-bottom: 1px solid #eef0f2;
+    width: 100%; min-height: 36px; padding: 8px 16px 8px 12px; border: 0; border-bottom: 1px solid #eef0f2;
     background: #fff; color: #1f1f1f; font-size: 13px; text-align: left; cursor: pointer;
   }
   .gi-pick .gi-people button:last-child,
@@ -10938,9 +10948,9 @@
               <input class="gi-title" id="giName" type="text" maxlength="80" autocomplete="off" placeholder="Add a title" aria-label="Event title">
               <p id="giTitle" class="visually-hidden">Create event</p>
               <div class="gi-row">
-                <span class="gi-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M16 11a3 3 0 1 0-2-5.2A3 3 0 1 0 8 11"/><path d="M4 19c.6-2.6 2.8-4 5.5-4 .7 0 1.3.1 1.9.3"/><path d="M14 15c2.8 0 5 1.4 5.6 4"/></svg></span>
+                <span class="gi-ico" aria-hidden="true"><svg class="gi-people-ico" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M368.989091 474.763636a182.225455 182.225455 0 1 1 182.341818-182.225454A182.458182 182.458182 0 0 1 368.989091 474.763636z m0-306.269091a124.043636 124.043636 0 1 0 124.16 124.043637 124.16 124.16 0 0 0-124.16-124.043637zM372.363636 890.647273h-1.512727c-20.829091-1.163636-43.054545-1.512727-64.465454-1.978182C211.549091 886.690909 113.454545 884.363636 54.458182 826.181818c-29.323636-26.414545-36.072727-70.981818-18.036364-119.505454 34.909091-93.090909 154.530909-194.56 335.825455-196.189091 181.76 1.629091 301.614545 102.865455 336.290909 196.189091 18.036364 48.523636 11.636364 93.090909-18.036364 119.505454-58.996364 58.181818-157.090909 59.927273-252.043636 61.789091-21.410909 0-43.636364 0.814545-64.465455 1.978182z m0-321.396364c-163.723636 0.930909-258.094545 95.418182-281.483636 158.254546-9.309091 25.018182-8.378182 46.545455 2.56 56.203636l1.28 1.163636c42.472727 42.24 129.047273 43.869091 212.712727 45.498182 21.410909 0 43.52 0.814545 64.930909 1.978182 21.294545-1.163636 43.52-1.512727 64.930909-1.978182 83.781818-1.629091 170.356364-3.374545 212.712728-45.498182l1.28-1.163636c10.938182-9.541818 11.636364-31.069091 2.56-56.203636C630.690909 664.669091 536.32 570.181818 372.363636 569.250909z" fill="currentColor"/><path d="M707.025455 502.225455a155.229091 155.229091 0 1 1 155.112727-155.112728 155.345455 155.345455 0 0 1-155.112727 155.112728z m0-252.16a97.047273 97.047273 0 1 0 97.047272 97.047272 97.163636 97.163636 0 0 0-97.047272-97.047272zM709.818182 844.683636h-1.512727c-13.381818-0.698182-26.996364-1.047273-40.843637-1.396363l1.28-58.181818c13.847273 0 27.694545 0.698182 41.076364 1.396363 17.570909-0.930909 35.723636-1.28 53.294545-1.629091 67.956364-1.28 138.24-2.676364 171.636364-35.956363l1.28-1.28c7.214545-6.4 7.563636-22.341818 0.698182-40.610909C918.109091 656.64 842.123636 581.818182 709.818182 580.072727a291.607273 291.607273 0 0 0-125.090909 27.345455l-24.785455-52.712727A357.469091 357.469091 0 0 1 709.818182 521.890909C861.789091 523.636364 962.210909 608.349091 991.418182 686.545455c15.592727 42.24 9.309091 81.454545-16.174546 104.727272-50.036364 49.221818-131.84 50.734545-210.967272 52.247273-17.570909 0-35.84 0.698182-52.945455 1.629091z" fill="currentColor"/><path d="M563.898182 618.356364l-29.44-50.152728c8.145455-4.770909 16.756364-9.309091 25.483636-13.381818l24.785455 52.712727c-7.214545 3.258182-14.545455 6.981818-20.829091 10.821819z" fill="currentColor"/></svg></span>
                 <div class="gi-row-body">
-                  <div class="gi-row-line"><button type="button" class="gi-link" data-gi="people">Add people</button></div>
+                  <div class="gi-row-line"><button type="button" class="gi-link" data-gi="people" aria-expanded="false">Add people<svg class="gi-chev" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14.5 5.5L8 12l6.5 6.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
                   <div class="gi-chips" id="giWhoChips"></div>
                   <div class="gi-pick" id="giPick" hidden>
                     <input id="giPeopleQ" type="search" placeholder="Search name" aria-label="Search people">
@@ -22675,14 +22685,18 @@ function paintGroupItem() {
   }
   const pick = $('giPick');
   if (pick) pick.hidden = !gi.picking;
+  const peopleBtn = modal.querySelector('[data-gi="people"]');
+  if (peopleBtn) peopleBtn.setAttribute('aria-expanded', gi.picking ? 'true' : 'false');
   const peopleBox = $('giPeople');
   const query = (gi.peopleQuery || '').trim().toLowerCase();
   if (peopleBox) {
+    const scroll = peopleBox.scrollTop;
     const rows = members.filter((id) => !query || person(id).name.toLowerCase().includes(query));
     peopleBox.innerHTML = rows.length ? rows.map((id) => {
       const on = gi.who.includes(id);
       return `<button type="button" data-gi-who="${esc(id)}" aria-pressed="${on ? 'true' : 'false'}">${esc(person(id).name)}</button>`;
     }).join('') : '<p class="hint">No matching people.</p>';
+    peopleBox.scrollTop = scroll;
   }
   const q = $('giPeopleQ');
   if (q && q.value !== gi.peopleQuery) q.value = gi.peopleQuery;
@@ -23692,7 +23706,13 @@ $('giModal')?.addEventListener('click', (e) => {
     paintGroupItem();
     return;
   }
-  if (e.target.closest('[data-gi="people"]')) { gi.picking = !gi.picking; gi.filePick = false; paintGroupItem(); $('giPeopleQ')?.focus(); return; }
+  if (e.target.closest('[data-gi="people"]')) {
+    gi.picking = !gi.picking;
+    gi.filePick = false;
+    paintGroupItem();
+    if (gi.picking) $('giPeopleQ')?.focus();
+    return;
+  }
   if (e.target.closest('[data-gi="meet"]')) {
     gi.meet = gi.meet ? '' : giMeetLink();
     if (gi.meet) gi.type = 'Meeting';
