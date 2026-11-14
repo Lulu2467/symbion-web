@@ -1565,30 +1565,22 @@
     width: 16px;
     height: 16px;
     margin: 0;
-    border-radius: 999px;
-    border: 1.5px solid var(--green);
+    border: 0;
+    border-radius: 0;
     background: transparent;
-    color: transparent;
+    color: var(--green);
     font-size: 0;
     line-height: 0;
     padding: 0;
   }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+  }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x::before,
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 8px;
-    height: 1.5px;
-    border-radius: 1px;
-    background: var(--green);
-  }
-  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x::before {
-    transform: translate(-50%, -50%) rotate(45deg);
-  }
-  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x::after {
-    transform: translate(-50%, -50%) rotate(-45deg);
+    content: none;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home {
     width: min(1200px, 100%);
@@ -3423,7 +3415,11 @@
   .composer-tool-chip .chip-ico svg { display: block; width: 12px; height: 12px; }
   .composer-tool-chip .chip-ico img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .composer-tool-chip .chip-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; line-height: 1.25; padding-bottom: 1px; }
-  .composer-tool-chip .chip-x { width: 16px; height: 16px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; color: var(--faint); font-size: 13px; line-height: 1; flex: none; margin-left: 0; border: 0; background: transparent; padding: 0; cursor: pointer; }
+  .composer-tool-chip .chip-x {
+    width: 16px; height: 16px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center;
+    color: var(--faint); font-size: 0; line-height: 0; flex: none; margin-left: 0; border: 0; background: transparent; padding: 0; cursor: pointer;
+  }
+  .composer-tool-chip .chip-x svg { width: 16px; height: 16px; display: block; }
   .composer-tool-chip .chip-x:hover { background: var(--surface); color: var(--ink); }
   /* Between 21 (too display) and 15 (too thin vs Kimi) — ~16–17 matches Kimi body next to chips. */
   .composer-input { flex: 1 1 160px; min-width: 140px; width: 100%; font-size: 17px; font-weight: 400; line-height: 1.45; color: var(--ink); background: transparent; border: 0; padding: 0; margin: 0; resize: none; font-family: var(--font); min-height: 1.45em; overflow: hidden; box-sizing: border-box; }
@@ -9788,7 +9784,7 @@
                         <div class="composer-tool-chip" id="composerToolChip" hidden>
                           <span class="chip-ico" id="composerToolChipIco" aria-hidden="true"></span>
                           <span class="chip-label" id="composerToolChipLabel"></span>
-                          <button type="button" class="chip-x" id="composerToolChipClear" aria-label="Remove tool">×</button>
+                          <button type="button" class="chip-x" id="composerToolChipClear" aria-label="Remove tool"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M512 0C794.769794 0 1024 229.805588 1024 512 1024 794.769794 794.194408 1024 512 1024 229.230208 1024 0 794.194408 0 512 0 229.230208 229.805588 0 512 0ZM512 984.615385C772.648448 984.615385 984.615385 772.81286 984.615385 512 984.615385 251.351552 772.81286 39.384615 512 39.384615 251.351552 39.384615 39.384615 251.18714 39.384615 512 39.384615 772.648448 251.18714 984.615385 512 984.615385ZM512 539.849129 358.829792 693.019336C351.139468 700.70966 338.670988 700.70966 330.980664 693.019336 323.29034 685.329012 323.29034 672.860532 330.980664 665.170208L484.150871 512 330.980664 358.829792C323.29034 351.139468 323.29034 338.670988 330.980664 330.980664 338.670988 323.29034 351.139468 323.29034 358.829792 330.980664L512 484.150871 665.170208 330.980664C672.860532 323.29034 685.329012 323.29034 693.019336 330.980664 700.70966 338.670988 700.70966 351.139468 693.019336 358.829792L539.849129 512 693.019336 665.170208C700.70966 672.860532 700.70966 685.329012 693.019336 693.019336 685.329012 700.70966 672.860532 700.70966 665.170208 693.019336L512 539.849129Z"/></svg></button>
                         </div>
                       </div>
                       <textarea class="composer-input" id="composerInput" rows="1" placeholder="What do you want to work on?" aria-label="What do you want to work on?"></textarea>
@@ -15107,7 +15103,7 @@
       x.type = 'button';
       x.className = 'chip-x';
       x.setAttribute('aria-label', `Remove ${att.name}`);
-      x.textContent = '×';
+      x.innerHTML = '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M512 0C794.769794 0 1024 229.805588 1024 512 1024 794.769794 794.194408 1024 512 1024 229.230208 1024 0 794.194408 0 512 0 229.230208 229.805588 0 512 0ZM512 984.615385C772.648448 984.615385 984.615385 772.81286 984.615385 512 984.615385 251.351552 772.81286 39.384615 512 39.384615 251.351552 39.384615 39.384615 251.18714 39.384615 512 39.384615 772.648448 251.18714 984.615385 512 984.615385ZM512 539.849129 358.829792 693.019336C351.139468 700.70966 338.670988 700.70966 330.980664 693.019336 323.29034 685.329012 323.29034 672.860532 330.980664 665.170208L484.150871 512 330.980664 358.829792C323.29034 351.139468 323.29034 338.670988 330.980664 330.980664 338.670988 323.29034 351.139468 323.29034 358.829792 330.980664L512 484.150871 665.170208 330.980664C672.860532 323.29034 685.329012 323.29034 693.019336 330.980664 700.70966 338.670988 700.70966 351.139468 693.019336 358.829792L539.849129 512 693.019336 665.170208C700.70966 672.860532 700.70966 685.329012 693.019336 693.019336 685.329012 700.70966 672.860532 700.70966 665.170208 693.019336L512 539.849129Z"/></svg>';
       x.addEventListener('click', (e) => {
         e.stopPropagation();
         removeAttachment(att.id);
