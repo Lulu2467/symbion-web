@@ -8330,11 +8330,31 @@
   }
   .ws-files button span { width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 650; }
   .ws-files button small { color: #71777d; font-size: 12px; }
-  .ws-kanban h3 { margin: 0 0 10px; font-size: 16px; font-weight: 650; color: #1f1f1f; }
-  .ws-kanban .desk-tools { width: 100%; margin-bottom: 10px; }
-  .ws-kanban .desk-views { gap: 0; padding: 2px; border-radius: 9px; background: #f3f5f7; }
-  .ws-kanban .desk-views button[aria-pressed="true"] { background: #fff; color: var(--green-dark); }
-  .ws-kanban .desk-new > button { background: var(--green); color: #fff; border-radius: 8px; padding: 6px 12px; }
+  .ws-kanban .ws-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .ws-kanban .ws-head h3 { margin: 0; font-size: 16px; font-weight: 650; color: #1f1f1f; }
+  .ws-kanban .desk-tools { width: 100%; margin: 0 0 12px; }
+  .ws-kanban .desk-views { height: 32px; gap: 2px; padding: 3px; border-radius: 10px; background: #eef0f2; }
+  .ws-kanban .desk-views button { height: 26px; padding: 0 12px; border-radius: 8px; font-size: 13px; font-weight: 500; color: #71777d; }
+  .ws-kanban .desk-views button[aria-pressed="true"] { background: #fff; color: #1d1d1f; font-weight: 650; box-shadow: 0 1px 2px rgba(20, 24, 28, .08); }
+  .ws-kanban .desk-new > button { height: 32px; padding: 0 12px; border-radius: 8px; background: #3c7a94; color: #fff; }
+  .ws-kanban .desk-new > button:hover { background: #316479; }
+  .g-list { display: flex; flex-direction: column; gap: 16px; }
+  .g-day h4 { margin: 0 0 8px; font-size: 12px; font-weight: 650; color: #8b9198; }
+  .g-row { display: flex; align-items: flex-start; gap: 12px; width: 100%; padding: 12px 14px; border: 1px solid #e6e8ec; border-radius: 12px; background: #fff; text-align: left; color: #1f1f1f; }
+  .g-row + .g-row { margin-top: 8px; }
+  .g-row:hover { background: #f7f8fa; }
+  .g-kind { flex: none; width: 76px; padding-top: 2px; color: #3c7a94; font-size: 12px; font-weight: 650; }
+  .g-copy { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .g-copy b { font-size: 14px; font-weight: 650; }
+  .g-copy span { color: #71777d; font-size: 12px; line-height: 1.4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .g-copy .g-meet { color: #3c7a94; }
+  .g-copy .g-file { color: #1f1f1f; }
+  .ws-kanban .desk-bar { min-width: 0; height: 36px; padding: 3px 6px; border-radius: 6px; white-space: normal; }
+  .ws-kanban .desk-bar b, .ws-kanban .desk-bar small,
+  .ws-kanban .desk-cal .desk-task b, .ws-kanban .desk-cal .desk-task small { display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 650; }
+  .ws-kanban .desk-bar small, .ws-kanban .desk-cal .desk-task small { margin-top: 1px; font-size: 10px; font-weight: 500; opacity: .8; }
+  .ws-kanban .desk-cal .desk-task { display: flex; flex-direction: column; align-items: flex-start; min-height: 0; height: auto; margin-top: 4px; padding: 3px 6px; font-size: 11px; line-height: 1.25; white-space: normal; overflow: hidden; text-align: left; }
+  .ws-kanban .desk-cal-day.is-today > button:first-child { color: #3c7a94; }
   .tk-board { display: grid; grid-template-columns: repeat(4, minmax(180px, 1fr)); gap: 12px; align-items: stretch; }
   .tk-col { min-width: 0; min-height: 360px; padding: 10px; border-radius: 12px; background: #f6f7f8; }
   .tk-col.is-over { background: #ebf5fa; }
@@ -21869,6 +21889,16 @@ function gDayLabel(iso) {
   if (!iso) return '';
   return new Date(iso + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
+function gPrettyDay(iso) {
+  if (!iso) return '';
+  return new Date(iso + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+}
+function gCanvasTitle() {
+  if (gCanvas === 'calendar') return 'Calendar';
+  if (gCanvas === 'list') return 'List';
+  if (gCanvas === 'timeline') return 'Timeline';
+  return 'Kanban';
+}
 function gDocIcon(name) {
   const ext = String(name || '').split('.').pop().toLowerCase();
   const color = ext === 'pdf' ? '#e24b4a' : (ext === 'doc' || ext === 'docx' || ext === 'txt') ? '#3c7a94' : '#8b9198';
@@ -21924,6 +21954,17 @@ function gSpanOf(item, isos) {
   const right = (endIdx + endM / 1440) / isos.length;
   return { left: left * 100, width: Math.max((right - left) * 100, 0.4) };
 }
+function gDayBox(item, isos) {
+  let startIdx = isos.indexOf(item.date);
+  const endIso = item.end || item.date;
+  let endIdx = isos.indexOf(endIso);
+  if (startIdx < 0 && item.date < isos[0]) startIdx = 0;
+  if (endIdx < 0 && endIso > isos[isos.length - 1]) endIdx = isos.length - 1;
+  if (startIdx < 0 || endIdx < 0) return null;
+  if (endIdx < startIdx) endIdx = startIdx;
+  const span = endIdx - startIdx + 1;
+  return { left: (startIdx / isos.length) * 100, width: (span / isos.length) * 100 };
+}
 function gPoint(track, clientX) {
   const rect = track.getBoundingClientRect();
   const slots = [...track.querySelectorAll('[data-g-slot]')];
@@ -21950,13 +21991,13 @@ function paintGroupBoard() {
   const days = gDays();
   const isos = days.map(gIso);
   const cols = days.length;
-  const head = days.map((d) => `<span>${d.getDate()} ${d.toLocaleDateString('en-US', { weekday: 'short' })}</span>`).join('');
+  const head = days.map((d) => `<span>${d.toLocaleDateString('en-US', { weekday: 'short' })} ${d.getDate()}</span>`).join('');
   const peopleIds = c.members.filter((id) => people[id] && !people[id].agent && !people[id].twin);
   peopleIds.sort((a, b) => (a === ME ? -1 : b === ME ? 1 : 0));
   const lanes = peopleIds.map((id) => {
     const cells = days.map((d) => `<div class="desk-cell" data-g-slot="${gIso(d)}"></div>`).join('');
     const hits = gItems(c.id).filter((item) => item.who === id && gCanSee(item, c) && isos.some((iso) => gCovers(item, iso)))
-      .map((item) => ({ item, outside: false, span: gSpanOf(item, isos) })).filter((row) => row.span);
+      .map((item) => ({ item, outside: false, span: gDayBox(item, isos) })).filter((row) => row.span);
     hits.sort((a, b) => a.span.left - b.span.left);
     const rowEnds = [];
     hits.forEach((row) => {
@@ -21969,17 +22010,26 @@ function paintGroupBoard() {
       const open = !row.outside && gCanSee(row.item, c);
       const label = open ? row.item.title : 'Occupied';
       const attr = row.outside ? 'data-g-busy="1"' : `data-g-item="${row.item.id}"`;
-      return `<button type="button" class="desk-task desk-bar${open ? ' type-' + esc(row.item.type).toLowerCase() : ' g-occupied'}" ${attr} style="left:${row.span.left}%;width:${row.span.width}%;top:${8 + row.level * 32}px">${esc(label)}</button>`;
+      const sub = open ? (row.item.startTime ? gWhen(row.item) : (row.item.meet ? 'Meeting' : (gFileNames(row.item)[0] || ''))) : '';
+      return `<button type="button" class="desk-task desk-bar${open ? ' type-' + esc(row.item.type).toLowerCase() : ' g-occupied'}" ${attr} title="${esc(open ? label + (sub ? ' · ' + sub : '') : 'Occupied')}" style="left:calc(${row.span.left}% + 4px);width:calc(${row.span.width}% - 8px);top:${8 + row.level * 44}px"><b>${esc(label)}</b>${sub ? '<small>' + esc(sub) + '</small>' : ''}</button>`;
     }).join('');
-    return `<div class="desk-week lane" style="--cols:${cols}"><div class="desk-lane-name">${esc(people[id].name)}</div><div class="desk-track" data-g-track="${id}" style="--cols:${cols};min-height:${Math.max(56, rowEnds.length * 32 + 16)}px">${cells}${bars}</div></div>`;
+    return `<div class="desk-week lane" style="--cols:${cols}"><div class="desk-lane-name">${esc(people[id].name)}</div><div class="desk-track" data-g-track="${id}" style="--cols:${cols};min-height:${Math.max(56, rowEnds.length * 44 + 16)}px">${cells}${bars}</div></div>`;
   }).join('');
   let boardHtml = gCanvas === 'board' ? gTaskBoard(c) : `<div class="desk-board"><div class="desk-week head" style="--cols:${cols}"><span>Member</span>${head}</div>${lanes}</div>`;
   if (gCanvas === 'list') {
-    const rows = gItems(c.id).filter((item) => gCanSee(item, c) && isos.some((iso) => gCovers(item, iso))).map((item) => ({ item, outside: false }));
-    boardHtml = '<div class="desk-list">' + (rows.map((row) => {
-      const open = !row.outside && gCanSee(row.item, c);
-      const attr = row.outside ? 'data-g-busy="1"' : `data-g-item="${row.item.id}"`;
-      return '<button type="button" class="' + (open ? 'type-' + esc(row.item.type).toLowerCase() : 'g-occupied') + '" ' + attr + '><span>' + esc(open ? row.item.title : 'Occupied') + '<em style="display:block;font-style:normal;color:#71777d;font-weight:500">' + esc(people[row.item.who].name) + ' · ' + esc(gWhen(row.item)) + '</em></span><small>' + esc(row.item.date) + '</small></button>';
+    const rows = gItems(c.id).filter((item) => gCanSee(item, c) && isos.some((iso) => gCovers(item, iso)));
+    const byDay = new Map();
+    rows.forEach((item) => {
+      if (!byDay.has(item.date)) byDay.set(item.date, []);
+      byDay.get(item.date).push(item);
+    });
+    boardHtml = '<div class="g-list">' + ([...byDay.keys()].sort().map((iso) => {
+      const cards = byDay.get(iso).map((item) => {
+        const p = people[item.who];
+        const file = gFileNames(item)[0] || '';
+        return '<button type="button" class="g-row" data-g-item="' + esc(item.id) + '"><span class="g-kind">' + esc(item.type || 'Task') + '</span><span class="g-copy"><b>' + esc(item.title) + '</b><span>' + esc(p ? p.name : '') + ' · ' + esc(gWhen(item)) + '</span>' + (item.meet ? '<span class="g-meet">' + esc(item.meet) + '</span>' : '') + (file ? '<span class="g-file">' + esc(file) + '</span>' : '') + '</span></button>';
+      }).join('');
+      return '<section class="g-day"><h4>' + esc(gPrettyDay(iso)) + '</h4>' + cards + '</section>';
     }).join('') || '<p class="desk-empty">Nothing in this range.</p>') + '</div>';
   } else if (gCanvas === 'calendar') {
     const first = new Date(gFocus.getFullYear(), gFocus.getMonth(), 1);
@@ -21989,7 +22039,12 @@ function paintGroupBoard() {
     for (let n = 1; n <= count; n += 1) {
       const iso = gIso(new Date(first.getFullYear(), first.getMonth(), n));
       const hits = gItems(c.id).filter((item) => gCovers(item, iso) && gCanSee(item, c)).map((item) => ({ item, outside: false }));
-      cells.push('<div class="desk-cal-day' + (hits.length ? ' has' : '') + '"><button type="button">' + n + '</button>' + hits.map((row) => '<button type="button" class="desk-task' + (row.outside ? ' g-occupied' : ' type-' + esc(row.item.type).toLowerCase()) + '" ' + (row.outside ? 'data-g-busy="1"' : 'data-g-item="' + row.item.id + '"') + '>' + esc(row.outside ? 'Occupied' : row.item.title) + '</button>').join('') + '</div>');
+      const today = iso === gIso(new Date()) ? ' is-today' : '';
+      cells.push('<div class="desk-cal-day' + (hits.length ? ' has' : '') + today + '"><button type="button">' + n + '</button>' + hits.map((row) => {
+        const mark = row.item.meet ? 'Meet' : (gFileNames(row.item).length ? 'File' : '');
+        const sub = [row.item.startTime || '', mark].filter(Boolean).join(' · ');
+        return '<button type="button" class="desk-task type-' + esc(row.item.type).toLowerCase() + '" data-g-item="' + row.item.id + '" title="' + esc(row.item.title + (sub ? ' · ' + sub : '')) + '"><b>' + esc(row.item.title) + '</b>' + (sub ? '<small>' + esc(sub) + '</small>' : '') + '</button>';
+      }).join('') + '</div>');
     }
     boardHtml = '<div class="desk-cal">' + ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map((d) => '<i>' + d + '</i>').join('') + cells.join('') + '</div>';
   }
@@ -22040,20 +22095,17 @@ function paintGroupBoard() {
     const fileRows = docPage.rows.map((f) => `<button type="button" data-ws-file="${esc(f.name)}"><span>${esc(f.name)}</span><small>${esc(f.by)}${f.size ? ' · ' + esc(f.size) : ''}</small></button>`).join('') || '<p class="meta">No shared files yet.</p>';
     panel = `<section class="ws-panel"><div class="ws-ann-head"><h3>Documents</h3><div class="ws-head-tools">${wsPager(docPage.page, docPage.pages, 'docs')}</div></div><input class="ws-find" id="wsDocQ" type="search" placeholder="Search shared files" value="${esc(state.wsQuery)}" aria-label="Search shared files"><div class="ws-files">${fileRows}</div></section>`;
   }
-  host.innerHTML = `<div class="ws-kanban">
-      <h3>Kanban</h3>
-      <div class="desk-tools">
-        ${gCanvas === 'board' ? '' : `<div class="desk-when">
-          <button type="button" data-g-act="prev" aria-label="Previous">‹</button>
-          <span class="desk-range">${gRangeLabel()}</span>
-          <button type="button" data-g-act="next" aria-label="Next">›</button>
-          <button type="button" data-g-act="today">Today</button>
-          <div class="desk-views" role="group" aria-label="Range">
+  const rangeLabel = gCanvas === 'calendar'
+    ? gFocus.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+    : gRangeLabel();
+  const rangeSwitch = gCanvas === 'calendar' ? '' : `<div class="desk-views" role="group" aria-label="Range">
             <button type="button" data-g-span="day" aria-pressed="${gSpan === 'day'}">Day</button>
             <button type="button" data-g-span="week" aria-pressed="${gSpan === 'week'}">Week</button>
             <button type="button" data-g-span="month" aria-pressed="${gSpan === 'month'}">Month</button>
-          </div>
-        </div>`}
+          </div>`;
+  host.innerHTML = `<div class="ws-kanban">
+      <div class="ws-head">
+        <h3>${gCanvasTitle()}</h3>
         <div class="desk-tools-end">
           <div class="desk-views" role="group" aria-label="Canvas">
             <button type="button" data-g-canvas="board" aria-pressed="${gCanvas === 'board'}">Kanban</button>
@@ -22064,6 +22116,13 @@ function paintGroupBoard() {
           <div class="desk-new"><button type="button" data-g-act="new">Create event</button></div>
         </div>
       </div>
+      ${gCanvas === 'board' ? '' : `<div class="desk-tools"><div class="desk-when">
+          <button type="button" data-g-act="prev" aria-label="Previous">‹</button>
+          <span class="desk-range">${rangeLabel}</span>
+          <button type="button" data-g-act="next" aria-label="Next">›</button>
+          <button type="button" data-g-act="today">Today</button>
+          ${rangeSwitch}
+        </div></div>`}
       ${boardHtml}
     </div>`;
   host.querySelectorAll('.ws-ann').forEach((row) => {
@@ -23525,8 +23584,9 @@ $('workspace').addEventListener('click', (e) => {
   if (act.dataset.gAct === 'new') { openGroupItem(); return; }
   if (act.dataset.gAct === 'today') { gFocus = new Date(); paintGroupBoard(); return; }
   const step = gSpan === 'month' ? 0 : (gSpan === 'day' ? 1 : 7);
-  if (gSpan === 'month') gFocus = new Date(gFocus.getFullYear(), gFocus.getMonth() + (act.dataset.gAct === 'next' ? 1 : -1), 1);
-  else gFocus = gAddDays(gFocus, act.dataset.gAct === 'next' ? step : -step);
+  const dir = act.dataset.gAct === 'next' ? 1 : -1;
+  if (gCanvas === 'calendar' || gSpan === 'month') gFocus = new Date(gFocus.getFullYear(), gFocus.getMonth() + dir, 1);
+  else gFocus = gAddDays(gFocus, dir * step);
   paintGroupBoard();
 });
 $('workspace').addEventListener('dragstart', (e) => {
