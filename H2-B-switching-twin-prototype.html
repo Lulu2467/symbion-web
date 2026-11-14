@@ -6532,7 +6532,8 @@
     overflow: auto;
     padding: 18px 12px 28px;
   }
-  .set-nav h2 { margin: 0 8px 12px; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+  .set-nav-head { display: flex; align-items: center; gap: 4px; margin: 0 0 12px; }
+  .set-nav h2 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
   .set-kicker {
     margin: 14px 8px 4px;
     color: var(--label);
@@ -6588,15 +6589,16 @@
   .set-back:hover { color: #1a1d21; }
   html[data-theme="blue"] .set-shell { position: relative; }
   html[data-theme="blue"] .set-nav { padding-top: 0; }
-  html[data-theme="blue"] .set-nav h2 {
+  html[data-theme="blue"] .set-nav-head {
     position: sticky;
     top: 0;
     z-index: 2;
-    margin: 0;
-    padding: 18px 8px 12px 48px;
+    gap: 4px;
+    margin: 0 -12px 4px;
+    padding: 16px 12px 12px 8px;
     background: #fff;
-    line-height: 24px;
   }
+  html[data-theme="blue"] .set-nav h2 { line-height: 24px; }
   html[data-theme="blue"] .set-main { padding-top: 0; }
   html[data-theme="blue"] .set-top {
     position: sticky;
@@ -6607,10 +6609,8 @@
     background: #f6f7f8;
   }
   html[data-theme="blue"] #setHost .set-back {
-    position: absolute;
-    top: 18px;
-    left: 8px;
-    z-index: 3;
+    position: static;
+    flex: none;
     color: #5f6368;
   }
   html[data-theme="blue"] #setHost .set-back:hover { color: #1a1d21; }
@@ -10724,7 +10724,7 @@
           <section id="setHost" aria-label="Settings" hidden>
             <div class="set-shell">
               <nav class="set-nav" aria-label="Account settings">
-                <h2>Account Hub</h2>
+                <div class="set-nav-head"><button type="button" class="set-back" data-set-act="back" aria-label="Back"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path d="M679.13916 138.387837c10.304693 0 20.602224 3.941775 28.457122 11.791557 15.733333 15.733333 15.733333 41.172725 0 56.906058L397.262304 517.418406l314.834478 314.836525c15.733333 15.733333 15.733333 41.171702 0 56.905034s-41.171702 15.733333-56.905034 0L311.900148 545.868365c-15.734356-15.733333-15.734356-41.172725 0-56.906058L650.683061 150.179394C658.532843 142.335752 668.830373 138.387837 679.13916 138.387837L679.13916 138.387837zM679.13916 138.387837" fill="#272636"/></svg></button><h2>Account Hub</h2></div>
                 <p class="set-kicker">GENERAL</p>
                 <button type="button" data-set="profile" aria-current="page">Edit profile</button>
                 <button type="button" data-set="picture">Profile picture</button>
@@ -10753,7 +10753,7 @@
                 <button type="button" data-set="signout" class="set-signout">Sign out</button>
               </nav>
               <div class="set-main">
-                <div class="set-top"><button type="button" class="set-back" data-set-act="back" aria-label="Back"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path d="M679.13916 138.387837c10.304693 0 20.602224 3.941775 28.457122 11.791557 15.733333 15.733333 15.733333 41.172725 0 56.906058L397.262304 517.418406l314.834478 314.836525c15.733333 15.733333 15.733333 41.171702 0 56.905034s-41.171702 15.733333-56.905034 0L311.900148 545.868365c-15.734356-15.733333-15.734356-41.172725 0-56.906058L650.683061 150.179394C658.532843 142.335752 668.830373 138.387837 679.13916 138.387837L679.13916 138.387837zM679.13916 138.387837" fill="#272636"/></svg></button><p>SETTINGS</p></div>
+                <div class="set-top"><p>SETTINGS</p></div>
                 <div class="set-card" data-set-panel="profile">
                   <h3>Profile</h3>
                   <p class="sub">Manage your identity and basic account information.</p>
