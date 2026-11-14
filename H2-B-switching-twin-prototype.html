@@ -551,7 +551,9 @@
     font-size: 13px;
   }
   .todo-card[hidden] { display: none !important; }
-  .todo-hd { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+  .todo-hd { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--line); cursor: grab; user-select: none; touch-action: none; }
+  .todo-card.is-dragging { cursor: grabbing; }
+  .todo-card.is-dragging .todo-hd { cursor: grabbing; }
   .todo-hd b { font-size: 15px; font-weight: 600; }
   .todo-x { width: 28px; height: 28px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: #1a1d21; display: grid; place-items: center; cursor: pointer; }
   .todo-x:hover { background: #f3f4f6; }
@@ -6307,7 +6309,9 @@
     background: #fff; border: 0; border-radius: 8px;
     box-shadow: 0 8px 28px rgba(0, 0, 0, .22); padding: 20px 24px 0;
   }
-  .kanban-top { display: flex; align-items: center; justify-content: space-between; }
+  .kanban-top { display: flex; align-items: center; justify-content: space-between; cursor: grab; user-select: none; touch-action: none; }
+  .kanban-sheet.is-dragging { cursor: grabbing; }
+  .kanban-sheet.is-dragging .kanban-top { cursor: grabbing; }
   .kanban-kicker {
     display: inline-flex; align-items: center; height: 22px; padding: 0 10px;
     border-radius: 999px; background: var(--surface); color: var(--muted);
@@ -8797,7 +8801,9 @@
     border: 1px solid #e6e8ec; box-shadow: 0 12px 40px rgba(26, 29, 33, .12);
     pointer-events: auto;
   }
-  .gi-top { display: flex; justify-content: flex-end; padding: 4px 8px 0; }
+  .gi-top { display: flex; justify-content: flex-end; padding: 4px 8px 0; cursor: grab; user-select: none; touch-action: none; }
+  .gi-sheet.is-dragging { cursor: grabbing; }
+  .gi-sheet.is-dragging .gi-top { cursor: grabbing; }
   .gi-x {
     width: 28px; height: 28px; padding: 0; border: 0; border-radius: 8px; background: transparent; color: #8b9198;
     display: grid; place-items: center; line-height: 0; cursor: pointer;
@@ -14404,6 +14410,7 @@
     const radio = document.querySelector(`#todoForm input[name="todoType"][value="${type}"]`);
     if (radio) radio.checked = true;
     document.getElementById('todoScrim').hidden = false;
+    resetCardDrag(document.getElementById('todoForm'));
     requestAnimationFrame(fitTodoNotes);
     document.getElementById('todoTitle').focus();
   }
@@ -14415,6 +14422,7 @@
     const title = rem.querySelector('.t')?.textContent.trim() || 'this to-do';
     document.getElementById('todoConfirmText').textContent = `Mark “${title}” complete? It leaves the list.`;
     document.getElementById('todoScrim').hidden = false;
+    resetCardDrag(document.getElementById('todoConfirm'));
   }
   function writeTodoRow(rem, title, type, when, notes) {
     rem.querySelector('.t').textContent = title;
@@ -20489,12 +20497,14 @@
       if (sheet) sheet.hidden = true;
       if (card) card.hidden = false;
       resetKanbanCard();
+      resetCardDrag(card);
       modal.hidden = false;
       document.getElementById('kanbanCardName')?.focus();
       return;
     }
     if (card) card.hidden = true;
     if (sheet) sheet.hidden = false;
+    resetCardDrag(sheet);
     modal.querySelectorAll('#kanbanSheet input, #kanbanSheet textarea').forEach((el) => { el.value = ''; });
     modal.hidden = false;
     paintKanban();
@@ -20502,7 +20512,11 @@
   }
   function closeKanban() {
     const modal = document.getElementById('kanbanModal');
-    if (modal) modal.hidden = true;
+    if (modal) {
+      resetCardDrag(document.getElementById('kanbanSheet'));
+      resetCardDrag(document.getElementById('kanbanCard'));
+      modal.hidden = true;
+    }
   }
   function createKanbanItem() {
     if (kanbanUseCard()) {
@@ -23088,6 +23102,7 @@ function openGroupItem(preset) {
   if (preset && preset.endTime && $('giEndTime')) $('giEndTime').value = preset.endTime;
   giSyncClockButtons();
   modal.hidden = false;
+  resetCardDrag(modal.querySelector('.gi-sheet'));
   paintGroupItem();
   requestAnimationFrame(() => $('giName')?.focus());
 }
@@ -23098,7 +23113,10 @@ function closeGroupItem() {
     el.setAttribute('aria-expanded', 'false');
   });
   const modal = $('giModal');
-  if (modal) modal.hidden = true;
+  if (modal) {
+    resetCardDrag(modal.querySelector('.gi-sheet'));
+    modal.hidden = true;
+  }
   gi = null;
 }
 function giClockLabel(hm) {
@@ -23420,14 +23438,15 @@ function showGo(label) {
   go.disabled = false;
   if (label) go.textContent = label;
 }
-function resetSheetDrag() {
-  const sheet = $('sheet');
-  if (!sheet) return;
-  sheet.style.transform = '';
-  sheet._dragX = 0;
-  sheet._dragY = 0;
-  sheet.classList.remove('is-dragging');
+function resetCardDrag(card) {
+  if (!card) return;
+  card.style.transform = '';
+  card._dragX = 0;
+  card._dragY = 0;
+  card.classList.remove('is-dragging');
 }
+window.resetCardDrag = resetCardDrag;
+function resetSheetDrag() { resetCardDrag($('sheet')); }
 function fieldHint(title, note) {
   if (document.documentElement.dataset.theme !== 'blue') {
     return note ? `${title} <span style="font-weight:500">${note}</span>` : title;
@@ -23556,51 +23575,52 @@ function closeModal() {
   if (back === 'finder') { openModal('finder', { nested: true }); return; }
   $('modal').hidden = true;
 }
-(function bindSheetDrag() {
-  const sheet = $('sheet');
-  const head = sheet && sheet.querySelector('.sheet-head');
-  if (!sheet || !head) return;
-  head.addEventListener('pointerdown', (e) => {
-    if (document.documentElement.dataset.theme !== 'blue') return;
-    if (e.button !== 0 || e.target.closest('button')) return;
-    const modal = sheet.parentElement;
-    const pad = 12;
-    const ox = sheet._dragX || 0;
-    const oy = sheet._dragY || 0;
-    const sr = sheet.getBoundingClientRect();
-    const mr = modal.getBoundingClientRect();
-    const drag = {
-      x: e.clientX,
-      y: e.clientY,
-      ox: ox,
-      oy: oy,
-      minX: ox + mr.left + pad - sr.left,
-      maxX: ox + mr.right - pad - sr.right,
-      minY: oy + mr.top + pad - sr.top,
-      maxY: oy + mr.bottom - pad - sr.bottom
-    };
-    if (drag.maxX < drag.minX) drag.minX = drag.maxX = ox;
-    if (drag.maxY < drag.minY) drag.minY = drag.maxY = oy;
-    sheet.classList.add('is-dragging');
-    try { head.setPointerCapture(e.pointerId); } catch (err) {}
-    const move = (ev) => {
-      let x = drag.ox + ev.clientX - drag.x;
-      let y = drag.oy + ev.clientY - drag.y;
-      x = Math.min(drag.maxX, Math.max(drag.minX, x));
-      y = Math.min(drag.maxY, Math.max(drag.minY, y));
-      sheet._dragX = x;
-      sheet._dragY = y;
-      sheet.style.transform = 'translate(' + x + 'px,' + y + 'px)';
-    };
-    const up = () => {
-      document.removeEventListener('pointermove', move);
-      document.removeEventListener('pointerup', up);
-      sheet.classList.remove('is-dragging');
-    };
-    document.addEventListener('pointermove', move);
-    document.addEventListener('pointerup', up);
-  });
-})();
+document.addEventListener('pointerdown', (e) => {
+  if (document.documentElement.dataset.theme !== 'blue') return;
+  if (e.button !== 0) return;
+  const card = e.target.closest('.gi-sheet, .kanban-sheet, .todo-card, #sheet');
+  if (!card || card.hidden || card.closest('[hidden]')) return;
+  if (e.target.closest('button, a, input, textarea, select, label, summary, [contenteditable="true"]')) return;
+  const overlay = card.parentElement;
+  if (!overlay) return;
+  const pad = 12;
+  const ox = card._dragX || 0;
+  const oy = card._dragY || 0;
+  const sr = card.getBoundingClientRect();
+  const mr = overlay.getBoundingClientRect();
+  const scaleX = sr.width / card.offsetWidth || 1;
+  const scaleY = sr.height / card.offsetHeight || 1;
+  const drag = {
+    x: e.clientX,
+    y: e.clientY,
+    ox: ox,
+    oy: oy,
+    minX: ox + (mr.left + pad - sr.left) / scaleX,
+    maxX: ox + (mr.right - pad - sr.right) / scaleX,
+    minY: oy + (mr.top + pad - sr.top) / scaleY,
+    maxY: oy + (mr.bottom - pad - sr.bottom) / scaleY
+  };
+  if (drag.maxX < drag.minX) drag.minX = drag.maxX = ox;
+  if (drag.maxY < drag.minY) drag.minY = drag.maxY = oy;
+  card.classList.add('is-dragging');
+  try { card.setPointerCapture(e.pointerId); } catch (err) {}
+  const move = (ev) => {
+    let x = drag.ox + (ev.clientX - drag.x) / scaleX;
+    let y = drag.oy + (ev.clientY - drag.y) / scaleY;
+    x = Math.min(drag.maxX, Math.max(drag.minX, x));
+    y = Math.min(drag.maxY, Math.max(drag.minY, y));
+    card._dragX = x;
+    card._dragY = y;
+    card.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+  };
+  const up = () => {
+    document.removeEventListener('pointermove', move);
+    document.removeEventListener('pointerup', up);
+    card.classList.remove('is-dragging');
+  };
+  document.addEventListener('pointermove', move);
+  document.addEventListener('pointerup', up);
+});
 function findNotJoined(id) {
   return directory.find((g) => g.id === id) || parked.find((g) => g.id === id);
 }
