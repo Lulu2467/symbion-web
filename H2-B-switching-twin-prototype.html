@@ -8382,12 +8382,18 @@
   .tk-file-ico svg { width: 12px; height: 14px; display: block; }
   .gi-file-ico { width: 22px; height: 26px; flex: none; display: flex; }
   .gi-file-ico svg { width: 22px; height: 26px; display: block; }
-  .gi-meet { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+  .gi-meet { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; }
   #giMeetBtn.is-set {
     height: 28px; padding: 0 10px; border: 1px solid #3c7a94; border-radius: 6px; color: #3c7a94; font-weight: 500;
   }
-  .gi-meet-url { color: #8b9198; font-size: 12px; line-height: 1.4; }
-  .gi-meet-url[hidden] { display: none !important; }
+  .gi-meet-input {
+    width: 100%; height: 32px; box-sizing: border-box; border: 1px solid #e6e8ec; border-radius: 8px;
+    padding: 0 10px; background: #fff; color: #1f1f1f; font: inherit; font-size: 13px;
+  }
+  .gi-meet-input::placeholder { color: #b0b4ba; }
+  .gi-meet-input:focus { outline: 2px solid rgba(60, 122, 148, .25); outline-offset: 0; }
+  .gi-meet-input[hidden], .gi-meet-actions[hidden] { display: none !important; }
+  .gi-meet-actions { display: flex; align-items: center; gap: 12px; }
   .gi-file-card {
     display: flex; align-items: center; gap: 8px; width: 100%; min-height: 44px; padding: 6px 8px;
     border: 1px solid #e6e8ec; border-radius: 8px; background: #fff; color: #1f1f1f; font-size: 13px;
@@ -10991,9 +10997,12 @@
                 <div class="gi-row-body">
                   <div class="gi-row-line">
                     <span class="gi-meet">
-                      <button type="button" class="gi-quiet" id="giMeetBtn" data-gi="meet" aria-pressed="false"><span id="giMeetLabel">Add meeting</span></button>
-                      <span class="gi-meet-url" id="giMeetUrl" hidden></span>
-                      <button type="button" class="gi-link" id="giMeetHint" data-gi="meet" hidden>Remove</button>
+                      <button type="button" class="gi-quiet" id="giMeetBtn" data-gi="meet-open" aria-pressed="false"><span id="giMeetLabel">Add meeting</span></button>
+                      <input class="gi-meet-input" id="giMeetInput" type="text" inputmode="url" autocomplete="off" placeholder="Paste a meeting link" aria-label="Meeting link" hidden>
+                      <span class="gi-meet-actions" id="giMeetActions" hidden>
+                        <button type="button" class="gi-link" data-gi="meet-create">Create link</button>
+                        <button type="button" class="gi-link" id="giMeetHint" data-gi="meet-clear">Remove</button>
+                      </span>
                     </span>
                   </div>
                 </div>
@@ -22556,7 +22565,7 @@ function openGroupItem(preset) {
   if (!c || c.kind !== 'group') return;
   if (!(c.members || []).includes(ME)) { toast('Join this group to create an event.'); return; }
   const who = preset && preset.who ? [preset.who] : [ME];
-  gi = { type: 'Meeting', who, group: c.id, note: '', files: [], meet: giMeetLink(), picking: false, filePick: false, peopleQuery: '' };
+  gi = { type: 'Meeting', who, group: c.id, note: '', files: [], meet: '', meetEdit: true, picking: false, filePick: false, peopleQuery: '' };
   const modal = $('giModal');
   if (!modal) return;
   ['giStart', 'giStartTime', 'giEnd', 'giEndTime', 'giName', 'giDetails'].forEach((id) => {
@@ -22711,18 +22720,21 @@ function paintGroupItem() {
   }
   const meetBtn = $('giMeetBtn');
   const meetLabel = $('giMeetLabel');
-  const meetHint = $('giMeetHint');
+  const meetInput = $('giMeetInput');
+  const meetActions = $('giMeetActions');
   if (meetBtn) {
     const on = !!gi.meet;
+    const editing = !!(gi.meetEdit || on);
     meetBtn.classList.toggle('is-set', on);
     meetBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
     if (meetLabel) meetLabel.textContent = on ? 'Start video meeting' : 'Add meeting';
-    const meetUrl = $('giMeetUrl');
-    if (meetUrl) {
-      meetUrl.hidden = !on;
-      meetUrl.textContent = on ? gi.meet : '';
+    if (meetInput) {
+      meetInput.hidden = !editing;
+      if (document.activeElement !== meetInput && meetInput.value !== (gi.meet || '')) meetInput.value = gi.meet || '';
     }
-    if (meetHint) meetHint.hidden = !on;
+    if (meetActions) meetActions.hidden = !editing;
+    const createLink = modal.querySelector('[data-gi="meet-create"]');
+    if (createLink) createLink.hidden = on;
   }
   const filePick = $('giFilePick');
   if (filePick) filePick.hidden = !gi.filePick;
@@ -22754,7 +22766,7 @@ function giCreate() {
   const title = $('giName').value.trim();
   const start = $('giStart').value;
   const files = gi.files.map((file) => ({ name: file.name }));
-  const meet = gi.meet || '';
+  const meet = ($('giMeetInput')?.value || gi.meet || '').trim();
   const names = who.map((id) => (people[id] && people[id].name) || id);
   who.forEach((id) => {
     const row = {
@@ -23705,10 +23717,11 @@ $('giModal')?.addEventListener('click', (e) => {
   const type = e.target.closest('[data-gi-type]');
   if (type) {
     gi.type = type.dataset.giType;
-    if (gi.type === 'Meeting' && !gi.meet) gi.meet = giMeetLink();
-    if (gi.type !== 'Meeting') gi.meet = '';
+    if (gi.type === 'Meeting') gi.meetEdit = true;
+    else { gi.meet = ''; gi.meetEdit = false; }
     gi.note = '';
     paintGroupItem();
+    if (gi.meetEdit) $('giMeetInput')?.focus();
     return;
   }
   if (e.target.closest('[data-gi="people"]')) {
@@ -23718,9 +23731,25 @@ $('giModal')?.addEventListener('click', (e) => {
     if (gi.picking) $('giPeopleQ')?.focus();
     return;
   }
-  if (e.target.closest('[data-gi="meet"]')) {
-    gi.meet = gi.meet ? '' : giMeetLink();
-    if (gi.meet) gi.type = 'Meeting';
+  if (e.target.closest('[data-gi="meet-open"]')) {
+    gi.meetEdit = true;
+    gi.type = gi.type || 'Meeting';
+    paintGroupItem();
+    $('giMeetInput')?.focus();
+    return;
+  }
+  if (e.target.closest('[data-gi="meet-create"]')) {
+    gi.meet = giMeetLink();
+    gi.meetEdit = true;
+    gi.type = 'Meeting';
+    gi.note = '';
+    paintGroupItem();
+    $('giMeetInput')?.focus();
+    return;
+  }
+  if (e.target.closest('[data-gi="meet-clear"]')) {
+    gi.meet = '';
+    gi.meetEdit = false;
     gi.note = '';
     paintGroupItem();
     return;
@@ -23754,7 +23783,24 @@ $('giModal')?.addEventListener('click', (e) => {
   if (e.target.closest('[data-gi="next"]')) giCreate();
 });
 $('giModal')?.addEventListener('input', (e) => {
-  if (!gi || e.target.id !== 'giPeopleQ') return;
+  if (!gi) return;
+  if (e.target.id === 'giMeetInput') {
+    gi.meet = e.target.value.trim();
+    gi.meetEdit = true;
+    if (gi.meet) gi.type = 'Meeting';
+    const on = !!gi.meet;
+    $('giMeetBtn')?.classList.toggle('is-set', on);
+    $('giMeetBtn')?.setAttribute('aria-pressed', on ? 'true' : 'false');
+    const meetLabel = $('giMeetLabel');
+    if (meetLabel) meetLabel.textContent = on ? 'Start video meeting' : 'Add meeting';
+    const createLink = $('giModal')?.querySelector('[data-gi="meet-create"]');
+    if (createLink) createLink.hidden = on;
+    $('giModal')?.querySelectorAll('[data-gi-type]').forEach((btn) => {
+      btn.setAttribute('aria-pressed', String(btn.dataset.giType === gi.type));
+    });
+    return;
+  }
+  if (e.target.id !== 'giPeopleQ') return;
   gi.peopleQuery = e.target.value;
   const box = $('giPeople');
   const c = chats.find((item) => item.id === gi.group);
