@@ -8509,7 +8509,7 @@
   .tk-faces > :first-child { margin-left: 0; }
   .tk-face-more { padding: 0; background: #f3f4f6; color: #3c434a; cursor: pointer; }
   .tk-face-more:hover { background: #e8eaed; }
-  .tk-face-more svg { width: 12px; height: 12px; display: block; }
+  .tk-face-more svg { width: 14px; height: 14px; display: block; }
   .tk-faces-pop {
     position: absolute; z-index: 6; left: 0; bottom: calc(100% + 8px);
     min-width: 168px; max-height: 220px; overflow: auto; padding: 6px;
@@ -22085,7 +22085,7 @@ function gFaceStack(item) {
   const ids = gMembers(item);
   const shown = ids.length > 3 ? ids.slice(0, 3) : ids;
   const more = ids.length > 3
-    ? `<span class="tk-face-more" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>`
+    ? `<span class="tk-face-more" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/></svg></span>`
     : '';
   const pop = ids.length > 1
     ? `<span class="tk-faces-pop" hidden>${ids.map((id) => `<i>${gFace(id)}<b>${esc(people[id].name)}</b></i>`).join('')}</span>`
