@@ -8358,7 +8358,8 @@
   .g-row { display: flex; align-items: flex-start; gap: 12px; width: 100%; padding: 12px 14px; border: 1px solid #e6e8ec; border-radius: 12px; background: #fff; text-align: left; color: #1f1f1f; }
   .g-row + .g-row { margin-top: 8px; }
   .g-row:hover { background: #f7f8fa; }
-  .g-kind { flex: none; width: 76px; padding-top: 2px; color: #3c7a94; font-size: 12px; font-weight: 650; }
+  .g-kind { flex: none; display: inline-flex; align-items: center; gap: 4px; width: 96px; padding-top: 1px; color: #3c7a94; font-size: 12px; font-weight: 650; }
+  .g-kind svg { width: 14px; height: 14px; flex: none; display: block; }
   .g-copy { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
   .g-copy b { font-size: 14px; font-weight: 650; }
   .g-copy span { color: #71777d; font-size: 12px; line-height: 1.4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -21935,6 +21936,11 @@ function gPrettyDay(iso) {
   if (!iso) return '';
   return new Date(iso + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 }
+function gKindIcon(type) {
+  if (type === 'Meeting') return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6h8A2.5 2.5 0 0 1 16 8.5v7a2.5 2.5 0 0 1-2.5 2.5h-8A2.5 2.5 0 0 1 3 15.5v-7z"/><path d="m16 10 5-2.5v9L16 14"/></svg>';
+  if (type === 'Task') return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="4.5" y="4.5" width="15" height="15" rx="3"/><path d="m8.2 12.2 2.5 2.5 5.1-5.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  return '';
+}
 function gCanvasTitle() {
   if (gCanvas === 'calendar') return 'Calendar';
   if (gCanvas === 'list') return 'List';
@@ -22068,7 +22074,8 @@ function paintGroupBoard() {
       const cards = byDay.get(iso).map((item) => {
         const p = people[item.who];
         const file = gFileNames(item)[0] || '';
-        return '<button type="button" class="g-row" data-g-item="' + esc(item.id) + '"><span class="g-kind">' + esc(item.type || 'Task') + '</span><span class="g-copy"><b>' + esc(item.title) + '</b><span>' + esc(p ? p.name : '') + ' · ' + esc(gWhen(item)) + '</span>' + (item.meet ? '<span class="g-meet">' + esc(item.meet) + '</span>' : '') + (file ? '<span class="g-file">' + esc(file) + '</span>' : '') + '</span></button>';
+        const kind = item.type || 'Task';
+        return '<button type="button" class="g-row" data-g-item="' + esc(item.id) + '"><span class="g-kind">' + gKindIcon(kind) + esc(kind) + '</span><span class="g-copy"><b>' + esc(item.title) + '</b><span>' + esc(p ? p.name : '') + ' · ' + esc(gWhen(item)) + '</span>' + (item.meet ? '<span class="g-meet">' + esc(item.meet) + '</span>' : '') + (file ? '<span class="g-file">' + esc(file) + '</span>' : '') + '</span></button>';
       }).join('');
       return '<section class="g-day"><h4>' + esc(gPrettyDay(iso)) + '</h4>' + cards + '</section>';
     }).join('') || '<p class="desk-empty">Nothing in this range.</p>') + '</div>';
