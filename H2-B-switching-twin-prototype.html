@@ -1791,6 +1791,40 @@
     height: auto;
     overflow: hidden;
   }
+  #homeTaskBoard { display: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .rem-board,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .tl-pop,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .tl-fab { display: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard {
+    display: flex;
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-board {
+    display: grid;
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-file-ico svg {
+    width: 12px;
+    height: 14px;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-col {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-list {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #d5d8dc transparent;
+  }
   html[data-theme="blue"] .hub:has(#screen-home.on) :is(#tail-home,.ws-home-cal) #homeTimeline,
   html[data-theme="blue"] .hub:has(#screen-home.on) :is(#tail-home,.ws-home-cal) #tlBody,
   html[data-theme="blue"] .hub:has(#screen-home.on) :is(#tail-home,.ws-home-cal) #tlBody > .kb {
@@ -8193,7 +8227,7 @@
   #teamHost button, #teamHost input, #teamHost textarea, #teamHost select { font: inherit; color: inherit; }
   #teamHost button { cursor: pointer; }
   #teamHost [hidden] { display: none !important; }
-  #teamHost {
+  #teamHost, #homeTaskBoard {
   .team { flex: 1; min-width: 0; display: flex; min-height: 0; background: var(--frame-bg); }
   .list { width: 320px; flex: none; border-right: 1px solid var(--line); display: flex; flex-direction: column; min-height: 0; background: #fff; }
   .list-brand { padding: 18px 16px 0; font-size: 12px; font-weight: 500; letter-spacing: .18em; color: var(--ink); }
@@ -10152,6 +10186,7 @@
                       <button type="button" data-rem-filter="pending" role="tab" aria-selected="false">Pending</button>
                     </div>
                   </div>
+                  <div id="homeTaskBoard"></div>
                   <div class="two-main-l">
                     <div class="rem">
                       <button type="button" class="rem-check" tabindex="-1" aria-label="Mark complete: Heavy-ion Physics — lecture 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="todo-tick" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M6.4 12.3 10.2 16.1 17.6 8.4"/></svg></button>
@@ -22210,6 +22245,13 @@ function wsPager(page, pages, key) {
   if (pages <= 1) return '';
   return `<div class="ws-pager"><button type="button" data-ws-page="${key}" data-ws-dir="prev" aria-label="Previous page"${page <= 1 ? ' disabled' : ''}>‹</button><span>${page} / ${pages}</span><button type="button" data-ws-page="${key}" data-ws-dir="next" aria-label="Next page"${page >= pages ? ' disabled' : ''}>›</button></div>`;
 }
+function paintHomeTaskBoard() {
+  const slot = document.getElementById('homeTaskBoard');
+  const c = chats.find((row) => row.id === 'hip');
+  if (!slot || !c) return;
+  slot.innerHTML = gTaskBoard(c);
+  slot.querySelectorAll('.tk-card').forEach((card) => { card.draggable = false; });
+}
 function paintGroupBoard() {
   const host = $('workspace');
   const c = current();
@@ -22359,6 +22401,7 @@ function paintGroupBoard() {
   gPlaceCanvasSeg();
   gPlaceRangeSeg();
   if (gCanvas === 'calendar' && window.paintSymbionCalendar) window.paintSymbionCalendar(host.querySelector('.ws-home-cal .tl-body'));
+  paintHomeTaskBoard();
 }
 
 function renderChrome() {
@@ -24684,6 +24727,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 render(true);
+paintHomeTaskBoard();
 window.renderTeamWorkspace = render;
 })();
 </script>
