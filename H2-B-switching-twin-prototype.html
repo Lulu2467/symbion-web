@@ -1818,6 +1818,45 @@
     color: #1d1d1f;
     font-weight: 650;
   }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .home-add {
+    width: 32px;
+    height: 32px;
+    margin-left: auto;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #1d1d1f;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    cursor: pointer;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .home-add svg { width: 22px; height: 22px; display: block; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .home-add:hover { background: #f2f2f4; color: #3c7a94; }
+  html[data-theme="blue"] .frame:not(.team-on) #teamHost:has(#giModal:not([hidden])) {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    width: auto;
+    height: auto;
+    min-height: 0;
+    background: transparent;
+    pointer-events: none;
+  }
+  html[data-theme="blue"] .frame:not(.team-on) #teamHost:has(#giModal:not([hidden])) .team,
+  html[data-theme="blue"] .frame:not(.team-on) #teamHost:has(#giModal:not([hidden])) .thread {
+    display: block;
+    width: auto;
+    min-height: 0;
+    background: transparent;
+    border: 0;
+    pointer-events: none;
+  }
+  html[data-theme="blue"] .frame:not(.team-on) #teamHost:has(#giModal:not([hidden])) .team > :not(.thread),
+  html[data-theme="blue"] .frame:not(.team-on) #teamHost:has(#giModal:not([hidden])) .thread > :not(#giModal) { display: none !important; }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-title-l h3 { display: none; }
   html[data-theme="blue"] :is(#tail-home,.ws-home-cal) .two-title-l .act-add { display: none; }
   .rem-board { display: none; }
@@ -22491,6 +22530,7 @@ function paintHomeTaskBoard() {
   if (!slot || !c) return;
   const blue = document.documentElement.dataset.theme === 'blue';
   titleRow?.querySelector('.home-canvas')?.remove();
+  titleRow?.querySelector('.home-add')?.remove();
   const boardTitle = document.getElementById('homeBoardTitle');
   if (boardTitle && blue) boardTitle.textContent = gCanvasTitle(homeCanvas);
   if (!blue) return;
@@ -22521,6 +22561,7 @@ function paintHomeTaskBoard() {
             <button type="button" data-home-canvas="timeline" aria-pressed="${homeCanvas === 'timeline'}">Timeline</button>
           </div>`;
     titleRow.insertAdjacentHTML('afterbegin', html);
+    titleRow.insertAdjacentHTML('beforeend', `<button type="button" class="home-add" data-home-act="new" aria-label="Create event"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.25" fill="none" stroke="currentColor" stroke-width="1.35"/><path d="M12 8.2v7.6M8.2 12h7.6" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/></svg></button>`);
   }
   const seg = titleRow?.querySelector('.home-canvas');
   const prev = homeCanvasFrom && seg ? seg.querySelector('[data-home-canvas="' + homeCanvasFrom + '"]') : null;
@@ -23253,6 +23294,7 @@ function giCreate() {
   } }));
   closeGroupItem();
   paintGroupBoard();
+  paintHomeTaskBoard();
   toast('Created · ' + title);
 }
 function syncWorkspace() {
@@ -24982,6 +25024,13 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
   }
   const act = e.target.closest('[data-home-act]');
   if (!act) return;
+  if (act.dataset.homeAct === 'new') {
+    const prev = state.id;
+    state.id = 'hip';
+    openGroupItem();
+    state.id = prev;
+    return;
+  }
   if (act.dataset.homeAct === 'today') { gFocus = new Date(); paintHomeTaskBoard(); return; }
   const dir = act.dataset.homeAct === 'next' ? 1 : -1;
   if (gSpan === 'month') gFocus = new Date(gFocus.getFullYear(), gFocus.getMonth() + dir, 1);
