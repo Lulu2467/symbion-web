@@ -8377,7 +8377,7 @@
   .tk-col h4 { display: flex; align-items: center; gap: 8px; margin: 0 0 10px; font-size: 13px; font-weight: 650; color: #1f1f1f; }
   .tk-col h4 span { min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: #fff; color: #71777d; font-size: 11px; font-weight: 650; display: inline-flex; align-items: center; justify-content: center; }
   .tk-list { display: flex; flex-direction: column; gap: 8px; min-height: 48px; }
-  .tk-card { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; width: 100%; padding: 10px 12px 8px; border: 1px solid #e6e8ec; border-radius: 10px; background: #fff; text-align: left; color: #1f1f1f; cursor: grab; }
+  .tk-card { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; width: 100%; padding: 10px 12px 8px; border: 1px solid #e6e8ec; border-radius: 10px; background: #fff; text-align: left; color: #1f1f1f; cursor: grab; }
   .tk-card.is-dragging { opacity: .45; }
   .tk-card[draggable="false"] { cursor: default; }
   .tk-card b { max-width: 100%; font-size: 14px; font-weight: 650; line-height: 1.3; }
@@ -8421,13 +8421,36 @@
   .gi-file-card button:hover { background: #f3f4f6; color: #1f1f1f; }
   .tk-type { color: #3c7a94; font-size: 11px; font-weight: 650; line-height: 1.2; }
   .tk-meta {
-    display: grid; grid-template-columns: 18px minmax(0, 1fr); column-gap: 6px; row-gap: 0; align-items: center;
+    display: flex; align-items: center; gap: 8px;
     width: 100%; min-width: 0; margin-top: 8px; padding-top: 8px; border-top: 1px solid #eef0f2;
     color: #3c434a; font-size: 12px;
   }
-  .tk-meta .av { grid-row: 1 / span 2; width: 18px; height: 18px; border-radius: 5px; font-size: 8px; align-self: center; }
-  .tk-meta > span:nth-child(2) { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .tk-meta time { margin: 0; color: #8b9198; font-size: 11px; }
+  .tk-faces { position: relative; display: flex; align-items: center; min-width: 0; }
+  .tk-faces[data-g-faces] { cursor: pointer; }
+  .tk-face, .tk-face-more {
+    width: 22px; height: 22px; margin-left: -7px; box-sizing: border-box;
+    border: 2px solid #fff; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 8px; font-weight: 650; line-height: 1; flex: none;
+  }
+  .tk-faces > :first-child { margin-left: 0; }
+  .tk-face-more { padding: 0; background: #f3f4f6; color: #3c434a; cursor: pointer; }
+  .tk-face-more:hover { background: #e8eaed; }
+  .tk-face-more svg { width: 12px; height: 12px; display: block; }
+  .tk-faces-pop {
+    position: absolute; z-index: 6; left: 0; bottom: calc(100% + 8px);
+    min-width: 168px; max-height: 220px; overflow: auto; padding: 6px;
+    background: #fff; border: 1px solid #e6e8ec; border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(20, 25, 26, .12);
+  }
+  .tk-faces-pop[hidden] { display: none !important; }
+  .tk-faces-pop i {
+    display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 8px;
+    font-style: normal; font-size: 13px; font-weight: 500; color: #1f1f1f; white-space: nowrap;
+  }
+  .tk-faces-pop .tk-face { width: 22px; height: 22px; margin: 0; border: 0; }
+  .tk-who { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tk-meta time { margin-left: auto; flex: none; color: #8b9198; font-size: 11px; }
   .tk-empty { margin: 8px 4px; color: #a4a4a2; font-size: 12px; }
   .gi-modal {
     position: fixed; inset: 0; z-index: 80; display: flex; align-items: flex-start; justify-content: center;
@@ -21920,14 +21943,35 @@ function gWhen(item) {
   if (item.startTime && item.endTime) return `${item.startTime}–${item.endTime}`;
   return 'All day';
 }
+function gMembers(item) {
+  const ids = Array.isArray(item.with) && item.with.length ? item.with.slice() : (item.who ? [item.who] : []);
+  return ids.filter((id, i) => people[id] && ids.indexOf(id) === i);
+}
+function gFace(id) {
+  const p = people[id];
+  return `<span class="tk-face hue-${p.hue}" title="${esc(p.name)}">${esc(p.short)}</span>`;
+}
+function gFaceStack(item) {
+  const ids = gMembers(item);
+  const shown = ids.length > 3 ? ids.slice(0, 3) : ids;
+  const more = ids.length > 3
+    ? `<span class="tk-face-more" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>`
+    : '';
+  const pop = ids.length > 1
+    ? `<span class="tk-faces-pop" hidden>${ids.map((id) => `<i>${gFace(id)}<b>${esc(people[id].name)}</b></i>`).join('')}</span>`
+    : '';
+  const name = ids.length === 1 ? `<span class="tk-who">${esc(people[ids[0]].name)}</span>` : '';
+  const open = ids.length > 1 ? ` data-g-faces="${esc(item.id)}" role="button" tabindex="0" aria-label="Show all members"` : '';
+  return `<span class="tk-faces"${open}>${shown.map(gFace).join('')}${more}${pop}</span>${name}`;
+}
 function gCanSee(item, c) {
-  if (canReview(c) || item.who === ME || item.see === 'group') return true;
+  if (canReview(c) || item.who === ME || gMembers(item).includes(ME) || item.see === 'group') return true;
   return false;
 }
 function gStage(item) {
   return G_STAGES.some(([id]) => id === item.stage) ? item.stage : 'todo';
 }
-function gCanMove(item, c) { return canReview(c) || item.who === ME; }
+function gCanMove(item, c) { return canReview(c) || item.who === ME || gMembers(item).includes(ME); }
 function gDayLabel(iso) {
   if (!iso) return '';
   return new Date(iso + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
@@ -21962,12 +22006,11 @@ function gFileNames(item) {
   return names;
 }
 function gTaskCard(item, c) {
-  const p = people[item.who];
   const when = [gDayLabel(item.date), item.startTime ? gWhen(item) : ''].filter(Boolean).join(' · ');
   const names = gFileNames(item);
   const meet = item.meet ? '<span class="tk-meet"><span class="tk-meet-go">Start video meeting</span><span class="tk-meet-url">' + esc(item.meet) + '</span></span>' : '';
   const files = names.length ? '<span class="tk-files">' + names.map((name) => '<span class="tk-file-card"><span class="tk-file-ico">' + gDocIcon(name) + '</span><span>' + esc(name) + '</span></span>').join('') + '</span>' : '';
-  return `<button type="button" class="tk-card" data-g-item="${esc(item.id)}" draggable="${gCanMove(item, c) ? 'true' : 'false'}"><span class="tk-type">${esc(item.type || 'Task')}</span><b>${esc(item.title)}</b>${item.notes ? '<p>' + esc(item.notes) + '</p>' : ''}${meet}${files}<span class="tk-meta"><span class="av hue-${p ? p.hue : 'slate'}">${esc(p ? p.short : '')}</span><span>${esc(p ? p.name : '')}</span><time>${esc(when)}</time></span></button>`;
+  return `<button type="button" class="tk-card" data-g-item="${esc(item.id)}" draggable="${gCanMove(item, c) ? 'true' : 'false'}"><span class="tk-type">${esc(item.type || 'Task')}</span><b>${esc(item.title)}</b>${item.notes ? '<p>' + esc(item.notes) + '</p>' : ''}${meet}${files}<span class="tk-meta">${gFaceStack(item)}<time>${esc(when)}</time></span></button>`;
 }
 function gTaskBoard(c) {
   const rows = gItems(c.id).filter((item) => gCanSee(item, c));
@@ -22043,7 +22086,7 @@ function paintGroupBoard() {
   peopleIds.sort((a, b) => (a === ME ? -1 : b === ME ? 1 : 0));
   const lanes = peopleIds.map((id) => {
     const cells = days.map((d) => `<div class="desk-cell" data-g-slot="${gIso(d)}"></div>`).join('');
-    const hits = gItems(c.id).filter((item) => item.who === id && gCanSee(item, c) && isos.some((iso) => gCovers(item, iso)))
+    const hits = gItems(c.id).filter((item) => gMembers(item).includes(id) && gCanSee(item, c) && isos.some((iso) => gCovers(item, iso)))
       .map((item) => ({ item, outside: false, span: gDayBox(item, isos) })).filter((row) => row.span);
     hits.sort((a, b) => a.span.left - b.span.left);
     const rowEnds = [];
@@ -22072,10 +22115,11 @@ function paintGroupBoard() {
     });
     boardHtml = '<div class="g-list">' + ([...byDay.keys()].sort().map((iso) => {
       const cards = byDay.get(iso).map((item) => {
-        const p = people[item.who];
+        const members = gMembers(item);
+        const whoLabel = members.length > 1 ? members.length + ' people' : (members[0] ? people[members[0]].name : '');
         const file = gFileNames(item)[0] || '';
         const kind = item.type || 'Task';
-        return '<button type="button" class="g-row" data-g-item="' + esc(item.id) + '"><span class="g-kind">' + gKindIcon(kind) + esc(kind) + '</span><span class="g-copy"><b>' + esc(item.title) + '</b><span>' + esc(p ? p.name : '') + ' · ' + esc(gWhen(item)) + '</span>' + (item.meet ? '<span class="g-meet">' + esc(item.meet) + '</span>' : '') + (file ? '<span class="g-file">' + esc(file) + '</span>' : '') + '</span></button>';
+        return '<button type="button" class="g-row" data-g-item="' + esc(item.id) + '"><span class="g-kind">' + gKindIcon(kind) + esc(kind) + '</span><span class="g-copy"><b>' + esc(item.title) + '</b><span>' + esc(whoLabel) + ' · ' + esc(gWhen(item)) + '</span>' + (item.meet ? '<span class="g-meet">' + esc(item.meet) + '</span>' : '') + (file ? '<span class="g-file">' + esc(file) + '</span>' : '') + '</span></button>';
       }).join('');
       return '<section class="g-day"><h4>' + esc(gPrettyDay(iso)) + '</h4>' + cards + '</section>';
     }).join('') || '<p class="desk-empty">Nothing in this range.</p>') + '</div>';
@@ -22792,19 +22836,18 @@ function giCreate() {
   const files = gi.files.map((file) => ({ name: file.name }));
   const meet = ($('giMeetInput')?.value || gi.meet || '').trim();
   const names = who.map((id) => (people[id] && people[id].name) || id);
-  who.forEach((id) => {
-    const row = {
-      id: uid(), who: id, title, type: gi.type, date: start, end: $('giEnd').value || start,
-      startTime: $('giStartTime').value, endTime: $('giEndTime').value,
-      notes: $('giDetails').value.trim(), files, meet, see: 'group', stage: 'todo'
-    };
-    gItems(c.id).push(row);
-    document.dispatchEvent(new CustomEvent('symbion-group-event', { detail: {
-      id: 'home-' + row.id, who: id, title, date: start, end: row.end,
-      startTime: row.startTime, endTime: row.endTime, notes: row.notes,
-      files: files.map((file) => file.name), meet, people: names, groupName: c.name
-    } }));
-  });
+  const owner = who.includes(ME) ? ME : who[0];
+  const row = {
+    id: uid(), who: owner, with: who, title, type: gi.type, date: start, end: $('giEnd').value || start,
+    startTime: $('giStartTime').value, endTime: $('giEndTime').value,
+    notes: $('giDetails').value.trim(), files, meet, see: 'group', stage: 'todo'
+  };
+  gItems(c.id).push(row);
+  document.dispatchEvent(new CustomEvent('symbion-group-event', { detail: {
+    id: 'home-' + row.id, who: owner, title, date: start, end: row.end,
+    startTime: row.startTime, endTime: row.endTime, notes: row.notes,
+    files: files.map((file) => file.name), meet, people: names, groupName: c.name
+  } }));
   closeGroupItem();
   paintGroupBoard();
   toast('Created · ' + title);
@@ -23625,13 +23668,24 @@ $('workspace').addEventListener('click', (e) => {
   if (canvas) { gCanvas = canvas.dataset.gCanvas; paintGroupBoard(); return; }
   const busy = e.target.closest('[data-g-busy]');
   if (busy) { toast('This time is taken.'); return; }
+  if (e.target.closest('.tk-faces-pop')) return;
+  const faces = e.target.closest('[data-g-faces]');
+  if (faces) {
+    const host = faces.classList.contains('tk-faces') ? faces : faces.parentElement;
+    const pop = host.querySelector('.tk-faces-pop');
+    const willOpen = pop && pop.hidden;
+    document.querySelectorAll('.tk-faces-pop').forEach((el) => { el.hidden = true; });
+    if (pop && willOpen) pop.hidden = false;
+    return;
+  }
   const item = e.target.closest('[data-g-item]');
   if (item) {
     const row = gItems(current().id).find((x) => x.id === item.dataset.gItem);
     if (!row) return;
     if (!gCanSee(row, current())) { toast('This group time is taken.'); return; }
     if (row.type === 'Document' && row.fileName) { toast('Open file · ' + row.fileName); return; }
-    toast(row.title + ' · ' + row.type + ' · ' + gWhen(row) + ' · ' + people[row.who].name);
+    const memberNames = gMembers(row).map((id) => people[id].name).join(', ');
+    toast(row.title + ' · ' + row.type + ' · ' + gWhen(row) + ' · ' + memberNames);
     return;
   }
   const act = e.target.closest('[data-g-act]');
@@ -23857,6 +23911,7 @@ document.addEventListener('keydown', (e) => {
 });
 document.addEventListener('pointerdown', (e) => {
   if (document.querySelector('.gi-clock-menu') && !e.target.closest('.gi-clock-menu, .gi-clock')) giCloseClockMenu();
+  if (!e.target.closest('.tk-faces')) document.querySelectorAll('.tk-faces-pop').forEach((el) => { el.hidden = true; });
 });
 $('threadMore').addEventListener('click', (e) => {
   e.stopPropagation();
