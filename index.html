@@ -8325,6 +8325,13 @@
   .tk-card[draggable="false"] { cursor: default; }
   .tk-card b { font-size: 14px; font-weight: 650; line-height: 1.35; }
   .tk-card p { margin: 0; max-width: 100%; color: #71777d; font-size: 12px; line-height: 1.4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tk-card .tk-meet,
+  .tk-card .tk-file {
+    display: block; max-width: 100%; font-size: 12px; line-height: 1.4; font-weight: 500;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .tk-card .tk-meet { color: #3c7a94; }
+  .tk-card .tk-file { color: #1f1f1f; }
   .tk-type { color: #3c7a94; font-size: 11px; font-weight: 700; }
   .tk-meta { display: flex; align-items: center; gap: 6px; width: 100%; min-width: 0; color: #71777d; font-size: 12px; }
   .tk-meta .av { width: 20px; height: 20px; border-radius: 6px; font-size: 9px; flex: none; }
@@ -21727,17 +21734,17 @@ function syncTeamSend() {
 }
 const groupItems = {
   hip: [
-    { id: 'g1', who: 'chris', title: 'Lecture 5', type: 'Meeting', date: '2026-11-11', end: '2026-11-11', startTime: '14:30', endTime: '16:00', notes: 'Room 6-120', see: 'group', stage: 'progress' },
-    { id: 'g2', who: 'jess', title: 'Reading report', type: 'Task', date: '2026-11-12', end: '2026-11-12', startTime: '09:00', endTime: '11:00', notes: '1,500 words', see: 'recipients', stage: 'todo' },
-    { id: 'g3', who: 'maya', title: 'Quiz draft', type: 'Document', date: '2026-11-12', end: '2026-11-13', startTime: '15:00', endTime: '10:00', notes: 'Short answers', fileName: 'quiz.pdf', see: 'admins', stage: 'review' },
-    { id: 'g4', who: 'alex', title: 'Jet notes', type: 'Task', date: '2026-11-10', end: '2026-11-10', startTime: '10:00', endTime: '11:30', notes: 'Stay under the cap', see: 'recipients', stage: 'done' }
+    { id: 'g1', who: 'chris', title: 'Lecture 5', type: 'Meeting', date: '2026-11-11', end: '2026-11-11', startTime: '14:30', endTime: '16:00', notes: 'Room 6-120', meet: 'meet.symbion.app/lecture-5', files: [{ name: 'Lecture 5 slides.pdf' }], see: 'group', stage: 'progress' },
+    { id: 'g2', who: 'jess', title: 'Reading report', type: 'Task', date: '2026-11-12', end: '2026-11-12', startTime: '09:00', endTime: '11:00', notes: '1,500 words', files: [{ name: 'Reading report.docx' }], see: 'recipients', stage: 'todo' },
+    { id: 'g3', who: 'maya', title: 'Quiz draft', type: 'Document', date: '2026-11-12', end: '2026-11-13', startTime: '15:00', endTime: '10:00', notes: 'Short answers', fileName: 'quiz.pdf', files: [{ name: 'quiz.pdf' }], see: 'admins', stage: 'review' },
+    { id: 'g4', who: 'alex', title: 'Jet notes', type: 'Task', date: '2026-11-10', end: '2026-11-10', startTime: '10:00', endTime: '11:30', notes: 'Stay under the cap', files: [{ name: 'Jet notes.txt' }], see: 'recipients', stage: 'done' }
   ],
   notes: [
-    { id: 'nkb', who: 'chris', title: 'Outline', type: 'Document', date: '2026-11-11', end: '2026-11-11', startTime: '10:00', endTime: '11:00', notes: 'Phase diagram page', see: 'group', stage: 'todo' },
-    { id: 'nkb2', who: 'jess', title: 'Quiz answers', type: 'Task', date: '2026-11-13', end: '2026-11-13', startTime: '16:00', endTime: '17:00', notes: 'After class', see: 'group', stage: 'progress' }
+    { id: 'nkb', who: 'chris', title: 'Outline', type: 'Document', date: '2026-11-11', end: '2026-11-11', startTime: '10:00', endTime: '11:00', notes: 'Phase diagram page', files: [{ name: 'Outline.pdf' }], see: 'group', stage: 'todo' },
+    { id: 'nkb2', who: 'jess', title: 'Quiz answers', type: 'Task', date: '2026-11-13', end: '2026-11-13', startTime: '16:00', endTime: '17:00', notes: 'After class', meet: 'meet.symbion.app/quiz-review', see: 'group', stage: 'progress' }
   ],
   qgp: [
-    { id: 'qkb', who: 'elena', title: 'Chapter 3', type: 'Meeting', date: '2026-11-12', end: '2026-11-12', startTime: '19:00', endTime: '20:00', notes: 'Phase diagram', see: 'group', stage: 'review' }
+    { id: 'qkb', who: 'elena', title: 'Chapter 3', type: 'Meeting', date: '2026-11-12', end: '2026-11-12', startTime: '19:00', endTime: '20:00', notes: 'Phase diagram', meet: 'meet.symbion.app/chapter-3', files: [{ name: 'Chapter 3.pdf' }], see: 'group', stage: 'review' }
   ]
 };
 const personalBusy = [
@@ -21802,13 +21809,21 @@ function gDayLabel(iso) {
   if (!iso) return '';
   return new Date(iso + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
+function gFileNames(item) {
+  const names = [];
+  (item.files || []).forEach((file) => {
+    const name = typeof file === 'string' ? file : (file && file.name) || '';
+    if (name && !names.includes(name)) names.push(name);
+  });
+  if (item.fileName && !names.includes(item.fileName)) names.push(item.fileName);
+  return names;
+}
 function gTaskCard(item, c) {
   const p = people[item.who];
-  const file = (item.files && item.files[0] && item.files[0].name) || item.fileName || '';
-  const meet = item.meet || '';
   const when = [gDayLabel(item.date), item.startTime ? gWhen(item) : ''].filter(Boolean).join(' · ');
-  const extras = [meet ? 'Meeting · ' + meet : '', file].filter(Boolean).map((line) => '<p>' + esc(line) + '</p>').join('');
-  return `<button type="button" class="tk-card" data-g-item="${esc(item.id)}" draggable="${gCanMove(item, c) ? 'true' : 'false'}"><span class="tk-type">${esc(item.type || 'Task')}</span><b>${esc(item.title)}</b>${item.notes ? '<p>' + esc(item.notes) + '</p>' : ''}${extras}<span class="tk-meta"><span class="av hue-${p ? p.hue : 'slate'}">${esc(p ? p.short : '')}</span><span>${esc(p ? p.name : '')}</span><time>${esc(when)}</time></span></button>`;
+  const meet = item.meet ? '<span class="tk-meet">Meeting · ' + esc(item.meet) + '</span>' : '';
+  const files = gFileNames(item).map((name) => '<span class="tk-file">File · ' + esc(name) + '</span>').join('');
+  return `<button type="button" class="tk-card" data-g-item="${esc(item.id)}" draggable="${gCanMove(item, c) ? 'true' : 'false'}"><span class="tk-type">${esc(item.type || 'Task')}</span><b>${esc(item.title)}</b>${item.notes ? '<p>' + esc(item.notes) + '</p>' : ''}${meet}${files}<span class="tk-meta"><span class="av hue-${p ? p.hue : 'slate'}">${esc(p ? p.short : '')}</span><span>${esc(p ? p.name : '')}</span><time>${esc(when)}</time></span></button>`;
 }
 function gTaskBoard(c) {
   const rows = gItems(c.id).filter((item) => gCanSee(item, c));
@@ -21914,7 +21929,12 @@ function paintGroupBoard() {
   const files = [];
   (c.messages || []).forEach((m) => { if (m.file) files.push({ name: m.file.name, size: m.file.size || '', by: people[m.who] ? people[m.who].name : '' }); });
   (c.files || []).forEach((f) => { if (!files.some((x) => x.name === f.name)) files.push(f); });
-  gItems(c.id).forEach((item) => { if (item.fileName && gCanSee(item, c) && !files.some((f) => f.name === item.fileName)) files.push({ name: item.fileName, size: 'Shared file', by: people[item.who] ? people[item.who].name : '' }); });
+  gItems(c.id).forEach((item) => {
+    if (!gCanSee(item, c)) return;
+    gFileNames(item).forEach((name) => {
+      if (!files.some((f) => f.name === name)) files.push({ name, size: 'Shared file', by: people[item.who] ? people[item.who].name : '' });
+    });
+  });
   const q = state.wsQuery.trim().toLowerCase();
   const shownFiles = files.filter((f) => !q || f.name.toLowerCase().includes(q));
   const owner = people[c.owner];
@@ -22560,8 +22580,7 @@ function paintGroupItem() {
   if (groupFiles) {
     const shared = [];
     gItems(c.id).forEach((item) => {
-      const name = (item.files && item.files[0] && item.files[0].name) || item.fileName || '';
-      if (name && !shared.includes(name)) shared.push(name);
+      gFileNames(item).forEach((name) => { if (!shared.includes(name)) shared.push(name); });
     });
     const available = shared.filter((name) => !gi.files.some((file) => file.name === name));
     groupFiles.innerHTML = available.length
@@ -23479,7 +23498,9 @@ $('workspace').addEventListener('pointermove', (e) => {
     if (row && gCanSee(row, current())) {
       if (cursor) cursor.hidden = true;
       bubble.hidden = false;
-      bubble.innerHTML = '<b>' + esc(row.title) + '</b><span>' + esc(row.type) + ' · ' + esc(gWhen(row)) + '</span><span>' + esc(people[row.who].name) + ' · ' + esc(current().name) + '</span>' + (row.notes ? '<span>' + esc(row.notes) + '</span>' : '');
+      const meetLine = row.meet ? '<span>Meeting · ' + esc(row.meet) + '</span>' : '';
+      const fileLines = gFileNames(row).map((name) => '<span>File · ' + esc(name) + '</span>').join('');
+      bubble.innerHTML = '<b>' + esc(row.title) + '</b><span>' + esc(row.type) + ' · ' + esc(gWhen(row)) + '</span><span>' + esc(people[row.who].name) + ' · ' + esc(current().name) + '</span>' + (row.notes ? '<span>' + esc(row.notes) + '</span>' : '') + meetLine + fileLines;
       gPlaceTip(bubble, e.clientX, e.clientY);
     }
     return;
