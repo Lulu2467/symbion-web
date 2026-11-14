@@ -8351,10 +8351,10 @@
   .ws-kanban .desk-views { height: 32px; gap: 2px; padding: 3px; border-radius: 10px; background: #eef0f2; }
   .ws-kanban .desk-views button { height: 26px; padding: 0 12px; border-radius: 8px; font-size: 13px; font-weight: 500; color: #71777d; }
   .ws-kanban .desk-views button[aria-pressed="true"] { background: #fff; color: #1d1d1f; font-weight: 650; box-shadow: 0 1px 2px rgba(20, 24, 28, .08); }
-  .ws-kanban .desk-views[aria-label="Canvas"] {
+  .ws-kanban .desk-views:is([aria-label="Canvas"], [aria-label="Range"]) {
     position: relative; gap: 0; border-radius: 999px; background: #f2f2f4;
   }
-  .ws-kanban .desk-views[aria-label="Canvas"]::before {
+  .ws-kanban .desk-views:is([aria-label="Canvas"], [aria-label="Range"])::before {
     content: "";
     position: absolute; top: 3px; bottom: 3px; left: 0; width: var(--seg-w, 0px);
     border-radius: 999px; background: #fff; box-shadow: 0 1px 3px rgba(20, 24, 28, .12);
@@ -8362,19 +8362,19 @@
     transition: transform .46s cubic-bezier(.22, 1, .36, 1), width .46s cubic-bezier(.22, 1, .36, 1);
     pointer-events: none;
   }
-  .ws-kanban .desk-views[aria-label="Canvas"].is-set::before { transition: none; }
-  .ws-kanban .desk-views[aria-label="Canvas"] button {
+  .ws-kanban .desk-views:is([aria-label="Canvas"], [aria-label="Range"]).is-set::before { transition: none; }
+  .ws-kanban .desk-views:is([aria-label="Canvas"], [aria-label="Range"]) button {
     position: relative; z-index: 1; padding: 0 14px; border-radius: 999px;
     background: transparent; color: #8e8e93; font-weight: 550; box-shadow: none;
     transition: color .18s ease;
   }
-  .ws-kanban .desk-views[aria-label="Canvas"] button:hover { background: transparent; }
-  .ws-kanban .desk-views[aria-label="Canvas"] button[aria-pressed="true"] {
+  .ws-kanban .desk-views:is([aria-label="Canvas"], [aria-label="Range"]) button:hover { background: transparent; }
+  .ws-kanban .desk-views:is([aria-label="Canvas"], [aria-label="Range"]) button[aria-pressed="true"] {
     background: transparent; color: #1d1d1f; font-weight: 650; box-shadow: none;
   }
   @media (prefers-reduced-motion: reduce) {
-    .ws-kanban .desk-views[aria-label="Canvas"]::before,
-    .ws-kanban .desk-views[aria-label="Canvas"] button { transition: none; }
+    .ws-kanban .desk-views:is([aria-label="Canvas"], [aria-label="Range"])::before,
+    .ws-kanban .desk-views:is([aria-label="Canvas"], [aria-label="Range"]) button { transition: none; }
   }
   .ws-kanban .desk-new > button {
     width: 32px; height: 32px; padding: 0; border-radius: 8px; background: #3c7a94; color: #fff;
@@ -13740,7 +13740,6 @@
       } else seg.dataset.span = to;
     }
     if (box.swap) host.querySelector('.kb-pane')?.classList.add('is-swap');
-    box.swap = false;
   }
   function kbAct(act, val) {
     const box = kbBox();
@@ -13783,6 +13782,7 @@
     if (!node || document.documentElement.dataset.theme !== 'blue') return;
     if (!remDay) remDay = todoDateIso(new Date());
     paintKb(node);
+    kbBox().swap = false;
   };
   function paintHomeTimeline() {
     const dateBtn = document.getElementById('tlDate');
@@ -13792,6 +13792,7 @@
     const embedded = document.querySelector('.ws-home-cal .tl-body');
     if (host) paintKb(host);
     if (embedded && embedded !== host) paintKb(embedded);
+    kbBox().swap = false;
     return;
     if (dateBtn) {
       const date = todoParseIso(remDay);
@@ -22001,8 +22002,8 @@ let gFocus = new Date(2026, 10, 11);
 let gSpan = 'week';
 let gCanvas = 'board';
 let gCanvasFrom = '';
-function gPlaceCanvasSeg() {
-  const seg = document.querySelector('#workspace .desk-views[aria-label="Canvas"]');
+let gSpanFrom = '';
+function gPlaceSlidingSeg(seg, prev) {
   if (!seg) return;
   const on = seg.querySelector('[aria-pressed="true"]');
   if (!on) return;
@@ -22010,7 +22011,6 @@ function gPlaceCanvasSeg() {
     seg.style.setProperty('--seg-x', btn.offsetLeft + 'px');
     seg.style.setProperty('--seg-w', btn.offsetWidth + 'px');
   };
-  const prev = gCanvasFrom ? seg.querySelector('[data-g-canvas="' + gCanvasFrom + '"]') : null;
   if (prev && prev !== on) {
     seg.classList.add('is-set');
     place(prev);
@@ -22018,7 +22018,18 @@ function gPlaceCanvasSeg() {
     seg.classList.remove('is-set');
   }
   place(on);
+}
+function gPlaceCanvasSeg() {
+  const seg = document.querySelector('#workspace .desk-views[aria-label="Canvas"]');
+  const prev = gCanvasFrom && seg ? seg.querySelector('[data-g-canvas="' + gCanvasFrom + '"]') : null;
+  gPlaceSlidingSeg(seg, prev);
   gCanvasFrom = '';
+}
+function gPlaceRangeSeg() {
+  const seg = document.querySelector('#workspace .desk-views[aria-label="Range"]');
+  const prev = gSpanFrom && seg ? seg.querySelector('[data-g-span="' + gSpanFrom + '"]') : null;
+  gPlaceSlidingSeg(seg, prev);
+  gSpanFrom = '';
 }
 const G_STAGES = [['todo', 'To do'], ['progress', 'In progress'], ['review', 'In review'], ['done', 'Done']];
 let gStep = 1;
@@ -22340,6 +22351,7 @@ function paintGroupBoard() {
     btn.hidden = full <= text.clientHeight + 1;
   });
   gPlaceCanvasSeg();
+  gPlaceRangeSeg();
   if (gCanvas === 'calendar' && window.paintSymbionCalendar) window.paintSymbionCalendar(host.querySelector('.ws-home-cal .tl-body'));
 }
 
@@ -23770,7 +23782,12 @@ $('workspace').addEventListener('click', (e) => {
   const fileBtn = e.target.closest('[data-ws-file]');
   if (fileBtn) { toast('Open file · ' + fileBtn.dataset.wsFile); return; }
   const span = e.target.closest('[data-g-span]');
-  if (span) { gSpan = span.dataset.gSpan; paintGroupBoard(); return; }
+  if (span) {
+    if (span.dataset.gSpan !== gSpan) gSpanFrom = gSpan;
+    gSpan = span.dataset.gSpan;
+    paintGroupBoard();
+    return;
+  }
   const canvas = e.target.closest('[data-g-canvas]');
   if (canvas) {
     if (canvas.dataset.gCanvas !== gCanvas) gCanvasFrom = gCanvas;
