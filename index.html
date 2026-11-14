@@ -1797,9 +1797,55 @@
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .tl-fab { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard {
     display: flex;
+    flex-direction: column;
     flex: 1 1 auto;
     min-height: 0;
     height: 100%;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .ws-kanban {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .ws-head,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-tools { flex: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .ws-head { margin-bottom: 8px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .home-kanban-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .home-kanban-body:has(.tk-board) { overflow: hidden; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .ws-home-cal {
+    width: auto;
+    max-width: none;
+    margin: 0;
+    flex: 1 1 auto;
+    min-height: 0;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: none;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .ws-home-cal .tl-body,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .ws-home-cal .tl-body > .kb,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .ws-home-cal .kb-sched,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .ws-home-cal .kb-pane:has(.nc) {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 100%;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-board {
     display: grid;
@@ -17867,7 +17913,8 @@
     }
 
     const boardTitle = document.getElementById('homeBoardTitle');
-    if (boardTitle) boardTitle.textContent = next === 'blue' ? 'Kanban' : 'Reminders';
+    if (boardTitle && next !== 'blue') boardTitle.textContent = 'Reminders';
+    if (next === 'blue' && window.paintHomeTaskBoard) window.paintHomeTaskBoard();
     const communityBtn = document.querySelector('.rail .r[data-rail="community"]');
     if (communityBtn) {
       const communityName = next === 'blue' ? 'Community' : 'Team';
@@ -22044,6 +22091,9 @@ let gSpan = 'week';
 let gCanvas = 'board';
 let gCanvasFrom = '';
 let gSpanFrom = '';
+let homeCanvas = 'board';
+let homeCanvasFrom = '';
+let homeSpanFrom = '';
 function gPlaceSlidingSeg(seg, prev) {
   if (!seg) return;
   const on = seg.querySelector('[aria-pressed="true"]');
@@ -22154,10 +22204,11 @@ function gKindIcon(type) {
   if (type === 'Task') return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="4.5" y="4.5" width="15" height="15" rx="3"/><path d="m8.2 12.2 2.5 2.5 5.1-5.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   return '';
 }
-function gCanvasTitle() {
-  if (gCanvas === 'calendar') return 'Calendar';
-  if (gCanvas === 'list') return 'List';
-  if (gCanvas === 'timeline') return 'Timeline';
+function gCanvasTitle(canvas) {
+  const mode = canvas || gCanvas;
+  if (mode === 'calendar') return 'Calendar';
+  if (mode === 'list') return 'List';
+  if (mode === 'timeline') return 'Timeline';
   return 'Kanban';
 }
 function gDocIcon(name) {
@@ -22244,20 +22295,30 @@ function wsPager(page, pages, key) {
   if (pages <= 1) return '';
   return `<div class="ws-pager"><button type="button" data-ws-page="${key}" data-ws-dir="prev" aria-label="Previous page"${page <= 1 ? ' disabled' : ''}>‹</button><span>${page} / ${pages}</span><button type="button" data-ws-page="${key}" data-ws-dir="next" aria-label="Next page"${page >= pages ? ' disabled' : ''}>›</button></div>`;
 }
-function paintHomeTaskBoard() {
-  const slot = document.getElementById('homeTaskBoard');
-  const c = chats.find((row) => row.id === 'hip');
-  if (!slot || !c) return;
-  slot.innerHTML = gTaskBoard(c);
-  slot.querySelectorAll('.tk-card').forEach((card) => { card.draggable = false; });
-}
-function paintGroupBoard() {
-  const host = $('workspace');
-  const c = current();
-  if (!host || !c || c.kind !== 'group') return;
+function gCanvasBody(c, canvas) {
   const days = gDays();
   const isos = days.map(gIso);
   const cols = days.length;
+  if (canvas === 'board') return gTaskBoard(c);
+  if (canvas === 'list') {
+    const rows = gItems(c.id).filter((item) => gCanSee(item, c) && isos.some((iso) => gCovers(item, iso)));
+    const byDay = new Map();
+    rows.forEach((item) => {
+      if (!byDay.has(item.date)) byDay.set(item.date, []);
+      byDay.get(item.date).push(item);
+    });
+    return '<div class="g-list">' + ([...byDay.keys()].sort().map((iso) => {
+      const cards = byDay.get(iso).map((item) => {
+        const members = gMembers(item);
+        const whoLabel = members.length > 1 ? members.length + ' people' : (members[0] ? people[members[0]].name : '');
+        const file = gFileNames(item)[0] || '';
+        const kind = item.type || 'Task';
+        return '<button type="button" class="g-row" data-g-item="' + esc(item.id) + '"><span class="g-kind">' + gKindIcon(kind) + esc(kind) + '</span><span class="g-copy"><b>' + esc(item.title) + '</b><span>' + esc(whoLabel) + ' · ' + esc(gWhen(item)) + '</span>' + (item.meet ? '<span class="g-meet">' + esc(item.meet) + '</span>' : '') + (file ? '<span class="g-file">' + esc(file) + '</span>' : '') + '</span></button>';
+      }).join('');
+      return '<section class="g-day"><h4>' + esc(gPrettyDay(iso)) + '</h4>' + cards + '</section>';
+    }).join('') || '<p class="desk-empty">Nothing in this range.</p>') + '</div>';
+  }
+  if (canvas === 'calendar') return '<div class="ws-home-cal"><div class="tl-body"></div></div>';
   const head = days.map((d) => `<span>${d.toLocaleDateString('en-US', { weekday: 'short' })} ${d.getDate()}</span>`).join('');
   const peopleIds = c.members.filter((id) => people[id] && !people[id].agent && !people[id].twin);
   peopleIds.sort((a, b) => (a === ME ? -1 : b === ME ? 1 : 0));
@@ -22282,27 +22343,60 @@ function paintGroupBoard() {
     }).join('');
     return `<div class="desk-week lane" style="--cols:${cols}"><div class="desk-lane-name">${esc(people[id].name)}</div><div class="desk-track" data-g-track="${id}" style="--cols:${cols};min-height:${Math.max(56, rowEnds.length * 44 + 16)}px">${cells}${bars}</div></div>`;
   }).join('');
-  let boardHtml = gCanvas === 'board' ? gTaskBoard(c) : `<div class="desk-board"><div class="desk-week head" style="--cols:${cols}"><span>Member</span>${head}</div>${lanes}</div>`;
-  if (gCanvas === 'list') {
-    const rows = gItems(c.id).filter((item) => gCanSee(item, c) && isos.some((iso) => gCovers(item, iso)));
-    const byDay = new Map();
-    rows.forEach((item) => {
-      if (!byDay.has(item.date)) byDay.set(item.date, []);
-      byDay.get(item.date).push(item);
-    });
-    boardHtml = '<div class="g-list">' + ([...byDay.keys()].sort().map((iso) => {
-      const cards = byDay.get(iso).map((item) => {
-        const members = gMembers(item);
-        const whoLabel = members.length > 1 ? members.length + ' people' : (members[0] ? people[members[0]].name : '');
-        const file = gFileNames(item)[0] || '';
-        const kind = item.type || 'Task';
-        return '<button type="button" class="g-row" data-g-item="' + esc(item.id) + '"><span class="g-kind">' + gKindIcon(kind) + esc(kind) + '</span><span class="g-copy"><b>' + esc(item.title) + '</b><span>' + esc(whoLabel) + ' · ' + esc(gWhen(item)) + '</span>' + (item.meet ? '<span class="g-meet">' + esc(item.meet) + '</span>' : '') + (file ? '<span class="g-file">' + esc(file) + '</span>' : '') + '</span></button>';
-      }).join('');
-      return '<section class="g-day"><h4>' + esc(gPrettyDay(iso)) + '</h4>' + cards + '</section>';
-    }).join('') || '<p class="desk-empty">Nothing in this range.</p>') + '</div>';
-  } else if (gCanvas === 'calendar') {
-    boardHtml = '<div class="ws-home-cal"><div class="tl-body"></div></div>';
+  return `<div class="desk-board"><div class="desk-week head" style="--cols:${cols}"><span>Member</span>${head}</div>${lanes}</div>`;
+}
+function paintHomeTaskBoard() {
+  const slot = document.getElementById('homeTaskBoard');
+  const c = chats.find((row) => row.id === 'hip');
+  if (!slot || !c) return;
+  const boardTitle = document.getElementById('homeBoardTitle');
+  if (boardTitle && document.documentElement.dataset.theme === 'blue') boardTitle.textContent = gCanvasTitle(homeCanvas);
+  const rangeSwitch = `<div class="desk-views" role="group" aria-label="Range">
+            <button type="button" data-home-span="day" aria-pressed="${gSpan === 'day'}">Day</button>
+            <button type="button" data-home-span="week" aria-pressed="${gSpan === 'week'}">Week</button>
+            <button type="button" data-home-span="month" aria-pressed="${gSpan === 'month'}">Month</button>
+          </div>`;
+  const tools = homeCanvas === 'list' || homeCanvas === 'timeline'
+    ? `<div class="desk-tools"><div class="desk-when">
+          <button type="button" data-home-act="prev" aria-label="Previous">‹</button>
+          <span class="desk-range">${gRangeLabel()}</span>
+          <button type="button" data-home-act="next" aria-label="Next">›</button>
+          <button type="button" data-home-act="today">Today</button>
+          ${rangeSwitch}
+        </div></div>`
+    : '';
+  slot.innerHTML = `<div class="ws-kanban">
+      <div class="ws-head">
+        <div class="desk-tools-end">
+          <div class="desk-views" role="group" aria-label="Canvas">
+            <button type="button" data-home-canvas="board" aria-pressed="${homeCanvas === 'board'}">Kanban</button>
+            <button type="button" data-home-canvas="calendar" aria-pressed="${homeCanvas === 'calendar'}">Calendar</button>
+            <button type="button" data-home-canvas="list" aria-pressed="${homeCanvas === 'list'}">List</button>
+            <button type="button" data-home-canvas="timeline" aria-pressed="${homeCanvas === 'timeline'}">Timeline</button>
+          </div>
+        </div>
+      </div>
+      ${tools}
+      <div class="home-kanban-body">${gCanvasBody(c, homeCanvas)}</div>
+    </div>`;
+  slot.querySelectorAll('.tk-card').forEach((card) => { card.draggable = false; });
+  const seg = slot.querySelector('.desk-views[aria-label="Canvas"]');
+  const prev = homeCanvasFrom && seg ? seg.querySelector('[data-home-canvas="' + homeCanvasFrom + '"]') : null;
+  gPlaceSlidingSeg(seg, prev);
+  homeCanvasFrom = '';
+  const range = slot.querySelector('.desk-views[aria-label="Range"]');
+  if (range) {
+    const prevRange = homeSpanFrom ? range.querySelector('[data-home-span="' + homeSpanFrom + '"]') : null;
+    gPlaceSlidingSeg(range, prevRange);
+    homeSpanFrom = '';
   }
+  if (homeCanvas === 'calendar' && window.paintSymbionCalendar) window.paintSymbionCalendar(slot.querySelector('.ws-home-cal .tl-body'));
+}
+function paintGroupBoard() {
+  const host = $('workspace');
+  const c = current();
+  if (!host || !c || c.kind !== 'group') return;
+  const boardHtml = gCanvasBody(c, gCanvas);
   const files = [];
   (c.messages || []).forEach((m) => { if (m.file) files.push({ name: m.file.name, size: m.file.size || '', by: people[m.who] ? people[m.who].name : '' }); });
   (c.files || []).forEach((f) => { if (!files.some((x) => x.name === f.name)) files.push(f); });
@@ -24727,7 +24821,31 @@ document.addEventListener('keydown', (e) => {
 
 render(true);
 paintHomeTaskBoard();
+window.paintHomeTaskBoard = paintHomeTaskBoard;
 window.renderTeamWorkspace = render;
+document.getElementById('homeTaskBoard')?.addEventListener('click', (e) => {
+  const canvasBtn = e.target.closest('[data-home-canvas]');
+  if (canvasBtn) {
+    if (canvasBtn.dataset.homeCanvas !== homeCanvas) homeCanvasFrom = homeCanvas;
+    homeCanvas = canvasBtn.dataset.homeCanvas;
+    paintHomeTaskBoard();
+    return;
+  }
+  const spanBtn = e.target.closest('[data-home-span]');
+  if (spanBtn) {
+    if (spanBtn.dataset.homeSpan !== gSpan) homeSpanFrom = gSpan;
+    gSpan = spanBtn.dataset.homeSpan;
+    paintHomeTaskBoard();
+    return;
+  }
+  const act = e.target.closest('[data-home-act]');
+  if (!act) return;
+  if (act.dataset.homeAct === 'today') { gFocus = new Date(); paintHomeTaskBoard(); return; }
+  const dir = act.dataset.homeAct === 'next' ? 1 : -1;
+  if (gSpan === 'month') gFocus = new Date(gFocus.getFullYear(), gFocus.getMonth() + dir, 1);
+  else gFocus = gAddDays(gFocus, dir * (gSpan === 'day' ? 1 : 7));
+  paintHomeTaskBoard();
+});
 })();
 </script>
 </body>
