@@ -1974,20 +1974,44 @@
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-meta time { font-size: 12px; }
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-list:has(.tk-empty) {
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-empty {
-    margin: 0;
+    margin: 4px 2px 0;
     color: #b0b4ba;
     font-size: 13px;
     font-weight: 500;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .g-row,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .g-row {
+    border: 1px solid #e6e8ec;
+    border-radius: 14px;
+    box-shadow: 0 16px 22px -14px rgba(20, 24, 28, .12);
+  }
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-board {
     border-color: transparent;
     border-radius: 14px;
     box-shadow: 0 0 0 1px rgba(20, 24, 28, .06);
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .nc-chip {
+    white-space: normal;
+    height: auto;
+    align-items: flex-start;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .nc-ev b {
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .home-kanban-body {
+    box-sizing: border-box;
+    padding-bottom: 148px;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .nc-scroll,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .kb-legend {
+    padding-bottom: 8px;
+    scroll-padding-bottom: 16px;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .home-kanban-body {
     flex: 1 1 auto;
@@ -9344,6 +9368,8 @@
     top: auto;
     bottom: 24px;
     z-index: 70;
+    max-width: min(560px, calc(100% - 48px));
+    white-space: normal;
   }
   #teamHost .list-brand,
   #teamHost .list-title { display: none; }
@@ -12958,6 +12984,11 @@
     if (!kbBox.v) kbBox.v = { span: 'week', canvas: 'timeline', focus: new Date(), extra: [], over: {}, drag: null, suppress: false, seeded: false };
     return kbBox.v;
   }
+  window.pushHomeFocus = function (date, span) {
+    const box = kbBox();
+    if (date instanceof Date && !Number.isNaN(date.getTime())) box.focus = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    if (span === 'day' || span === 'week' || span === 'month') box.span = span;
+  };
   function kbMembers() {
     return [
       ['jess', 'Jess'], ['chris', 'Chris Dalton'], ['maya', 'Maya Chen'], ['alex', 'Alex Okonkwo'],
@@ -13953,6 +13984,11 @@
   }
   function kbCollectDay(iso) {
     const events = tlEventsFor(iso).map((ev) => ({ ...ev, iso, lane: kbLaneOf(ev), task: kbTaskOf(ev), color: ev.rem?.dataset?.color || ev.item?.color || '', block: ev.rem?.dataset?.block === '1' || !!ev.item?.block, visibility: ev.rem?.dataset?.visibility || ev.item?.visibility || 'default', tz: ev.rem?.dataset?.tz || ev.item?.tz || '', repeat: ev.rem?.dataset?.repeat || ev.item?.repeat || '', repeatN: Number(ev.rem?.dataset?.repeatN || ev.item?.repeatN || 0) || 0, repeatUnit: ev.rem?.dataset?.repeatUnit || ev.item?.repeatUnit || '', files: kbParseFiles(ev.rem?.dataset?.files || ev.item?.files), meet: ev.rem?.dataset?.meet || ev.item?.meet || '' }));
+    const onHomeBoard = window.kbPaintHost && window.kbPaintHost.closest && window.kbPaintHost.closest('#homeTaskBoard');
+    if (onHomeBoard && window.homeBoardEventsFor) {
+      const have = new Set(kbBox().extra.map((item) => item.id));
+      window.homeBoardEventsFor(iso).forEach((ev) => { if (!have.has(ev.groupId)) events.push(ev); });
+    }
     kbBox().extra.filter((item) => item.date === iso).forEach((item) => {
       events.push({
         kind: 'extra', extraId: item.id, title: item.title, note: '',
@@ -14004,6 +14040,7 @@
     return `<div class="nc ${mode}"><div class="nc-head"><span class="nc-gutter nc-tz">${kbTz()}</span><div class="nc-days">${heads}</div></div>${allRow}<div class="nc-scroll"><div class="nc-time" style="height:${24 * NC_H}px">${labels}${nowLabel}</div><div class="nc-cols" style="height:${24 * NC_H}px">${cols}</div></div></div>`;
   }
   function paintKb(host) {
+    window.kbPaintHost = host;
     kbBindDetail();
     ncBind(host);
     const box = kbBox();
@@ -14041,6 +14078,7 @@
     }
     if (act === 'span') box.span = val;
     if (act === 'canvas') box.canvas = val;
+    if (window.pullHomeFocus) window.pullHomeFocus(box.focus, box.span);
     if (act === 'add') {
       const iso = todoDateIso(box.focus);
       if (!kbFind(`#tlBody .nc-col[data-iso="${iso}"]`)) {
@@ -22294,7 +22332,7 @@ const personalBusy = [
   { id: 'busy-alex', who: 'alex', date: '2026-11-11', end: '2026-11-11', startTime: '13:00', endTime: '14:30' },
   { id: 'busy-priya', who: 'priya', date: '2026-11-12', end: '2026-11-12', startTime: '11:00', endTime: '12:00' }
 ];
-let gFocus = new Date(2026, 10, 11);
+let gFocus = new Date();
 let gSpan = 'week';
 let gCanvas = 'board';
 let gCanvasFrom = '';
@@ -22424,6 +22462,40 @@ function gDocIcon(name) {
   const color = ext === 'pdf' ? '#e24b4a' : (ext === 'doc' || ext === 'docx' || ext === 'txt') ? '#3c7a94' : '#8b9198';
   return '<svg viewBox="0 0 24 28" aria-hidden="true"><path fill="' + color + '" d="M5 1.5h9.2L21 8.2V25a1.5 1.5 0 0 1-1.5 1.5h-14A1.5 1.5 0 0 1 4 25V3A1.5 1.5 0 0 1 5.5 1.5H5z"/><path fill="#fff" fill-opacity=".9" d="M14 1.5V8h7"/></svg>';
 }
+function gShowItem(row) {
+  const members = gMembers(row).map((id) => (people[id] ? people[id].name : '')).filter(Boolean);
+  const bits = [row.title, row.type, gWhen(row), members.join(', '), row.notes, row.meet, gFileNames(row).join(', ')].filter(Boolean);
+  const text = bits.join(' · ');
+  if (typeof showToastMsg === 'function') showToastMsg(text);
+  else toast(text);
+}
+window.homeBoardEventsFor = function (iso) {
+  const c = chats.find((row) => row.id === 'hip');
+  if (!c) return [];
+  return gItems('hip').filter((item) => gCanSee(item, c) && gCovers(item, iso)).map((item) => {
+    const start = item.startTime ? gMinutes(item.startTime) : 0;
+    const endMin = item.endTime ? gMinutes(item.endTime) : start + 60;
+    const dur = item.startTime ? Math.max(30, endMin > start ? endMin - start : 60) : 60;
+    const title = String(item.title || '');
+    const task = item.type === 'Meeting' || title.toLowerCase().includes('lecture') ? 'lecture' : (title.toLowerCase().includes('read') ? 'reading' : 'task');
+    return {
+      kind: 'group', groupId: item.id, title, note: item.notes || '',
+      start, timed: !!item.startTime, dur, done: item.stage === 'done',
+      iso, lane: item.type === 'Meeting' ? 'course' : 'personal', task,
+      color: '', block: false, visibility: 'default', tz: '',
+      repeat: '', repeatN: 0, repeatUnit: '',
+      files: gFileNames(item).map((name) => ({ name })),
+      meet: item.meet || '', people: gMembers(item), groupName: c.name || '',
+    };
+  });
+};
+window.pullHomeFocus = function (date, span) {
+  const home = document.getElementById('screen-home');
+  if (!home || !home.classList.contains('on')) return;
+  if (!(date instanceof Date) || Number.isNaN(date.getTime())) return;
+  gFocus = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  if (span === 'day' || span === 'week' || span === 'month') gSpan = span;
+};
 function gFileNames(item) {
   const names = [];
   (item.files || []).forEach((file) => {
@@ -22521,7 +22593,8 @@ function gCanvasBody(c, canvas) {
         const whoLabel = members.length > 1 ? members.length + ' people' : (members[0] ? people[members[0]].name : '');
         const file = gFileNames(item)[0] || '';
         const kind = item.type || 'Task';
-        return '<button type="button" class="g-row" data-g-item="' + esc(item.id) + '"><span class="g-kind">' + gKindIcon(kind) + esc(kind) + '</span><span class="g-copy"><b>' + esc(item.title) + '</b><span>' + esc(whoLabel) + ' · ' + esc(gWhen(item)) + '</span>' + (item.meet ? '<span class="g-meet">' + esc(item.meet) + '</span>' : '') + (file ? '<span class="g-file">' + esc(file) + '</span>' : '') + '</span></button>';
+        const note = item.notes ? '<span>' + esc(item.notes) + '</span>' : '';
+        return '<button type="button" class="g-row" data-g-item="' + esc(item.id) + '"><span class="g-kind">' + gKindIcon(kind) + esc(kind) + '</span><span class="g-copy"><b>' + esc(item.title) + '</b><span>' + esc(whoLabel) + ' · ' + esc(gWhen(item)) + '</span>' + note + (item.meet ? '<span class="g-meet">' + esc(item.meet) + '</span>' : '') + (file ? '<span class="g-file">' + esc(file) + '</span>' : '') + '</span></button>';
       }).join('');
       return '<section class="g-day"><h4>' + esc(gPrettyDay(iso)) + '</h4>' + cards + '</section>';
     }).join('') || '<p class="desk-empty">Nothing in this range.</p>') + '</div>';
@@ -22546,7 +22619,15 @@ function gCanvasBody(c, canvas) {
       const open = !row.outside && gCanSee(row.item, c);
       const label = open ? row.item.title : 'Occupied';
       const attr = row.outside ? 'data-g-busy="1"' : `data-g-item="${row.item.id}"`;
-      const sub = open ? (row.item.startTime ? gWhen(row.item) : (row.item.meet ? 'Meeting' : (gFileNames(row.item)[0] || ''))) : '';
+      const subBits = [];
+      if (open) {
+        if (row.item.startTime) subBits.push(gWhen(row.item));
+        else if (row.item.meet) subBits.push('Meeting');
+        const fileName = gFileNames(row.item)[0];
+        if (fileName) subBits.push(fileName);
+        if (row.item.notes) subBits.push(row.item.notes);
+      }
+      const sub = subBits.join(' · ');
       return `<button type="button" class="desk-task desk-bar${open ? ' type-' + esc(row.item.type).toLowerCase() : ' g-occupied'}" ${attr} title="${esc(open ? label + (sub ? ' · ' + sub : '') : 'Occupied')}" style="left:calc(${row.span.left}% + 4px);width:calc(${row.span.width}% - 8px);top:${8 + row.level * 44}px"><b>${esc(label)}</b>${sub ? '<small>' + esc(sub) + '</small>' : ''}</button>`;
     }).join('');
     return `<div class="desk-week lane" style="--cols:${cols}"><div class="desk-lane-name">${esc(people[id].name)}</div><div class="desk-track" data-g-track="${id}" style="--cols:${cols};min-height:${Math.max(56, rowEnds.length * 44 + 16)}px">${cells}${bars}</div></div>`;
@@ -22602,7 +22683,10 @@ function paintHomeTaskBoard() {
     gPlaceSlidingSeg(range, prevRange);
     homeSpanFrom = '';
   }
-  if (homeCanvas === 'calendar' && window.paintSymbionCalendar) window.paintSymbionCalendar(slot.querySelector('.ws-home-cal .tl-body'));
+  if (homeCanvas === 'calendar' && window.paintSymbionCalendar) {
+    if (window.pushHomeFocus) window.pushHomeFocus(gFocus, gSpan);
+    window.paintSymbionCalendar(slot.querySelector('.ws-home-cal .tl-body'));
+  }
 }
 function paintGroupBoard() {
   const host = $('workspace');
@@ -24173,9 +24257,7 @@ $('workspace').addEventListener('click', (e) => {
     const row = gItems(current().id).find((x) => x.id === item.dataset.gItem);
     if (!row) return;
     if (!gCanSee(row, current())) { toast('This group time is taken.'); return; }
-    if (row.type === 'Document' && row.fileName) { toast('Open file · ' + row.fileName); return; }
-    const memberNames = gMembers(row).map((id) => people[id].name).join(', ');
-    toast(row.title + ' · ' + row.type + ' · ' + gWhen(row) + ' · ' + memberNames);
+    gShowItem(row);
     return;
   }
   const act = e.target.closest('[data-g-act]');
@@ -25076,6 +25158,28 @@ if (homeBoard && !homeBoard.dataset.dragBound) {
   });
 }
 document.getElementById('tail-home')?.addEventListener('click', (e) => {
+  if (e.target.closest('#homeTaskBoard')) {
+    if (e.target.closest('.tk-faces-pop')) return;
+    const faces = e.target.closest('[data-g-faces]');
+    if (faces) {
+      const host = faces.classList.contains('tk-faces') ? faces : faces.parentElement;
+      const pop = host && host.querySelector('.tk-faces-pop');
+      const willOpen = pop && pop.hidden;
+      document.querySelectorAll('.tk-faces-pop').forEach((el) => { el.hidden = true; });
+      if (pop && willOpen) pop.hidden = false;
+      return;
+    }
+    if (e.target.closest('[data-g-busy]')) { toast('This time is taken.'); return; }
+    const item = e.target.closest('[data-g-item]');
+    if (item) {
+      const c = chats.find((row) => row.id === 'hip');
+      const row = c && gItems('hip').find((x) => x.id === item.dataset.gItem);
+      if (!row) return;
+      if (!gCanSee(row, c)) { toast('This group time is taken.'); return; }
+      gShowItem(row);
+      return;
+    }
+  }
   const canvasBtn = e.target.closest('[data-home-canvas]');
   if (canvasBtn) {
     if (canvasBtn.dataset.homeCanvas !== homeCanvas) homeCanvasFrom = homeCanvas;
