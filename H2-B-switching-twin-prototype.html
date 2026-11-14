@@ -1988,10 +1988,26 @@
     border-radius: 14px;
     box-shadow: none;
   }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .home-kanban-body:has(.desk-board) {
+    overflow: hidden;
+  }
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-board {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
     border-color: transparent;
     border-radius: 14px;
     box-shadow: 0 0 0 1px rgba(20, 24, 28, .06);
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-week.head { flex: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-week.lane {
+    flex: 1 1 0;
+    min-height: 72px;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-lane-name,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-track {
+    min-height: 100%;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .nc-chip {
     white-space: normal;
