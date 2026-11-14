@@ -4624,7 +4624,7 @@
     background: var(--green-tint);
     border-color: rgba(var(--brand-rgb),.28);
   }
-  /* Open menu: keep resting look (图二) — no sticky “lit” well. */
+  /* Open menu: keep resting look (fig.2) — no sticky “lit” well. */
   .citta-panel .ph .sw-sm[aria-expanded="true"] {
     background: #fff;
     border-color: var(--line);
@@ -5333,7 +5333,7 @@
   .tutorial-doc-citta .ph .citta-av { width: 28px; height: 28px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; background: var(--green-tint); color: var(--green-dark); flex: none; overflow: hidden; }
   .tutorial-doc-citta .ph .citta-av.citta-portrait { border-radius: 8px; background: transparent; }
   .tutorial-doc-citta .ph .citta-av.twin-init { border-radius: 14px; }
-  /* Resting = 图二: white well + grey border + green glyph. No sticky glow after click. */
+  /* Resting = fig.2: white well + grey border + green glyph. No sticky glow after click. */
   .tutorial-doc-citta .doc-switch {
     margin-left: 4px;
     color: var(--green);
@@ -5437,7 +5437,7 @@
   .pickup .badge.course,
   .pickup .badge.email { background: #fbf1de; color: #9a5b07; }
 
-  /* Same quiet strip language as .course-banner (图二) — no loud green frame. */
+  /* Same quiet strip language as .course-banner (fig.2) — no loud green frame. */
   .tutorial-entry {
     display: flex;
     gap: 14px;
@@ -9489,15 +9489,15 @@
 
 <div class="presenter">
   <h1>Home v2</h1>
-  <div class="seg scenario" role="group" aria-label="主页情境">
-    <button type="button" data-screen="tutorial" aria-pressed="false">第一次来</button>
-    <button type="button" data-screen="welcome" aria-pressed="false">过几天来</button>
-    <button type="button" data-screen="home" aria-pressed="true">平时在用</button>
+  <div class="seg scenario" role="group" aria-label="Home scenario">
+    <button type="button" data-screen="tutorial" aria-pressed="false">First visit</button>
+    <button type="button" data-screen="welcome" aria-pressed="false">A few days later</button>
+    <button type="button" data-screen="home" aria-pressed="true">Daily use</button>
   </div>
-  <span class="theme-label">配色</span>
-  <div class="seg theme-seg" role="group" aria-label="主题色">
-    <button type="button" data-theme-pick="green" aria-pressed="false">绿色</button>
-    <button type="button" data-theme-pick="blue" aria-pressed="true">蓝色</button>
+  <span class="theme-label">Theme</span>
+  <div class="seg theme-seg" role="group" aria-label="Theme color">
+    <button type="button" data-theme-pick="green" aria-pressed="false">Green</button>
+    <button type="button" data-theme-pick="blue" aria-pressed="true">Blue</button>
   </div>
 </div>
 
@@ -9534,9 +9534,9 @@
           </div>
         </div>
         <span class="sp"></span>
-        <div class="seg theme-seg" role="group" aria-label="主题色">
-          <button type="button" data-theme-pick="green" aria-pressed="true">绿色</button>
-          <button type="button" data-theme-pick="blue" aria-pressed="false">蓝色</button>
+        <div class="seg theme-seg" role="group" aria-label="Theme color">
+          <button type="button" data-theme-pick="green" aria-pressed="true">Green</button>
+          <button type="button" data-theme-pick="blue" aria-pressed="false">Blue</button>
         </div>
         <button type="button" class="osbar-app" aria-label="Symbion" data-osbar="symbion"><span class="av-s" aria-hidden="true">S</span><span>Symbion</span></button>
       </div>
@@ -9551,9 +9551,9 @@
           <div class="rail-follow" aria-label="Following">
             <div class="rail-follow-k"><svg class="rail-follow-line" viewBox="0 0 1024 1024" aria-hidden="true"><path d="M84.309333 490.666667h812.714667c11.221333 0 20.309333 9.557333 20.309333 21.333333s-9.088 21.333333-20.309333 21.333333H84.309333A20.864 20.864 0 0 1 64 512c0-11.776 9.088-21.333333 20.309333-21.333333z" fill="#bfbfbf"/></svg>FOLLOWING</div>
             <button type="button" class="rail-follow-row" data-follow="Prof. Gunther Roland" aria-label="Prof. Gunther Roland"><span class="av is-gr">GR</span><span class="nm">Prof. Gunther Roland</span></button>
-            <button type="button" class="rail-follow-row" data-follow="骆王宇" aria-label="骆王宇"><span class="av is-luo">骆</span><span class="nm">骆王宇</span></button>
-            <button type="button" class="rail-follow-row" data-follow="李佳琦" aria-label="李佳琦"><span class="av is-li">李</span><span class="nm">李佳琦</span></button>
-            <button type="button" class="rail-follow-row" data-follow="豆豆" aria-label="豆豆"><span class="av is-dou">豆</span><span class="nm">豆豆</span></button>
+            <button type="button" class="rail-follow-row" data-follow="Wangyu Luo" aria-label="Wangyu Luo"><span class="av is-luo">W</span><span class="nm">Wangyu Luo</span></button>
+            <button type="button" class="rail-follow-row" data-follow="Jiaqi Li" aria-label="Jiaqi Li"><span class="av is-li">J</span><span class="nm">Jiaqi Li</span></button>
+            <button type="button" class="rail-follow-row" data-follow="Doudou" aria-label="Doudou"><span class="av is-dou">D</span><span class="nm">Doudou</span></button>
           </div>
           <button type="button" class="r" data-rail="community" aria-label="Community"><svg class="rail-ico rail-ico-chat" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M637.024 434.112c8.928-15.232 3.84-34.848-11.392-43.808-15.168-8.928-34.816-3.84-43.776 11.392-25.76 43.84-99.456 79.488-164.352 79.488-65.12 0-138.976-35.936-164.64-80.096-8.896-15.296-28.48-20.48-43.744-11.584-15.296 8.864-20.48 28.48-11.584 43.744 42.24 72.704 144.864 111.968 220 111.968C492.32 545.184 594.656 506.24 637.024 434.112zM704 704c52.928 0 96-43.072 96-96L800 192c0-52.928-43.072-96-96-96L128 96C75.072 96 32 139.072 32 192l0 416c0 52.928 43.072 96 96 96l0.416 0L128 863.904c-0.032 13.152 8 24.992 20.192 29.856C152.032 895.264 156.032 896 160 896c8.672 0 17.184-3.52 23.36-10.112L353.568 704 704 704zM192.512 676.224C192.672 674.784 193.344 673.504 193.344 672c0-17.696-14.336-32-32-32L128 640c-17.632 0-32-14.336-32-32L96 192c0-17.632 14.368-32 32-32l576 0c17.664 0 32 14.368 32 32l0 416c0 17.664-14.336 32-32 32L339.872 640c-0.224 0-0.416 0.128-0.64 0.128-3.136 0.032-6.144 0.896-9.184 1.856-0.928 0.32-1.952 0.288-2.816 0.672-2.688 1.12-5.024 3.072-7.392 4.96-0.864 0.704-1.984 1.152-2.752 1.984-0.224 0.256-0.544 0.32-0.768 0.576l-124.096 132.64L192.512 676.224zM895.808 288.416c-17.696 0-31.712 14.336-31.712 32s14.592 32 32.288 32c17.6 0 31.904 14.368 31.904 32l0 352c0 17.664-14.304 32-31.904 32L864 768.416c-17.696 0-32 14.304-32 32 0 0.096 0.032 0.16 0.032 0.224 0 0.256-0.128 0.448-0.128 0.672l-0.16 49.536-72.512-73.344c-6.272-6.368-14.592-9.472-22.912-9.44C736.224 768.064 736.128 768 736 768l-160 0c-17.696 0-32 14.304-32 32s14.304 32 32 32l147.136 0 117.632 119.008c6.112 6.176 14.368 9.504 22.752 9.504 4.096 0 8.192-0.768 12.128-2.368 11.968-4.896 19.84-16.576 19.872-29.536l0.32-96.192 0.576 0c52.864 0 95.904-43.072 95.904-96l0-352C992.288 331.456 949.248 288.416 895.808 288.416z" fill="currentColor"/></svg><svg class="rail-ico rail-ico-people" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M368.989091 474.763636a182.225455 182.225455 0 1 1 182.341818-182.225454A182.458182 182.458182 0 0 1 368.989091 474.763636z m0-306.269091a124.043636 124.043636 0 1 0 124.16 124.043637 124.16 124.16 0 0 0-124.16-124.043637zM372.363636 890.647273h-1.512727c-20.829091-1.163636-43.054545-1.512727-64.465454-1.978182C211.549091 886.690909 113.454545 884.363636 54.458182 826.181818c-29.323636-26.414545-36.072727-70.981818-18.036364-119.505454 34.909091-93.090909 154.530909-194.56 335.825455-196.189091 181.76 1.629091 301.614545 102.865455 336.290909 196.189091 18.036364 48.523636 11.636364 93.090909-18.036364 119.505454-58.996364 58.181818-157.090909 59.927273-252.043636 61.789091-21.410909 0-43.636364 0.814545-64.465455 1.978182z m0-321.396364c-163.723636 0.930909-258.094545 95.418182-281.483636 158.254546-9.309091 25.018182-8.378182 46.545455 2.56 56.203636l1.28 1.163636c42.472727 42.24 129.047273 43.869091 212.712727 45.498182 21.410909 0 43.52 0.814545 64.930909 1.978182 21.294545-1.163636 43.52-1.512727 64.930909-1.978182 83.781818-1.629091 170.356364-3.374545 212.712728-45.498182l1.28-1.163636c10.938182-9.541818 11.636364-31.069091 2.56-56.203636C630.690909 664.669091 536.32 570.181818 372.363636 569.250909z" fill="currentColor"/><path d="M707.025455 502.225455a155.229091 155.229091 0 1 1 155.112727-155.112728 155.345455 155.345455 0 0 1-155.112727 155.112728z m0-252.16a97.047273 97.047273 0 1 0 97.047272 97.047272 97.163636 97.163636 0 0 0-97.047272-97.047272zM709.818182 844.683636h-1.512727c-13.381818-0.698182-26.996364-1.047273-40.843637-1.396363l1.28-58.181818c13.847273 0 27.694545 0.698182 41.076364 1.396363 17.570909-0.930909 35.723636-1.28 53.294545-1.629091 67.956364-1.28 138.24-2.676364 171.636364-35.956363l1.28-1.28c7.214545-6.4 7.563636-22.341818 0.698182-40.610909C918.109091 656.64 842.123636 581.818182 709.818182 580.072727a291.607273 291.607273 0 0 0-125.090909 27.345455l-24.785455-52.712727A357.469091 357.469091 0 0 1 709.818182 521.890909C861.789091 523.636364 962.210909 608.349091 991.418182 686.545455c15.592727 42.24 9.309091 81.454545-16.174546 104.727272-50.036364 49.221818-131.84 50.734545-210.967272 52.247273-17.570909 0-35.84 0.698182-52.945455 1.629091z" fill="currentColor"/><path d="M563.898182 618.356364l-29.44-50.152728c8.145455-4.770909 16.756364-9.309091 25.483636-13.381818l24.785455 52.712727c-7.214545 3.258182-14.545455 6.981818-20.829091 10.821819z" fill="currentColor"/></svg><span class="rail-lab">Community</span></button>
           <button type="button" class="r" data-rail="desk" aria-label="Desk"><svg class="rail-ico" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M955.2384 153.6c18.2784 0 35.7888 7.168 48.64 19.8144 12.9024 12.6976 20.1216 29.8496 20.1216 47.7696v636.2112c0 3.4304-1.4336 6.7072-3.8912 9.1648a13.5168 13.5168 0 0 1-9.4208 3.84h-36.9152a13.4656 13.4656 0 0 1-9.472-3.84 12.8 12.8 0 0 1-3.84-9.1648V434.0736H506.88v368.7424c0 17.92-7.168 35.072-20.0704 47.7696a69.376 69.376 0 0 1-48.64 19.8144H68.7104c-18.2272 0-35.7376-7.168-48.64-19.8144A67.0208 67.0208 0 0 1 0 802.816V221.184c0-17.92 7.2192-35.072 20.1216-47.7696C32.9728 160.768 50.4832 153.6 68.7616 153.6h886.4768zM63.5392 434.0736v350.6176c0 13.0048 10.752 23.3984 23.6544 23.3984h332.4416c6.2464 0 12.288-2.4576 16.6912-6.8096a23.296 23.296 0 0 0 7.0144-16.5888V434.0736H63.488z m282.2656 83.0976c3.5328 0 6.912 1.4336 9.3696 3.84a12.9024 12.9024 0 0 1 3.8912 9.1648v36.352a12.8 12.8 0 0 1-3.8912 9.1136 13.4144 13.4144 0 0 1-9.3696 3.8912H161.0752a13.4144 13.4144 0 0 1-9.4208-3.8912 12.8 12.8 0 0 1-3.8912-9.1136v-36.352c0-3.4304 1.4336-6.7072 3.8912-9.1648a13.4656 13.4656 0 0 1 9.4208-3.84h184.7296z m-258.56-301.2096a23.8592 23.8592 0 0 0-16.7424 6.7584 23.296 23.296 0 0 0-6.9632 16.5888v132.4544h896.9216V239.3088a23.296 23.296 0 0 0-6.9632-16.5888 23.8592 23.8592 0 0 0-16.6912-6.7584H87.1936z" fill="currentColor"/></svg><span class="rail-lab">Desk</span></button>
@@ -9577,7 +9577,7 @@
               <span class="copy"><b>Haifeng Xu</b><small>AI · Chicago</small></span>
             </button>
           </div>
-          <button type="button" class="p" aria-label="Prof. Roland">GR</button><button type="button" class="p" aria-label="王">王</button><button type="button" class="p" aria-label="Prof. Pajer">EP</button><button type="button" class="p" aria-label="Prof. Xu">HX</button>
+          <button type="button" class="p" aria-label="Prof. Roland">GR</button><button type="button" class="p" aria-label="Wang">W</button><button type="button" class="p" aria-label="Prof. Pajer">EP</button><button type="button" class="p" aria-label="Prof. Xu">HX</button>
           <div class="osbar-bell" id="osbarBell">
             <button type="button" class="osbar-nav-btn" aria-label="Reminders" aria-expanded="false" data-osbar="bell"><svg class="osbar-ico" viewBox="70.28 66.28 881.45 881.45" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M808 712l-48-108.8V448c0-102.4-65.6-195.2-160-232-3.2-44.8-41.6-80-88-80s-83.2 35.2-88 80c-96 36.8-160 129.6-160 232v155.2l-48 108.8c-6.4 14.4-4.8 30.4 3.2 43.2 8 12.8 22.4 20.8 38.4 20.8h508.8c16 0 30.4-8 38.4-20.8s9.6-30.4 3.2-43.2z m-547.2 16l51.2-115.2V448c0-88 59.2-166.4 144-192l19.2-6.4-3.2-20.8V224c0-22.4 17.6-40 40-40s40 17.6 40 40v6.4l-3.2 20.8 19.2 6.4c84.8 25.6 144 104 144 192v164.8l51.2 115.2H260.8zM512 880c44.8 0 80-35.2 80-80H432c0 44.8 35.2 80 80 80z"/></svg></button>
             <div class="osbar-bell-menu" role="region" aria-label="Cosmos"><div class="osbar-bell-hd"><b>Cosmos</b><button type="button" class="osbar-bell-x" data-osbar="bell-close" aria-label="Close"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.25 3.25 12.75 12.75M12.75 3.25 3.25 12.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div><div class="osbar-bell-card"><div class="osbar-bell-list"></div></div></div>
@@ -9858,7 +9858,7 @@
               </div>
             </section>
 
-            <!-- 平时在用：续写工具 + Goal，不再推 Try（试用已过） -->
+            <!-- Daily use: continue tools + Goal; no Try (trial ended) -->
             <div class="screen on" id="tail-home" data-tail="home">
             <section class="week-tools-panel" id="sec-tools-week">
               <div class="week-tools-hd">
@@ -9974,7 +9974,7 @@
                   <div class="cosmos-scroll-wrap two-main-r">
                   <aside class="activity" data-cosmos-scroll>
                     <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland’s twin posted lecture 5 slides</div><small>Heavy-ion Physics · 1h ago</small><button type="button" class="act-link">Turn into study notes<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
-                    <div class="act-item"><span class="aav">王</span><div><div class="t">骆王宇 is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                    <div class="act-item"><span class="aav">W</span><div><div class="t">Wangyu Luo is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                     <div class="act-item"><span class="aav">EP</span><div><div class="t">2 replies to your #cosmology thread</div><small>Prof. Pajer’s twin + @maya_k</small><button type="button" class="act-link">Open thread<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                     <div class="act-item"><span class="aav">HX</span><div><div class="t">Prof. Xu’s twin: new insight on pricing data</div><small>AI &amp; decisions · today</small><button type="button" class="act-link">View insight<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                     <div class="act-item"><span class="aav">AR</span><div><div class="t">Anastasia’s twin shared a climate-math notebook</div><small>Physics &amp; Space · 3h ago</small><button type="button" class="act-link">Open in Code<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
@@ -10073,7 +10073,7 @@
               </section>
             </div>
 
-            <!-- 刚完成 tutorial：只推 Try，不推 Goal -->
+            <!-- Just finished tutorial: Try only, no Goal -->
             <div class="screen" id="tail-handoff" data-tail="handoff">
               <section class="tool-sec" id="sec-try-each">
                 <div class="hdr">
@@ -10158,7 +10158,7 @@
                     <div class="cosmos-scroll-wrap two-main-r">
                     <aside class="activity" data-cosmos-scroll>
                       <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland’s twin posted lecture 5 slides</div><small>Heavy-ion Physics · 1h ago</small><button type="button" class="act-link">Turn into study notes<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
-                      <div class="act-item"><span class="aav">王</span><div><div class="t">骆王宇 is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                      <div class="act-item"><span class="aav">W</span><div><div class="t">Wangyu Luo is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                       <div class="act-item"><span class="aav">EP</span><div><div class="t">2 replies to your #cosmology thread</div><small>Prof. Pajer’s twin + @maya_k</small><button type="button" class="act-link">Open thread<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                       <div class="act-item"><span class="aav">HX</span><div><div class="t">Prof. Xu’s twin: new insight on pricing data</div><small>AI &amp; decisions · today</small><button type="button" class="act-link">View insight<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                       <div class="act-item"><span class="aav">AR</span><div><div class="t">Anastasia’s twin shared a climate-math notebook</div><small>Physics &amp; Space · 3h ago</small><button type="button" class="act-link">Open in Code<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
@@ -10622,7 +10622,7 @@
                 <article class="me-card" style="margin-top:12px">
                   <div class="me-badges"><span class="me-badge">Unverified</span><span class="me-badge">Not used yet</span></div>
                   <h3>Recurring file topics</h3>
-                  <p>Internal files reference "researcher", "线性研究链路", "输出结构设计文档" · 2026/8/12</p>
+                  <p>Internal files reference "researcher", "linear research chain", "output structure design doc" · 2026/8/12</p>
                   <p class="me-meta">No authenticated matching suggestion. Not used.</p>
                 </article>
                 <div class="me-foot">
@@ -10767,8 +10767,8 @@
                       <button type="button" class="post-detail-stat" id="postDetailStar" aria-label="Save"><svg class="star-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="m12 3.6 2.2 4.7 5.2.6-3.9 3.5 1.1 5.1L12 15.2 7.4 17.5l1.1-5.1L4.6 8.9l5.2-.6L12 3.6z"/></svg><svg class="star-blue" viewBox="0 0 1024 1024" fill="currentColor" aria-hidden="true"><path class="star-line" fill="currentColor" d="M743.43 926.01c-8.16 0-16.35-2.01-23.9-6.06L508.44 806.43 295.27 915.99c-17.18 8.82-37.49 7.16-53.02-4.36-15.51-11.48-23.01-30.43-19.58-49.43l42.73-235.84L95.35 457.48c-13.71-13.61-18.41-33.46-12.26-51.76 6.14-18.32 21.85-31.31 40.99-33.9l237.47-32.25 108.07-213.91c8.63-17.1 25.83-27.67 44.95-27.67h0.49c19.31 0.19 36.53 11.11 44.91 28.52L664.03 342.4l236.84 36.67c19.09 2.95 34.54 16.24 40.34 34.66 5.8 18.42 0.74 38.16-13.23 51.51l-173.17 165.7 38.3 236.58c3.09 19.07-4.77 37.88-20.51 49.09-8.76 6.23-18.94 9.4-29.17 9.4zM508.51 748.79c8.2 0 16.41 2.01 23.85 6.01l202.58 108.94-36.76-227.06a50.366 50.366 0 0 1 14.9-44.44l166.2-159.01-227.3-35.19a50.4 50.4 0 0 1-37.67-27.92l-99.86-207.19-103.71 205.28a50.334 50.334 0 0 1-38.19 27.2l-227.91 30.96 163.2 162.07a50.309 50.309 0 0 1 14.06 44.72L280.91 859.5l204.58-105.15a50.405 50.405 0 0 1 23.02-5.56z"/><path class="star-fill" fill="currentColor" d="M743.43 926.01c-8.16 0-16.35-2.01-23.9-6.06L508.44 806.43 295.27 915.99c-17.18 8.82-37.49 7.16-53.02-4.36-15.51-11.48-23.01-30.43-19.58-49.43l42.73-235.84L95.35 457.48c-13.71-13.61-18.41-33.46-12.26-51.76 6.14-18.32 21.85-31.31 40.99-33.9l237.47-32.25 108.07-213.91c8.63-17.1 25.83-27.67 44.95-27.67h0.49c19.31 0.19 36.53 11.11 44.91 28.52L664.03 342.4l236.84 36.67c19.09 2.95 34.54 16.24 40.34 34.66 5.8 18.42 0.74 38.16-13.23 51.51l-173.17 165.7 38.3 236.58c3.09 19.07-4.77 37.88-20.51 49.09-8.76 6.23-18.94 9.4-29.17 9.4z"/></svg><span id="postDetailSaves">0</span></button>
                       <span class="post-detail-stat" aria-hidden="true"><svg class="comment-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 5.2a6.8 6.8 0 0 0-5.9 10.2L4.8 19.2l3.4-1.1A6.8 6.8 0 1 0 12 5.2z"/></svg><svg class="comment-blue" viewBox="0 0 1024 1024" fill="currentColor" aria-hidden="true"><path d="M157.568 751.296c-11.008-18.688-18.218667-31.221333-21.802667-37.909333A424.885333 424.885333 0 0 1 85.333333 512C85.333333 276.362667 276.362667 85.333333 512 85.333333s426.666667 191.029333 426.666667 426.666667-191.029333 426.666667-426.666667 426.666667a424.778667 424.778667 0 0 1-219.125333-60.501334 2786.56 2786.56 0 0 0-20.053334-11.765333l-104.405333 28.48c-23.893333 6.506667-45.802667-15.413333-39.285333-39.296l28.437333-104.288z m65.301333 3.786667l-17.258666 63.306666 63.306666-17.258666a32 32 0 0 1 24.522667 3.210666 4515.84 4515.84 0 0 1 32.352 18.944A360.789333 360.789333 0 0 0 512 874.666667c200.298667 0 362.666667-162.368 362.666667-362.666667S712.298667 149.333333 512 149.333333 149.333333 311.701333 149.333333 512c0 60.586667 14.848 118.954667 42.826667 171.136 3.712 6.912 12.928 22.826667 27.370667 47.232a32 32 0 0 1 3.338666 24.714667z m145.994667-70.773334a32 32 0 1 1 40.917333-49.205333A159.189333 159.189333 0 0 0 512 672c37.888 0 73.674667-13.173333 102.186667-36.885333a32 32 0 0 1 40.917333 49.216A223.178667 223.178667 0 0 1 512 736a223.178667 223.178667 0 0 1-143.136-51.690667z"/></svg><span id="postDetailCommentCount">0</span></span>
                     </span>
-                    <button type="submit" class="post-reply-send">发送</button>
-                    <button type="button" class="post-reply-cancel" id="postReplyCancel">取消</button>
+                    <button type="submit" class="post-reply-send">Send</button>
+                    <button type="button" class="post-reply-cancel" id="postReplyCancel">Cancel</button>
                   </form>
                 </div>
               </div>
@@ -11339,7 +11339,7 @@
   function parseReminderIntent(text) {
     const raw = String(text || '').trim();
     const m = raw.match(/^\s*remind\s+me\s+(?:to\s+)?(.+)$/i)
-      || raw.match(/^\s*提醒我(?:去|要)?(.+)$/);
+      || raw.match(/^\s*(?:remind me(?: to)?)(.+)$/i);
     if (!m) return null;
     let task = m[1].trim().replace(/[.!?。！？]+$/u, '').trim();
     if (!task) return null;
@@ -14096,7 +14096,7 @@
   function documentRequest(text) {
     const raw = String(text || '').trim();
     const m = raw.match(/^(?:please\s+)?(?:write|draft|create|make)\s+(?:me\s+)?(?:a|an|the\s+)?(.+)$/i)
-      || raw.match(/^(?:帮我)?(?:写|做|创建)(?:一份|一个|一篇)?(.+)$/);
+      || raw.match(/^(?:(?:please|help me)\s+)?(?:write|make|create|draft)\s+(?:a\s+|an\s+)?(.+)$/i);
     if (!m) return null;
     let title = m[1].trim().replace(/[.!?。！？]+$/u, '').trim();
     if (!title) return null;
@@ -14562,7 +14562,7 @@
       if (tutorialDocPhase !== 'twin-finish' && tutorialDocPhase !== 'doc-done') tutorialDocPhase = 'switch-open';
       $('tutorialDocSwitcher')?.classList.add('open');
       const sw = $('tutorialDocSwitch');
-      // Menu open → back to resting icon (图二), not a stuck green ring.
+      // Menu open → back to resting icon (fig.2), not a stuck green ring.
       sw?.classList.remove('spot');
       sw?.setAttribute('aria-expanded', 'true');
       coach.classList.remove('on');
@@ -14935,7 +14935,7 @@
     clearTimeout(toolRecentTimer);
     const title = document.createElement('p');
     title.className = 'recent-k';
-    title.textContent = '最近项目';
+    title.textContent = 'Recent projects';
     pop.classList.remove('is-on');
     pop.replaceChildren(title, ...names.map((name) => {
       const btn = document.createElement('button');
@@ -16953,7 +16953,7 @@
     }
     document.querySelectorAll('.hub > .screen[data-screen]').forEach((el) => el.classList.toggle('on', el.dataset.screen === next));
     document.querySelectorAll('.hub > .screen[data-tail]').forEach((el) => el.classList.toggle('on', el.dataset.tail === next));
-    // Scenario bar: handoff (post-tutorial) still counts as「第一次来」.
+    // Scenario bar: handoff (post-tutorial) still counts as First visit.
     document.querySelectorAll('.presenter [data-screen]').forEach((b) => {
       const s = b.dataset.screen;
       const on = s === next || (next === 'handoff' && s === 'tutorial');
@@ -18010,23 +18010,23 @@
       foot: school
     }));
     people.push({
-      name: '骆王宇',
+      name: 'Wangyu Luo',
       field: 'Skincare',
       school: 'Creator',
       group: 'Skincare',
-      blurb: '护肤博主',
+      blurb: 'Skincare creator',
       tags: ['Skincare', 'Creator'],
       photo: 'assets/luo-wangyu.png',
       foot: 'Creator'
     }, {
-      name: '李佳琦',
+      name: 'Jiaqi Li',
       field: 'Product',
       school: 'Notes',
       group: 'Business',
-      blurb: '产品笔记',
+      blurb: 'Product notes',
       tags: ['Product', 'Notes'],
       photo: '',
-      letter: '李',
+      letter: 'J',
       tone: 'mint',
       foot: 'Notes'
     });
@@ -18039,28 +18039,28 @@
   }
 
   const DIR_POSTS = [
-    { title: '护肤从这张近照讲起', img: 'luo/assets/luo-portrait.png', h: 'tall', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '128' },
-    { title: '今天的产品笔记', quote: '把复杂能力收进一个更清晰的工作界面。', tone: 'paper', name: '李佳琦', initial: '李', av: 'mint', likes: '54' },
-    { title: '新的护肤内容合集已经更新。', img: 'luo/assets/product-sunscreen.jpg', h: 'tall', name: '豆豆', initial: '豆', tone: 'sky', likes: '86' },
-    { title: '新的护肤内容合集封面', img: 'luo/assets/luo-hero.png', h: 'mid', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '203' },
-    { title: '研究摘要里的一句', quote: 'Agent memory 不该靠聊天记录硬记。', tone: 'dot', name: '李佳琦', initial: '李', av: 'mint', likes: '62' },
-    { title: '这套水乳，混油皮我留着白天用', img: 'luo/assets/product-cetaphil.png', h: 'mid', name: '豆豆', initial: '豆', tone: 'sky', likes: '41' },
-    { title: '重离子课，我从这张图讲起', img: 'luo/assets/cosmo-roland.jpg', h: 'short', name: 'Prof. Roland', photo: 'assets/gunther-roland-illustrated.jpg', likes: '37' },
-    { title: '修护精华敷完，先别急着洗脸', img: 'luo/assets/product-drwu.jpg', h: 'tall', name: '豆豆', initial: '豆', tone: 'sky', likes: '96' },
-    { title: '课前先把这页图存下来', img: 'luo/assets/cosmo-roland.jpg', h: 'mid', name: 'Prof. Roland', photo: 'assets/gunther-roland-illustrated.jpg', likes: '44' },
-    { title: '笔记只留一句', quote: '先写结论，再把证据贴在后面。', tone: 'rose', name: '李佳琦', initial: '李', av: 'mint', likes: '73' },
-    { title: '出门前这一支就够', img: 'luo/assets/product-sunscreen.jpg', h: 'short', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '151' },
-    { title: '封面换了，合集还是那一套', img: 'luo/assets/luo-hero.png', h: 'tall', name: '豆豆', initial: '豆', tone: 'sky', likes: '68' },
-    { title: '白天这套，晚上就收起来', img: 'luo/assets/product-cetaphil.png', h: 'short', name: '豆豆', initial: '豆', tone: 'sky', likes: '29' },
-    { title: '修护顺序我标在这一段', quote: '先清洁，再精华，防晒留到出门前。', tone: 'mist', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '88' },
-    { title: '近一点看这张', img: 'luo/assets/luo-portrait.png', h: 'mid', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '112' },
-    { title: '讲义这一页，我通常停久一点', img: 'luo/assets/cosmo-roland.jpg', h: 'tall', name: 'Prof. Roland', photo: 'assets/gunther-roland-illustrated.jpg', likes: '51' },
-    { title: '敷完等两分钟再看状态', img: 'luo/assets/product-drwu.jpg', h: 'short', name: '豆豆', initial: '豆', tone: 'sky', likes: '77' },
-    { title: '今天先不写长的', quote: '界面少一件事，比多一个按钮有用。', tone: 'paper', name: '李佳琦', initial: '李', av: 'mint', likes: '39' },
-    { title: '防晒放在包的侧袋', img: 'luo/assets/product-sunscreen.jpg', h: 'mid', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '64' },
-    { title: '这张我留着当封面', img: 'luo/assets/luo-hero.png', h: 'short', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '190' },
-    { title: '水乳的瓶子，我按这个顺序摆', img: 'luo/assets/product-cetaphil.png', h: 'tall', name: '豆豆', initial: '豆', tone: 'sky', likes: '58' },
-    { title: '摘要卡片，只放这一句', quote: '先对齐问题，再决定要不要加功能。', tone: 'dot', name: '李佳琦', initial: '李', av: 'mint', likes: '21' }
+    { title: 'Skincare starts with this close-up', img: 'luo/assets/luo-portrait.png', h: 'tall', name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', likes: '128' },
+    { title: 'Today's product notes', quote: 'Fold complex capability into a clearer work interface.', tone: 'paper', name: 'Jiaqi Li', initial: 'J', av: 'mint', likes: '54' },
+    { title: 'The new skincare collection is updated.', img: 'luo/assets/product-sunscreen.jpg', h: 'tall', name: 'Doudou', initial: 'D', tone: 'sky', likes: '86' },
+    { title: 'Cover for the new skincare collection', img: 'luo/assets/luo-hero.png', h: 'mid', name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', likes: '203' },
+    { title: 'One line from the research brief', quote: 'Agent memory should not rely on raw chat history.', tone: 'dot', name: 'Jiaqi Li', initial: 'J', av: 'mint', likes: '62' },
+    { title: 'This cleanser set stays in my daytime routine for combination skin', img: 'luo/assets/product-cetaphil.png', h: 'mid', name: 'Doudou', initial: 'D', tone: 'sky', likes: '41' },
+    { title: 'I'll start heavy-ion class from this figure', img: 'luo/assets/cosmo-roland.jpg', h: 'short', name: 'Prof. Roland', photo: 'assets/gunther-roland-illustrated.jpg', likes: '37' },
+    { title: 'After repair essence, wait before washing', img: 'luo/assets/product-drwu.jpg', h: 'tall', name: 'Doudou', initial: 'D', tone: 'sky', likes: '96' },
+    { title: 'Save this slide before class', img: 'luo/assets/cosmo-roland.jpg', h: 'mid', name: 'Prof. Roland', photo: 'assets/gunther-roland-illustrated.jpg', likes: '44' },
+    { title: 'Keep one line in the notes', quote: 'Write the conclusion first, then attach evidence.', tone: 'rose', name: 'Jiaqi Li', initial: 'J', av: 'mint', likes: '73' },
+    { title: 'One sunscreen is enough before heading out', img: 'luo/assets/product-sunscreen.jpg', h: 'short', name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', likes: '151' },
+    { title: 'New cover, same collection', img: 'luo/assets/luo-hero.png', h: 'tall', name: 'Doudou', initial: 'D', tone: 'sky', likes: '68' },
+    { title: 'Daytime set — put it away at night', img: 'luo/assets/product-cetaphil.png', h: 'short', name: 'Doudou', initial: 'D', tone: 'sky', likes: '29' },
+    { title: 'I marked the repair order in this section', quote: 'Cleanse, then essence; sunscreen right before you leave.', tone: 'mist', name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', likes: '88' },
+    { title: 'A closer look at this shot', img: 'luo/assets/luo-portrait.png', h: 'mid', name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', likes: '112' },
+    { title: 'I usually linger on this lecture page', img: 'luo/assets/cosmo-roland.jpg', h: 'tall', name: 'Prof. Roland', photo: 'assets/gunther-roland-illustrated.jpg', likes: '51' },
+    { title: 'Wait two minutes after the mask, then check', img: 'luo/assets/product-drwu.jpg', h: 'short', name: 'Doudou', initial: 'D', tone: 'sky', likes: '77' },
+    { title: 'Keeping it short today', quote: 'One fewer UI chore beats one more button.', tone: 'paper', name: 'Jiaqi Li', initial: 'J', av: 'mint', likes: '39' },
+    { title: 'Sunscreen lives in the side pocket', img: 'luo/assets/product-sunscreen.jpg', h: 'mid', name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', likes: '64' },
+    { title: 'Keeping this as the cover', img: 'luo/assets/luo-hero.png', h: 'short', name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', likes: '190' },
+    { title: 'I line up the bottles in this order', img: 'luo/assets/product-cetaphil.png', h: 'tall', name: 'Doudou', initial: 'D', tone: 'sky', likes: '58' },
+    { title: 'Summary card — only this line', quote: 'Align on the problem before adding a feature.', tone: 'dot', name: 'Jiaqi Li', initial: 'J', av: 'mint', likes: '21' }
   ];
   function fillNoteCard(card, note) {
     if (note.img) {
@@ -18193,8 +18193,8 @@
       author: true
     };
     const pool = [
-      { name: '骆王宇', photo: 'assets/luo-wangyu.png', initial: '骆', tone: 'mint' },
-      { name: '豆豆', photo: '', initial: '豆', tone: 'sky' },
+      { name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', initial: 'W', tone: 'mint' },
+      { name: 'Doudou', photo: '', initial: 'D', tone: 'sky' },
       { name: 'Maya', photo: '', initial: 'M', tone: 'sand' }
     ].filter((person) => person.name !== note.name);
     return { author, pool };
@@ -18223,8 +18223,8 @@
     }
     btn.innerHTML = (kind === 'like' ? CMT_HEART : CMT_BUBBLE) + '<span></span>';
     const label = btn.querySelector('span');
-    if (kind === 'like') label.textContent = count > 0 ? String(count) : '赞';
-    else label.textContent = count > 0 ? String(count) : '回复';
+    if (kind === 'like') label.textContent = count > 0 ? String(count) : 'Like';
+    else label.textContent = count > 0 ? String(count) : 'Reply';
     return btn;
   }
   function commentRow(person, item) {
@@ -18240,7 +18240,7 @@
     if (person.author) {
       const badge = document.createElement('span');
       badge.className = 'post-cmt-author';
-      badge.textContent = '作者';
+      badge.textContent = 'Author';
       head.appendChild(badge);
     }
     const dots = document.createElement('button');
@@ -18269,26 +18269,26 @@
     const second = pool[1] || pool[0];
     const third = pool[2] || second;
     const lead = commentRow(first, {
-      text: note.quote ? '这句话可以单独留在摘要里。' : '这张我留下来了。',
-      time: '3天前',
-      place: '江苏',
+      text: note.quote ? 'This line can stand alone in the summary.' : 'I saved this one.',
+      time: '3d ago',
+      place: 'Jiangsu',
       likes: 0,
       replies: 5
     });
     lead.main.appendChild(commentRow(author, {
-      text: note.quote ? '对，先把这一句定下来。' : '换着看也行。',
-      time: '2天前',
-      place: '浙江',
+      text: note.quote ? 'Yes — lock this line first.' : 'Looking at them side by side works too.',
+      time: '2d ago',
+      place: 'Zhejiang',
       reply: true
     }).row);
     const fold = document.createElement('div');
     fold.className = 'post-cmt-fold';
     fold.hidden = true;
     [
-      { person: second, text: '我按这个收进笔记了。', time: '2天前', place: '上海' },
-      { person: third, text: '读起来比整段清楚。', time: '1天前', place: '浙江' },
-      { person: second, text: '我也会换着方式留一句。', time: '1天前', place: '上海' },
-      { person: author, text: '嗯，留一句就够。', time: '1天前', place: '浙江' }
+      { person: second, text: 'I filed this into my notes.', time: '2d ago', place: 'Shanghai' },
+      { person: third, text: 'Reads clearer than the full paragraph.', time: '1d ago', place: 'Zhejiang' },
+      { person: second, text: 'I keep one line in different ways too.', time: '1d ago', place: 'Shanghai' },
+      { person: author, text: 'Yep — one line is enough.', time: '1d ago', place: 'Zhejiang' }
     ].forEach((item) => {
       fold.appendChild(commentRow(item.person, { text: item.text, time: item.time, place: item.place, reply: true }).row);
     });
@@ -18296,23 +18296,23 @@
     open.type = 'button';
     open.className = 'post-cmt-open';
     open.dataset.cmtOpen = '4';
-    open.textContent = '展开 4 条回复';
+    open.textContent = 'Show 4 replies';
     lead.main.append(open, fold);
     const next = commentRow(second, {
-      text: '这张卡片也好读。',
-      time: '3天前',
-      place: '上海'
+      text: 'This card reads well too.',
+      time: '3d ago',
+      place: 'Shanghai'
     });
     next.main.appendChild(commentRow(author, {
-      text: '谢谢。',
-      time: '3天前',
-      place: '浙江',
+      text: 'Thanks.',
+      time: '3d ago',
+      place: 'Zhejiang',
       reply: true
     }).row);
     const last = commentRow(third, {
-      text: '我先把这一页存下来。',
-      time: '5天前',
-      place: '广东',
+      text: 'Saving this page first.',
+      time: '5d ago',
+      place: 'Guangdong',
       likes: 1,
       liked: true,
       replies: 3
@@ -18330,7 +18330,7 @@
     const el = document.getElementById('postDetailCommentCount');
     if (el) el.textContent = String(n);
     const head = document.getElementById('postCmtCount');
-    if (head) head.textContent = '共 ' + n + ' 条评论';
+    if (head) head.textContent = n + ' comments';
   }
   function openPostDetail(note) {
     if (document.documentElement.dataset.theme !== 'blue' || !note) return;
@@ -18389,14 +18389,14 @@
     root.hidden = false;
   }
   const DIR_NOTES = [
-    { title: '通勤防晒，我只留这一支', img: 'luo/assets/product-sunscreen.jpg', h: 'tall', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '128' },
-    { title: '修护精华敷完，先别急着洗脸', img: 'luo/assets/product-drwu.jpg', h: 'mid', name: '豆豆', initial: '豆', tone: 'sky', likes: '86' },
-    { title: '今天的产品笔记', quote: '把复杂能力收进一个更清晰的工作界面。', tone: 'paper', name: '李佳琦', initial: '李', av: 'mint', likes: '54' },
-    { title: '新的护肤内容合集封面', img: 'luo/assets/luo-hero.png', h: 'tall', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '203' },
-    { title: '这套水乳，混油皮我留着白天用', img: 'luo/assets/product-cetaphil.png', h: 'mid', name: '豆豆', initial: '豆', tone: 'sky', likes: '41' },
-    { title: '重离子课，我从这张图讲起', img: 'luo/assets/cosmo-roland.jpg', h: 'short', name: 'Prof. Roland', photo: 'assets/gunther-roland-illustrated.jpg', likes: '37' },
-    { title: '研究摘要里的一句', quote: 'Agent memory 不该靠聊天记录硬记。', tone: 'mist', name: '李佳琦', initial: '李', av: 'mint', likes: '62' },
-    { title: '近距离看一下修护后的状态', img: 'luo/assets/luo-portrait.png', h: 'tall', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '96' }
+    { title: 'Commute sunscreen — only this one', img: 'luo/assets/product-sunscreen.jpg', h: 'tall', name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', likes: '128' },
+    { title: 'After repair essence, wait before washing', img: 'luo/assets/product-drwu.jpg', h: 'mid', name: 'Doudou', initial: 'D', tone: 'sky', likes: '86' },
+    { title: 'Today's product notes', quote: 'Fold complex capability into a clearer work interface.', tone: 'paper', name: 'Jiaqi Li', initial: 'J', av: 'mint', likes: '54' },
+    { title: 'Cover for the new skincare collection', img: 'luo/assets/luo-hero.png', h: 'tall', name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', likes: '203' },
+    { title: 'This cleanser set stays in my daytime routine for combination skin', img: 'luo/assets/product-cetaphil.png', h: 'mid', name: 'Doudou', initial: 'D', tone: 'sky', likes: '41' },
+    { title: 'I'll start heavy-ion class from this figure', img: 'luo/assets/cosmo-roland.jpg', h: 'short', name: 'Prof. Roland', photo: 'assets/gunther-roland-illustrated.jpg', likes: '37' },
+    { title: 'One line from the research brief', quote: 'Agent memory should not rely on raw chat history.', tone: 'mist', name: 'Jiaqi Li', initial: 'J', av: 'mint', likes: '62' },
+    { title: 'A close look after repair', img: 'luo/assets/luo-portrait.png', h: 'tall', name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', likes: '96' }
   ];
   function noteHeart() {
     const ns = 'http://www.w3.org/2000/svg';
@@ -18437,33 +18437,33 @@
   });
   const CHAO = {
     luo: {
-      name: '骆王宇',
-      initial: '骆',
+      name: 'Wangyu Luo',
+      initial: 'W',
       tone: 'sand',
       line: 'One big group · 12.8k · preview without joining',
       meta: 'One big group · many subgroups · 12.8k · you are admin',
       posts: [
-        { initial: '骆', tone: 'sand', name: '骆王宇', time: '1h', text: '周五 20:00 直播：屏障修护怎么选。回这条帖子提问即可，不用在大群里刷屏', replies: '2 replies 武汉粉丝 From big group' }
+        { initial: 'W', tone: 'sand', name: 'Wangyu Luo', time: '1h', text: 'Friday 20:00 live: how to choose barrier repair. Reply here to ask — no need to spam the big group.', replies: '2 replies · Wuhan fans · From big group' }
       ]
     },
     li: {
-      name: '李佳琦',
-      initial: '李',
+      name: 'Jiaqi Li',
+      initial: 'J',
       tone: 'mint',
       line: 'One big group · 8.1k · preview without joining',
       meta: 'One big group · many subgroups · 8.1k',
       posts: [
-        { initial: '李', tone: 'mint', name: '李佳琦', time: '5h', text: '今天的产品笔记：把复杂能力收进一个更清晰的工作界面。', replies: 'From big group' }
+        { initial: 'J', tone: 'mint', name: 'Jiaqi Li', time: '5h', text: 'Today's product notes：Fold complex capability into a clearer work interface.', replies: 'From big group' }
       ]
     }
   };
   const CHAO_LIST = [
-    { id: 'luo', kind: 'topic', name: '骆王宇', initial: '骆', tone: 'sand', sub: '12.8k · 1 featured announcement', act: 'Preview' },
-    { id: 'li', kind: 'topic', name: '李佳琦', initial: '李', tone: 'mint', sub: '8.1k · 1 featured announcement', act: 'Preview' },
+    { id: 'luo', kind: 'topic', name: 'Wangyu Luo', initial: 'W', tone: 'sand', sub: '12.8k · 1 featured announcement', act: 'Preview' },
+    { id: 'li', kind: 'topic', name: 'Jiaqi Li', initial: 'J', tone: 'mint', sub: '8.1k · 1 featured announcement', act: 'Preview' },
     { kind: 'person', name: 'Prof. Gunther Roland', photo: 'assets/gunther-roland-illustrated.jpg', sub: 'MIT Professor of Physics · Nuclear and particle physics', act: 'Available', ok: true },
-    { kind: 'person', name: '骆王宇', photo: 'assets/luo-wangyu.png', sub: '护肤内容创作者', act: 'Available', ok: true },
-    { kind: 'person', name: '李佳琦', initial: '李', tone: 'mint', sub: 'Review required', act: 'Unavailable', ok: false },
-    { kind: 'person', name: '豆豆', initial: '豆', tone: 'sky', sub: 'Identity ambiguous', act: 'Unavailable', ok: false }
+    { kind: 'person', name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', sub: 'Skincare creator', act: 'Available', ok: true },
+    { kind: 'person', name: 'Jiaqi Li', initial: 'J', tone: 'mint', sub: 'Review required', act: 'Unavailable', ok: false },
+    { kind: 'person', name: 'Doudou', initial: 'D', tone: 'sky', sub: 'Identity ambiguous', act: 'Unavailable', ok: false }
   ];
   function chaoAv(item) {
     if (item.photo) {
@@ -18541,7 +18541,7 @@
     if (dirChaoTab === 'sub') {
       const note = document.createElement('p');
       note.className = 'chao-note';
-      note.textContent = '武汉粉丝';
+      note.textContent = 'Wuhan fans';
       const hint = document.createElement('p');
       hint.className = 'chao-line';
       hint.textContent = 'Big group posts sync here.';
@@ -18625,16 +18625,16 @@
     const copy = document.createElement('div');
     copy.className = 'chao-copy';
     const name = document.createElement('b');
-    name.textContent = '武汉粉丝';
+    name.textContent = 'Wuhan fans';
     const sub = document.createElement('small');
-    sub.textContent = '骆王宇 · subgroup';
+    sub.textContent = 'Wangyu Luo · subgroup';
     copy.append(name, sub);
-    joined.append(chaoAv({ initial: '骆', tone: 'sand' }), copy);
+    joined.append(chaoAv({ initial: 'W', tone: 'sand' }), copy);
     host.replaceChildren(...rows, sec, joined);
   }
 
   function followFace(p) {
-    if (p.name === 'Gunther Roland') return { blurb: '重离子物理 · MIT', tags: ['重离子', 'Lecture'] };
+    if (p.name === 'Gunther Roland') return { blurb: 'Heavy-ion physics · MIT', tags: ['Heavy ion', 'Lecture'] };
     return { blurb: p.blurb, tags: p.tags };
   }
   function followPostsOf(name) {
@@ -18643,7 +18643,7 @@
   }
   function followMessages(name) {
     if (name === 'Gunther Roland') {
-      return [{ time: '2h', text: 'Lecture 5 这页图先存下来，课上从重离子碰撞讲起。' }];
+      return [{ time: '2h', text: 'Save this Lecture 5 figure; class starts from heavy-ion collisions.' }];
     }
     const topic = Object.values(CHAO).find((item) => item.name === name);
     return topic ? topic.posts.map((post) => ({ time: post.time, text: post.text })) : [];
@@ -18653,7 +18653,7 @@
     row.className = 'dir-msg';
     const k = document.createElement('span');
     k.className = 'dir-msg-k';
-    k.textContent = '消息';
+    k.textContent = 'Message';
     const time = document.createElement('span');
     time.className = 'dir-msg-time';
     time.textContent = msg.time;
@@ -18705,7 +18705,7 @@
     back.type = 'button';
     back.className = 'dir-back';
     back.dataset.dirBack = '1';
-    back.textContent = '返回';
+    back.textContent = 'Back';
     const hd = document.createElement('div');
     hd.className = 'dir-person-hd';
     const copy = document.createElement('span');
@@ -18722,7 +18722,7 @@
       const empty = document.createElement('p');
       empty.className = 'dir-empty';
       empty.hidden = false;
-      empty.textContent = '还没有公开内容。';
+      empty.textContent = 'No public posts yet.';
       host.replaceChildren(back, hd, empty);
       return;
     }
@@ -18756,7 +18756,7 @@
       sec.className = 'dir-person-msgs';
       const label = document.createElement('p');
       label.className = 'dir-k';
-      label.textContent = '消息';
+      label.textContent = 'Message';
       sec.append(label, ...msgs.map(followMsgEl));
       parts.push(sec);
     }
@@ -18800,8 +18800,8 @@
       const enter = document.createElement('button');
       enter.type = 'button';
       enter.className = 'dir-enter';
-      enter.textContent = '进入';
-      enter.setAttribute('aria-label', '进入 ' + p.name);
+      enter.textContent = 'Enter';
+      enter.setAttribute('aria-label', 'Enter ' + p.name);
       meta.appendChild(enter);
       const post = dirLatestPost(p.name);
       const desc = post?.quote || post?.title || '';
@@ -19034,7 +19034,7 @@
       name: name,
       initial: userInitials(name) || 'Y',
       tone: 'mint'
-    }, { text: text, time: '刚刚', reply: replying }).row;
+    }, { text: text, time: 'Just now', reply: replying }).row;
     if (replying) {
       const target = form._replyRow;
       const parent = target.classList.contains('is-reply') ? target.parentElement : target.querySelector(':scope > div');
@@ -19060,7 +19060,7 @@
       n = Math.max(0, n + (on ? 1 : -1));
       like.dataset.count = String(n);
       const span = like.querySelector('span');
-      if (span) span.textContent = n > 0 ? String(n) : '赞';
+      if (span) span.textContent = n > 0 ? String(n) : 'Like';
       return;
     }
     const reply = e.target.closest('.post-cmt-reply');
@@ -19070,7 +19070,7 @@
       const who = document.getElementById('postReplyWho');
       const snip = document.getElementById('postReplySnip');
       if (!row || !form || !who || !snip) return;
-      who.textContent = '回复 ' + (row.querySelector('.post-cmt-head b')?.textContent || '');
+      who.textContent = 'Reply to ' + (row.querySelector('.post-cmt-head b')?.textContent || '');
       snip.textContent = row.querySelector('.post-cmt-text')?.textContent || '';
       form._replyRow = row;
       form.classList.add('is-replying');
@@ -19088,7 +19088,7 @@
     const fold = open.nextElementSibling;
     if (!fold) return;
     fold.hidden = !fold.hidden;
-    open.textContent = fold.hidden ? '展开 ' + open.dataset.cmtOpen + ' 条回复' : '收起回复';
+    open.textContent = fold.hidden ? 'Show ' + open.dataset.cmtOpen + ' replies' : 'Hide replies';
   });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closePostDetail();
@@ -19245,8 +19245,8 @@
   ];
   const DESK_GROUPS = [
     { id: 'team4', name: 'Team 4', preview: 'Group' },
-    { id: 'wuhan', name: 'Wuhan Branch Team', preview: 'Oct 19 · Hao Zou · 补充 1014.docx 的请假审批入口改进' },
-    { id: 'research', name: 'Research_Test', preview: 'Sep 20 · Hao Zou · 已完成梳理：现有 Research 将升级为 Roland 的独立 Research Hub' },
+    { id: 'wuhan', name: 'Wuhan Branch Team', preview: 'Oct 19 · Hao Zou · Improved leave-approval entry in 1014.docx' },
+    { id: 'research', name: 'Research_Test', preview: 'Sep 20 · Hao Zou · Research will become Roland’s standalone Research Hub' },
     { id: 'course', name: 'CO006017 · Data Analysis and Machine Learning', preview: '#general' },
     { id: 'ai', name: '1105 AI', preview: '#general' },
   ];
@@ -20288,10 +20288,10 @@
     });
   }
   const COSMO_MANAGE = [
-    { rail: 'Prof. Gunther Roland', dir: 'Gunther Roland', short: 'GR', cls: 'is-gr', blurb: '重离子物理 · MIT' },
-    { rail: '骆王宇', dir: '骆王宇', short: '骆', cls: 'is-luo', blurb: '护肤博主' },
-    { rail: '李佳琦', dir: '李佳琦', short: '李', cls: 'is-li', blurb: '产品笔记' },
-    { rail: '豆豆', dir: '', short: '豆', cls: 'is-dou', blurb: 'On your rail' }
+    { rail: 'Prof. Gunther Roland', dir: 'Gunther Roland', short: 'GR', cls: 'is-gr', blurb: 'Heavy-ion physics · MIT' },
+    { rail: 'Wangyu Luo', dir: 'Wangyu Luo', short: 'W', cls: 'is-luo', blurb: 'Skincare creator' },
+    { rail: 'Jiaqi Li', dir: 'Jiaqi Li', short: 'J', cls: 'is-li', blurb: 'Product notes' },
+    { rail: 'Doudou', dir: '', short: 'D', cls: 'is-dou', blurb: 'On your rail' }
   ];
   const cosmoOn = new Set(COSMO_MANAGE.map((row) => row.rail));
   function cosmoDirNames() {
@@ -21929,7 +21929,7 @@ function paintGroupBoard() {
     const editIcon = '<button type="button" class="ws-edit-btn" data-ws-edit aria-label="Edit group"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 20h4l10.5-10.5a2.1 2.1 0 0 0-3-3L5 17v3Z"/><path d="m13.5 6.5 3 3"/></svg></button>';
     const head = canReview(c) && state.wsEditing
       ? `<label class="ws-face">${face(c)}<input id="wsPhoto" type="file" accept="image/*" hidden aria-label="Group photo"></label><div class="ws-info-copy"><input class="ws-edit-name" id="wsName" maxlength="40" value="${esc(c.name)}" aria-label="Group name"><textarea class="ws-edit-desc" id="wsDesc" maxlength="240" aria-label="Group description">${esc(c.description || '')}</textarea><button type="button" class="ws-save" data-ws-save>Save</button></div>`
-      : `${face(c)}<div class="ws-info-copy"><h3>${esc(c.name)}</h3><p>${esc(c.description || '这个群还没有简介。')}</p></div>${canReview(c) ? editIcon : ''}`;
+      : `${face(c)}<div class="ws-info-copy"><h3>${esc(c.name)}</h3><p>${esc(c.description || 'This group has no description yet.')}</p></div>${canReview(c) ? editIcon : ''}`;
     panel = `<section class="ws-panel"><div class="ws-info">${head}${pager}</div><div class="ws-members">${memberHtml}</div></section>`;
   } else if (state.wsCard === 'announcements') {
     const list = (c.announcements && c.announcements.length)
@@ -22092,7 +22092,7 @@ function historyList(c) {
 function historyHit(m) {
   const p = m.who ? person(m.who) : { name: '', short: '·', hue: 'slate' };
   const preview = m.file ? `${m.file.name} · ${m.file.size}` : (historyLinks(m)[0] || m.text || '');
-  return `<button type="button" class="history-hit" data-jump="${m.id}"><span class="av hue-${p.hue}">${esc(p.short)}</span><span class="history-copy"><b>${esc(p.name)}</b><small>${esc(preview)}</small></span><span class="locate">定位到聊天位置</span></button>`;
+  return `<button type="button" class="history-hit" data-jump="${m.id}"><span class="av hue-${p.hue}">${esc(p.short)}</span><span class="history-copy"><b>${esc(p.name)}</b><small>${esc(preview)}</small></span><span class="locate">Jump to chat</span></button>`;
 }
 function renderHistory() {
   const c = current();
