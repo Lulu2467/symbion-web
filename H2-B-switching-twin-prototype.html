@@ -1889,15 +1889,16 @@
     font-weight: 600;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-card {
-    border: 0;
+    border: 1px solid #e3e5e8;
     border-radius: 14px;
     padding: 12px 12px 10px;
     background: #fff;
-    box-shadow: 0 8px 22px rgba(20, 24, 28, .08), 0 1px 4px rgba(20, 24, 28, .04);
+    box-shadow: 0 6px 16px rgba(20, 24, 28, .10), 0 1px 3px rgba(20, 24, 28, .06);
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-card b { font-weight: 600; }
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-card:hover {
-    box-shadow: 0 12px 28px rgba(20, 24, 28, .11), 0 2px 6px rgba(20, 24, 28, .05);
+    border-color: #d5d8dc;
+    box-shadow: 0 10px 24px rgba(20, 24, 28, .14), 0 2px 6px rgba(20, 24, 28, .07);
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-type { font-size: 12px; font-weight: 600; }
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-list { gap: 10px; }
@@ -1991,6 +1992,7 @@
     flex: 1;
     min-height: 0;
     overflow: auto;
+    padding: 4px 4px 18px;
     scrollbar-width: thin;
     scrollbar-color: #d5d8dc transparent;
   }
