@@ -2076,9 +2076,30 @@
     flex: 1;
     min-height: 0;
     overflow: auto;
-    padding: 6px 6px 18px;
+    padding: 6px 2px 18px 6px;
     scrollbar-width: thin;
-    scrollbar-color: #d5d8dc transparent;
+    scrollbar-color: rgba(132, 138, 146, .72) transparent;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-list::-webkit-scrollbar {
+    width: 12px;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-list::-webkit-scrollbar-button {
+    display: none;
+    height: 0;
+    width: 0;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-list::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 6px 0 12px;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-list::-webkit-scrollbar-thumb {
+    background-color: rgba(132, 138, 146, .72);
+    border: 3px solid transparent;
+    border-radius: 999px;
+    background-clip: padding-box;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-list::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(60, 122, 148, .55);
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) :is(#tail-home,.ws-home-cal) #homeTimeline,
   html[data-theme="blue"] .hub:has(#screen-home.on) :is(#tail-home,.ws-home-cal) #tlBody,
