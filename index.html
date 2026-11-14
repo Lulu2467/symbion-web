@@ -1565,30 +1565,22 @@
     width: 16px;
     height: 16px;
     margin: 0;
-    border-radius: 999px;
-    border: 1.5px solid var(--green);
+    border: 0;
+    border-radius: 0;
     background: transparent;
-    color: transparent;
+    color: var(--green);
     font-size: 0;
     line-height: 0;
     padding: 0;
   }
+  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+  }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x::before,
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 8px;
-    height: 1.5px;
-    border-radius: 1px;
-    background: var(--green);
-  }
-  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x::before {
-    transform: translate(-50%, -50%) rotate(45deg);
-  }
-  html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .composer-tool-chip.on:hover .chip-x::after {
-    transform: translate(-50%, -50%) rotate(-45deg);
+    content: none;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home {
     width: min(1200px, 100%);
@@ -2544,10 +2536,27 @@
   }
   html[data-theme="blue"] #tail-home .kd-name::placeholder { color: #a1a6ac; font-weight: 500; }
   html[data-theme="blue"] #tail-home .kd-clock {
-    width: 54px; border: 0; padding: 0; background: transparent; color: inherit; font: inherit;
-    font-size: 13px; font-weight: 500; outline: none; cursor: text;
+    min-width: 0; height: 28px; border: 0; border-radius: 6px; padding: 0 6px; background: transparent;
+    color: #1d1d1f; font: inherit; font-size: 13px; font-weight: 500; line-height: 28px;
+    white-space: nowrap; cursor: pointer; text-align: left;
   }
-  html[data-theme="blue"] #tail-home .kd-clock::-webkit-calendar-picker-indicator { opacity: 0; width: 0; }
+  html[data-theme="blue"] #tail-home .kd-clock:hover,
+  html[data-theme="blue"] #tail-home .kd-clock.is-open { background: #f3f4f6; }
+  html[data-theme="blue"] .kd-clock-menu {
+    position: fixed; z-index: 80; width: 132px; max-height: 280px; overflow: auto; padding: 6px;
+    background: #fff; color: #1d1d1f; border: 1px solid #e6e8ec; border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(20, 25, 26, .12);
+  }
+  html[data-theme="blue"] .kd-clock-menu button {
+    display: block; width: 100%; min-height: 32px; padding: 0 10px; border: 0; border-radius: 6px;
+    background: transparent; color: #1d1d1f; font: inherit; font-size: 13px; text-align: left; cursor: pointer;
+  }
+  html[data-theme="blue"] .kd-clock-menu button:hover,
+  html[data-theme="blue"] .kd-clock-menu button.is-on { background: #f3f4f6; color: #3c7a94; }
+  html[data-theme="blue"] .kd-clock-menu button:focus { outline: none; }
+  html[data-theme="blue"] .kd-clock-menu button:focus-visible { background: #ebf5fa; color: #3c7a94; }
+  html[data-theme="blue"] .kd-clock-menu::-webkit-scrollbar { width: 8px; }
+  html[data-theme="blue"] .kd-clock-menu::-webkit-scrollbar-thumb { background: #d0d4d9; border-radius: 8px; }
   html[data-theme="blue"] #tail-home .kd-allday {
     width: 100%; border: 0; background: transparent; font: inherit; color: inherit; text-align: left; cursor: pointer;
   }
@@ -2591,27 +2600,25 @@
   }
   html[data-theme="blue"] #tail-home .kd-tz:hover,
   html[data-theme="blue"] #tail-home .kd-tz.is-open { background: #f3f4f6; }
-  html[data-theme="blue"] #tail-home .kd-tz-input {
-    flex: 1; min-width: 0; border: 0; background: transparent; font: inherit; font-size: 13px; color: #1d1d1f; outline: none;
-  }
-  html[data-theme="blue"] #tail-home .kd-tz-go {
-    margin-left: auto; width: 22px; height: 22px; padding: 0; border: 0; border-radius: 50%;
-    background: transparent; color: #8b9198; font: inherit; font-size: 14px; cursor: pointer; flex: none;
+  html[data-theme="blue"] #tail-home .kd-tz > span { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  html[data-theme="blue"] #tail-home .kd-tz-chev {
+    margin-left: auto; width: 14px; height: 14px; color: #8b9198; flex: none;
   }
   html[data-theme="blue"] .kd-tz-menu {
     position: fixed; z-index: 80; width: 320px; max-height: 280px; overflow: auto; padding: 6px;
-    background: #2c2c2e; color: #fff; border-radius: 12px; box-shadow: 0 10px 28px rgba(0, 0, 0, .28);
+    background: #fff; color: #1d1d1f; border: 1px solid #e6e8ec; border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(20, 25, 26, .12);
   }
   html[data-theme="blue"] .kd-tz-menu button {
     display: block; width: 100%; min-height: 32px; padding: 6px 10px; border: 0; border-radius: 6px;
-    background: transparent; color: #fff; font: inherit; font-size: 13px; text-align: left; cursor: pointer;
+    background: transparent; color: #1d1d1f; font: inherit; font-size: 13px; text-align: left; cursor: pointer;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
   html[data-theme="blue"] .kd-tz-menu button:hover,
-  html[data-theme="blue"] .kd-tz-menu button.is-on { background: rgba(255, 255, 255, .1); }
-  html[data-theme="blue"] .kd-tz-menu .kd-tz-rule { height: 1px; margin: 4px 8px; background: rgba(255, 255, 255, .12); }
+  html[data-theme="blue"] .kd-tz-menu button.is-on { background: #f3f4f6; color: #3c7a94; }
+  html[data-theme="blue"] .kd-tz-menu .kd-tz-rule { height: 1px; margin: 4px 8px; background: #ededec; }
   html[data-theme="blue"] .kd-tz-menu::-webkit-scrollbar { width: 8px; }
-  html[data-theme="blue"] .kd-tz-menu::-webkit-scrollbar-thumb { background: #6e6e73; border-radius: 8px; }
+  html[data-theme="blue"] .kd-tz-menu::-webkit-scrollbar-thumb { background: #d0d4d9; border-radius: 8px; }
   html[data-theme="blue"] #tail-home .kd-repeat {
     width: auto; margin: 8px 16px; padding: 0 8px; border-radius: 8px; background: #f3f4f6;
     color: #8b9198; cursor: pointer; box-sizing: border-box;
@@ -2659,7 +2666,8 @@
   html[data-theme="blue"] #tail-home .kd-row span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   html[data-theme="blue"] #tail-home .kd-sub { padding: 12px 16px 8px 40px; font-size: 13px; line-height: 18px; color: #1d1d1f; }
   html[data-theme="blue"] #tail-home .kd-arrow { color: #8b9198; }
-  html[data-theme="blue"] #tail-home .kd-time { margin-left: auto; flex: none; color: #8b9198; font-size: 12px; }
+  html[data-theme="blue"] #tail-home .kd-time,
+  html[data-theme="blue"] #tail-home .kd-dur { margin-left: auto; flex: none; color: #8b9198; font-size: 12px; }
   html[data-theme="blue"] #tail-home .kd-gap { height: 0; border-top: 1px solid #ededec; margin: 8px 16px; }
   html[data-theme="blue"] #tail-home .kd-label { padding: 0 16px; font-size: 13px; font-weight: 500; color: #8b9198; }
   html[data-theme="blue"] #tail-home .kd-note { min-height: 28px; padding: 4px 16px 8px; font-size: 13px; line-height: 18px; color: #1d1d1f; }
@@ -3407,7 +3415,11 @@
   .composer-tool-chip .chip-ico svg { display: block; width: 12px; height: 12px; }
   .composer-tool-chip .chip-ico img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .composer-tool-chip .chip-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; line-height: 1.25; padding-bottom: 1px; }
-  .composer-tool-chip .chip-x { width: 16px; height: 16px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; color: var(--faint); font-size: 13px; line-height: 1; flex: none; margin-left: 0; border: 0; background: transparent; padding: 0; cursor: pointer; }
+  .composer-tool-chip .chip-x {
+    width: 16px; height: 16px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center;
+    color: var(--faint); font-size: 0; line-height: 0; flex: none; margin-left: 0; border: 0; background: transparent; padding: 0; cursor: pointer;
+  }
+  .composer-tool-chip .chip-x svg { width: 16px; height: 16px; display: block; }
   .composer-tool-chip .chip-x:hover { background: var(--surface); color: var(--ink); }
   /* Between 21 (too display) and 15 (too thin vs Kimi) — ~16–17 matches Kimi body next to chips. */
   .composer-input { flex: 1 1 160px; min-width: 140px; width: 100%; font-size: 17px; font-weight: 400; line-height: 1.45; color: var(--ink); background: transparent; border: 0; padding: 0; margin: 0; resize: none; font-family: var(--font); min-height: 1.45em; overflow: hidden; box-sizing: border-box; }
@@ -4608,7 +4620,7 @@
     background: var(--green-tint);
     border-color: rgba(var(--brand-rgb),.28);
   }
-  /* Open menu: keep resting look (图二) — no sticky “lit” well. */
+  /* Open menu: keep resting look (fig.2) — no sticky “lit” well. */
   .citta-panel .ph .sw-sm[aria-expanded="true"] {
     background: #fff;
     border-color: var(--line);
@@ -5317,7 +5329,7 @@
   .tutorial-doc-citta .ph .citta-av { width: 28px; height: 28px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; background: var(--green-tint); color: var(--green-dark); flex: none; overflow: hidden; }
   .tutorial-doc-citta .ph .citta-av.citta-portrait { border-radius: 8px; background: transparent; }
   .tutorial-doc-citta .ph .citta-av.twin-init { border-radius: 14px; }
-  /* Resting = 图二: white well + grey border + green glyph. No sticky glow after click. */
+  /* Resting = fig.2: white well + grey border + green glyph. No sticky glow after click. */
   .tutorial-doc-citta .doc-switch {
     margin-left: 4px;
     color: var(--green);
@@ -5421,7 +5433,7 @@
   .pickup .badge.course,
   .pickup .badge.email { background: #fbf1de; color: #9a5b07; }
 
-  /* Same quiet strip language as .course-banner (图二) — no loud green frame. */
+  /* Same quiet strip language as .course-banner (fig.2) — no loud green frame. */
   .tutorial-entry {
     display: flex;
     gap: 14px;
@@ -6248,6 +6260,17 @@
   .set-nav button[data-set] + button[data-set] { margin-top: 4px; }
   .set-nav button[data-set]:hover { background: #f3f5f7; }
   .set-nav button[data-set][aria-current="page"] { background: var(--green-tint); color: var(--green); font-weight: 500; }
+  .set-nav button.set-signout { color: #c62828; }
+  .set-nav button.set-signout:hover { background: #fceeee; color: #b71c1c; }
+  .set-nav button.set-signout[aria-current="page"] { background: #fceeee; color: #b71c1c; }
+  .set-friend-list, .set-history-list { display: grid; gap: 8px; margin-top: 12px; }
+  .set-friend-list .set-line, .set-history-list .set-line {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px;
+    padding: 10px 0; border-bottom: 1px solid #eef0f2;
+  }
+  .set-friend-list .set-line b, .set-history-list .set-line b { flex: 1; min-width: 120px; font-size: 13px; font-weight: 600; }
+  .set-friend-list .set-line span, .set-history-list .set-line span { color: var(--muted); font-size: 12px; }
+  .set-friend-list .set-line .set-quiet { margin-left: auto; }
   .set-main { flex: 1; min-width: 0; overflow: auto; padding: 22px 28px 40px; }
   .set-top { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
   .set-top p { margin: 0 0 0 auto; color: var(--label); font-size: 11px; font-weight: 700; letter-spacing: .08em; }
@@ -7080,7 +7103,8 @@
     align-items: center;
     justify-content: center;
     height: 32px;
-    padding: 1px 16px 0;
+    /* Inter 600 optically sits high — extra top padding centers the letters. */
+    padding: 2px 16px 0;
     border: 1px solid #c5d4de;
     border-radius: 999px;
     background: #fff;
@@ -7218,7 +7242,8 @@
     align-items: center;
     justify-content: center;
     height: 32px;
-    padding: 1px 16px 0;
+    /* Inter 600 optically sits high — extra top padding centers the letters. */
+    padding: 2px 16px 0;
     border: 1px solid #c5d4de;
     border-radius: 999px;
     background: #fff;
@@ -8305,94 +8330,141 @@
   .tk-meta time { margin-left: auto; flex: none; }
   .tk-empty { margin: 8px 4px; color: #a4a4a2; font-size: 12px; }
   .gi-modal {
-    position: absolute; inset: 0; z-index: 30; display: flex; align-items: center; justify-content: center;
-    padding: 24px; background: rgba(20, 24, 28, .45);
+    position: fixed; inset: 0; z-index: 80; display: flex; align-items: flex-start; justify-content: center;
+    padding: 48px 24px 24px; background: transparent; pointer-events: none;
   }
+  .gi-modal[hidden] { display: none !important; }
   .gi-sheet {
-    width: min(680px, 100%); max-height: 100%; overflow: auto; box-sizing: border-box;
-    padding: 18px 22px 0; border-radius: 16px; background: #fff; box-shadow: 0 12px 36px rgba(20, 24, 28, .18);
+    width: min(560px, 100%); max-height: calc(100vh - 72px); overflow: auto; box-sizing: border-box;
+    padding: 8px 8px 0; border-radius: 12px; background: #fff;
+    border: 1px solid #e6e8ec; box-shadow: 0 12px 40px rgba(26, 29, 33, .12);
+    pointer-events: auto;
   }
-  .gi-top { display: flex; align-items: center; justify-content: space-between; }
-  .gi-kicker {
-    display: inline-flex; align-items: center; height: 22px; padding: 0 10px; border-radius: 999px;
-    background: #f3f4f6; color: #8b9198; font-size: 11px; font-weight: 700; letter-spacing: .06em;
-  }
+  .gi-top { display: flex; justify-content: flex-end; padding: 4px 8px 0; }
   .gi-x {
     width: 28px; height: 28px; border: 0; border-radius: 8px; background: transparent; color: #8b9198; font-size: 18px;
   }
-  .gi-x:hover { background: #f3f4f6; color: #1d1d1f; }
-  .gi-sheet h2 { margin: 12px 0 4px; font-size: 20px; font-weight: 700; letter-spacing: 0; color: #1d1d1f; }
-  .gi-lead { margin: 0; color: #8b9198; font-size: 14px; line-height: 1.45; }
-  .gi-tabs { display: grid; grid-template-columns: repeat(3, 1fr); margin: 18px 0 16px; border-bottom: 1px solid #ededec; }
-  .gi-tabs button {
-    border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; padding: 10px 8px; background: transparent;
-    color: #6e7378; font-size: 14px; font-weight: 650;
+  .gi-x:hover { background: #f3f5f7; color: #1f1f1f; }
+  .gi-panel { padding: 0 12px 4px; }
+  .gi-title {
+    width: 100%; box-sizing: border-box; margin: 0 0 8px; padding: 8px 4px 14px;
+    border: 0; background: transparent; color: #1f1f1f;
+    font: inherit; font-size: 22px; font-weight: 600; line-height: 1.3; letter-spacing: -0.01em;
   }
-  .gi-tabs button[aria-selected="true"] { color: #1d1d1f; border-bottom-color: #3c7a94; }
-  .gi-when { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
-  .gi-when > div > b { display: block; margin-bottom: 8px; font-size: 15px; font-weight: 700; color: #1d1d1f; }
-  .gi-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .gi-field { display: block; }
-  .gi-field span { display: block; margin-bottom: 6px; color: #8b9198; font-size: 12px; font-weight: 600; }
-  .gi-field input, .gi-field textarea {
-    width: 100%; box-sizing: border-box; border: 1px solid #e6e8ec; border-radius: 10px; background: #fff; color: #1d1d1f;
-    font: inherit; font-size: 14px;
+  .gi-title::placeholder { color: #b0b4ba; font-weight: 500; }
+  .gi-title:focus { outline: none; }
+  .gi-rule { height: 1px; margin: 4px 0; background: #eef0f2; border: 0; }
+  .gi-row {
+    display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; align-items: start;
+    padding: 10px 4px; color: #1f1f1f;
   }
-  .gi-field input { height: 40px; padding: 0 10px; }
-  .gi-field textarea { min-height: 88px; padding: 8px 10px; resize: vertical; }
-  .gi-field input:focus, .gi-field textarea:focus { outline: none; border-color: #3c7a94; }
-  .gi-types, .gi-people { display: grid; gap: 10px; margin-top: 16px; }
-  .gi-types { grid-template-columns: repeat(4, 1fr); }
-  .gi-people { grid-template-columns: repeat(3, 1fr); }
-  .gi-types button, .gi-people button {
-    height: 40px; border: 1px solid #e6e8ec; border-radius: 8px; background: #fff; color: #1d1d1f; font-size: 14px; font-weight: 600;
+  .gi-ico {
+    width: 28px; height: 28px; display: grid; place-items: center; color: #8b9198; flex: none;
   }
-  .gi-types button[aria-pressed="true"] { background: #3c7a94; border-color: #3c7a94; color: #fff; }
-  .gi-people button[aria-pressed="true"] { background: #ebf5fa; border-color: #3c7a94; color: #3c7a94; }
-  .gi-panel h3 { margin: 0 0 4px; font-size: 15px; font-weight: 700; color: #1d1d1f; }
-  .gi-panel .hint { margin: 0 0 12px; color: #8b9198; font-size: 13px; }
-  .gi-panel .gi-field + .gi-field { margin-top: 12px; }
-  .gi-note { min-height: 18px; margin: 10px 0 0; color: #d93025; font-size: 12px; }
-  .gi-foot {
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    margin: 16px -22px 0; padding: 14px 22px; border-top: 1px solid #ededec;
+  .gi-ico svg { width: 18px; height: 18px; display: block; }
+  .gi-row-body { min-width: 0; display: flex; flex-direction: column; gap: 8px; padding-top: 3px; }
+  .gi-row-line { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 28px; }
+  .gi-link {
+    border: 0; background: transparent; padding: 0; color: #3c7a94;
+    font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; text-align: left;
   }
-  .gi-foot > span { color: #8b9198; font-size: 13px; }
-  .gi-foot div { display: flex; align-items: center; gap: 8px; }
-  .gi-cancel, .gi-next {
-    height: 32px; padding: 0 14px; border-radius: 8px; font-size: 14px; font-weight: 600;
+  .gi-link:hover { color: #316479; }
+  .gi-quiet {
+    border: 0; background: transparent; padding: 0; color: #71777d;
+    font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; text-align: left;
   }
-  .gi-cancel { border: 0; background: #f3f4f6; color: #6e7378; }
-  .gi-cancel:hover { background: #ececee; }
-  .gi-next { border: 0; background: #3c7a94; color: #fff; }
-  .gi-next:hover { background: #316479; }
-  .gi-block { margin-top: 16px; }
-  .gi-block-hd { display: flex; align-items: center; justify-content: space-between; min-height: 36px; }
-  .gi-block-hd b { font-size: 15px; font-weight: 700; color: #1d1d1f; }
-  .gi-add {
-    height: 32px; padding: 0 10px; border: 0; border-radius: 8px; background: transparent;
-    color: #3c7a94; font-size: 14px; font-weight: 600;
+  .gi-quiet:hover { color: #3c7a94; }
+  .gi-quiet.is-set { color: #3c7a94; }
+  .gi-when-line {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
   }
-  .gi-add:hover { background: #ebf5fa; }
-  .gi-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .gi-when-line input[type="date"] {
+    height: 30px; box-sizing: border-box; border: 0; border-radius: 6px; padding: 0 8px;
+    background: #f6f7f8; color: #1f1f1f; font: inherit; font-size: 13px; font-weight: 500;
+  }
+  .gi-when-line input[type="date"]:focus { outline: 2px solid rgba(60, 122, 148, .25); outline-offset: 0; }
+  .gi-when-line .gi-clock {
+    height: 30px; box-sizing: border-box; border: 0; border-radius: 6px; padding: 0 10px;
+    background: #f6f7f8; color: #1f1f1f; font: inherit; font-size: 13px; font-weight: 500;
+    cursor: pointer; white-space: nowrap;
+  }
+  .gi-when-line .gi-clock:hover,
+  .gi-when-line .gi-clock.is-open { background: #ebf5fa; color: #3c7a94; }
+  .gi-clock-menu {
+    position: fixed; z-index: 120; width: 132px; max-height: 280px; overflow: auto; padding: 6px;
+    background: #fff; color: #1d1d1f; border: 1px solid #e6e8ec; border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(20, 25, 26, .12);
+  }
+  .gi-clock-menu button {
+    display: block; width: 100%; min-height: 32px; padding: 0 10px; border: 0; border-radius: 6px;
+    background: transparent; color: #1d1d1f; font: inherit; font-size: 13px; text-align: left; cursor: pointer;
+  }
+  .gi-clock-menu button:hover,
+  .gi-clock-menu button.is-on { background: #f3f4f6; color: #3c7a94; }
+  .gi-clock-menu button:focus { outline: none; }
+  .gi-when-line .gi-dash { color: #b0b4ba; font-size: 13px; }
+  .gi-types { display: flex; flex-wrap: wrap; gap: 6px; }
+  .gi-types button {
+    height: 28px; padding: 0 10px; border: 0; border-radius: 8px; background: #f6f7f8;
+    color: #71777d; font-size: 12px; font-weight: 650; cursor: pointer;
+  }
+  .gi-types button[aria-pressed="true"] { background: #ebf5fa; color: #3c7a94; }
+  .gi-people { display: grid; gap: 0; }
+  .gi-chips { display: flex; flex-wrap: wrap; gap: 6px; }
   .gi-chips:empty { display: none; }
   .gi-chip {
-    display: inline-flex; align-items: center; gap: 6px; height: 32px; max-width: 100%;
-    padding: 0 6px 0 10px; border-radius: 8px; background: #f3f5f7; color: #1d1d1f; font-size: 13px;
+    display: inline-flex; align-items: center; gap: 4px; height: 28px; max-width: 100%;
+    padding: 0 4px 0 10px; border-radius: 8px; background: #f6f7f8; color: #1f1f1f; font-size: 13px;
   }
   .gi-chip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .gi-chip button {
-    width: 20px; height: 20px; border: 0; border-radius: 6px; background: transparent; color: #6e7378; font-size: 14px; line-height: 1;
+    width: 20px; height: 20px; border: 0; border-radius: 6px; background: transparent; color: #8b9198; font-size: 14px; line-height: 1;
   }
-  .gi-chip button:hover { background: #e6e8ec; color: #1d1d1f; }
-  .gi-pick { margin-top: 8px; border: 1px solid #e6e8ec; border-radius: 10px; overflow: hidden; }
+  .gi-chip button:hover { background: #e6e8ec; color: #1f1f1f; }
+  .gi-pick { border: 1px solid #e6e8ec; border-radius: 10px; overflow: hidden; background: #fff; }
+  .gi-pick[hidden], .gi-file-pick[hidden] { display: none !important; }
   .gi-pick input {
-    width: 100%; height: 40px; box-sizing: border-box; border: 0; border-bottom: 1px solid #e6e8ec;
-    padding: 0 12px; font: inherit; font-size: 14px; color: #1d1d1f;
+    width: 100%; height: 36px; box-sizing: border-box; border: 0; border-bottom: 1px solid #eef0f2;
+    padding: 0 12px; font: inherit; font-size: 13px; color: #1f1f1f; background: #fff;
   }
   .gi-pick input:focus { outline: none; }
-  .gi-pick .gi-people { grid-template-columns: 1fr; margin: 0; max-height: 200px; overflow: auto; }
-  .gi-pick .gi-people button { width: 100%; border: 0; border-radius: 0; text-align: left; }
+  .gi-pick .gi-people { max-height: 180px; overflow: auto; }
+  .gi-pick .gi-people button,
+  .gi-file-pick button {
+    width: 100%; min-height: 36px; padding: 8px 12px; border: 0; border-bottom: 1px solid #eef0f2;
+    background: #fff; color: #1f1f1f; font-size: 13px; text-align: left; cursor: pointer;
+  }
+  .gi-pick .gi-people button:last-child,
+  .gi-file-pick button:last-child { border-bottom: 0; }
+  .gi-pick .gi-people button:hover,
+  .gi-file-pick button:hover { background: #f6f7f8; }
+  .gi-pick .gi-people button[aria-pressed="true"] { background: #ebf5fa; color: #3c7a94; }
+  .gi-file-pick { border: 1px solid #e6e8ec; border-radius: 10px; overflow: hidden; }
+  .gi-file-pick button small { display: block; color: #8b9198; font-size: 12px; }
+  .gi-desc {
+    width: 100%; min-height: 72px; box-sizing: border-box; border: 0; padding: 0;
+    background: transparent; color: #1f1f1f; font: inherit; font-size: 14px; line-height: 1.45; resize: vertical;
+  }
+  .gi-desc::placeholder { color: #b0b4ba; }
+  .gi-desc:focus { outline: none; }
+  .gi-note { min-height: 16px; margin: 0; padding: 0 16px; color: #d93025; font-size: 12px; }
+  .gi-foot {
+    display: flex; align-items: center; justify-content: flex-end; gap: 8px;
+    margin-top: 8px; padding: 12px 16px; border-top: 1px solid #eef0f2; background: #fff;
+    position: sticky; bottom: 0;
+  }
+  .gi-cancel, .gi-next {
+    height: 32px; padding: 0 14px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;
+  }
+  .gi-cancel { border: 1px solid #e6e8ec; background: #fff; color: #71777d; }
+  .gi-cancel:hover { background: #f6f7f8; }
+  .gi-next { border: 0; background: var(--green); color: #fff; }
+  .gi-next:hover { background: var(--green-dark); }
+  .gi-panel .hint { margin: 0; padding: 8px 12px; color: #8b9198; font-size: 13px; }
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+  }
   .thread-head .icon-btn { border: 0; background: transparent; color: #5f6368; }
   .thread-head .icon-btn:hover, .thread-head .icon-btn[aria-expanded="true"], .thread-head .icon-btn[aria-pressed="true"] { border: 0; background: #d4e4ee; color: #1f1f1f; }
   .head-face .mosaic, .head-face .av { width: 36px; height: 36px; border-radius: 4px; border: 0; }
@@ -9413,15 +9485,15 @@
 
 <div class="presenter">
   <h1>Home v2</h1>
-  <div class="seg scenario" role="group" aria-label="主页情境">
-    <button type="button" data-screen="tutorial" aria-pressed="false">第一次来</button>
-    <button type="button" data-screen="welcome" aria-pressed="false">过几天来</button>
-    <button type="button" data-screen="home" aria-pressed="true">平时在用</button>
+  <div class="seg scenario" role="group" aria-label="Home scenario">
+    <button type="button" data-screen="tutorial" aria-pressed="false">First visit</button>
+    <button type="button" data-screen="welcome" aria-pressed="false">A few days later</button>
+    <button type="button" data-screen="home" aria-pressed="true">Daily use</button>
   </div>
-  <span class="theme-label">配色</span>
-  <div class="seg theme-seg" role="group" aria-label="主题色">
-    <button type="button" data-theme-pick="green" aria-pressed="false">绿色</button>
-    <button type="button" data-theme-pick="blue" aria-pressed="true">蓝色</button>
+  <span class="theme-label">Theme</span>
+  <div class="seg theme-seg" role="group" aria-label="Theme color">
+    <button type="button" data-theme-pick="green" aria-pressed="false">Green</button>
+    <button type="button" data-theme-pick="blue" aria-pressed="true">Blue</button>
   </div>
 </div>
 
@@ -9458,9 +9530,9 @@
           </div>
         </div>
         <span class="sp"></span>
-        <div class="seg theme-seg" role="group" aria-label="主题色">
-          <button type="button" data-theme-pick="green" aria-pressed="true">绿色</button>
-          <button type="button" data-theme-pick="blue" aria-pressed="false">蓝色</button>
+        <div class="seg theme-seg" role="group" aria-label="Theme color">
+          <button type="button" data-theme-pick="green" aria-pressed="true">Green</button>
+          <button type="button" data-theme-pick="blue" aria-pressed="false">Blue</button>
         </div>
         <button type="button" class="osbar-app" aria-label="Symbion" data-osbar="symbion"><span class="av-s" aria-hidden="true">S</span><span>Symbion</span></button>
       </div>
@@ -9475,9 +9547,9 @@
           <div class="rail-follow" aria-label="Following">
             <div class="rail-follow-k"><svg class="rail-follow-line" viewBox="0 0 1024 1024" aria-hidden="true"><path d="M84.309333 490.666667h812.714667c11.221333 0 20.309333 9.557333 20.309333 21.333333s-9.088 21.333333-20.309333 21.333333H84.309333A20.864 20.864 0 0 1 64 512c0-11.776 9.088-21.333333 20.309333-21.333333z" fill="#bfbfbf"/></svg>FOLLOWING</div>
             <button type="button" class="rail-follow-row" data-follow="Prof. Gunther Roland" aria-label="Prof. Gunther Roland"><span class="av is-gr">GR</span><span class="nm">Prof. Gunther Roland</span></button>
-            <button type="button" class="rail-follow-row" data-follow="骆王宇" aria-label="骆王宇"><span class="av is-luo">骆</span><span class="nm">骆王宇</span></button>
-            <button type="button" class="rail-follow-row" data-follow="李佳琦" aria-label="李佳琦"><span class="av is-li">李</span><span class="nm">李佳琦</span></button>
-            <button type="button" class="rail-follow-row" data-follow="豆豆" aria-label="豆豆"><span class="av is-dou">豆</span><span class="nm">豆豆</span></button>
+            <button type="button" class="rail-follow-row" data-follow="Wangyu Luo" aria-label="Wangyu Luo"><span class="av is-luo">W</span><span class="nm">Wangyu Luo</span></button>
+            <button type="button" class="rail-follow-row" data-follow="Jiaqi Li" aria-label="Jiaqi Li"><span class="av is-li">J</span><span class="nm">Jiaqi Li</span></button>
+            <button type="button" class="rail-follow-row" data-follow="Doudou" aria-label="Doudou"><span class="av is-dou">D</span><span class="nm">Doudou</span></button>
           </div>
           <button type="button" class="r" data-rail="community" aria-label="Community"><svg class="rail-ico rail-ico-chat" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M637.024 434.112c8.928-15.232 3.84-34.848-11.392-43.808-15.168-8.928-34.816-3.84-43.776 11.392-25.76 43.84-99.456 79.488-164.352 79.488-65.12 0-138.976-35.936-164.64-80.096-8.896-15.296-28.48-20.48-43.744-11.584-15.296 8.864-20.48 28.48-11.584 43.744 42.24 72.704 144.864 111.968 220 111.968C492.32 545.184 594.656 506.24 637.024 434.112zM704 704c52.928 0 96-43.072 96-96L800 192c0-52.928-43.072-96-96-96L128 96C75.072 96 32 139.072 32 192l0 416c0 52.928 43.072 96 96 96l0.416 0L128 863.904c-0.032 13.152 8 24.992 20.192 29.856C152.032 895.264 156.032 896 160 896c8.672 0 17.184-3.52 23.36-10.112L353.568 704 704 704zM192.512 676.224C192.672 674.784 193.344 673.504 193.344 672c0-17.696-14.336-32-32-32L128 640c-17.632 0-32-14.336-32-32L96 192c0-17.632 14.368-32 32-32l576 0c17.664 0 32 14.368 32 32l0 416c0 17.664-14.336 32-32 32L339.872 640c-0.224 0-0.416 0.128-0.64 0.128-3.136 0.032-6.144 0.896-9.184 1.856-0.928 0.32-1.952 0.288-2.816 0.672-2.688 1.12-5.024 3.072-7.392 4.96-0.864 0.704-1.984 1.152-2.752 1.984-0.224 0.256-0.544 0.32-0.768 0.576l-124.096 132.64L192.512 676.224zM895.808 288.416c-17.696 0-31.712 14.336-31.712 32s14.592 32 32.288 32c17.6 0 31.904 14.368 31.904 32l0 352c0 17.664-14.304 32-31.904 32L864 768.416c-17.696 0-32 14.304-32 32 0 0.096 0.032 0.16 0.032 0.224 0 0.256-0.128 0.448-0.128 0.672l-0.16 49.536-72.512-73.344c-6.272-6.368-14.592-9.472-22.912-9.44C736.224 768.064 736.128 768 736 768l-160 0c-17.696 0-32 14.304-32 32s14.304 32 32 32l147.136 0 117.632 119.008c6.112 6.176 14.368 9.504 22.752 9.504 4.096 0 8.192-0.768 12.128-2.368 11.968-4.896 19.84-16.576 19.872-29.536l0.32-96.192 0.576 0c52.864 0 95.904-43.072 95.904-96l0-352C992.288 331.456 949.248 288.416 895.808 288.416z" fill="currentColor"/></svg><svg class="rail-ico rail-ico-people" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M368.989091 474.763636a182.225455 182.225455 0 1 1 182.341818-182.225454A182.458182 182.458182 0 0 1 368.989091 474.763636z m0-306.269091a124.043636 124.043636 0 1 0 124.16 124.043637 124.16 124.16 0 0 0-124.16-124.043637zM372.363636 890.647273h-1.512727c-20.829091-1.163636-43.054545-1.512727-64.465454-1.978182C211.549091 886.690909 113.454545 884.363636 54.458182 826.181818c-29.323636-26.414545-36.072727-70.981818-18.036364-119.505454 34.909091-93.090909 154.530909-194.56 335.825455-196.189091 181.76 1.629091 301.614545 102.865455 336.290909 196.189091 18.036364 48.523636 11.636364 93.090909-18.036364 119.505454-58.996364 58.181818-157.090909 59.927273-252.043636 61.789091-21.410909 0-43.636364 0.814545-64.465455 1.978182z m0-321.396364c-163.723636 0.930909-258.094545 95.418182-281.483636 158.254546-9.309091 25.018182-8.378182 46.545455 2.56 56.203636l1.28 1.163636c42.472727 42.24 129.047273 43.869091 212.712727 45.498182 21.410909 0 43.52 0.814545 64.930909 1.978182 21.294545-1.163636 43.52-1.512727 64.930909-1.978182 83.781818-1.629091 170.356364-3.374545 212.712728-45.498182l1.28-1.163636c10.938182-9.541818 11.636364-31.069091 2.56-56.203636C630.690909 664.669091 536.32 570.181818 372.363636 569.250909z" fill="currentColor"/><path d="M707.025455 502.225455a155.229091 155.229091 0 1 1 155.112727-155.112728 155.345455 155.345455 0 0 1-155.112727 155.112728z m0-252.16a97.047273 97.047273 0 1 0 97.047272 97.047272 97.163636 97.163636 0 0 0-97.047272-97.047272zM709.818182 844.683636h-1.512727c-13.381818-0.698182-26.996364-1.047273-40.843637-1.396363l1.28-58.181818c13.847273 0 27.694545 0.698182 41.076364 1.396363 17.570909-0.930909 35.723636-1.28 53.294545-1.629091 67.956364-1.28 138.24-2.676364 171.636364-35.956363l1.28-1.28c7.214545-6.4 7.563636-22.341818 0.698182-40.610909C918.109091 656.64 842.123636 581.818182 709.818182 580.072727a291.607273 291.607273 0 0 0-125.090909 27.345455l-24.785455-52.712727A357.469091 357.469091 0 0 1 709.818182 521.890909C861.789091 523.636364 962.210909 608.349091 991.418182 686.545455c15.592727 42.24 9.309091 81.454545-16.174546 104.727272-50.036364 49.221818-131.84 50.734545-210.967272 52.247273-17.570909 0-35.84 0.698182-52.945455 1.629091z" fill="currentColor"/><path d="M563.898182 618.356364l-29.44-50.152728c8.145455-4.770909 16.756364-9.309091 25.483636-13.381818l24.785455 52.712727c-7.214545 3.258182-14.545455 6.981818-20.829091 10.821819z" fill="currentColor"/></svg><span class="rail-lab">Community</span></button>
           <button type="button" class="r" data-rail="desk" aria-label="Desk"><svg class="rail-ico" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M955.2384 153.6c18.2784 0 35.7888 7.168 48.64 19.8144 12.9024 12.6976 20.1216 29.8496 20.1216 47.7696v636.2112c0 3.4304-1.4336 6.7072-3.8912 9.1648a13.5168 13.5168 0 0 1-9.4208 3.84h-36.9152a13.4656 13.4656 0 0 1-9.472-3.84 12.8 12.8 0 0 1-3.84-9.1648V434.0736H506.88v368.7424c0 17.92-7.168 35.072-20.0704 47.7696a69.376 69.376 0 0 1-48.64 19.8144H68.7104c-18.2272 0-35.7376-7.168-48.64-19.8144A67.0208 67.0208 0 0 1 0 802.816V221.184c0-17.92 7.2192-35.072 20.1216-47.7696C32.9728 160.768 50.4832 153.6 68.7616 153.6h886.4768zM63.5392 434.0736v350.6176c0 13.0048 10.752 23.3984 23.6544 23.3984h332.4416c6.2464 0 12.288-2.4576 16.6912-6.8096a23.296 23.296 0 0 0 7.0144-16.5888V434.0736H63.488z m282.2656 83.0976c3.5328 0 6.912 1.4336 9.3696 3.84a12.9024 12.9024 0 0 1 3.8912 9.1648v36.352a12.8 12.8 0 0 1-3.8912 9.1136 13.4144 13.4144 0 0 1-9.3696 3.8912H161.0752a13.4144 13.4144 0 0 1-9.4208-3.8912 12.8 12.8 0 0 1-3.8912-9.1136v-36.352c0-3.4304 1.4336-6.7072 3.8912-9.1648a13.4656 13.4656 0 0 1 9.4208-3.84h184.7296z m-258.56-301.2096a23.8592 23.8592 0 0 0-16.7424 6.7584 23.296 23.296 0 0 0-6.9632 16.5888v132.4544h896.9216V239.3088a23.296 23.296 0 0 0-6.9632-16.5888 23.8592 23.8592 0 0 0-16.6912-6.7584H87.1936z" fill="currentColor"/></svg><span class="rail-lab">Desk</span></button>
@@ -9501,7 +9573,7 @@
               <span class="copy"><b>Haifeng Xu</b><small>AI · Chicago</small></span>
             </button>
           </div>
-          <button type="button" class="p" aria-label="Prof. Roland">GR</button><button type="button" class="p" aria-label="王">王</button><button type="button" class="p" aria-label="Prof. Pajer">EP</button><button type="button" class="p" aria-label="Prof. Xu">HX</button>
+          <button type="button" class="p" aria-label="Prof. Roland">GR</button><button type="button" class="p" aria-label="Wang">W</button><button type="button" class="p" aria-label="Prof. Pajer">EP</button><button type="button" class="p" aria-label="Prof. Xu">HX</button>
           <div class="osbar-bell" id="osbarBell">
             <button type="button" class="osbar-nav-btn" aria-label="Reminders" aria-expanded="false" data-osbar="bell"><svg class="osbar-ico" viewBox="70.28 66.28 881.45 881.45" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M808 712l-48-108.8V448c0-102.4-65.6-195.2-160-232-3.2-44.8-41.6-80-88-80s-83.2 35.2-88 80c-96 36.8-160 129.6-160 232v155.2l-48 108.8c-6.4 14.4-4.8 30.4 3.2 43.2 8 12.8 22.4 20.8 38.4 20.8h508.8c16 0 30.4-8 38.4-20.8s9.6-30.4 3.2-43.2z m-547.2 16l51.2-115.2V448c0-88 59.2-166.4 144-192l19.2-6.4-3.2-20.8V224c0-22.4 17.6-40 40-40s40 17.6 40 40v6.4l-3.2 20.8 19.2 6.4c84.8 25.6 144 104 144 192v164.8l51.2 115.2H260.8zM512 880c44.8 0 80-35.2 80-80H432c0 44.8 35.2 80 80 80z"/></svg></button>
             <div class="osbar-bell-menu" role="region" aria-label="Cosmos"><div class="osbar-bell-hd"><b>Cosmos</b><button type="button" class="osbar-bell-x" data-osbar="bell-close" aria-label="Close"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.25 3.25 12.75 12.75M12.75 3.25 3.25 12.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div><div class="osbar-bell-card"><div class="osbar-bell-list"></div></div></div>
@@ -9712,7 +9784,7 @@
                         <div class="composer-tool-chip" id="composerToolChip" hidden>
                           <span class="chip-ico" id="composerToolChipIco" aria-hidden="true"></span>
                           <span class="chip-label" id="composerToolChipLabel"></span>
-                          <button type="button" class="chip-x" id="composerToolChipClear" aria-label="Remove tool">×</button>
+                          <button type="button" class="chip-x" id="composerToolChipClear" aria-label="Remove tool"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M512 0C794.769794 0 1024 229.805588 1024 512 1024 794.769794 794.194408 1024 512 1024 229.230208 1024 0 794.194408 0 512 0 229.230208 229.805588 0 512 0ZM512 984.615385C772.648448 984.615385 984.615385 772.81286 984.615385 512 984.615385 251.351552 772.81286 39.384615 512 39.384615 251.351552 39.384615 39.384615 251.18714 39.384615 512 39.384615 772.648448 251.18714 984.615385 512 984.615385ZM512 539.849129 358.829792 693.019336C351.139468 700.70966 338.670988 700.70966 330.980664 693.019336 323.29034 685.329012 323.29034 672.860532 330.980664 665.170208L484.150871 512 330.980664 358.829792C323.29034 351.139468 323.29034 338.670988 330.980664 330.980664 338.670988 323.29034 351.139468 323.29034 358.829792 330.980664L512 484.150871 665.170208 330.980664C672.860532 323.29034 685.329012 323.29034 693.019336 330.980664 700.70966 338.670988 700.70966 351.139468 693.019336 358.829792L539.849129 512 693.019336 665.170208C700.70966 672.860532 700.70966 685.329012 693.019336 693.019336 685.329012 700.70966 672.860532 700.70966 665.170208 693.019336L512 539.849129Z"/></svg></button>
                         </div>
                       </div>
                       <textarea class="composer-input" id="composerInput" rows="1" placeholder="What do you want to work on?" aria-label="What do you want to work on?"></textarea>
@@ -9782,7 +9854,7 @@
               </div>
             </section>
 
-            <!-- 平时在用：续写工具 + Goal，不再推 Try（试用已过） -->
+            <!-- Daily use: continue tools + Goal; no Try (trial ended) -->
             <div class="screen on" id="tail-home" data-tail="home">
             <section class="week-tools-panel" id="sec-tools-week">
               <div class="week-tools-hd">
@@ -9898,7 +9970,7 @@
                   <div class="cosmos-scroll-wrap two-main-r">
                   <aside class="activity" data-cosmos-scroll>
                     <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland’s twin posted lecture 5 slides</div><small>Heavy-ion Physics · 1h ago</small><button type="button" class="act-link">Turn into study notes<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
-                    <div class="act-item"><span class="aav">王</span><div><div class="t">骆王宇 is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                    <div class="act-item"><span class="aav">W</span><div><div class="t">Wangyu Luo is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                     <div class="act-item"><span class="aav">EP</span><div><div class="t">2 replies to your #cosmology thread</div><small>Prof. Pajer’s twin + @maya_k</small><button type="button" class="act-link">Open thread<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                     <div class="act-item"><span class="aav">HX</span><div><div class="t">Prof. Xu’s twin: new insight on pricing data</div><small>AI &amp; decisions · today</small><button type="button" class="act-link">View insight<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                     <div class="act-item"><span class="aav">AR</span><div><div class="t">Anastasia’s twin shared a climate-math notebook</div><small>Physics &amp; Space · 3h ago</small><button type="button" class="act-link">Open in Code<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
@@ -9997,7 +10069,7 @@
               </section>
             </div>
 
-            <!-- 刚完成 tutorial：只推 Try，不推 Goal -->
+            <!-- Just finished tutorial: Try only, no Goal -->
             <div class="screen" id="tail-handoff" data-tail="handoff">
               <section class="tool-sec" id="sec-try-each">
                 <div class="hdr">
@@ -10082,7 +10154,7 @@
                     <div class="cosmos-scroll-wrap two-main-r">
                     <aside class="activity" data-cosmos-scroll>
                       <div class="act-item"><span class="aav">GR</span><div><div class="t">Prof. Roland’s twin posted lecture 5 slides</div><small>Heavy-ion Physics · 1h ago</small><button type="button" class="act-link">Turn into study notes<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
-                      <div class="act-item"><span class="aav">王</span><div><div class="t">骆王宇 is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
+                      <div class="act-item"><span class="aav">W</span><div><div class="t">Wangyu Luo is going live soon (the real person)</div><small>Live at 3:10 · twin has a recap ready</small><button type="button" class="act-link">Set reminder<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                       <div class="act-item"><span class="aav">EP</span><div><div class="t">2 replies to your #cosmology thread</div><small>Prof. Pajer’s twin + @maya_k</small><button type="button" class="act-link">Open thread<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                       <div class="act-item"><span class="aav">HX</span><div><div class="t">Prof. Xu’s twin: new insight on pricing data</div><small>AI &amp; decisions · today</small><button type="button" class="act-link">View insight<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
                       <div class="act-item"><span class="aav">AR</span><div><div class="t">Anastasia’s twin shared a climate-math notebook</div><small>Physics &amp; Space · 3h ago</small><button type="button" class="act-link">Open in Code<span class="ico-ne" aria-hidden="true"><svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.353516 14.5L14.3535 0.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M1.85352 0.5H14.3535V13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></span></button></div></div>
@@ -10156,10 +10228,13 @@
               <nav class="set-nav" aria-label="Account settings">
                 <h2>Account Hub</h2>
                 <p class="set-kicker">GENERAL</p>
-                <button type="button" data-set="profile" aria-current="page">Profile</button>
+                <button type="button" data-set="profile" aria-current="page">Edit profile</button>
                 <button type="button" data-set="picture">Profile picture</button>
+                <button type="button" data-set="friends">Friends</button>
                 <p class="set-kicker">COSMOS</p>
                 <button type="button" data-set="cosmos">Cosmos</button>
+                <p class="set-kicker">ACCOUNT</p>
+                <button type="button" data-set="settings">Account &amp; settings</button>
                 <p class="set-kicker">CONNECTIONS</p>
                 <button type="button" data-set="apps">Connected apps</button>
                 <p class="set-kicker">PREFERENCES</p>
@@ -10168,12 +10243,16 @@
                 <button type="button" data-set="chat">Chat display</button>
                 <button type="button" data-set="neo">Citta in NeoSchool</button>
                 <p class="set-kicker">SECURITY</p>
-                <button type="button" data-set="security">Security</button>
+                <button type="button" data-set="security">Security &amp; privacy</button>
                 <p class="set-kicker">ADVANCED</p>
                 <button type="button" data-set="bugs"><span>Bug Report mode</span><em>Product test</em></button>
                 <p class="set-kicker">RELATED</p>
+                <button type="button" data-set="about">About Symbion</button>
+                <button type="button" data-set="history">Recent history</button>
                 <button type="button" data-set="tokens">Tokens &amp; plan</button>
                 <button type="button" data-set="agents">Agents</button>
+                <p class="set-kicker">SESSION</p>
+                <button type="button" data-set="signout" class="set-signout">Sign out</button>
               </nav>
               <div class="set-main">
                 <div class="set-top"><button type="button" class="set-back" data-set-act="back" aria-label="Back"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path d="M679.13916 138.387837c10.304693 0 20.602224 3.941775 28.457122 11.791557 15.733333 15.733333 15.733333 41.172725 0 56.906058L397.262304 517.418406l314.834478 314.836525c15.733333 15.733333 15.733333 41.171702 0 56.905034s-41.171702 15.733333-56.905034 0L311.900148 545.868365c-15.734356-15.733333-15.734356-41.172725 0-56.906058L650.683061 150.179394C658.532843 142.335752 668.830373 138.387837 679.13916 138.387837L679.13916 138.387837zM679.13916 138.387837" fill="#272636"/></svg></button><p>SETTINGS</p></div>
@@ -10341,8 +10420,42 @@
                   <div class="set-actions"><button type="button" class="set-primary" data-set-act="save-neo">Save Citta preference</button></div>
                   <p class="set-note" id="setNeoNote">Saved preference: Use existing layout.</p>
                 </div>
+                <div class="set-card" data-set-panel="friends" hidden>
+                  <h3>Friends</h3>
+                  <p class="sub">Find people by name or email and start a conversation.</p>
+                  <label><span>SEARCH</span><input id="setFriendQ" type="search" placeholder="Name or email" autocomplete="off" aria-label="Search friends"></label>
+                  <div id="setFriendResults" class="set-friend-list"></div>
+                </div>
+                <div class="set-card" data-set-panel="settings" hidden>
+                  <h3>Account &amp; settings</h3>
+                  <p class="sub">Shortcuts into the same places as the account menu.</p>
+                  <div class="set-actions">
+                    <button type="button" class="set-quiet" data-set="profile">Edit profile</button>
+                    <button type="button" class="set-quiet" data-set="picture">Profile picture</button>
+                    <button type="button" class="set-quiet" data-set="security">Security &amp; privacy</button>
+                    <button type="button" class="set-quiet" data-set="apps">Connected apps</button>
+                    <button type="button" class="set-quiet" data-set="cosmos">Cosmos</button>
+                    <button type="button" class="set-quiet" data-set="friends">Friends</button>
+                    <button type="button" class="set-quiet" data-set="about">About Symbion</button>
+                    <button type="button" class="set-quiet" data-set="history">Recent history</button>
+                  </div>
+                  <p class="set-note">Account Hub keeps every account-menu destination in one place.</p>
+                </div>
+                <div class="set-card" data-set-panel="about" hidden>
+                  <h3>About Symbion</h3>
+                  <p class="sub">Product identity for this prototype.</p>
+                  <div class="set-line"><b>Product</b><span>Symbion</span></div>
+                  <div class="set-line"><b>Build</b><span>H2 · Switching Twin</span></div>
+                  <div class="set-line"><b>Theme</b><span>Home v2 · Blue</span></div>
+                  <p class="set-note">This page is a UX prototype. Live version and legal links wait for the account service.</p>
+                </div>
+                <div class="set-card" data-set-panel="history" hidden>
+                  <h3>Recent history</h3>
+                  <p class="sub">Recent places and actions from this session.</p>
+                  <div id="setHistory" class="set-history-list"></div>
+                </div>
                 <div class="set-card" data-set-panel="security" hidden>
-                  <h3>Security</h3>
+                  <h3>Security &amp; privacy</h3>
                   <p class="sub">Review this session and account-wide sign-out controls.</p>
                   <h3>Where you’re signed in</h3>
                   <div class="set-line"><b>This device</b><span>sid_9f527aee…</span></div>
@@ -10378,6 +10491,16 @@
                     <button type="button" class="set-plan" data-plan="pro" aria-pressed="false"><b>Pro</b><small>2M tokens · $129/month · 4.8M effective</small></button>
                     <button type="button" class="set-plan" data-plan="purchase" aria-pressed="false"><b>Purchase</b><small>$39/month on the Plus plan. Checkout waits for the account service.</small></button>
                   </div>
+                </div>
+                <div class="set-card" data-set-panel="signout" hidden>
+                  <h3>Sign out</h3>
+                  <p class="sub">End this browser session. You can sign back in anytime.</p>
+                  <div class="set-line"><b>Signed in as</b><span id="setSignoutWho">Lulu · 2849182439@qq.com</span></div>
+                  <div class="set-actions">
+                    <button type="button" class="set-quiet set-signout" data-set-act="confirm-signout">Sign out</button>
+                    <button type="button" class="set-quiet" data-set="profile">Stay signed in</button>
+                  </div>
+                  <p class="set-note">Live sign-out waits for the account service. This prototype only shows the confirmation.</p>
                 </div>
                 <div class="set-card" data-set-panel="agents" hidden>
                   <h3>Hire a course tutor</h3>
@@ -10495,7 +10618,7 @@
                 <article class="me-card" style="margin-top:12px">
                   <div class="me-badges"><span class="me-badge">Unverified</span><span class="me-badge">Not used yet</span></div>
                   <h3>Recurring file topics</h3>
-                  <p>Internal files reference "researcher", "线性研究链路", "输出结构设计文档" · 2026/8/12</p>
+                  <p>Internal files reference "researcher", "linear research chain", "output structure design doc" · 2026/8/12</p>
                   <p class="me-meta">No authenticated matching suggestion. Not used.</p>
                 </article>
                 <div class="me-foot">
@@ -10640,8 +10763,8 @@
                       <button type="button" class="post-detail-stat" id="postDetailStar" aria-label="Save"><svg class="star-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="m12 3.6 2.2 4.7 5.2.6-3.9 3.5 1.1 5.1L12 15.2 7.4 17.5l1.1-5.1L4.6 8.9l5.2-.6L12 3.6z"/></svg><svg class="star-blue" viewBox="0 0 1024 1024" fill="currentColor" aria-hidden="true"><path class="star-line" fill="currentColor" d="M743.43 926.01c-8.16 0-16.35-2.01-23.9-6.06L508.44 806.43 295.27 915.99c-17.18 8.82-37.49 7.16-53.02-4.36-15.51-11.48-23.01-30.43-19.58-49.43l42.73-235.84L95.35 457.48c-13.71-13.61-18.41-33.46-12.26-51.76 6.14-18.32 21.85-31.31 40.99-33.9l237.47-32.25 108.07-213.91c8.63-17.1 25.83-27.67 44.95-27.67h0.49c19.31 0.19 36.53 11.11 44.91 28.52L664.03 342.4l236.84 36.67c19.09 2.95 34.54 16.24 40.34 34.66 5.8 18.42 0.74 38.16-13.23 51.51l-173.17 165.7 38.3 236.58c3.09 19.07-4.77 37.88-20.51 49.09-8.76 6.23-18.94 9.4-29.17 9.4zM508.51 748.79c8.2 0 16.41 2.01 23.85 6.01l202.58 108.94-36.76-227.06a50.366 50.366 0 0 1 14.9-44.44l166.2-159.01-227.3-35.19a50.4 50.4 0 0 1-37.67-27.92l-99.86-207.19-103.71 205.28a50.334 50.334 0 0 1-38.19 27.2l-227.91 30.96 163.2 162.07a50.309 50.309 0 0 1 14.06 44.72L280.91 859.5l204.58-105.15a50.405 50.405 0 0 1 23.02-5.56z"/><path class="star-fill" fill="currentColor" d="M743.43 926.01c-8.16 0-16.35-2.01-23.9-6.06L508.44 806.43 295.27 915.99c-17.18 8.82-37.49 7.16-53.02-4.36-15.51-11.48-23.01-30.43-19.58-49.43l42.73-235.84L95.35 457.48c-13.71-13.61-18.41-33.46-12.26-51.76 6.14-18.32 21.85-31.31 40.99-33.9l237.47-32.25 108.07-213.91c8.63-17.1 25.83-27.67 44.95-27.67h0.49c19.31 0.19 36.53 11.11 44.91 28.52L664.03 342.4l236.84 36.67c19.09 2.95 34.54 16.24 40.34 34.66 5.8 18.42 0.74 38.16-13.23 51.51l-173.17 165.7 38.3 236.58c3.09 19.07-4.77 37.88-20.51 49.09-8.76 6.23-18.94 9.4-29.17 9.4z"/></svg><span id="postDetailSaves">0</span></button>
                       <span class="post-detail-stat" aria-hidden="true"><svg class="comment-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 5.2a6.8 6.8 0 0 0-5.9 10.2L4.8 19.2l3.4-1.1A6.8 6.8 0 1 0 12 5.2z"/></svg><svg class="comment-blue" viewBox="0 0 1024 1024" fill="currentColor" aria-hidden="true"><path d="M157.568 751.296c-11.008-18.688-18.218667-31.221333-21.802667-37.909333A424.885333 424.885333 0 0 1 85.333333 512C85.333333 276.362667 276.362667 85.333333 512 85.333333s426.666667 191.029333 426.666667 426.666667-191.029333 426.666667-426.666667 426.666667a424.778667 424.778667 0 0 1-219.125333-60.501334 2786.56 2786.56 0 0 0-20.053334-11.765333l-104.405333 28.48c-23.893333 6.506667-45.802667-15.413333-39.285333-39.296l28.437333-104.288z m65.301333 3.786667l-17.258666 63.306666 63.306666-17.258666a32 32 0 0 1 24.522667 3.210666 4515.84 4515.84 0 0 1 32.352 18.944A360.789333 360.789333 0 0 0 512 874.666667c200.298667 0 362.666667-162.368 362.666667-362.666667S712.298667 149.333333 512 149.333333 149.333333 311.701333 149.333333 512c0 60.586667 14.848 118.954667 42.826667 171.136 3.712 6.912 12.928 22.826667 27.370667 47.232a32 32 0 0 1 3.338666 24.714667z m145.994667-70.773334a32 32 0 1 1 40.917333-49.205333A159.189333 159.189333 0 0 0 512 672c37.888 0 73.674667-13.173333 102.186667-36.885333a32 32 0 0 1 40.917333 49.216A223.178667 223.178667 0 0 1 512 736a223.178667 223.178667 0 0 1-143.136-51.690667z"/></svg><span id="postDetailCommentCount">0</span></span>
                     </span>
-                    <button type="submit" class="post-reply-send">发送</button>
-                    <button type="button" class="post-reply-cancel" id="postReplyCancel">取消</button>
+                    <button type="submit" class="post-reply-send">Send</button>
+                    <button type="button" class="post-reply-cancel" id="postReplyCancel">Cancel</button>
                   </form>
                 </div>
               </div>
@@ -10734,49 +10857,76 @@
         <div class="desk-bubble" id="gBubble" hidden></div>
         <div class="gi-modal" id="giModal" hidden>
           <div class="gi-sheet" role="dialog" aria-modal="true" aria-labelledby="giTitle">
-            <div class="gi-top"><span class="gi-kicker">EVENT</span><button type="button" class="gi-x" data-gi="close" aria-label="Close">×</button></div>
-            <h2 id="giTitle">Create event</h2>
-            <p class="gi-lead">This stays in this group. It does not show anyone's private schedule.</p>
+            <div class="gi-top"><button type="button" class="gi-x" data-gi="close" aria-label="Close">×</button></div>
             <div class="gi-panel">
-              <label class="gi-field"><span>Name</span><input id="giName" type="text" maxlength="80" autocomplete="off"></label>
-              <div class="gi-when">
-                <div><b>Start</b><div class="gi-pair">
-                  <label class="gi-field"><span>Start date</span><input id="giStart" type="date"></label>
-                  <label class="gi-field"><span>Start time</span><input id="giStartTime" type="time"></label>
-                </div></div>
-                <div><b>End</b><div class="gi-pair">
-                  <label class="gi-field"><span>End date</span><input id="giEnd" type="date"></label>
-                  <label class="gi-field"><span>End time</span><input id="giEndTime" type="time"></label>
-                </div></div>
-              </div>
-              <div class="gi-types">
-                <button type="button" data-gi-type="Meeting" aria-pressed="true">Meeting</button>
-                <button type="button" data-gi-type="Task" aria-pressed="false">Task</button>
-                <button type="button" data-gi-type="Document" aria-pressed="false">Document</button>
-                <button type="button" data-gi-type="Pod" aria-pressed="false">Pod</button>
-              </div>
-              <div class="gi-block">
-                <div class="gi-block-hd"><b>People</b><button type="button" class="gi-add" data-gi="people">Add people</button></div>
-                <div class="gi-chips" id="giWhoChips"></div>
-                <div class="gi-pick" id="giPick" hidden>
-                  <input id="giPeopleQ" type="search" placeholder="Search name" aria-label="Search people">
-                  <div class="gi-people" id="giPeople"></div>
+              <input class="gi-title" id="giName" type="text" maxlength="80" autocomplete="off" placeholder="Add a title" aria-label="Event title">
+              <p id="giTitle" class="visually-hidden">Create event</p>
+              <div class="gi-row">
+                <span class="gi-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M16 11a3 3 0 1 0-2-5.2A3 3 0 1 0 8 11"/><path d="M4 19c.6-2.6 2.8-4 5.5-4 .7 0 1.3.1 1.9.3"/><path d="M14 15c2.8 0 5 1.4 5.6 4"/></svg></span>
+                <div class="gi-row-body">
+                  <div class="gi-row-line"><button type="button" class="gi-link" data-gi="people">Add people</button></div>
+                  <div class="gi-chips" id="giWhoChips"></div>
+                  <div class="gi-pick" id="giPick" hidden>
+                    <input id="giPeopleQ" type="search" placeholder="Search name" aria-label="Search people">
+                    <div class="gi-people" id="giPeople"></div>
+                  </div>
                 </div>
               </div>
-              <div class="gi-block">
-                <div class="gi-block-hd"><b>Files</b><button type="button" class="gi-add" data-gi="file">Add file</button></div>
-                <div class="gi-chips" id="giFiles"></div>
-                <input id="giFile" type="file" multiple hidden>
+              <hr class="gi-rule">
+              <div class="gi-row">
+                <span class="gi-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 1.5"/></svg></span>
+                <div class="gi-row-body">
+                  <div class="gi-when-line">
+                    <input id="giStart" type="date" aria-label="Start date">
+                    <input id="giStartTime" type="hidden" value="">
+                    <button type="button" class="gi-clock" id="giStartClock" data-gi-clock="start" aria-haspopup="listbox" aria-expanded="false" aria-label="Start time">Add time</button>
+                    <span class="gi-dash">—</span>
+                    <input id="giEndTime" type="hidden" value="">
+                    <button type="button" class="gi-clock" id="giEndClock" data-gi-clock="end" aria-haspopup="listbox" aria-expanded="false" aria-label="End time">Add time</button>
+                    <input id="giEnd" type="date" aria-label="End date">
+                  </div>
+                  <div class="gi-types" role="group" aria-label="Type">
+                    <button type="button" data-gi-type="Meeting" aria-pressed="true">Meeting</button>
+                    <button type="button" data-gi-type="Task" aria-pressed="false">Task</button>
+                    <button type="button" data-gi-type="Document" aria-pressed="false">Document</button>
+                    <button type="button" data-gi-type="Pod" aria-pressed="false">Pod</button>
+                  </div>
+                </div>
               </div>
-              <label class="gi-field"><span>Details</span><textarea id="giDetails" rows="3" maxlength="240"></textarea></label>
+              <hr class="gi-rule">
+              <div class="gi-row">
+                <span class="gi-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6h8A2.5 2.5 0 0 1 16 8.5v7a2.5 2.5 0 0 1-2.5 2.5h-8A2.5 2.5 0 0 1 3 15.5v-7z"/><path d="m16 10 5-2.5v9L16 14"/></svg></span>
+                <div class="gi-row-body">
+                  <div class="gi-row-line">
+                    <button type="button" class="gi-quiet" id="giMeetBtn" data-gi="meet" aria-pressed="false"><span id="giMeetLabel">Add meeting</span></button>
+                    <button type="button" class="gi-link" id="giMeetHint" data-gi="meet" hidden>Remove</button>
+                  </div>
+                </div>
+              </div>
+              <div class="gi-row">
+                <span class="gi-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 7V4.5A1.5 1.5 0 0 1 9.5 3h8A1.5 1.5 0 0 1 19 4.5v13A1.5 1.5 0 0 1 17.5 19H14"/><path d="M5 8h9.5A1.5 1.5 0 0 1 16 9.5v10A1.5 1.5 0 0 1 14.5 21H5.5A1.5 1.5 0 0 1 4 19.5v-10A1.5 1.5 0 0 1 5.5 8H5z"/></svg></span>
+                <div class="gi-row-body">
+                  <div class="gi-row-line"><button type="button" class="gi-link" data-gi="file-menu">Add attachment</button></div>
+                  <div class="gi-chips" id="giFiles"></div>
+                  <div class="gi-file-pick" id="giFilePick" hidden>
+                    <button type="button" data-gi="file">Upload from computer</button>
+                    <div id="giGroupFiles"></div>
+                  </div>
+                  <input id="giFile" type="file" multiple hidden>
+                </div>
+              </div>
+              <hr class="gi-rule">
+              <div class="gi-row">
+                <span class="gi-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 7h14M5 12h14M5 17h8"/></svg></span>
+                <div class="gi-row-body">
+                  <textarea class="gi-desc" id="giDetails" rows="3" maxlength="240" placeholder="Add description" aria-label="Description"></textarea>
+                </div>
+              </div>
             </div>
             <p class="gi-note" id="giNote"></p>
             <div class="gi-foot">
-              <span></span>
-              <div>
-                <button type="button" class="gi-cancel" data-gi="cancel">Cancel</button>
-                <button type="button" class="gi-next" id="giNext" data-gi="next">Create</button>
-              </div>
+              <button type="button" class="gi-cancel" data-gi="cancel">Cancel</button>
+              <button type="button" class="gi-next" id="giNext" data-gi="next">Create</button>
             </div>
           </div>
         </div>
@@ -11185,7 +11335,7 @@
   function parseReminderIntent(text) {
     const raw = String(text || '').trim();
     const m = raw.match(/^\s*remind\s+me\s+(?:to\s+)?(.+)$/i)
-      || raw.match(/^\s*提醒我(?:去|要)?(.+)$/);
+      || raw.match(/^\s*(?:remind me(?: to)?)(.+)$/i);
     if (!m) return null;
     let task = m[1].trim().replace(/[.!?。！？]+$/u, '').trim();
     if (!task) return null;
@@ -11804,7 +11954,6 @@
     });
     host.addEventListener('input', (e) => {
       if (e.target.classList.contains('kd-name')) kbLiveTitle(e.target.value);
-      if (e.target.classList.contains('kd-clock')) kbApplyClock(e.target);
       if (e.target.matches('[data-todo-name]')) {
         const item = kbTodos().find((row) => row.id === e.target.dataset.todoName);
         if (item) item.text = e.target.value;
@@ -11836,8 +11985,21 @@
         kbToggleVisMenu(e.target.closest('[data-kd="visibility"]'));
         return;
       }
+      const clockBtn = e.target.closest('.kd-clock[data-kd]');
+      if (clockBtn) {
+        const which = clockBtn.dataset.kd;
+        if (kbBox().clockOpen === which) { kbCloseClockMenu(false); return; }
+        const opened = kbOpenEv() || (kbBox().draft && !kbBox().draft.done ? kbDraftEvent(kbBox().draft) : null);
+        if (!opened) return;
+        const mins = which === 'start' ? (opened.start || 0) : ((opened.start || 0) + (opened.dur || 60));
+        kbShowClockMenu(clockBtn, which, mins);
+        return;
+      }
+      if (kbBox().clockOpen && !e.target.closest('.kd-clock, .kd-clock-menu')) kbCloseClockMenu(false);
       const tzRow = e.target.closest('[data-kd="tz"]');
-      if (tzRow && !e.target.closest('.kd-tz-input, .kd-tz-go')) {
+      if (tzRow) {
+        kbCloseClockMenu(false);
+        if (kbBox().tzOpen) { kbCloseTzMenu(true); return; }
         const opened = kbOpenEv() || (kbBox().draft && !kbBox().draft.done ? kbDraftEvent(kbBox().draft) : null);
         if (opened) kbShowTzMenu(tzRow, opened);
         return;
@@ -12389,7 +12551,7 @@
   }
   function kbLegend() {
     const groups = ['personal', 'wuhan', 'research', 'course'].map((id) => `<div class="kb-rule"><i class="kb-swatch is-${id}">${kbIcon(id)}</i><span>${deskEsc(kbLaneName(id))}</span></div>`).join('');
-    return `<aside class="kb-legend"><b>分类</b><div class="kb-k">群组</div>${groups}${kbTodoList()}</aside>`;
+    return `<aside class="kb-legend"><b>Categories</b><div class="kb-k">Groups</div>${groups}${kbTodoList()}</aside>`;
   }
   function kdIcon(name) {
     const paths = {"earth":["M854.4 800.9c0.2-0.3 0.5-0.6 0.7-0.9C920.6 722.1 960 621.7 960 512s-39.4-210.1-104.8-288c-0.2-0.3-0.5-0.5-0.7-0.8-1.1-1.3-2.1-2.5-3.2-3.7-0.4-0.5-0.8-0.9-1.2-1.4-1.4-1.6-2.7-3.1-4.1-4.7l-0.1-0.1c-1.5-1.7-3.1-3.4-4.6-5.1l-0.1-0.1c-3.2-3.4-6.4-6.8-9.7-10.1l-0.1-0.1-4.8-4.8-0.3-0.3c-1.5-1.5-3-2.9-4.5-4.3-0.5-0.5-1-1-1.6-1.5-1-1-2-1.9-3-2.8-0.3-0.3-0.7-0.6-1-1C736.4 109.2 629.5 64 512 64s-224.4 45.2-304.3 119.2c-0.3 0.3-0.7 0.6-1 1-1 0.9-2 1.9-3 2.9-0.5 0.5-1 1-1.6 1.5-1.5 1.4-3 2.9-4.5 4.3l-0.3 0.3-4.8 4.8-0.1 0.1c-3.3 3.3-6.5 6.7-9.7 10.1l-0.1 0.1c-1.6 1.7-3.1 3.4-4.6 5.1l-0.1 0.1c-1.4 1.5-2.8 3.1-4.1 4.7-0.4 0.5-0.8 0.9-1.2 1.4-1.1 1.2-2.1 2.5-3.2 3.7-0.2 0.3-0.5 0.5-0.7 0.8C103.4 301.9 64 402.3 64 512s39.4 210.1 104.8 288c0.2 0.3 0.5 0.6 0.7 0.9 1 1.2 2.1 2.5 3.1 3.7 0.4 0.5 0.8 0.9 1.2 1.4 1.4 1.6 2.7 3.1 4.1 4.7 0 0.1 0.1 0.1 0.1 0.2 1.5 1.7 3 3.4 4.6 5l0.1 0.1c3.2 3.4 6.4 6.8 9.6 10.1l0.1 0.1c1.6 1.6 3.1 3.2 4.7 4.7l0.3 0.3c3.3 3.3 6.7 6.5 10.1 9.6 80.1 74 187 119.2 304.5 119.2s224.4-45.2 304.3-119.2c3.4-3.1 6.7-6.3 10-9.6l0.3-0.3c1.6-1.6 3.2-3.1 4.7-4.7l0.1-0.1c3.3-3.3 6.5-6.7 9.6-10.1l0.1-0.1c1.5-1.7 3.1-3.3 4.6-5 0-0.1 0.1-0.1 0.1-0.2 1.4-1.5 2.8-3.1 4.1-4.7 0.4-0.5 0.8-0.9 1.2-1.4 1.2-1.3 2.3-2.5 3.3-3.7z m4.1-142.6c-13.8 32.6-32 62.8-54.2 90.2-24.9-21.5-52.2-40.3-81.5-55.9 11.6-46.9 18.8-98.4 20.7-152.6H887c-3 40.9-12.6 80.6-28.5 118.3zM887 484H743.5c-1.9-54.2-9.1-105.7-20.7-152.6 29.3-15.6 56.6-34.4 81.5-55.9 22.2 27.4 40.4 57.6 54.2 90.2C874.4 403.4 884 443.1 887 484zM658.3 165.5c39.7 16.8 75.8 40 107.6 69.2-18.5 15.8-38.4 29.7-59.4 41.8-15.7-45-35.8-84.1-59.2-115.4 3.7 1.4 7.4 2.9 11 4.4z m-90.6 700.6c-9.2 7.2-18.4 12.7-27.7 16.4V697c39.9 2.8 78.6 11.6 115.7 26.2-8.3 24.6-17.9 47.3-29 67.8-17.4 32.4-37.8 58.3-59 75.1z m59-633.1c11 20.6 20.7 43.3 29 67.8-37.1 14.6-75.8 23.4-115.7 26.2V141.6c9.2 3.7 18.5 9.1 27.7 16.4 21.2 16.7 41.6 42.6 59 75zM540 640.9V540h147.5c-1.6 44.2-7.1 87.1-16.3 127.8l-0.3 1.2c-41.1-15.6-85.1-25.3-130.9-28.1z m0-156.9V383.1c45.8-2.8 89.8-12.5 130.9-28.1l0.3 1.2c9.2 40.7 14.7 83.5 16.3 127.8H540z m-56 56v100.9c-45.8 2.8-89.8 12.5-130.9 28.1l-0.3-1.2c-9.2-40.7-14.7-83.5-16.3-127.8H484z m-147.5-56c1.6-44.2 7.1-87.1 16.3-127.8l0.3-1.2c41.1 15.6 85 25.3 130.9 28.1V484H336.5zM484 697v185.4c-9.2-3.7-18.5-9.1-27.7-16.4-21.2-16.7-41.7-42.7-59.1-75.1-11-20.6-20.7-43.3-29-67.8 37.2-14.6 75.9-23.3 115.8-26.1z m0-370c-39.9-2.8-78.6-11.6-115.7-26.2 8.3-24.6 17.9-47.3 29-67.8 17.4-32.4 37.8-58.4 59.1-75.1 9.2-7.2 18.4-12.7 27.7-16.4V327zM365.7 165.5c3.7-1.5 7.3-3 11-4.4-23.4 31.3-43.5 70.4-59.2 115.4-21-12-40.9-26-59.4-41.8 31.8-29.2 67.9-52.4 107.6-69.2zM165.5 365.7c13.8-32.6 32-62.8 54.2-90.2 24.9 21.5 52.2 40.3 81.5 55.9-11.6 46.9-18.8 98.4-20.7 152.6H137c3-40.9 12.6-80.6 28.5-118.3zM137 540h143.5c1.9 54.2 9.1 105.7 20.7 152.6-29.3 15.6-56.6 34.4-81.5 55.9-22.2-27.4-40.4-57.6-54.2-90.2C149.6 620.6 140 580.9 137 540z m228.7 318.5c-39.7-16.8-75.8-40-107.6-69.2 18.5-15.8 38.4-29.7 59.4-41.8 15.7 45 35.8 84.1 59.2 115.4-3.7-1.4-7.4-2.9-11-4.4z m292.6 0c-3.7 1.5-7.3 3-11 4.4 23.4-31.3 43.5-70.4 59.2-115.4 21 12 40.9 26 59.4 41.8-31.8 29.2-67.9 52.4-107.6 69.2z"],"sync":["M168 504.2c1-43.7 10-86.1 26.9-126 17.3-41 42.1-77.7 73.7-109.4S337 212.3 378 195c42.4-17.9 87.4-27 133.9-27s91.5 9.1 133.8 27c40.9 17.3 77.7 42.1 109.3 73.8 9.9 9.9 19.2 20.4 27.8 31.4l-60.2 47c-5.3 4.1-3.5 12.5 3 14.1l175.7 43c5 1.2 9.9-2.6 9.9-7.7l0.8-180.9c0-6.7-7.7-10.5-12.9-6.3l-56.4 44.1C765.8 155.1 646.2 92 511.8 92 282.7 92 96.3 275.6 92 503.8c-0.1 4.5 3.5 8.2 8 8.2h60c4.4 0 7.9-3.5 8-7.8zM924 512h-60c-4.4 0-7.9 3.5-8 7.8-1 43.7-10 86.1-26.9 126-17.3 41-42.1 77.8-73.7 109.4S687 811.7 646 829c-42.4 17.9-87.4 27-133.9 27s-91.5-9.1-133.9-27c-40.9-17.3-77.7-42.1-109.3-73.8-9.9-9.9-19.2-20.4-27.8-31.4l60.2-47c5.3-4.1 3.5-12.5-3-14.1l-175.7-43c-5-1.2-9.9 2.6-9.9 7.7l-0.7 181c0 6.7 7.7 10.5 12.9 6.3l56.4-44.1C258.2 868.9 377.8 932 512.2 932c229.2 0 415.5-183.7 419.8-411.8 0.1-4.5-3.5-8.2-8-8.2z"],"location":["M854.6 289.1c-18.8-43.4-45.7-82.3-79.9-115.7-34.2-33.4-73.9-59.5-118.2-77.8C610.7 76.6 562.1 67 512 67c-50.1 0-98.7 9.6-144.5 28.5-44.3 18.3-84 44.5-118.2 77.8-34.2 33.4-61.1 72.4-79.9 115.7-19.5 45-29.4 92.8-29.4 142 0 70.6 16.9 140.9 50.1 208.7 26.7 54.5 64 107.6 111 158.1 80.3 86.2 164.5 138.9 188.4 153 6.9 4.1 14.7 6.1 22.4 6.1 7.8 0 15.5-2 22.4-6.1 23.9-14.1 108.1-66.8 188.4-153 47-50.4 84.3-103.6 111-158.1C867.1 572 884 501.8 884 431.1c0-49.2-9.9-97-29.4-142zM512 880.2c-65.9-41.9-300-207.8-300-449.1 0-77.9 31.1-151.1 87.6-206.3C356.3 169.5 431.7 139 512 139s155.7 30.5 212.4 85.9C780.9 280 812 353.2 812 431.1c0 241.3-234.1 407.2-300 449.1z","M512 263c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176z m79.2 255.2C570 539.3 541.9 551 512 551c-29.9 0-58-11.7-79.2-32.8C411.7 497 400 468.9 400 439c0-29.9 11.7-58 32.8-79.2C454 338.6 482.1 327 512 327c29.9 0 58 11.6 79.2 32.8C612.4 381 624 409.1 624 439c0 29.9-11.6 58-32.8 79.2z"],"video":["M912 302.3L784 376V224c0-35.3-28.7-64-64-64H128c-35.3 0-64 28.7-64 64v576c0 35.3 28.7 64 64 64h592c35.3 0 64-28.7 64-64V648l128 73.7c21.3 12.3 48-3.1 48-27.6V330c0-24.6-26.7-40-48-27.7zM712 792H136V232h576v560z m176-167l-104-59.8V458.9L888 399v226z","M208 360h112c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H208c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8z"],"link":["M574 665.4c-3.1-3.1-8.2-3.1-11.3 0L446.5 781.6c-53.8 53.8-144.6 59.5-204 0-59.5-59.5-53.8-150.2 0-204l116.2-116.2c3.1-3.1 3.1-8.2 0-11.3l-39.8-39.8c-3.1-3.1-8.2-3.1-11.3 0L191.4 526.5c-84.6 84.6-84.6 221.5 0 306s221.5 84.6 306 0l116.2-116.2c3.1-3.1 3.1-8.2 0-11.3L574 665.4zM832.6 191.4c-84.6-84.6-221.5-84.6-306 0L410.3 307.6c-3.1 3.1-3.1 8.2 0 11.3l39.7 39.7c3.1 3.1 8.2 3.1 11.3 0l116.2-116.2c53.8-53.8 144.6-59.5 204 0 59.5 59.5 53.8 150.2 0 204L665.3 562.6c-3.1 3.1-3.1 8.2 0 11.3l39.8 39.8c3.1 3.1 8.2 3.1 11.3 0l116.2-116.2c84.5-84.6 84.5-221.5 0-306.1z","M610.1 372.3c-3.1-3.1-8.2-3.1-11.3 0L372.3 598.7c-3.1 3.1-3.1 8.2 0 11.3l39.6 39.6c3.1 3.1 8.2 3.1 11.3 0l226.4-226.4c3.1-3.1 3.1-8.2 0-11.3l-39.5-39.6z"],"bell":["M816 768h-24V428c0-141.1-104.3-257.7-240-277.1V112c0-22.1-17.9-40-40-40s-40 17.9-40 40v38.9c-135.7 19.4-240 136-240 277.1v340h-24c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h216c0 61.8 50.2 112 112 112s112-50.2 112-112h216c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM512 888c-26.5 0-48-21.5-48-48h96c0 26.5-21.5 48-48 48zM304 768V428c0-55.6 21.6-107.8 60.9-147.1S456.4 220 512 220c55.6 0 107.8 21.6 147.1 60.9S720 372.4 720 428v340H304z"],"file":["M854.6 288.6L639.4 73.4c-6-6-14.1-9.4-22.6-9.4H192c-17.7 0-32 14.3-32 32v832c0 17.7 14.3 32 32 32h640c17.7 0 32-14.3 32-32V311.3c0-8.5-3.4-16.7-9.4-22.7zM790.2 326H602V137.8L790.2 326z m1.8 562H232V136h302v216c0 23.2 18.8 42 42 42h216v494z","M504 618H320c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h184c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8zM312 490v48c0 4.4 3.6 8 8 8h384c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H320c-4.4 0-8 3.6-8 8z"],"ellipsis":["M232 511m-56 0a56 56 0 1 0 112 0 56 56 0 1 0-112 0Z","M512 511m-56 0a56 56 0 1 0 112 0 56 56 0 1 0-112 0Z","M792 511m-56 0a56 56 0 1 0 112 0 56 56 0 1 0-112 0Z"],"down":["M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3 0.1-12.7-6.4-12.7z"]};
@@ -12433,15 +12595,15 @@
     kbTzCatalog.list = zones.map((id) => {
       const city = id === "UTC" ? "UTC" : id.split("/").pop().replace(/_/g, " ");
       let offset = "GMT+00:00";
-      let cn = city;
+      let name = city;
       try {
-        const parts = new Intl.DateTimeFormat("zh-CN", { timeZone: id, timeZoneName: "long", hour: "2-digit" }).formatToParts(now);
+        const parts = new Intl.DateTimeFormat("en-US", { timeZone: id, timeZoneName: "long", hour: "2-digit" }).formatToParts(now);
         const off = new Intl.DateTimeFormat("en-US", { timeZone: id, timeZoneName: "shortOffset", hour: "2-digit" }).formatToParts(now).find((p) => p.type === "timeZoneName");
         offset = kbTzPad(String(off?.value || "GMT").replace("UTC", "GMT"));
-        cn = parts.find((p) => p.type === "timeZoneName")?.value || city;
+        name = parts.find((p) => p.type === "timeZoneName")?.value || city;
       } catch (e) {}
-      const alias = ({ Shanghai: "上海 北京", "Los Angeles": "洛杉矶", "New York": "纽约", London: "伦敦", Brussels: "布鲁塞尔", Kolkata: "加尔各答", Tokyo: "东京", Seoul: "首尔", Singapore: "新加坡", Bangkok: "曼谷", Dubai: "迪拜", Paris: "巴黎", Berlin: "柏林", Rome: "罗马", Moscow: "莫斯科", Chicago: "芝加哥", Denver: "丹佛", Phoenix: "凤凰城", Toronto: "多伦多", Vancouver: "温哥华", Sydney: "悉尼", Melbourne: "墨尔本", Auckland: "奥克兰", Honolulu: "檀香山", "Hong Kong": "香港", Taipei: "台北", Jakarta: "雅加达", "Kuala Lumpur": "吉隆坡", Manila: "马尼拉" })[city] || "";
-      return { id, city, offset, cn, alias, text: offset + " " + cn + " – " + city };
+      const alias = ({ Shanghai: "Beijing China", "Los Angeles": "LA Pacific", "New York": "NYC Eastern", London: "UK", Brussels: "Belgium", Kolkata: "India", Tokyo: "Japan", Seoul: "Korea", Singapore: "SG", Bangkok: "Thailand", Dubai: "UAE", Paris: "France", Berlin: "Germany", Rome: "Italy", Moscow: "Russia", Chicago: "Central", Denver: "Mountain", Phoenix: "Arizona", Toronto: "Canada", Vancouver: "BC", Sydney: "Australia", Melbourne: "AU", Auckland: "NZ", Honolulu: "Hawaii", "Hong Kong": "HK", Taipei: "Taiwan", Jakarta: "Indonesia", "Kuala Lumpur": "Malaysia", Manila: "Philippines" })[city] || "";
+      return { id, city, offset, cn: name, alias, text: offset + " " + name + " – " + city };
     }).sort((a, b) => kbTzMinutes(a.offset) - kbTzMinutes(b.offset) || a.city.localeCompare(b.city));
     return kbTzCatalog.list;
   }
@@ -12467,6 +12629,10 @@
   function kbCloseTzMenu(repaint) {
     const open = !!document.querySelector(".kd-tz-menu, #tlBody .kd-tz.is-open");
     kbBox().tzOpen = false;
+    document.querySelectorAll("#tlBody .kd-tz.is-open").forEach((el) => {
+      el.classList.remove("is-open");
+      el.setAttribute("aria-expanded", "false");
+    });
     document.querySelector(".kd-tz-menu")?.remove();
     if (repaint && open) kbPaintSide();
   }
@@ -12497,44 +12663,23 @@
     kbCloseTzMenu(false);
     kbBox().tzOpen = true;
     row.classList.add("is-open");
+    row.setAttribute("aria-expanded", "true");
     const current = (ev && ev.tz) || "";
-    const span = row.querySelector("span");
-    const input = document.createElement("input");
-    input.className = "kd-tz-input";
-    input.value = kbTzLabel(ev);
-    input.setAttribute("aria-label", "Time zone");
-    if (span) span.replaceWith(input);
-    const go = document.createElement("button");
-    go.type = "button";
-    go.className = "kd-tz-go";
-    go.setAttribute("aria-label", "Use time zone");
-    go.textContent = "→";
-    row.appendChild(go);
     const menu = document.createElement("div");
     menu.className = "kd-tz-menu";
+    menu.setAttribute("role", "listbox");
+    menu.setAttribute("aria-label", "Time zone");
     menu.innerHTML = kbTzMenuHtml("", current);
     kbMenuHost().appendChild(menu);
     kbPlaceTzMenu(menu, row);
-    input.focus();
-    input.select();
-    const refill = () => { menu.innerHTML = kbTzMenuHtml(input.value === kbTzLabel(ev) ? "" : input.value, current); };
-    input.addEventListener("input", refill);
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") { e.preventDefault(); kbCloseTzMenu(true); return; }
-      if (e.key === "Enter") {
-        e.preventDefault();
-        const hit = menu.querySelector("[data-kd-tz]");
-        if (hit) kbApplyTz(hit.dataset.kdTz);
-      }
-    });
+    const on = menu.querySelector("button.is-on") || menu.querySelector("[data-kd-tz]");
+    try { on?.focus({ preventScroll: true }); } catch (_) { on?.focus(); }
     menu.addEventListener("click", (e) => {
       const hit = e.target.closest("[data-kd-tz]");
       if (hit) kbApplyTz(hit.dataset.kdTz);
     });
-    go.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const hit = menu.querySelector("[data-kd-tz]");
-      if (hit) kbApplyTz(hit.dataset.kdTz);
+    menu.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") { e.preventDefault(); kbCloseTzMenu(true); row.focus(); }
     });
   }
   function kbOrd(n) {
@@ -12688,9 +12833,74 @@
     kbBox().open = kbEventKey(ev);
     kbSetBlockTitle(value);
   }
-  function kbApplyClock(input) {
-    if (!input.value) return;
-    const mins = tlMins(input.value);
+  function kbClockLabel(mins) {
+    const total = ((Number(mins) % 1440) + 1440) % 1440;
+    const h24 = Math.floor(total / 60);
+    const m = total % 60;
+    const ap = h24 >= 12 ? "PM" : "AM";
+    const h12 = h24 % 12 || 12;
+    return h12 + ":" + String(m).padStart(2, "0") + " " + ap;
+  }
+  function kbClockSlots() {
+    const rows = [];
+    for (let mins = 0; mins < 1440; mins += 15) rows.push(mins);
+    return rows;
+  }
+  function kbCloseClockMenu(repaint) {
+    const open = !!document.querySelector(".kd-clock-menu, #tlBody .kd-clock.is-open");
+    kbBox().clockOpen = false;
+    document.querySelectorAll("#tlBody .kd-clock.is-open").forEach((el) => {
+      el.classList.remove("is-open");
+      el.setAttribute("aria-expanded", "false");
+    });
+    document.querySelector(".kd-clock-menu")?.remove();
+    if (repaint && open) kbPaintSide();
+  }
+  function kbPlaceClockMenu(menu, btn) {
+    const r = btn.getBoundingClientRect();
+    const mw = menu.offsetWidth || 132;
+    const mh = menu.offsetHeight || 280;
+    let left = r.left;
+    if (left + mw > window.innerWidth - 8) left = Math.max(8, r.right - mw);
+    if (left < 8) left = 8;
+    let top = r.bottom + 4;
+    if (top + mh > window.innerHeight - 8) top = Math.max(8, r.top - mh - 4);
+    menu.style.left = Math.round(left) + "px";
+    menu.style.top = Math.round(top) + "px";
+  }
+  function kbShowClockMenu(btn, which, currentMins) {
+    kbCloseClockMenu(false);
+    kbCloseTzMenu(false);
+    kbCloseRepeatMenu(false);
+    kbBox().clockOpen = which;
+    btn.classList.add("is-open");
+    btn.setAttribute("aria-expanded", "true");
+    try { btn.scrollIntoView({ block: "nearest", inline: "nearest" }); } catch (_) {}
+    const cur = ((Number(currentMins) % 1440) + 1440) % 1440;
+    const menu = document.createElement("div");
+    menu.className = "kd-clock-menu";
+    menu.setAttribute("role", "listbox");
+    menu.setAttribute("aria-label", which === "start" ? "Start time" : "End time");
+    menu.innerHTML = kbClockSlots().map((mins) => {
+      const on = mins === cur ? ' class="is-on"' : "";
+      return '<button type="button" role="option" tabindex="-1" data-kd-clock="' + mins + '"' + on + (mins === cur ? ' aria-selected="true"' : "") + ">" + deskEsc(kbClockLabel(mins)) + "</button>";
+    }).join("");
+    kbMenuHost().appendChild(menu);
+    const onBtn = menu.querySelector("button.is-on") || menu.querySelector("[data-kd-clock]");
+    try { onBtn?.scrollIntoView({ block: "center" }); } catch (_) {}
+    kbPlaceClockMenu(menu, btn);
+    requestAnimationFrame(() => kbPlaceClockMenu(menu, btn));
+    menu.addEventListener("click", (e) => {
+      const hit = e.target.closest("[data-kd-clock]");
+      if (!hit) return;
+      kbApplyClockMins(which, Number(hit.dataset.kdClock));
+      kbCloseClockMenu(true);
+    });
+    menu.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") { e.preventDefault(); kbCloseClockMenu(false); btn.focus(); }
+    });
+  }
+  function kbApplyClockMins(which, mins) {
     const draft = kbBox().draft;
     const live = draft && !draft.done;
     const ev = live ? null : kbOpenEv();
@@ -12699,10 +12909,16 @@
     let start = src.start || 0;
     let dur = src.dur || 60;
     const end = start + dur;
-    if (input.dataset.kd === "start") {
+    if (which === "start") {
       start = mins;
       dur = Math.max(15, end - start);
-    } else dur = Math.max(15, mins - start);
+      if (start + dur > 1440) dur = Math.max(15, 1440 - start);
+    } else {
+      let endMins = mins;
+      if (endMins <= start) endMins = start + 15;
+      if (endMins > 1440) endMins = 1440;
+      dur = Math.max(15, endMins - start);
+    }
     if (live) {
       draft.start = start;
       draft.dur = dur;
@@ -12727,12 +12943,16 @@
         if (small) small.textContent = kbHm(start) + "–" + kbHm(start + dur);
       }
     }
-    const startInput = document.querySelector(".kd-clock[data-kd='start']");
-    const endInput = document.querySelector(".kd-clock[data-kd='end']");
-    if (startInput && document.activeElement !== startInput) startInput.value = kbHm(start);
-    if (endInput && document.activeElement !== endInput) endInput.value = kbHm(start + dur);
+    const startBtn = document.querySelector(".kd-clock[data-kd='start']");
+    const endBtn = document.querySelector(".kd-clock[data-kd='end']");
+    if (startBtn) startBtn.textContent = kbClockLabel(start);
+    if (endBtn) endBtn.textContent = kbClockLabel(start + dur);
     const durEl = document.querySelector(".kd-dur");
     if (durEl) durEl.textContent = kbDurLabel(dur);
+  }
+  function kbApplyClock(input) {
+    if (!input || !input.value) return;
+    kbApplyClockMins(input.dataset.kd, tlMins(input.value));
   }
   function kbApplyNote(value) {
     const draft = kbBox().draft;
@@ -13062,7 +13282,7 @@
   function kbDetail(ev) {
     const end = ev.start + (ev.dur || 60);
     const when = ev.timed
-      ? '<div class="kd-row">' + kbTaskIcon("lecture") + '<input class="kd-clock" data-kd="start" type="time" value="' + kbHm(ev.start) + '" aria-label="Start"><span class="kd-arrow">→</span><input class="kd-clock" data-kd="end" type="time" value="' + kbHm(end) + '" aria-label="End"><span class="kd-dur">' + kbDurLabel(ev.dur || 60) + "</span></div>"
+      ? '<div class="kd-row kd-when">' + kbTaskIcon("lecture") + '<button type="button" class="kd-clock" data-kd="start" aria-haspopup="listbox" aria-expanded="false" aria-label="Start time">' + deskEsc(kbClockLabel(ev.start || 0)) + '</button><span class="kd-arrow" aria-hidden="true">→</span><button type="button" class="kd-clock" data-kd="end" aria-haspopup="listbox" aria-expanded="false" aria-label="End time">' + deskEsc(kbClockLabel(end)) + '</button><span class="kd-dur">' + kbDurLabel(ev.dur || 60) + "</span></div>"
       : "";
     const note = '<textarea class="kd-note" data-kd="note" placeholder="Add description" aria-label="Description">' + deskEsc(kbNoteText(ev)) + "</textarea>";
     const group = ev.invite && ev.groupName ? ev.groupName : ev.lane === "occupied" ? "Busy" : kbLaneName(ev.lane || "personal");
@@ -13081,7 +13301,7 @@
     const peopleRow = ev.invite ? '<div class="kd-row">' + kbIcon("personal") + "<span>" + deskEsc((ev.people && ev.people.length) ? ev.people.join(", ") : "You") + "</span></div>" : off("user", "Participants");
     const all = '<button type="button" class="kd-row kd-allday" data-kd="allday"><i class="kd-tog' + (ev.timed ? "" : " is-on") + '"></i><span>All-day</span></button>';
     const repeatRow = '<div class="kd-row kd-repeat' + (ev.repeat ? " is-set" : "") + '" data-kd="repeat" role="button" tabindex="0">' + kdIcon("sync") + "<span>" + deskEsc(kbRepeatLabel(ev)) + '</span><svg class="kd-repeat-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.2 6.2 8 10l3.8-3.8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
-    return '<aside class="kb-legend kb-detail"><div class="kd-title">' + mark + title + "</div>" + iconMenu + when + date + rsvpRow + all + '<div class="kd-row kd-tz" data-kd="tz" role="button" tabindex="0">' + kdIcon("earth") + "<span>" + deskEsc(kbTzLabel(ev)) + "</span></div>" + repeatRow + '<div class="kd-gap"></div>' + peopleRow + fileRow + fileChips + meetRow + '<div class="kd-gap"></div><div class="kd-label">Description</div>' + note + '<div class="kd-gap"></div><div class="kd-row"><i class="kd-dot" style="background:' + color + '"></i><span>' + deskEsc(group) + '</span></div>' + kbVisRow(ev) + off("bell", "Reminders") + "</aside>";
+    return '<aside class="kb-legend kb-detail"><div class="kd-title">' + mark + title + "</div>" + iconMenu + when + date + rsvpRow + all + '<div class="kd-row kd-tz" data-kd="tz" role="button" tabindex="0" aria-haspopup="listbox" aria-expanded="false" aria-label="Time zone">' + kdIcon("earth") + "<span>" + deskEsc(kbTzLabel(ev)) + '</span><svg class="kd-tz-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.2 6.2 8 10l3.8-3.8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>' + repeatRow + '<div class="kd-gap"></div>' + peopleRow + fileRow + fileChips + meetRow + '<div class="kd-gap"></div><div class="kd-label">Description</div>' + note + '<div class="kd-gap"></div><div class="kd-row"><i class="kd-dot" style="background:' + color + '"></i><span>' + deskEsc(group) + '</span></div>' + kbVisRow(ev) + off("bell", "Reminders") + "</aside>";
   }
   function kbSide() {
     const draft = kbBox().draft;
@@ -13124,8 +13344,10 @@
     document.addEventListener("pointerdown", (e) => {
       if (e.button !== 0) return;
       if (document.documentElement.dataset.theme !== "blue") return;
-      if (!e.target.closest(".kd-tz, .kd-tz-menu, .kd-repeat, .kd-repeat-menu, .kb-legend")) { kbCloseTzMenu(false); kbCloseRepeatMenu(false); }
-      if (e.target.closest(".nc-ev, .nc-chip, .kb-chip, .kb-legend, .nc-draft, .nc-all-draft, .kb-plus, .kb-menu, .kd-vis-menu, .kd-tz-menu, .kd-repeat-menu")) return;
+      if (!e.target.closest(".kd-tz, .kd-tz-menu, .kd-repeat, .kd-repeat-menu, .kd-clock, .kd-clock-menu, .kb-legend")) {
+        kbCloseTzMenu(false); kbCloseRepeatMenu(false); kbCloseClockMenu(false);
+      }
+      if (e.target.closest(".nc-ev, .nc-chip, .kb-chip, .kb-legend, .nc-draft, .nc-all-draft, .kb-plus, .kb-menu, .kd-vis-menu, .kd-tz-menu, .kd-repeat-menu, .kd-clock-menu")) return;
       if (kbBox().draft) { kbCommitDraft(false); return; }
       if (kbBox().open == null) return;
       kbCloseDetail();
@@ -13870,7 +14092,7 @@
   function documentRequest(text) {
     const raw = String(text || '').trim();
     const m = raw.match(/^(?:please\s+)?(?:write|draft|create|make)\s+(?:me\s+)?(?:a|an|the\s+)?(.+)$/i)
-      || raw.match(/^(?:帮我)?(?:写|做|创建)(?:一份|一个|一篇)?(.+)$/);
+      || raw.match(/^(?:(?:please|help me)\s+)?(?:write|make|create|draft)\s+(?:a\s+|an\s+)?(.+)$/i);
     if (!m) return null;
     let title = m[1].trim().replace(/[.!?。！？]+$/u, '').trim();
     if (!title) return null;
@@ -14336,7 +14558,7 @@
       if (tutorialDocPhase !== 'twin-finish' && tutorialDocPhase !== 'doc-done') tutorialDocPhase = 'switch-open';
       $('tutorialDocSwitcher')?.classList.add('open');
       const sw = $('tutorialDocSwitch');
-      // Menu open → back to resting icon (图二), not a stuck green ring.
+      // Menu open → back to resting icon (fig.2), not a stuck green ring.
       sw?.classList.remove('spot');
       sw?.setAttribute('aria-expanded', 'true');
       coach.classList.remove('on');
@@ -14709,7 +14931,7 @@
     clearTimeout(toolRecentTimer);
     const title = document.createElement('p');
     title.className = 'recent-k';
-    title.textContent = '最近项目';
+    title.textContent = 'Recent projects';
     pop.classList.remove('is-on');
     pop.replaceChildren(title, ...names.map((name) => {
       const btn = document.createElement('button');
@@ -14881,7 +15103,7 @@
       x.type = 'button';
       x.className = 'chip-x';
       x.setAttribute('aria-label', `Remove ${att.name}`);
-      x.textContent = '×';
+      x.innerHTML = '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M512 0C794.769794 0 1024 229.805588 1024 512 1024 794.769794 794.194408 1024 512 1024 229.230208 1024 0 794.194408 0 512 0 229.230208 229.805588 0 512 0ZM512 984.615385C772.648448 984.615385 984.615385 772.81286 984.615385 512 984.615385 251.351552 772.81286 39.384615 512 39.384615 251.351552 39.384615 39.384615 251.18714 39.384615 512 39.384615 772.648448 251.18714 984.615385 512 984.615385ZM512 539.849129 358.829792 693.019336C351.139468 700.70966 338.670988 700.70966 330.980664 693.019336 323.29034 685.329012 323.29034 672.860532 330.980664 665.170208L484.150871 512 330.980664 358.829792C323.29034 351.139468 323.29034 338.670988 330.980664 330.980664 338.670988 323.29034 351.139468 323.29034 358.829792 330.980664L512 484.150871 665.170208 330.980664C672.860532 323.29034 685.329012 323.29034 693.019336 330.980664 700.70966 338.670988 700.70966 351.139468 693.019336 358.829792L539.849129 512 693.019336 665.170208C700.70966 672.860532 700.70966 685.329012 693.019336 693.019336 685.329012 700.70966 672.860532 700.70966 665.170208 693.019336L512 539.849129Z"/></svg>';
       x.addEventListener('click', (e) => {
         e.stopPropagation();
         removeAttachment(att.id);
@@ -16484,12 +16706,16 @@
       if (!btn) return;
       const act = btn.dataset.railAccount;
       setRailMeMenu(false);
-      if (act === 'profile' || act === 'settings') openSettings('profile');
+      if (act === 'profile') openSettings('profile');
+      else if (act === 'settings') openSettings('settings');
       else if (act === 'picture') openSettings('picture');
+      else if (act === 'friends') openSettings('friends');
       else if (act === 'security') openSettings('security');
       else if (act === 'apps') openSettings('apps');
       else if (act === 'cosmos') openSettings('cosmos');
-      else if (act === 'signout') showToastMsg('Sign out waits for the account service.');
+      else if (act === 'about') openSettings('about');
+      else if (act === 'history') openSettings('history');
+      else if (act === 'signout') openSettings('signout');
     });
     document.addEventListener('click', (e) => {
       const menu = document.getElementById('railMeMenu');
@@ -16723,7 +16949,7 @@
     }
     document.querySelectorAll('.hub > .screen[data-screen]').forEach((el) => el.classList.toggle('on', el.dataset.screen === next));
     document.querySelectorAll('.hub > .screen[data-tail]').forEach((el) => el.classList.toggle('on', el.dataset.tail === next));
-    // Scenario bar: handoff (post-tutorial) still counts as「第一次来」.
+    // Scenario bar: handoff (post-tutorial) still counts as First visit.
     document.querySelectorAll('.presenter [data-screen]').forEach((b) => {
       const s = b.dataset.screen;
       const on = s === next || (next === 'handoff' && s === 'tutorial');
@@ -17358,7 +17584,7 @@
     }
     placeHeaderSearch();
     const teamSearch = document.getElementById('q');
-    if (teamSearch) teamSearch.placeholder = next === 'blue' ? '搜索' : 'Search';
+    if (teamSearch) teamSearch.placeholder = 'Search';
     placeCourseBanner();
     placeCittaPicker();
     placeComposerToolChip();
@@ -17780,23 +18006,23 @@
       foot: school
     }));
     people.push({
-      name: '骆王宇',
+      name: 'Wangyu Luo',
       field: 'Skincare',
       school: 'Creator',
       group: 'Skincare',
-      blurb: '护肤博主',
+      blurb: 'Skincare creator',
       tags: ['Skincare', 'Creator'],
       photo: 'assets/luo-wangyu.png',
       foot: 'Creator'
     }, {
-      name: '李佳琦',
+      name: 'Jiaqi Li',
       field: 'Product',
       school: 'Notes',
       group: 'Business',
-      blurb: '产品笔记',
+      blurb: 'Product notes',
       tags: ['Product', 'Notes'],
       photo: '',
-      letter: '李',
+      letter: 'J',
       tone: 'mint',
       foot: 'Notes'
     });
@@ -17809,28 +18035,28 @@
   }
 
   const DIR_POSTS = [
-    { title: '护肤从这张近照讲起', img: 'luo/assets/luo-portrait.png', h: 'tall', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '128' },
-    { title: '今天的产品笔记', quote: '把复杂能力收进一个更清晰的工作界面。', tone: 'paper', name: '李佳琦', initial: '李', av: 'mint', likes: '54' },
-    { title: '新的护肤内容合集已经更新。', img: 'luo/assets/product-sunscreen.jpg', h: 'tall', name: '豆豆', initial: '豆', tone: 'sky', likes: '86' },
-    { title: '新的护肤内容合集封面', img: 'luo/assets/luo-hero.png', h: 'mid', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '203' },
-    { title: '研究摘要里的一句', quote: 'Agent memory 不该靠聊天记录硬记。', tone: 'dot', name: '李佳琦', initial: '李', av: 'mint', likes: '62' },
-    { title: '这套水乳，混油皮我留着白天用', img: 'luo/assets/product-cetaphil.png', h: 'mid', name: '豆豆', initial: '豆', tone: 'sky', likes: '41' },
-    { title: '重离子课，我从这张图讲起', img: 'luo/assets/cosmo-roland.jpg', h: 'short', name: 'Prof. Roland', photo: 'assets/gunther-roland-illustrated.jpg', likes: '37' },
-    { title: '修护精华敷完，先别急着洗脸', img: 'luo/assets/product-drwu.jpg', h: 'tall', name: '豆豆', initial: '豆', tone: 'sky', likes: '96' },
-    { title: '课前先把这页图存下来', img: 'luo/assets/cosmo-roland.jpg', h: 'mid', name: 'Prof. Roland', photo: 'assets/gunther-roland-illustrated.jpg', likes: '44' },
-    { title: '笔记只留一句', quote: '先写结论，再把证据贴在后面。', tone: 'rose', name: '李佳琦', initial: '李', av: 'mint', likes: '73' },
-    { title: '出门前这一支就够', img: 'luo/assets/product-sunscreen.jpg', h: 'short', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '151' },
-    { title: '封面换了，合集还是那一套', img: 'luo/assets/luo-hero.png', h: 'tall', name: '豆豆', initial: '豆', tone: 'sky', likes: '68' },
-    { title: '白天这套，晚上就收起来', img: 'luo/assets/product-cetaphil.png', h: 'short', name: '豆豆', initial: '豆', tone: 'sky', likes: '29' },
-    { title: '修护顺序我标在这一段', quote: '先清洁，再精华，防晒留到出门前。', tone: 'mist', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '88' },
-    { title: '近一点看这张', img: 'luo/assets/luo-portrait.png', h: 'mid', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '112' },
-    { title: '讲义这一页，我通常停久一点', img: 'luo/assets/cosmo-roland.jpg', h: 'tall', name: 'Prof. Roland', photo: 'assets/gunther-roland-illustrated.jpg', likes: '51' },
-    { title: '敷完等两分钟再看状态', img: 'luo/assets/product-drwu.jpg', h: 'short', name: '豆豆', initial: '豆', tone: 'sky', likes: '77' },
-    { title: '今天先不写长的', quote: '界面少一件事，比多一个按钮有用。', tone: 'paper', name: '李佳琦', initial: '李', av: 'mint', likes: '39' },
-    { title: '防晒放在包的侧袋', img: 'luo/assets/product-sunscreen.jpg', h: 'mid', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '64' },
-    { title: '这张我留着当封面', img: 'luo/assets/luo-hero.png', h: 'short', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '190' },
-    { title: '水乳的瓶子，我按这个顺序摆', img: 'luo/assets/product-cetaphil.png', h: 'tall', name: '豆豆', initial: '豆', tone: 'sky', likes: '58' },
-    { title: '摘要卡片，只放这一句', quote: '先对齐问题，再决定要不要加功能。', tone: 'dot', name: '李佳琦', initial: '李', av: 'mint', likes: '21' }
+    { title: 'Skincare starts with this close-up', img: 'luo/assets/luo-portrait.png', h: 'tall', name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', likes: '128' },
+    { title: 'Today's product notes', quote: 'Fold complex capability into a clearer work interface.', tone: 'paper', name: 'Jiaqi Li', initial: 'J', av: 'mint', likes: '54' },
+    { title: 'The new skincare collection is updated.', img: 'luo/assets/product-sunscreen.jpg', h: 'tall', name: 'Doudou', initial: 'D', tone: 'sky', likes: '86' },
+    { title: 'Cover for the new skincare collection', img: 'luo/assets/luo-hero.png', h: 'mid', name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', likes: '203' },
+    { title: 'One line from the research brief', quote: 'Agent memory should not rely on raw chat history.', tone: 'dot', name: 'Jiaqi Li', initial: 'J', av: 'mint', likes: '62' },
+    { title: 'This cleanser set stays in my daytime routine for combination skin', img: 'luo/assets/product-cetaphil.png', h: 'mid', name: 'Doudou', initial: 'D', tone: 'sky', likes: '41' },
+    { title: 'I'll start heavy-ion class from this figure', img: 'luo/assets/cosmo-roland.jpg', h: 'short', name: 'Prof. Roland', photo: 'assets/gunther-roland-illustrated.jpg', likes: '37' },
+    { title: 'After repair essence, wait before washing', img: 'luo/assets/product-drwu.jpg', h: 'tall', name: 'Doudou', initial: 'D', tone: 'sky', likes: '96' },
+    { title: 'Save this slide before class', img: 'luo/assets/cosmo-roland.jpg', h: 'mid', name: 'Prof. Roland', photo: 'assets/gunther-roland-illustrated.jpg', likes: '44' },
+    { title: 'Keep one line in the notes', quote: 'Write the conclusion first, then attach evidence.', tone: 'rose', name: 'Jiaqi Li', initial: 'J', av: 'mint', likes: '73' },
+    { title: 'One sunscreen is enough before heading out', img: 'luo/assets/product-sunscreen.jpg', h: 'short', name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', likes: '151' },
+    { title: 'New cover, same collection', img: 'luo/assets/luo-hero.png', h: 'tall', name: 'Doudou', initial: 'D', tone: 'sky', likes: '68' },
+    { title: 'Daytime set — put it away at night', img: 'luo/assets/product-cetaphil.png', h: 'short', name: 'Doudou', initial: 'D', tone: 'sky', likes: '29' },
+    { title: 'I marked the repair order in this section', quote: 'Cleanse, then essence; sunscreen right before you leave.', tone: 'mist', name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', likes: '88' },
+    { title: 'A closer look at this shot', img: 'luo/assets/luo-portrait.png', h: 'mid', name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', likes: '112' },
+    { title: 'I usually linger on this lecture page', img: 'luo/assets/cosmo-roland.jpg', h: 'tall', name: 'Prof. Roland', photo: 'assets/gunther-roland-illustrated.jpg', likes: '51' },
+    { title: 'Wait two minutes after the mask, then check', img: 'luo/assets/product-drwu.jpg', h: 'short', name: 'Doudou', initial: 'D', tone: 'sky', likes: '77' },
+    { title: 'Keeping it short today', quote: 'One fewer UI chore beats one more button.', tone: 'paper', name: 'Jiaqi Li', initial: 'J', av: 'mint', likes: '39' },
+    { title: 'Sunscreen lives in the side pocket', img: 'luo/assets/product-sunscreen.jpg', h: 'mid', name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', likes: '64' },
+    { title: 'Keeping this as the cover', img: 'luo/assets/luo-hero.png', h: 'short', name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', likes: '190' },
+    { title: 'I line up the bottles in this order', img: 'luo/assets/product-cetaphil.png', h: 'tall', name: 'Doudou', initial: 'D', tone: 'sky', likes: '58' },
+    { title: 'Summary card — only this line', quote: 'Align on the problem before adding a feature.', tone: 'dot', name: 'Jiaqi Li', initial: 'J', av: 'mint', likes: '21' }
   ];
   function fillNoteCard(card, note) {
     if (note.img) {
@@ -17963,8 +18189,8 @@
       author: true
     };
     const pool = [
-      { name: '骆王宇', photo: 'assets/luo-wangyu.png', initial: '骆', tone: 'mint' },
-      { name: '豆豆', photo: '', initial: '豆', tone: 'sky' },
+      { name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', initial: 'W', tone: 'mint' },
+      { name: 'Doudou', photo: '', initial: 'D', tone: 'sky' },
       { name: 'Maya', photo: '', initial: 'M', tone: 'sand' }
     ].filter((person) => person.name !== note.name);
     return { author, pool };
@@ -17993,8 +18219,8 @@
     }
     btn.innerHTML = (kind === 'like' ? CMT_HEART : CMT_BUBBLE) + '<span></span>';
     const label = btn.querySelector('span');
-    if (kind === 'like') label.textContent = count > 0 ? String(count) : '赞';
-    else label.textContent = count > 0 ? String(count) : '回复';
+    if (kind === 'like') label.textContent = count > 0 ? String(count) : 'Like';
+    else label.textContent = count > 0 ? String(count) : 'Reply';
     return btn;
   }
   function commentRow(person, item) {
@@ -18010,7 +18236,7 @@
     if (person.author) {
       const badge = document.createElement('span');
       badge.className = 'post-cmt-author';
-      badge.textContent = '作者';
+      badge.textContent = 'Author';
       head.appendChild(badge);
     }
     const dots = document.createElement('button');
@@ -18039,26 +18265,26 @@
     const second = pool[1] || pool[0];
     const third = pool[2] || second;
     const lead = commentRow(first, {
-      text: note.quote ? '这句话可以单独留在摘要里。' : '这张我留下来了。',
-      time: '3天前',
-      place: '江苏',
+      text: note.quote ? 'This line can stand alone in the summary.' : 'I saved this one.',
+      time: '3d ago',
+      place: 'Jiangsu',
       likes: 0,
       replies: 5
     });
     lead.main.appendChild(commentRow(author, {
-      text: note.quote ? '对，先把这一句定下来。' : '换着看也行。',
-      time: '2天前',
-      place: '浙江',
+      text: note.quote ? 'Yes — lock this line first.' : 'Looking at them side by side works too.',
+      time: '2d ago',
+      place: 'Zhejiang',
       reply: true
     }).row);
     const fold = document.createElement('div');
     fold.className = 'post-cmt-fold';
     fold.hidden = true;
     [
-      { person: second, text: '我按这个收进笔记了。', time: '2天前', place: '上海' },
-      { person: third, text: '读起来比整段清楚。', time: '1天前', place: '浙江' },
-      { person: second, text: '我也会换着方式留一句。', time: '1天前', place: '上海' },
-      { person: author, text: '嗯，留一句就够。', time: '1天前', place: '浙江' }
+      { person: second, text: 'I filed this into my notes.', time: '2d ago', place: 'Shanghai' },
+      { person: third, text: 'Reads clearer than the full paragraph.', time: '1d ago', place: 'Zhejiang' },
+      { person: second, text: 'I keep one line in different ways too.', time: '1d ago', place: 'Shanghai' },
+      { person: author, text: 'Yep — one line is enough.', time: '1d ago', place: 'Zhejiang' }
     ].forEach((item) => {
       fold.appendChild(commentRow(item.person, { text: item.text, time: item.time, place: item.place, reply: true }).row);
     });
@@ -18066,23 +18292,23 @@
     open.type = 'button';
     open.className = 'post-cmt-open';
     open.dataset.cmtOpen = '4';
-    open.textContent = '展开 4 条回复';
+    open.textContent = 'Show 4 replies';
     lead.main.append(open, fold);
     const next = commentRow(second, {
-      text: '这张卡片也好读。',
-      time: '3天前',
-      place: '上海'
+      text: 'This card reads well too.',
+      time: '3d ago',
+      place: 'Shanghai'
     });
     next.main.appendChild(commentRow(author, {
-      text: '谢谢。',
-      time: '3天前',
-      place: '浙江',
+      text: 'Thanks.',
+      time: '3d ago',
+      place: 'Zhejiang',
       reply: true
     }).row);
     const last = commentRow(third, {
-      text: '我先把这一页存下来。',
-      time: '5天前',
-      place: '广东',
+      text: 'Saving this page first.',
+      time: '5d ago',
+      place: 'Guangdong',
       likes: 1,
       liked: true,
       replies: 3
@@ -18100,7 +18326,7 @@
     const el = document.getElementById('postDetailCommentCount');
     if (el) el.textContent = String(n);
     const head = document.getElementById('postCmtCount');
-    if (head) head.textContent = '共 ' + n + ' 条评论';
+    if (head) head.textContent = n + ' comments';
   }
   function openPostDetail(note) {
     if (document.documentElement.dataset.theme !== 'blue' || !note) return;
@@ -18159,14 +18385,14 @@
     root.hidden = false;
   }
   const DIR_NOTES = [
-    { title: '通勤防晒，我只留这一支', img: 'luo/assets/product-sunscreen.jpg', h: 'tall', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '128' },
-    { title: '修护精华敷完，先别急着洗脸', img: 'luo/assets/product-drwu.jpg', h: 'mid', name: '豆豆', initial: '豆', tone: 'sky', likes: '86' },
-    { title: '今天的产品笔记', quote: '把复杂能力收进一个更清晰的工作界面。', tone: 'paper', name: '李佳琦', initial: '李', av: 'mint', likes: '54' },
-    { title: '新的护肤内容合集封面', img: 'luo/assets/luo-hero.png', h: 'tall', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '203' },
-    { title: '这套水乳，混油皮我留着白天用', img: 'luo/assets/product-cetaphil.png', h: 'mid', name: '豆豆', initial: '豆', tone: 'sky', likes: '41' },
-    { title: '重离子课，我从这张图讲起', img: 'luo/assets/cosmo-roland.jpg', h: 'short', name: 'Prof. Roland', photo: 'assets/gunther-roland-illustrated.jpg', likes: '37' },
-    { title: '研究摘要里的一句', quote: 'Agent memory 不该靠聊天记录硬记。', tone: 'mist', name: '李佳琦', initial: '李', av: 'mint', likes: '62' },
-    { title: '近距离看一下修护后的状态', img: 'luo/assets/luo-portrait.png', h: 'tall', name: '骆王宇', photo: 'assets/luo-wangyu.png', likes: '96' }
+    { title: 'Commute sunscreen — only this one', img: 'luo/assets/product-sunscreen.jpg', h: 'tall', name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', likes: '128' },
+    { title: 'After repair essence, wait before washing', img: 'luo/assets/product-drwu.jpg', h: 'mid', name: 'Doudou', initial: 'D', tone: 'sky', likes: '86' },
+    { title: 'Today's product notes', quote: 'Fold complex capability into a clearer work interface.', tone: 'paper', name: 'Jiaqi Li', initial: 'J', av: 'mint', likes: '54' },
+    { title: 'Cover for the new skincare collection', img: 'luo/assets/luo-hero.png', h: 'tall', name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', likes: '203' },
+    { title: 'This cleanser set stays in my daytime routine for combination skin', img: 'luo/assets/product-cetaphil.png', h: 'mid', name: 'Doudou', initial: 'D', tone: 'sky', likes: '41' },
+    { title: 'I'll start heavy-ion class from this figure', img: 'luo/assets/cosmo-roland.jpg', h: 'short', name: 'Prof. Roland', photo: 'assets/gunther-roland-illustrated.jpg', likes: '37' },
+    { title: 'One line from the research brief', quote: 'Agent memory should not rely on raw chat history.', tone: 'mist', name: 'Jiaqi Li', initial: 'J', av: 'mint', likes: '62' },
+    { title: 'A close look after repair', img: 'luo/assets/luo-portrait.png', h: 'tall', name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', likes: '96' }
   ];
   function noteHeart() {
     const ns = 'http://www.w3.org/2000/svg';
@@ -18207,33 +18433,33 @@
   });
   const CHAO = {
     luo: {
-      name: '骆王宇',
-      initial: '骆',
+      name: 'Wangyu Luo',
+      initial: 'W',
       tone: 'sand',
       line: 'One big group · 12.8k · preview without joining',
       meta: 'One big group · many subgroups · 12.8k · you are admin',
       posts: [
-        { initial: '骆', tone: 'sand', name: '骆王宇', time: '1h', text: '周五 20:00 直播：屏障修护怎么选。回这条帖子提问即可，不用在大群里刷屏', replies: '2 replies 武汉粉丝 From big group' }
+        { initial: 'W', tone: 'sand', name: 'Wangyu Luo', time: '1h', text: 'Friday 20:00 live: how to choose barrier repair. Reply here to ask — no need to spam the big group.', replies: '2 replies · Wuhan fans · From big group' }
       ]
     },
     li: {
-      name: '李佳琦',
-      initial: '李',
+      name: 'Jiaqi Li',
+      initial: 'J',
       tone: 'mint',
       line: 'One big group · 8.1k · preview without joining',
       meta: 'One big group · many subgroups · 8.1k',
       posts: [
-        { initial: '李', tone: 'mint', name: '李佳琦', time: '5h', text: '今天的产品笔记：把复杂能力收进一个更清晰的工作界面。', replies: 'From big group' }
+        { initial: 'J', tone: 'mint', name: 'Jiaqi Li', time: '5h', text: 'Today's product notes：Fold complex capability into a clearer work interface.', replies: 'From big group' }
       ]
     }
   };
   const CHAO_LIST = [
-    { id: 'luo', kind: 'topic', name: '骆王宇', initial: '骆', tone: 'sand', sub: '12.8k · 1 featured announcement', act: 'Preview' },
-    { id: 'li', kind: 'topic', name: '李佳琦', initial: '李', tone: 'mint', sub: '8.1k · 1 featured announcement', act: 'Preview' },
+    { id: 'luo', kind: 'topic', name: 'Wangyu Luo', initial: 'W', tone: 'sand', sub: '12.8k · 1 featured announcement', act: 'Preview' },
+    { id: 'li', kind: 'topic', name: 'Jiaqi Li', initial: 'J', tone: 'mint', sub: '8.1k · 1 featured announcement', act: 'Preview' },
     { kind: 'person', name: 'Prof. Gunther Roland', photo: 'assets/gunther-roland-illustrated.jpg', sub: 'MIT Professor of Physics · Nuclear and particle physics', act: 'Available', ok: true },
-    { kind: 'person', name: '骆王宇', photo: 'assets/luo-wangyu.png', sub: '护肤内容创作者', act: 'Available', ok: true },
-    { kind: 'person', name: '李佳琦', initial: '李', tone: 'mint', sub: 'Review required', act: 'Unavailable', ok: false },
-    { kind: 'person', name: '豆豆', initial: '豆', tone: 'sky', sub: 'Identity ambiguous', act: 'Unavailable', ok: false }
+    { kind: 'person', name: 'Wangyu Luo', photo: 'assets/luo-wangyu.png', sub: 'Skincare creator', act: 'Available', ok: true },
+    { kind: 'person', name: 'Jiaqi Li', initial: 'J', tone: 'mint', sub: 'Review required', act: 'Unavailable', ok: false },
+    { kind: 'person', name: 'Doudou', initial: 'D', tone: 'sky', sub: 'Identity ambiguous', act: 'Unavailable', ok: false }
   ];
   function chaoAv(item) {
     if (item.photo) {
@@ -18311,7 +18537,7 @@
     if (dirChaoTab === 'sub') {
       const note = document.createElement('p');
       note.className = 'chao-note';
-      note.textContent = '武汉粉丝';
+      note.textContent = 'Wuhan fans';
       const hint = document.createElement('p');
       hint.className = 'chao-line';
       hint.textContent = 'Big group posts sync here.';
@@ -18395,16 +18621,16 @@
     const copy = document.createElement('div');
     copy.className = 'chao-copy';
     const name = document.createElement('b');
-    name.textContent = '武汉粉丝';
+    name.textContent = 'Wuhan fans';
     const sub = document.createElement('small');
-    sub.textContent = '骆王宇 · subgroup';
+    sub.textContent = 'Wangyu Luo · subgroup';
     copy.append(name, sub);
-    joined.append(chaoAv({ initial: '骆', tone: 'sand' }), copy);
+    joined.append(chaoAv({ initial: 'W', tone: 'sand' }), copy);
     host.replaceChildren(...rows, sec, joined);
   }
 
   function followFace(p) {
-    if (p.name === 'Gunther Roland') return { blurb: '重离子物理 · MIT', tags: ['重离子', 'Lecture'] };
+    if (p.name === 'Gunther Roland') return { blurb: 'Heavy-ion physics · MIT', tags: ['Heavy ion', 'Lecture'] };
     return { blurb: p.blurb, tags: p.tags };
   }
   function followPostsOf(name) {
@@ -18413,7 +18639,7 @@
   }
   function followMessages(name) {
     if (name === 'Gunther Roland') {
-      return [{ time: '2h', text: 'Lecture 5 这页图先存下来，课上从重离子碰撞讲起。' }];
+      return [{ time: '2h', text: 'Save this Lecture 5 figure; class starts from heavy-ion collisions.' }];
     }
     const topic = Object.values(CHAO).find((item) => item.name === name);
     return topic ? topic.posts.map((post) => ({ time: post.time, text: post.text })) : [];
@@ -18423,7 +18649,7 @@
     row.className = 'dir-msg';
     const k = document.createElement('span');
     k.className = 'dir-msg-k';
-    k.textContent = '消息';
+    k.textContent = 'Message';
     const time = document.createElement('span');
     time.className = 'dir-msg-time';
     time.textContent = msg.time;
@@ -18475,7 +18701,7 @@
     back.type = 'button';
     back.className = 'dir-back';
     back.dataset.dirBack = '1';
-    back.textContent = '返回';
+    back.textContent = 'Back';
     const hd = document.createElement('div');
     hd.className = 'dir-person-hd';
     const copy = document.createElement('span');
@@ -18492,7 +18718,7 @@
       const empty = document.createElement('p');
       empty.className = 'dir-empty';
       empty.hidden = false;
-      empty.textContent = '还没有公开内容。';
+      empty.textContent = 'No public posts yet.';
       host.replaceChildren(back, hd, empty);
       return;
     }
@@ -18526,7 +18752,7 @@
       sec.className = 'dir-person-msgs';
       const label = document.createElement('p');
       label.className = 'dir-k';
-      label.textContent = '消息';
+      label.textContent = 'Message';
       sec.append(label, ...msgs.map(followMsgEl));
       parts.push(sec);
     }
@@ -18570,8 +18796,8 @@
       const enter = document.createElement('button');
       enter.type = 'button';
       enter.className = 'dir-enter';
-      enter.textContent = '进入';
-      enter.setAttribute('aria-label', '进入 ' + p.name);
+      enter.textContent = 'Enter';
+      enter.setAttribute('aria-label', 'Enter ' + p.name);
       meta.appendChild(enter);
       const post = dirLatestPost(p.name);
       const desc = post?.quote || post?.title || '';
@@ -18804,7 +19030,7 @@
       name: name,
       initial: userInitials(name) || 'Y',
       tone: 'mint'
-    }, { text: text, time: '刚刚', reply: replying }).row;
+    }, { text: text, time: 'Just now', reply: replying }).row;
     if (replying) {
       const target = form._replyRow;
       const parent = target.classList.contains('is-reply') ? target.parentElement : target.querySelector(':scope > div');
@@ -18830,7 +19056,7 @@
       n = Math.max(0, n + (on ? 1 : -1));
       like.dataset.count = String(n);
       const span = like.querySelector('span');
-      if (span) span.textContent = n > 0 ? String(n) : '赞';
+      if (span) span.textContent = n > 0 ? String(n) : 'Like';
       return;
     }
     const reply = e.target.closest('.post-cmt-reply');
@@ -18840,7 +19066,7 @@
       const who = document.getElementById('postReplyWho');
       const snip = document.getElementById('postReplySnip');
       if (!row || !form || !who || !snip) return;
-      who.textContent = '回复 ' + (row.querySelector('.post-cmt-head b')?.textContent || '');
+      who.textContent = 'Reply to ' + (row.querySelector('.post-cmt-head b')?.textContent || '');
       snip.textContent = row.querySelector('.post-cmt-text')?.textContent || '';
       form._replyRow = row;
       form.classList.add('is-replying');
@@ -18858,7 +19084,7 @@
     const fold = open.nextElementSibling;
     if (!fold) return;
     fold.hidden = !fold.hidden;
-    open.textContent = fold.hidden ? '展开 ' + open.dataset.cmtOpen + ' 条回复' : '收起回复';
+    open.textContent = fold.hidden ? 'Show ' + open.dataset.cmtOpen + ' replies' : 'Hide replies';
   });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closePostDetail();
@@ -19015,8 +19241,8 @@
   ];
   const DESK_GROUPS = [
     { id: 'team4', name: 'Team 4', preview: 'Group' },
-    { id: 'wuhan', name: 'Wuhan Branch Team', preview: 'Oct 19 · Hao Zou · 补充 1014.docx 的请假审批入口改进' },
-    { id: 'research', name: 'Research_Test', preview: 'Sep 20 · Hao Zou · 已完成梳理：现有 Research 将升级为 Roland 的独立 Research Hub' },
+    { id: 'wuhan', name: 'Wuhan Branch Team', preview: 'Oct 19 · Hao Zou · Improved leave-approval entry in 1014.docx' },
+    { id: 'research', name: 'Research_Test', preview: 'Sep 20 · Hao Zou · Research will become Roland’s standalone Research Hub' },
     { id: 'course', name: 'CO006017 · Data Analysis and Machine Learning', preview: '#general' },
     { id: 'ai', name: '1105 AI', preview: '#general' },
   ];
@@ -20058,10 +20284,10 @@
     });
   }
   const COSMO_MANAGE = [
-    { rail: 'Prof. Gunther Roland', dir: 'Gunther Roland', short: 'GR', cls: 'is-gr', blurb: '重离子物理 · MIT' },
-    { rail: '骆王宇', dir: '骆王宇', short: '骆', cls: 'is-luo', blurb: '护肤博主' },
-    { rail: '李佳琦', dir: '李佳琦', short: '李', cls: 'is-li', blurb: '产品笔记' },
-    { rail: '豆豆', dir: '', short: '豆', cls: 'is-dou', blurb: 'On your rail' }
+    { rail: 'Prof. Gunther Roland', dir: 'Gunther Roland', short: 'GR', cls: 'is-gr', blurb: 'Heavy-ion physics · MIT' },
+    { rail: 'Wangyu Luo', dir: 'Wangyu Luo', short: 'W', cls: 'is-luo', blurb: 'Skincare creator' },
+    { rail: 'Jiaqi Li', dir: 'Jiaqi Li', short: 'J', cls: 'is-li', blurb: 'Product notes' },
+    { rail: 'Doudou', dir: '', short: 'D', cls: 'is-dou', blurb: 'On your rail' }
   ];
   const cosmoOn = new Set(COSMO_MANAGE.map((row) => row.rail));
   function cosmoDirNames() {
@@ -20096,19 +20322,68 @@
       return line;
     }));
   }
+  function setEsc(text) {
+    return String(text ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+  const SET_FRIENDS = [
+    { id: 'maya', name: 'Maya Chen', email: 'maya@symbion.test' },
+    { id: 'chris', name: 'Chris Dalton', email: 'chris@symbion.test' },
+    { id: 'alex', name: 'Alex Rivera', email: 'alex@symbion.test' },
+    { id: 'priya', name: 'Priya Nair', email: 'priya@symbion.test' },
+    { id: 'elena', name: 'Elena Voss', email: 'elena@symbion.test' },
+    { id: 'jonah', name: 'Jonah Blake', email: 'jonah@symbion.test' }
+  ];
+  function paintSetFriends() {
+    const results = document.getElementById('setFriendResults');
+    const box = document.getElementById('setFriendQ');
+    if (!results) return;
+    const q = (box?.value || '').trim().toLowerCase();
+    if (!q) {
+      results.innerHTML = '<p class="set-note">Type a name or an email to add someone.</p>';
+      return;
+    }
+    const rows = SET_FRIENDS.filter((p) => p.name.toLowerCase().includes(q) || p.email.toLowerCase().includes(q));
+    results.innerHTML = rows.length
+      ? rows.map((p) => `<div class="set-line"><b>${setEsc(p.name)}</b><span>${setEsc(p.email)}</span><button type="button" class="set-quiet" data-set-friend="${setEsc(p.id)}">Add</button></div>`).join('')
+      : '<p class="set-note">No matching people. Try another name or email.</p>';
+  }
+  function paintSetHistory() {
+    const host = document.getElementById('setHistory');
+    if (!host) return;
+    const rows = [
+      { title: 'Account Hub', detail: 'Opened from the account menu' },
+      { title: 'Community · Heavy-ion Physics', detail: 'Workspace / Kanban' },
+      { title: 'Home', detail: 'Daily desk' },
+      { title: 'Cosmos', detail: 'Following list' },
+      { title: 'Create event', detail: 'Group workspace draft' }
+    ];
+    host.innerHTML = rows.map((row) => `<div class="set-line"><b>${setEsc(row.title)}</b><span>${setEsc(row.detail)}</span></div>`).join('');
+  }
   function showSettings(section) {
     const host = document.getElementById('setHost');
     if (!host) return;
     settingsSection = section || 'profile';
-    host.querySelectorAll('button[data-set]').forEach((btn) => {
-      if (btn.dataset.set === settingsSection) btn.setAttribute('aria-current', 'page');
-      else btn.removeAttribute('aria-current');
+    let currentNav = null;
+    host.querySelectorAll('nav.set-nav button[data-set]').forEach((btn) => {
+      if (btn.dataset.set === settingsSection) {
+        btn.setAttribute('aria-current', 'page');
+        currentNav = btn;
+      } else btn.removeAttribute('aria-current');
     });
     host.querySelectorAll('[data-set-panel]').forEach((panel) => {
       panel.hidden = panel.dataset.setPanel !== settingsSection;
     });
     host.querySelector('.set-main')?.scrollTo({ top: 0 });
+    if (currentNav) {
+      try { currentNav.scrollIntoView({ block: 'nearest', inline: 'nearest' }); } catch (_) {}
+    }
     if (settingsSection === 'cosmos') paintCosmoManage();
+    if (settingsSection === 'friends') paintSetFriends();
+    if (settingsSection === 'history') paintSetHistory();
+    if (settingsSection === 'signout') {
+      const who = document.getElementById('setSignoutWho');
+      if (who) who.textContent = `${userName() || 'Lulu'} · 2849182439@qq.com`;
+    }
   }
   function fillSettingsName() {
     const name = document.getElementById('setName');
@@ -20131,6 +20406,12 @@
     if (!host || settingsBound) return;
     settingsBound = true;
     host.addEventListener('click', (event) => {
+      const friendAdd = event.target.closest('[data-set-friend]');
+      if (friendAdd) {
+        const row = SET_FRIENDS.find((p) => p.id === friendAdd.dataset.setFriend);
+        showToastMsg(row ? `Added ${row.name}.` : 'Friend added.');
+        return;
+      }
       const nav = event.target.closest('button[data-set]');
       if (nav) {
         showSettings(nav.dataset.set);
@@ -20252,7 +20533,7 @@
         if (save) save.disabled = true;
         showToastMsg('Announcement times follow this device.');
       } else if (act === 'reset') showToastMsg('Onboarding reset waits for the account service.');
-      else if (act === 'logout') showToastMsg('Sign out waits for the account service.');
+      else if (act === 'logout' || act === 'confirm-signout') showToastMsg('Sign out waits for the account service.');
       else if (act === 'signout-all') showToastMsg('Sign out everywhere waits for the account service.');
       else if (act === 'connect') showToastMsg('Google Workspace isn’t connected yet.');
       else if (act === 'refresh-connectors') showToastMsg('No connectors yet.');
@@ -20282,6 +20563,7 @@
         if (detail) detail.textContent = on ? 'Right-click reporting is available.' : 'Right-click reporting is off on this device.';
       }
     });
+    document.getElementById('setFriendQ')?.addEventListener('input', () => paintSetFriends());
     document.getElementById('setZone')?.addEventListener('change', (event) => {
       const save = document.getElementById('setZoneSave');
       if (save) save.disabled = event.target.value === settingsZoneSaved;
@@ -21367,18 +21649,20 @@ function noticeItems() {
 }
 function noticeRow() {
   const q = state.query.trim().toLowerCase();
-  if (q && !'群通知'.includes(q)) return '';
+  if (q && !'group notifications'.includes(q) && !'notifications'.includes(q) && !'join requests'.includes(q)) return '';
   const items = noticeItems();
   const waiting = items.filter((item) => !item.req.decision);
   const latest = waiting[0] || items[0];
   const who = latest ? people[latest.req.who] : null;
-  const line = waiting.length ? `${who.name} 申请加入 ${latest.chat.name}` : (items.length ? '申请都已处理' : '暂无入群申请');
-  const dot = waiting.length ? '<i class="dot" title="入群申请" aria-label="入群申请"></i>' : '';
+  const line = waiting.length
+    ? `${who.name} requested to join ${latest.chat.name}`
+    : (items.length ? 'All requests reviewed' : 'No join requests');
+  const dot = waiting.length ? '<i class="dot" title="Join requests" aria-label="Join requests"></i>' : '';
   return `<div class="row${state.notice ? ' on' : ''}">
       <button type="button" class="row-hit" data-open-notice${state.notice ? ' aria-current="true"' : ''}>
         <span class="face notice-face">${noticeIcon()}${dot}</span>
         <span class="row-body">
-          <span class="row-top"><strong>群通知</strong><time>${esc(latest ? latest.chat.time : '')}</time></span>
+          <span class="row-top"><strong>Group Notifications</strong><time>${esc(latest ? latest.chat.time : '')}</time></span>
           <span class="row-bot"><em>${esc(line)}</em></span>
         </span>
       </button>
@@ -21516,8 +21800,10 @@ function gDayLabel(iso) {
 function gTaskCard(item, c) {
   const p = people[item.who];
   const file = (item.files && item.files[0] && item.files[0].name) || item.fileName || '';
+  const meet = item.meet || '';
   const when = [gDayLabel(item.date), item.startTime ? gWhen(item) : ''].filter(Boolean).join(' · ');
-  return `<button type="button" class="tk-card" data-g-item="${esc(item.id)}" draggable="${gCanMove(item, c) ? 'true' : 'false'}"><span class="tk-type">${esc(item.type || 'Task')}</span><b>${esc(item.title)}</b>${item.notes ? '<p>' + esc(item.notes) + '</p>' : ''}${file ? '<p>' + esc(file) + '</p>' : ''}<span class="tk-meta"><span class="av hue-${p ? p.hue : 'slate'}">${esc(p ? p.short : '')}</span><span>${esc(p ? p.name : '')}</span><time>${esc(when)}</time></span></button>`;
+  const extras = [meet ? 'Meeting · ' + meet : '', file].filter(Boolean).map((line) => '<p>' + esc(line) + '</p>').join('');
+  return `<button type="button" class="tk-card" data-g-item="${esc(item.id)}" draggable="${gCanMove(item, c) ? 'true' : 'false'}"><span class="tk-type">${esc(item.type || 'Task')}</span><b>${esc(item.title)}</b>${item.notes ? '<p>' + esc(item.notes) + '</p>' : ''}${extras}<span class="tk-meta"><span class="av hue-${p ? p.hue : 'slate'}">${esc(p ? p.short : '')}</span><span>${esc(p ? p.name : '')}</span><time>${esc(when)}</time></span></button>`;
 }
 function gTaskBoard(c) {
   const rows = gItems(c.id).filter((item) => gCanSee(item, c));
@@ -21639,7 +21925,7 @@ function paintGroupBoard() {
     const editIcon = '<button type="button" class="ws-edit-btn" data-ws-edit aria-label="Edit group"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 20h4l10.5-10.5a2.1 2.1 0 0 0-3-3L5 17v3Z"/><path d="m13.5 6.5 3 3"/></svg></button>';
     const head = canReview(c) && state.wsEditing
       ? `<label class="ws-face">${face(c)}<input id="wsPhoto" type="file" accept="image/*" hidden aria-label="Group photo"></label><div class="ws-info-copy"><input class="ws-edit-name" id="wsName" maxlength="40" value="${esc(c.name)}" aria-label="Group name"><textarea class="ws-edit-desc" id="wsDesc" maxlength="240" aria-label="Group description">${esc(c.description || '')}</textarea><button type="button" class="ws-save" data-ws-save>Save</button></div>`
-      : `${face(c)}<div class="ws-info-copy"><h3>${esc(c.name)}</h3><p>${esc(c.description || '这个群还没有简介。')}</p></div>${canReview(c) ? editIcon : ''}`;
+      : `${face(c)}<div class="ws-info-copy"><h3>${esc(c.name)}</h3><p>${esc(c.description || 'This group has no description yet.')}</p></div>${canReview(c) ? editIcon : ''}`;
     panel = `<section class="ws-panel"><div class="ws-info">${head}${pager}</div><div class="ws-members">${memberHtml}</div></section>`;
   } else if (state.wsCard === 'announcements') {
     const list = (c.announcements && c.announcements.length)
@@ -21711,7 +21997,7 @@ function renderChrome() {
   const composer = $('composer');
   if (composer) composer.hidden = !!state.notice;
   if (state.notice) {
-    $('title').textContent = '群通知';
+    $('title').textContent = 'Group Notifications';
     $('headFace').hidden = true;
     $('headFace').innerHTML = '';
     $('sub').hidden = true;
@@ -21720,7 +22006,7 @@ function renderChrome() {
     $('quoteBar').hidden = true;
     $('infoBtn').setAttribute('aria-label', 'Group notifications');
     $('infoBtn').setAttribute('aria-pressed', 'false');
-    $('threadMore').setAttribute('aria-label', '通知菜单');
+    $('threadMore').setAttribute('aria-label', 'Notifications menu');
     $('threadMore').setAttribute('aria-pressed', 'false');
     $('searchBtn').setAttribute('aria-pressed', 'false');
     $('chatSearch').hidden = true;
@@ -21802,7 +22088,7 @@ function historyList(c) {
 function historyHit(m) {
   const p = m.who ? person(m.who) : { name: '', short: '·', hue: 'slate' };
   const preview = m.file ? `${m.file.name} · ${m.file.size}` : (historyLinks(m)[0] || m.text || '');
-  return `<button type="button" class="history-hit" data-jump="${m.id}"><span class="av hue-${p.hue}">${esc(p.short)}</span><span class="history-copy"><b>${esc(p.name)}</b><small>${esc(preview)}</small></span><span class="locate">定位到聊天位置</span></button>`;
+  return `<button type="button" class="history-hit" data-jump="${m.id}"><span class="av hue-${p.hue}">${esc(p.short)}</span><span class="history-copy"><b>${esc(p.name)}</b><small>${esc(preview)}</small></span><span class="locate">Jump to chat</span></button>`;
 }
 function renderHistory() {
   const c = current();
@@ -21892,18 +22178,18 @@ function requestCard(item) {
   const p = people[item.req.who];
   const reason = item.req.reason ? `<span class="notice-preview">${esc(item.req.reason)}</span>` : '';
   const status = item.req.decision === 'yes'
-    ? '<span class="notice-status is-yes">已同意</span>'
+    ? '<span class="notice-status is-yes">Approved</span>'
     : item.req.decision === 'no'
-      ? '<span class="notice-status is-no">已拒绝</span>'
+      ? '<span class="notice-status is-no">Declined</span>'
       : `<span class="notice-actions">
-          <button type="button" class="btn" data-decline="${item.req.id}" data-chat="${item.chat.id}">拒绝</button>
-          <button type="button" class="btn go" data-approve="${item.req.id}" data-chat="${item.chat.id}">同意</button>
+          <button type="button" class="btn" data-decline="${item.req.id}" data-chat="${item.chat.id}">Decline</button>
+          <button type="button" class="btn go" data-approve="${item.req.id}" data-chat="${item.chat.id}">Approve</button>
         </span>`;
   return `<article class="notice-req">
       <span class="av hue-${p.hue}">${esc(p.short)}</span>
       <div class="notice-copy">
         <span class="notice-top"><b>${esc(p.name)}</b><time>${esc(item.chat.time)}</time></span>
-        <span class="notice-where">申请加入 <span class="notice-group">${esc(item.chat.name)}</span></span>
+        <span class="notice-where">Requested to join <span class="notice-group">${esc(item.chat.name)}</span></span>
         ${reason}
       </div>
       ${status}
@@ -21917,7 +22203,7 @@ function decideRequest(chatId, reqId, approve) {
   if (approve && !c.members.includes(req.who)) c.members.push(req.who);
   req.decision = approve ? 'yes' : 'no';
   render(false);
-  toast(approve ? '已同意，对方已加入群聊。' : '已拒绝。');
+  toast(approve ? 'Approved — they joined the group.' : 'Declined.');
 }
 function clearDecided() {
   let n = 0;
@@ -21929,20 +22215,20 @@ function clearDecided() {
   });
   if (!n) return;
   render(false);
-  toast('已清空处理记录。');
+  toast('Cleared processed requests.');
 }
 function openNoticeMenu(clientX, clientY) {
   const decided = noticeItems().some((item) => item.req.decision);
   state.ctx = 'notice';
   const menu = $('ctx');
-  menu.innerHTML = `<button type="button" role="menuitem" data-ctx="clear-decided"${decided ? '' : ' disabled'}>清空已处理</button>`;
+  menu.innerHTML = `<button type="button" role="menuitem" data-ctx="clear-decided"${decided ? '' : ' disabled'}>Clear processed</button>`;
   menu.style.width = '148px';
   placeMenu(menu, clientX, clientY);
 }
 function renderLog(scroll) {
   if (state.notice) {
     const items = noticeItems();
-    $('log').innerHTML = items.length ? items.map(requestCard).join('') : '<p class="sys">暂无入群申请</p>';
+    $('log').innerHTML = items.length ? items.map(requestCard).join('') : '<p class="sys">No join requests</p>';
     return;
   }
   const c = current();
@@ -22102,26 +22388,110 @@ let gi = null;
 function openGroupItem(preset) {
   const c = current();
   if (!c || c.kind !== 'group') return;
-  if (!canReview(c)) { toast('Only the owner or an admin can assign a group task.'); return; }
-  gi = { type: 'Meeting', who: preset && preset.who ? [preset.who] : [], group: c.id, note: '', files: [], picking: false, peopleQuery: '' };
+  if (!(c.members || []).includes(ME)) { toast('Join this group to create an event.'); return; }
+  const who = preset && preset.who ? [preset.who] : [ME];
+  gi = { type: 'Meeting', who, group: c.id, note: '', files: [], meet: giMeetLink(), picking: false, filePick: false, peopleQuery: '' };
   const modal = $('giModal');
   if (!modal) return;
   ['giStart', 'giStartTime', 'giEnd', 'giEndTime', 'giName', 'giDetails'].forEach((id) => {
     const el = $(id);
     if (el) el.value = '';
   });
-  if (preset && preset.date && $('giStart')) $('giStart').value = preset.date;
+  const today = gIso(new Date());
+  if ($('giStart')) $('giStart').value = (preset && preset.date) || today;
   if (preset && preset.end && $('giEnd')) $('giEnd').value = preset.end;
   if (preset && preset.startTime && $('giStartTime')) $('giStartTime').value = preset.startTime;
   if (preset && preset.endTime && $('giEndTime')) $('giEndTime').value = preset.endTime;
+  giSyncClockButtons();
   modal.hidden = false;
   paintGroupItem();
-  $('giStart')?.focus();
+  requestAnimationFrame(() => $('giName')?.focus());
 }
 function closeGroupItem() {
+  document.querySelector('.gi-clock-menu')?.remove();
+  document.querySelectorAll('.gi-clock.is-open').forEach((el) => {
+    el.classList.remove('is-open');
+    el.setAttribute('aria-expanded', 'false');
+  });
   const modal = $('giModal');
   if (modal) modal.hidden = true;
   gi = null;
+}
+function giClockLabel(hm) {
+  if (!hm) return 'Add time';
+  const m = String(hm).match(/^(\d{1,2}):(\d{2})$/);
+  if (!m) return 'Add time';
+  const h24 = Number(m[1]);
+  const min = Number(m[2]);
+  const ap = h24 >= 12 ? 'PM' : 'AM';
+  const h12 = h24 % 12 || 12;
+  return h12 + ':' + String(min).padStart(2, '0') + ' ' + ap;
+}
+function giHmFromMins(mins) {
+  const total = ((Number(mins) % 1440) + 1440) % 1440;
+  return String(Math.floor(total / 60)).padStart(2, '0') + ':' + String(total % 60).padStart(2, '0');
+}
+function giMinsFromHm(hm) {
+  const m = String(hm || '').match(/^(\d{1,2}):(\d{2})$/);
+  if (!m) return null;
+  return Number(m[1]) * 60 + Number(m[2]);
+}
+function giSyncClockButtons() {
+  const start = $('giStartTime')?.value || '';
+  const end = $('giEndTime')?.value || '';
+  const startBtn = $('giStartClock');
+  const endBtn = $('giEndClock');
+  if (startBtn) startBtn.textContent = giClockLabel(start);
+  if (endBtn) endBtn.textContent = giClockLabel(end);
+}
+function giCloseClockMenu() {
+  document.querySelector('.gi-clock-menu')?.remove();
+  document.querySelectorAll('.gi-clock.is-open').forEach((el) => {
+    el.classList.remove('is-open');
+    el.setAttribute('aria-expanded', 'false');
+  });
+}
+function giShowClockMenu(btn, which) {
+  giCloseClockMenu();
+  const hidden = which === 'start' ? $('giStartTime') : $('giEndTime');
+  const cur = giMinsFromHm(hidden?.value);
+  btn.classList.add('is-open');
+  btn.setAttribute('aria-expanded', 'true');
+  const menu = document.createElement('div');
+  menu.className = 'gi-clock-menu';
+  menu.setAttribute('role', 'listbox');
+  menu.setAttribute('aria-label', which === 'start' ? 'Start time' : 'End time');
+  const slots = [];
+  for (let mins = 0; mins < 1440; mins += 15) slots.push(mins);
+  menu.innerHTML = slots.map((mins) => {
+    const hm = giHmFromMins(mins);
+    const on = cur != null && mins === cur;
+    return '<button type="button" role="option" tabindex="-1" data-gi-clock-mins="' + mins + '"' + (on ? ' class="is-on" aria-selected="true"' : '') + '>' + esc(giClockLabel(hm)) + '</button>';
+  }).join('');
+  document.body.appendChild(menu);
+  const place = () => {
+    const r = btn.getBoundingClientRect();
+    const mw = menu.offsetWidth || 132;
+    const mh = menu.offsetHeight || 280;
+    let left = r.left;
+    if (left + mw > window.innerWidth - 8) left = Math.max(8, r.right - mw);
+    let top = r.bottom + 4;
+    if (top + mh > window.innerHeight - 8) top = Math.max(8, r.top - mh - 4);
+    menu.style.left = Math.round(left) + 'px';
+    menu.style.top = Math.round(top) + 'px';
+  };
+  const onBtn = menu.querySelector('button.is-on') || menu.querySelector('[data-gi-clock-mins]');
+  try { onBtn?.scrollIntoView({ block: 'center' }); } catch (_) {}
+  place();
+  requestAnimationFrame(place);
+  menu.addEventListener('click', (e) => {
+    const hit = e.target.closest('[data-gi-clock-mins]');
+    if (!hit || !hidden) return;
+    hidden.value = giHmFromMins(Number(hit.dataset.giClockMins));
+    giSyncClockButtons();
+    giCloseClockMenu();
+    if (gi) { gi.note = ''; paintGroupItem(); }
+  });
 }
 function giRangeError() {
   const start = $('giStart')?.value || '';
@@ -22169,35 +22539,65 @@ function paintGroupItem() {
   if (files) {
     files.innerHTML = gi.files.map((file) => `<span class="gi-chip"><span>${esc(file.name)}</span><button type="button" data-gi-file="${esc(file.name)}" aria-label="Remove ${esc(file.name)}">×</button></span>`).join('');
   }
+  const meetBtn = $('giMeetBtn');
+  const meetLabel = $('giMeetLabel');
+  const meetHint = $('giMeetHint');
+  if (meetBtn) {
+    const on = !!gi.meet;
+    meetBtn.classList.toggle('is-set', on);
+    meetBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    if (meetLabel) meetLabel.textContent = on ? gi.meet : 'Add meeting';
+    if (meetHint) meetHint.hidden = !on;
+  }
+  const filePick = $('giFilePick');
+  if (filePick) filePick.hidden = !gi.filePick;
+  const groupFiles = $('giGroupFiles');
+  if (groupFiles) {
+    const shared = [];
+    gItems(c.id).forEach((item) => {
+      const name = (item.files && item.files[0] && item.files[0].name) || item.fileName || '';
+      if (name && !shared.includes(name)) shared.push(name);
+    });
+    const available = shared.filter((name) => !gi.files.some((file) => file.name === name));
+    groupFiles.innerHTML = available.length
+      ? available.map((name) => `<button type="button" data-gi-share="${esc(name)}">${esc(name)}<small>From this group</small></button>`).join('')
+      : '<button type="button" disabled>No shared group files yet</button>';
+  }
   const note = $('giNote');
   if (note) note.textContent = gi.note || '';
+  giSyncClockButtons();
+}
+function giMeetLink() {
+  return 'meet.symbion.app/' + Math.random().toString(36).slice(2, 8);
 }
 function giCreate() {
   if (!gi) return;
   const err = giFormError();
   if (err) { gi.note = err; paintGroupItem(); return; }
   const c = chats.find((item) => item.id === gi.group);
-  if (!c || !canReview(c)) return;
+  if (!c || !(c.members || []).includes(ME)) return;
   const who = gi.who.slice();
   const title = $('giName').value.trim();
   const start = $('giStart').value;
   const files = gi.files.map((file) => ({ name: file.name }));
-    const names = who.map((id) => (people[id] && people[id].name) || id);
-    who.forEach((id) => {
-      const row = {
-        id: uid(), who: id, title, type: gi.type, date: start, end: $('giEnd').value || start,
-        startTime: $('giStartTime').value, endTime: $('giEndTime').value,
-        notes: $('giDetails').value.trim(), files, see: 'group', stage: 'todo'
-      };
-      gItems(c.id).push(row);
-      document.dispatchEvent(new CustomEvent('symbion-group-event', { detail: {
-        id: 'home-' + row.id, who: id, title, date: start, end: row.end,
-        startTime: row.startTime, endTime: row.endTime, notes: row.notes,
-        files: files.map((file) => file.name), people: names, groupName: c.name
-      } }));
-    });
+  const meet = gi.meet || '';
+  const names = who.map((id) => (people[id] && people[id].name) || id);
+  who.forEach((id) => {
+    const row = {
+      id: uid(), who: id, title, type: gi.type, date: start, end: $('giEnd').value || start,
+      startTime: $('giStartTime').value, endTime: $('giEndTime').value,
+      notes: $('giDetails').value.trim(), files, meet, see: 'group', stage: 'todo'
+    };
+    gItems(c.id).push(row);
+    document.dispatchEvent(new CustomEvent('symbion-group-event', { detail: {
+      id: 'home-' + row.id, who: id, title, date: start, end: row.end,
+      startTime: row.startTime, endTime: row.endTime, notes: row.notes,
+      files: files.map((file) => file.name), meet, people: names, groupName: c.name
+    } }));
+  });
   closeGroupItem();
   paintGroupBoard();
+  toast('Created · ' + title);
 }
 function syncWorkspace() {
   const c = current();
@@ -23111,15 +23511,48 @@ $('workspace').addEventListener('pointerup', (e) => {
   openGroupItem({ who: drag.start.who, date: startAt.iso, end: finish.iso === startAt.iso ? '' : finish.iso, startTime: gClock(startAt.mins), endTime: gClock(finish.mins) });
 });
 $('giModal')?.addEventListener('click', (e) => {
-  if (e.target.id === 'giModal' || e.target.closest('[data-gi="close"]') || e.target.closest('[data-gi="cancel"]')) {
+  if (e.target.closest('[data-gi="close"]') || e.target.closest('[data-gi="cancel"]')) {
     closeGroupItem();
     return;
   }
   if (!gi) return;
+  const clockBtn = e.target.closest('[data-gi-clock]');
+  if (clockBtn) {
+    const which = clockBtn.dataset.giClock;
+    if (clockBtn.classList.contains('is-open')) { giCloseClockMenu(); return; }
+    giShowClockMenu(clockBtn, which);
+    return;
+  }
+  if (e.target.closest('.gi-clock-menu')) return;
+  giCloseClockMenu();
   const type = e.target.closest('[data-gi-type]');
-  if (type) { gi.type = type.dataset.giType; gi.note = ''; paintGroupItem(); return; }
-  if (e.target.closest('[data-gi="people"]')) { gi.picking = !gi.picking; paintGroupItem(); $('giPeopleQ')?.focus(); return; }
-  if (e.target.closest('[data-gi="file"]')) { $('giFile')?.click(); return; }
+  if (type) {
+    gi.type = type.dataset.giType;
+    if (gi.type === 'Meeting' && !gi.meet) gi.meet = giMeetLink();
+    if (gi.type !== 'Meeting') gi.meet = '';
+    gi.note = '';
+    paintGroupItem();
+    return;
+  }
+  if (e.target.closest('[data-gi="people"]')) { gi.picking = !gi.picking; gi.filePick = false; paintGroupItem(); $('giPeopleQ')?.focus(); return; }
+  if (e.target.closest('[data-gi="meet"]')) {
+    gi.meet = gi.meet ? '' : giMeetLink();
+    if (gi.meet) gi.type = 'Meeting';
+    gi.note = '';
+    paintGroupItem();
+    return;
+  }
+  if (e.target.closest('[data-gi="file-menu"]')) { gi.filePick = !gi.filePick; gi.picking = false; paintGroupItem(); return; }
+  if (e.target.closest('[data-gi="file"]')) { gi.filePick = false; paintGroupItem(); $('giFile')?.click(); return; }
+  const share = e.target.closest('[data-gi-share]');
+  if (share) {
+    const name = share.dataset.giShare;
+    if (name && !gi.files.some((file) => file.name === name)) gi.files.push({ name });
+    gi.filePick = false;
+    gi.note = '';
+    paintGroupItem();
+    return;
+  }
   const dropFile = e.target.closest('[data-gi-file]');
   if (dropFile) {
     gi.files = gi.files.filter((file) => file.name !== dropFile.dataset.giFile);
@@ -23162,7 +23595,15 @@ $('giFile')?.addEventListener('change', () => {
   paintGroupItem();
 });
 document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && document.querySelector('.gi-clock-menu')) {
+    e.preventDefault();
+    giCloseClockMenu();
+    return;
+  }
   if (e.key === 'Escape' && $('giModal') && !$('giModal').hidden) closeGroupItem();
+});
+document.addEventListener('pointerdown', (e) => {
+  if (document.querySelector('.gi-clock-menu') && !e.target.closest('.gi-clock-menu, .gi-clock')) giCloseClockMenu();
 });
 $('threadMore').addEventListener('click', (e) => {
   e.stopPropagation();
