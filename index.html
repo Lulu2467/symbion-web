@@ -6587,15 +6587,33 @@
   .set-back svg { width: 16px; height: 16px; display: block; }
   .set-back:hover { color: #1a1d21; }
   html[data-theme="blue"] .set-shell { position: relative; }
+  html[data-theme="blue"] .set-nav { padding-top: 0; }
+  html[data-theme="blue"] .set-nav h2 {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    margin: 0;
+    padding: 18px 8px 12px 48px;
+    background: #fff;
+    line-height: 24px;
+  }
+  html[data-theme="blue"] .set-main { padding-top: 0; }
+  html[data-theme="blue"] .set-top {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    margin: 0 -28px 16px;
+    padding: 22px 28px 0;
+    background: #f6f7f8;
+  }
   html[data-theme="blue"] #setHost .set-back {
     position: absolute;
     top: 18px;
     left: 8px;
-    z-index: 2;
+    z-index: 3;
     color: #5f6368;
   }
   html[data-theme="blue"] #setHost .set-back:hover { color: #1a1d21; }
-  html[data-theme="blue"] .set-nav h2 { margin: 0 8px 12px 48px; line-height: 24px; }
   .set-card {
     background: #fff;
     border: 1px solid var(--line);
