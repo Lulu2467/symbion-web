@@ -1777,7 +1777,7 @@
     flex-wrap: nowrap;
     align-items: center;
     height: 32px;
-    margin-left: auto;
+    margin-left: 0;
     padding: 3px;
     gap: 0;
     border-radius: 999px;
@@ -1818,12 +1818,7 @@
     color: #1d1d1f;
     font-weight: 650;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) :is(#tail-home,.ws-home-cal) .two-title-l h3 {
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 0;
-    color: #1f1f1f;
-  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .two-title-l h3 { display: none; }
   html[data-theme="blue"] :is(#tail-home,.ws-home-cal) .two-title-l .act-add { display: none; }
   .rem-board { display: none; }
   html[data-theme="blue"] :is(#tail-home,.ws-home-cal) .rem-board {
@@ -22499,15 +22494,13 @@ function paintHomeTaskBoard() {
     </div>`;
   slot.querySelectorAll('.tk-card').forEach((card) => { card.draggable = false; });
   if (titleRow) {
-    const add = titleRow.querySelector('.act-add');
     const html = `<div class="desk-views home-canvas" role="group" aria-label="Canvas">
             <button type="button" data-home-canvas="board" aria-pressed="${homeCanvas === 'board'}">Kanban</button>
             <button type="button" data-home-canvas="calendar" aria-pressed="${homeCanvas === 'calendar'}">Calendar</button>
             <button type="button" data-home-canvas="list" aria-pressed="${homeCanvas === 'list'}">List</button>
             <button type="button" data-home-canvas="timeline" aria-pressed="${homeCanvas === 'timeline'}">Timeline</button>
           </div>`;
-    if (add) add.insertAdjacentHTML('beforebegin', html);
-    else titleRow.insertAdjacentHTML('beforeend', html);
+    titleRow.insertAdjacentHTML('afterbegin', html);
   }
   const seg = titleRow?.querySelector('.home-canvas');
   const prev = homeCanvasFrom && seg ? seg.querySelector('[data-home-canvas="' + homeCanvasFrom + '"]') : null;
