@@ -12540,7 +12540,10 @@
       const todoCheck = e.target.closest('[data-todo-check]');
       if (todoCheck) {
         const item = kbTodos().find((row) => row.id === todoCheck.dataset.todoCheck);
-        if (item) item.done = !item.done;
+        if (item) {
+          item.done = !item.done;
+          item.stage = item.done ? 'done' : 'todo';
+        }
         kbPaintSide();
         return;
       }
@@ -13112,12 +13115,20 @@
     const box = kbBox();
     if (box.todos) return box.todos;
     box.todoOpen = true;
-    box.todos = [...document.querySelectorAll('#tail-home .two-main-l .rem')].map((rem, index) => ({
-      id: 'todo-' + index,
-      text: rem.querySelector('.t')?.textContent.trim() || '',
-      when: rem.querySelector('.when')?.textContent.trim() || '',
-      done: false,
-    })).filter((row) => row.text);
+    box.todos = [...document.querySelectorAll('#tail-home .two-main-l .rem')].map((rem, index) => {
+      const parts = todoWhenParts(rem);
+      let time = parts.time;
+      if (time && tlMins(time) < 7 * 60) time = tlClock(tlMins(time) + 12 * 60);
+      return {
+        id: 'todo-' + index,
+        text: rem.querySelector('.t')?.textContent.trim() || '',
+        when: (rem.querySelector('.when')?.textContent || '').replace(/\s+/g, ' ').trim(),
+        date: parts.date,
+        time,
+        done: rem.classList.contains('is-done'),
+        stage: rem.classList.contains('is-done') ? 'done' : 'todo',
+      };
+    }).filter((row) => row.text);
     return box.todos;
   }
   function kbTodoList() {
@@ -22402,6 +22413,47 @@ let gPlace = 'local';
 let gPicked = [];
 let gFileName = '';
 function gItems(id) { if (!groupItems[id]) groupItems[id] = []; return groupItems[id]; }
+function gCalendarTodos() {
+  if (typeof kbTodos !== 'function') return [];
+  return kbTodos().filter((item) => String(item.text || '').trim()).map((item) => {
+    const date = item.date || gIso(new Date());
+    const start = item.time || '';
+    const end = start ? gClock(Math.min(1435, gMinutes(start) + 60)) : '';
+    return {
+      id: item.id,
+      who: ME,
+      title: item.text.trim(),
+      type: 'Task',
+      date,
+      end: date,
+      startTime: start,
+      endTime: end,
+      notes: '',
+      see: 'group',
+      stage: item.stage || (item.done ? 'done' : 'todo'),
+      fromTodo: true,
+    };
+  });
+}
+function gVisibleItems(c) {
+  const rows = gItems(c.id).filter((item) => gCanSee(item, c));
+  const seen = new Set(rows.map((item) => item.id));
+  gCalendarTodos().forEach((item) => { if (!seen.has(item.id)) rows.push(item); });
+  return rows;
+}
+function gFindBoardItem(groupId, itemId) {
+  return gItems(groupId).find((row) => row.id === itemId) || gCalendarTodos().find((row) => row.id === itemId) || null;
+}
+function gSetItemStage(groupId, itemId, stage) {
+  const row = gItems(groupId).find((item) => item.id === itemId);
+  if (row) { row.stage = stage; return true; }
+  if (typeof kbTodos !== 'function') return false;
+  const todo = kbTodos().find((item) => item.id === itemId);
+  if (!todo) return false;
+  todo.stage = stage;
+  todo.done = stage === 'done';
+  return true;
+}
 function gMonday(date) {
   const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
   d.setDate(d.getDate() - ((d.getDay() + 6) % 7));
@@ -22540,7 +22592,7 @@ function gTaskCard(item, c) {
   return `<button type="button" class="tk-card" data-g-item="${esc(item.id)}" draggable="${gCanMove(item, c) ? 'true' : 'false'}"><span class="tk-type">${esc(item.type || 'Task')}</span><b>${esc(item.title)}</b>${meet}${files}<span class="tk-meta"><span class="tk-meta-row">${gFaceStack(item)}<time>${esc(when)}</time></span>${desc}</span></button>`;
 }
 function gTaskBoard(c) {
-  const rows = gItems(c.id).filter((item) => gCanSee(item, c));
+  const rows = gVisibleItems(c);
   return '<div class="tk-board">' + G_STAGES.map(([id, label]) => {
     const cards = rows.filter((item) => gStage(item) === id);
     const body = cards.map((item) => gTaskCard(item, c)).join('') || '<p class="tk-empty">No tasks</p>';
@@ -22607,7 +22659,7 @@ function gCanvasBody(c, canvas) {
   const cols = days.length;
   if (canvas === 'board') return gTaskBoard(c);
   if (canvas === 'list') {
-    const rows = gItems(c.id).filter((item) => gCanSee(item, c) && isos.some((iso) => gCovers(item, iso)));
+    const rows = gVisibleItems(c).filter((item) => isos.some((iso) => gCovers(item, iso)));
     const byDay = new Map();
     rows.forEach((item) => {
       if (!byDay.has(item.date)) byDay.set(item.date, []);
@@ -22631,7 +22683,7 @@ function gCanvasBody(c, canvas) {
   peopleIds.sort((a, b) => (a === ME ? -1 : b === ME ? 1 : 0));
   const lanes = peopleIds.map((id) => {
     const cells = days.map((d) => `<div class="desk-cell" data-g-slot="${gIso(d)}"></div>`).join('');
-    const hits = gItems(c.id).filter((item) => gMembers(item).includes(id) && gCanSee(item, c) && isos.some((iso) => gCovers(item, iso)))
+    const hits = gVisibleItems(c).filter((item) => gMembers(item).includes(id) && isos.some((iso) => gCovers(item, iso)))
       .map((item) => ({ item, outside: false, span: gDayBox(item, isos) })).filter((row) => row.span);
     hits.sort((a, b) => a.span.left - b.span.left);
     const rowEnds = [];
@@ -24280,7 +24332,7 @@ $('workspace').addEventListener('click', (e) => {
   }
   const item = e.target.closest('[data-g-item]');
   if (item) {
-    const row = gItems(current().id).find((x) => x.id === item.dataset.gItem);
+    const row = gFindBoardItem(current().id, item.dataset.gItem);
     if (!row) return;
     if (!gCanSee(row, current())) { toast('This group time is taken.'); return; }
     gShowItem(row);
@@ -24318,9 +24370,10 @@ $('workspace').addEventListener('drop', (e) => {
   if (!col) return;
   e.preventDefault();
   const c = current();
-  const row = c && gItems(c.id).find((item) => item.id === e.dataTransfer.getData('text/plain'));
+  const itemId = e.dataTransfer.getData('text/plain');
+  const row = c && gFindBoardItem(c.id, itemId);
   if (!row || !gCanSee(row, c) || !gCanMove(row, c)) return;
-  row.stage = col.dataset.gCol;
+  gSetItemStage(c.id, itemId, col.dataset.gCol);
   paintGroupBoard();
 });
 $('workspace').addEventListener('pointerdown', (e) => {
@@ -24333,7 +24386,7 @@ $('workspace').addEventListener('pointermove', (e) => {
   const cursor = $('gCursor');
   const card = e.target.closest('[data-g-item]');
   if (card && !gDrag && bubble) {
-    const row = gItems(current().id).find((x) => x.id === card.dataset.gItem);
+    const row = gFindBoardItem(current().id, card.dataset.gItem);
     if (row && gCanSee(row, current())) {
       if (cursor) cursor.hidden = true;
       bubble.hidden = false;
@@ -25176,9 +25229,10 @@ if (homeBoard && !homeBoard.dataset.dragBound) {
     if (!col || !homeBoard.contains(col)) return;
     e.preventDefault();
     const c = chats.find((row) => row.id === 'hip');
-    const row = c && gItems(c.id).find((item) => item.id === e.dataTransfer.getData('text/plain'));
+    const itemId = e.dataTransfer.getData('text/plain');
+    const row = c && gFindBoardItem(c.id, itemId);
     if (!row || !gCanSee(row, c) || !gCanMove(row, c)) return;
-    row.stage = col.dataset.gCol;
+    gSetItemStage(c.id, itemId, col.dataset.gCol);
     if (current() && current().id === 'hip') paintGroupBoard();
     else paintHomeTaskBoard();
   });
@@ -25199,7 +25253,7 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
     const item = e.target.closest('[data-g-item]');
     if (item) {
       const c = chats.find((row) => row.id === 'hip');
-      const row = c && gItems('hip').find((x) => x.id === item.dataset.gItem);
+      const row = c && gFindBoardItem('hip', item.dataset.gItem);
       if (!row) return;
       if (!gCanSee(row, c)) { toast('This group time is taken.'); return; }
       gShowItem(row);
