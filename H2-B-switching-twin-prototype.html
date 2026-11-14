@@ -22552,7 +22552,6 @@ function paintHomeTaskBoard() {
       ${tools}
       <div class="home-kanban-body">${gCanvasBody(c, homeCanvas)}</div>
     </div>`;
-  slot.querySelectorAll('.tk-card').forEach((card) => { card.draggable = false; });
   if (titleRow) {
     const html = `<div class="desk-views home-canvas" role="group" aria-label="Canvas">
             <button type="button" data-home-canvas="board" aria-pressed="${homeCanvas === 'board'}">Kanban</button>
@@ -25007,6 +25006,39 @@ render(true);
 paintHomeTaskBoard();
 window.paintHomeTaskBoard = paintHomeTaskBoard;
 window.renderTeamWorkspace = render;
+const homeBoard = document.getElementById('homeTaskBoard');
+if (homeBoard && !homeBoard.dataset.dragBound) {
+  homeBoard.dataset.dragBound = '1';
+  homeBoard.addEventListener('dragstart', (e) => {
+    const card = e.target.closest('.tk-card');
+    if (!card || card.getAttribute('draggable') !== 'true') { e.preventDefault(); return; }
+    e.dataTransfer.setData('text/plain', card.dataset.gItem);
+    e.dataTransfer.effectAllowed = 'move';
+    card.classList.add('is-dragging');
+  });
+  homeBoard.addEventListener('dragend', () => {
+    homeBoard.querySelectorAll('.is-dragging, .is-over').forEach((el) => el.classList.remove('is-dragging', 'is-over'));
+  });
+  homeBoard.addEventListener('dragover', (e) => {
+    const col = e.target.closest('[data-g-col]');
+    if (!col || !homeBoard.contains(col)) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    homeBoard.querySelectorAll('.tk-col.is-over').forEach((el) => { if (el !== col) el.classList.remove('is-over'); });
+    col.classList.add('is-over');
+  });
+  homeBoard.addEventListener('drop', (e) => {
+    const col = e.target.closest('[data-g-col]');
+    if (!col || !homeBoard.contains(col)) return;
+    e.preventDefault();
+    const c = chats.find((row) => row.id === 'hip');
+    const row = c && gItems(c.id).find((item) => item.id === e.dataTransfer.getData('text/plain'));
+    if (!row || !gCanSee(row, c) || !gCanMove(row, c)) return;
+    row.stage = col.dataset.gCol;
+    if (current() && current().id === 'hip') paintGroupBoard();
+    else paintHomeTaskBoard();
+  });
+}
 document.getElementById('tail-home')?.addEventListener('click', (e) => {
   const canvasBtn = e.target.closest('[data-home-canvas]');
   if (canvasBtn) {
