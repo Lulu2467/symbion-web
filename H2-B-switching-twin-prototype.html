@@ -2559,6 +2559,23 @@
   html[data-theme="blue"] .kd-clock-menu button:focus-visible { background: #ebf5fa; color: #1d1d1f; }
   html[data-theme="blue"] .kd-clock-menu::-webkit-scrollbar { width: 8px; }
   html[data-theme="blue"] .kd-clock-menu::-webkit-scrollbar-thumb { background: #d0d4d9; border-radius: 8px; }
+  .gi-clock-menu {
+    position: fixed; z-index: 120; width: 132px; max-height: 280px; overflow: auto; padding: 6px;
+    display: flex; flex-direction: column; gap: 4px;
+    background: #fff; color: #1d1d1f; border: 1px solid #e6e8ec; border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(20, 25, 26, .12);
+  }
+  .gi-clock-menu button {
+    display: block; flex: none; width: 100%; min-height: 32px; padding: 6px 10px; border: 0; border-radius: 8px;
+    background: transparent; color: #1d1d1f; font: inherit; font-size: 13px; line-height: 1.4; text-align: left; cursor: pointer;
+  }
+  .gi-clock-menu button:hover { background: #f6f7f8; color: #1d1d1f; }
+  .gi-clock-menu button.is-on,
+  .gi-clock-menu button.is-on:hover { background: #f6f7f8; color: #1d1d1f; font-weight: 650; }
+  .gi-clock-menu button:focus { outline: none; }
+  .gi-clock-menu button:focus-visible { background: #ebf5fa; color: #1d1d1f; }
+  .gi-clock-menu::-webkit-scrollbar { width: 8px; }
+  .gi-clock-menu::-webkit-scrollbar-thumb { background: #d0d4d9; border-radius: 8px; }
   html[data-theme="blue"] #tail-home .kd-allday {
     width: 100%; border: 0; background: transparent; font: inherit; color: inherit; text-align: left; cursor: pointer;
   }
@@ -22656,7 +22673,7 @@ function giShowClockMenu(btn, which) {
     menu.style.top = Math.round(top) + 'px';
   };
   const onBtn = menu.querySelector('button.is-on') || menu.querySelector('[data-gi-clock-mins]');
-  try { onBtn?.scrollIntoView({ block: 'center' }); } catch (_) {}
+  if (onBtn) menu.scrollTop = Math.max(0, onBtn.offsetTop - (menu.clientHeight - onBtn.offsetHeight) / 2);
   place();
   requestAnimationFrame(place);
   menu.addEventListener('click', (e) => {
