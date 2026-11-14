@@ -22052,13 +22052,12 @@ function gPlaceSlidingSeg(seg, prev) {
     seg.style.setProperty('--seg-x', btn.offsetLeft + 'px');
     seg.style.setProperty('--seg-w', btn.offsetWidth + 'px');
   };
-  if (prev && prev !== on) {
-    seg.classList.add('is-set');
-    place(prev);
-    void seg.offsetWidth;
-    seg.classList.remove('is-set');
-  }
-  place(on);
+  const from = prev && prev !== on ? prev : on;
+  seg.classList.add('is-set');
+  place(from);
+  void seg.offsetWidth;
+  seg.classList.remove('is-set');
+  if (from !== on) place(on);
 }
 function gPlaceCanvasSeg() {
   const seg = document.querySelector('#workspace .desk-views[aria-label="Canvas"]');
