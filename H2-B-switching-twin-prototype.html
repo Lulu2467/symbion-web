@@ -2544,17 +2544,19 @@
   html[data-theme="blue"] #tail-home .kd-clock.is-open { background: #f3f4f6; }
   html[data-theme="blue"] .kd-clock-menu {
     position: fixed; z-index: 80; width: 132px; max-height: 280px; overflow: auto; padding: 6px;
+    display: flex; flex-direction: column; gap: 4px;
     background: #fff; color: #1d1d1f; border: 1px solid #e6e8ec; border-radius: 12px;
     box-shadow: 0 8px 24px rgba(20, 25, 26, .12);
   }
   html[data-theme="blue"] .kd-clock-menu button {
-    display: block; width: 100%; min-height: 32px; padding: 0 10px; border: 0; border-radius: 6px;
-    background: transparent; color: #1d1d1f; font: inherit; font-size: 13px; text-align: left; cursor: pointer;
+    display: block; flex: none; width: 100%; min-height: 32px; padding: 6px 10px; border: 0; border-radius: 8px;
+    background: transparent; color: #1d1d1f; font: inherit; font-size: 13px; line-height: 1.4; text-align: left; cursor: pointer;
   }
-  html[data-theme="blue"] .kd-clock-menu button:hover,
-  html[data-theme="blue"] .kd-clock-menu button.is-on { background: #f3f4f6; color: #3c7a94; }
+  html[data-theme="blue"] .kd-clock-menu button:hover { background: #f6f7f8; color: #1d1d1f; }
+  html[data-theme="blue"] .kd-clock-menu button.is-on,
+  html[data-theme="blue"] .kd-clock-menu button.is-on:hover { background: #f6f7f8; color: #1d1d1f; font-weight: 650; }
   html[data-theme="blue"] .kd-clock-menu button:focus { outline: none; }
-  html[data-theme="blue"] .kd-clock-menu button:focus-visible { background: #ebf5fa; color: #3c7a94; }
+  html[data-theme="blue"] .kd-clock-menu button:focus-visible { background: #ebf5fa; color: #1d1d1f; }
   html[data-theme="blue"] .kd-clock-menu::-webkit-scrollbar { width: 8px; }
   html[data-theme="blue"] .kd-clock-menu::-webkit-scrollbar-thumb { background: #d0d4d9; border-radius: 8px; }
   html[data-theme="blue"] #tail-home .kd-allday {
@@ -6259,7 +6261,7 @@
   }
   .set-nav button[data-set] + button[data-set] { margin-top: 4px; }
   .set-nav button[data-set]:hover { background: #f3f5f7; }
-  .set-nav button[data-set][aria-current="page"] { background: var(--green-tint); color: var(--green); font-weight: 500; }
+  .set-nav button[data-set][aria-current="page"] { background: var(--green-tint); color: #1f1f1f; font-weight: 650; }
   .set-nav button.set-signout { color: #c62828; }
   .set-nav button.set-signout:hover { background: #fceeee; color: #b71c1c; }
   .set-nav button.set-signout[aria-current="page"] { background: #fceeee; color: #b71c1c; }
@@ -6411,13 +6413,13 @@
   .set-line span { color: var(--muted); }
   #setHost [hidden] { display: none !important; }
   #setHost .set-primary { color: #fff; }
-  #setHost .set-nav button[data-set][aria-current="page"] { background: var(--green-tint); color: var(--green); }
+  #setHost .set-nav button[data-set][aria-current="page"] { background: var(--green-tint); color: #1f1f1f; }
   html[data-theme="blue"] #setHost .set-nav button[data-set]:hover {
     background: #f6f7f8; color: #1d1d1f;
   }
   html[data-theme="blue"] #setHost .set-nav button[data-set][aria-current="page"],
   html[data-theme="blue"] #setHost .set-nav button[data-set][aria-current="page"]:hover {
-    background: #f6f7f8; color: #3c7a94; font-weight: 650;
+    background: #f6f7f8; color: #1d1d1f; font-weight: 650;
   }
   .set-badge {
     display: inline-flex;
@@ -8392,16 +8394,19 @@
   .gi-when-line .gi-clock.is-open { background: #ebf5fa; color: #3c7a94; }
   .gi-clock-menu {
     position: fixed; z-index: 120; width: 132px; max-height: 280px; overflow: auto; padding: 6px;
+    display: flex; flex-direction: column; gap: 4px;
     background: #fff; color: #1d1d1f; border: 1px solid #e6e8ec; border-radius: 12px;
     box-shadow: 0 8px 24px rgba(20, 25, 26, .12);
   }
   .gi-clock-menu button {
-    display: block; width: 100%; min-height: 32px; padding: 0 10px; border: 0; border-radius: 6px;
-    background: transparent; color: #1d1d1f; font: inherit; font-size: 13px; text-align: left; cursor: pointer;
+    display: block; flex: none; width: 100%; min-height: 32px; padding: 6px 10px; border: 0; border-radius: 8px;
+    background: transparent; color: #1d1d1f; font: inherit; font-size: 13px; line-height: 1.4; text-align: left; cursor: pointer;
   }
-  .gi-clock-menu button:hover,
-  .gi-clock-menu button.is-on { background: #f3f4f6; color: #3c7a94; }
+  .gi-clock-menu button:hover { background: #f6f7f8; color: #1d1d1f; }
+  .gi-clock-menu button.is-on,
+  .gi-clock-menu button.is-on:hover { background: #f6f7f8; color: #1d1d1f; font-weight: 650; }
   .gi-clock-menu button:focus { outline: none; }
+  .gi-clock-menu button:focus-visible { background: #ebf5fa; color: #1d1d1f; }
   .gi-when-line .gi-dash { color: #b0b4ba; font-size: 13px; }
   .gi-types { display: flex; flex-wrap: wrap; gap: 6px; }
   .gi-types button {
