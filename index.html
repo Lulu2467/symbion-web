@@ -2658,13 +2658,34 @@
   }
   html[data-theme="blue"] #tail-home button.kd-act:hover { background: #f6f7f8; }
   html[data-theme="blue"] #tail-home .kd-act.is-set span { color: #3c7a94; }
-  html[data-theme="blue"] #tail-home .kd-file {
-    display: flex; align-items: center; gap: 8px; min-height: 28px; margin: 0 16px 4px 40px; color: #1d1d1f; font-size: 13px;
+  html[data-theme="blue"] #tail-home .kd-meet {
+    display: flex; flex-direction: column; align-items: flex-start; gap: 4px; margin: 4px 16px 8px 40px;
   }
-  html[data-theme="blue"] #tail-home .kd-file span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  html[data-theme="blue"] #tail-home .kd-file button {
-    margin-left: auto; width: 24px; height: 24px; padding: 0; border: 0; background: transparent; color: #8b9198; cursor: pointer; font-size: 14px;
+  html[data-theme="blue"] #tail-home .kd-meet-go {
+    height: 28px; padding: 0 10px; border: 1px solid #3c7a94; border-radius: 6px; background: #fff;
+    color: #3c7a94; font: inherit; font-size: 13px; font-weight: 500; cursor: pointer;
   }
+  html[data-theme="blue"] #tail-home .kd-meet-go:hover { background: #ebf5fa; }
+  html[data-theme="blue"] #tail-home .kd-meet-url {
+    border: 0; padding: 0; background: transparent; color: #8b9198; font: inherit; font-size: 12px; cursor: pointer; text-align: left;
+  }
+  html[data-theme="blue"] #tail-home .kd-meet-url:hover { color: #3c7a94; }
+  html[data-theme="blue"] #tail-home .kd-meet-x {
+    border: 0; padding: 0; background: transparent; color: #8b9198; font: inherit; font-size: 12px; cursor: pointer;
+  }
+  html[data-theme="blue"] #tail-home .kd-attach { margin: 2px 16px 8px 40px; display: flex; flex-direction: column; gap: 6px; }
+  html[data-theme="blue"] #tail-home .kd-attach-k { font-size: 13px; color: #1d1d1f; }
+  html[data-theme="blue"] #tail-home .kd-file-card {
+    display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 8px 8px 8px 10px;
+    border: 1px solid #e6e8ec; border-radius: 8px; background: #fff; color: #1d1d1f; font-size: 13px;
+  }
+  html[data-theme="blue"] #tail-home .kd-file-card > span:last-of-type { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  html[data-theme="blue"] #tail-home .kd-file-ico { width: 28px; height: 32px; flex: none; display: flex; }
+  html[data-theme="blue"] #tail-home .kd-file-ico svg { width: 28px; height: 32px; display: block; }
+  html[data-theme="blue"] #tail-home .kd-file-card button {
+    margin-left: auto; width: 24px; height: 24px; padding: 0; border: 0; border-radius: 6px; background: transparent; color: #8b9198; cursor: pointer; font-size: 14px;
+  }
+  html[data-theme="blue"] #tail-home .kd-file-card button:hover { background: #f3f4f6; color: #1d1d1f; }
   html[data-theme="blue"] #tail-home .kd-row span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   html[data-theme="blue"] #tail-home .kd-sub { padding: 12px 16px 8px 40px; font-size: 13px; line-height: 18px; color: #1d1d1f; }
   html[data-theme="blue"] #tail-home .kd-arrow { color: #8b9198; }
@@ -8325,13 +8346,35 @@
   .tk-card[draggable="false"] { cursor: default; }
   .tk-card b { font-size: 14px; font-weight: 650; line-height: 1.35; }
   .tk-card p { margin: 0; max-width: 100%; color: #71777d; font-size: 12px; line-height: 1.4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .tk-card .tk-meet,
-  .tk-card .tk-file {
-    display: block; max-width: 100%; font-size: 12px; line-height: 1.4; font-weight: 500;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  .tk-meet, .tk-files { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; width: 100%; min-width: 0; }
+  .tk-meet-go {
+    display: inline-flex; align-items: center; height: 26px; padding: 0 8px; border: 1px solid #3c7a94; border-radius: 6px;
+    background: #fff; color: #3c7a94; font-size: 12px; font-weight: 500; line-height: 1;
   }
-  .tk-card .tk-meet { color: #3c7a94; }
-  .tk-card .tk-file { color: #1f1f1f; }
+  .tk-meet-url, .tk-file-k { max-width: 100%; color: #8b9198; font-size: 12px; line-height: 1.4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tk-file-k { color: #1f1f1f; }
+  .tk-file-card {
+    display: flex; align-items: center; gap: 8px; width: 100%; min-width: 0; min-height: 44px; padding: 6px 8px;
+    border: 1px solid #e6e8ec; border-radius: 8px; background: #fff; color: #1f1f1f; font-size: 12px; font-weight: 500;
+  }
+  .tk-file-card > span:last-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tk-file-ico, .gi-file-ico { width: 22px; height: 26px; flex: none; display: flex; }
+  .tk-file-ico svg, .gi-file-ico svg { width: 22px; height: 26px; display: block; }
+  .gi-meet { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+  #giMeetBtn.is-set {
+    height: 28px; padding: 0 10px; border: 1px solid #3c7a94; border-radius: 6px; color: #3c7a94; font-weight: 500;
+  }
+  .gi-meet-url { color: #8b9198; font-size: 12px; line-height: 1.4; }
+  .gi-meet-url[hidden] { display: none !important; }
+  .gi-file-card {
+    display: flex; align-items: center; gap: 8px; width: 100%; min-height: 44px; padding: 6px 8px;
+    border: 1px solid #e6e8ec; border-radius: 8px; background: #fff; color: #1f1f1f; font-size: 13px;
+  }
+  .gi-file-card > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .gi-file-card button {
+    margin-left: auto; width: 24px; height: 24px; border: 0; border-radius: 6px; background: transparent; color: #8b9198; font-size: 14px;
+  }
+  .gi-file-card button:hover { background: #f3f4f6; color: #1f1f1f; }
   .tk-type { color: #3c7a94; font-size: 11px; font-weight: 700; }
   .tk-meta { display: flex; align-items: center; gap: 6px; width: 100%; min-width: 0; color: #71777d; font-size: 12px; }
   .tk-meta .av { width: 20px; height: 20px; border-radius: 6px; font-size: 9px; flex: none; }
@@ -8423,6 +8466,7 @@
   .gi-types button[aria-pressed="true"] { background: #ebf5fa; color: #3c7a94; }
   .gi-people { display: grid; gap: 0; }
   .gi-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .gi-chips:has(.gi-file-card) { flex-direction: column; align-items: stretch; width: 100%; }
   .gi-chips:empty { display: none; }
   .gi-chip {
     display: inline-flex; align-items: center; gap: 4px; height: 28px; max-width: 100%;
@@ -10910,8 +10954,11 @@
                 <span class="gi-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6h8A2.5 2.5 0 0 1 16 8.5v7a2.5 2.5 0 0 1-2.5 2.5h-8A2.5 2.5 0 0 1 3 15.5v-7z"/><path d="m16 10 5-2.5v9L16 14"/></svg></span>
                 <div class="gi-row-body">
                   <div class="gi-row-line">
-                    <button type="button" class="gi-quiet" id="giMeetBtn" data-gi="meet" aria-pressed="false"><span id="giMeetLabel">Add meeting</span></button>
-                    <button type="button" class="gi-link" id="giMeetHint" data-gi="meet" hidden>Remove</button>
+                    <span class="gi-meet">
+                      <button type="button" class="gi-quiet" id="giMeetBtn" data-gi="meet" aria-pressed="false"><span id="giMeetLabel">Add meeting</span></button>
+                      <span class="gi-meet-url" id="giMeetUrl" hidden></span>
+                      <button type="button" class="gi-link" id="giMeetHint" data-gi="meet" hidden>Remove</button>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -12044,6 +12091,11 @@
       const fileRemove = e.target.closest("[data-kd-file-remove]");
       if (fileRemove) { kbRemoveFile(Number(fileRemove.dataset.kdFileRemove)); return; }
       if (e.target.closest('[data-kd="file"]')) { kbPickFiles(); return; }
+      if (e.target.closest('[data-kd="meet-open"]')) {
+        const opened = kbOpenEv() || (kbBox().draft && !kbBox().draft.done ? kbDraftEvent(kbBox().draft) : null);
+        if (opened && opened.meet) showToastMsg('Opening ' + opened.meet);
+        return;
+      }
       if (e.target.closest('[data-kd="meet"]')) { kbToggleMeet(); return; }
       if (e.target.closest('[data-kd="allday"]')) kbToggleAllDay();
       const rsvp = e.target.closest('[data-kd-rsvp]');
@@ -13291,6 +13343,11 @@
     }
     input.click();
   }
+  function kbDocIcon(name) {
+    const ext = String(name || '').split('.').pop().toLowerCase();
+    const color = ext === 'pdf' ? '#e24b4a' : (ext === 'doc' || ext === 'docx' || ext === 'txt') ? '#3c7a94' : '#8b9198';
+    return '<svg viewBox="0 0 24 28" aria-hidden="true"><path fill="' + color + '" d="M5 1.5h9.2L21 8.2V25a1.5 1.5 0 0 1-1.5 1.5h-14A1.5 1.5 0 0 1 4 25V3A1.5 1.5 0 0 1 5.5 1.5H5z"/><path fill="#fff" fill-opacity=".9" d="M14 1.5V8h7"/></svg>';
+  }
   function kbDetail(ev) {
     const end = ev.start + (ev.dur || 60);
     const when = ev.timed
@@ -13301,9 +13358,12 @@
     const color = kbLaneColor(ev.lane || "personal");
     const off = (icon, label) => '<div class="kd-row is-off">' + (icon === "user" ? kbIcon("personal") : kdIcon(icon)) + "<span>" + label + "</span></div>";
     const files = kbFileList(ev);
-    const fileRow = '<button type="button" class="kd-row kd-act" data-kd="file">' + kdIcon("file") + "<span>Upload file</span></button>";
-    const fileChips = files.map((name, i) => '<div class="kd-file"><span>' + deskEsc(name) + '</span><button type="button" data-kd-file-remove="' + i + '" aria-label="Remove file">×</button></div>').join("");
-    const meetRow = '<button type="button" class="kd-row kd-act' + (ev.meet ? " is-set" : "") + '" data-kd="meet">' + kdIcon("video") + "<span>" + deskEsc(ev.meet || "Meeting") + "</span></button>";
+    const fileCount = files.length === 1 ? "1 attachment" : files.length + " attachments";
+    const fileCards = files.map((name, i) => '<div class="kd-file-card"><span class="kd-file-ico">' + kbDocIcon(name) + '</span><span>' + deskEsc(name) + '</span><button type="button" data-kd-file-remove="' + i + '" aria-label="Remove file">×</button></div>').join("");
+    const fileRow = '<button type="button" class="kd-row kd-act" data-kd="file">' + kdIcon("file") + "<span>" + (files.length ? "Add attachment" : "Add attachment") + "</span></button>" + (files.length ? '<div class="kd-attach"><div class="kd-attach-k">' + fileCount + "</div>" + fileCards + "</div>" : "");
+    const meetRow = ev.meet
+      ? '<div class="kd-meet"><button type="button" class="kd-meet-go" data-kd="meet-open">Start video meeting</button><button type="button" class="kd-meet-url" data-kd="meet-open">' + deskEsc(ev.meet) + '</button><button type="button" class="kd-meet-x" data-kd="meet">Remove</button></div>'
+      : '<button type="button" class="kd-row kd-act" data-kd="meet">' + kdIcon("video") + "<span>Add meeting</span></button>";
     const picked = ev.task || "task";
     const iconMenu = kbBox().iconOpen ? '<div class="kd-icons" role="listbox" aria-label="Icons">' + KB_ICON_CHOICES.map(([id, name]) => '<button type="button" role="option" data-kd-task="' + id + '" class="' + (id === picked ? "is-on" : "") + '" aria-label="' + name + '" aria-selected="' + (id === picked ? "true" : "false") + '">' + kbTaskIcon(id) + "</button>").join("") + "</div>" : "";
     const mark = '<button type="button" class="kd-mark' + (kbBox().iconOpen ? " is-open" : "") + '" data-kd="icon" style="color:' + color + '" aria-label="Choose icon" aria-expanded="' + (kbBox().iconOpen ? "true" : "false") + '">' + kbTaskIcon(picked) + "</button>";
@@ -13313,7 +13373,7 @@
     const peopleRow = ev.invite ? '<div class="kd-row">' + kbIcon("personal") + "<span>" + deskEsc((ev.people && ev.people.length) ? ev.people.join(", ") : "You") + "</span></div>" : off("user", "Participants");
     const all = '<button type="button" class="kd-row kd-allday" data-kd="allday"><i class="kd-tog' + (ev.timed ? "" : " is-on") + '"></i><span>All-day</span></button>';
     const repeatRow = '<div class="kd-row kd-repeat' + (ev.repeat ? " is-set" : "") + '" data-kd="repeat" role="button" tabindex="0">' + kdIcon("sync") + "<span>" + deskEsc(kbRepeatLabel(ev)) + '</span><svg class="kd-repeat-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.2 6.2 8 10l3.8-3.8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
-    return '<aside class="kb-legend kb-detail"><div class="kd-title">' + mark + title + "</div>" + iconMenu + when + date + rsvpRow + all + '<div class="kd-row kd-tz" data-kd="tz" role="button" tabindex="0" aria-haspopup="listbox" aria-expanded="false" aria-label="Time zone">' + kdIcon("earth") + "<span>" + deskEsc(kbTzLabel(ev)) + '</span><svg class="kd-tz-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.2 6.2 8 10l3.8-3.8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>' + repeatRow + '<div class="kd-gap"></div>' + peopleRow + fileRow + fileChips + meetRow + '<div class="kd-gap"></div><div class="kd-label">Description</div>' + note + '<div class="kd-gap"></div><div class="kd-row"><i class="kd-dot" style="background:' + color + '"></i><span>' + deskEsc(group) + '</span></div>' + kbVisRow(ev) + off("bell", "Reminders") + "</aside>";
+    return '<aside class="kb-legend kb-detail"><div class="kd-title">' + mark + title + "</div>" + iconMenu + when + date + rsvpRow + all + '<div class="kd-row kd-tz" data-kd="tz" role="button" tabindex="0" aria-haspopup="listbox" aria-expanded="false" aria-label="Time zone">' + kdIcon("earth") + "<span>" + deskEsc(kbTzLabel(ev)) + '</span><svg class="kd-tz-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.2 6.2 8 10l3.8-3.8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>' + repeatRow + '<div class="kd-gap"></div>' + peopleRow + meetRow + fileRow + '<div class="kd-gap"></div><div class="kd-label">Description</div>' + note + '<div class="kd-gap"></div><div class="kd-row"><i class="kd-dot" style="background:' + color + '"></i><span>' + deskEsc(group) + '</span></div>' + kbVisRow(ev) + off("bell", "Reminders") + "</aside>";
   }
   function kbSide() {
     const draft = kbBox().draft;
@@ -21809,6 +21869,11 @@ function gDayLabel(iso) {
   if (!iso) return '';
   return new Date(iso + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
+function gDocIcon(name) {
+  const ext = String(name || '').split('.').pop().toLowerCase();
+  const color = ext === 'pdf' ? '#e24b4a' : (ext === 'doc' || ext === 'docx' || ext === 'txt') ? '#3c7a94' : '#8b9198';
+  return '<svg viewBox="0 0 24 28" aria-hidden="true"><path fill="' + color + '" d="M5 1.5h9.2L21 8.2V25a1.5 1.5 0 0 1-1.5 1.5h-14A1.5 1.5 0 0 1 4 25V3A1.5 1.5 0 0 1 5.5 1.5H5z"/><path fill="#fff" fill-opacity=".9" d="M14 1.5V8h7"/></svg>';
+}
 function gFileNames(item) {
   const names = [];
   (item.files || []).forEach((file) => {
@@ -21821,8 +21886,10 @@ function gFileNames(item) {
 function gTaskCard(item, c) {
   const p = people[item.who];
   const when = [gDayLabel(item.date), item.startTime ? gWhen(item) : ''].filter(Boolean).join(' · ');
-  const meet = item.meet ? '<span class="tk-meet">Meeting · ' + esc(item.meet) + '</span>' : '';
-  const files = gFileNames(item).map((name) => '<span class="tk-file">File · ' + esc(name) + '</span>').join('');
+  const names = gFileNames(item);
+  const meet = item.meet ? '<span class="tk-meet"><span class="tk-meet-go">Start video meeting</span><span class="tk-meet-url">' + esc(item.meet) + '</span></span>' : '';
+  const fileCount = names.length === 1 ? '1 attachment' : names.length + ' attachments';
+  const files = names.length ? '<span class="tk-files"><span class="tk-file-k">' + fileCount + '</span>' + names.map((name) => '<span class="tk-file-card"><span class="tk-file-ico">' + gDocIcon(name) + '</span><span>' + esc(name) + '</span></span>').join('') + '</span>' : '';
   return `<button type="button" class="tk-card" data-g-item="${esc(item.id)}" draggable="${gCanMove(item, c) ? 'true' : 'false'}"><span class="tk-type">${esc(item.type || 'Task')}</span><b>${esc(item.title)}</b>${item.notes ? '<p>' + esc(item.notes) + '</p>' : ''}${meet}${files}<span class="tk-meta"><span class="av hue-${p ? p.hue : 'slate'}">${esc(p ? p.short : '')}</span><span>${esc(p ? p.name : '')}</span><time>${esc(when)}</time></span></button>`;
 }
 function gTaskBoard(c) {
@@ -22562,7 +22629,7 @@ function paintGroupItem() {
   if (q && q.value !== gi.peopleQuery) q.value = gi.peopleQuery;
   const files = $('giFiles');
   if (files) {
-    files.innerHTML = gi.files.map((file) => `<span class="gi-chip"><span>${esc(file.name)}</span><button type="button" data-gi-file="${esc(file.name)}" aria-label="Remove ${esc(file.name)}">×</button></span>`).join('');
+    files.innerHTML = gi.files.map((file) => `<span class="gi-file-card"><span class="gi-file-ico">${gDocIcon(file.name)}</span><span>${esc(file.name)}</span><button type="button" data-gi-file="${esc(file.name)}" aria-label="Remove ${esc(file.name)}">×</button></span>`).join('');
   }
   const meetBtn = $('giMeetBtn');
   const meetLabel = $('giMeetLabel');
@@ -22571,7 +22638,12 @@ function paintGroupItem() {
     const on = !!gi.meet;
     meetBtn.classList.toggle('is-set', on);
     meetBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
-    if (meetLabel) meetLabel.textContent = on ? gi.meet : 'Add meeting';
+    if (meetLabel) meetLabel.textContent = on ? 'Start video meeting' : 'Add meeting';
+    const meetUrl = $('giMeetUrl');
+    if (meetUrl) {
+      meetUrl.hidden = !on;
+      meetUrl.textContent = on ? gi.meet : '';
+    }
     if (meetHint) meetHint.hidden = !on;
   }
   const filePick = $('giFilePick');
