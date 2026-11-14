@@ -1896,8 +1896,16 @@
     display: flex;
     flex-direction: column;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-tools { flex: none; margin-bottom: 12px; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-when { gap: 4px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-tools {
+    flex: none;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 12px;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-tools > .desk-range { margin-right: auto; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-when { gap: 4px; margin-left: auto; flex: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-when > .desk-views { margin-left: 0; }
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-when > button {
     height: 32px;
     padding: 0 12px;
@@ -1907,7 +1915,7 @@
     font-weight: 500;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-when > button:hover { background: #f4f5f7; color: #1d1d1f; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-range { color: #1d1d1f; font-size: 13px; font-weight: 600; width: 196px; min-width: 196px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-range { color: #1d1d1f; font-size: 16px; font-weight: 700; letter-spacing: -.02em; width: auto; min-width: 0; }
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-board { gap: 0; }
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-col {
     padding: 2px 16px 0;
@@ -8678,7 +8686,10 @@
   .ws-files button small { color: #71777d; font-size: 12px; }
   .ws-kanban .ws-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
   .ws-kanban .ws-head h3 { margin: 0; font-size: 16px; font-weight: 650; color: #1f1f1f; }
-  .ws-kanban .desk-tools { width: 100%; margin: 0 0 12px; }
+  .ws-kanban .desk-tools { display: flex; align-items: center; flex-wrap: nowrap; justify-content: flex-end; width: 100%; margin: 0 0 12px; }
+  .ws-kanban .desk-tools > .desk-range { margin-right: auto; width: auto; min-width: 0; }
+  .ws-kanban .desk-tools > .desk-when { margin-left: auto; flex: none; }
+  .ws-kanban .desk-when > .desk-views { margin-left: 0; }
   .ws-kanban .desk-views { height: 32px; gap: 2px; padding: 3px; border-radius: 10px; background: #eef0f2; }
   .ws-kanban .desk-views button { height: 26px; padding: 0 12px; border-radius: 8px; font-size: 13px; font-weight: 500; color: #71777d; }
   .ws-kanban .desk-views button[aria-pressed="true"] { background: #fff; color: #1d1d1f; font-weight: 650; box-shadow: 0 1px 2px rgba(20, 24, 28, .08); }
@@ -22750,12 +22761,11 @@ function paintHomeTaskBoard() {
             <button type="button" data-home-span="month" aria-pressed="${gSpan === 'month'}">Month</button>
           </div>`;
   const tools = homeCanvas === 'list' || homeCanvas === 'timeline'
-    ? `<div class="desk-tools"><div class="desk-when">
-          <button type="button" data-home-act="prev" aria-label="Previous">‹</button>
-          <span class="desk-range">${gRangeLabel()}</span>
-          <button type="button" data-home-act="next" aria-label="Next">›</button>
-          <button type="button" data-home-act="today">Today</button>
+    ? `<div class="desk-tools"><span class="desk-range">${gRangeLabel()}</span><div class="desk-when">
           ${rangeSwitch}
+          <button type="button" data-home-act="today">Today</button>
+          <button type="button" data-home-act="prev" aria-label="Previous">‹</button>
+          <button type="button" data-home-act="next" aria-label="Next">›</button>
         </div></div>`
     : '';
   slot.innerHTML = `<div class="ws-kanban">
@@ -22860,12 +22870,11 @@ function paintGroupBoard() {
           <div class="desk-new"><button type="button" data-g-act="new" aria-label="Create event"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.25" fill="none" stroke="currentColor" stroke-width="1.35"/><path d="M12 8.2v7.6M8.2 12h7.6" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/></svg></button></div>
         </div>
       </div>
-      ${gCanvas === 'board' || gCanvas === 'calendar' ? '' : `<div class="desk-tools"><div class="desk-when">
-          <button type="button" data-g-act="prev" aria-label="Previous">‹</button>
-          <span class="desk-range">${rangeLabel}</span>
-          <button type="button" data-g-act="next" aria-label="Next">›</button>
-          <button type="button" data-g-act="today">Today</button>
+      ${gCanvas === 'board' || gCanvas === 'calendar' ? '' : `<div class="desk-tools"><span class="desk-range">${rangeLabel}</span><div class="desk-when">
           ${rangeSwitch}
+          <button type="button" data-g-act="today">Today</button>
+          <button type="button" data-g-act="prev" aria-label="Previous">‹</button>
+          <button type="button" data-g-act="next" aria-label="Next">›</button>
         </div></div>`}
       ${boardHtml}
     </div>`;
