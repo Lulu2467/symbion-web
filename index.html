@@ -8512,16 +8512,21 @@
   .tk-face-more svg { width: 14px; height: 14px; display: block; }
   .tk-faces-pop {
     position: absolute; z-index: 6; left: 0; bottom: calc(100% + 8px);
-    min-width: 168px; max-height: 220px; overflow: auto; padding: 6px;
-    background: #fff; border: 1px solid #e6e8ec; border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(20, 25, 26, .12);
+    min-width: 208px; max-height: 248px; overflow: auto; padding: 6px;
+    background: #fff; border: 1px solid #e6e8ec; border-radius: 14px;
+    box-shadow: 0 12px 32px rgba(20, 24, 28, .14);
+    scrollbar-width: thin; scrollbar-color: #d5d8dc transparent;
   }
+  .tk-faces-pop::-webkit-scrollbar { width: 10px; }
+  .tk-faces-pop::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
+  .tk-faces-pop::-webkit-scrollbar-thumb { background: #d5d8dc; border-radius: 8px; border: 3px solid #fff; }
   .tk-faces-pop[hidden] { display: none !important; }
   .tk-faces-pop i {
-    display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 8px;
-    font-style: normal; font-size: 13px; font-weight: 500; color: #1f1f1f; white-space: nowrap;
+    display: flex; align-items: center; gap: 10px; min-height: 36px; padding: 4px 10px 4px 6px; border-radius: 10px;
+    font-style: normal; font-size: 13px; font-weight: 550; color: #1d1d1f; white-space: nowrap;
   }
-  .tk-faces-pop .tk-face { width: 22px; height: 22px; margin: 0; border: 0; }
+  .tk-faces-pop i:hover { background: #f4f5f7; }
+  .tk-faces-pop .tk-face { width: 26px; height: 26px; margin: 0; border: 0; font-size: 9px; }
   .tk-who { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .tk-meta time { margin-left: auto; flex: none; color: #8b9198; font-size: 11px; }
   .tk-empty { margin: 8px 4px; color: #a4a4a2; font-size: 12px; }
