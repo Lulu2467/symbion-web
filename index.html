@@ -1738,9 +1738,13 @@
     box-sizing: border-box;
     position: relative;
     background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 16px;
+    border: 0;
+    border-radius: 22px;
     padding: 16px;
+    box-shadow:
+      0 10px 28px rgba(20, 24, 28, 0.06),
+      0 2px 6px rgba(20, 24, 28, 0.04),
+      0 0 0 1px rgba(20, 24, 28, 0.06);
   }
   .tl-fab { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) :is(#tail-home,.ws-home-cal) .rem-card:is(:has(.rem-board.is-blank), :has(#tlZoom [data-tl-span="plan"][aria-pressed="true"])):not(:has(.is-cal)):not(:has(.is-add)) .tl-fab {
@@ -1762,10 +1766,57 @@
   }
   html[data-theme="blue"] :is(#tail-home,.ws-home-cal) .tl-fab svg { width: 36px; height: 36px; display: block; }
   html[data-theme="blue"] .hub:has(#screen-home.on) :is(#tail-home,.ws-home-cal) .two-title-l {
-    height: 28px;
-    min-height: 28px;
-    max-height: 28px;
+    height: 32px;
+    min-height: 32px;
+    max-height: 32px;
     padding: 0;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .home-canvas {
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    height: 32px;
+    margin-left: auto;
+    padding: 3px;
+    gap: 0;
+    border-radius: 999px;
+    background: #f2f2f4;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .home-canvas::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    left: 0;
+    width: var(--seg-w, 0px);
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(20, 24, 28, .12);
+    transform: translateX(var(--seg-x, 3px));
+    transition: transform .46s cubic-bezier(.22, 1, .36, 1), width .46s cubic-bezier(.22, 1, .36, 1);
+    pointer-events: none;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .home-canvas.is-set::before { transition: none; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .home-canvas button {
+    position: relative;
+    z-index: 1;
+    height: 26px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #8e8e93;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 550;
+    box-shadow: none;
+    cursor: pointer;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .home-canvas button:hover { color: #1d1d1f; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .home-canvas button[aria-pressed="true"] {
+    color: #1d1d1f;
+    font-weight: 650;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) :is(#tail-home,.ws-home-cal) .two-title-l h3 {
     font-size: 16px;
@@ -1809,9 +1860,82 @@
     display: flex;
     flex-direction: column;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .ws-head,
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-tools { flex: none; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .ws-head { margin-bottom: 8px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-tools { flex: none; margin-bottom: 12px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-when { gap: 4px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-when > button {
+    height: 32px;
+    padding: 0 12px;
+    border-radius: 999px;
+    color: #5f6670;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-when > button:hover { background: #f4f5f7; color: #1d1d1f; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-range { color: #1d1d1f; font-size: 13px; font-weight: 600; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-board { gap: 14px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-col {
+    padding: 14px;
+    border-radius: 18px;
+    background: #f7f8fa;
+    box-shadow: inset 0 0 0 1px rgba(20, 24, 28, .04);
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-col h4 {
+    margin-bottom: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1d1d1f;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-col h4 span {
+    background: #fff;
+    color: #8b9198;
+    font-weight: 600;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-card {
+    border: 0;
+    border-radius: 14px;
+    padding: 12px 12px 10px;
+    box-shadow: 0 1px 2px rgba(20, 24, 28, .04), 0 0 0 1px rgba(20, 24, 28, .06);
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-card b { font-weight: 600; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-card:hover {
+    box-shadow: 0 6px 16px rgba(20, 24, 28, .06), 0 0 0 1px rgba(20, 24, 28, .08);
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-type { font-size: 12px; font-weight: 600; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-list { gap: 10px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-file-card {
+    height: 24px;
+    padding: 0 8px 0 6px;
+    border: 0;
+    border-radius: 999px;
+    background: #f3f4f6;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-meet-go {
+    height: 26px;
+    padding: 0 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 550;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-meta { border-top-color: rgba(20, 24, 28, .06); }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-meta time { font-size: 12px; }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-list:has(.tk-empty) {
+    align-items: center;
+    justify-content: center;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-empty {
+    margin: 0;
+    color: #b0b4ba;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .g-row,
+  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-board {
+    border-color: transparent;
+    border-radius: 14px;
+    box-shadow: 0 0 0 1px rgba(20, 24, 28, .06);
+  }
   html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .home-kanban-body {
     flex: 1 1 auto;
     min-height: 0;
@@ -17914,7 +18038,7 @@
 
     const boardTitle = document.getElementById('homeBoardTitle');
     if (boardTitle && next !== 'blue') boardTitle.textContent = 'Reminders';
-    if (next === 'blue' && window.paintHomeTaskBoard) window.paintHomeTaskBoard();
+    if (window.paintHomeTaskBoard) window.paintHomeTaskBoard();
     const communityBtn = document.querySelector('.rail .r[data-rail="community"]');
     if (communityBtn) {
       const communityName = next === 'blue' ? 'Community' : 'Team';
@@ -22348,9 +22472,13 @@ function gCanvasBody(c, canvas) {
 function paintHomeTaskBoard() {
   const slot = document.getElementById('homeTaskBoard');
   const c = chats.find((row) => row.id === 'hip');
+  const titleRow = document.querySelector('#tail-home .two-title-l');
   if (!slot || !c) return;
+  const blue = document.documentElement.dataset.theme === 'blue';
+  titleRow?.querySelector('.home-canvas')?.remove();
   const boardTitle = document.getElementById('homeBoardTitle');
-  if (boardTitle && document.documentElement.dataset.theme === 'blue') boardTitle.textContent = gCanvasTitle(homeCanvas);
+  if (boardTitle && blue) boardTitle.textContent = gCanvasTitle(homeCanvas);
+  if (!blue) return;
   const rangeSwitch = `<div class="desk-views" role="group" aria-label="Range">
             <button type="button" data-home-span="day" aria-pressed="${gSpan === 'day'}">Day</button>
             <button type="button" data-home-span="week" aria-pressed="${gSpan === 'week'}">Week</button>
@@ -22366,21 +22494,22 @@ function paintHomeTaskBoard() {
         </div></div>`
     : '';
   slot.innerHTML = `<div class="ws-kanban">
-      <div class="ws-head">
-        <div class="desk-tools-end">
-          <div class="desk-views" role="group" aria-label="Canvas">
-            <button type="button" data-home-canvas="board" aria-pressed="${homeCanvas === 'board'}">Kanban</button>
-            <button type="button" data-home-canvas="calendar" aria-pressed="${homeCanvas === 'calendar'}">Calendar</button>
-            <button type="button" data-home-canvas="list" aria-pressed="${homeCanvas === 'list'}">List</button>
-            <button type="button" data-home-canvas="timeline" aria-pressed="${homeCanvas === 'timeline'}">Timeline</button>
-          </div>
-        </div>
-      </div>
       ${tools}
       <div class="home-kanban-body">${gCanvasBody(c, homeCanvas)}</div>
     </div>`;
   slot.querySelectorAll('.tk-card').forEach((card) => { card.draggable = false; });
-  const seg = slot.querySelector('.desk-views[aria-label="Canvas"]');
+  if (titleRow) {
+    const add = titleRow.querySelector('.act-add');
+    const html = `<div class="desk-views home-canvas" role="group" aria-label="Canvas">
+            <button type="button" data-home-canvas="board" aria-pressed="${homeCanvas === 'board'}">Kanban</button>
+            <button type="button" data-home-canvas="calendar" aria-pressed="${homeCanvas === 'calendar'}">Calendar</button>
+            <button type="button" data-home-canvas="list" aria-pressed="${homeCanvas === 'list'}">List</button>
+            <button type="button" data-home-canvas="timeline" aria-pressed="${homeCanvas === 'timeline'}">Timeline</button>
+          </div>`;
+    if (add) add.insertAdjacentHTML('beforebegin', html);
+    else titleRow.insertAdjacentHTML('beforeend', html);
+  }
+  const seg = titleRow?.querySelector('.home-canvas');
   const prev = homeCanvasFrom && seg ? seg.querySelector('[data-home-canvas="' + homeCanvasFrom + '"]') : null;
   gPlaceSlidingSeg(seg, prev);
   homeCanvasFrom = '';
@@ -24823,7 +24952,7 @@ render(true);
 paintHomeTaskBoard();
 window.paintHomeTaskBoard = paintHomeTaskBoard;
 window.renderTeamWorkspace = render;
-document.getElementById('homeTaskBoard')?.addEventListener('click', (e) => {
+document.getElementById('tail-home')?.addEventListener('click', (e) => {
   const canvasBtn = e.target.closest('[data-home-canvas]');
   if (canvasBtn) {
     if (canvasBtn.dataset.homeCanvas !== homeCanvas) homeCanvasFrom = homeCanvas;
