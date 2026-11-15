@@ -17372,7 +17372,7 @@
       if (!btn) return;
       const act = btn.dataset.railAccount;
       setRailMeMenu(false);
-      if (act === 'desk') openDesk('kanban');
+      if (act === 'desk') openDesk('email');
       else if (act === 'profile') openSettings('profile');
       else if (act === 'settings') openSettings('settings');
       else if (act === 'picture') openSettings('picture');
@@ -19914,7 +19914,7 @@
     { id: 'course', name: 'CO006017 · Data Analysis and Machine Learning', preview: '#general' },
     { id: 'ai', name: '1105 AI', preview: '#general' },
   ];
-  let deskSection = 'kanban';
+  let deskSection = 'email';
   let deskSpan = 'week';
   let deskCanvas = 'timeline';
   let deskFocus = new Date();
@@ -20251,30 +20251,6 @@
     host.dataset.ready = '1';
     host.innerHTML = `<div class="desk-shell">
       <div class="desk-scroll" id="deskScroll">
-        <section class="desk-card" id="desk-kanban">
-          <h2>Kanban</h2>
-          <p class="sub">Your schedule</p>
-          <div class="desk-tools">
-            <button type="button" data-desk-act="prev" aria-label="Previous">‹</button>
-            <button type="button" data-desk-act="next" aria-label="Next">›</button>
-            <span class="desk-range" id="deskRange"></span>
-            <button type="button" data-desk-act="today">Today</button>
-            <div class="desk-views" role="group" aria-label="Range">
-              <button type="button" data-desk-span="day">Day</button>
-              <button type="button" data-desk-span="week">Week</button>
-              <button type="button" data-desk-span="month">Month</button>
-            </div>
-            <div class="desk-views" role="group" aria-label="Canvas">
-              <button type="button" data-desk-canvas="timeline">Timeline</button>
-              <button type="button" data-desk-canvas="calendar">Calendar</button>
-              <button type="button" data-desk-canvas="list">List</button>
-            </div>
-            <div class="desk-new">
-              <button type="button" data-desk-act="new">New item</button>
-            </div>
-          </div>
-          <div id="deskBoard"></div>
-        </section>
         <section class="desk-card" id="desk-email">
           <h2>Email</h2>
           <p class="sub">0 unread</p>
@@ -20930,7 +20906,8 @@
       b.setAttribute('aria-pressed', String(b.dataset.screen === 'home'));
     });
     paintDeskChrome();
-    if (deskSection !== 'kanban') document.getElementById(`desk-${deskSection}`)?.scrollIntoView({ block: 'start' });
+    const deskTarget = document.getElementById(`desk-${deskSection}`);
+    if (deskTarget && deskSection !== 'email') deskTarget.scrollIntoView({ block: 'start' });
     else {
       const scroll = document.getElementById('deskScroll');
       if (scroll) scroll.scrollTop = 0;
@@ -21093,7 +21070,7 @@
       const nav = event.target.closest('button[data-set]');
       if (nav) {
         if (nav.dataset.set === 'desk') {
-          openDesk('kanban');
+          openDesk('email');
           return;
         }
         showSettings(nav.dataset.set);
@@ -21375,7 +21352,7 @@
       setScreen('home');
     } else if (s === 'team') openTeam();
     else if (s === 'dir') openDir(q.get('dir') || 'cosmo');
-    else if (s === 'desk') openDesk(q.get('desk') || 'kanban');
+    else if (s === 'desk') openDesk(q.get('desk') || 'email');
     else if (s === 'symbion') openSymbion(q.get('me') || 'know');
     else if (s === 'settings') openSettings(q.get('set') || 'profile');
     else if (s === 'tutorial') {
