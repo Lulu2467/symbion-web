@@ -711,6 +711,7 @@
     margin-top: -1px;
     overflow: visible;
     box-shadow: none;
+    transition: width .42s cubic-bezier(0.22, 1, 0.36, 1), padding .42s cubic-bezier(0.22, 1, 0.36, 1);
   }
   html[data-theme="blue"] .rail::before {
     content: "";
@@ -725,6 +726,26 @@
   /* Open rail spans the same inset as the osbar logo: mark at 20px, word ends at 135px. */
   html[data-theme="blue"] .rail.is-open { width: 228px; }
   html[data-theme="blue"] .rail .r { color: #5f6368; }
+  html[data-theme="blue"] .rail .r[data-rail] {
+    transition: background .15s ease, color .15s ease, width .42s cubic-bezier(0.22, 1, 0.36, 1), padding .42s cubic-bezier(0.22, 1, 0.36, 1), gap .36s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  html[data-theme="blue"] .rail .r .rail-lab {
+    display: inline-block;
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    transform: translateX(-6px);
+    pointer-events: none;
+    transition: max-width .32s cubic-bezier(0.4, 0, 0.2, 1), opacity .18s ease, transform .28s ease;
+  }
+  html[data-theme="blue"] .rail.is-open .r .rail-lab {
+    display: inline-block;
+    max-width: 148px;
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+    transition: max-width .42s cubic-bezier(0.22, 1, 0.36, 1) .05s, opacity .3s ease .1s, transform .36s cubic-bezier(0.22, 1, 0.36, 1) .05s;
+  }
   html[data-theme="blue"] .rail .r.o {
     background: transparent;
     border-color: transparent;
@@ -777,6 +798,7 @@
     color: #5f6368;
     appearance: none;
     cursor: pointer;
+    transition: width .42s cubic-bezier(0.22, 1, 0.36, 1), padding .42s cubic-bezier(0.22, 1, 0.36, 1), gap .36s cubic-bezier(0.22, 1, 0.36, 1), background .15s ease;
   }
   html[data-theme="blue"] .rail-rec-card:hover,
   html[data-theme="blue"] .rail.is-open .rail-rec-card:hover { background: #d4e4ee; }
@@ -812,8 +834,22 @@
     height: 24px;
     border: 0;
   }
-  html[data-theme="blue"] .rail-rec-card .copy { display: none; }
-  html[data-theme="blue"] .rail.is-open .rail-rec-card .copy { display: block; min-width: 0; flex: 1; }
+  html[data-theme="blue"] .rail-rec-card .copy {
+    display: block;
+    min-width: 0;
+    flex: 1;
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    transform: translateX(-6px);
+    transition: max-width .32s cubic-bezier(0.4, 0, 0.2, 1), opacity .18s ease, transform .28s ease;
+  }
+  html[data-theme="blue"] .rail.is-open .rail-rec-card .copy {
+    max-width: 160px;
+    opacity: 1;
+    transform: translateX(0);
+    transition: max-width .42s cubic-bezier(0.22, 1, 0.36, 1) .05s, opacity .3s ease .1s, transform .36s cubic-bezier(0.22, 1, 0.36, 1) .05s;
+  }
   html[data-theme="blue"] .rail-rec-card .dav img {
     width: 100%;
     height: 100%;
@@ -840,7 +876,7 @@
     position: relative; display: flex; align-items: center; justify-content: center; box-sizing: border-box;
     width: 36px; height: 16px; margin: 0; overflow: hidden; flex: none;
     font-size: 10px; font-weight: 650; letter-spacing: .08em; line-height: 16px; color: transparent;
-    transition: color .18s ease;
+    transition: color .28s ease .08s, width .42s cubic-bezier(0.22, 1, 0.36, 1), margin .42s cubic-bezier(0.22, 1, 0.36, 1);
   }
   html[data-theme="blue"] .rail-follow-k .rail-follow-line {
     position: absolute; left: 50%; top: 50%; width: 24px; height: 24px; margin: -12px 0 0 -12px; display: block;
@@ -855,6 +891,7 @@
     display: flex; align-items: center; justify-content: center; box-sizing: border-box;
     width: 36px; height: 36px; padding: 0; border: 0; border-radius: 10px; background: transparent;
     font: inherit; cursor: pointer; color: #3c4043;
+    transition: width .42s cubic-bezier(0.22, 1, 0.36, 1), padding .42s cubic-bezier(0.22, 1, 0.36, 1), background .15s ease;
   }
   html[data-theme="blue"] .rail.is-open .rail-follow-row {
     width: 100%; height: 36px; justify-content: flex-start; padding: 0 4px;
@@ -872,9 +909,13 @@
   html[data-theme="blue"] .rail-follow-row .nm {
     display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     font-size: 14px; font-weight: 500; line-height: 1.2; max-width: 0; margin-left: 0; opacity: 0;
-    transition: max-width .18s ease, margin-left .18s ease, opacity .18s ease;
+    transform: translateX(-6px);
+    transition: max-width .32s cubic-bezier(0.4, 0, 0.2, 1), margin-left .32s cubic-bezier(0.4, 0, 0.2, 1), opacity .18s ease, transform .28s ease;
   }
-  html[data-theme="blue"] .rail.is-open .rail-follow-row .nm { max-width: 148px; margin-left: 10px; opacity: 1; }
+  html[data-theme="blue"] .rail.is-open .rail-follow-row .nm {
+    max-width: 148px; margin-left: 10px; opacity: 1; transform: translateX(0);
+    transition: max-width .42s cubic-bezier(0.22, 1, 0.36, 1) .05s, margin-left .42s cubic-bezier(0.22, 1, 0.36, 1) .05s, opacity .3s ease .1s, transform .36s cubic-bezier(0.22, 1, 0.36, 1) .05s;
+  }
   .rail-me { display: none; }
   html[data-theme="blue"] .rail-me {
     display: flex;
@@ -889,6 +930,7 @@
     flex: none;
     margin-top: auto;
     color: #1a1d21;
+    transition: width .42s cubic-bezier(0.22, 1, 0.36, 1), height .42s cubic-bezier(0.22, 1, 0.36, 1), padding .42s cubic-bezier(0.22, 1, 0.36, 1);
   }
   html[data-theme="blue"] .rail.is-open .rail-me {
     width: 100%;
@@ -911,8 +953,26 @@
     line-height: 1;
     flex: none;
   }
-  html[data-theme="blue"] .rail-me-copy { display: none; min-width: 0; text-align: left; }
-  html[data-theme="blue"] .rail.is-open .rail-me-copy { display: flex; min-width: 0; }
+  html[data-theme="blue"] .rail-me-copy {
+    display: flex;
+    min-width: 0;
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    text-align: left;
+    transform: translateX(-6px);
+    pointer-events: none;
+    transition: max-width .32s cubic-bezier(0.4, 0, 0.2, 1), opacity .18s ease, transform .28s ease;
+  }
+  html[data-theme="blue"] .rail.is-open .rail-me-copy {
+    display: flex;
+    min-width: 0;
+    max-width: 140px;
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+    transition: max-width .42s cubic-bezier(0.22, 1, 0.36, 1) .05s, opacity .3s ease .1s, transform .36s cubic-bezier(0.22, 1, 0.36, 1) .05s;
+  }
   html[data-theme="blue"] .rail-me-copy b {
     font-size: 13px;
     font-weight: 600;
@@ -17599,7 +17659,7 @@
 
     railExpand?.addEventListener('click', (e) => {
       e.stopPropagation();
-      flashEl(railExpand);
+      if (document.documentElement.dataset.theme !== 'blue') flashEl(railExpand);
       const open = railExpand.getAttribute('aria-expanded') !== 'true';
       setRailOpen(open);
       const meMenu = document.getElementById('railMeMenu');
