@@ -5059,11 +5059,48 @@
   html[data-theme="blue"] .citta-panel .ph .citta-new svg { width: 16px; height: 16px; display: block; }
   html[data-theme="blue"] .citta-panel .ph .citta-new:hover { color: #1a1d21; }
   .citta-panel .citta-chatbar { display: none; }
+
+  html[data-theme="blue"] {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, .14) transparent;
+  }
+  html[data-theme="blue"] *::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  html[data-theme="blue"] *::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, .14);
+    border-radius: 999px;
+  }
+  html[data-theme="blue"] *::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, .22);
+  }
+  html[data-theme="blue"] *::-webkit-scrollbar-track,
+  html[data-theme="blue"] *::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+  html[data-theme="blue"] .kd-tz-menu::-webkit-scrollbar,
+  html[data-theme="blue"] .activity::-webkit-scrollbar {
+    width: 4px;
+  }
+  html[data-theme="blue"] .kd-tz-menu::-webkit-scrollbar-thumb,
+  html[data-theme="blue"] .activity::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, .14);
+    border-radius: 999px;
+  }
+  html[data-theme="blue"] .citta-panel .citta-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, .14) transparent;
+  }
+  html[data-theme="blue"] #deskHost .desk-board {
+    scrollbar-color: rgba(0, 0, 0, .14) transparent;
+  }
+
   html[data-theme="blue"] .citta-panel .citta-chatbar {
     display: flex;
     position: absolute;
-    top: calc(var(--citta-head, 55px) + 8px);
-    right: 16px;
+    top: calc(var(--citta-head, 55px) + 20px);
+    right: 15px;
     z-index: 5;
     padding: 0;
     background: transparent;
@@ -5071,19 +5108,19 @@
     align-items: center;
   }
   html[data-theme="blue"] .citta-panel .citta-lines {
-    width: 16px;
+    width: 20px;
     height: 16px;
     padding: 0;
     border: 0;
     background: transparent;
-    color: #656d76;
+    color: #1d1d1f;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
   }
-  html[data-theme="blue"] .citta-panel .citta-lines svg { width: 13.2px; height: 13.2px; display: block; }
-  html[data-theme="blue"] .citta-panel .citta-lines:hover { color: #1a1d21; background: transparent; }
+  html[data-theme="blue"] .citta-panel .citta-lines svg { width: 20px; height: 20px; display: block; }
+  html[data-theme="blue"] .citta-panel .citta-lines:hover { color: #000; background: transparent; }
   .citta-more { display: none; }
   html[data-theme="blue"] .citta-more:not([hidden]) {
     display: block;
