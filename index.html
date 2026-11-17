@@ -6534,6 +6534,119 @@
     cursor: default;
     opacity: 1;
   }
+
+  html[data-theme="blue"] #deskHost.desk-focus-drive .desk-nav { display: none; }
+  html[data-theme="blue"] #deskHost.desk-focus-drive .desk-shell { display: block; }
+  html[data-theme="blue"] #deskHost.desk-focus-drive .desk-main { width: 100%; max-width: none; }
+  html[data-theme="blue"] #deskHost.desk-focus-drive #desk-kanban,
+  html[data-theme="blue"] #deskHost.desk-focus-drive #desk-email,
+  html[data-theme="blue"] #deskHost.desk-focus-drive #desk-ledger { display: none; }
+  html[data-theme="blue"] #deskHost.desk-focus-drive #desk-drive {
+    margin: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; padding: 0;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-head {
+    flex-direction: row; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 4px;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-head h2 {
+    margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.02em; color: #1d1d1f;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-head .sub {
+    margin: 0; font-size: 13px; color: #86868b; font-weight: 500;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .desk-drive-bar[role="tablist"] {
+    gap: 4px; margin: 0 0 16px; border-bottom: 1px solid #e8e8ed;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .desk-drive-bar[role="tablist"] button {
+    height: 40px; padding: 0 12px; font-size: 14px; font-weight: 500; color: #86868b;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .desk-drive-bar[role="tablist"] button[aria-pressed="true"] {
+    color: #1d1d1f; border-bottom-color: #3c7a94; font-weight: 600;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .desk-drive-bar[role="tablist"] button.drive-soon[disabled] {
+    color: #c7c7cc;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-tools {
+    gap: 10px; margin-bottom: 14px; padding: 10px 12px; border: 1px solid #e8e8ed;
+    border-radius: 12px; background: #fff;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-search {
+    width: 240px; height: 34px; border: 1px solid #e8e8ed; border-radius: 8px; background: #fafafa; color: #86868b;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-search:focus-within {
+    background: #fff; box-shadow: 0 0 0 3px rgba(60,122,148,.12); border-color: #3c7a94;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-views {
+    height: 34px; border: 1px solid #e8e8ed; border-radius: 8px; background: #f2f2f7; padding: 2px; gap: 0; border: 0;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-views button {
+    height: 30px; padding: 0 12px; border: 0; border-radius: 6px; font-size: 13px; font-weight: 500; color: #86868b;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-views button + button { border: 0; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-views button[aria-pressed="true"] {
+    background: #fff; color: #1d1d1f; box-shadow: 0 1px 2px rgba(20,24,28,.08);
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-actions > button,
+  html[data-theme="blue"] #deskHost #desk-drive .drive-upload > button,
+  html[data-theme="blue"] #deskHost #desk-drive #deskSelectSlot > button {
+    height: 34px; padding: 0 12px; border-radius: 8px; font-size: 13px; font-weight: 500;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-note {
+    margin: 0 0 12px; padding: 10px 14px; border-radius: 10px;
+    background: #f4f8fa; color: #5b6b75; border: 1px solid #e4eef3;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-citta-banner {
+    display: flex; align-items: flex-start; gap: 12px; margin: 0 0 14px; padding: 14px 16px;
+    border: 1px solid #e4eef3; border-radius: 12px; background: linear-gradient(180deg, #f7fbfd 0%, #fff 100%);
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-citta-banner .drive-citta-ico {
+    width: 36px; height: 36px; border-radius: 10px; background: #ebf5fa; color: #3c7a94;
+    display: inline-flex; align-items: center; justify-content: center; flex: none;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-citta-banner .drive-citta-ico svg { width: 18px; height: 18px; display: block; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-citta-banner b {
+    display: block; font-size: 14px; font-weight: 600; color: #1d1d1f; margin-bottom: 2px;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-citta-banner span {
+    display: block; font-size: 13px; line-height: 1.45; color: #5b6b75;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-citta-banner button {
+    margin-left: auto; align-self: center; height: 32px; padding: 0 12px; border: 0; border-radius: 8px;
+    background: #ebf5fa; color: #316479; font-size: 13px; font-weight: 600; flex: none;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-citta-banner button:hover { background: #dceef6; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-drop {
+    margin: 0 0 14px; padding: 14px 12px; border-radius: 12px; background: #fafafa; color: #86868b;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .desk-folders {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .desk-folder {
+    border: 1px solid #ececf0; border-radius: 14px; padding: 14px; background: #fff;
+    transition: border-color .15s ease, box-shadow .15s ease;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .desk-folder:hover {
+    border-color: #d5e4ec; box-shadow: 0 6px 18px rgba(28,40,48,.06);
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .desk-folder.on {
+    outline: none; border-color: #3c7a94; box-shadow: 0 0 0 3px rgba(60,122,148,.16);
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ico {
+    width: 28px; height: 28px; color: #3c7a94;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-main b {
+    font-size: 14px; font-weight: 600; color: #1d1d1f;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-main small {
+    font-size: 12px; color: #86868b;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .desk-folders:not(.is-list) .drive-main { gap: 10px; }
+  html[data-theme="blue"] #deskHost #desk-drive .desk-foot {
+    margin-top: 18px; padding-top: 12px; border-top-color: #e8e8ed; color: #86868b;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .desk-empty {
+    margin: 24px 0; text-align: center; color: #86868b; font-size: 14px; line-height: 1.5;
+  }
+
   html[data-theme="blue"] #deskHost { background: #f6f7f8; }
   html[data-theme="blue"] #deskHost .kanban-modal { background: rgba(26, 29, 33, .28); }
   html[data-theme="blue"] #deskHost .desk-scroll { padding: 20px 24px 40px; }
@@ -20139,6 +20252,9 @@
   let deskNewOpen = false;
   let deskItems = [{ id: 'ns', lane: 'personal', title: 'New schedule', type: 'Task', date: '2026-11-02' }];
   let deskNodes = [
+    { id: 'citta', parent: '', kind: 'folder', name: 'From Citta', fromCitta: true, protect: true },
+    { id: 'citta-deck', parent: 'citta', kind: 'file', name: 'Lecture 5 deck', meta: 'Deck · Citta', fromCitta: true, protect: true },
+    { id: 'citta-quiz', parent: 'citta', kind: 'file', name: 'Lecture 5 quiz keys', meta: 'Deck · Citta', fromCitta: true, protect: true },
     { id: 'editors', parent: '', kind: 'folder', name: 'Symbion Editors' },
     { id: 'code', parent: 'editors', kind: 'folder', name: 'Code' },
     { id: 'decks', parent: 'editors', kind: 'folder', name: 'Decks' },
@@ -20268,6 +20384,11 @@
   function deskNode(id) { return deskNodes.find((node) => node.id === id); }
   function deskMeta(node) {
     if (node.kind === 'file') return node.meta || 'File';
+    if (node.id === 'citta' || node.fromCitta) {
+      const kids = deskKids(node.id);
+      if (!kids.length) return 'Files from Citta chats';
+      return `${kids.length} file${kids.length === 1 ? '' : 's'} from Citta`;
+    }
     if (node.protect) return 'Shared with you';
     const kids = deskKids(node.id);
     const folders = kids.filter((kid) => kid.kind === 'folder').length;
@@ -20328,18 +20449,25 @@
     document.querySelectorAll('[data-desk-drive]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.deskDrive === deskDriveTab)));
     document.querySelectorAll('[data-desk-drive-view]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.deskDriveView === deskDriveView)));
     const tools = document.getElementById('deskDriveTools');
-    if (tools) tools.hidden = deskDriveTab !== 'files';
+    if (tools) tools.hidden = deskDriveTab !== 'files' && deskDriveTab !== 'citta';
     const count = document.getElementById('deskDriveCount');
-    const here = deskHere();
+    const here = deskDriveTab === 'citta' ? 'citta' : deskHere();
     const kids = deskKids(here);
     const folders = kids.filter((node) => node.kind === 'folder').length;
     const files = kids.length - folders;
-    if (count) count.textContent = deskDriveTab === 'courses' ? 'Folders shared with you' : `${folders} folder${folders === 1 ? '' : 's'} · ${files} file${files === 1 ? '' : 's'}`;
+    if (count) {
+      if (deskDriveTab === 'courses') count.textContent = 'Folders shared with you';
+      else if (deskDriveTab === 'citta') count.textContent = files ? `${files} file${files === 1 ? '' : 's'} from Citta chats` : 'Files created while chatting with Citta';
+      else count.textContent = `${folders} folder${folders === 1 ? '' : 's'} · ${files} file${files === 1 ? '' : 's'}`;
+    }
     const crumb = document.getElementById('deskDriveCrumb');
     if (crumb) {
       if (deskDriveTab === 'courses') {
         crumb.hidden = false;
         crumb.innerHTML = '<button type="button" data-drive-do="root">Super Drive</button><span aria-hidden="true">/</span><span>Courses</span>';
+      } else if (deskDriveTab === 'citta') {
+        crumb.hidden = false;
+        crumb.innerHTML = '<button type="button" data-drive-do="root">Super Drive</button><span aria-hidden="true">/</span><span>From Citta</span>';
       } else if (!deskPath.length) {
         crumb.hidden = true;
         crumb.innerHTML = '';
@@ -20362,11 +20490,21 @@
     const uploadBtn = document.getElementById('deskUploadBtn');
     if (uploadBtn) uploadBtn.setAttribute('aria-expanded', String(deskMenuId === 'upload'));
     const slot = document.getElementById('deskSelectSlot');
-    if (slot) {
-      const n = deskSelectedIds.length;
-      slot.innerHTML = deskSelectOn
-        ? `<button type="button" class="drive-del" data-drive-do="delete-selected"${n ? '' : ' disabled'}>Delete (${n})</button><button type="button" data-drive-do="select-cancel">Cancel</button>`
-        : '<button type="button" data-drive-do="select">Select</button>';
+    const nameBtnEl = document.getElementById('deskNameBtn');
+    const uploadWrap = document.querySelector('#deskDriveTools .drive-upload');
+    if (deskDriveTab === 'citta') {
+      if (nameBtnEl) nameBtnEl.hidden = true;
+      if (uploadWrap) uploadWrap.hidden = true;
+      if (slot) slot.innerHTML = '';
+    } else {
+      if (nameBtnEl) nameBtnEl.hidden = false;
+      if (uploadWrap) uploadWrap.hidden = false;
+      if (slot) {
+        const n = deskSelectedIds.length;
+        slot.innerHTML = deskSelectOn
+          ? `<button type="button" class="drive-del" data-drive-do="delete-selected"${n ? '' : ' disabled'}>Delete (${n})</button><button type="button" data-drive-do="select-cancel">Cancel</button>`
+          : '<button type="button" data-drive-do="select">Select</button>';
+      }
     }
     const search = document.getElementById('deskSearch');
     if (search && search.value !== deskQuery) search.value = deskQuery;
@@ -20374,12 +20512,18 @@
       host.innerHTML = '<p class="desk-empty">No organized course materials yet.</p>';
       return;
     }
+    if (deskDriveTab === 'citta') {
+      deskPath = ['citta'];
+    }
     const q = deskQuery.trim().toLowerCase();
     const shown = kids.filter((node) => !q || node.name.toLowerCase().includes(q));
-    const google = here ? '' : `<p class="drive-note">Google Drive is not connected. <button type="button" class="drive-link" data-drive-do="connect">Connect account</button>. Shared drives aren’t available yet. Course folders are in Courses.</p>`;
+    const cittaBanner = (deskDriveTab === 'files' && !here)
+      ? `<div class="drive-citta-banner"><span class="drive-citta-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 16.5A3.5 3.5 0 0 1 7.6 10a5 5 0 0 1 9.7-1.2A3.8 3.8 0 0 1 19 16.5H5Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9.5 13.5h5M12 11v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span><div><b>From Citta</b><span>Files created while chatting with Citta land here.</span></div><button type="button" data-desk-drive="citta">Open</button></div>`
+      : '';
+    const google = (here || deskDriveTab === 'citta') ? '' : `<p class="drive-note">Google Drive is not connected. <button type="button" class="drive-link" data-drive-do="connect">Connect account</button>. Shared drives aren’t available yet. Course folders are in Courses.</p>`;
     const naming = deskNaming ? `<form class="drive-name" id="deskNameForm"><input id="deskNewFolder" type="text" placeholder="Folder name" aria-label="Folder name" autocomplete="off"><button type="submit" class="drive-go" id="deskCreateFolder" disabled>Create</button></form>` : '';
     const empty = !shown.length
-      ? `<p class="desk-empty">${q ? 'No folders match.' : (here === 'shared' ? 'Files shared with you stay with the account. None are listed on this device.' : 'This folder is empty.')}</p>`
+      ? `<p class="desk-empty">${q ? 'No folders match.' : (deskDriveTab === 'citta' || here === 'citta' ? 'No files from Citta chats yet. Files created while chatting with Citta will show up here.' : (here === 'shared' ? 'Files shared with you stay with the account. None are listed on this device.' : 'This folder is empty.'))}</p>`
       : '';
     const cards = shown.map((node) => {
       const menuOpen = deskMenuId === node.id;
@@ -20389,7 +20533,7 @@
       const pick = deskSelectOn && !node.protect
         ? `<button type="button" class="drive-pick" data-drive-pick="${node.id}" aria-pressed="${picked}" aria-label="Select ${deskEsc(node.name)}"></button>`
         : '';
-      const icon = `<svg class="drive-ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">${node.kind === 'folder' ? '<path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H10l2 2h6.5A2.5 2.5 0 0 1 21 9.5v7A2.5 2.5 0 0 1 18.5 19h-13A2.5 2.5 0 0 1 3 16.5v-9Z" fill="none" stroke="currentColor" stroke-width="1.6"/>' : '<path d="M7 3.5h7l5 5V20.5H7V3.5Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M14 3.5V9h5.5" fill="none" stroke="currentColor" stroke-width="1.6"/>'}</svg>`;
+      const icon = `<svg class="drive-ico" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">${node.id === 'citta' ? '<path d="M5 16.5A3.5 3.5 0 0 1 7.6 10a5 5 0 0 1 9.7-1.2A3.8 3.8 0 0 1 19 16.5H5Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9.5 13.5h5M12 11v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>' : (node.kind === 'folder' ? '<path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H10l2 2h6.5A2.5 2.5 0 0 1 21 9.5v7A2.5 2.5 0 0 1 18.5 19h-13A2.5 2.5 0 0 1 3 16.5v-9Z" fill="none" stroke="currentColor" stroke-width="1.6"/>' : '<path d="M7 3.5h7l5 5V20.5H7V3.5Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M14 3.5V9h5.5" fill="none" stroke="currentColor" stroke-width="1.6"/>')}</svg>`;
       const title = renaming
         ? `<input class="drive-rename" data-drive-rename="${node.id}" value="${deskEsc(node.name)}" aria-label="Rename ${deskEsc(node.name)}">`
         : `<b>${deskEsc(node.name)}</b><small>${deskEsc(deskMeta(node))}</small>`;
@@ -20406,7 +20550,8 @@
     }).join('');
     const used = deskNodes.reduce((sum, node) => sum + (node.size || 0), 0);
     const shownCount = shown.length;
-    host.innerHTML = `${google}<button type="button" class="drive-drop" id="deskDrop">${here ? 'Drop more files here or choose Upload' : 'Drop files here or choose Upload'}</button>${naming}${empty}<div class="desk-folders ${deskDriveView === 'list' ? 'is-list' : ''}">${cards}</div><div class="desk-foot"><button type="button" class="drive-status" data-drive-do="source" aria-expanded="${deskSourceOpen}">On this device</button><span>${shownCount} item${shownCount === 1 ? '' : 's'}</span><span>${deskBytes(used)} of 50 GB</span></div>${deskSourceOpen ? '<p class="drive-note">Symbion files on this device are available. Google Drive is not connected.</p>' : ''}`;
+    const drop = deskDriveTab === 'citta' ? '' : `<button type="button" class="drive-drop" id="deskDrop">${here && here !== 'citta' ? 'Drop more files here or choose Upload' : 'Drop files here or choose Upload'}</button>`;
+    host.innerHTML = `${cittaBanner}${google}${drop}${naming}${empty}<div class="desk-folders ${deskDriveView === 'list' ? 'is-list' : ''}">${cards}</div><div class="desk-foot"><button type="button" class="drive-status" data-drive-do="source" aria-expanded="${deskSourceOpen}">On this device</button><span>${shownCount} item${shownCount === 1 ? '' : 's'}</span><span>${deskBytes(used)} of 50 GB</span></div>${deskSourceOpen ? '<p class="drive-note">Symbion files on this device are available. Google Drive is not connected.</p>' : ''}`;
     if (searchFocused) {
       const field = document.getElementById('deskSearch');
       if (field) { field.focus(); field.setSelectionRange(caret, caret); }
@@ -20415,6 +20560,8 @@
     if (deskRenameId) document.querySelector(`[data-drive-rename="${deskRenameId}"]`)?.focus();
   }
   function paintDeskChrome() {
+    const deskHost = document.getElementById('deskHost');
+    if (deskHost) deskHost.classList.toggle('desk-focus-drive', deskSection === 'drive' && document.documentElement.dataset.theme === 'blue');
     const shell = document.querySelector('.desk-shell');
     if (shell) shell.classList.toggle('is-nav-hidden', deskNavHidden);
     document.querySelectorAll('[data-desk-jump]').forEach((b) => {
@@ -20473,6 +20620,7 @@
           <div class="drive-head"><h2>Super Drive</h2><p class="sub" id="deskDriveCount">Current folder</p></div>
           <div class="desk-drive-bar" role="tablist" aria-label="Drive sources">
             <button type="button" data-desk-drive="files">Files</button>
+            <button type="button" data-desk-drive="citta">Citta</button>
             <button type="button" data-desk-drive="courses">Courses</button>
             <button type="button" class="drive-soon" disabled title="Google shared drives aren’t available yet.">Shared drives</button>
           </div>
@@ -20971,6 +21119,7 @@
         return true;
       }
       if (node.kind === 'folder') {
+        if (node.id === 'citta') deskDriveTab = 'citta';
         deskPath = deskPath.concat(node.id);
         deskQuery = '';
         deskMenuId = '';
@@ -20984,7 +21133,7 @@
       const act = driveDo.dataset.driveDo;
       const id = driveDo.dataset.driveId;
       const node = id ? deskNode(id) : null;
-      if (act === 'root') { deskDriveTab = 'files'; deskPath = []; deskQuery = ''; }
+      if (act === 'root') { deskDriveTab = 'files'; deskPath = []; deskQuery = ''; deskSelectOn = false; deskSelectedIds = []; }
       else if (act === 'name') { deskNaming = !deskNaming; deskMenuId = ''; }
       else if (act === 'upload-menu') { deskMenuId = deskMenuId === 'upload' ? '' : 'upload'; }
       else if (act === 'pick-files') document.getElementById('deskFilePick')?.click();
@@ -21047,7 +21196,13 @@
     const canvas = e.target.closest('[data-desk-canvas]');
     if (canvas) { deskCanvas = canvas.dataset.deskCanvas; paintDeskBoard(); return; }
     const drive = e.target.closest('[data-desk-drive]');
-    if (drive) { deskDriveTab = drive.dataset.deskDrive; paintDeskDrive(); return; }
+    if (drive) {
+      deskDriveTab = drive.dataset.deskDrive;
+      if (deskDriveTab === 'citta') { deskPath = ['citta']; deskSelectOn = false; deskSelectedIds = []; }
+      else if (deskDriveTab === 'files') { deskPath = []; }
+      paintDeskDrive();
+      return;
+    }
     const view = e.target.closest('[data-desk-drive-view]');
     if (view) { deskDriveView = view.dataset.deskDriveView; paintDeskDrive(); return; }
     const group = e.target.closest('[data-desk-group]');
