@@ -5077,6 +5077,46 @@
   }
   html[data-theme="blue"] .citta-panel .citta-lines svg { width: 16px; height: 16px; display: block; }
   html[data-theme="blue"] .citta-panel .citta-lines:hover { color: #1a1d21; }
+  html[data-theme="blue"] .citta-panel .citta-chatbar { position: relative; z-index: 4; }
+  .citta-more { display: none; }
+  html[data-theme="blue"] .citta-more:not([hidden]) {
+    display: block;
+    position: absolute;
+    top: calc(100% - 2px);
+    right: 16px;
+    z-index: 6;
+    width: 220px;
+    padding: 6px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, .18);
+  }
+  html[data-theme="blue"] .citta-more button {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 18px;
+    color: #1d1d1f;
+    text-align: left;
+    cursor: pointer;
+  }
+  html[data-theme="blue"] .citta-more button svg { width: 16px; height: 16px; flex: none; color: #656d76; }
+  html[data-theme="blue"] .citta-more button:hover,
+  html[data-theme="blue"] .citta-more button[aria-expanded="true"] { background: #ebf5fa; color: #3c7a94; }
+  html[data-theme="blue"] .citta-more button:hover svg,
+  html[data-theme="blue"] .citta-more button[aria-expanded="true"] svg { color: #3c7a94; }
+  html[data-theme="blue"] .citta-history { display: flex; flex-direction: column; max-height: 180px; overflow: auto; padding-bottom: 4px; }
+  html[data-theme="blue"] .citta-history button { padding-left: 34px; font-size: 12px; color: #656d76; }
+  html[data-theme="blue"] .citta-history button.is-on { color: #3c7a94; font-weight: 650; }
+  html[data-theme="blue"] .citta-history-empty { margin: 0; padding: 2px 10px 8px 34px; font-size: 12px; line-height: 18px; color: #8b9198; }
   .citta-panel .ctx { padding: 10px 16px 4px; font-size: 12px; color: var(--muted); border-bottom: 0; flex: none; }
   .citta-panel .ctx .where { display: inline-block; font-weight: 600; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 2px 8px; margin-left: 4px; }
   .citta-panel .citta-scroll-wrap {
@@ -11662,7 +11702,12 @@
           <button type="button" class="panel-close" id="cittaPanelClose" aria-label="Close Citta panel"><svg class="close-x" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.25 3.25 12.75 12.75M12.75 3.25 3.25 12.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
         </div>
         <div class="citta-chatbar">
-          <button type="button" class="citta-lines" id="cittaLines" aria-label="Chat menu"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M66.488889 211.781818h891.022222c28.198788 0 50.980202-22.238384 50.980202-49.648485 0-27.397172-22.768485-49.648485-50.980202-49.648485H66.488889C38.341818 112.484848 15.508687 134.723232 15.508687 162.133333s22.833131 49.648485 50.980202 49.648485z m891.009293 248.242424H66.488889C38.277172 460.024242 15.508687 482.262626 15.508687 509.672727s22.768485 49.648485 50.980202 49.648485h891.022222c28.198788 0 50.980202-22.238384 50.980202-49.648485-0.012929-27.410101-22.923636-49.648485-50.993131-49.648485z m0 351.63798H66.488889c-28.134141 0-50.980202 22.238384-50.980202 49.648485s22.833131 49.648485 50.980202 49.648485h891.022222c28.198788 0 50.980202-22.238384 50.980202-49.648485-0.012929-27.397172-22.781414-49.648485-50.993131-49.648485z m0 0"/></svg></button>
+          <button type="button" class="citta-lines" id="cittaLines" aria-label="Chat menu" aria-expanded="false" aria-controls="cittaMore"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M66.488889 211.781818h891.022222c28.198788 0 50.980202-22.238384 50.980202-49.648485 0-27.397172-22.768485-49.648485-50.980202-49.648485H66.488889C38.341818 112.484848 15.508687 134.723232 15.508687 162.133333s22.833131 49.648485 50.980202 49.648485z m891.009293 248.242424H66.488889C38.277172 460.024242 15.508687 482.262626 15.508687 509.672727s22.768485 49.648485 50.980202 49.648485h891.022222c28.198788 0 50.980202-22.238384 50.980202-49.648485-0.012929-27.410101-22.923636-49.648485-50.993131-49.648485z m0 351.63798H66.488889c-28.134141 0-50.980202 22.238384-50.980202 49.648485s22.833131 49.648485 50.980202 49.648485h891.022222c28.198788 0 50.980202-22.238384 50.980202-49.648485-0.012929-27.397172-22.781414-49.648485-50.993131-49.648485z m0 0"/></svg></button>
+          <div class="citta-more" id="cittaMore" hidden>
+            <button type="button" data-citta-act="new"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M512 102.4a409.6 409.6 0 0 1 0 819.2H179.2a40.96 40.96 0 0 1-33.9456-63.7952l36.352-54.1184a45.2608 45.2608 0 0 0-1.9456-53.0944l-6.0416-7.8848A407.7056 407.7056 0 0 1 102.4 512a409.6 409.6 0 0 1 409.6-409.6z m0 70.1952a339.456 339.456 0 0 0-282.2656 527.872l5.2736 6.912c30.72 39.424 32.6656 94.0544 4.864 135.424l-5.8368 8.6016H512a339.4048 339.4048 0 0 0 339.1488-326.4l0.256-13.0048A339.4048 339.4048 0 0 0 512 172.5952z"/><path fill="currentColor" d="M512 327.3728c21.504 0 39.0144 17.408 39.0144 38.9632v106.5984l106.6496 0.0512a39.0144 39.0144 0 1 1 0 78.0288l-106.6496-0.0512v106.6496a39.0144 39.0144 0 1 1-78.0288 0v-106.6496H366.336a39.0144 39.0144 0 1 1 0-77.9776h106.6496V366.2848c0-21.504 17.4592-38.9632 39.0144-38.9632z"/></svg><span>新建对话</span></button>
+            <button type="button" data-citta-act="history" aria-expanded="false"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M512 938.666667c235.648 0 426.666667-191.018667 426.666667-426.666667S747.648 85.333333 512 85.333333 85.333333 276.352 85.333333 512s191.018667 426.666667 426.666667 426.666667z m0 85.333333C229.248 1024 0 794.752 0 512S229.248 0 512 0s512 229.248 512 512-229.248 512-512 512z m42.666667-486.869333V298.538667C554.666667 275.328 535.552 256 512 256c-23.722667 0-42.666667 19.029333-42.666667 42.538667v256.256a41.984 41.984 0 0 0 12.202667 29.866666l121.258667 121.258667a42.368 42.368 0 0 0 60.032-0.298667 42.666667 42.666667 0 0 0 0.298666-60.032L554.666667 537.130667z"/></svg><span>历史对话</span></button>
+            <div class="citta-history" id="cittaHistory" hidden></div>
+          </div>
         </div>
         <div class="ctx">Working with: <span class="where">Home</span></div>
         <div class="citta-scroll-wrap" id="cittaScrollWrap">
@@ -18686,9 +18731,66 @@
     }, { passive: true });
   })();
   $('cittaPanelClose').addEventListener('click', () => setCittaExpanded(false));
-  $('cittaNew')?.addEventListener('click', () => {
+  const cittaThreads = [];
+  let cittaCurrentId = 'seed';
+  function cittaScrollEl() { return $('cittaScroll'); }
+  function cittaThreadTitle(root) {
+    const text = (root.querySelector('.user-bubble')?.textContent || '').trim();
+    return text.length > 36 ? text.slice(0, 36) + '…' : text;
+  }
+  function cittaSaveCurrent() {
+    const scroll = cittaScrollEl();
+    if (!scroll || !scroll.querySelector('.user-bubble, .asst-card')) return;
+    const title = cittaThreadTitle(scroll) || 'New conversation';
+    const html = scroll.innerHTML;
+    const row = cittaThreads.find((t) => t.id === cittaCurrentId);
+    if (row) { row.title = title; row.html = html; return; }
+    cittaThreads.unshift({ id: cittaCurrentId, title, html });
+  }
+  function cittaCloseMore() {
+    const menu = $('cittaMore');
+    if (menu) menu.hidden = true;
+    $('cittaLines')?.setAttribute('aria-expanded', 'false');
+    const historyBtn = document.querySelector('[data-citta-act="history"]');
+    if (historyBtn) historyBtn.setAttribute('aria-expanded', 'false');
+    const list = $('cittaHistory');
+    if (list) list.hidden = true;
+  }
+  function cittaRenderHistory() {
+    cittaSaveCurrent();
+    const list = $('cittaHistory');
+    if (!list) return;
+    list.replaceChildren();
+    if (!cittaThreads.length) {
+      const empty = document.createElement('p');
+      empty.className = 'citta-history-empty';
+      empty.textContent = '还没有历史对话';
+      list.appendChild(empty);
+      return;
+    }
+    cittaThreads.forEach((thread) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = thread.title;
+      if (thread.id === cittaCurrentId) btn.className = 'is-on';
+      btn.addEventListener('click', () => {
+        const scroll = cittaScrollEl();
+        if (!scroll) return;
+        cittaSaveCurrent();
+        cittaCurrentId = thread.id;
+        scroll.innerHTML = thread.html;
+        scroll.scrollTop = 0;
+        syncCittaScrollFade();
+        cittaCloseMore();
+      });
+      list.appendChild(btn);
+    });
+  }
+  function cittaStartNew() {
     if (document.documentElement.dataset.theme !== 'blue') return;
-    const scroll = $('cittaScroll');
+    cittaSaveCurrent();
+    cittaCurrentId = 't' + Date.now();
+    const scroll = cittaScrollEl();
     if (scroll) scroll.replaceChildren();
     const input = $('cittaInput');
     if (input) {
@@ -18699,6 +18801,34 @@
     clearAttachments('citta');
     syncCittaSendReady();
     syncCittaScrollFade();
+    cittaCloseMore();
+  }
+  $('cittaNew')?.addEventListener('click', cittaStartNew);
+  $('cittaLines')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (document.documentElement.dataset.theme !== 'blue') return;
+    const menu = $('cittaMore');
+    if (!menu) return;
+    const open = menu.hidden;
+    cittaCloseMore();
+    if (!open) return;
+    menu.hidden = false;
+    $('cittaLines').setAttribute('aria-expanded', 'true');
+  });
+  $('cittaMore')?.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-citta-act]');
+    if (!btn) return;
+    e.stopPropagation();
+    if (btn.dataset.cittaAct === 'new') { cittaStartNew(); return; }
+    const list = $('cittaHistory');
+    const show = list.hidden;
+    list.hidden = !show;
+    btn.setAttribute('aria-expanded', show ? 'true' : 'false');
+    if (show) cittaRenderHistory();
+  });
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('#cittaMore') || e.target.closest('#cittaLines')) return;
+    cittaCloseMore();
   });
   newTip.addEventListener('click', (e) => e.stopPropagation());
   $('newTipDismiss').addEventListener('click', (e) => {
