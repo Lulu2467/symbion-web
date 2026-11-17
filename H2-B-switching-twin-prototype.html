@@ -5089,36 +5089,41 @@
     right: 16px;
     z-index: 6;
     width: 220px;
-    padding: 6px;
+    padding: 8px;
     background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 8px 28px rgba(0, 0, 0, .18);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
   }
   html[data-theme="blue"] .citta-more button {
     display: flex;
     width: 100%;
     align-items: center;
-    gap: 8px;
-    padding: 8px 10px;
+    gap: 12px;
+    padding: 10px 12px;
     border: 0;
     border-radius: 8px;
     background: transparent;
     font: inherit;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 400;
-    line-height: 18px;
+    line-height: 20px;
     color: #1d1d1f;
     text-align: left;
     cursor: pointer;
   }
-  html[data-theme="blue"] .citta-more button svg { width: 16px; height: 16px; flex: none; color: #656d76; }
+  html[data-theme="blue"] .citta-more button svg { width: 16px; height: 16px; flex: none; color: #3d3d3d; }
   html[data-theme="blue"] .citta-more button:hover,
-  html[data-theme="blue"] .citta-more button[aria-expanded="true"] { background: #ebf5fa; color: #3c7a94; }
+  html[data-theme="blue"] .citta-more button:active,
+  html[data-theme="blue"] .citta-more button[aria-expanded="true"] { background: #f2f3f5; color: #1d1d1f; }
   html[data-theme="blue"] .citta-more button:hover svg,
-  html[data-theme="blue"] .citta-more button[aria-expanded="true"] svg { color: #3c7a94; }
+  html[data-theme="blue"] .citta-more button:active svg,
+  html[data-theme="blue"] .citta-more button[aria-expanded="true"] svg { color: #1d1d1f; }
   html[data-theme="blue"] .citta-history { display: flex; flex-direction: column; max-height: 180px; overflow: auto; padding-bottom: 4px; }
-  html[data-theme="blue"] .citta-history button { padding-left: 34px; font-size: 12px; color: #656d76; }
-  html[data-theme="blue"] .citta-history button.is-on { color: #3c7a94; font-weight: 650; }
+  html[data-theme="blue"] .citta-history button { padding-left: 40px; font-size: 14px; color: #1d1d1f; }
+  html[data-theme="blue"] .citta-history button.is-on,
+  html[data-theme="blue"] .citta-history button:hover,
+  html[data-theme="blue"] .citta-history button:active { background: #f2f3f5; color: #1d1d1f; font-weight: 400; }
+
   html[data-theme="blue"] .citta-history-empty { margin: 0; padding: 2px 10px 8px 34px; font-size: 12px; line-height: 18px; color: #8b9198; }
   .citta-panel .ctx { padding: 10px 16px 4px; font-size: 12px; color: var(--muted); border-bottom: 0; flex: none; }
   .citta-panel .ctx .where { display: inline-block; font-weight: 600; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 2px 8px; margin-left: 4px; }
