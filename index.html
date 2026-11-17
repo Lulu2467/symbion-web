@@ -736,19 +736,23 @@
   }
   html[data-theme="blue"] .rail.is-open .rail-top { justify-content: flex-start; }
   html[data-theme="blue"] .rail .r { color: #5f6368; }
-  /* Icons stay pinned: full-width row + fixed left pad open or closed. */
+  /* Closed: 36×36 pill with centered icon. Open: full row, same left inset. */
   html[data-theme="blue"] .rail .r[data-rail] {
-    width: 100%;
-    justify-content: flex-start;
-    padding: 0 8px;
+    width: 36px;
+    justify-content: center;
+    padding: 0;
     gap: 10px;
-    transition: background .15s ease, color .15s ease;
+    transition: background .15s ease, color .15s ease, width .52s cubic-bezier(0.22, 1, 0.36, 1), padding .52s cubic-bezier(0.22, 1, 0.36, 1);
   }
   html[data-theme="blue"] .rail.is-open .r[data-rail] {
     width: 100%;
     justify-content: flex-start;
     padding: 0 8px;
     gap: 10px;
+  }
+  html[data-theme="blue"] .rail .r.flash,
+  html[data-theme="blue"] .rail .p.flash {
+    animation: none;
   }
   html[data-theme="blue"] .rail .r .rail-lab {
     display: block !important;
@@ -17725,7 +17729,7 @@
 
     frame.querySelectorAll('.rail .r[data-rail]').forEach((el) => {
       el.addEventListener('click', () => {
-        flashEl(el);
+        if (document.documentElement.dataset.theme !== 'blue') flashEl(el);
         if (el.dataset.rail === 'home') {
           setScreen('home');
           document.querySelector('.main')?.classList.remove('is-new-tab');
@@ -17758,7 +17762,7 @@
 
     frame.querySelectorAll('.rail .p').forEach((el) => {
       el.addEventListener('click', () => {
-        flashEl(el);
+        if (document.documentElement.dataset.theme !== 'blue') flashEl(el);
         showToastMsg(`Rail · ${el.getAttribute('aria-label') || el.textContent.trim()}`);
       });
     });
