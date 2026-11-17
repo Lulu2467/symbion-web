@@ -5061,10 +5061,14 @@
   .citta-panel .citta-chatbar { display: none; }
   html[data-theme="blue"] .citta-panel .citta-chatbar {
     display: flex;
+    position: absolute;
+    top: calc(var(--citta-head, 55px) + 8px);
+    right: 16px;
+    z-index: 5;
+    padding: 0;
+    background: transparent;
     justify-content: flex-end;
     align-items: center;
-    flex: none;
-    padding: 8px 16px;
   }
   html[data-theme="blue"] .citta-panel .citta-lines {
     width: 16px;
@@ -5079,14 +5083,13 @@
     cursor: pointer;
   }
   html[data-theme="blue"] .citta-panel .citta-lines svg { width: 16px; height: 16px; display: block; }
-  html[data-theme="blue"] .citta-panel .citta-lines:hover { color: #1a1d21; }
-  html[data-theme="blue"] .citta-panel .citta-chatbar { position: relative; z-index: 4; }
+  html[data-theme="blue"] .citta-panel .citta-lines:hover { color: #1a1d21; background: transparent; }
   .citta-more { display: none; }
   html[data-theme="blue"] .citta-more:not([hidden]) {
     display: block;
     position: absolute;
-    top: calc(100% - 2px);
-    right: 16px;
+    top: calc(100% + 6px);
+    right: 0;
     z-index: 6;
     width: 220px;
     padding: 8px;
@@ -17818,10 +17821,9 @@
     const wrap = $('cittaScrollWrap');
     const head = panel.querySelector('.ph');
     const foot = panel.querySelector('.foot');
-    const bar = panel.querySelector('.citta-chatbar');
+    if (head) panel.style.setProperty('--citta-head', `${head.offsetHeight}px`);
     if (wrap && head && foot) {
-      const barH = bar && getComputedStyle(bar).display !== 'none' ? bar.offsetHeight : 0;
-      const room = Math.max(120, panel.clientHeight - head.offsetHeight - foot.offsetHeight - barH);
+      const room = Math.max(120, panel.clientHeight - head.offsetHeight - foot.offsetHeight);
       wrap.style.flex = 'none';
       wrap.style.height = `${room}px`;
       wrap.style.overflow = 'hidden';
