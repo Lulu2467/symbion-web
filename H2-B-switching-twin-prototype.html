@@ -5218,13 +5218,123 @@
   html[data-theme="blue"] .citta-more button:hover svg,
   html[data-theme="blue"] .citta-more button:active svg,
   html[data-theme="blue"] .citta-more button[aria-expanded="true"] svg { color: #1d1d1f; }
-  html[data-theme="blue"] .citta-history { display: flex; flex-direction: column; max-height: 180px; overflow: auto; padding-bottom: 4px; }
-  html[data-theme="blue"] .citta-history button { padding-left: 52px; font-size: 15px; color: #1d1d1f; }
-  html[data-theme="blue"] .citta-history button.is-on,
-  html[data-theme="blue"] .citta-history button:hover,
-  html[data-theme="blue"] .citta-history button:active { background: #f2f3f5; color: #1d1d1f; font-weight: 400; }
-
-  html[data-theme="blue"] .citta-history-empty { margin: 0; padding: 2px 10px 8px 34px; font-size: 12px; line-height: 18px; color: #8b9198; }
+  html[data-theme="blue"] .citta-history { display: none; }
+  .citta-history-pane { display: none; }
+  html[data-theme="blue"] .citta-history-pane {
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 12;
+    flex-direction: column;
+    background: #fff;
+    min-height: 0;
+  }
+  html[data-theme="blue"] .citta-history-pane:not([hidden]) {
+    display: flex;
+    animation: cittaHistIn .34s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @keyframes cittaHistIn {
+    from { opacity: 0; transform: translateX(14px); }
+    to { opacity: 1; transform: none; }
+  }
+  html[data-theme="blue"] .citta-history-top {
+    position: relative;
+    flex: none;
+    padding: 22px 18px 10px;
+  }
+  html[data-theme="blue"] .citta-history-top h2 {
+    margin: 0 36px 16px 0;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: #1a1d21;
+  }
+  html[data-theme="blue"] .citta-history-back {
+    position: absolute;
+    top: 18px;
+    right: 14px;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #1a1d21;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  html[data-theme="blue"] .citta-history-back svg { width: 14px; height: 14px; display: block; }
+  html[data-theme="blue"] .citta-history-back:hover { background: #f2f3f5; }
+  html[data-theme="blue"] .citta-history-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 14px;
+    border-radius: 12px;
+    background: #f2f3f5;
+    box-sizing: border-box;
+  }
+  html[data-theme="blue"] .citta-history-search svg {
+    width: 16px;
+    height: 16px;
+    flex: none;
+    color: #8b9198;
+  }
+  html[data-theme="blue"] .citta-history-search input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    font: inherit;
+    font-size: 14px;
+    line-height: 1.3;
+    color: #1a1d21;
+  }
+  html[data-theme="blue"] .citta-history-search input::placeholder { color: #8b9198; }
+  html[data-theme="blue"] .citta-history-list {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    padding: 6px 10px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  html[data-theme="blue"] .citta-history-list button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    padding: 12px 10px;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.35;
+    color: #1d1d1f;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  html[data-theme="blue"] .citta-history-list button.is-on,
+  html[data-theme="blue"] .citta-history-list button:hover,
+  html[data-theme="blue"] .citta-history-list button:active {
+    background: #f2f3f5;
+    color: #1d1d1f;
+  }
+  html[data-theme="blue"] .citta-history-empty {
+    margin: 12px 10px 0;
+    font-size: 13px;
+    line-height: 18px;
+    color: #8b9198;
+  }
   .citta-panel .ctx { padding: 10px 16px 4px; font-size: 12px; color: var(--muted); border-bottom: 0; flex: none; }
   .citta-panel .ctx .where { display: inline-block; font-weight: 600; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 2px 8px; margin-left: 4px; }
   .citta-panel .citta-scroll-wrap {
@@ -12015,9 +12125,20 @@
           <button type="button" class="citta-lines" id="cittaLines" aria-label="Chat menu" aria-expanded="false" aria-controls="cittaMore"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M66.488889 211.781818h891.022222c28.198788 0 50.980202-22.238384 50.980202-49.648485 0-27.397172-22.768485-49.648485-50.980202-49.648485H66.488889C38.341818 112.484848 15.508687 134.723232 15.508687 162.133333s22.833131 49.648485 50.980202 49.648485z m891.009293 248.242424H66.488889C38.277172 460.024242 15.508687 482.262626 15.508687 509.672727s22.768485 49.648485 50.980202 49.648485h891.022222c28.198788 0 50.980202-22.238384 50.980202-49.648485-0.012929-27.410101-22.923636-49.648485-50.993131-49.648485z m0 351.63798H66.488889c-28.134141 0-50.980202 22.238384-50.980202 49.648485s22.833131 49.648485 50.980202 49.648485h891.022222c28.198788 0 50.980202-22.238384 50.980202-49.648485-0.012929-27.397172-22.781414-49.648485-50.993131-49.648485z m0 0"/></svg></button>
           <div class="citta-more" id="cittaMore" hidden>
             <button type="button" data-citta-act="new"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M512 102.4a409.6 409.6 0 0 1 0 819.2H179.2a40.96 40.96 0 0 1-33.9456-63.7952l36.352-54.1184a45.2608 45.2608 0 0 0-1.9456-53.0944l-6.0416-7.8848A407.7056 407.7056 0 0 1 102.4 512a409.6 409.6 0 0 1 409.6-409.6z m0 70.1952a339.456 339.456 0 0 0-282.2656 527.872l5.2736 6.912c30.72 39.424 32.6656 94.0544 4.864 135.424l-5.8368 8.6016H512a339.4048 339.4048 0 0 0 339.1488-326.4l0.256-13.0048A339.4048 339.4048 0 0 0 512 172.5952z"/><path fill="currentColor" d="M512 327.3728c21.504 0 39.0144 17.408 39.0144 38.9632v106.5984l106.6496 0.0512a39.0144 39.0144 0 1 1 0 78.0288l-106.6496-0.0512v106.6496a39.0144 39.0144 0 1 1-78.0288 0v-106.6496H366.336a39.0144 39.0144 0 1 1 0-77.9776h106.6496V366.2848c0-21.504 17.4592-38.9632 39.0144-38.9632z"/></svg><span>新建对话</span></button>
-            <button type="button" data-citta-act="history" aria-expanded="false"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M512 938.666667c235.648 0 426.666667-191.018667 426.666667-426.666667S747.648 85.333333 512 85.333333 85.333333 276.352 85.333333 512s191.018667 426.666667 426.666667 426.666667z m0 85.333333C229.248 1024 0 794.752 0 512S229.248 0 512 0s512 229.248 512 512-229.248 512-512 512z m42.666667-486.869333V298.538667C554.666667 275.328 535.552 256 512 256c-23.722667 0-42.666667 19.029333-42.666667 42.538667v256.256a41.984 41.984 0 0 0 12.202667 29.866666l121.258667 121.258667a42.368 42.368 0 0 0 60.032-0.298667 42.666667 42.666667 0 0 0 0.298666-60.032L554.666667 537.130667z"/></svg><span>历史对话</span></button>
+            <button type="button" data-citta-act="history"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M512 938.666667c235.648 0 426.666667-191.018667 426.666667-426.666667S747.648 85.333333 512 85.333333 85.333333 276.352 85.333333 512s191.018667 426.666667 426.666667 426.666667z m0 85.333333C229.248 1024 0 794.752 0 512S229.248 0 512 0s512 229.248 512 512-229.248 512-512 512z m42.666667-486.869333V298.538667C554.666667 275.328 535.552 256 512 256c-23.722667 0-42.666667 19.029333-42.666667 42.538667v256.256a41.984 41.984 0 0 0 12.202667 29.866666l121.258667 121.258667a42.368 42.368 0 0 0 60.032-0.298667 42.666667 42.666667 0 0 0 0.298666-60.032L554.666667 537.130667z"/></svg><span>历史对话</span></button>
             <div class="citta-history" id="cittaHistory" hidden></div>
           </div>
+        </div>
+        <div class="citta-history-pane" id="cittaHistoryPane" hidden>
+          <div class="citta-history-top">
+            <button type="button" class="citta-history-back" id="cittaHistoryBack" aria-label="返回对话"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.25 3.25 12.75 12.75M12.75 3.25 3.25 12.75" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+            <h2>历史会话</h2>
+            <label class="citta-history-search">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.25" stroke="currentColor" stroke-width="1.7"/><path d="M16.2 16.2 20 20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+              <input type="search" id="cittaHistorySearch" placeholder="搜索历史会话" autocomplete="off" enterkeyhint="search" aria-label="搜索历史会话">
+            </label>
+          </div>
+          <div class="citta-history-list" id="cittaHistoryList" role="listbox" aria-label="历史会话列表"></div>
         </div>
         <div class="ctx">Working with: <span class="where">Home</span></div>
         <div class="citta-scroll-wrap" id="cittaScrollWrap">
@@ -18254,6 +18375,10 @@
     // Avatar dock only while the side panel is closed.
     dock.hidden = !!open;
     if (open) dock.classList.remove('is-dragging');
+    if (!open) {
+      cittaCloseMore();
+      cittaCloseHistoryPane();
+    }
     syncDockNotice();
     document.querySelectorAll('[data-panel]').forEach((b) => {
       const on = (b.dataset.panel === 'expanded' && open) || (b.dataset.panel === 'dock' && !open);
@@ -19064,26 +19189,46 @@
     const menu = $('cittaMore');
     if (menu) menu.hidden = true;
     $('cittaLines')?.setAttribute('aria-expanded', 'false');
-    const historyBtn = document.querySelector('[data-citta-act="history"]');
-    if (historyBtn) historyBtn.setAttribute('aria-expanded', 'false');
     const list = $('cittaHistory');
     if (list) list.hidden = true;
   }
-  function cittaRenderHistory() {
+  function cittaCloseHistoryPane() {
+    const pane = $('cittaHistoryPane');
+    if (pane) pane.hidden = true;
+    const search = $('cittaHistorySearch');
+    if (search) search.value = '';
+  }
+  function cittaOpenHistoryPane() {
+    if (document.documentElement.dataset.theme !== 'blue') return;
+    cittaCloseMore();
     cittaSaveCurrent();
-    const list = $('cittaHistory');
+    const pane = $('cittaHistoryPane');
+    if (!pane) return;
+    pane.hidden = false;
+    cittaRenderHistoryPane();
+    const search = $('cittaHistorySearch');
+    if (search) {
+      search.value = '';
+      requestAnimationFrame(() => search.focus());
+    }
+  }
+  function cittaRenderHistoryPane(filter) {
+    const list = $('cittaHistoryList');
     if (!list) return;
     list.replaceChildren();
-    if (!cittaThreads.length) {
+    const q = String(filter || '').trim().toLowerCase();
+    const rows = cittaThreads.filter((t) => !q || String(t.title || '').toLowerCase().includes(q));
+    if (!rows.length) {
       const empty = document.createElement('p');
       empty.className = 'citta-history-empty';
-      empty.textContent = '还没有历史对话';
+      empty.textContent = q ? '没有匹配的会话' : '还没有历史对话';
       list.appendChild(empty);
       return;
     }
-    cittaThreads.forEach((thread) => {
+    rows.forEach((thread) => {
       const btn = document.createElement('button');
       btn.type = 'button';
+      btn.setAttribute('role', 'option');
       btn.textContent = thread.title;
       if (thread.id === cittaCurrentId) btn.className = 'is-on';
       btn.addEventListener('click', () => {
@@ -19094,7 +19239,7 @@
         scroll.innerHTML = thread.html;
         scroll.scrollTop = 0;
         syncCittaScrollFade();
-        cittaCloseMore();
+        cittaCloseHistoryPane();
       });
       list.appendChild(btn);
     });
@@ -19115,6 +19260,7 @@
     syncCittaSendReady();
     syncCittaScrollFade();
     cittaCloseMore();
+    cittaCloseHistoryPane();
   }
   $('cittaNew')?.addEventListener('click', cittaStartNew);
   $('cittaLines')?.addEventListener('click', (e) => {
@@ -19133,14 +19279,17 @@
     if (!btn) return;
     e.stopPropagation();
     if (btn.dataset.cittaAct === 'new') { cittaStartNew(); return; }
-    const list = $('cittaHistory');
-    const show = list.hidden;
-    list.hidden = !show;
-    btn.setAttribute('aria-expanded', show ? 'true' : 'false');
-    if (show) cittaRenderHistory();
+    if (btn.dataset.cittaAct === 'history') { cittaOpenHistoryPane(); return; }
+  });
+  $('cittaHistoryBack')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    cittaCloseHistoryPane();
+  });
+  $('cittaHistorySearch')?.addEventListener('input', (e) => {
+    cittaRenderHistoryPane(e.target.value);
   });
   document.addEventListener('click', (e) => {
-    if (e.target.closest('#cittaMore') || e.target.closest('#cittaLines')) return;
+    if (e.target.closest('#cittaMore') || e.target.closest('#cittaLines') || e.target.closest('#cittaHistoryPane')) return;
     cittaCloseMore();
   });
   newTip.addEventListener('click', (e) => e.stopPropagation());
