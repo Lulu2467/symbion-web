@@ -6727,15 +6727,31 @@
     background: #fff; box-shadow: 0 0 0 3px rgba(60,122,148,.12); border-color: #3c7a94;
   }
   html[data-theme="blue"] #deskHost #desk-drive .drive-views {
-    height: 34px; border: 1px solid #e8e8ed; border-radius: 8px; background: #f2f2f7; padding: 2px; gap: 0; border: 0;
+    position: relative; display: flex; align-items: center; height: 32px; padding: 3px; gap: 0;
+    border: 0; border-radius: 999px; background: #f2f2f4; overflow: hidden;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-views::before {
+    content: "";
+    position: absolute; top: 3px; bottom: 3px; left: 3px; width: calc((100% - 6px) / 2);
+    border-radius: 999px; background: #fff; box-shadow: 0 1px 3px rgba(20, 24, 28, .12);
+    transform: translateX(0);
+    transition: transform .46s cubic-bezier(.22, 1, .36, 1);
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-views:has(button[data-desk-drive-view="list"][aria-pressed="true"])::before {
+    transform: translateX(100%);
   }
   html[data-theme="blue"] #deskHost #desk-drive .drive-views button {
-    height: 30px; padding: 0 12px; border: 0; border-radius: 6px; font-size: 13px; font-weight: 500; color: #86868b;
+    position: relative; z-index: 1; flex: 1 1 0; min-width: 0; height: 26px; margin: 0; padding: 0 12px;
+    border: 0; border-radius: 999px; background: transparent; box-shadow: none;
+    font-size: 13px; font-weight: 500; line-height: 26px; color: #8e8e93;
+    transition: color .18s ease;
   }
   html[data-theme="blue"] #deskHost #desk-drive .drive-views button + button { border: 0; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-views button:hover,
   html[data-theme="blue"] #deskHost #desk-drive .drive-views button[aria-pressed="true"] {
-    background: #fff; color: #1d1d1f; box-shadow: 0 1px 2px rgba(20,24,28,.08);
+    background: transparent; box-shadow: none;
   }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-views button[aria-pressed="true"] { color: #1d1d1f; }
   html[data-theme="blue"] #deskHost #desk-drive .drive-actions > button,
   html[data-theme="blue"] #deskHost #desk-drive .drive-upload > button,
   html[data-theme="blue"] #deskHost #desk-drive #deskSelectSlot > button {
