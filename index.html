@@ -6820,17 +6820,19 @@
   html[data-theme="blue"] #deskHost #desk-drive .db-main { flex: 1; min-width: 0; }
   html[data-theme="blue"] #deskHost #desk-drive .db-head,
   html[data-theme="blue"] #deskHost #desk-drive .db-row {
-    display: grid; grid-template-columns: 28px minmax(0, 1fr) 200px 168px 168px 36px;
+    display: grid; grid-template-columns: 16px minmax(0, 1fr) 200px 168px 168px 36px;
     align-items: center; gap: 8px; min-height: 44px; padding: 0 8px; border-radius: 8px;
   }
   html[data-theme="blue"] #deskHost #desk-drive .db.is-mine .db-head,
-  html[data-theme="blue"] #deskHost #desk-drive .db.is-mine .db-row { grid-template-columns: 28px minmax(0, 1.5fr) 180px 180px 32px; }
+  html[data-theme="blue"] #deskHost #desk-drive .db.is-mine .db-row { grid-template-columns: 16px minmax(0, 1.5fr) 180px 180px 32px; }
   html[data-theme="blue"] #deskHost #desk-drive .db.is-star .db-head,
   html[data-theme="blue"] #deskHost #desk-drive .db.is-star .db-row,
   html[data-theme="blue"] #deskHost #desk-drive .db.is-trash .db-head,
-  html[data-theme="blue"] #deskHost #desk-drive .db.is-trash .db-row { grid-template-columns: 28px minmax(0, 1.5fr) 160px 160px 72px; }
+  html[data-theme="blue"] #deskHost #desk-drive .db.is-trash .db-row { grid-template-columns: 16px minmax(0, 1.5fr) 160px 160px 72px; }
   html[data-theme="blue"] #deskHost #desk-drive .db-head { color: #86868b; font-size: 13px; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-head > * { justify-self: start; text-align: left; }
   html[data-theme="blue"] #deskHost #desk-drive .db-head button { border: 0; background: transparent; padding: 0; color: inherit; font-size: 13px; cursor: pointer; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-row > .db-check { justify-self: end; }
   html[data-theme="blue"] #deskHost #desk-drive .db-row:hover,
   html[data-theme="blue"] #deskHost #desk-drive .db-card:hover { background: #e8eaed; }
   html[data-theme="blue"] #deskHost #desk-drive .db-row:has(.db-more[aria-expanded="true"]) { background: #e4eef6; }
