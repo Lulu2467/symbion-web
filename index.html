@@ -6821,6 +6821,50 @@
   html[data-theme="blue"] #deskHost #desk-drive .drive-ai-end::after {
     content: ""; flex: 1; max-width: 120px; height: 1px; background: #ececf0;
   }
+
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-add-wrap,
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-tool { position: relative; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-add-wrap .drive-pop { left: 0; right: auto; top: calc(100% + 4px); }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-tool .drive-pop { right: 0; left: auto; top: calc(100% + 4px); }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-head {
+    width: 100%; min-height: 24px; border: 0; background: transparent; padding: 0;
+    display: inline-flex; align-items: center; justify-content: flex-start; gap: 4px;
+    font-size: 12px; font-weight: 500; color: #aeaeb2; cursor: pointer; text-align: left;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-head:hover { color: #1d1d1f; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-head[aria-pressed="true"] { color: #1d1d1f; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-head svg { width: 12px; height: 12px; }
+  html[data-theme="blue"] #deskHost #desk-drive th[aria-sort="ascending"] .drive-ai-head svg { transform: rotate(180deg); }
+  html[data-theme="blue"] #deskHost #desk-drive button.drive-ai-title { cursor: pointer; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-row { cursor: pointer; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-row td:last-child { position: relative; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-owner-btn {
+    border: 0; background: transparent; padding: 0; color: inherit; font-size: 13px;
+    display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-owner-btn:hover { color: #316479; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-star { width: 12px; height: 12px; color: #3c7a94; flex: none; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-visit-wrap { position: relative; display: inline-flex; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-visit {
+    border: 0; background: transparent; padding: 0; color: #86868b; font-size: 13px;
+    display: inline-flex; align-items: center; gap: 4px; cursor: pointer;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-visit svg { width: 12px; height: 12px; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-visit-wrap .drive-pop { left: 0; right: auto; top: calc(100% + 4px); min-width: 168px; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-log { margin: 0; padding: 4px 8px 6px; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-log p { margin: 0; padding: 4px 2px 6px; font-size: 12px; color: #86868b; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-log ul { margin: 0; padding: 0; list-style: none; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-log li { padding: 4px 2px; font-size: 13px; color: #1d1d1f; }
+  html[data-theme="blue"] #deskHost #desk-drive.is-citta-view .desk-folders .drive-main b { display: flex; align-items: center; gap: 4px; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-pop button[aria-checked="true"] { color: #316479; font-weight: 650; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-tools button[aria-expanded="true"],
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-add[aria-expanded="true"] { background: #ebf5fa; color: #316479; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-head:focus-visible,
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-title:focus-visible,
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-visit:focus-visible,
+  html[data-theme="blue"] #deskHost #desk-drive .drive-ai-owner-btn:focus-visible {
+    outline: 2px solid #3c7a94; outline-offset: 2px; border-radius: 6px;
+  }
   html[data-theme="blue"] #deskHost #desk-drive.is-citta-view .drive-head .sub { display: none; }
   html[data-theme="blue"] #deskHost #desk-drive.is-citta-view .drive-crumb { display: none; }
 
@@ -17577,59 +17621,7 @@
     });
 
     function openNewTab(label) {
-      const tabs = document.querySelector('.osbar-tabs');
-      const search = document.getElementById('headerSearch');
-      const main = document.querySelector('.main');
-      if (!tabs) return;
-      const name = label || 'New tab';
-      const make = (label, active, animate) => {
-        const tab = document.createElement('button');
-        tab.type = 'button';
-        tab.className = 'osbar-tab' + (active ? ' on' : '') + (animate ? ' is-in' : '');
-        tab.innerHTML = `<span class="osbar-tab-label"></span><span class="osbar-tab-x" role="button" aria-label="Close tab">×</span>`;
-        tab.querySelector('.osbar-tab-label').textContent = label;
-        tab.addEventListener('click', (e) => {
-          if (e.target.closest('.osbar-tab-x')) {
-            const wasOn = tab.classList.contains('on');
-            tab.remove();
-            if (wasOn) {
-              const last = tabs.querySelector('.osbar-tab:last-child');
-              if (last) last.classList.add('on');
-            }
-            return;
-          }
-          tabs.querySelectorAll('.osbar-tab').forEach((t) => t.classList.remove('on'));
-          tab.classList.add('on');
-        });
-        tabs.appendChild(tab);
-        return tab;
-      };
-      const existing = label
-        ? [...tabs.querySelectorAll('.osbar-tab')].find((t) => t.querySelector('.osbar-tab-label')?.textContent === name)
-        : null;
-      if (existing) {
-        tabs.querySelectorAll('.osbar-tab').forEach((t) => t.classList.remove('on'));
-        existing.classList.add('on');
-      } else if (tabs.children.length >= 3) {
-        const last = tabs.querySelector('.osbar-tab:last-child');
-        tabs.querySelectorAll('.osbar-tab').forEach((t) => t.classList.remove('on'));
-        if (last) {
-          if (label) last.querySelector('.osbar-tab-label').textContent = name;
-          last.classList.add('on');
-          last.classList.remove('is-in');
-          void last.offsetWidth;
-          last.classList.add('is-in');
-        }
-      } else {
-        tabs.querySelectorAll('.osbar-tab').forEach((t) => t.classList.remove('on'));
-        make(name, true, true);
-      }
-      if (search) search.value = '';
-      if (main) {
-        main.classList.remove('is-new-tab');
-        void main.offsetWidth;
-        main.classList.add('is-new-tab');
-      }
+      openDriveDoc(label);
     }
 
     function toggleOsbarBell(force) {
@@ -20481,6 +20473,10 @@
   let deskDriveTab = 'files';
   let deskDriveView = 'grid';
   let deskCittaScope = 'recent';
+  let deskCittaSort = 'accessed';
+  let deskCittaSortDir = 'desc';
+  let deskCittaKind = '';
+  let deskCittaPop = '';
   let deskQuery = '';
   let deskPath = [];
   let deskSelectOn = false;
@@ -20494,8 +20490,8 @@
   let deskItems = [{ id: 'ns', lane: 'personal', title: 'New schedule', type: 'Task', date: '2026-11-02' }];
   let deskNodes = [
     { id: 'citta', parent: '', kind: 'folder', name: 'From Citta', fromCitta: true, protect: true },
-    { id: 'citta-deck', parent: 'citta', kind: 'file', name: 'Lecture 5 deck', meta: 'Deck · Citta', fromCitta: true, protect: true, created: '11月17日 14:30', accessed: '11月17日 14:30' },
-    { id: 'citta-quiz', parent: 'citta', kind: 'file', name: 'Lecture 5 quiz keys', meta: 'Deck · Citta', fromCitta: true, protect: true, created: '11月17日 14:32', accessed: '11月17日 14:32' },
+    { id: 'citta-deck', parent: 'citta', kind: 'file', name: 'Lecture 5 deck', meta: 'Deck · Citta', fromCitta: true, protect: true, created: '11月17日 14:30', accessed: '11月17日 14:30', createdAt: Date.parse('2026-11-17T14:30:00'), accessedAt: Date.parse('2026-11-17T14:30:00') },
+    { id: 'citta-quiz', parent: 'citta', kind: 'file', name: 'Lecture 5 quiz keys', meta: 'Deck · Citta', fromCitta: true, protect: true, created: '11月17日 14:32', accessed: '11月17日 14:32', createdAt: Date.parse('2026-11-17T14:32:00'), accessedAt: Date.parse('2026-11-17T14:32:00') },
     { id: 'editors', parent: '', kind: 'folder', name: 'Symbion Editors' },
     { id: 'code', parent: 'editors', kind: 'folder', name: 'Code' },
     { id: 'decks', parent: 'editors', kind: 'folder', name: 'Decks' },
@@ -20676,12 +20672,154 @@
         if (rel.endsWith('/')) return;
       }
       const id = `d${Date.now()}${Math.random().toString(36).slice(2, 6)}`;
-      deskNodes = deskNodes.concat({ id, parent: folderId, kind: 'file', name: file.name, meta: 'File', size: file.size || 0 });
+      const addedAt = Date.now();
+      deskNodes = deskNodes.concat({ id, parent: folderId, kind: 'file', name: file.name, meta: 'File', size: file.size || 0, created: deskCittaWhen(addedAt), accessed: deskCittaWhen(addedAt), createdAt: addedAt, accessedAt: addedAt });
       deskFileBlobs.set(id, file);
     });
     deskMenuId = '';
     paintDeskDrive();
   }
+
+
+  function openDriveDoc(label) {
+    const tabs = document.querySelector('.osbar-tabs');
+    const search = document.getElementById('headerSearch');
+    const main = document.querySelector('.main');
+    if (!tabs) return;
+    const name = label || 'New tab';
+    const make = (tabLabel, active, animate) => {
+      const tab = document.createElement('button');
+      tab.type = 'button';
+      tab.className = 'osbar-tab' + (active ? ' on' : '') + (animate ? ' is-in' : '');
+      tab.innerHTML = `<span class="osbar-tab-label"></span><span class="osbar-tab-x" role="button" aria-label="Close tab">×</span>`;
+      tab.querySelector('.osbar-tab-label').textContent = tabLabel;
+      tab.addEventListener('click', (e) => {
+        if (e.target.closest('.osbar-tab-x')) {
+          const wasOn = tab.classList.contains('on');
+          tab.remove();
+          if (wasOn) {
+            const last = tabs.querySelector('.osbar-tab:last-child');
+            if (last) last.classList.add('on');
+          }
+          return;
+        }
+        tabs.querySelectorAll('.osbar-tab').forEach((t) => t.classList.remove('on'));
+        tab.classList.add('on');
+      });
+      tabs.appendChild(tab);
+      return tab;
+    };
+    const existing = label
+      ? [...tabs.querySelectorAll('.osbar-tab')].find((t) => t.querySelector('.osbar-tab-label')?.textContent === name)
+      : null;
+    if (existing) {
+      tabs.querySelectorAll('.osbar-tab').forEach((t) => t.classList.remove('on'));
+      existing.classList.add('on');
+    } else if (tabs.children.length >= 3) {
+      const last = tabs.querySelector('.osbar-tab:last-child');
+      tabs.querySelectorAll('.osbar-tab').forEach((t) => t.classList.remove('on'));
+      if (last) {
+        if (label) last.querySelector('.osbar-tab-label').textContent = name;
+        last.classList.add('on');
+        last.classList.remove('is-in');
+        void last.offsetWidth;
+        last.classList.add('is-in');
+      }
+    } else {
+      tabs.querySelectorAll('.osbar-tab').forEach((t) => t.classList.remove('on'));
+      make(name, true, true);
+    }
+    if (search) search.value = '';
+    if (main) {
+      main.classList.remove('is-new-tab');
+      void main.offsetWidth;
+      main.classList.add('is-new-tab');
+    }
+  }
+
+  function deskCittaWhen(ms) {
+    const d = new Date(ms);
+    return `${d.getMonth() + 1}月${d.getDate()}日 ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+  }
+  function deskCittaKindOf(node) {
+    const meta = String(node.meta || '');
+    if (meta.startsWith('Deck')) return 'deck';
+    if (meta.startsWith('Doc')) return 'doc';
+    return 'file';
+  }
+  function openCittaFile(node) {
+    if (!node) return;
+    const now = Date.now();
+    node.accessedAt = now;
+    node.accessed = deskCittaWhen(now);
+    node.visits = [node.accessed].concat(node.visits || []).filter((item, index, all) => all.indexOf(item) === index).slice(0, 6);
+    deskMenuId = '';
+    deskCittaPop = '';
+    if (document.documentElement.dataset.theme === 'blue') openDriveDoc(node.name);
+    else showToastMsg(node.name);
+    paintDeskDrive();
+  }
+  function cittaDriveBody(ownerName, ownerInitials) {
+    const q = deskQuery.trim().toLowerCase();
+    let list = deskKids('citta').filter((node) => node.kind === 'file');
+    if (deskCittaScope === 'star') list = list.filter((node) => node.starred);
+    if (deskCittaKind) list = list.filter((node) => deskCittaKindOf(node) === deskCittaKind);
+    if (q) list = list.filter((node) => node.name.toLowerCase().includes(q));
+    const dir = deskCittaSortDir === 'asc' ? 1 : -1;
+    list = list.slice().sort((a, b) => {
+      if (deskCittaSort === 'name') return a.name.localeCompare(b.name, 'zh') * dir;
+      if (deskCittaSort === 'owner') return (a.owner || ownerName).localeCompare(b.owner || ownerName, 'zh') * dir;
+      const pick = deskCittaSort === 'created' ? 'createdAt' : 'accessedAt';
+      return ((a[pick] || a.createdAt || 0) - (b[pick] || b.createdAt || 0)) * dir;
+    });
+    const chevron = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 8l3-3.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    const star = '<svg class="drive-ai-star" viewBox="0 0 16 16" aria-hidden="true"><title>已收藏</title><path d="M8 2.2 9.7 6l4.1.4-3.1 2.7.9 4L8 11.2 4.4 13.1l.9-4L2.2 6.4 6.3 6 8 2.2Z" fill="currentColor"/></svg>';
+    const aiBadge = '<span class="drive-ai-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="7" y="5" width="10" height="14" rx="1.5" fill="#fff"/><path d="M13 5v3.5h3.5" fill="#dceef6"/><path d="M10 12h4.5M10 14.5h3.2" stroke="#3c7a94" stroke-width="1.4" stroke-linecap="round"/><path d="M15.8 16.2h2.4M17 15v2.4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg></span>';
+    const head = (key, label, width) => {
+      const on = deskCittaSort === key;
+      const sort = on ? (deskCittaSortDir === 'asc' ? 'ascending' : 'descending') : 'none';
+      return `<th style="width:${width}" aria-sort="${sort}"><button type="button" class="drive-ai-head" data-citta-sort="${key}" aria-pressed="${on}">${label}${on ? chevron : ''}</button></th>`;
+    };
+    const radio = (act, keyName, id, label, current) => `<button type="button" role="menuitemradio" data-drive-do="${act}" data-${keyName}="${id}" aria-checked="${current === id}">${label}</button>`;
+    const kindItems = [['', '全部类型'], ['deck', 'Deck'], ['doc', '文档'], ['file', '其他文件']].map(([id, label]) => radio('citta-kind', 'citta-kind', id, label, deskCittaKind)).join('');
+    const sortItems = [['accessed', '最近访问'], ['created', '创建时间'], ['name', '标题'], ['owner', '所有者']].map(([id, label]) => radio('citta-sort', 'citta-sort', id, label, deskCittaSort)).join('');
+    const addPop = deskCittaPop === 'add' ? '<div class="drive-pop" role="menu"><button type="button" data-drive-do="citta-upload">上传文件</button><button type="button" data-drive-do="citta-new">用 Citta 新建</button></div>' : '';
+    const filterPop = deskCittaPop === 'filter' ? `<div class="drive-pop" role="menu">${kindItems}</div>` : '';
+    const sortPop = deskCittaPop === 'sort' ? `<div class="drive-pop" role="menu">${sortItems}</div>` : '';
+    const bar = `<div class="drive-ai-bar"><div class="drive-ai-tabs" role="tablist" aria-label="Citta files"><button type="button" data-citta-scope="recent" aria-pressed="${deskCittaScope === 'recent'}">最近</button><button type="button" data-citta-scope="mine" aria-pressed="${deskCittaScope === 'mine'}">我的</button><button type="button" data-citta-scope="star" aria-pressed="${deskCittaScope === 'star'}">收藏</button></div><div class="drive-ai-add-wrap"><button type="button" class="drive-ai-add" data-citta-pop="add" aria-expanded="${deskCittaPop === 'add'}" aria-label="新建"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>${addPop}</div><div class="drive-ai-tools"><div class="drive-ai-tool"><button type="button" data-citta-pop="filter" aria-pressed="${deskCittaKind ? 'true' : 'false'}" aria-expanded="${deskCittaPop === 'filter'}" aria-label="筛选"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 3.5h11l-4 4.5v3.5l-3-1.5v-2L2.5 3.5Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></button>${filterPop}</div><div class="drive-ai-tool"><button type="button" data-citta-pop="sort" aria-expanded="${deskCittaPop === 'sort'}" aria-label="排序"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 4.5h10M5 8h6M7 11.5h2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>${sortPop}</div><button type="button" data-desk-drive-view="list" aria-pressed="${deskDriveView !== 'grid'}" aria-label="列表"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 4h10M3 8h10M3 12h10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><button type="button" data-desk-drive-view="grid" aria-pressed="${deskDriveView === 'grid'}" aria-label="网格"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.5" y="2.5" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="2.5" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="2.5" y="9" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="9" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button></div></div>`;
+    const fileMenu = (node) => {
+      if (deskMenuId !== node.id) return '';
+      const canBlob = deskFileBlobs.has(node.id);
+      return `<div class="drive-pop drive-menu" role="menu"><button type="button" data-drive-do="open" data-drive-id="${node.id}">打开</button><button type="button" data-drive-do="star" data-drive-id="${node.id}">${node.starred ? '取消收藏' : '收藏'}</button><button type="button" data-drive-do="rename" data-drive-id="${node.id}">重命名</button><button type="button" data-drive-do="copy" data-drive-id="${node.id}">复制</button><button type="button" data-drive-do="download" data-drive-id="${node.id}"${canBlob ? '' : ' disabled'} title="${canBlob ? '' : '文件还在账号里，这台设备没有副本。'}">下载</button><button type="button" disabled title="分享要等账号服务。">分享</button>${node.protect ? '<button type="button" disabled title="示例文件留在这里。">删除</button>' : `<button type="button" data-drive-do="delete" data-drive-id="${node.id}">删除</button>`}</div>`;
+    };
+    let body;
+    if (!list.length) {
+      const empty = q ? '没有匹配的文件。' : (deskCittaKind ? '没有这类文件。' : (deskCittaScope === 'star' ? '还没有收藏。在一行右侧的 ··· 里选「收藏」。' : '还没有和 Citta 对话产生的文件。'));
+      body = `<p class="desk-empty">${empty}</p>`;
+    } else if (deskDriveView !== 'grid') {
+      const rows = list.map((node) => {
+        const who = node.owner || ownerName;
+        const mark = node.starred ? star : '';
+        const title = deskRenameId === node.id
+          ? `<input class="drive-rename" data-drive-rename="${node.id}" value="${deskEsc(node.name)}" aria-label="重命名 ${deskEsc(node.name)}">`
+          : `<button type="button" class="drive-ai-title" data-drive-open="${node.id}">${aiBadge}${mark}<span title="${deskEsc(node.name)}">${deskEsc(node.name)}</span></button>`;
+        const visits = node.visits && node.visits.length ? node.visits : [node.accessed || node.created || '—'];
+        const log = deskCittaPop === `visits:${node.id}` ? `<div class="drive-pop" role="dialog" aria-label="访问记录"><div class="drive-ai-log"><p>访问记录</p><ul>${visits.map((item) => `<li>${deskEsc(item)}</li>`).join('')}</ul></div></div>` : '';
+        return `<tr class="drive-ai-row" data-drive-open="${node.id}"><td>${title}</td><td><button type="button" class="drive-ai-owner-btn" data-drive-do="owner" title="只看我的文件"><span class="drive-ai-owner"><i>${deskEsc(ownerInitials)}</i>${deskEsc(who)}</span></button></td><td class="drive-ai-time">${deskEsc(node.created || '—')}</td><td class="drive-ai-time"><span class="drive-ai-visit-wrap"><button type="button" class="drive-ai-visit" data-drive-do="visits" data-drive-id="${node.id}" aria-expanded="${deskCittaPop === `visits:${node.id}`}" aria-label="访问记录">${deskEsc(node.accessed || node.created || '—')}${chevron}</button>${log}</span></td><td><button type="button" class="drive-more" data-drive-menu="${node.id}" aria-label="Actions for ${deskEsc(node.name)}" aria-expanded="${deskMenuId === node.id}">···</button>${fileMenu(node)}</td></tr>`;
+      }).join('');
+      body = `<table class="drive-ai-list"><thead><tr>${head('name', '标题', '42%')}${head('owner', '所有者', '18%')}${head('created', '创建时间', '18%')}${head('accessed', '最近访问', '18%')}<th></th></tr></thead><tbody>${rows}</tbody></table><div class="drive-ai-end">已经到底了</div>`;
+    } else {
+      const grid = list.map((node) => {
+        const open = deskRenameId === node.id
+          ? `<input class="drive-rename" data-drive-rename="${node.id}" value="${deskEsc(node.name)}" aria-label="重命名 ${deskEsc(node.name)}">`
+          : `<button type="button" class="drive-main" data-drive-open="${node.id}">${aiBadge}<b>${node.starred ? star : ''}${deskEsc(node.name)}</b><small>${deskEsc(node.meta || 'Citta')}</small></button>`;
+        return `<div class="desk-folder drive-item">${open}<button type="button" class="drive-more" data-drive-menu="${node.id}" aria-label="Actions for ${deskEsc(node.name)}" aria-expanded="${deskMenuId === node.id}">···</button>${fileMenu(node)}</div>`;
+      }).join('');
+      body = `<div class="desk-folders">${grid}</div><div class="drive-ai-end">已经到底了</div>`;
+    }
+    return bar + body;
+  }
+
   function paintDeskDrive() {
     const host = document.getElementById('deskDriveBody');
     if (!host) return;
@@ -20770,8 +20908,6 @@
       : '';
     const ownerName = (typeof userName === 'function' ? userName() : 'Lulu') || 'Lulu';
     const ownerInitials = (typeof userInitials === 'function' ? userInitials(ownerName) : ownerName.slice(0, 2)).toUpperCase();
-    const aiBadge = '<span class="drive-ai-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="7" y="5" width="10" height="14" rx="1.5" fill="#fff"/><path d="M13 5v3.5h3.5" fill="#dceef6"/><path d="M10 12h4.5M10 14.5h3.2" stroke="#3c7a94" stroke-width="1.4" stroke-linecap="round"/><path d="M15.8 16.2h2.4M17 15v2.4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg></span>';
-    const isCittaFiles = deskDriveTab === 'citta' || here === 'citta';
     let cittaShown = shown;
     if (deskDriveTab === 'citta') {
       cittaShown = shown.filter((node) => node.kind === 'file');
@@ -20807,30 +20943,7 @@
     const shownCount = shown.length;
     const drop = deskDriveTab === 'citta' ? '' : `<button type="button" class="drive-drop" id="deskDrop">${here && here !== 'citta' ? 'Drop more files here or choose Upload' : 'Drop files here or choose Upload'}</button>`;
     if (deskDriveTab === 'citta') {
-      const scope = deskCittaScope;
-      const bar = `<div class="drive-ai-bar"><div class="drive-ai-tabs" role="tablist" aria-label="Citta files"><button type="button" data-citta-scope="recent" aria-pressed="${scope === 'recent'}">最近</button><button type="button" data-citta-scope="mine" aria-pressed="${scope === 'mine'}">我的</button><button type="button" data-citta-scope="star" aria-pressed="${scope === 'star'}">收藏</button></div><button type="button" class="drive-ai-add" data-drive-do="citta-add" disabled title="上传还没接上" aria-label="添加"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button><div class="drive-ai-tools"><button type="button" disabled title="筛选还没接上" aria-label="筛选"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 3.5h11l-4 4.5v3.5l-3-1.5v-2L2.5 3.5Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></button><button type="button" disabled title="排序还没接上" aria-label="排序"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 4.5h10M5 8h6M7 11.5h2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><button type="button" data-desk-drive-view="list" aria-pressed="${deskDriveView !== 'grid'}" aria-label="列表"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 4h10M3 8h10M3 12h10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><button type="button" data-desk-drive-view="grid" aria-pressed="${deskDriveView === 'grid'}" aria-label="网格"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.5" y="2.5" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="2.5" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="2.5" y="9" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="9" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button></div></div>`;
-      const useList = deskDriveView !== 'grid';
-      let body;
-      if (!cittaShown.length) {
-        body = `<p class="desk-empty">${scope === 'star' ? '还没有收藏的 Citta 文件。' : (q ? '没有匹配的文件。' : '还没有和 Citta 对话产生的文件。')}</p>`;
-      } else if (useList) {
-        const rows = cittaShown.map((node) => {
-          const menuOpen = deskMenuId === node.id;
-          const canBlob = deskFileBlobs.has(node.id);
-          const menu = menuOpen ? `<div class="drive-pop drive-menu" role="menu"><button type="button" data-drive-do="download" data-drive-id="${node.id}"${canBlob ? '' : ' disabled'} title="${canBlob ? '' : 'File bytes stay with the account.'}">Download</button><button type="button" disabled title="Sharing waits for the account service.">Share…</button></div>` : '';
-          return `<tr class="drive-ai-row"><td><div class="drive-ai-title">${aiBadge}<span title="${deskEsc(node.name)}">${deskEsc(node.name)}</span></div></td><td><span class="drive-ai-owner"><i>${deskEsc(ownerInitials)}</i>${deskEsc(ownerName)}</span></td><td class="drive-ai-time">${deskEsc(node.created || '—')}</td><td class="drive-ai-time"><span class="drive-ai-sort">${deskEsc(node.accessed || node.created || '—')}<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 8l3-3.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></td><td><button type="button" class="drive-more" data-drive-menu="${node.id}" aria-label="Actions for ${deskEsc(node.name)}" aria-expanded="${menuOpen}">···</button>${menu}</td></tr>`;
-        }).join('');
-        body = `<table class="drive-ai-list"><thead><tr><th style="width:42%">标题</th><th style="width:18%">所有者</th><th style="width:18%">创建时间</th><th style="width:18%">最近访问</th><th></th></tr></thead><tbody>${rows}</tbody></table><div class="drive-ai-end">已经到底了</div>`;
-      } else {
-        const grid = cittaShown.map((node) => {
-          const menuOpen = deskMenuId === node.id;
-          const canBlob = deskFileBlobs.has(node.id);
-          const menu = menuOpen ? `<div class="drive-pop drive-menu" role="menu"><button type="button" data-drive-do="download" data-drive-id="${node.id}"${canBlob ? '' : ' disabled'}>Download</button></div>` : '';
-          return `<div class="desk-folder drive-item"><div class="drive-main">${aiBadge}<b>${deskEsc(node.name)}</b><small>${deskEsc(node.meta || 'Citta')}</small></div><button type="button" class="drive-more" data-drive-menu="${node.id}" aria-expanded="${menuOpen}">···</button>${menu}</div>`;
-        }).join('');
-        body = `<div class="desk-folders">${grid}</div><div class="drive-ai-end">已经到底了</div>`;
-      }
-      host.innerHTML = `${bar}${body}`;
+      host.innerHTML = cittaDriveBody(ownerName, ownerInitials);
     } else {
       host.innerHTML = `${cittaBanner}${google}${drop}${naming}${empty}<div class="desk-folders ${deskDriveView === 'list' ? 'is-list' : ''}">${cards}</div><div class="desk-foot"><button type="button" class="drive-status" data-drive-do="source" aria-expanded="${deskSourceOpen}">On this device</button><span>${shownCount} item${shownCount === 1 ? '' : 's'}</span><span>${deskBytes(used)} of 50 GB</span></div>${deskSourceOpen ? '<p class="drive-note">Symbion files on this device are available. Google Drive is not connected.</p>' : ''}`;
     }
@@ -21052,13 +21165,14 @@
     });
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && document.getElementById('kanbanModal') && !document.getElementById('kanbanModal').hidden) closeKanban();
-      if (e.key === 'Escape' && (deskMenuId || deskNaming || deskMoveId || deskRenameId || deskSelectOn)) {
+      if (e.key === 'Escape' && (deskMenuId || deskNaming || deskMoveId || deskRenameId || deskSelectOn || deskCittaPop)) {
         deskMenuId = '';
         deskNaming = false;
         deskMoveId = '';
         deskRenameId = '';
         deskSelectOn = false;
         deskSelectedIds = [];
+        deskCittaPop = '';
         paintDeskDrive();
       }
       if (e.key === 'Enter' && e.target.matches?.('[data-drive-rename]')) {
@@ -21357,11 +21471,32 @@
     }
     if (!inDrive) return false;
     if (e.target.closest('[data-desk-drive], [data-desk-drive-view], [data-citta-scope], #deskSearch')) {
-      const close = deskMenuId || deskMoveId;
+      const close = deskMenuId || deskMoveId || deskCittaPop;
       deskMenuId = '';
       deskMoveId = '';
+      deskCittaPop = '';
       if (close) paintDeskDrive();
       return false;
+    }
+    const cittaPop = e.target.closest('[data-citta-pop]');
+    if (cittaPop) {
+      const next = cittaPop.dataset.cittaPop;
+      deskCittaPop = deskCittaPop === next ? '' : next;
+      deskMenuId = '';
+      paintDeskDrive();
+      return true;
+    }
+    const cittaSort = e.target.closest('[data-citta-sort]');
+    if (cittaSort) {
+      const key = cittaSort.dataset.cittaSort;
+      if (deskCittaSort === key) deskCittaSortDir = deskCittaSortDir === 'asc' ? 'desc' : 'asc';
+      else {
+        deskCittaSort = key;
+        deskCittaSortDir = (key === 'name' || key === 'owner') ? 'asc' : 'desc';
+      }
+      deskCittaPop = '';
+      paintDeskDrive();
+      return true;
     }
     if (e.target.matches?.('[data-drive-rename]')) return true;
     if (menuBtn) {
@@ -21392,7 +21527,7 @@
       paintDeskDrive();
       return true;
     }
-    if (open) {
+    if (open && !e.target.closest('.drive-pop, [data-drive-do], [data-drive-menu], [data-drive-rename]')) {
       const node = deskNode(open.dataset.driveOpen);
       if (!node) return true;
       if (deskSelectOn) {
@@ -21408,6 +21543,8 @@
         deskSelectOn = false;
         deskSelectedIds = [];
         paintDeskDrive();
+      } else if (deskDriveTab === 'citta' || node.parent === 'citta') {
+        openCittaFile(node);
       }
       return true;
     }
@@ -21434,7 +21571,7 @@
       else if (act === 'move' && node) { deskMoveId = node.id; deskMenuId = ''; }
       else if (act === 'copy' && node) {
         const copyId = `d${Date.now()}`;
-        deskNodes = deskNodes.concat({ ...node, id: copyId, name: `${node.name} copy` });
+        deskNodes = deskNodes.concat({ ...node, id: copyId, name: `${node.name} copy`, protect: false, starred: false });
         const blob = deskFileBlobs.get(node.id);
         if (blob) deskFileBlobs.set(copyId, blob);
         deskMenuId = '';
@@ -21456,10 +21593,43 @@
         if (deskPath.includes(node.id)) deskPath = deskPath.slice(0, deskPath.indexOf(node.id));
         deskMenuId = '';
       }
+      else if (act === 'open' && node) { openCittaFile(node); return true; }
+      else if (act === 'star' && node) { node.starred = !node.starred; deskMenuId = ''; }
+      else if (act === 'visits' && node) {
+        const key = 'visits:' + node.id;
+        deskCittaPop = deskCittaPop === key ? '' : key;
+        deskMenuId = '';
+      }
+      else if (act === 'owner') {
+        deskCittaScope = 'mine';
+        deskCittaSort = 'created';
+        deskCittaSortDir = 'desc';
+        deskCittaPop = '';
+        deskMenuId = '';
+      }
+      else if (act === 'citta-kind') {
+        deskCittaKind = driveDo.dataset.cittaKind || '';
+        deskCittaPop = '';
+      }
+      else if (act === 'citta-sort') {
+        const key = driveDo.dataset.cittaSort || 'accessed';
+        deskCittaSort = key;
+        deskCittaSortDir = (key === 'name' || key === 'owner') ? 'asc' : 'desc';
+        deskCittaPop = '';
+      }
+      else if (act === 'citta-upload') {
+        deskCittaPop = '';
+        document.getElementById('deskFilePick')?.click();
+      }
+      else if (act === 'citta-new') {
+        deskCittaPop = '';
+        setCittaExpanded(true);
+        document.getElementById('cittaInput')?.focus();
+      }
       paintDeskDrive();
       return true;
     }
-    if (deskMenuId || deskMoveId) { deskMenuId = ''; deskMoveId = ''; paintDeskDrive(); }
+    if (deskMenuId || deskMoveId || deskCittaPop) { deskMenuId = ''; deskMoveId = ''; deskCittaPop = ''; paintDeskDrive(); }
     return true;
   }
   function onDeskClick(e) {
@@ -21480,13 +21650,16 @@
     const cittaScope = e.target.closest('[data-citta-scope]');
     if (cittaScope) {
       deskCittaScope = cittaScope.dataset.cittaScope;
+      if (deskCittaScope === 'mine') { deskCittaSort = 'created'; deskCittaSortDir = 'desc'; }
+      else { deskCittaSort = 'accessed'; deskCittaSortDir = 'desc'; }
+      deskCittaPop = '';
       paintDeskDrive();
       return;
     }
     const drive = e.target.closest('[data-desk-drive]');
     if (drive) {
       deskDriveTab = drive.dataset.deskDrive;
-      if (deskDriveTab === 'citta') { deskPath = ['citta']; deskSelectOn = false; deskSelectedIds = []; deskDriveView = 'list'; deskCittaScope = 'recent'; }
+      if (deskDriveTab === 'citta') { deskPath = ['citta']; deskSelectOn = false; deskSelectedIds = []; deskDriveView = 'list'; deskCittaScope = 'recent'; deskCittaSort = 'accessed'; deskCittaSortDir = 'desc'; deskCittaKind = ''; deskCittaPop = ''; deskQuery = ''; }
       else if (deskDriveTab === 'files') { deskPath = []; }
       paintDeskDrive();
       return;
