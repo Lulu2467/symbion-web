@@ -6773,10 +6773,8 @@
     margin-top: 10px; height: 32px; padding: 0 12px; border: 0; border-radius: 8px;
     background: #e8e8ed; color: #86868b; font-size: 13px; cursor: not-allowed;
   }
-  html[data-theme="blue"] #deskHost #desk-drive.is-file-browser .drive-head .sub { display: none; }
-  html[data-theme="blue"] #deskHost #desk-drive .drive-head h2 { display: none; }
-  html[data-theme="blue"] #deskHost #desk-drive.is-file-browser .drive-head,
-  html[data-theme="blue"] #deskHost #desk-drive.is-citta-view .drive-head { display: none; margin: 0; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-head { display: none; margin: 0; }
+  html[data-theme="blue"] #deskHost #deskScroll { overflow-anchor: none; }
   html[data-theme="blue"] #deskHost #desk-drive.is-file-browser #deskDriveTools { display: none !important; }
   html[data-theme="blue"] #deskHost #desk-drive.is-file-browser { position: relative; }
   html[data-theme="blue"] #deskHost #desk-drive .db > .db-actions,
@@ -22201,11 +22199,22 @@
     }
     const drive = e.target.closest('[data-desk-drive]');
     if (drive) {
+      const blue = document.documentElement.dataset.theme === 'blue';
+      const scroll = document.getElementById('deskScroll');
+      const page = document.scrollingElement;
+      const keepDesk = scroll ? scroll.scrollTop : 0;
+      const keepFrame = frame.scrollTop;
+      const keepPage = page ? page.scrollTop : 0;
       deskDriveTab = drive.dataset.deskDrive;
       if (deskDriveTab === 'citta') { deskPath = ['citta']; deskSelectOn = false; deskSelectedIds = []; deskDriveView = 'list'; deskCittaScope = 'recent'; deskCittaSort = 'accessed'; deskCittaSortDir = 'desc'; deskCittaKind = ''; deskCittaPop = ''; deskQuery = ''; }
-      else if (deskDriveTab === 'shared') { if (document.documentElement.dataset.theme !== 'blue') return; deskPath = []; deskQuery = ''; deskSelectOn = false; deskSelectedIds = []; deskSharedWho = ''; deskDriveView = 'list'; }
+      else if (deskDriveTab === 'shared') { if (!blue) return; deskPath = []; deskQuery = ''; deskSelectOn = false; deskSelectedIds = []; deskSharedWho = ''; deskDriveView = 'list'; }
       else if (deskDriveTab === 'files') { deskPath = []; }
       paintDeskDrive();
+      if (blue) {
+        if (scroll) scroll.scrollTop = keepDesk;
+        frame.scrollTop = keepFrame;
+        if (page) page.scrollTop = keepPage;
+      }
       return;
     }
     const view = e.target.closest('[data-desk-drive-view]');
