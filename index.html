@@ -21484,7 +21484,12 @@
 
   function courseDriveBody() {
     const here = deskPath.length ? deskHere() : 'co';
-    const kids = deskKids(here);
+    const dir = deskBlueSortDir === 'asc' ? 1 : -1;
+    let kids = deskKids(here).slice().sort((a, b) => {
+      if (deskBlueSort === 'name') return deskBlueName(a).localeCompare(deskBlueName(b), 'zh') * dir;
+      const key = deskBlueSort === 'created' ? 'created' : 'accessed';
+      return (deskBlueStamp(a, key) - deskBlueStamp(b, key)) * dir;
+    });
     const glyph = (node) => node.kind === 'folder'
       ? '<svg class="drive-ico" viewBox="0 0 1024 1024" width="18" height="18" aria-hidden="true"><path d="M918.673 883H104.327C82.578 883 65 867.368 65 848.027V276.973C65 257.632 82.578 242 104.327 242h814.346C940.422 242 958 257.632 958 276.973v571.054C958 867.28 940.323 883 918.673 883z" fill="#FFE9B4"/><path d="M512 411H65V210.37C65 188.597 82.598 171 104.371 171h305.92c17.4 0 32.71 11.334 37.681 28.036L512 411z" fill="#FFB02C"/><path d="M918.673 883H104.327C82.578 883 65 865.42 65 843.668V335.332C65 313.58 82.578 296 104.327 296h814.346C940.422 296 958 313.58 958 335.332v508.336C958 865.32 940.323 883 918.673 883z" fill="#FFCA28"/></svg>'
       : '<svg class="drive-ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M7 3.5h7l5 5V20.5H7V3.5Z" fill="none" stroke="#3c7a94" stroke-width="1.6"/><path d="M14 3.5V9h5.5" fill="none" stroke="#3c7a94" stroke-width="1.6"/></svg>';
@@ -21497,18 +21502,34 @@
     });
     const crumb = deskPath.length ? `<div class="db-crumb">${bits.join('')}</div>` : '';
     const root = !deskPath.length;
+    const check = (on) => `<button type="button" class="db-check" aria-pressed="${on}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.2 6.4 11 12.5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
+    const sortBtn = (key, label) => {
+      const on = deskBlueSort === key;
+      const arrow = on ? (deskBlueSortDir === 'asc' ? ' ↑' : ' ↓') : '';
+      return `<button type="button" data-drive-do="blue-sort" data-blue-sort="${key}">${label}${arrow}</button>`;
+    };
+    const menu = (node) => {
+      if (deskMenuId !== node.id) return '';
+      const locked = node.protect ? ' disabled title="示例文件留在这里。"' : '';
+      return `<div class="drive-pop drive-menu" role="menu"><button type="button" data-drive-do="blue-ask" data-drive-id="${node.id}">问问 Citta</button><button type="button" disabled title="分享要等账号服务。">分享</button><button type="button" data-drive-do="copy" data-drive-id="${node.id}">创建副本</button><button type="button" data-drive-do="delete" data-drive-id="${node.id}"${locked}>删除</button></div>`;
+    };
     const head = root
-      ? '<div class="db-head"><span></span><span>课程</span><span>授课</span><span>学期</span><span>最近更新</span><span></span></div>'
-      : '<div class="db-head"><span></span><span>标题</span><span>所有者</span><span>创建时间</span><span>最近访问</span><span></span></div>';
+      ? `<div class="db-head"><span></span>${sortBtn('name', '课程')}<span>授课</span><span>学期</span>${sortBtn('accessed', '最近更新')}<span></span></div>`
+      : `<div class="db-head"><span></span>${sortBtn('name', '标题')}<span>所有者</span>${sortBtn('created', '创建时间')}${sortBtn('accessed', '最近访问')}<span></span></div>`;
     const rows = kids.map((node) => {
+      const picked = deskSelectedIds.includes(node.id);
       const who = node.staff || node.owner || '—';
-      const initial = String(who).slice(0, 1);
-      const third = root ? (node.term || '—') : (node.created || '—');
-      const fourth = node.accessed || '—';
-      return `<div class="db-row"><span></span><button type="button" class="db-title" data-drive-open="${node.id}">${glyph(node)}<span>${deskEsc(node.name)}</span></button><span class="db-owner"><i aria-hidden="true">${deskEsc(initial)}</i>${deskEsc(who)}</span><span class="db-meta">${deskEsc(third)}</span><span class="db-meta">${deskEsc(fourth)}</span><span></span></div>`;
+      const initial = (typeof userInitials === 'function' ? userInitials(who) : String(who)).slice(0, 1);
+      const third = root ? (node.term || '—') : deskBlueLabel(node, 'created');
+      const fourth = deskBlueLabel(node, 'accessed');
+      const more = `<span class="db-pop"><button type="button" class="db-more" data-drive-menu="${node.id}" aria-label="更多操作" aria-expanded="${deskMenuId === node.id}">···</button>${menu(node)}</span>`;
+      return `<div class="db-row">${check(picked).replace('class="db-check"', `class="db-check" data-drive-pick="${node.id}" aria-label="选择 ${deskEsc(deskBlueName(node))}"`)}<button type="button" class="db-title" data-drive-open="${node.id}">${glyph(node)}<span>${deskEsc(deskBlueName(node))}</span></button><span class="db-owner"><i aria-hidden="true">${deskEsc(initial)}</i>${deskEsc(who)}</span><span class="db-meta">${deskEsc(third)}</span><span class="db-meta">${deskEsc(fourth)}</span>${more}</div>`;
     }).join('');
+    const picked = kids.filter((node) => deskSelectedIds.includes(node.id));
+    const canDelete = picked.some((node) => !node.protect);
+    const selectBar = picked.length ? `<div class="db-select">${check(true).replace('class="db-check"', 'class="db-check" data-drive-do="blue-clear" aria-label="取消选择"')}<button type="button" data-drive-do="blue-ask"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3.4h10a1 1 0 0 1 1 1v5.8a1 1 0 0 1-1 1H7.1L4.4 13.6V11.2H3a1 1 0 0 1-1-1V4.4a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>问问 Citta</button><button type="button" disabled title="分享要等账号服务。"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="4" cy="8" r="1.2" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="11.6" cy="4.2" r="1.2" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="11.6" cy="11.8" r="1.2" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.1 7.3 10.4 4.8M5.1 8.7l5.3 2.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>分享</button><button type="button" data-drive-do="blue-copy"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.6" y="2.6" width="7.2" height="7.2" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="6.2" y="6.2" width="7.2" height="7.2" rx="1.2" fill="#fff" stroke="currentColor" stroke-width="1.3"/></svg>创建副本</button><button type="button" disabled title="快捷方式要等账号服务。"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.2 3.4H12v5.6M11.2 4.2 4 11.4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>添加快捷方式到</button><button type="button" data-drive-do="blue-delete"${canDelete ? '' : ' disabled'}><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.4 4.4h9.2M6.2 4.4V3.2h3.6v1.2M4.6 4.4l.5 8.2h5.8l.5-8.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>删除</button></div>` : '';
     const empty = kids.length ? '' : '<p class="desk-empty">这个文件夹是空的。</p>';
-    return `<div class="db">${crumb}${head}${rows}${empty}<div class="db-end">已经到底了</div></div>`;
+    return `<div class="db is-recent${picked.length ? ' is-picking' : ''}">${crumb}${head}${rows}${empty}<div class="db-end">已经到底了</div>${selectBar}</div>`;
   }
 
   function paintDeskDrive() {
