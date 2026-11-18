@@ -6849,7 +6849,7 @@
   }
   html[data-theme="blue"] #deskHost #desk-drive .db-row:hover,
   html[data-theme="blue"] #deskHost #desk-drive .db-card:hover { background: #f3f4f6; }
-  html[data-theme="blue"] #deskHost #desk-drive .db-row:has(.db-more[aria-expanded="true"]) { background: #e4eef6; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-row:has(.db-more[aria-expanded="true"]) { background: #e4eef6; position: relative; z-index: 6; }
   html[data-theme="blue"] #deskHost #desk-drive .db-title {
     display: flex; align-items: center; gap: 10px; min-width: 0; border: 0; background: transparent;
     padding: 0; text-align: left; color: #1d1d1f; font-size: 14px; cursor: pointer;
@@ -22200,10 +22200,13 @@
         deskBluePop = '';
       }
       else if (act === 'blue-copy') {
-        deskSelectedIds.forEach((item) => {
+        const now = Date.now();
+        const when = deskCittaWhen(now);
+        deskSelectedIds.forEach((item, index) => {
           const source = deskNode(item);
           if (!source) return;
-          deskNodes = deskNodes.concat({ ...source, id: `d${Date.now()}${item}`, name: `${source.name} 副本`, protect: false, starred: false, trashed: false });
+          const at = now + index;
+          deskNodes = deskNodes.concat({ ...source, id: `d${at}${item}`, name: `${deskBlueName(source)} 副本`, protect: false, starred: false, trashed: false, created: when, accessed: when, createdAt: at, accessedAt: at });
         });
         deskSelectedIds = [];
         deskMenuId = '';
@@ -22220,7 +22223,18 @@
       else if (act === 'move' && node) { deskMoveId = node.id; deskMenuId = ''; }
       else if (act === 'copy' && node) {
         const copyId = `d${Date.now()}`;
-        deskNodes = deskNodes.concat({ ...node, id: copyId, name: `${node.name} copy`, protect: false, starred: false });
+        const blue = document.documentElement.dataset.theme === 'blue';
+        const now = Date.now();
+        const when = deskCittaWhen(now);
+        deskNodes = deskNodes.concat({
+          ...node,
+          id: copyId,
+          name: blue ? `${deskBlueName(node)} 副本` : `${node.name} copy`,
+          protect: false,
+          starred: false,
+          trashed: false,
+          ...(blue ? { created: when, accessed: when, createdAt: now, accessedAt: now } : {})
+        });
         const blob = deskFileBlobs.get(node.id);
         if (blob) deskFileBlobs.set(copyId, blob);
         deskMenuId = '';
