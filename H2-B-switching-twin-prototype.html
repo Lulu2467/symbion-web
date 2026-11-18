@@ -6709,7 +6709,7 @@
     gap: 4px; margin: 0 0 16px; border-bottom: 0;
   }
   html[data-theme="blue"] #deskHost #desk-drive .desk-drive-bar[role="tablist"] button {
-    height: 40px; padding: 0 12px; margin-bottom: 0; border-bottom: 0;
+    height: 40px; padding: 0 12px 0 40px; margin-bottom: 0; border-bottom: 0;
     font-size: 14px; font-weight: 500; color: #86868b;
   }
   html[data-theme="blue"] #deskHost #desk-drive .desk-drive-bar[role="tablist"] button[aria-pressed="true"] {
@@ -6719,10 +6719,10 @@
     color: #c7c7cc;
   }
   html[data-theme="blue"] #deskHost #desk-drive .drive-shared-note {
-    margin: 0 0 12px -28px; width: calc(100% + 28px); padding-left: 40px; box-sizing: border-box;
+    margin: 0 0 12px; width: 100%; padding-left: 40px; box-sizing: border-box;
     font-size: 13px; line-height: 1.4; color: #86868b;
   }
-  html[data-theme="blue"] #deskHost #desk-drive .drive-shared { display: flex; flex-direction: column; gap: 8px; margin-left: -28px; width: calc(100% + 28px); }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared { display: flex; flex-direction: column; gap: 8px; margin-left: 0; width: 100%; }
   html[data-theme="blue"] #deskHost #desk-drive .drive-shared-row {
     display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center;
     padding: 10px 4px 10px 40px; border: 1px solid #ececf0; border-radius: 14px; background: #fff; box-sizing: border-box;
@@ -6854,19 +6854,19 @@
   html[data-theme="blue"] #deskHost #desk-drive .db-main { flex: 1; min-width: 0; }
   html[data-theme="blue"] #deskHost #desk-drive .db-head,
   html[data-theme="blue"] #deskHost #desk-drive .db-row {
-    display: grid; grid-template-columns: 32px minmax(0, 1fr) 128px 148px 148px 28px;
-    align-items: center; column-gap: 8px; min-height: 40px; padding: 0 4px 0 0; border-radius: 8px;
+    display: grid; grid-template-columns: 32px minmax(0, 1fr) minmax(88px, 128px) minmax(108px, 148px) minmax(108px, 148px) 32px;
+    align-items: center; column-gap: 8px; min-height: 40px; padding: 0 4px 0 0; border-radius: 8px; box-sizing: border-box;
   }
   html[data-theme="blue"] #deskHost #desk-drive .db-head { min-height: 32px; }
   html[data-theme="blue"] #deskHost #desk-drive .db.is-mine .db-head,
-  html[data-theme="blue"] #deskHost #desk-drive .db.is-mine .db-row { grid-template-columns: 32px minmax(0, 1fr) 148px 148px 28px; }
+  html[data-theme="blue"] #deskHost #desk-drive .db.is-mine .db-row { grid-template-columns: 32px minmax(0, 1fr) minmax(108px, 148px) minmax(108px, 148px) 32px; }
   html[data-theme="blue"] #deskHost #desk-drive .db.is-star .db-head,
   html[data-theme="blue"] #deskHost #desk-drive .db.is-star .db-row,
   html[data-theme="blue"] #deskHost #desk-drive .db.is-trash .db-head,
-  html[data-theme="blue"] #deskHost #desk-drive .db.is-trash .db-row { grid-template-columns: 32px minmax(0, 1fr) 128px 148px 28px; }
+  html[data-theme="blue"] #deskHost #desk-drive .db.is-trash .db-row { grid-template-columns: 32px minmax(0, 1fr) minmax(88px, 128px) minmax(108px, 148px) 32px; }
   html[data-theme="blue"] #deskHost #desk-drive .db:not(.is-trash) .db-head,
   html[data-theme="blue"] #deskHost #desk-drive .db:not(.is-trash) .db-row {
-    margin-left: -28px; width: calc(100% + 28px);
+    margin-left: 0; width: 100%;
   }
   html[data-theme="blue"] #deskHost #desk-drive .db-head { color: #86868b; font-size: 13px; }
   html[data-theme="blue"] #deskHost #desk-drive .db-head > * { justify-self: start; text-align: left; }
@@ -6902,7 +6902,7 @@
   html[data-theme="blue"] #deskHost #desk-drive .db-more[aria-expanded="true"] { background: #eef1f3; color: #1d1d1f; }
   html[data-theme="blue"] #deskHost #desk-drive .db-end {
     display: flex; align-items: center; justify-content: center; gap: 12px;
-    margin: 22px 0 22px -28px; width: calc(100% + 28px); color: #c7c7cc; font-size: 13px;
+    margin: 22px 0; width: 100%; color: #c7c7cc; font-size: 13px;
   }
   html[data-theme="blue"] #deskHost #desk-drive .db-end::before,
   html[data-theme="blue"] #deskHost #desk-drive .db-end::after { content: ""; width: 64px; height: 1px; background: #e6e6ea; }
