@@ -714,7 +714,7 @@
     /* Keep stretch always — flipping align-items with is-open kills the width tween. */
     align-items: stretch;
     padding: 16px 8px 18px;
-    transition: width .52s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: width .28s cubic-bezier(0.4, 0, 0.2, 1);
   }
   html[data-theme="blue"] .rail.is-animating { overflow-x: clip; }
   html[data-theme="blue"] .rail::before {
@@ -731,53 +731,60 @@
   html[data-theme="blue"] .rail.is-open { width: 228px; padding: 16px 8px 18px; align-items: stretch; }
   html[data-theme="blue"] .rail .rail-top {
     justify-content: flex-start;
-    padding: 0 8px;
+    padding: 0;
     box-sizing: border-box;
   }
   html[data-theme="blue"] .rail.is-open .rail-top { justify-content: flex-start; }
   html[data-theme="blue"] .rail .r { color: #5f6368; }
-  /* Closed: 36×36 pill with centered icon. Open: full row, same left inset. */
+  /* Icon stays in a 36px slot. Opening only grows the row to the right. */
   html[data-theme="blue"] .rail .r[data-rail] {
     width: 36px;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 0;
     gap: 0;
-    transition: background .15s ease, color .15s ease, width .52s cubic-bezier(0.22, 1, 0.36, 1), padding .52s cubic-bezier(0.22, 1, 0.36, 1), gap .36s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: background .15s ease, color .15s ease, width .28s cubic-bezier(0.4, 0, 0.2, 1);
   }
   html[data-theme="blue"] .rail.is-open .r[data-rail] {
     width: 100%;
     justify-content: flex-start;
-    padding: 0 8px;
-    gap: 10px;
+    padding: 0;
+    gap: 0;
   }
+  html[data-theme="blue"] .rail .r[data-rail] .rail-ico {
+    margin-left: 9px;
+    margin-right: 0;
+    transition: margin-right .28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  html[data-theme="blue"] .rail.is-open .r[data-rail] .rail-ico { margin-right: 10px; }
   html[data-theme="blue"] .rail .r.flash,
   html[data-theme="blue"] .rail .p.flash {
     animation: none;
   }
   html[data-theme="blue"] .rail .r .rail-lab {
     display: block !important;
+    min-width: 0;
     max-width: 0;
     opacity: 0;
     overflow: hidden;
-    transform: translateX(-4px);
+    transform: none;
     pointer-events: none;
     white-space: nowrap;
-    transition: max-width .4s cubic-bezier(0.22, 1, 0.36, 1), opacity .28s ease, transform .36s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: max-width .28s cubic-bezier(0.4, 0, 0.2, 1), opacity .2s ease;
   }
   html[data-theme="blue"] .rail.is-open .r .rail-lab {
     display: block !important;
     max-width: 148px;
     opacity: 1;
-    transform: translateX(0);
+    transform: none;
     pointer-events: auto;
-    transition: max-width .48s cubic-bezier(0.22, 1, 0.36, 1) .06s, opacity .32s ease .1s, transform .4s cubic-bezier(0.22, 1, 0.36, 1) .06s;
   }
   html[data-theme="blue"] .rail .r.o {
     background: transparent;
-    border-color: transparent;
+    border: 0;
     color: #5f6368;
     width: 36px;
     height: 36px;
+    flex: none;
     border-radius: 10px;
     justify-content: center;
     padding: 0;
@@ -790,7 +797,12 @@
     color: #1f1f1f;
   }
   html[data-theme="blue"] .rail .r:hover:not(.on),
-  html[data-theme="blue"] .rail .r[data-rail]:hover:not(.on) {
+  html[data-theme="blue"] .rail .r[data-rail]:hover:not(.on),
+  html[data-theme="blue"] .rail .r.o:hover {
+    background: #f3f4f6;
+    color: #1f1f1f;
+  }
+  html[data-theme="blue"] .rail .r.on:hover {
     background: #d4e4ee;
     color: #1f1f1f;
   }
@@ -912,9 +924,9 @@
     transition: color .28s ease .08s;
   }
   html[data-theme="blue"] .rail-follow-k .rail-follow-line {
-    position: absolute; left: 14px; top: 50%; width: 24px; height: 24px; margin: -12px 0 0 0; display: block;
+    position: absolute; left: 6px; top: 50%; width: 24px; height: 24px; margin: -12px 0 0 0; display: block;
     background: transparent; opacity: 1;
-    transition: opacity .24s ease;
+    transition: opacity .2s ease;
   }
   html[data-theme="blue"] .rail.is-open .rail-follow-k {
     justify-content: flex-start; width: 100%; margin: 0; padding: 0 8px; color: #9aa0a6;
@@ -925,17 +937,17 @@
   html[data-theme="blue"] .rail-follow-row[hidden] { display: none; }
   html[data-theme="blue"] .rail-follow-row {
     display: flex; align-items: center; justify-content: flex-start; box-sizing: border-box;
-    width: 100%; height: 36px; padding: 0 8px; border: 0; border-radius: 10px; background: transparent;
+    width: 100%; height: 36px; padding: 0; border: 0; border-radius: 10px; background: transparent;
     font: inherit; cursor: pointer; color: #3c4043;
     transition: background .15s ease;
   }
   html[data-theme="blue"] .rail.is-open .rail-follow-row {
-    width: 100%; height: 36px; justify-content: flex-start; padding: 0 8px;
+    width: 100%; height: 36px; justify-content: flex-start; padding: 0;
   }
   html[data-theme="blue"] .rail.is-open .rail-follow-row[hidden] { display: none; }
-  html[data-theme="blue"] .rail-follow-row:hover { background: #d4e4ee; }
+  html[data-theme="blue"] .rail-follow-row:hover { background: #f3f4f6; }
   html[data-theme="blue"] .rail-follow-row .av {
-    width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; margin-left: 4px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
     font-size: 13px; font-weight: 650; line-height: 1; flex: none;
   }
   html[data-theme="blue"] .rail-follow-row .av.is-gr { background: #efe6f8; color: #6d4c9a; font-size: 11px; letter-spacing: -0.04em; }
@@ -945,39 +957,38 @@
   html[data-theme="blue"] .rail-follow-row .nm {
     display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     font-size: 14px; font-weight: 500; line-height: 1.2; max-width: 0; margin-left: 0; opacity: 0;
-    transform: translateX(-4px);
-    transition: max-width .4s cubic-bezier(0.22, 1, 0.36, 1), margin-left .4s cubic-bezier(0.22, 1, 0.36, 1), opacity .28s ease, transform .36s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: none;
+    transition: max-width .28s cubic-bezier(0.4, 0, 0.2, 1), margin-left .28s cubic-bezier(0.4, 0, 0.2, 1), opacity .2s ease;
   }
   html[data-theme="blue"] .rail.is-open .rail-follow-row .nm {
-    max-width: 148px; margin-left: 10px; opacity: 1; transform: translateX(0);
-    transition: max-width .48s cubic-bezier(0.22, 1, 0.36, 1) .06s, margin-left .48s cubic-bezier(0.22, 1, 0.36, 1) .06s, opacity .32s ease .1s, transform .4s cubic-bezier(0.22, 1, 0.36, 1) .06s;
+    max-width: 148px; margin-left: 10px; opacity: 1; transform: none;
   }
   .rail-me { display: none; }
   html[data-theme="blue"] .rail-me {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 10px;
+    gap: 0;
     width: 100%;
     height: 36px;
-    padding: 0 8px;
+    padding: 0;
     border-radius: 10px;
     align-self: stretch;
     flex: none;
     margin-top: auto;
     color: #1a1d21;
-    transition: height .36s cubic-bezier(0.22, 1, 0.36, 1);
   }
   html[data-theme="blue"] .rail.is-open .rail-me {
     width: 100%;
-    height: 40px;
-    padding: 0 8px;
+    height: 36px;
+    padding: 0;
     justify-content: flex-start;
     align-self: stretch;
   }
   html[data-theme="blue"] .rail-me-av {
     width: 28px;
     height: 28px;
+    margin-left: 4px;
     border-radius: 50%;
     background: #3c7a94;
     color: #fff;
@@ -996,18 +1007,18 @@
     opacity: 0;
     overflow: hidden;
     text-align: left;
-    transform: translateX(-6px);
+    transform: none;
     pointer-events: none;
-    transition: max-width .32s cubic-bezier(0.4, 0, 0.2, 1), opacity .18s ease, transform .28s ease;
+    transition: max-width .28s cubic-bezier(0.4, 0, 0.2, 1), opacity .2s ease;
   }
   html[data-theme="blue"] .rail.is-open .rail-me-copy {
     display: flex;
     min-width: 0;
     max-width: 140px;
+    margin-left: 10px;
     opacity: 1;
-    transform: translateX(0);
+    transform: none;
     pointer-events: auto;
-    transition: max-width .42s cubic-bezier(0.22, 1, 0.36, 1) .05s, opacity .3s ease .1s, transform .36s cubic-bezier(0.22, 1, 0.36, 1) .05s;
   }
   html[data-theme="blue"] .rail-me-copy b {
     font-size: 13px;
@@ -17695,7 +17706,7 @@
         primaryRail.removeEventListener('transitionend', clearAnim);
       };
       primaryRail.addEventListener('transitionend', clearAnim);
-      window.setTimeout(() => primaryRail.classList.remove('is-animating'), 650);
+      window.setTimeout(() => primaryRail.classList.remove('is-animating'), 320);
     }
 
     function selectRailItem(key) {
