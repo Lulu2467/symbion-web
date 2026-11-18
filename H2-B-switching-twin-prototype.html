@@ -21201,7 +21201,7 @@
     const menu = (node) => {
       if (deskMenuId !== node.id) return '';
       const locked = node.protect ? ' disabled title="示例文件留在这里。"' : '';
-      return `<div class="drive-pop drive-menu" role="menu"><button type="button" data-drive-do="blue-ask" data-drive-id="${node.id}">问问 Citta</button><button type="button" disabled title="分享要等账号服务。">分享</button><button type="button" disabled title="链接要等账号服务。">复制链接</button><button type="button" data-drive-do="copy" data-drive-id="${node.id}">创建副本</button><button type="button" disabled title="快捷方式要等账号服务。">添加快捷方式到</button><button type="button" data-drive-do="star" data-drive-id="${node.id}">${node.starred ? '取消收藏' : '收藏'}</button><button type="button" data-drive-do="delete" data-drive-id="${node.id}"${locked}>删除</button></div>`;
+      return `<div class="drive-pop drive-menu" role="menu"><button type="button" data-drive-do="blue-ask" data-drive-id="${node.id}">问问 Citta</button><button type="button" disabled title="分享要等账号服务。">分享</button><button type="button" data-drive-do="copy" data-drive-id="${node.id}">创建副本</button><button type="button" data-drive-do="delete" data-drive-id="${node.id}"${locked}>删除</button></div>`;
     };
     const scopeBtn = (id, label) => `<button type="button" data-drive-do="blue-scope" data-blue-scope="${id}" aria-pressed="${deskBlueScope === id}">${label}</button>`;
     const pop = (id, inner) => deskBluePop === id ? `<div class="drive-pop" role="menu">${inner}</div>` : '';
