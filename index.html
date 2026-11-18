@@ -6844,7 +6844,9 @@
   html[data-theme="blue"] #deskHost #desk-drive .db-head { color: #86868b; font-size: 13px; }
   html[data-theme="blue"] #deskHost #desk-drive .db-head > * { justify-self: start; text-align: left; }
   html[data-theme="blue"] #deskHost #desk-drive .db-head button { border: 0; background: transparent; padding: 0; color: inherit; font-size: 13px; cursor: pointer; }
-  html[data-theme="blue"] #deskHost #desk-drive .db-row > .db-check { justify-self: end; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-row > .db-check {
+    justify-self: center; align-self: center; margin: 0; transform: translateX(3px);
+  }
   html[data-theme="blue"] #deskHost #desk-drive .db-row:hover,
   html[data-theme="blue"] #deskHost #desk-drive .db-card:hover { background: #e8eaed; }
   html[data-theme="blue"] #deskHost #desk-drive .db-row:has(.db-more[aria-expanded="true"]) { background: #e4eef6; }
@@ -7162,6 +7164,9 @@
   html[data-theme="blue"] #deskHost #desk-drive .drive-ico {
     width: 28px; height: 28px; color: #3c7a94;
   }
+  html[data-theme="blue"] #deskHost #desk-drive .db-title .drive-ico,
+  html[data-theme="blue"] #deskHost #desk-drive .db-card .drive-ico,
+  html[data-theme="blue"] #deskHost #desk-drive .db-hit .drive-ico { width: 18px; height: 18px; }
   html[data-theme="blue"] #deskHost #desk-drive .drive-main b {
     font-size: 14px; font-weight: 600; color: #1d1d1f;
   }
