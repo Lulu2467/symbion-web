@@ -6719,12 +6719,13 @@
     color: #c7c7cc;
   }
   html[data-theme="blue"] #deskHost #desk-drive .drive-shared-note {
-    margin: 0 0 12px; font-size: 13px; line-height: 1.4; color: #86868b;
+    margin: 0 0 12px -28px; width: calc(100% + 28px); padding-left: 40px; box-sizing: border-box;
+    font-size: 13px; line-height: 1.4; color: #86868b;
   }
-  html[data-theme="blue"] #deskHost #desk-drive .drive-shared { display: flex; flex-direction: column; gap: 8px; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared { display: flex; flex-direction: column; gap: 8px; margin-left: -28px; width: calc(100% + 28px); }
   html[data-theme="blue"] #deskHost #desk-drive .drive-shared-row {
     display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center;
-    padding: 10px 12px; border: 1px solid #ececf0; border-radius: 14px; background: #fff;
+    padding: 10px 4px 10px 40px; border: 1px solid #ececf0; border-radius: 14px; background: #fff; box-sizing: border-box;
   }
   html[data-theme="blue"] #deskHost #desk-drive .drive-shared-row:hover { border-color: #d5e4ec; }
   html[data-theme="blue"] #deskHost #desk-drive .drive-shared-open {
@@ -6862,12 +6863,8 @@
   html[data-theme="blue"] #deskHost #desk-drive .db.is-star .db-row,
   html[data-theme="blue"] #deskHost #desk-drive .db.is-trash .db-head,
   html[data-theme="blue"] #deskHost #desk-drive .db.is-trash .db-row { grid-template-columns: 32px minmax(0, 1fr) 128px 148px 28px; }
-  html[data-theme="blue"] #deskHost #desk-drive .db.is-recent .db-head,
-  html[data-theme="blue"] #deskHost #desk-drive .db.is-recent .db-row,
-  html[data-theme="blue"] #deskHost #desk-drive .db.is-mine .db-head,
-  html[data-theme="blue"] #deskHost #desk-drive .db.is-mine .db-row,
-  html[data-theme="blue"] #deskHost #desk-drive .db.is-star .db-head,
-  html[data-theme="blue"] #deskHost #desk-drive .db.is-star .db-row {
+  html[data-theme="blue"] #deskHost #desk-drive .db:not(.is-trash) .db-head,
+  html[data-theme="blue"] #deskHost #desk-drive .db:not(.is-trash) .db-row {
     margin-left: -28px; width: calc(100% + 28px);
   }
   html[data-theme="blue"] #deskHost #desk-drive .db-head { color: #86868b; font-size: 13px; }
@@ -6904,7 +6901,7 @@
   html[data-theme="blue"] #deskHost #desk-drive .db-more[aria-expanded="true"] { background: #eef1f3; color: #1d1d1f; }
   html[data-theme="blue"] #deskHost #desk-drive .db-end {
     display: flex; align-items: center; justify-content: center; gap: 12px;
-    margin: 22px 0; color: #c7c7cc; font-size: 13px;
+    margin: 22px 0 22px -28px; width: calc(100% + 28px); color: #c7c7cc; font-size: 13px;
   }
   html[data-theme="blue"] #deskHost #desk-drive .db-end::before,
   html[data-theme="blue"] #deskHost #desk-drive .db-end::after { content: ""; width: 64px; height: 1px; background: #e6e6ea; }
