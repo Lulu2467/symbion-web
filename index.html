@@ -6776,18 +6776,24 @@
   html[data-theme="blue"] #deskHost #desk-drive.is-file-browser .drive-head .sub { display: none; }
   html[data-theme="blue"] #deskHost #desk-drive.is-file-browser #deskDriveTools { display: none !important; }
   html[data-theme="blue"] #deskHost #desk-drive.is-file-browser { position: relative; }
-  html[data-theme="blue"] #deskHost #desk-drive .db-top,
-  html[data-theme="blue"] #deskHost #desk-drive .db-bar-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-  html[data-theme="blue"] #deskHost #desk-drive .db-top { margin: 4px 0 10px; }
+  html[data-theme="blue"] #deskHost #desk-drive .db > .db-actions,
+  html[data-theme="blue"] #deskHost #desk-drive .db-bar-row { display: flex; align-items: center; gap: 12px; }
+  html[data-theme="blue"] #deskHost #desk-drive .db > .db-actions { justify-content: flex-end; margin: 0 0 8px; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-bar-row { justify-content: space-between; margin: 0 0 6px; }
   html[data-theme="blue"] #deskHost #desk-drive .db-scopes,
   html[data-theme="blue"] #deskHost #desk-drive .db-actions,
   html[data-theme="blue"] #deskHost #desk-drive .db-views { display: flex; align-items: center; gap: 4px; }
   html[data-theme="blue"] #deskHost #desk-drive .db-scopes button,
-  html[data-theme="blue"] #deskHost #desk-drive .db-views button,
   html[data-theme="blue"] #deskHost #desk-drive .db-icon {
     height: 32px; padding: 0 10px; border: 0; border-radius: 8px; background: transparent;
     color: #86868b; font-size: 14px; font-weight: 500; cursor: pointer;
   }
+  html[data-theme="blue"] #deskHost #desk-drive .db-views button {
+    width: 32px; height: 32px; padding: 0; border: 0; border-radius: 8px; background: transparent;
+    color: #86868b; display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .db-views button svg,
+  html[data-theme="blue"] #deskHost #desk-drive .db-ghost svg { width: 16px; height: 16px; display: block; }
   html[data-theme="blue"] #deskHost #desk-drive .db-scopes button[aria-pressed="true"] { color: #1d1d1f; font-weight: 600; }
   html[data-theme="blue"] #deskHost #desk-drive .db-scopes button:hover,
   html[data-theme="blue"] #deskHost #desk-drive .db-views button:hover,
@@ -6796,7 +6802,7 @@
   html[data-theme="blue"] #deskHost #desk-drive .db-actions { gap: 8px; }
   html[data-theme="blue"] #deskHost #desk-drive .db-ghost,
   html[data-theme="blue"] #deskHost #desk-drive .db-primary { height: 32px; padding: 0 12px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; }
-  html[data-theme="blue"] #deskHost #desk-drive .db-ghost { border: 1px solid #e8e8ed; background: #fff; color: #1d1d1f; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-ghost { border: 1px solid #e8e8ed; background: #fff; color: #1d1d1f; display: inline-flex; align-items: center; gap: 6px; }
   html[data-theme="blue"] #deskHost #desk-drive .db-ghost:hover { background: #f7f8f9; }
   html[data-theme="blue"] #deskHost #desk-drive .db-primary { border: 0; background: #3c7a94; color: #fff; }
   html[data-theme="blue"] #deskHost #desk-drive .db-primary:hover { background: #316479; }
@@ -6808,7 +6814,7 @@
   html[data-theme="blue"] #deskHost #desk-drive .db-main { flex: 1; min-width: 0; }
   html[data-theme="blue"] #deskHost #desk-drive .db-head,
   html[data-theme="blue"] #deskHost #desk-drive .db-row {
-    display: grid; grid-template-columns: 28px minmax(0, 1.5fr) 150px 140px 150px 32px;
+    display: grid; grid-template-columns: 28px minmax(0, 1fr) 200px 168px 168px 36px;
     align-items: center; gap: 8px; min-height: 44px; padding: 0 8px; border-radius: 8px;
   }
   html[data-theme="blue"] #deskHost #desk-drive .db.is-mine .db-head,
@@ -6826,6 +6832,11 @@
   }
   html[data-theme="blue"] #deskHost #desk-drive .db-title span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   html[data-theme="blue"] #deskHost #desk-drive .db-meta { color: #5b6b75; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-owner { display: inline-flex; align-items: center; gap: 8px; min-width: 0; color: #1d1d1f; font-size: 13px; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-owner i {
+    width: 22px; height: 22px; border-radius: 50%; background: #d4e4ee; color: #316479;
+    display: inline-flex; align-items: center; justify-content: center; font-style: normal; font-size: 11px; font-weight: 650; flex: none;
+  }
   html[data-theme="blue"] #deskHost #desk-drive .db-check {
     width: 16px; height: 16px; border: 1.5px solid #d0d0d4; border-radius: 4px; background: #fff;
     color: transparent; padding: 0; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0;
@@ -6838,7 +6849,12 @@
   html[data-theme="blue"] #deskHost #desk-drive .db-more { width: 28px; height: 28px; border: 0; border-radius: 8px; background: transparent; color: #86868b; cursor: pointer; }
   html[data-theme="blue"] #deskHost #desk-drive .db-more:hover,
   html[data-theme="blue"] #deskHost #desk-drive .db-more[aria-expanded="true"] { background: #eef1f3; color: #1d1d1f; }
-  html[data-theme="blue"] #deskHost #desk-drive .db-end { margin: 18px 0; text-align: center; color: #c7c7cc; font-size: 12px; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-end {
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    margin: 22px 0; color: #c7c7cc; font-size: 12px;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .db-end::before,
+  html[data-theme="blue"] #deskHost #desk-drive .db-end::after { content: ""; width: 64px; height: 1px; background: #e6e6ea; }
   html[data-theme="blue"] #deskHost #desk-drive .db-empty { min-height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: #86868b; font-size: 14px; }
   html[data-theme="blue"] #deskHost #desk-drive .db-empty .db-actions { margin-top: 4px; }
   html[data-theme="blue"] #deskHost #desk-drive .db-side { width: 260px; flex: none; padding: 8px 4px 0 16px; border-left: 1px solid #eee; }
@@ -21162,8 +21178,8 @@
     const uploadPop = pop('upload', '<button type="button" data-drive-do="pick-files">上传文件</button><button type="button" data-drive-do="pick-folder">上传文件夹</button><button type="button" disabled title="导入在线文档要等账号服务。">导入为在线文档</button>');
     const filterPop = pop('filter', [['', '全部类型'], ['folder', '文件夹'], ['doc', '文档'], ['deck', 'Deck'], ['sheet', '表格']].map(([id, label]) => `<button type="button" data-drive-do="blue-kind" data-blue-kind="${id}" aria-checked="${deskBlueKind === id}">${label}</button>`).join(''));
     const morePop = pop('more', `<button type="button" disabled>云盘存储<span class="db-meta">已使用 ${deskBytes(deskNodes.reduce((sum, node) => sum + (node.size || 0), 0))}</span></button><button type="button" data-drive-do="blue-trash">回收站</button>`);
-    const actionButtons = `<span class="db-pop"><button type="button" class="db-icon" data-drive-do="blue-pop" data-blue-pop="more" aria-label="更多" aria-expanded="${deskBluePop === 'more'}">···</button>${morePop}</span><button type="button" class="db-ghost" data-drive-do="blue-search" aria-expanded="${deskBlueSearchOpen}">搜索</button><span class="db-pop"><button type="button" class="db-ghost" data-drive-do="blue-pop" data-blue-pop="upload" aria-expanded="${deskBluePop === 'upload'}">上传</button>${uploadPop}</span><span class="db-pop"><button type="button" class="db-primary" data-drive-do="blue-pop" data-blue-pop="add" aria-expanded="${deskBluePop === 'add'}">+ 新建</button>${addPop}</span>`;
-    const views = `<div class="db-views"><span class="db-pop"><button type="button" class="db-icon" data-drive-do="blue-pop" data-blue-pop="filter" aria-label="筛选" aria-pressed="${deskBlueKind ? 'true' : 'false'}">筛选</button>${filterPop}</span><button type="button" data-desk-drive-view="list" aria-pressed="${deskBlueView !== 'grid'}" aria-label="列表">列表</button><button type="button" data-desk-drive-view="grid" aria-pressed="${deskBlueView === 'grid'}" aria-label="网格">网格</button></div>`;
+    const actionButtons = `<span class="db-pop"><button type="button" class="db-icon" data-drive-do="blue-pop" data-blue-pop="more" aria-label="更多" aria-expanded="${deskBluePop === 'more'}">···</button>${morePop}</span><button type="button" class="db-ghost" data-drive-do="blue-search" aria-expanded="${deskBlueSearchOpen}"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.2 10.2 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>搜索</button><span class="db-pop"><button type="button" class="db-ghost" data-drive-do="blue-pop" data-blue-pop="upload" aria-expanded="${deskBluePop === 'upload'}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 11V3.5M5.2 6.2 8 3.4l2.8 2.8M3.5 13h9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>上传</button>${uploadPop}</span><span class="db-pop"><button type="button" class="db-primary" data-drive-do="blue-pop" data-blue-pop="add" aria-expanded="${deskBluePop === 'add'}">+ 新建</button>${addPop}</span>`;
+    const views = `<div class="db-views"><span class="db-pop"><button type="button" data-drive-do="blue-pop" data-blue-pop="filter" aria-label="筛选" aria-pressed="${deskBlueKind ? 'true' : 'false'}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 3h11l-4 5.2V12.5L6.5 11V8.2L2.5 3Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>${filterPop}</span><button type="button" data-desk-drive-view="list" aria-pressed="${deskBlueView !== 'grid'}" aria-label="列表"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 4.5h10M3 8h10M3 11.5h10" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button><button type="button" data-desk-drive-view="grid" aria-pressed="${deskBlueView === 'grid'}" aria-label="网格"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3h4v4H3zM9 3h4v4H9zM3 9h4v4H3zM9 9h4v4H9z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button></div>`;
     const naming = deskNaming ? `<form class="drive-name db-name" id="deskNameForm"><input id="deskNewFolder" type="text" placeholder="文件夹名称" aria-label="文件夹名称" autocomplete="off"><button type="submit" class="drive-go" id="deskCreateFolder" disabled>创建</button></form>` : '';
     const here = deskPath.length ? deskNode(deskHere()) : null;
     const crumb = deskBlueScope === 'mine' && here ? `<div class="db-crumb"><button type="button" data-drive-do="blue-root">全部</button><span aria-hidden="true">›</span><span>${deskEsc(deskBlueName(here))}</span></div>` : '';
@@ -21190,10 +21206,10 @@
           ? `${title}<span class="db-meta">${deskEsc(deskBlueLabel(node, 'accessed'))}</span><span class="db-meta">${deskEsc(deskBlueLabel(node, 'created'))}</span>${more}`
           : deskBlueScope === 'trash'
             ? `${title}<span class="db-meta">${deskEsc(node.parent ? (deskNode(node.parent) ? deskBlueName(deskNode(node.parent)) : '我的') : '我的')}</span><button type="button" class="db-ghost" data-drive-do="blue-restore" data-drive-id="${node.id}">恢复</button><span></span>`
-            : `${title}<span class="db-meta">${deskEsc(node.owner || owner)}</span><span class="db-meta">${deskEsc(deskBlueLabel(node, deskBlueScope === 'star' ? 'accessed' : 'created'))}</span>${deskBlueScope === 'star' ? more : `<span class="db-meta">${deskEsc(deskBlueLabel(node, 'accessed'))}</span>${more}`}`;
+            : `${title}<span class="db-owner"><i aria-hidden="true">${deskEsc((typeof userInitials === 'function' ? userInitials(node.owner || owner) : (node.owner || owner)).slice(0, 1))}</i>${deskEsc(node.owner || owner)}</span><span class="db-meta">${deskEsc(deskBlueLabel(node, deskBlueScope === 'star' ? 'accessed' : 'created'))}</span>${deskBlueScope === 'star' ? more : `<span class="db-meta">${deskEsc(deskBlueLabel(node, 'accessed'))}</span>${more}`}`;
         return `<div class="db-row">${check(picked).replace('class="db-check"', `class="db-check" data-drive-pick="${node.id}" aria-label="选择 ${deskEsc(deskBlueName(node))}"`)}${cells}</div>`;
       }).join('');
-      main = `${head}${rows}<div class="db-end">—— 已经到底了 ——</div>`;
+      main = `${head}${rows}<div class="db-end">已经到底了</div>`;
     }
     const side = here && deskBlueScope === 'mine' && !deskBlueSearchOpen ? `<aside class="db-side"><h3>${deskEsc(deskBlueName(here))}</h3><div class="db-preview">${fileGlyph(here).replace('width="18" height="18"', 'width="42" height="42"')}</div><button type="button" class="db-ghost" disabled title="分享要等账号服务。">分享</button><p><b>描述</b>暂无描述</p><p><b>所有者</b>${deskEsc(owner)}</p></aside>` : '';
     const picked = list.filter((node) => deskSelectedIds.includes(node.id));
@@ -21205,7 +21221,7 @@
       const hits = (q ? list : list.slice(0, 8)).map((node) => `<button type="button" class="db-hit" data-drive-open="${node.id}">${fileGlyph(node)}<span>${deskEsc(deskBlueName(node))}</span></button>`).join('');
       return `<div class="db-modal"><div class="db-dialog" role="dialog" aria-label="搜索"><label class="drive-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M16 16l4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input id="deskBlueSearch" type="search" placeholder="搜索" value="${deskEsc(deskQuery)}" aria-label="搜索文件"></label><div class="db-chips"><span class="db-chip">云盘</span><span class="db-pop"><button type="button" data-drive-do="blue-pop" data-blue-pop="search-scope">${deskBlueSearchScope === 'mine' ? '归我所有' : '搜索范围'}</button>${scopePop}</span><span class="db-pop"><button type="button" data-drive-do="blue-pop" data-blue-pop="search-kind">${deskBlueKind ? '已筛选' : '文件类型'}</button>${kindPop}</span><button type="button" class="db-icon" data-drive-do="blue-search-close" aria-label="关闭搜索" style="margin-left:auto">×</button></div><div>${hits || '<p class="desk-empty">没有匹配的文件。</p>'}</div></div></div>`;
     })() : '';
-    return `<div class="db is-${deskBlueScope}${picked.length ? ' is-picking' : ''}"><div class="db-top"><div class="db-scopes">${scopeBtn('recent', '最近')}${scopeBtn('mine', '我的')}${scopeBtn('star', '收藏')}<button type="button" class="db-icon" data-drive-do="blue-pop" data-blue-pop="add" aria-label="新建">+</button></div><div class="db-actions">${actionButtons}${views}</div></div>${naming}${crumb}<div class="db-layout"><div class="db-main">${main}</div>${side}</div>${selectBar}</div>${searchPop}`;
+    return `<div class="db is-${deskBlueScope}${picked.length ? ' is-picking' : ''}"><div class="db-actions">${actionButtons}</div><div class="db-bar-row"><div class="db-scopes">${scopeBtn('recent', '最近')}${scopeBtn('mine', '我的')}${scopeBtn('star', '收藏')}<button type="button" class="db-icon" data-drive-do="blue-pop" data-blue-pop="add" aria-label="新建">+</button></div>${views}</div>${naming}${crumb}<div class="db-layout"><div class="db-main">${main}</div>${side}</div>${selectBar}</div>${searchPop}`;
   }
 
   function paintDeskDrive() {
