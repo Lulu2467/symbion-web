@@ -6722,12 +6722,13 @@
     margin: 0 0 12px; width: 100%; padding-left: 40px; box-sizing: border-box;
     font-size: 13px; line-height: 1.4; color: #86868b;
   }
-  html[data-theme="blue"] #deskHost #desk-drive .drive-shared { display: flex; flex-direction: column; gap: 8px; margin-left: 0; width: 100%; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared { display: flex; flex-direction: column; gap: 0; margin-left: 0; width: 100%; }
   html[data-theme="blue"] #deskHost #desk-drive .drive-shared-row {
     display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center;
-    padding: 10px 4px 10px 40px; border: 1px solid #ececf0; border-radius: 14px; background: #fff; box-sizing: border-box;
+    padding: 12px 4px 12px 40px; border: 0; border-bottom: 1px solid #ececf0; border-radius: 8px; background: transparent; box-sizing: border-box;
   }
-  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-row:hover { border-color: #d5e4ec; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-row:last-child { border-bottom: 0; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-row:hover { background: #f3f4f6; }
   html[data-theme="blue"] #deskHost #desk-drive .drive-shared-open {
     display: grid; grid-template-columns: 28px minmax(0, 1fr); column-gap: 10px; row-gap: 2px;
     align-items: center; width: 100%; min-width: 0; padding: 0; border: 0; background: transparent;
