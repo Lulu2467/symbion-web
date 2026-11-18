@@ -21468,7 +21468,7 @@
     if (jump) {
       deskSection = jump.dataset.deskJump;
       paintDeskChrome();
-      document.getElementById(`desk-${deskSection}`)?.scrollIntoView({ block: 'start' });
+      revealDeskSection(deskSection);
       syncHash();
       return;
     }
@@ -21553,12 +21553,7 @@
       b.setAttribute('aria-pressed', String(b.dataset.screen === 'home'));
     });
     paintDeskChrome();
-    const deskTarget = document.getElementById(`desk-${deskSection}`);
-    if (deskTarget && deskSection !== 'email') deskTarget.scrollIntoView({ block: 'start' });
-    else {
-      const scroll = document.getElementById('deskScroll');
-      if (scroll) scroll.scrollTop = 0;
-    }
+    revealDeskSection(deskSection);
     syncHash();
     fit();
   }
@@ -22051,7 +22046,20 @@
   function isDocFullscreen() {
     return !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
   }
+  function revealDeskSection(id) {
+    const scroll = document.getElementById('deskScroll');
+    const el = document.getElementById('desk-' + id);
+    if (scroll) {
+      if (!el || id === 'email') scroll.scrollTop = 0;
+      else {
+        const top = el.getBoundingClientRect().top - scroll.getBoundingClientRect().top + scroll.scrollTop;
+        scroll.scrollTop = Math.max(0, top);
+      }
+    }
+    frame.scrollTop = 0;
+  }
   function fit() {
+    frame.scrollTop = 0;
     const stageEl = document.querySelector('.stage');
     const fsRoot = $('fsRoot');
     const fs = isDocFullscreen();
