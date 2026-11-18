@@ -6814,6 +6814,9 @@
   html[data-theme="blue"] #deskHost #desk-drive .db-hit {
     font-size: 13px; font-weight: 500; line-height: 20px;
   }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-pop button.db-new { display: flex; align-items: center; gap: 8px; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-pop button.db-new svg { width: 16px; height: 16px; flex: none; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-new-rule { height: 1px; margin: 4px 8px; background: #ececf0; }
   html[data-theme="blue"] #deskHost #desk-drive .db-crumb { display: flex; align-items: center; gap: 6px; margin: 0 0 8px; font-size: 13px; color: #86868b; }
   html[data-theme="blue"] #deskHost #desk-drive .db-crumb button { border: 0; background: transparent; padding: 0; color: #316479; font-weight: 600; cursor: pointer; }
   html[data-theme="blue"] #deskHost #desk-drive .db-layout { display: flex; align-items: stretch; gap: 16px; min-height: 420px; }
@@ -21242,7 +21245,13 @@
     };
     const scopeBtn = (id, label) => `<button type="button" data-drive-do="blue-scope" data-blue-scope="${id}" aria-pressed="${deskBlueScope === id}">${label}</button>`;
     const pop = (id, inner) => deskBluePop === id ? `<div class="drive-pop" role="menu">${inner}</div>` : '';
-    const addPop = pop('add', '<button type="button" data-drive-do="name">新建文件夹</button><button type="button" data-drive-do="citta-new">用 Citta 新建</button>');
+    const addPop = pop('add', [
+      ['doc', '#3c7a94', '<path d="M5.5 3.9h8.35L19.85 9.55V18.75a1.35 1.35 0 0 1-1.35 1.35H5.5a1.35 1.35 0 0 1-1.35-1.35V5.25A1.35 1.35 0 0 1 5.5 3.9z"/><path d="M13.65 3.95V9.4h6.05"/><path d="M7.35 12.9h7.5M7.35 16.15h4.9"/>', 'Doc'],
+      ['deck', '#c4841d', '<rect x="4.15" y="3.9" width="15.7" height="11.4" rx="1.45"/><path d="M12 15.3v4.8M8.15 20.1h7.7"/>', 'Deck'],
+      ['numbers', '#2f8f62', '<rect x="4.15" y="3.9" width="15.7" height="16.2" rx="1.45"/><path d="M4.15 9.35h15.7M4.15 14.55h15.7M9.55 3.9v16.2M14.6 3.9v16.2"/>', 'Numbers'],
+      ['symtex', '#6b3fa0', '<path d="M6 4h12M5 6h14M7 9h4M13 9h4M8 12h8M8 15h8M6 18h12" fill="none"/>', 'SymTex'],
+      ['code', '#5c6b73', '<path d="M9.25 4.15 4.15 12l5.1 7.85M14.75 4.15 19.85 12l-5.1 7.85"/>', 'Code']
+    ].map(([id, color, path, label]) => `<button type="button" class="db-new" data-drive-do="blue-new-tool" data-blue-tool="${id}"><svg viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path}</svg>${label}</button>`).join('') + '<div class="db-new-rule" role="separator"></div><button type="button" class="db-new" data-drive-do="name"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path d="M918.673 883H104.327C82.578 883 65 867.368 65 848.027V276.973C65 257.632 82.578 242 104.327 242h814.346C940.422 242 958 257.632 958 276.973v571.054C958 867.28 940.323 883 918.673 883z" fill="#FFE9B4"/><path d="M512 411H65V210.37C65 188.597 82.598 171 104.371 171h305.92c17.4 0 32.71 11.334 37.681 28.036L512 411z" fill="#FFB02C"/><path d="M918.673 883H104.327C82.578 883 65 865.42 65 843.668V335.332C65 313.58 82.578 296 104.327 296h814.346C940.422 296 958 313.58 958 335.332v508.336C958 865.32 940.323 883 918.673 883z" fill="#FFCA28"/></svg>文件夹</button>');
     const uploadPop = pop('upload', '<button type="button" data-drive-do="pick-files">上传文件</button><button type="button" data-drive-do="pick-folder">上传文件夹</button>');
     const morePop = pop('more', `<button type="button" disabled>云盘存储<span class="db-meta">已使用 ${deskBytes(deskNodes.reduce((sum, node) => sum + (node.size || 0), 0))}</span></button><button type="button" data-drive-do="blue-trash">回收站</button>`);
     const actionButtons = `<span class="db-pop"><button type="button" class="db-icon" data-drive-do="blue-pop" data-blue-pop="more" aria-label="更多" aria-expanded="${deskBluePop === 'more'}">···</button>${morePop}</span><button type="button" class="db-ghost" data-drive-do="blue-search" aria-expanded="${deskBlueSearchOpen}"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.2 10.2 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>搜索</button><span class="db-pop"><button type="button" class="db-ghost" data-drive-do="blue-pop" data-blue-pop="upload" aria-expanded="${deskBluePop === 'upload'}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 11V3.5M5.2 6.2 8 3.4l2.8 2.8M3.5 13h9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>上传</button>${uploadPop}</span><span class="db-pop"><button type="button" class="db-primary" data-drive-do="blue-pop" data-blue-pop="add" aria-expanded="${deskBluePop === 'add'}">+ 新建</button>${addPop}</span>`;
@@ -22264,6 +22273,12 @@
       }
       else if (act === 'citta-new') {
         deskCittaPop = '';
+        setCittaExpanded(true);
+        document.getElementById('cittaInput')?.focus();
+      }
+      else if (act === 'blue-new-tool') {
+        deskBluePop = '';
+        setComposerToolSelection(driveDo.dataset.blueTool || '');
         setCittaExpanded(true);
         document.getElementById('cittaInput')?.focus();
       }
