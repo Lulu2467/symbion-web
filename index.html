@@ -6717,11 +6717,11 @@
     color: #c7c7cc;
   }
   html[data-theme="blue"] #deskHost #desk-drive .drive-tools {
-    gap: 10px; margin-bottom: 14px; padding: 10px 12px; border: 1px solid #e8e8ed;
-    border-radius: 12px; background: #fff;
+    gap: 8px; margin: 0 0 16px; padding: 0; border: 0; border-radius: 0; background: transparent;
   }
   html[data-theme="blue"] #deskHost #desk-drive .drive-search {
-    width: 240px; height: 34px; border: 1px solid #e8e8ed; border-radius: 8px; background: #fafafa; color: #86868b;
+    flex: 1 1 240px; width: auto; max-width: 320px; height: 32px;
+    border: 1px solid #e8e8ed; border-radius: 8px; background: #fff; color: #86868b;
   }
   html[data-theme="blue"] #deskHost #desk-drive .drive-search:focus-within {
     background: #fff; box-shadow: 0 0 0 3px rgba(60,122,148,.12); border-color: #3c7a94;
@@ -6752,10 +6752,11 @@
     background: transparent; box-shadow: none;
   }
   html[data-theme="blue"] #deskHost #desk-drive .drive-views button[aria-pressed="true"] { color: #1d1d1f; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-actions { gap: 4px; }
   html[data-theme="blue"] #deskHost #desk-drive .drive-actions > button,
   html[data-theme="blue"] #deskHost #desk-drive .drive-upload > button,
   html[data-theme="blue"] #deskHost #desk-drive #deskSelectSlot > button {
-    height: 34px; padding: 0 12px; border-radius: 8px; font-size: 13px; font-weight: 500;
+    height: 32px; padding: 0 10px; border-radius: 8px; font-size: 13px; font-weight: 500;
   }
   html[data-theme="blue"] #deskHost #desk-drive .drive-note {
     margin: 0 0 12px; padding: 10px 14px; border-radius: 10px;
@@ -6895,10 +6896,21 @@
   html[data-theme="blue"] #deskHost #desk-drive.is-citta-view .drive-head .sub { display: none; }
   html[data-theme="blue"] #deskHost #desk-drive.is-citta-view .drive-crumb { display: none; }
 
-  html[data-theme="blue"] #deskHost #desk-drive .drive-citta-banner {
-    display: flex; align-items: flex-start; gap: 12px; margin: 0 0 14px; padding: 14px 16px;
-    border: 1px solid #e4eef3; border-radius: 12px; background: linear-gradient(180deg, #f7fbfd 0%, #fff 100%);
+  html[data-theme="blue"] #deskHost #desk-drive #deskDriveBody {
+    display: flex; flex-direction: column; align-items: stretch;
   }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-citta-banner { order: 1; }
+  html[data-theme="blue"] #deskHost #desk-drive #deskDriveBody > .drive-note { order: 2; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-name { order: 3; }
+  html[data-theme="blue"] #deskHost #desk-drive .desk-empty { order: 4; }
+  html[data-theme="blue"] #deskHost #desk-drive .desk-folders { order: 5; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-drop { order: 6; }
+  html[data-theme="blue"] #deskHost #desk-drive .desk-foot { order: 7; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-citta-banner {
+    display: flex; align-items: center; gap: 12px; margin: 0 0 12px; padding: 10px 12px;
+    border: 1px solid #e4eef3; border-radius: 12px; background: #f7fbfd;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-citta-banner > div { min-width: 0; flex: 1; }
   html[data-theme="blue"] #deskHost #desk-drive .drive-citta-banner .drive-citta-ico {
     width: 36px; height: 36px; border-radius: 10px; background: #ebf5fa; color: #3c7a94;
     display: inline-flex; align-items: center; justify-content: center; flex: none;
@@ -6908,7 +6920,8 @@
     display: block; font-size: 14px; font-weight: 600; color: #1d1d1f; margin-bottom: 2px;
   }
   html[data-theme="blue"] #deskHost #desk-drive .drive-citta-banner span {
-    display: block; font-size: 13px; line-height: 1.45; color: #5b6b75;
+    display: block; font-size: 13px; line-height: 1.4; color: #5b6b75;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
   html[data-theme="blue"] #deskHost #desk-drive .drive-citta-banner button {
     margin-left: auto; align-self: center; height: 32px; padding: 0 12px; border: 0; border-radius: 8px;
@@ -6916,11 +6929,12 @@
   }
   html[data-theme="blue"] #deskHost #desk-drive .drive-citta-banner button:hover { background: #dceef6; }
   html[data-theme="blue"] #deskHost #desk-drive .drive-drop {
-    margin: 0 0 14px; padding: 14px 12px; border-radius: 12px; background: #fafafa; color: #86868b;
+    margin: 12px 0 0; padding: 10px 12px; border-radius: 10px; background: transparent; color: #86868b;
   }
   html[data-theme="blue"] #deskHost #desk-drive .desk-folders {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px;
+    grid-template-columns: repeat(auto-fill, 240px); justify-content: start; gap: 12px;
   }
+  html[data-theme="blue"] #deskHost #desk-drive .desk-folders.is-list { grid-template-columns: minmax(0, 1fr); }
   html[data-theme="blue"] #deskHost #desk-drive .desk-folder {
     border: 1px solid #ececf0; border-radius: 14px; padding: 14px; background: #fff;
     transition: border-color .15s ease, box-shadow .15s ease;
@@ -6940,9 +6954,17 @@
   html[data-theme="blue"] #deskHost #desk-drive .drive-main small {
     font-size: 12px; color: #86868b;
   }
-  html[data-theme="blue"] #deskHost #desk-drive .desk-folders:not(.is-list) .drive-main { gap: 10px; }
+  html[data-theme="blue"] #deskHost #desk-drive .desk-folders:not(.is-list) .drive-item { align-items: center; }
+  html[data-theme="blue"] #deskHost #desk-drive .desk-folders:not(.is-list) .drive-main {
+    display: grid; grid-template-columns: 28px minmax(0, 1fr); column-gap: 10px; row-gap: 2px; align-items: center;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .desk-folders:not(.is-list) .drive-ico { grid-row: 1 / span 2; }
+  html[data-theme="blue"] #deskHost #desk-drive .desk-folders:not(.is-list) .drive-main b,
+  html[data-theme="blue"] #deskHost #desk-drive .desk-folders:not(.is-list) .drive-main small {
+    min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
   html[data-theme="blue"] #deskHost #desk-drive .desk-foot {
-    margin-top: 18px; padding-top: 12px; border-top-color: #e8e8ed; color: #86868b;
+    order: 7; margin-top: 14px; padding-top: 0; border-top: 0; gap: 10px; color: #86868b;
   }
   html[data-theme="blue"] #deskHost #desk-drive .desk-empty {
     margin: 24px 0; text-align: center; color: #86868b; font-size: 14px; line-height: 1.5;
