@@ -21806,6 +21806,18 @@
       </div>
     </div>`;
     host.addEventListener('click', onDeskClick);
+    if (!window.__blueDrivePopCloser) {
+      window.__blueDrivePopCloser = true;
+      document.addEventListener('click', (e) => {
+        if (document.documentElement.dataset.theme !== 'blue') return;
+        if (!deskBluePop && !deskMenuId) return;
+        if (e.target.closest('#desk-drive')) return;
+        deskBluePop = '';
+        deskMenuId = '';
+        deskMoveId = '';
+        queueMicrotask(() => paintDeskDrive());
+      }, true);
+    }
     host.addEventListener('input', (e) => {
       if (e.target.id === 'kanbanCardNotes') resizeTextarea(e.target);
       if (e.target.closest('#kanbanSheet')) paintKanban();
@@ -22165,15 +22177,23 @@
     const crumb = e.target.closest('[data-drive-crumb]');
     const go = e.target.closest('[data-drive-go]');
     if (!inDrive && !menuBtn) {
-      if (deskMenuId || deskMoveId) { deskMenuId = ''; deskMoveId = ''; paintDeskDrive(); }
+      const blueTheme = document.documentElement.dataset.theme === 'blue';
+      if (deskMenuId || deskMoveId || (blueTheme && deskBluePop)) {
+        deskMenuId = '';
+        deskMoveId = '';
+        if (blueTheme) deskBluePop = '';
+        paintDeskDrive();
+      }
       return false;
     }
     if (!inDrive) return false;
     if (e.target.closest('[data-desk-drive], [data-desk-drive-view], [data-citta-scope], #deskSearch')) {
-      const close = deskMenuId || deskMoveId || deskCittaPop;
+      const blueTheme = document.documentElement.dataset.theme === 'blue';
+      const close = deskMenuId || deskMoveId || deskCittaPop || (blueTheme && deskBluePop);
       deskMenuId = '';
       deskMoveId = '';
       deskCittaPop = '';
+      if (blueTheme) deskBluePop = '';
       if (close) paintDeskDrive();
       return false;
     }
@@ -22197,7 +22217,14 @@
       paintDeskDrive();
       return true;
     }
-    if (e.target.matches?.('[data-drive-rename]')) return true;
+    const blueTheme = document.documentElement.dataset.theme === 'blue';
+    const inBlueMenu = !!e.target.closest('#deskBlueActions .db-pop');
+    const closeBluePop = blueTheme && !!deskBluePop && !inBlueMenu;
+    if (closeBluePop) deskBluePop = '';
+    if (e.target.matches?.('[data-drive-rename]')) {
+      if (closeBluePop) paintDeskDrive();
+      return true;
+    }
     if (menuBtn) {
       deskMenuId = deskMenuId === menuBtn.dataset.driveMenu ? '' : menuBtn.dataset.driveMenu;
       deskMoveId = '';
@@ -22267,6 +22294,7 @@
         openDriveDoc(node.name);
         deskMenuId = '';
       }
+      if (node.kind !== 'folder' && document.documentElement.dataset.theme === 'blue') paintDeskDrive();
       return true;
     }
     if (driveDo) {
@@ -22288,7 +22316,7 @@
         deskSelectedIds = [];
         deskSelectOn = false;
       }
-      else if (act === 'connect') { openSettings('apps'); return true; }
+      else if (act === 'connect') { openSettings('apps'); if (closeBluePop) paintDeskDrive(); return true; }
       else if (act === 'source') deskSourceOpen = !deskSourceOpen;
       else if (act === 'members') { deskSharedWho = deskSharedWho === id ? '' : id; deskMenuId = ''; }
       else if (act === 'blue-pop') { deskBluePop = deskBluePop === (driveDo.dataset.bluePop || '') ? '' : (driveDo.dataset.bluePop || ''); deskMenuId = ''; }
@@ -22387,7 +22415,7 @@
           deskMenuId = '';
         }
       }
-      else if (act === 'open' && node) { openCittaFile(node); return true; }
+      else if (act === 'open' && node) { openCittaFile(node); if (closeBluePop) paintDeskDrive(); return true; }
       else if (act === 'star' && node) { node.starred = !node.starred; deskMenuId = ''; }
       else if (act === 'visits' && node) {
         const key = 'visits:' + node.id;
@@ -22429,7 +22457,7 @@
       paintDeskDrive();
       return true;
     }
-    if (deskMenuId || deskMoveId || deskCittaPop) { deskMenuId = ''; deskMoveId = ''; deskCittaPop = ''; paintDeskDrive(); }
+    if (deskMenuId || deskMoveId || deskCittaPop || closeBluePop) { deskMenuId = ''; deskMoveId = ''; deskCittaPop = ''; paintDeskDrive(); }
     return true;
   }
   function onDeskClick(e) {
