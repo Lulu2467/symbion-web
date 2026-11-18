@@ -6856,7 +6856,7 @@
   html[data-theme="blue"] #deskHost #desk-drive .db-head,
   html[data-theme="blue"] #deskHost #desk-drive .db-row {
     display: grid; grid-template-columns: 32px minmax(0, 1fr) minmax(88px, 128px) minmax(108px, 148px) minmax(108px, 148px) 32px;
-    align-items: center; column-gap: 8px; min-height: 40px; padding: 0 4px 0 0; border-radius: 8px; box-sizing: border-box;
+    align-items: center; column-gap: 8px; min-height: 40px; padding: 0 4px 0 0; border-radius: 10px; box-sizing: border-box;
   }
   html[data-theme="blue"] #deskHost #desk-drive .db-head { min-height: 32px; }
   html[data-theme="blue"] #deskHost #desk-drive .db.is-mine .db-head,
@@ -6867,7 +6867,7 @@
   html[data-theme="blue"] #deskHost #desk-drive .db.is-trash .db-row { grid-template-columns: 32px minmax(0, 1fr) minmax(88px, 128px) minmax(108px, 148px) 32px; }
   html[data-theme="blue"] #deskHost #desk-drive .db:not(.is-trash) .db-head,
   html[data-theme="blue"] #deskHost #desk-drive .db:not(.is-trash) .db-row {
-    margin-left: 0; width: 100%;
+    margin-left: 8px; margin-right: 8px; width: calc(100% - 16px);
   }
   html[data-theme="blue"] #deskHost #desk-drive .db-head { color: #86868b; font-size: 13px; }
   html[data-theme="blue"] #deskHost #desk-drive .db-head > * { justify-self: start; text-align: left; }
