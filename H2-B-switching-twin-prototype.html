@@ -6716,6 +6716,63 @@
   html[data-theme="blue"] #deskHost #desk-drive .desk-drive-bar[role="tablist"] button.drive-soon[disabled] {
     color: #c7c7cc;
   }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-note {
+    margin: 0 0 12px; font-size: 13px; line-height: 1.4; color: #86868b;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared { display: flex; flex-direction: column; gap: 8px; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-row {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center;
+    padding: 10px 12px; border: 1px solid #ececf0; border-radius: 14px; background: #fff;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-row:hover { border-color: #d5e4ec; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-open {
+    display: grid; grid-template-columns: 28px minmax(0, 1fr); column-gap: 10px; row-gap: 2px;
+    align-items: center; width: 100%; min-width: 0; padding: 0; border: 0; background: transparent;
+    text-align: left; cursor: pointer; color: inherit;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-open .drive-ico { grid-row: 1 / span 2; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-name,
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-meta {
+    min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-name { font-size: 14px; font-weight: 600; color: #1d1d1f; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-meta { font-size: 12px; color: #86868b; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-side { display: flex; align-items: center; gap: 10px; color: #86868b; font-size: 12px; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-side > span {
+    max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-side button,
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-bar button,
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-member {
+    height: 32px; padding: 0 10px; border: 0; border-radius: 8px; background: #ebf5fa; color: #316479;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-side button:hover,
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-bar button:hover,
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-member:hover { background: #dceef6; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-member { flex: none; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-bar {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    margin: 0 0 12px; font-size: 13px; color: #5b6b75;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-members {
+    margin: 0 0 12px; padding: 12px 14px; border: 1px solid #e4eef3; border-radius: 12px; background: #f7fbfd;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-members b { display: block; margin-bottom: 8px; font-size: 13px; color: #1d1d1f; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-members ul { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-members li {
+    display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 10px 0 4px;
+    border: 1px solid #e4eef3; border-radius: 999px; background: #fff; font-size: 13px; color: #1d1d1f;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-members i {
+    width: 24px; height: 24px; border-radius: 50%; background: #d4e4ee; color: #316479;
+    display: inline-flex; align-items: center; justify-content: center; font-style: normal; font-size: 11px; font-weight: 600;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-members small { color: #86868b; font-size: 12px; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-members button[disabled] {
+    margin-top: 10px; height: 32px; padding: 0 12px; border: 0; border-radius: 8px;
+    background: #e8e8ed; color: #86868b; font-size: 13px; cursor: not-allowed;
+  }
   html[data-theme="blue"] #deskHost #desk-drive .drive-tools {
     gap: 8px; margin: 0 0 16px; padding: 0; border: 0; border-radius: 0; background: transparent;
   }
@@ -18775,6 +18832,7 @@
     decorateLectureBookIcons();
     balancePostColumns();
     if (typeof mountHomeKanban === 'function') mountHomeKanban();
+    if (typeof paintDeskDrive === 'function' && document.getElementById('deskDriveBody')) paintDeskDrive();
     try { localStorage.setItem('h2-theme', next); } catch (e) {}
     document.dispatchEvent(new Event('h2-theme'));
     if (typeof seatCittaPanel === 'function') seatCittaPanel();
@@ -20535,6 +20593,7 @@
   let deskNaming = false;
   let deskRenameId = '';
   let deskSourceOpen = false;
+  let deskSharedWho = '';
   let deskNewOpen = false;
   let deskItems = [{ id: 'ns', lane: 'personal', title: 'New schedule', type: 'Task', date: '2026-11-02' }];
   let deskNodes = [
@@ -20549,6 +20608,18 @@
     { id: 'symtex', parent: 'editors', kind: 'folder', name: 'SymTex' },
     { id: 'lec1', parent: 'docs', kind: 'file', name: 'Lecture 1 summary', meta: 'Document' },
     { id: 'shared', parent: '', kind: 'folder', name: 'Shared', protect: true },
+    { id: 'sd-hip', parent: 'sd', kind: 'folder', name: 'Heavy-ion Physics', drive: true, role: 'Contributor', activity: 'Lecture 5 slides · today', protect: true, members: [{ name: 'Prof. Roland', role: 'Manager' }, { name: 'Lulu', role: 'Contributor' }, { name: '骆王宇', role: 'Contributor' }, { name: '李佳琦', role: 'Viewer' }] },
+    { id: 'sd-hip-lec', parent: 'sd-hip', kind: 'folder', name: 'Lectures', protect: true },
+    { id: 'sd-hip-l5', parent: 'sd-hip-lec', kind: 'file', name: 'Lecture 5 slides', meta: 'Deck · Prof. Roland', protect: true },
+    { id: 'sd-hip-l1', parent: 'sd-hip-lec', kind: 'file', name: 'Lecture 1 slides', meta: 'Deck · Prof. Roland', protect: true },
+    { id: 'sd-hip-lab', parent: 'sd-hip', kind: 'folder', name: 'Labs', protect: true },
+    { id: 'sd-hip-brief', parent: 'sd-hip-lab', kind: 'file', name: 'Lab 3 brief', meta: 'Doc · Prof. Roland', protect: true },
+    { id: 'sd-hip-read', parent: 'sd-hip', kind: 'file', name: 'Reading list', meta: 'Doc · 骆王宇', protect: true },
+    { id: 'sd-lab', parent: 'sd', kind: 'folder', name: 'Lab 3 group', drive: true, role: 'Manager', activity: 'Analysis notes · yesterday', protect: true, members: [{ name: 'Lulu', role: 'Manager' }, { name: '豆豆', role: 'Contributor' }] },
+    { id: 'sd-lab-notes', parent: 'sd-lab', kind: 'file', name: 'Shared analysis notes', meta: 'Doc · 豆豆', protect: true },
+    { id: 'sd-lab-plot', parent: 'sd-lab', kind: 'file', name: 'Plot data', meta: 'Sheet · Lulu', protect: true },
+    { id: 'sd-edit', parent: 'sd', kind: 'folder', name: 'Symbion Editors', drive: true, role: 'Viewer', activity: 'Style notes · Nov 12', protect: true, members: [{ name: 'Prof. Roland', role: 'Manager' }, { name: 'Lulu', role: 'Viewer' }] },
+    { id: 'sd-edit-notes', parent: 'sd-edit', kind: 'file', name: 'Blue home notes', meta: 'Doc · Lulu', protect: true },
   ];
   const deskFileBlobs = new Map();
 
@@ -20668,6 +20739,21 @@
   function deskHere() { return deskPath[deskPath.length - 1] || ''; }
   function deskKids(parent) { return deskNodes.filter((node) => node.parent === parent); }
   function deskNode(id) { return deskNodes.find((node) => node.id === id); }
+  function deskInSharedDrive(node) {
+    let cur = node;
+    const seen = new Set();
+    while (cur && !seen.has(cur.id)) {
+      seen.add(cur.id);
+      if (cur.drive || cur.parent === 'sd') return true;
+      cur = cur.parent ? deskNode(cur.parent) : null;
+    }
+    return false;
+  }
+  function deskSharedInitials(name) {
+    const parts = String(name).trim().split(/\s+/);
+    if (parts.length >= 2 && /^[A-Za-z]/.test(parts[0])) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    return String(name).slice(0, 1);
+  }
   function deskMeta(node) {
     if (node.kind === 'file') return node.meta || 'File';
     if (node.id === 'citta' || node.fromCitta) {
@@ -20675,7 +20761,7 @@
       if (!kids.length) return 'Files from Citta chats';
       return `${kids.length} file${kids.length === 1 ? '' : 's'} from Citta`;
     }
-    if (node.protect) return 'Shared with you';
+    if (node.protect && !deskInSharedDrive(node)) return 'Shared with you';
     const kids = deskKids(node.id);
     const folders = kids.filter((kid) => kid.kind === 'folder').length;
     const files = kids.length - folders;
@@ -20869,15 +20955,55 @@
     return bar + body;
   }
 
+  function sharedDriveBody() {
+    const q = deskQuery.trim().toLowerCase();
+    const here = deskPath.length ? deskHere() : 'sd';
+    const drive = deskPath.length ? deskNode(deskPath[0]) : null;
+    const kids = deskKids(here).filter((node) => !q || node.name.toLowerCase().includes(q));
+    const peopleIcon = '<svg class="drive-ico" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><circle cx="9" cy="8" r="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="15.5" cy="8.5" r="1.8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4.5 17.5c.6-2.4 2.4-3.5 4.5-3.5s3.9 1.1 4.5 3.5M14 14.2c1.4-.3 2.7.2 3.5 1.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
+    const fileIcon = (node) => (node.kind === 'folder'
+      ? '<svg class="drive-ico" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H10l2 2h6.5A2.5 2.5 0 0 1 21 9.5v7A2.5 2.5 0 0 1 18.5 19h-13A2.5 2.5 0 0 1 3 16.5v-9Z" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>'
+      : '<svg class="drive-ico" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M7 3.5h7l5 5V20.5H7V3.5Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M14 3.5V9h5.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>');
+    const memberPanel = (node) => {
+      if (!node || deskSharedWho !== node.id) return '';
+      const people = (node.members || []).map((member) => `<li><i>${deskEsc(deskSharedInitials(member.name))}</i><span>${deskEsc(member.name)}</span><small>${deskEsc(member.role)}</small></li>`).join('');
+      return `<div class="drive-members"><b>People in ${deskEsc(node.name)}</b><ul>${people}</ul><button type="button" disabled title="Inviting people waits for the account.">Invite</button></div>`;
+    };
+    const note = '<p class="drive-shared-note">Already shared with this account. Creating a drive waits for the account.</p>';
+    if (!deskPath.length) {
+      if (!kids.length) return `${note}<p class="desk-empty">${q ? 'No shared drives match.' : 'No shared drives for this account.'}</p>`;
+      const panel = deskSharedWho ? memberPanel(deskNode(deskSharedWho)) : '';
+      if (deskDriveView === 'list') {
+        const rows = kids.map((node) => `<div class="drive-shared-row"><button type="button" class="drive-shared-open" data-drive-open="${node.id}">${peopleIcon}<b class="drive-shared-name">${deskEsc(node.name)}</b><span class="drive-shared-meta">${deskEsc(node.role)} · ${(node.members || []).length} members</span></button><span class="drive-shared-side"><span>${deskEsc(node.activity || '')}</span><button type="button" data-drive-do="members" data-drive-id="${node.id}" aria-expanded="${deskSharedWho === node.id}">Members</button></span></div>`).join('');
+        return `${note}${panel}<div class="drive-shared">${rows}</div>`;
+      }
+      const cards = kids.map((node) => `<div class="desk-folder drive-item"><button type="button" class="drive-main" data-drive-open="${node.id}">${peopleIcon}<b>${deskEsc(node.name)}</b><small>${deskEsc(node.role)} · ${(node.members || []).length} members</small></button><button type="button" class="drive-shared-member" data-drive-do="members" data-drive-id="${node.id}" aria-expanded="${deskSharedWho === node.id}" aria-label="Members of ${deskEsc(node.name)}">Members</button></div>`).join('');
+      return `${note}${panel}<div class="desk-folders">${cards}</div>`;
+    }
+    const bar = drive && drive.drive ? `<div class="drive-shared-bar"><span>Your role · ${deskEsc(drive.role || 'Member')}</span><button type="button" data-drive-do="members" data-drive-id="${drive.id}" aria-expanded="${deskSharedWho === drive.id}">${(drive.members || []).length} members</button></div>${memberPanel(drive)}` : '';
+    if (!kids.length) return `${bar}<p class="desk-empty">${q ? 'No files match.' : 'This folder is empty.'}</p>`;
+    const cards = kids.map((node) => `<div class="desk-folder drive-item"><button type="button" class="drive-main" data-drive-open="${node.id}">${node.drive ? peopleIcon : fileIcon(node)}<b>${deskEsc(node.name)}</b><small>${deskEsc(node.kind === 'folder' ? deskMeta(node) : (node.meta || 'File'))}</small></button></div>`).join('');
+    return `${bar}<div class="desk-folders ${deskDriveView === 'list' ? 'is-list' : ''}">${cards}</div>`;
+  }
+
   function paintDeskDrive() {
     const host = document.getElementById('deskDriveBody');
     if (!host) return;
+    const sharedBtn = document.getElementById('deskSharedTab');
+    const blueDrive = document.documentElement.dataset.theme === 'blue';
+    if (sharedBtn) {
+      sharedBtn.disabled = !blueDrive;
+      sharedBtn.classList.toggle('drive-soon', !blueDrive);
+      if (blueDrive) sharedBtn.removeAttribute('title');
+      else sharedBtn.title = 'Google shared drives aren’t available yet.';
+      if (!blueDrive && deskDriveTab === 'shared') deskDriveTab = 'files';
+    }
     const searchFocused = document.activeElement && document.activeElement.id === 'deskSearch';
     const caret = searchFocused ? document.activeElement.selectionStart : 0;
     document.querySelectorAll('[data-desk-drive]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.deskDrive === deskDriveTab)));
     document.querySelectorAll('[data-desk-drive-view]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.deskDriveView === deskDriveView)));
     const tools = document.getElementById('deskDriveTools');
-    if (tools) tools.hidden = deskDriveTab !== 'files';
+    if (tools) tools.hidden = deskDriveTab !== 'files' && deskDriveTab !== 'shared';
     const driveCard = document.getElementById('desk-drive');
     if (driveCard) driveCard.classList.toggle('is-citta-view', deskDriveTab === 'citta');
     const count = document.getElementById('deskDriveCount');
@@ -20887,6 +21013,7 @@
     const files = kids.length - folders;
     if (count) {
       if (deskDriveTab === 'courses') count.textContent = 'Folders shared with you';
+      else if (deskDriveTab === 'shared') count.textContent = deskPath.length ? (deskNode(deskHere())?.name || 'Shared drives') : `${deskKids('sd').length} shared drives`;
       else if (deskDriveTab === 'citta') count.textContent = files ? `${files} file${files === 1 ? '' : 's'} from Citta chats` : 'Files created while chatting with Citta';
       else count.textContent = `${folders} folder${folders === 1 ? '' : 's'} · ${files} file${files === 1 ? '' : 's'}`;
     }
@@ -20898,6 +21025,21 @@
       } else if (deskDriveTab === 'citta') {
         crumb.hidden = false;
         crumb.innerHTML = '<button type="button" data-drive-do="root">Super Drive</button><span aria-hidden="true">/</span><span>From Citta</span>';
+      } else if (deskDriveTab === 'shared') {
+        if (!deskPath.length) {
+          crumb.hidden = true;
+          crumb.innerHTML = '';
+        } else {
+          crumb.hidden = false;
+          const bits = ['<button type="button" data-drive-do="shared-root">Shared drives</button>'];
+          deskPath.forEach((id, index) => {
+            const node = deskNode(id);
+            if (!node) return;
+            bits.push('<span aria-hidden="true">/</span>');
+            bits.push(index === deskPath.length - 1 ? `<span>${deskEsc(node.name)}</span>` : `<button type="button" data-drive-crumb="${deskEsc(id)}">${deskEsc(node.name)}</button>`);
+          });
+          crumb.innerHTML = bits.join('');
+        }
       } else if (!deskPath.length) {
         crumb.hidden = true;
         crumb.innerHTML = '';
@@ -20922,7 +21064,7 @@
     const slot = document.getElementById('deskSelectSlot');
     const nameBtnEl = document.getElementById('deskNameBtn');
     const uploadWrap = document.querySelector('#deskDriveTools .drive-upload');
-    if (deskDriveTab === 'citta') {
+    if (deskDriveTab === 'citta' || deskDriveTab === 'shared') {
       if (nameBtnEl) nameBtnEl.hidden = true;
       if (uploadWrap) uploadWrap.hidden = true;
       if (slot) slot.innerHTML = '';
@@ -20940,6 +21082,14 @@
     if (search && search.value !== deskQuery) search.value = deskQuery;
     if (deskDriveTab === 'courses') {
       host.innerHTML = '<p class="desk-empty">No organized course materials yet.</p>';
+      return;
+    }
+    if (deskDriveTab === 'shared') {
+      host.innerHTML = sharedDriveBody();
+      if (searchFocused) {
+        const field = document.getElementById('deskSearch');
+        if (field) { field.focus(); field.setSelectionRange(caret, caret); }
+      }
       return;
     }
     if (deskDriveTab === 'citta') {
@@ -21066,7 +21216,7 @@
             <button type="button" data-desk-drive="files">Files</button>
             <button type="button" data-desk-drive="citta">Citta</button>
             <button type="button" data-desk-drive="courses">Courses</button>
-            <button type="button" class="drive-soon" disabled title="Google shared drives aren’t available yet.">Shared drives</button>
+            <button type="button" id="deskSharedTab" class="drive-soon" data-desk-drive="shared" disabled title="Google shared drives aren’t available yet.">Shared drives</button>
           </div>
           <nav class="drive-crumb" id="deskDriveCrumb" aria-label="Folder path"></nav>
           <div class="desk-drive-bar drive-tools" id="deskDriveTools">
@@ -21586,6 +21736,7 @@
       }
       if (node.kind === 'folder') {
         if (node.id === 'citta') deskDriveTab = 'citta';
+        if (deskDriveTab === 'shared') deskSharedWho = '';
         deskPath = deskPath.concat(node.id);
         deskQuery = '';
         deskMenuId = '';
@@ -21594,6 +21745,9 @@
         paintDeskDrive();
       } else if (deskDriveTab === 'citta' || node.parent === 'citta') {
         openCittaFile(node);
+      } else if (deskInSharedDrive(node)) {
+        openDriveDoc(node.name);
+        deskMenuId = '';
       }
       return true;
     }
@@ -21602,6 +21756,7 @@
       const id = driveDo.dataset.driveId;
       const node = id ? deskNode(id) : null;
       if (act === 'root') { deskDriveTab = 'files'; deskPath = []; deskQuery = ''; deskSelectOn = false; deskSelectedIds = []; }
+      else if (act === 'shared-root') { deskDriveTab = 'shared'; deskPath = []; deskQuery = ''; deskSharedWho = ''; }
       else if (act === 'name') { deskNaming = !deskNaming; deskMenuId = ''; }
       else if (act === 'upload-menu') { deskMenuId = deskMenuId === 'upload' ? '' : 'upload'; }
       else if (act === 'pick-files') document.getElementById('deskFilePick')?.click();
@@ -21616,6 +21771,7 @@
       }
       else if (act === 'connect') { openSettings('apps'); return true; }
       else if (act === 'source') deskSourceOpen = !deskSourceOpen;
+      else if (act === 'members') { deskSharedWho = deskSharedWho === id ? '' : id; deskMenuId = ''; }
       else if (act === 'rename' && node) { deskRenameId = node.id; deskMenuId = ''; }
       else if (act === 'move' && node) { deskMoveId = node.id; deskMenuId = ''; }
       else if (act === 'copy' && node) {
@@ -21709,6 +21865,7 @@
     if (drive) {
       deskDriveTab = drive.dataset.deskDrive;
       if (deskDriveTab === 'citta') { deskPath = ['citta']; deskSelectOn = false; deskSelectedIds = []; deskDriveView = 'list'; deskCittaScope = 'recent'; deskCittaSort = 'accessed'; deskCittaSortDir = 'desc'; deskCittaKind = ''; deskCittaPop = ''; deskQuery = ''; }
+      else if (deskDriveTab === 'shared') { if (document.documentElement.dataset.theme !== 'blue') return; deskPath = []; deskQuery = ''; deskSelectOn = false; deskSelectedIds = []; deskSharedWho = ''; deskDriveView = 'list'; }
       else if (deskDriveTab === 'files') { deskPath = []; }
       paintDeskDrive();
       return;
