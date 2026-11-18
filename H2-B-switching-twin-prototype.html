@@ -6778,10 +6778,13 @@
   html[data-theme="blue"] #deskHost #deskScroll { overflow-anchor: none; }
   html[data-theme="blue"] #deskHost #desk-drive.is-file-browser #deskDriveTools { display: none !important; }
   html[data-theme="blue"] #deskHost #desk-drive.is-file-browser { position: relative; }
+  html[data-theme="blue"] #deskHost.desk-focus-drive:has(#desk-drive.is-file-browser),
+  html[data-theme="blue"] #deskHost.desk-focus-drive:has(#desk-drive.is-file-browser) .desk-scroll { background: #fff; }
   html[data-theme="blue"] #deskHost #desk-drive .db > .db-actions,
   html[data-theme="blue"] #deskHost #desk-drive .db-bar-row { display: flex; align-items: center; gap: 12px; }
   html[data-theme="blue"] #deskHost #desk-drive .db > .db-actions { justify-content: flex-end; margin: 0 0 8px; }
-  html[data-theme="blue"] #deskHost #desk-drive .db-bar-row { justify-content: space-between; margin: 0 0 6px; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-bar-row { justify-content: space-between; margin: 0 0 2px; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-scopes button:first-child { padding-left: 40px; }
   html[data-theme="blue"] #deskHost #desk-drive .db-scopes,
   html[data-theme="blue"] #deskHost #desk-drive .db-actions,
   html[data-theme="blue"] #deskHost #desk-drive .db-views { display: flex; align-items: center; gap: 4px; }
@@ -6824,34 +6827,27 @@
   html[data-theme="blue"] #deskHost #desk-drive .db-main { flex: 1; min-width: 0; }
   html[data-theme="blue"] #deskHost #desk-drive .db-head,
   html[data-theme="blue"] #deskHost #desk-drive .db-row {
-    display: grid; grid-template-columns: 16px minmax(0, 1fr) 200px 168px 168px 36px;
-    align-items: center; gap: 8px; min-height: 44px; padding: 0 8px; border-radius: 8px;
+    display: grid; grid-template-columns: 32px minmax(0, 1fr) 128px 148px 148px 28px;
+    align-items: center; column-gap: 8px; min-height: 40px; padding: 0 4px 0 0; border-radius: 8px;
   }
+  html[data-theme="blue"] #deskHost #desk-drive .db-head { min-height: 32px; }
   html[data-theme="blue"] #deskHost #desk-drive .db.is-mine .db-head,
-  html[data-theme="blue"] #deskHost #desk-drive .db.is-mine .db-row { grid-template-columns: 16px minmax(0, 1.5fr) 180px 180px 32px; }
+  html[data-theme="blue"] #deskHost #desk-drive .db.is-mine .db-row { grid-template-columns: 32px minmax(0, 1fr) 148px 148px 28px; }
   html[data-theme="blue"] #deskHost #desk-drive .db.is-star .db-head,
   html[data-theme="blue"] #deskHost #desk-drive .db.is-star .db-row,
   html[data-theme="blue"] #deskHost #desk-drive .db.is-trash .db-head,
-  html[data-theme="blue"] #deskHost #desk-drive .db.is-trash .db-row { grid-template-columns: 16px minmax(0, 1.5fr) 160px 160px 72px; }
-  html[data-theme="blue"] #deskHost #desk-drive .db.is-recent .db-head,
-  html[data-theme="blue"] #deskHost #desk-drive .db.is-recent .db-row,
-  html[data-theme="blue"] #deskHost #desk-drive .db.is-mine .db-head,
-  html[data-theme="blue"] #deskHost #desk-drive .db.is-mine .db-row,
-  html[data-theme="blue"] #deskHost #desk-drive .db.is-star .db-head,
-  html[data-theme="blue"] #deskHost #desk-drive .db.is-star .db-row {
-    margin-left: -22px; width: calc(100% + 22px);
-  }
+  html[data-theme="blue"] #deskHost #desk-drive .db.is-trash .db-row { grid-template-columns: 32px minmax(0, 1fr) 128px 148px 28px; }
   html[data-theme="blue"] #deskHost #desk-drive .db-head { color: #86868b; font-size: 13px; }
   html[data-theme="blue"] #deskHost #desk-drive .db-head > * { justify-self: start; text-align: left; }
   html[data-theme="blue"] #deskHost #desk-drive .db-head button { border: 0; background: transparent; padding: 0; color: inherit; font-size: 13px; cursor: pointer; }
   html[data-theme="blue"] #deskHost #desk-drive .db-row > .db-check {
-    justify-self: center; align-self: center; margin: 0; transform: translateX(3px);
+    justify-self: center; align-self: center; margin: 0;
   }
   html[data-theme="blue"] #deskHost #desk-drive .db-row:hover,
-  html[data-theme="blue"] #deskHost #desk-drive .db-card:hover { background: #e8eaed; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-card:hover { background: #f3f4f6; }
   html[data-theme="blue"] #deskHost #desk-drive .db-row:has(.db-more[aria-expanded="true"]) { background: #e4eef6; }
   html[data-theme="blue"] #deskHost #desk-drive .db-title {
-    display: flex; align-items: center; gap: 8px; min-width: 0; border: 0; background: transparent;
+    display: flex; align-items: center; gap: 10px; min-width: 0; border: 0; background: transparent;
     padding: 0; text-align: left; color: #1d1d1f; font-size: 14px; cursor: pointer;
   }
   html[data-theme="blue"] #deskHost #desk-drive .db-title span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
