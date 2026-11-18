@@ -20745,6 +20745,16 @@
     { id: 'sd-lab-plot', parent: 'sd-lab', kind: 'file', name: 'Plot data', meta: 'Sheet · Lulu', protect: true },
     { id: 'sd-edit', parent: 'sd', kind: 'folder', name: 'Symbion Editors', drive: true, role: 'Viewer', activity: 'Style notes · Nov 12', protect: true, members: [{ name: 'Prof. Roland', role: 'Manager' }, { name: 'Lulu', role: 'Viewer' }] },
     { id: 'sd-edit-notes', parent: 'sd-edit', kind: 'file', name: 'Blue home notes', meta: 'Doc · Lulu', protect: true },
+    { id: 'co-hip', parent: 'co', kind: 'folder', name: 'Heavy-ion Physics', course: true, staff: 'Prof. Roland', term: '2026 秋', protect: true, created: '9月2日 09:00', accessed: '11月17日 14:10' },
+    { id: 'co-hip-lec', parent: 'co-hip', kind: 'folder', name: 'Lectures', protect: true, owner: 'Prof. Roland', created: '9月2日 09:10', accessed: '11月17日 14:10' },
+    { id: 'co-hip-l1', parent: 'co-hip-lec', kind: 'file', name: 'Lecture 1 slides', meta: 'Deck', owner: 'Prof. Roland', protect: true, created: '9月2日 09:20', accessed: '11月17日 10:20' },
+    { id: 'co-hip-l5', parent: 'co-hip-lec', kind: 'file', name: 'Lecture 5 slides', meta: 'Deck', owner: 'Prof. Roland', protect: true, created: '11月17日 08:40', accessed: '11月17日 14:10' },
+    { id: 'co-hip-lab', parent: 'co-hip', kind: 'folder', name: 'Labs', protect: true, owner: 'Prof. Roland', created: '10月6日 11:00', accessed: '11月16日 16:20' },
+    { id: 'co-hip-brief', parent: 'co-hip-lab', kind: 'file', name: 'Lab 3 brief', meta: 'Doc', owner: 'Prof. Roland', protect: true, created: '11月10日 11:00', accessed: '11月16日 16:20' },
+    { id: 'co-hip-read', parent: 'co-hip', kind: 'file', name: 'Reading list', meta: 'Doc', owner: 'Prof. Roland', protect: true, created: '9月2日 09:30', accessed: '11月12日 19:05' },
+    { id: 'co-da', parent: 'co', kind: 'folder', name: 'Data Analysis', course: true, staff: 'Prof. Xu', term: '2026 秋', protect: true, created: '9月8日 10:00', accessed: '11月14日 21:12' },
+    { id: 'co-da-w1', parent: 'co-da', kind: 'file', name: 'Week 1 notes', meta: 'Doc', owner: 'Prof. Xu', protect: true, created: '9月8日 10:20', accessed: '11月3日 15:40' },
+    { id: 'co-da-set', parent: 'co-da', kind: 'file', name: 'Problem set 2', meta: 'Doc', owner: 'Prof. Xu', protect: true, created: '11月4日 18:00', accessed: '11月14日 21:12' },
   ];
   const deskFileBlobs = new Map();
 
@@ -20864,6 +20874,16 @@
   function deskHere() { return deskPath[deskPath.length - 1] || ''; }
   function deskKids(parent) { return deskNodes.filter((node) => node.parent === parent); }
   function deskNode(id) { return deskNodes.find((node) => node.id === id); }
+  function deskInCourse(node) {
+    let cur = node;
+    const seen = new Set();
+    while (cur && !seen.has(cur.id)) {
+      seen.add(cur.id);
+      if (cur.course || cur.parent === 'co') return true;
+      cur = cur.parent ? deskNode(cur.parent) : null;
+    }
+    return false;
+  }
   function deskInSharedDrive(node) {
     let cur = node;
     const seen = new Set();
@@ -21132,7 +21152,7 @@
   }
   function blueDriveBody() {
     const owner = (typeof userName === 'function' ? userName() : 'Lulu') || 'Lulu';
-    const personal = (node) => node && !node.trashed && !deskInSharedDrive(node);
+    const personal = (node) => node && !node.trashed && !deskInSharedDrive(node) && !deskInCourse(node);
     const kindOf = (node) => {
       if (node.kind === 'folder') return 'folder';
       const meta = String(node.meta || '');
@@ -21144,7 +21164,7 @@
     const q = deskQuery.trim().toLowerCase();
     let list = [];
     if (deskBlueSearchOpen) {
-      list = deskNodes.filter((node) => !node.trashed && (deskBlueSearchScope === 'all' || (personal(node) && !node.drive)));
+      list = deskNodes.filter((node) => !node.trashed && !deskInCourse(node) && (deskBlueSearchScope === 'all' || (personal(node) && !node.drive)));
       if (q) list = list.filter((node) => deskBlueName(node).toLowerCase().includes(q) || node.name.toLowerCase().includes(q));
     } else if (deskBlueScope === 'trash') {
       list = deskNodes.filter((node) => node.trashed);
@@ -21230,6 +21250,35 @@
     return `<div class="db is-${deskBlueScope}${picked.length ? ' is-picking' : ''}"><div class="db-actions">${actionButtons}</div><div class="db-bar-row"><div class="db-scopes">${scopeBtn('recent', '最近')}${scopeBtn('mine', '我的')}${scopeBtn('star', '收藏')}<button type="button" class="db-icon" data-drive-do="blue-pop" data-blue-pop="add" aria-label="新建">+</button></div>${views}</div>${naming}${crumb}<div class="db-layout"><div class="db-main">${main}</div>${side}</div>${selectBar}</div>${searchPop}`;
   }
 
+  function courseDriveBody() {
+    const here = deskPath.length ? deskHere() : 'co';
+    const kids = deskKids(here);
+    const glyph = (node) => node.kind === 'folder'
+      ? '<svg class="drive-ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H10l2 2h6.5A2.5 2.5 0 0 1 21 9.5v7A2.5 2.5 0 0 1 18.5 19h-13A2.5 2.5 0 0 1 3 16.5v-9Z" fill="#e8b931" stroke="#d4a017" stroke-width="1.2"/></svg>'
+      : '<svg class="drive-ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M7 3.5h7l5 5V20.5H7V3.5Z" fill="none" stroke="#3c7a94" stroke-width="1.6"/><path d="M14 3.5V9h5.5" fill="none" stroke="#3c7a94" stroke-width="1.6"/></svg>';
+    const bits = ['<button type="button" data-drive-do="courses-root">Courses</button>'];
+    deskPath.forEach((id, index) => {
+      const node = deskNode(id);
+      if (!node) return;
+      bits.push('<span aria-hidden="true">/</span>');
+      bits.push(index === deskPath.length - 1 ? `<span>${deskEsc(node.name)}</span>` : `<button type="button" data-drive-crumb="${deskEsc(id)}">${deskEsc(node.name)}</button>`);
+    });
+    const crumb = deskPath.length ? `<div class="db-crumb">${bits.join('')}</div>` : '';
+    const root = !deskPath.length;
+    const head = root
+      ? '<div class="db-head"><span></span><span>课程</span><span>授课</span><span>学期</span><span>最近更新</span><span></span></div>'
+      : '<div class="db-head"><span></span><span>标题</span><span>所有者</span><span>创建时间</span><span>最近访问</span><span></span></div>';
+    const rows = kids.map((node) => {
+      const who = node.staff || node.owner || '—';
+      const initial = String(who).slice(0, 1);
+      const third = root ? (node.term || '—') : (node.created || '—');
+      const fourth = node.accessed || '—';
+      return `<div class="db-row"><span></span><button type="button" class="db-title" data-drive-open="${node.id}">${glyph(node)}<span>${deskEsc(node.name)}</span></button><span class="db-owner"><i aria-hidden="true">${deskEsc(initial)}</i>${deskEsc(who)}</span><span class="db-meta">${deskEsc(third)}</span><span class="db-meta">${deskEsc(fourth)}</span><span></span></div>`;
+    }).join('');
+    const empty = kids.length ? '' : '<p class="desk-empty">这个文件夹是空的。</p>';
+    return `<div class="db">${crumb}${head}${rows}${empty}<div class="db-end">已经到底了</div></div>`;
+  }
+
   function paintDeskDrive() {
     const host = document.getElementById('deskDriveBody');
     if (!host) return;
@@ -21274,8 +21323,8 @@
         crumb.hidden = true;
         crumb.innerHTML = '';
       } else if (deskDriveTab === 'courses') {
-        crumb.hidden = false;
-        crumb.innerHTML = '<button type="button" data-drive-do="root">Super Drive</button><span aria-hidden="true">/</span><span>Courses</span>';
+        crumb.hidden = document.documentElement.dataset.theme === 'blue' || false;
+        crumb.innerHTML = crumb.hidden ? '' : '<button type="button" data-drive-do="root">Super Drive</button><span aria-hidden="true">/</span><span>Courses</span>';
       } else if (deskDriveTab === 'citta') {
         crumb.hidden = false;
         crumb.innerHTML = '<button type="button" data-drive-do="root">Super Drive</button><span aria-hidden="true">/</span><span>From Citta</span>';
@@ -21335,7 +21384,9 @@
     const search = document.getElementById('deskSearch');
     if (search && search.value !== deskQuery) search.value = deskQuery;
     if (deskDriveTab === 'courses') {
-      host.innerHTML = '<p class="desk-empty">No organized course materials yet.</p>';
+      host.innerHTML = document.documentElement.dataset.theme === 'blue'
+        ? courseDriveBody()
+        : '<p class="desk-empty">No organized course materials yet.</p>';
       return;
     }
     if (deskDriveTab === 'shared') {
@@ -22042,6 +22093,7 @@
       const id = driveDo.dataset.driveId;
       const node = id ? deskNode(id) : null;
       if (act === 'root') { deskDriveTab = 'files'; deskPath = []; deskQuery = ''; deskSelectOn = false; deskSelectedIds = []; }
+      else if (act === 'courses-root') { deskDriveTab = 'courses'; deskPath = []; deskQuery = ''; }
       else if (act === 'shared-root') { deskDriveTab = 'shared'; deskPath = []; deskQuery = ''; deskSharedWho = ''; }
       else if (act === 'name') { deskNaming = !deskNaming; deskMenuId = ''; }
       else if (act === 'upload-menu') { deskMenuId = deskMenuId === 'upload' ? '' : 'upload'; }
@@ -22213,7 +22265,7 @@
       deskDriveTab = drive.dataset.deskDrive;
       if (deskDriveTab === 'citta') { deskPath = ['citta']; deskSelectOn = false; deskSelectedIds = []; deskDriveView = 'list'; deskCittaScope = 'recent'; deskCittaSort = 'accessed'; deskCittaSortDir = 'desc'; deskCittaKind = ''; deskCittaPop = ''; deskQuery = ''; }
       else if (deskDriveTab === 'shared') { if (!blue) return; deskPath = []; deskQuery = ''; deskSelectOn = false; deskSelectedIds = []; deskSharedWho = ''; deskDriveView = 'list'; }
-      else if (deskDriveTab === 'files') { deskPath = []; }
+      else if (deskDriveTab === 'files' || deskDriveTab === 'courses') { deskPath = []; deskQuery = ''; }
       paintDeskDrive();
       if (blue) {
         if (scroll) scroll.scrollTop = keepDesk;
