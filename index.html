@@ -6907,14 +6907,8 @@
   html[data-theme="blue"] #deskHost #desk-drive .db.is-picking .db-head > .db-check {
     opacity: 1; pointer-events: auto;
   }
-  html[data-theme="blue"] #deskHost #desk-drive .db-head > .db-check[aria-pressed="true"],
-  html[data-theme="blue"] #deskHost #desk-drive .db-head > .db-check.is-some {
+  html[data-theme="blue"] #deskHost #desk-drive .db-head > .db-check[aria-pressed="true"] {
     background: #3c7a94; border-color: #3c7a94; color: #fff;
-  }
-  html[data-theme="blue"] #deskHost #desk-drive .db-head > .db-check.is-some { color: transparent; }
-  html[data-theme="blue"] #deskHost #desk-drive .db-head > .db-check.is-some svg { display: none; }
-  html[data-theme="blue"] #deskHost #desk-drive .db-head > .db-check.is-some::after {
-    content: ""; width: 8px; height: 1.5px; border-radius: 1px; background: #fff;
   }
   html[data-theme="blue"] #deskHost #desk-drive .db-row > .db-check {
     justify-self: end; align-self: center; margin: 0;
@@ -22010,7 +22004,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     } else if (!deskBlueSearchOpen) {
       const pickedNow = list.filter((node) => deskSelectedIds.includes(node.id));
       const allNow = !!list.length && pickedNow.length === list.length;
-      const allCheck = check(allNow).replace('class="db-check"', `class="db-check${pickedNow.length && !allNow ? ' is-some' : ''}" data-drive-do="blue-all" aria-label="${allNow ? 'Clear selection' : 'Select all'}"`);
+      const allCheck = check(allNow).replace('class="db-check"', `class="db-check" data-drive-do="blue-all" aria-label="${allNow ? 'Clear selection' : 'Select all'}"`);
       const head = deskBlueScope === 'mine'
         ? `<div class="db-head">${allCheck}${sortBtn('name', 'Title')}${sortBtn('accessed', 'Modified')}${sortBtn('created', 'Created')}<span></span></div>`
         : deskBlueScope === 'star'
@@ -22184,7 +22178,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     };
     const picked = list.filter((node) => deskSelectedIds.includes(node.id));
     const allOn = !!list.length && picked.length === list.length;
-    const allCheck = check(allOn).replace('class="db-check"', `class="db-check${picked.length && !allOn ? ' is-some' : ''}" data-drive-do="blue-all" aria-label="${allOn ? 'Clear selection' : 'Select all'}"`);
+    const allCheck = check(allOn).replace('class="db-check"', `class="db-check" data-drive-do="blue-all" aria-label="${allOn ? 'Clear selection' : 'Select all'}"`);
     const head = `<div class="db-head">${allCheck}${sortBtn('name', 'Title')}<span>Owner</span>${sortBtn('created', 'Created')}${sortBtn('accessed', 'Last opened')}<span></span></div>`;
     const rows = list.map((node) => {
       const picked = deskSelectedIds.includes(node.id);
@@ -22233,7 +22227,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     };
     const picked = kids.filter((node) => deskSelectedIds.includes(node.id));
     const allOn = !!kids.length && picked.length === kids.length;
-    const allCheck = check(allOn).replace('class="db-check"', `class="db-check${picked.length && !allOn ? ' is-some' : ''}" data-drive-do="blue-all" aria-label="${allOn ? 'Clear selection' : 'Select all'}"`);
+    const allCheck = check(allOn).replace('class="db-check"', `class="db-check" data-drive-do="blue-all" aria-label="${allOn ? 'Clear selection' : 'Select all'}"`);
     const head = root
       ? `<div class="db-head">${allCheck}${sortBtn('name', 'Course')}<span>Taught by</span><span>Term</span>${sortBtn('accessed', 'Updated')}<span></span></div>`
       : `<div class="db-head">${allCheck}${sortBtn('name', 'Title')}<span>Owner</span>${sortBtn('created', 'Created')}${sortBtn('accessed', 'Last opened')}<span></span></div>`;
