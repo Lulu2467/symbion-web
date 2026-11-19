@@ -22072,7 +22072,8 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     const uploadPop = pop('upload', '<button type="button" data-drive-do="pick-files">Upload files</button><button type="button" data-drive-do="pick-folder">Upload folder</button>');
     const searchBtn = `<button type="button" class="db-ghost" data-drive-do="blue-search" aria-expanded="${deskBlueSearchOpen}"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.2 10.2 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>Search</button>`;
     const picking = deskSelectedIds.length && deskDriveTab !== 'shared' && !(deskDriveTab === 'files' && deskBlueScope === 'trash');
-    if (picking) return `<div class="db-actions">${searchBtn}${bluePickActions(deskSelectedIds.length)}</div>`;
+    const clearBtn = `<button type="button" class="db-ghost" data-drive-do="blue-clear"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>Clear</button>`;
+    if (picking) return `<div class="db-actions">${clearBtn}${searchBtn}${bluePickActions(deskSelectedIds.length)}</div>`;
     const sharedHere = deskDriveTab === 'shared';
     const used = deskBytes(deskNodes.reduce((sum, node) => sum + (node.size || 0), 0));
     const morePop = pop('more', `<button type="button" disabled>Drive storage<span class="db-meta">${used} used</span></button><button type="button" data-drive-do="blue-trash">Trash</button>`);
