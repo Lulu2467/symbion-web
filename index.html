@@ -6902,7 +6902,10 @@
   html[data-theme="blue"] #deskHost #desk-drive .db-head > .db-check {
     justify-self: end; align-self: center; width: 18px; height: 18px; margin: 0; padding: 0;
     border: 1.5px solid #c5c5cb; border-radius: 5px; background: #fff; color: transparent;
-    font-size: 0; opacity: 1; cursor: pointer;
+    font-size: 0; opacity: 0; pointer-events: none; cursor: pointer;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .db.is-picking .db-head > .db-check {
+    opacity: 1; pointer-events: auto;
   }
   html[data-theme="blue"] #deskHost #desk-drive .db-head > .db-check[aria-pressed="true"],
   html[data-theme="blue"] #deskHost #desk-drive .db-head > .db-check.is-some {
