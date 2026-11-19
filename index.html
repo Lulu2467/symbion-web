@@ -6729,6 +6729,7 @@
   }
   html[data-theme="blue"] #deskHost #desk-drive .drive-shared-row:last-child { border-bottom: 0; }
   html[data-theme="blue"] #deskHost #desk-drive .drive-shared-row:hover { background: transparent; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-row.is-open { align-items: start; padding-top: 14px; }
   html[data-theme="blue"] #deskHost #desk-drive .drive-shared-open {
     display: grid; grid-template-columns: 28px minmax(0, 1fr); column-gap: 10px; row-gap: 2px;
     align-items: center; width: 100%; min-width: 0; padding: 0; border: 0; background: transparent;
@@ -6753,16 +6754,22 @@
   }
   html[data-theme="blue"] #deskHost #desk-drive .drive-shared-side button:hover,
   html[data-theme="blue"] #deskHost #desk-drive .drive-shared-bar button:hover,
-  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-member:hover { background: #dceef6; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-member:hover,
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-side button[aria-expanded="true"],
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-bar button[aria-expanded="true"] { background: #dceef6; }
   html[data-theme="blue"] #deskHost #desk-drive .drive-shared-member { flex: none; }
   html[data-theme="blue"] #deskHost #desk-drive .drive-shared-bar {
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
     margin: 0 0 12px; font-size: 13px; color: #5b6b75;
   }
   html[data-theme="blue"] #deskHost #desk-drive .drive-members {
-    margin: 0 0 12px; padding: 12px 14px; border: 1px solid #e4eef3; border-radius: 12px; background: #f7fbfd;
+    display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+    margin: 0 0 8px 40px; width: calc(100% - 40px); padding: 0 0 8px; box-sizing: border-box;
+    border: 0; border-radius: 0; background: transparent;
   }
-  html[data-theme="blue"] #deskHost #desk-drive .drive-members b { display: block; margin-bottom: 8px; font-size: 13px; color: #1d1d1f; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-row .drive-members {
+    grid-column: 1 / -1; margin: 10px 0 2px; padding: 0 0 4px 38px; width: auto;
+  }
   html[data-theme="blue"] #deskHost #desk-drive .drive-members ul { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
   html[data-theme="blue"] #deskHost #desk-drive .drive-members li {
     display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 10px 0 4px;
@@ -6774,9 +6781,19 @@
   }
   html[data-theme="blue"] #deskHost #desk-drive .drive-members small { color: #86868b; font-size: 12px; }
   html[data-theme="blue"] #deskHost #desk-drive .drive-members button[disabled] {
-    margin-top: 10px; height: 32px; padding: 0 12px; border: 0; border-radius: 8px;
+    margin: 0; height: 32px; padding: 0 12px; border: 0; border-radius: 8px;
     background: #e8e8ed; color: #86868b; font-size: 13px; cursor: not-allowed;
   }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-files { display: flex; flex-direction: column; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-file {
+    display: flex; align-items: center; gap: 10px; margin-left: 40px; width: calc(100% - 40px);
+    min-height: 40px; padding: 0 8px; border: 0; border-bottom: 1px solid #ececf0; border-radius: 0;
+    background: transparent; box-sizing: border-box; text-align: left; color: #1d1d1f; font-size: 14px; cursor: pointer;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-file:hover { background: #f3f4f6; border-radius: 10px; border-bottom-color: transparent; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-file b { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-file small { margin-left: auto; color: #86868b; font-size: 13px; white-space: nowrap; }
+  html[data-theme="blue"] #deskHost #desk-drive .drive-shared-file .drive-ico { width: 18px; height: 18px; flex: none; }
   html[data-theme="blue"] #deskHost #desk-drive .drive-head { display: none; margin: 0; }
   html[data-theme="blue"] #deskHost #deskScroll { overflow-anchor: none; }
   html[data-theme="blue"] #deskHost #desk-drive.is-file-browser #deskDriveTools { display: none !important; }
@@ -6837,8 +6854,12 @@
   html[data-theme="blue"] #deskHost #desk-drive .db-primary { height: 32px; padding: 0 12px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
   html[data-theme="blue"] #deskHost #desk-drive .db-ghost { border: 1px solid #e8e8ed; background: #fff; color: #1d1d1f; display: inline-flex; align-items: center; gap: 6px; }
   html[data-theme="blue"] #deskHost #desk-drive .db-ghost:hover { background: #f7f8f9; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-ghost:disabled,
+  html[data-theme="blue"] #deskHost #desk-drive .db-ghost:disabled:hover { background: transparent; color: #c7c7cc; cursor: not-allowed; }
   html[data-theme="blue"] #deskHost #desk-drive .db-primary { border: 0; background: #3c7a94; color: #fff; }
   html[data-theme="blue"] #deskHost #desk-drive .db-primary:hover { background: #316479; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-primary:disabled,
+  html[data-theme="blue"] #deskHost #desk-drive .db-primary:disabled:hover { background: #c5d5de; cursor: not-allowed; }
   html[data-theme="blue"] #deskHost #desk-drive .db-pop { position: relative; }
   html[data-theme="blue"] #deskHost #desk-drive .db-pop .drive-pop { right: 0; left: auto; min-width: 196px; }
   html[data-theme="blue"] #deskHost #desk-drive .drive-pop button,
@@ -21214,26 +21235,45 @@
     const fileIcon = (node) => (node.kind === 'folder'
       ? '<svg class="drive-ico" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H10l2 2h6.5A2.5 2.5 0 0 1 21 9.5v7A2.5 2.5 0 0 1 18.5 19h-13A2.5 2.5 0 0 1 3 16.5v-9Z" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>'
       : '<svg class="drive-ico" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M7 3.5h7l5 5V20.5H7V3.5Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M14 3.5V9h5.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>');
+    const roleLabel = (role) => ({ Manager: '管理者', Contributor: '协作者', Viewer: '可查看', Member: '成员' }[role] || role || '成员');
+    const activityLabel = (text) => ({
+      'Lecture 5 slides · today': 'Lecture 5 课件 · 今天',
+      'Analysis notes · yesterday': '分析笔记 · 昨天',
+      'Style notes · Nov 12': '样式笔记 · 11月12日'
+    }[text] || text || '');
+    const itemMeta = (node) => {
+      if (node.kind === 'folder') {
+        const count = deskKids(node.id).length;
+        return count ? `${count} 项` : '空';
+      }
+      return String(node.meta || '文件').replace('Document', '文档').replace('Doc', '文档').replace('Sheet', '表格');
+    };
     const memberPanel = (node) => {
       if (!node || deskSharedWho !== node.id) return '';
-      const people = (node.members || []).map((member) => `<li><i>${deskEsc(deskSharedInitials(member.name))}</i><span>${deskEsc(member.name)}</span><small>${deskEsc(member.role)}</small></li>`).join('');
-      return `<div class="drive-members"><b>People in ${deskEsc(node.name)}</b><ul>${people}</ul><button type="button" disabled title="Inviting people waits for the account.">Invite</button></div>`;
+      const people = (node.members || []).map((member) => `<li><i>${deskEsc(deskSharedInitials(member.name))}</i><span>${deskEsc(member.name)}</span><small>${deskEsc(roleLabel(member.role))}</small></li>`).join('');
+      return `<div class="drive-members"><ul>${people}</ul><button type="button" disabled title="邀请要等账号服务。">邀请</button></div>`;
     };
-    const note = '<p class="drive-shared-note">Already shared with this account. Creating a drive waits for the account.</p>';
     if (!deskPath.length) {
-      if (!kids.length) return `${note}<p class="desk-empty">${q ? 'No shared drives match.' : 'No shared drives for this account.'}</p>`;
-      const panel = deskSharedWho ? memberPanel(deskNode(deskSharedWho)) : '';
-      if (deskDriveView === 'list') {
-        const rows = kids.map((node) => `<div class="drive-shared-row"><button type="button" class="drive-shared-open" data-drive-open="${node.id}">${driveMark}<b class="drive-shared-name">${deskEsc(node.name)}</b><span class="drive-shared-meta">${deskEsc(node.role)} · ${(node.members || []).length} members</span></button><span class="drive-shared-side"><span>${deskEsc(node.activity || '')}</span><button type="button" data-drive-do="members" data-drive-id="${node.id}" aria-expanded="${deskSharedWho === node.id}">Members</button></span></div>`).join('');
-        return `${note}${panel}<div class="drive-shared">${rows}</div>`;
-      }
-      const cards = kids.map((node) => `<div class="desk-folder drive-item"><button type="button" class="drive-main" data-drive-open="${node.id}">${driveMark}<b>${deskEsc(node.name)}</b><small>${deskEsc(node.role)} · ${(node.members || []).length} members</small></button><button type="button" class="drive-shared-member" data-drive-do="members" data-drive-id="${node.id}" aria-expanded="${deskSharedWho === node.id}" aria-label="Members of ${deskEsc(node.name)}">Members</button></div>`).join('');
-      return `${note}${panel}<div class="desk-folders">${cards}</div>`;
+      if (!kids.length) return `<p class="desk-empty">${q ? '没有匹配的共享盘。' : '还没有共享盘。'}</p>`;
+      const rows = kids.map((node) => {
+        const open = deskSharedWho === node.id;
+        const count = (node.members || []).length;
+        return `<div class="drive-shared-row${open ? ' is-open' : ''}"><button type="button" class="drive-shared-open" data-drive-open="${node.id}">${driveMark}<b class="drive-shared-name">${deskEsc(node.name)}</b><span class="drive-shared-meta">${deskEsc(roleLabel(node.role))} · ${count} 人</span></button><span class="drive-shared-side"><span>${deskEsc(activityLabel(node.activity || ''))}</span><button type="button" data-drive-do="members" data-drive-id="${node.id}" aria-expanded="${open}">成员</button></span>${memberPanel(node)}</div>`;
+      }).join('');
+      return `<div class="drive-shared">${rows}</div>`;
     }
-    const bar = drive && drive.drive ? `<div class="drive-shared-bar"><span>Your role · ${deskEsc(drive.role || 'Member')}</span><button type="button" data-drive-do="members" data-drive-id="${drive.id}" aria-expanded="${deskSharedWho === drive.id}">${(drive.members || []).length} members</button></div>${memberPanel(drive)}` : '';
-    if (!kids.length) return `${bar}<p class="desk-empty">${q ? 'No files match.' : 'This folder is empty.'}</p>`;
-    const cards = kids.map((node) => `<div class="desk-folder drive-item"><button type="button" class="drive-main" data-drive-open="${node.id}">${node.drive ? driveMark : fileIcon(node)}<b>${deskEsc(node.name)}</b><small>${deskEsc(node.kind === 'folder' ? deskMeta(node) : (node.meta || 'File'))}</small></button></div>`).join('');
-    return `${bar}<div class="desk-folders ${deskDriveView === 'list' ? 'is-list' : ''}">${cards}</div>`;
+    const bits = ['<button type="button" data-drive-do="shared-root">共享盘</button>'];
+    deskPath.forEach((id, index) => {
+      const node = deskNode(id);
+      if (!node) return;
+      bits.push('<span aria-hidden="true">/</span>');
+      bits.push(index === deskPath.length - 1 ? `<span>${deskEsc(node.name)}</span>` : `<button type="button" data-drive-crumb="${deskEsc(id)}">${deskEsc(node.name)}</button>`);
+    });
+    const crumb = `<div class="db-crumb">${bits.join('')}</div>`;
+    const bar = drive && drive.drive ? `<div class="drive-shared-bar"><span>我的身份 · ${deskEsc(roleLabel(drive.role || 'Member'))}</span><button type="button" data-drive-do="members" data-drive-id="${drive.id}" aria-expanded="${deskSharedWho === drive.id}">成员 ${(drive.members || []).length}</button></div>${memberPanel(drive)}` : '';
+    if (!kids.length) return `${crumb}${bar}<p class="desk-empty">${q ? '没有匹配的文件。' : '这个文件夹是空的。'}</p>`;
+    const files = kids.map((node) => `<button type="button" class="drive-shared-file" data-drive-open="${node.id}">${(node.drive ? driveMark : fileIcon(node)).replaceAll('width="28" height="28"', 'width="18" height="18"')}<b>${deskEsc(node.name)}</b><small>${deskEsc(itemMeta(node))}</small></button>`).join('');
+    return `${crumb}${bar}<div class="drive-shared-files">${files}</div>`;
   }
 
   function deskBlueLabel(node, key) {
@@ -21377,7 +21417,15 @@
     ].map(([id, icon, label]) => `<button type="button" class="db-new" data-drive-do="blue-new-tool" data-blue-tool="${id}">${icon}${label}</button>`).join('') + '<div class="db-new-rule" role="separator"></div><button type="button" class="db-new" data-drive-do="name"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path d="M918.673 883H104.327C82.578 883 65 867.368 65 848.027V276.973C65 257.632 82.578 242 104.327 242h814.346C940.422 242 958 257.632 958 276.973v571.054C958 867.28 940.323 883 918.673 883z" fill="#FFE9B4"/><path d="M512 411H65V210.37C65 188.597 82.598 171 104.371 171h305.92c17.4 0 32.71 11.334 37.681 28.036L512 411z" fill="#FFB02C"/><path d="M918.673 883H104.327C82.578 883 65 865.42 65 843.668V335.332C65 313.58 82.578 296 104.327 296h814.346C940.422 296 958 313.58 958 335.332v508.336C958 865.32 940.323 883 918.673 883z" fill="#FFCA28"/></svg>文件夹</button>');
     const uploadPop = pop('upload', '<button type="button" data-drive-do="pick-files">上传文件</button><button type="button" data-drive-do="pick-folder">上传文件夹</button>');
     const morePop = pop('more', `<button type="button" disabled>云盘存储<span class="db-meta">已使用 ${deskBytes(deskNodes.reduce((sum, node) => sum + (node.size || 0), 0))}</span></button><button type="button" data-drive-do="blue-trash">回收站</button>`);
-    return `<div class="db-actions"><span class="db-pop"><button type="button" class="db-icon" data-drive-do="blue-pop" data-blue-pop="more" aria-label="更多" aria-expanded="${deskBluePop === 'more'}">···</button>${morePop}</span><button type="button" class="db-ghost" data-drive-do="blue-search" aria-expanded="${deskBlueSearchOpen}"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.2 10.2 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>搜索</button><span class="db-pop"><button type="button" class="db-ghost" data-drive-do="blue-pop" data-blue-pop="upload" aria-expanded="${deskBluePop === 'upload'}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 11V3.5M5.2 6.2 8 3.4l2.8 2.8M3.5 13h9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>上传</button>${uploadPop}</span><span class="db-pop"><button type="button" class="db-primary" data-drive-do="blue-pop" data-blue-pop="add" aria-expanded="${deskBluePop === 'add'}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3.2v9.6M3.2 8h9.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>新建</button>${addPop}</span></div>`;
+    const sharedHere = deskDriveTab === 'shared';
+    const upload = sharedHere
+      ? `<button type="button" class="db-ghost" disabled title="上传要等账号服务。"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 11V3.5M5.2 6.2 8 3.4l2.8 2.8M3.5 13h9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>上传</button>`
+      : `<span class="db-pop"><button type="button" class="db-ghost" data-drive-do="blue-pop" data-blue-pop="upload" aria-expanded="${deskBluePop === 'upload'}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 11V3.5M5.2 6.2 8 3.4l2.8 2.8M3.5 13h9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>上传</button>${uploadPop}</span>`;
+    const addTitle = deskPath.length ? '在共享盘里新建要等账号服务。' : '新建共享盘要等账号服务。';
+    const add = sharedHere
+      ? `<button type="button" class="db-primary" disabled title="${addTitle}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3.2v9.6M3.2 8h9.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>新建</button>`
+      : `<span class="db-pop"><button type="button" class="db-primary" data-drive-do="blue-pop" data-blue-pop="add" aria-expanded="${deskBluePop === 'add'}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3.2v9.6M3.2 8h9.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>新建</button>${addPop}</span>`;
+    return `<div class="db-actions"><span class="db-pop"><button type="button" class="db-icon" data-drive-do="blue-pop" data-blue-pop="more" aria-label="更多" aria-expanded="${deskBluePop === 'more'}">···</button>${morePop}</span><button type="button" class="db-ghost" data-drive-do="blue-search" aria-expanded="${deskBlueSearchOpen}"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.2 10.2 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>搜索</button>${upload}${add}</div>`;
   }
 
   function blueSearchHtml() {
