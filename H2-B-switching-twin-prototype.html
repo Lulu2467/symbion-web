@@ -7000,6 +7000,34 @@
   html[data-theme="blue"] #deskHost #desk-drive .db-hit .db-enter { width: 16px; height: 16px; margin-left: auto; color: #86868b; flex: none; }
   html[data-theme="blue"] #deskHost #desk-drive .db-search-foot { display: flex; align-items: center; gap: 18px; margin: 8px -16px 0; padding: 12px 16px; border-top: 1px solid #ececf0; color: #86868b; font-size: 13px; flex: none; }
   html[data-theme="blue"] #deskHost #desk-drive .db-search-foot kbd { margin-left: 4px; padding: 0; border: 0; background: transparent; color: #aeaeb2; font-family: inherit; font-size: 12px; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-shared { flex: none; max-width: 46%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #8e8e93; font-size: 13px; font-weight: 400; }
+  html[data-theme="blue"] #deskHost #deskBlueShareHost { position: absolute; inset: 0; z-index: 8; display: flex; align-items: flex-start; justify-content: center; padding: 64px 24px 24px; pointer-events: none; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-share { width: min(420px, 100%); max-height: min(560px, calc(100% - 24px)); background: #fff; border-radius: 16px; box-shadow: 0 16px 48px rgba(20,24,28,.16); padding: 16px; display: flex; flex-direction: column; gap: 10px; pointer-events: auto; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-share-top { font-size: 15px; font-weight: 600; color: #1d1d1f; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-share-field { flex: none; width: 100%; box-sizing: border-box; height: 40px; padding: 0 12px; border: 1px solid #e6e6ea; border-radius: 10px; font-size: 14px; color: #1d1d1f; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-share-field:focus { outline: none; border-color: #d2d2d7; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-share-suggest { display: flex; flex-direction: column; gap: 2px; max-height: 168px; overflow: auto; flex: none; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-share-suggest p { margin: 6px 8px 2px; color: #8e8e93; font-size: 12px; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-share-suggest button { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; min-height: 40px; padding: 6px 8px; border: 0; border-radius: 8px; background: transparent; text-align: left; cursor: pointer; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-share-suggest button:hover { background: #f3f4f6; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-share-suggest b { font-size: 14px; font-weight: 600; color: #1d1d1f; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-share-suggest small,
+  html[data-theme="blue"] #deskHost #desk-drive .db-share-row small { font-size: 12px; color: #8e8e93; font-weight: 400; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-share-list { display: flex; flex-direction: column; min-height: 0; overflow: auto; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-share-list > p { margin: 2px 0 4px; color: #8e8e93; font-size: 12px; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-share-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; min-height: 44px; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-share-row i { width: 28px; height: 28px; border-radius: 50%; background: #d4e4ee; color: #316479; display: inline-flex; align-items: center; justify-content: center; font-style: normal; font-size: 12px; font-weight: 650; flex: none; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-share-row > span { min-width: 0; flex: 1; display: flex; flex-direction: column; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-share-row b { font-size: 14px; font-weight: 600; color: #1d1d1f; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-share-row select { height: 28px; border: 0; border-radius: 8px; background: #f3f4f6; color: #1d1d1f; font-size: 13px; padding: 0 8px; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-share-x { width: 28px; height: 28px; border: 0; border-radius: 6px; background: transparent; color: #8e8e93; cursor: pointer; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-share-x:hover { background: #f3f4f6; color: #1d1d1f; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-share-as { border: 0; background: transparent; color: #3c7a94; font-size: 13px; font-weight: 600; cursor: pointer; padding: 0 2px; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-share-foot { display: flex; justify-content: flex-end; gap: 8px; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-as-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 44px; margin: 0 8px 8px; border-bottom: 1px solid #ececf0; font-size: 13px; color: #1d1d1f; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-as-bar b { font-weight: 600; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-as-bar button { height: 32px; padding: 0 12px; border: 0; border-radius: 8px; background: #f3f4f6; color: #1d1d1f; font-size: 13px; font-weight: 600; cursor: pointer; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-as-bar button:hover { background: #e4eef6; }
   html[data-theme="blue"] #deskHost #desk-drive .db-grid { display: grid; grid-template-columns: repeat(auto-fill, 180px); gap: 12px; justify-content: start; }
   html[data-theme="blue"] #deskHost #desk-drive .db-card { border: 1px solid #ececf0; border-radius: 12px; background: #fff; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
   html[data-theme="blue"] #deskHost #desk-drive .db-card .db-title { font-weight: 600; }
@@ -20843,6 +20871,21 @@
   let deskBlueSearchFocus = false;
   let deskBlueView = 'list';
   let deskBlueVisible = [];
+  let deskBlueShareId = '';
+  let deskBlueShareQuery = '';
+  let deskBlueShareDraft = [];
+  let deskBlueShareFocus = false;
+  let deskBlueAs = '';
+  const deskBlueDirectory = [
+    { id: 'roland', name: 'Prof. Roland', email: 'roland@symbion.test' },
+    { id: 'luo', name: '骆王宇', email: 'luowangyu@symbion.test' },
+    { id: 'li', name: '李佳琦', email: 'lijiaqi@symbion.test' },
+    { id: 'dou', name: '豆豆', email: 'doudou@symbion.test' }
+  ];
+  const deskBlueGroups = [
+    { id: 'hip', name: 'Heavy-ion Physics', members: ['roland', 'luo', 'li'] },
+    { id: 'lab', name: 'Lab 3 group', members: ['dou', 'luo'] }
+  ];
   let deskNewOpen = false;
   let deskItems = [{ id: 'ns', lane: 'personal', title: 'New schedule', type: 'Task', date: '2026-11-02' }];
   let deskNodes = [
@@ -21230,6 +21273,129 @@
     return bar + body;
   }
 
+  function deskBlueGrantKey(grant) {
+    if (!grant) return '';
+    if (grant.kind === 'email') return 'email:' + String(grant.email || '').toLowerCase();
+    return grant.kind + ':' + grant.id;
+  }
+  function deskBlueSameGrants(a, b) {
+    const norm = (list) => (list || []).map((grant) => deskBlueGrantKey(grant) + ':' + (grant.role || 'viewer')).sort().join('|');
+    return norm(a) === norm(b);
+  }
+  function deskBlueGrantIncludes(grant, personId) {
+    if (!grant || !personId) return false;
+    if (grant.kind === 'person') return grant.id === personId;
+    if (grant.kind === 'group') {
+      const group = deskBlueGroups.find((item) => item.id === grant.id);
+      return !!group && group.members.includes(personId);
+    }
+    return false;
+  }
+  function deskBlueCover(node, personId) {
+    let cur = node;
+    const seen = new Set();
+    while (cur && !seen.has(cur.id)) {
+      seen.add(cur.id);
+      const grant = (cur.grants || []).find((item) => deskBlueGrantIncludes(item, personId));
+      if (grant) return { root: cur, grant };
+      cur = cur.parent ? deskNode(cur.parent) : null;
+    }
+    return null;
+  }
+  function deskBlueSharedRoots(personId) {
+    const roots = [];
+    const seen = new Set();
+    deskNodes.forEach((node) => {
+      if (node.trashed || node.viewer) return;
+      const cover = deskBlueCover(node, personId);
+      if (!cover || seen.has(cover.root.id)) return;
+      const parent = cover.root.parent ? deskNode(cover.root.parent) : null;
+      if (parent && deskBlueCover(parent, personId)) return;
+      seen.add(cover.root.id);
+      roots.push(cover);
+    });
+    return roots;
+  }
+  function deskBlueSharedMark(node) {
+    const grants = node && node.grants || [];
+    if (!grants.length || node.viewer) return '';
+    const names = grants.map((grant) => {
+      if (grant.kind === 'person') return (deskBlueDirectory.find((person) => person.id === grant.id) || {}).name || '';
+      if (grant.kind === 'group') return (deskBlueGroups.find((group) => group.id === grant.id) || {}).name || '';
+      return grant.email || '';
+    }).filter(Boolean);
+    if (!names.length) return '';
+    const text = names.length === 1 ? `Shared with ${names[0]}` : `Shared with ${names[0]} and ${names.length - 1} more`;
+    return `<small class="db-shared">${deskEsc(text)}</small>`;
+  }
+  function deskBlueInitial(name) {
+    const text = String(name || '').trim();
+    return text ? text.slice(0, 1).toUpperCase() : '?';
+  }
+  function blueShareHtml() {
+    const node = deskBlueShareId ? deskNode(deskBlueShareId) : null;
+    if (!node) return '';
+    const owner = (typeof userName === 'function' ? userName() : 'Lulu') || 'Lulu';
+    const query = deskBlueShareQuery.trim();
+    const q = query.toLowerCase();
+    const taken = new Set(deskBlueShareDraft.map(deskBlueGrantKey));
+    const people = deskBlueDirectory.filter((person) => !taken.has('person:' + person.id) && (!q || person.name.toLowerCase().includes(q) || person.email.includes(q)));
+    const groups = deskBlueGroups.filter((group) => !taken.has('group:' + group.id) && (!q || group.name.toLowerCase().includes(q)));
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(q) && !deskBlueDirectory.some((person) => person.email === q) && !taken.has('email:' + q);
+    const suggestPeople = people.length ? `<p>People</p>${people.map((person) => `<button type="button" data-drive-do="blue-share-add" data-share-kind="person" data-share-id="${person.id}"><b>${deskEsc(person.name)}</b><small>${deskEsc(person.email)}</small></button>`).join('')}` : '';
+    const suggestGroups = groups.length ? `<p>Groups</p>${groups.map((group) => `<button type="button" data-drive-do="blue-share-add" data-share-kind="group" data-share-id="${group.id}"><b>${deskEsc(group.name)}</b><small>${group.members.length} people</small></button>`).join('')}` : '';
+    const suggestEmail = emailOk ? `<button type="button" data-drive-do="blue-share-add" data-share-kind="email" data-share-email="${deskEsc(q)}"><b>Share with ${deskEsc(query)}</b><small>They see it when they open Super Drive with this email.</small></button>` : '';
+    const suggest = (suggestPeople || suggestGroups || suggestEmail) ? `<div class="db-share-suggest">${suggestPeople}${suggestGroups}${suggestEmail}</div>` : '';
+    const saved = new Set((node.grants || []).map(deskBlueGrantKey));
+    const rows = deskBlueShareDraft.map((grant) => {
+      const key = deskBlueGrantKey(grant);
+      const person = grant.kind === 'person' ? deskBlueDirectory.find((item) => item.id === grant.id) : null;
+      const group = grant.kind === 'group' ? deskBlueGroups.find((item) => item.id === grant.id) : null;
+      const title = person ? person.name : (group ? group.name : grant.email);
+      const detail = person ? person.email : (group ? `${group.members.length} people` : 'They see it when they open Super Drive with this email.');
+      const role = grant.role === 'contributor' ? 'contributor' : 'viewer';
+      const view = saved.has(key) && person ? `<button type="button" class="db-share-as" data-drive-do="blue-share-as" data-share-id="${person.id}">View as ${deskEsc(person.name)}</button>` : '';
+      const members = saved.has(key) && group ? group.members.map((id) => {
+        const member = deskBlueDirectory.find((item) => item.id === id);
+        return member ? `<button type="button" class="db-share-as" data-drive-do="blue-share-as" data-share-id="${member.id}">View as ${deskEsc(member.name)}</button>` : '';
+      }).join('') : '';
+      return `<div class="db-share-row"><i>${deskEsc(deskBlueInitial(title))}</i><span><b>${deskEsc(title)}</b><small>${deskEsc(detail)}</small></span>${view}${members}<select data-share-role data-share-key="${deskEsc(key)}" aria-label="Role for ${deskEsc(title)}"><option value="viewer"${role === 'viewer' ? ' selected' : ''}>Viewer</option><option value="contributor"${role === 'contributor' ? ' selected' : ''}>Contributor</option></select><button type="button" class="db-share-x" data-drive-do="blue-share-remove" data-share-key="${deskEsc(key)}" aria-label="Remove ${deskEsc(title)}">×</button></div>`;
+    }).join('');
+    const dirty = !deskBlueSameGrants(node.grants, deskBlueShareDraft);
+    return `<div class="db-share" role="dialog" aria-label="Share"><div class="db-share-top">Share “${deskEsc(deskBlueName(node))}”</div><input id="deskBlueShare" class="db-share-field" type="text" placeholder="Name, email, or group" value="${deskEsc(deskBlueShareQuery)}" aria-label="Name, email, or group" autocomplete="off">${suggest}<div class="db-share-list"><p>People with access</p><div class="db-share-row is-owner"><i>${deskEsc(deskBlueInitial(owner))}</i><span><b>${deskEsc(owner)}</b><small>Owner</small></span></div>${rows}</div><div class="db-share-foot"><button type="button" class="db-ghost" data-drive-do="blue-share-close">Cancel</button><button type="button" class="db-primary" data-drive-do="blue-share-save"${dirty ? '' : ' disabled'}>Share</button></div></div>`;
+  }
+  function blueAsBody() {
+    const person = deskBlueDirectory.find((item) => item.id === deskBlueAs);
+    const name = person ? person.name : 'Someone';
+    const glyph = (node) => node.kind === 'folder'
+      ? '<svg class="drive-ico" viewBox="0 0 1024 1024" width="18" height="18" aria-hidden="true"><path d="M918.673 883H104.327C82.578 883 65 867.368 65 848.027V276.973C65 257.632 82.578 242 104.327 242h814.346C940.422 242 958 257.632 958 276.973v571.054C958 867.28 940.323 883 918.673 883z" fill="#FFE9B4"/><path d="M512 411H65V210.37C65 188.597 82.598 171 104.371 171h305.92c17.4 0 32.71 11.334 37.681 28.036L512 411z" fill="#FFB02C"/><path d="M918.673 883H104.327C82.578 883 65 865.42 65 843.668V335.332C65 313.58 82.578 296 104.327 296h814.346C940.422 296 958 313.58 958 335.332v508.336C958 865.32 940.323 883 918.673 883z" fill="#FFCA28"/></svg>'
+      : '<svg class="drive-ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M7 3.5h7l5 5V20.5H7V3.5Z" fill="none" stroke="#3c7a94" stroke-width="1.6"/><path d="M14 3.5V9h5.5" fill="none" stroke="#3c7a94" stroke-width="1.6"/></svg>';
+    const here = deskPath.length ? deskNode(deskHere()) : null;
+    const copies = deskNodes.filter((node) => node.viewer === deskBlueAs && !node.trashed && !deskPath.length);
+    let rows = '';
+    if (here) {
+      rows = deskKids(here.id).filter((node) => !node.trashed).map((node) => {
+        const cover = deskBlueCover(node, deskBlueAs) || deskBlueCover(here, deskBlueAs);
+        const role = cover && cover.grant.role === 'contributor' ? 'Contributor' : 'Viewer';
+        return `<div class="db-row"><span></span><button type="button" class="db-title" data-drive-open="${node.id}">${glyph(node)}<span>${deskEsc(deskBlueName(node))}</span></button><span class="db-meta">From Lulu</span><span class="db-meta">${role}</span><button type="button" class="db-ghost" data-drive-do="copy" data-drive-id="${node.id}">Copy</button><span></span></div>`;
+      }).join('');
+    } else {
+      const shared = deskBlueSharedRoots(deskBlueAs).map((cover) => {
+        const group = cover.grant.kind === 'group' ? deskBlueGroups.find((item) => item.id === cover.grant.id) : null;
+        const from = group ? `From Lulu · ${group.name}` : 'From Lulu';
+        const role = cover.grant.role === 'contributor' ? 'Contributor' : 'Viewer';
+        return `<div class="db-row"><span></span><button type="button" class="db-title" data-drive-open="${cover.root.id}">${glyph(cover.root)}<span>${deskEsc(deskBlueName(cover.root))}</span></button><span class="db-meta">${deskEsc(from)}</span><span class="db-meta">${role}</span><button type="button" class="db-ghost" data-drive-do="copy" data-drive-id="${cover.root.id}">Copy</button><span></span></div>`;
+      }).join('');
+      const own = copies.map((node) => `<div class="db-row"><span></span><button type="button" class="db-title" data-drive-open="${node.id}">${glyph(node)}<span>${deskEsc(node.name)}</span></button><span class="db-meta">Your copy</span><span class="db-meta">Owner</span><button type="button" class="db-ghost" data-drive-do="blue-as-delete" data-drive-id="${node.id}">Delete</button><span></span></div>`).join('');
+      rows = shared + own;
+    }
+    const crumb = here ? `<div class="db-crumb"><button type="button" data-drive-do="blue-as-root">Shared drives</button><span aria-hidden="true">/</span><span>${deskEsc(deskBlueName(here))}</span></div>` : '';
+    const head = `<div class="db-head"><span></span><span>Title</span><span>From</span><span>Role</span><span></span><span></span></div>`;
+    const empty = rows ? '' : deskBlueEmpty(here ? 'This folder is empty.' : `Nothing shared with ${deskEsc(name)} yet.`);
+    const bar = `<div class="db-as-bar"><span>Viewing as <b>${deskEsc(name)}</b></span><button type="button" data-drive-do="blue-as-back">Back to my Drive</button></div>`;
+    return `<div class="db is-recent">${bar}${crumb}${rows ? head + rows : empty}</div>`;
+  }
+
   function deskBlueEmptyMark() {
     return '<svg class="db-empty-ico" viewBox="0 0 1598 1024" aria-hidden="true"><path d="M0 846.673a799.22 174.83 0 1 0 1598.439 0A799.22 174.83 0 1 0 0 846.673z" fill="#F5F5F5"/><path d="M1386.146 334.673L1128.898 39.961c-12.488-19.98-29.971-32.468-49.952-32.468H521.99c-19.98 0-37.463 12.487-49.951 32.468L212.293 334.673V799.22c0 54.946 32.468 97.404 74.927 97.404h1024c42.458 0 74.926-42.458 74.926-97.404V334.673z m-284.722 2.498c-32.468 0-57.444 34.966-57.444 74.927 0 42.458-24.975 74.926-57.443 74.926H611.902c-32.468 0-57.443-32.468-57.443-74.926 0-39.961-24.976-74.927-57.444-74.927H242.263L492.02 54.946V52.45c7.492-12.488 17.482-19.98 27.473-19.98h556.956c9.99 0 19.98 7.492 27.473 19.98v2.497l249.756 282.225h-252.254z" fill="#D9D9D9"/><path d="M287.22 871.649c-27.474 0-49.952-32.469-49.952-72.43V362.147h262.244c17.483 0 32.468 22.478 32.468 49.952 0 54.946 37.464 99.902 82.42 99.902h369.639c44.956 0 82.42-44.956 82.42-99.902 0-27.474 14.985-49.952 32.468-49.952h262.244V799.22c0 39.96-22.478 72.429-49.951 72.429h-1024z" fill="#FAFAFA"/></svg>';
   }
@@ -21309,7 +21475,7 @@
   }
   function blueDriveBody() {
     const owner = (typeof userName === 'function' ? userName() : 'Lulu') || 'Lulu';
-    const personal = (node) => node && !node.trashed && !deskInSharedDrive(node) && !deskInCourse(node);
+    const personal = (node) => node && !node.trashed && !node.viewer && !deskInSharedDrive(node) && !deskInCourse(node);
     const kindOf = (node) => {
       if (node.kind === 'folder') return 'folder';
       const meta = String(node.meta || '');
@@ -21358,7 +21524,7 @@
     const menu = (node) => {
       if (deskMenuId !== node.id) return '';
       const locked = node.protect ? ' disabled title="This sample file stays here."' : '';
-      return `<div class="drive-pop drive-menu" role="menu"><button type="button" data-drive-do="blue-ask" data-drive-id="${node.id}">Ask Citta</button><button type="button" disabled title="Sharing waits for the account.">Share</button><button type="button" data-drive-do="copy" data-drive-id="${node.id}">Make a copy</button><button type="button" data-drive-do="delete" data-drive-id="${node.id}"${locked}>Delete</button></div>`;
+      return `<div class="drive-pop drive-menu" role="menu"><button type="button" data-drive-do="blue-ask" data-drive-id="${node.id}">Ask Citta</button><button type="button" data-drive-do="blue-share" data-drive-id="${node.id}">Share</button><button type="button" data-drive-do="copy" data-drive-id="${node.id}">Make a copy</button><button type="button" data-drive-do="delete" data-drive-id="${node.id}"${locked}>Delete</button></div>`;
     };
     const scopeBtn = (id, label) => `<button type="button" data-drive-do="blue-scope" data-blue-scope="${id}" aria-pressed="${deskBlueScope === id}">${label}</button>`;
     const pop = (id, inner) => deskBluePop === id ? `<div class="drive-pop" role="menu">${inner}</div>` : '';
@@ -21393,7 +21559,7 @@
             : `<div class="db-head"><span></span>${sortBtn('name', 'Title')}<span>Owner</span>${sortBtn('created', 'Created')}${sortBtn('accessed', 'Last opened')}<span></span></div>`;
       const rows = list.map((node) => {
         const picked = deskSelectedIds.includes(node.id);
-        const title = `<button type="button" class="db-title" data-drive-open="${node.id}">${fileGlyph(node)}<span>${deskEsc(deskBlueName(node))}</span></button>`;
+        const title = `<button type="button" class="db-title" data-drive-open="${node.id}">${fileGlyph(node)}<span>${deskEsc(deskBlueName(node))}</span>${deskBlueSharedMark(node)}</button>`;
         const more = `<span class="db-pop"><button type="button" class="db-more" data-drive-menu="${node.id}" aria-label="More actions" aria-expanded="${deskMenuId === node.id}">···</button>${menu(node)}</span>`;
         const cells = deskBlueScope === 'mine'
           ? `${title}<span class="db-meta">${deskEsc(deskBlueLabel(node, 'accessed'))}</span><span class="db-meta">${deskEsc(deskBlueLabel(node, 'created'))}</span>${more}`
@@ -21404,7 +21570,7 @@
       }).join('');
       main = `${head}${rows}<div class="db-end">End of the list</div>`;
     }
-    const side = here && deskBlueScope === 'mine' && !deskBlueSearchOpen ? `<aside class="db-side"><h3>${deskEsc(deskBlueName(here))}</h3><div class="db-preview">${fileGlyph(here).replace('width="18" height="18"', 'width="42" height="42"')}</div><button type="button" class="db-ghost" disabled title="Sharing waits for the account.">Share</button><p><b>Description</b>No description</p><p><b>Owner</b>${deskEsc(owner)}</p></aside>` : '';
+    const side = here && deskBlueScope === 'mine' && !deskBlueSearchOpen ? `<aside class="db-side"><h3>${deskEsc(deskBlueName(here))}</h3><div class="db-preview">${fileGlyph(here).replace('width="18" height="18"', 'width="42" height="42"')}</div><button type="button" class="db-ghost" data-drive-do="blue-share" data-drive-id="${here.id}">Share</button><p><b>Description</b>No description</p><p><b>Owner</b>${deskEsc(owner)}</p></aside>` : '';
     const picked = list.filter((node) => deskSelectedIds.includes(node.id));
     const canDelete = picked.some((node) => !node.protect);
     const allOn = !!list.length && picked.length === list.length;
@@ -21445,7 +21611,7 @@
     if (!deskBlueSearchOpen) return '';
     const pop = (id, inner) => deskBluePop === id ? `<div class="drive-pop" role="menu">${inner}</div>` : '';
     const q = deskQuery.trim().toLowerCase();
-    let list = deskNodes.filter((node) => !node.trashed && !deskInCourse(node));
+    let list = deskNodes.filter((node) => !node.trashed && !node.viewer && !deskInCourse(node));
     if (deskBlueSearchScope === 'mine') list = list.filter((node) => !node.drive && !deskInSharedDrive(node));
     if (q) list = list.filter((node) => deskBlueName(node).toLowerCase().includes(q) || node.name.toLowerCase().includes(q));
     const kindOf = (node) => {
@@ -21479,6 +21645,7 @@
     if (!drive || !blue) {
       document.getElementById('deskBlueActions')?.remove();
       document.getElementById('deskBlueSearchHost')?.remove();
+      document.getElementById('deskBlueShareHost')?.remove();
       return;
     }
     let slot = document.getElementById('deskBlueActions');
@@ -21494,23 +21661,41 @@
     }
     const searchHtml = blueSearchHtml();
     let search = document.getElementById('deskBlueSearchHost');
-    if (!searchHtml) {
-      search?.remove();
-      return;
+    if (!searchHtml) search?.remove();
+    else {
+      if (!search) {
+        search = document.createElement('div');
+        search.id = 'deskBlueSearchHost';
+        drive.appendChild(search);
+      }
+      const typing = document.activeElement && document.activeElement.id === 'deskBlueSearch';
+      const caret = typing ? document.activeElement.selectionStart : 0;
+      if (search.dataset.stamp !== searchHtml) {
+        search.dataset.stamp = searchHtml;
+        search.innerHTML = searchHtml;
+        const field = document.getElementById('deskBlueSearch');
+        if (typing && field) { field.focus(); field.setSelectionRange(caret, caret); }
+        else if (deskBlueSearchFocus && field) { deskBlueSearchFocus = false; field.focus(); }
+      }
     }
-    if (!search) {
-      search = document.createElement('div');
-      search.id = 'deskBlueSearchHost';
-      drive.appendChild(search);
-    }
-    const typing = document.activeElement && document.activeElement.id === 'deskBlueSearch';
-    const caret = typing ? document.activeElement.selectionStart : 0;
-    if (search.dataset.stamp !== searchHtml) {
-      search.dataset.stamp = searchHtml;
-      search.innerHTML = searchHtml;
-      const field = document.getElementById('deskBlueSearch');
-      if (typing && field) { field.focus(); field.setSelectionRange(caret, caret); }
-      else if (deskBlueSearchFocus && field) { deskBlueSearchFocus = false; field.focus(); }
+    const shareHtml = blueShareHtml();
+    let share = document.getElementById('deskBlueShareHost');
+    if (!shareHtml) share?.remove();
+    else {
+      if (!share) {
+        share = document.createElement('div');
+        share.id = 'deskBlueShareHost';
+        drive.appendChild(share);
+      }
+      const typingShare = document.activeElement && document.activeElement.id === 'deskBlueShare';
+      const shareCaret = typingShare ? document.activeElement.selectionStart : 0;
+      if (share.dataset.stamp !== shareHtml) {
+        share.dataset.stamp = shareHtml;
+        share.innerHTML = shareHtml;
+        const field = document.getElementById('deskBlueShare');
+        if (typingShare && field) { field.focus(); field.setSelectionRange(shareCaret, shareCaret); }
+        else if (deskBlueShareFocus && field) { deskBlueShareFocus = false; field.focus(); }
+      }
     }
   }
 
@@ -21534,7 +21719,7 @@
     const menu = (node) => {
       if (deskMenuId !== node.id) return '';
       const locked = node.protect ? ' disabled title="This sample file stays here."' : '';
-      return `<div class="drive-pop drive-menu" role="menu"><button type="button" data-drive-do="blue-ask" data-drive-id="${node.id}">Ask Citta</button><button type="button" disabled title="Sharing waits for the account.">Share</button><button type="button" data-drive-do="copy" data-drive-id="${node.id}">Make a copy</button><button type="button" data-drive-do="delete" data-drive-id="${node.id}"${locked}>Delete</button></div>`;
+      return `<div class="drive-pop drive-menu" role="menu"><button type="button" data-drive-do="blue-ask" data-drive-id="${node.id}">Ask Citta</button><button type="button" data-drive-do="blue-share" data-drive-id="${node.id}">Share</button><button type="button" data-drive-do="copy" data-drive-id="${node.id}">Make a copy</button><button type="button" data-drive-do="delete" data-drive-id="${node.id}"${locked}>Delete</button></div>`;
     };
     const head = `<div class="db-head"><span></span>${sortBtn('name', 'Title')}<span>Owner</span>${sortBtn('created', 'Created')}${sortBtn('accessed', 'Last opened')}<span></span></div>`;
     const rows = list.map((node) => {
@@ -21542,7 +21727,7 @@
       const who = node.owner || owner;
       const initial = (typeof userInitials === 'function' ? userInitials(who) : String(who)).slice(0, 1);
       const more = `<span class="db-pop"><button type="button" class="db-more" data-drive-menu="${node.id}" aria-label="More actions" aria-expanded="${deskMenuId === node.id}">···</button>${menu(node)}</span>`;
-      return `<div class="db-row">${check(picked).replace('class="db-check"', `class="db-check" data-drive-pick="${node.id}" aria-label="Select ${deskEsc(deskBlueName(node))}"`)}<button type="button" class="db-title" data-drive-open="${node.id}">${glyph}<span>${deskEsc(deskBlueName(node))}</span></button><span class="db-owner"><i aria-hidden="true">${deskEsc(initial)}</i>${deskEsc(who)}</span><span class="db-meta">${deskEsc(deskBlueLabel(node, 'created'))}</span><span class="db-meta">${deskEsc(deskBlueLabel(node, 'accessed'))}</span>${more}</div>`;
+      return `<div class="db-row">${check(picked).replace('class="db-check"', `class="db-check" data-drive-pick="${node.id}" aria-label="Select ${deskEsc(deskBlueName(node))}"`)}<button type="button" class="db-title" data-drive-open="${node.id}">${glyph}<span>${deskEsc(deskBlueName(node))}</span>${deskBlueSharedMark(node)}</button><span class="db-owner"><i aria-hidden="true">${deskEsc(initial)}</i>${deskEsc(who)}</span><span class="db-meta">${deskEsc(deskBlueLabel(node, 'created'))}</span><span class="db-meta">${deskEsc(deskBlueLabel(node, 'accessed'))}</span>${more}</div>`;
     }).join('');
     const picked = list.filter((node) => deskSelectedIds.includes(node.id));
     const canDelete = picked.some((node) => !node.protect);
@@ -21582,7 +21767,7 @@
     const menu = (node) => {
       if (deskMenuId !== node.id) return '';
       const locked = node.protect ? ' disabled title="This sample file stays here."' : '';
-      return `<div class="drive-pop drive-menu" role="menu"><button type="button" data-drive-do="blue-ask" data-drive-id="${node.id}">Ask Citta</button><button type="button" disabled title="Sharing waits for the account.">Share</button><button type="button" data-drive-do="copy" data-drive-id="${node.id}">Make a copy</button><button type="button" data-drive-do="delete" data-drive-id="${node.id}"${locked}>Delete</button></div>`;
+      return `<div class="drive-pop drive-menu" role="menu"><button type="button" data-drive-do="blue-ask" data-drive-id="${node.id}">Ask Citta</button><button type="button" data-drive-do="blue-share" data-drive-id="${node.id}">Share</button><button type="button" data-drive-do="copy" data-drive-id="${node.id}">Make a copy</button><button type="button" data-drive-do="delete" data-drive-id="${node.id}"${locked}>Delete</button></div>`;
     };
     const head = root
       ? `<div class="db-head"><span></span>${sortBtn('name', 'Course')}<span>Taught by</span><span>Term</span>${sortBtn('accessed', 'Updated')}<span></span></div>`
@@ -21594,7 +21779,7 @@
       const third = root ? (node.term || '—') : deskBlueLabel(node, 'created');
       const fourth = deskBlueLabel(node, 'accessed');
       const more = `<span class="db-pop"><button type="button" class="db-more" data-drive-menu="${node.id}" aria-label="More actions" aria-expanded="${deskMenuId === node.id}">···</button>${menu(node)}</span>`;
-      return `<div class="db-row">${check(picked).replace('class="db-check"', `class="db-check" data-drive-pick="${node.id}" aria-label="Select ${deskEsc(deskBlueName(node))}"`)}<button type="button" class="db-title" data-drive-open="${node.id}">${glyph(node)}<span>${deskEsc(deskBlueName(node))}</span></button><span class="db-owner"><i aria-hidden="true">${deskEsc(initial)}</i>${deskEsc(who)}</span><span class="db-meta">${deskEsc(third)}</span><span class="db-meta">${deskEsc(fourth)}</span>${more}</div>`;
+      return `<div class="db-row">${check(picked).replace('class="db-check"', `class="db-check" data-drive-pick="${node.id}" aria-label="Select ${deskEsc(deskBlueName(node))}"`)}<button type="button" class="db-title" data-drive-open="${node.id}">${glyph(node)}<span>${deskEsc(deskBlueName(node))}</span>${deskBlueSharedMark(node)}</button><span class="db-owner"><i aria-hidden="true">${deskEsc(initial)}</i>${deskEsc(who)}</span><span class="db-meta">${deskEsc(third)}</span><span class="db-meta">${deskEsc(fourth)}</span>${more}</div>`;
     }).join('');
     const picked = kids.filter((node) => deskSelectedIds.includes(node.id));
     const canDelete = picked.some((node) => !node.protect);
@@ -21710,6 +21895,12 @@
     }
     const search = document.getElementById('deskSearch');
     if (search && search.value !== deskQuery) search.value = deskQuery;
+    if (blueDrive && deskBlueAs) {
+      const person = deskBlueDirectory.find((item) => item.id === deskBlueAs);
+      if (count) count.textContent = person ? person.name : 'Shared';
+      host.innerHTML = blueAsBody();
+      return;
+    }
     if (deskDriveTab === 'courses') {
       host.innerHTML = document.documentElement.dataset.theme === 'blue'
         ? courseDriveBody()
@@ -21960,10 +22151,11 @@
       window.__blueDrivePopCloser = true;
       document.addEventListener('click', (e) => {
         if (document.documentElement.dataset.theme !== 'blue') return;
-        if (!deskBluePop && !deskMenuId) return;
+        if (!deskBluePop && !deskMenuId && !deskBlueShareId) return;
         if (e.target.closest('#desk-drive')) return;
         deskBluePop = '';
         deskMenuId = '';
+        deskBlueShareId = '';
         deskMoveId = '';
         queueMicrotask(() => paintDeskDrive());
       }, true);
@@ -21976,6 +22168,10 @@
         if (e.target.id === 'deskBlueSearch') { deskBlueSearchOpen = true; deskBlueSearchAt = 0; }
         paintDeskDrive();
       }
+      if (e.target.id === 'deskBlueShare') {
+        deskBlueShareQuery = e.target.value;
+        paintDeskDrive();
+      }
       if (e.target.id === 'deskNewFolder') {
         const btn = document.getElementById('deskCreateFolder');
         if (btn) btn.disabled = !e.target.value.trim();
@@ -21983,6 +22179,12 @@
     });
     host.addEventListener('change', (e) => {
       if (e.target.id === 'kanbanDateOn' || e.target.id === 'kanbanTimeOn') syncKanbanWhen();
+      if (e.target.matches?.('[data-share-role]')) {
+        const key = e.target.dataset.shareKey || '';
+        const grant = deskBlueShareDraft.find((item) => deskBlueGrantKey(item) === key);
+        if (grant) grant.role = e.target.value === 'contributor' ? 'contributor' : 'viewer';
+        paintDeskDrive();
+      }
       if (e.target.id === 'deskFilePick' || e.target.id === 'deskFolderPick') {
         addDeskFiles(e.target.files || []);
         e.target.value = '';
@@ -22034,7 +22236,12 @@
         }
       }
       if (e.key === 'Escape' && document.getElementById('kanbanModal') && !document.getElementById('kanbanModal').hidden) closeKanban();
-      if (e.key === 'Escape' && (deskMenuId || deskNaming || deskMoveId || deskRenameId || deskSelectOn || deskCittaPop || deskBluePop || deskBlueSearchOpen)) {
+      if (deskBlueShareId && e.key === 'Enter' && e.target.id === 'deskBlueShare') {
+        e.preventDefault();
+        document.querySelector('#deskBlueShareHost [data-drive-do="blue-share-add"]')?.click();
+        return;
+      }
+      if (e.key === 'Escape' && (deskMenuId || deskNaming || deskMoveId || deskRenameId || deskSelectOn || deskCittaPop || deskBluePop || deskBlueSearchOpen || deskBlueShareId)) {
         deskMenuId = '';
         deskNaming = false;
         deskMoveId = '';
@@ -22044,6 +22251,7 @@
         deskCittaPop = '';
         deskBluePop = '';
         deskBlueSearchOpen = false;
+        deskBlueShareId = '';
         paintDeskDrive();
       }
       if (e.key === 'Enter' && e.target.matches?.('[data-drive-rename]')) {
@@ -22338,10 +22546,10 @@
     const go = e.target.closest('[data-drive-go]');
     if (!inDrive && !menuBtn) {
       const blueTheme = document.documentElement.dataset.theme === 'blue';
-      if (deskMenuId || deskMoveId || (blueTheme && deskBluePop)) {
+      if (deskMenuId || deskMoveId || (blueTheme && (deskBluePop || deskBlueShareId))) {
         deskMenuId = '';
         deskMoveId = '';
-        if (blueTheme) deskBluePop = '';
+        if (blueTheme) { deskBluePop = ''; deskBlueShareId = ''; }
         paintDeskDrive();
       }
       return false;
@@ -22416,6 +22624,16 @@
     if (open && !e.target.closest('.drive-pop, [data-drive-do], [data-drive-menu], [data-drive-rename]')) {
       const node = deskNode(open.dataset.driveOpen);
       if (!node) return true;
+      if (document.documentElement.dataset.theme === 'blue') deskBlueShareId = '';
+      if (document.documentElement.dataset.theme === 'blue' && deskBlueAs) {
+        if (node.kind === 'folder' && !node.trashed) {
+          deskPath = deskPath.concat(node.id);
+          deskQuery = '';
+          deskMenuId = '';
+          paintDeskDrive();
+        } else if (node.kind !== 'folder') openDriveDoc(node.name);
+        return true;
+      }
       if (deskSelectOn) {
         if (!node.protect) deskSelectedIds = deskSelectedIds.includes(node.id) ? deskSelectedIds.filter((item) => item !== node.id) : deskSelectedIds.concat(node.id);
         paintDeskDrive();
@@ -22507,6 +22725,51 @@
         const ids = deskBlueVisible.slice();
         deskSelectedIds = ids.length && ids.every((item) => deskSelectedIds.includes(item)) ? [] : ids;
       }
+      else if (act === 'blue-share' && node) {
+        deskBlueShareId = node.id;
+        deskBlueShareQuery = '';
+        deskBlueShareDraft = (node.grants || []).map((item) => ({ ...item }));
+        deskBlueShareFocus = true;
+        deskMenuId = '';
+        deskBluePop = '';
+        deskBlueSearchOpen = false;
+      }
+      else if (act === 'blue-share-add') {
+        const kind = driveDo.dataset.shareKind || '';
+        const grant = kind === 'email'
+          ? { kind, email: (driveDo.dataset.shareEmail || '').toLowerCase(), role: 'viewer' }
+          : { kind, id: driveDo.dataset.shareId || '', role: 'viewer' };
+        const key = deskBlueGrantKey(grant);
+        if (key && !deskBlueShareDraft.some((item) => deskBlueGrantKey(item) === key)) deskBlueShareDraft = deskBlueShareDraft.concat(grant);
+        deskBlueShareQuery = '';
+        deskBlueShareFocus = true;
+      }
+      else if (act === 'blue-share-remove') {
+        const key = driveDo.dataset.shareKey || '';
+        deskBlueShareDraft = deskBlueShareDraft.filter((item) => deskBlueGrantKey(item) !== key);
+      }
+      else if (act === 'blue-share-save') {
+        const current = deskNode(deskBlueShareId);
+        if (current) current.grants = deskBlueShareDraft.map((item) => ({ ...item }));
+        deskBlueShareQuery = '';
+      }
+      else if (act === 'blue-share-close') { deskBlueShareId = ''; deskBlueShareQuery = ''; }
+      else if (act === 'blue-share-as') {
+        deskBlueAs = driveDo.dataset.shareId || '';
+        deskBlueShareId = '';
+        deskBlueShareQuery = '';
+        deskPath = [];
+        deskQuery = '';
+        deskMenuId = '';
+        deskBlueSearchOpen = false;
+      }
+      else if (act === 'blue-as-back' || act === 'blue-as-root') {
+        if (act === 'blue-as-root') deskPath = [];
+        else { deskBlueAs = ''; deskPath = []; deskDriveTab = 'files'; deskBlueScope = 'recent'; }
+      }
+      else if (act === 'blue-as-delete' && node && node.viewer === deskBlueAs) {
+        deskNodes = deskNodes.filter((item) => item.id !== node.id);
+      }
       else if (act === 'blue-ask') {
         const names = (id ? [deskNode(id)] : deskSelectedIds.map((item) => deskNode(item))).filter(Boolean).map((item) => deskBlueName(item));
         setCittaExpanded(true);
@@ -22523,7 +22786,7 @@
           const source = deskNode(item);
           if (!source) return;
           const at = now + index;
-          deskNodes = deskNodes.concat({ ...source, id: `d${at}${item}`, name: `${deskBlueName(source)} copy`, protect: false, starred: false, trashed: false, created: when, accessed: when, createdAt: at, accessedAt: at });
+          deskNodes = deskNodes.concat({ ...source, id: `d${at}${item}`, name: `${deskBlueName(source)} copy`, protect: false, starred: false, trashed: false, grants: [], viewer: deskBlueAs || '', ...(deskBlueAs ? { parent: '' } : {}), created: when, accessed: when, createdAt: at, accessedAt: at });
         });
         deskSelectedIds = [];
         deskMenuId = '';
@@ -22550,6 +22813,9 @@
           protect: false,
           starred: false,
           trashed: false,
+          grants: [],
+          viewer: blue && deskBlueAs ? deskBlueAs : '',
+          ...(blue && deskBlueAs ? { parent: '' } : {}),
           ...(blue ? { created: when, accessed: when, createdAt: now, accessedAt: now } : {})
         });
         const blob = deskFileBlobs.get(node.id);
@@ -22658,6 +22924,8 @@
       const keepFrame = frame.scrollTop;
       const keepPage = page ? page.scrollTop : 0;
       deskDriveTab = drive.dataset.deskDrive;
+      deskBlueAs = '';
+      deskBlueShareId = '';
       if (deskDriveTab === 'citta') { deskPath = ['citta']; deskSelectOn = false; deskSelectedIds = []; deskDriveView = 'list'; deskCittaScope = 'recent'; deskCittaSort = 'accessed'; deskCittaSortDir = 'desc'; deskCittaKind = ''; deskCittaPop = ''; deskQuery = ''; }
       else if (deskDriveTab === 'shared') { if (!blue) return; deskPath = []; deskQuery = ''; deskSelectOn = false; deskSelectedIds = []; deskSharedWho = ''; deskDriveView = 'list'; }
       else if (deskDriveTab === 'files' || deskDriveTab === 'courses') { deskPath = []; deskQuery = ''; }
