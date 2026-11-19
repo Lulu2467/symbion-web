@@ -21874,7 +21874,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       const rows = kids.map((node) => {
         const open = deskSharedWho === node.id;
         const count = (node.members || []).length;
-        return `<div class="drive-shared-row${open ? ' is-open' : ''}"><button type="button" class="drive-shared-open" data-drive-open="${node.id}">${driveMark}<b class="drive-shared-name">${deskEsc(node.name)}</b><span class="drive-shared-meta">${deskEsc(roleLabel(node.role))} · ${countLabel(count, 'member', 'members')}</span></button><span class="drive-shared-side"><span>${deskEsc(node.activity || '')}</span><button type="button" data-drive-do="members" data-drive-id="${node.id}" aria-expanded="${open}">Members</button></span>${memberPanel(node)}</div>`;
+        return `<div class="drive-shared-row${open ? ' is-open' : ''}"><button type="button" class="drive-shared-open" data-drive-open="${node.id}">${driveMark}<b class="drive-shared-name">${deskEsc(node.name)}</b><span class="drive-shared-meta">${deskEsc(roleLabel(node.role))} · ${countLabel(count, 'member', 'members')}</span></button><span class="drive-shared-side"><span>${deskEsc(document.documentElement.dataset.theme === 'blue' ? String(node.activity || '').split(' · ').pop() : (node.activity || ''))}</span><button type="button" data-drive-do="members" data-drive-id="${node.id}" aria-expanded="${open}">Members</button></span>${memberPanel(node)}</div>`;
       }).join('');
       return `<div class="drive-shared">${rows}</div>`;
     }
