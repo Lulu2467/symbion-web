@@ -17098,6 +17098,26 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     renderAttachmentChips();
   }
 
+  function attachDriveFilesToCitta(nodes) {
+    composerAttachments = composerAttachments.filter((item) => !(item.target === 'citta' && item.fromDrive));
+    const seen = new Set(composerAttachments.filter((item) => item.target === 'citta').map((item) => item.driveId));
+    nodes.forEach((node) => {
+      if (!node || seen.has(node.id)) return;
+      seen.add(node.id);
+      const name = deskBlueName(node);
+      composerAttachments.push({
+        id: ++attachIdSeq,
+        name,
+        target: 'citta',
+        meta: metaForAttachment({ name }),
+        previewUrl: '',
+        fromDrive: true,
+        driveId: node.id,
+      });
+    });
+    renderAttachmentChips();
+  }
+
   function addAttachmentsFromFiles(fileList, target) {
     const files = [...(fileList || [])];
     if (!files.length) return;
@@ -23255,10 +23275,11 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
         deskNodes = deskNodes.filter((item) => item.id !== node.id);
       }
       else if (act === 'blue-ask') {
-        const names = (id ? [deskNode(id)] : deskSelectedIds.map((item) => deskNode(item))).filter(Boolean).map((item) => deskBlueName(item));
+        const nodes = (id ? [deskNode(id)] : deskSelectedIds.map((item) => deskNode(item))).filter(Boolean);
+        attachDriveFilesToCitta(nodes);
         setCittaExpanded(true);
         const field = document.getElementById('cittaInput');
-        if (field && names.length === 1) field.value = `Take a look at "${names[0]}"`;
+        if (field && /^Take a look at "/.test(field.value)) field.value = '';
         field?.focus();
         deskMenuId = '';
         deskBluePop = '';
