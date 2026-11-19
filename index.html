@@ -21523,7 +21523,7 @@
     };
     const menu = (node) => {
       if (deskMenuId !== node.id) return '';
-      const locked = node.protect ? ' disabled title="This sample file stays here."' : '';
+      const locked = '';
       return `<div class="drive-pop drive-menu" role="menu"><button type="button" data-drive-do="blue-ask" data-drive-id="${node.id}">Ask Citta</button><button type="button" data-drive-do="blue-share" data-drive-id="${node.id}">Share</button><button type="button" data-drive-do="copy" data-drive-id="${node.id}">Make a copy</button><button type="button" data-drive-do="delete" data-drive-id="${node.id}"${locked}>Delete</button></div>`;
     };
     const scopeBtn = (id, label) => `<button type="button" data-drive-do="blue-scope" data-blue-scope="${id}" aria-pressed="${deskBlueScope === id}">${label}</button>`;
@@ -21574,7 +21574,7 @@
     const picked = list.filter((node) => deskSelectedIds.includes(node.id));
     const canDelete = picked.some((node) => !node.protect);
     const allOn = !!list.length && picked.length === list.length;
-    const selectBar = picked.length ? `<div class="db-select">${check(allOn).replace('class="db-check"', 'class="db-check" data-drive-do="blue-all" aria-label="' + (allOn ? 'Clear selection' : 'Select all') + '"')}<button type="button" data-drive-do="blue-ask"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3.4h10a1 1 0 0 1 1 1v5.8a1 1 0 0 1-1 1H7.1L4.4 13.6V11.2H3a1 1 0 0 1-1-1V4.4a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>Ask Citta</button><button type="button" data-drive-do="blue-copy"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.6" y="2.6" width="7.2" height="7.2" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="6.2" y="6.2" width="7.2" height="7.2" rx="1.2" fill="#fff" stroke="currentColor" stroke-width="1.3"/></svg>Make a copy</button><button type="button" data-drive-do="blue-delete"${canDelete ? '' : ' disabled'}><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.4 4.4h9.2M6.2 4.4V3.2h3.6v1.2M4.6 4.4l.5 8.2h5.8l.5-8.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Delete</button></div>` : '';
+    const selectBar = picked.length ? `<div class="db-select">${check(allOn).replace('class="db-check"', 'class="db-check" data-drive-do="blue-all" aria-label="' + (allOn ? 'Clear selection' : 'Select all') + '"')}<button type="button" data-drive-do="blue-ask"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3.4h10a1 1 0 0 1 1 1v5.8a1 1 0 0 1-1 1H7.1L4.4 13.6V11.2H3a1 1 0 0 1-1-1V4.4a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>Ask Citta</button><button type="button" data-drive-do="blue-copy"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.6" y="2.6" width="7.2" height="7.2" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="6.2" y="6.2" width="7.2" height="7.2" rx="1.2" fill="#fff" stroke="currentColor" stroke-width="1.3"/></svg>Make a copy</button><button type="button" data-drive-do="blue-delete"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.4 4.4h9.2M6.2 4.4V3.2h3.6v1.2M4.6 4.4l.5 8.2h5.8l.5-8.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Delete</button></div>` : '';
     const searchPop = deskBlueSearchOpen ? (() => {
       const scopePop = pop('search-scope', '<button type="button" data-drive-do="blue-search-scope" data-blue-scope="all">Anywhere</button><button type="button" data-drive-do="blue-search-scope" data-blue-scope="mine">Owned by me</button>');
       const kindPop = pop('search-kind', [['', '全部类型'], ['folder', '文件夹'], ['doc', '文档'], ['deck', 'Deck']].map(([id, label]) => `<button type="button" data-drive-do="blue-search-kind" data-blue-kind="${id}">${label}</button>`).join(''));
@@ -21718,7 +21718,7 @@
     };
     const menu = (node) => {
       if (deskMenuId !== node.id) return '';
-      const locked = node.protect ? ' disabled title="This sample file stays here."' : '';
+      const locked = '';
       return `<div class="drive-pop drive-menu" role="menu"><button type="button" data-drive-do="blue-ask" data-drive-id="${node.id}">Ask Citta</button><button type="button" data-drive-do="blue-share" data-drive-id="${node.id}">Share</button><button type="button" data-drive-do="copy" data-drive-id="${node.id}">Make a copy</button><button type="button" data-drive-do="delete" data-drive-id="${node.id}"${locked}>Delete</button></div>`;
     };
     const head = `<div class="db-head"><span></span>${sortBtn('name', 'Title')}<span>Owner</span>${sortBtn('created', 'Created')}${sortBtn('accessed', 'Last opened')}<span></span></div>`;
@@ -21732,7 +21732,7 @@
     const picked = list.filter((node) => deskSelectedIds.includes(node.id));
     const canDelete = picked.some((node) => !node.protect);
     const allOn = !!list.length && picked.length === list.length;
-    const selectBar = picked.length ? `<div class="db-select">${check(allOn).replace('class="db-check"', 'class="db-check" data-drive-do="blue-all" aria-label="' + (allOn ? 'Clear selection' : 'Select all') + '"')}<button type="button" data-drive-do="blue-ask"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3.4h10a1 1 0 0 1 1 1v5.8a1 1 0 0 1-1 1H7.1L4.4 13.6V11.2H3a1 1 0 0 1-1-1V4.4a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>Ask Citta</button><button type="button" data-drive-do="blue-copy"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.6" y="2.6" width="7.2" height="7.2" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="6.2" y="6.2" width="7.2" height="7.2" rx="1.2" fill="#fff" stroke="currentColor" stroke-width="1.3"/></svg>Make a copy</button><button type="button" data-drive-do="blue-delete"${canDelete ? '' : ' disabled'}><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.4 4.4h9.2M6.2 4.4V3.2h3.6v1.2M4.6 4.4l.5 8.2h5.8l.5-8.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Delete</button></div>` : '';
+    const selectBar = picked.length ? `<div class="db-select">${check(allOn).replace('class="db-check"', 'class="db-check" data-drive-do="blue-all" aria-label="' + (allOn ? 'Clear selection' : 'Select all') + '"')}<button type="button" data-drive-do="blue-ask"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3.4h10a1 1 0 0 1 1 1v5.8a1 1 0 0 1-1 1H7.1L4.4 13.6V11.2H3a1 1 0 0 1-1-1V4.4a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>Ask Citta</button><button type="button" data-drive-do="blue-copy"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.6" y="2.6" width="7.2" height="7.2" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="6.2" y="6.2" width="7.2" height="7.2" rx="1.2" fill="#fff" stroke="currentColor" stroke-width="1.3"/></svg>Make a copy</button><button type="button" data-drive-do="blue-delete"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.4 4.4h9.2M6.2 4.4V3.2h3.6v1.2M4.6 4.4l.5 8.2h5.8l.5-8.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Delete</button></div>` : '';
     const empty = list.length ? '' : deskBlueEmpty('No files from Citta yet.');
     return `<div class="db is-recent${picked.length ? ' is-picking' : ''}">${head}${rows}${empty}<div class="db-end">End of the list</div>${selectBar}</div>`;
   }
@@ -21766,7 +21766,7 @@
     };
     const menu = (node) => {
       if (deskMenuId !== node.id) return '';
-      const locked = node.protect ? ' disabled title="This sample file stays here."' : '';
+      const locked = '';
       return `<div class="drive-pop drive-menu" role="menu"><button type="button" data-drive-do="blue-ask" data-drive-id="${node.id}">Ask Citta</button><button type="button" data-drive-do="blue-share" data-drive-id="${node.id}">Share</button><button type="button" data-drive-do="copy" data-drive-id="${node.id}">Make a copy</button><button type="button" data-drive-do="delete" data-drive-id="${node.id}"${locked}>Delete</button></div>`;
     };
     const head = root
@@ -21784,7 +21784,7 @@
     const picked = kids.filter((node) => deskSelectedIds.includes(node.id));
     const canDelete = picked.some((node) => !node.protect);
     const allOn = !!kids.length && picked.length === kids.length;
-    const selectBar = picked.length ? `<div class="db-select">${check(allOn).replace('class="db-check"', 'class="db-check" data-drive-do="blue-all" aria-label="' + (allOn ? 'Clear selection' : 'Select all') + '"')}<button type="button" data-drive-do="blue-ask"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3.4h10a1 1 0 0 1 1 1v5.8a1 1 0 0 1-1 1H7.1L4.4 13.6V11.2H3a1 1 0 0 1-1-1V4.4a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>Ask Citta</button><button type="button" data-drive-do="blue-copy"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.6" y="2.6" width="7.2" height="7.2" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="6.2" y="6.2" width="7.2" height="7.2" rx="1.2" fill="#fff" stroke="currentColor" stroke-width="1.3"/></svg>Make a copy</button><button type="button" data-drive-do="blue-delete"${canDelete ? '' : ' disabled'}><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.4 4.4h9.2M6.2 4.4V3.2h3.6v1.2M4.6 4.4l.5 8.2h5.8l.5-8.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Delete</button></div>` : '';
+    const selectBar = picked.length ? `<div class="db-select">${check(allOn).replace('class="db-check"', 'class="db-check" data-drive-do="blue-all" aria-label="' + (allOn ? 'Clear selection' : 'Select all') + '"')}<button type="button" data-drive-do="blue-ask"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3.4h10a1 1 0 0 1 1 1v5.8a1 1 0 0 1-1 1H7.1L4.4 13.6V11.2H3a1 1 0 0 1-1-1V4.4a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>Ask Citta</button><button type="button" data-drive-do="blue-copy"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.6" y="2.6" width="7.2" height="7.2" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="6.2" y="6.2" width="7.2" height="7.2" rx="1.2" fill="#fff" stroke="currentColor" stroke-width="1.3"/></svg>Make a copy</button><button type="button" data-drive-do="blue-delete"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.4 4.4h9.2M6.2 4.4V3.2h3.6v1.2M4.6 4.4l.5 8.2h5.8l.5-8.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Delete</button></div>` : '';
     const empty = kids.length ? '' : deskBlueEmpty('This folder is empty.');
     return `<div class="db is-recent${picked.length ? ' is-picking' : ''}">${crumb}${head}${rows}${empty}<div class="db-end">End of the list</div>${selectBar}</div>`;
   }
@@ -22794,7 +22794,7 @@
       else if (act === 'blue-delete') {
         deskSelectedIds.forEach((item) => {
           const source = deskNode(item);
-          if (source && !source.protect) source.trashed = true;
+          if (source) source.trashed = true;
         });
         deskSelectedIds = [];
         deskMenuId = '';
@@ -22833,7 +22833,7 @@
           setTimeout(() => URL.revokeObjectURL(url), 1000);
         }
       }
-      else if (act === 'delete' && node && !node.protect) {
+      else if (act === 'delete' && node && (document.documentElement.dataset.theme === 'blue' || !node.protect)) {
         if (document.documentElement.dataset.theme === 'blue') {
           node.trashed = true;
           if (deskPath.includes(node.id)) deskPath = deskPath.slice(0, deskPath.indexOf(node.id));
