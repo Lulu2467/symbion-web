@@ -5745,6 +5745,18 @@
   html[data-theme="blue"] .citta-panel .ask-row .plus:hover,
   html[data-theme="blue"] .citta-panel .ask-row .plus:hover::before,
   html[data-theme="blue"] .citta-panel .ask-row .plus:hover::after { background: transparent; color: #1a1d21; }
+  html[data-theme="blue"] #cittaChips .composer-tool-chip .chip-x {
+    position: relative; width: 14px; height: 14px; color: transparent; font-size: 0;
+  }
+  html[data-theme="blue"] #cittaChips .composer-tool-chip .chip-x::before,
+  html[data-theme="blue"] #cittaChips .composer-tool-chip .chip-x::after {
+    content: ""; position: absolute; left: 50%; top: 50%; width: 6px; height: 1px; border-radius: 1px; background: #c5c8cd;
+  }
+  html[data-theme="blue"] #cittaChips .composer-tool-chip .chip-x::before { transform: translate(-50%, -50%) rotate(45deg); }
+  html[data-theme="blue"] #cittaChips .composer-tool-chip .chip-x::after { transform: translate(-50%, -50%) rotate(-45deg); }
+  html[data-theme="blue"] #cittaChips .composer-tool-chip .chip-x:hover { background: transparent; color: transparent; }
+  html[data-theme="blue"] #cittaChips .composer-tool-chip .chip-x:hover::before,
+  html[data-theme="blue"] #cittaChips .composer-tool-chip .chip-x:hover::after { background: #8e949b; }
   .citta-panel .ask-row .plus:hover { background: #e6e9e7; }
   .citta-panel .ask-row .plus:hover::before,
   .citta-panel .ask-row .plus:hover::after { background: var(--ink); }
