@@ -6989,8 +6989,18 @@
   html[data-theme="blue"] #deskHost #desk-drive .db-side p b { display: block; margin-bottom: 2px; color: #86868b; font-size: 13px; font-weight: 500; }
   html[data-theme="blue"] #deskHost #desk-drive.is-file-browser:not(.is-trash):has(#deskBlueActions .db-pick-count) .desk-drive-bar[role="tablist"] { padding-right: 620px; }
   html[data-theme="blue"] #deskHost #deskBlueActions .db-pick-count {
-    margin-right: 4px; color: #1d1d1f; font-size: 13px; font-weight: 600; white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 2px; max-width: 220px; margin-right: 4px;
+    color: #1d1d1f; font-size: 13px; font-weight: 600;
   }
+  html[data-theme="blue"] #deskHost #deskBlueActions .db-pick-count b {
+    min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600;
+  }
+  html[data-theme="blue"] #deskHost #deskBlueActions .db-pick-clear {
+    width: 22px; height: 22px; padding: 0; border: 0; border-radius: 6px; background: transparent;
+    color: #8e8e93; display: inline-flex; align-items: center; justify-content: center; flex: none; cursor: pointer;
+  }
+  html[data-theme="blue"] #deskHost #deskBlueActions .db-pick-clear svg { width: 12px; height: 12px; display: block; }
+  html[data-theme="blue"] #deskHost #deskBlueActions .db-pick-clear:hover { background: #f3f4f6; color: #1d1d1f; }
   html[data-theme="blue"] #deskHost #desk-drive .db-name { margin: 0 0 10px; }
   html[data-theme="blue"] #deskHost #desk-drive .db-modal { position: absolute; inset: 0; z-index: 30; background: transparent; display: flex; justify-content: center; padding: 36px 24px; pointer-events: none; }
   html[data-theme="blue"] #deskHost #desk-drive .db-dialog { width: min(720px, 100%); height: min(640px, 100%); background: #fff; border-radius: 16px; box-shadow: 0 16px 48px rgba(20,24,28,.16); padding: 16px 16px 0; display: flex; flex-direction: column; pointer-events: auto; }
@@ -21945,8 +21955,11 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     return node.id === 'citta' ? 'Citta files' : node.name;
   }
   function bluePickActions(count) {
-    const label = count === 1 ? '1 selected' : count + ' selected';
-    return `<b class="db-pick-count">${label}</b><button type="button" class="db-ghost" data-drive-do="blue-ask"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3.4h10a1 1 0 0 1 1 1v5.8a1 1 0 0 1-1 1H7.1L4.4 13.6V11.2H3a1 1 0 0 1-1-1V4.4a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>Ask Citta</button><button type="button" class="db-ghost" data-drive-do="blue-share"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="3.6" cy="8" r="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="12.2" cy="3.8" r="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="12.2" cy="12.2" r="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.1 7.2 10.6 4.6M5.1 8.8l5.5 2.6" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Share</button><button type="button" class="db-ghost" data-drive-do="blue-copy"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.6" y="2.6" width="7.2" height="7.2" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="6.2" y="6.2" width="7.2" height="7.2" rx="1.2" fill="#fff" stroke="currentColor" stroke-width="1.3"/></svg>Make a copy</button><button type="button" class="db-ghost" data-drive-do="blue-delete"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.4 4.4h9.2M6.2 4.4V3.2h3.6v1.2M4.6 4.4l.5 8.2h5.8l.5-8.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Delete</button>`;
+    const nodes = deskSelectedIds.map((item) => deskNode(item)).filter(Boolean);
+    const one = nodes.length === 1 ? deskBlueName(nodes[0]) : '';
+    const label = one ? deskEsc(one) : (count === 1 ? '1 selected' : count + ' selected');
+    const clear = '<button type="button" class="db-pick-clear" data-drive-do="blue-clear" aria-label="Clear selection"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button>';
+    return `<span class="db-pick-count">${clear}<b${one ? ` title="${label}"` : ''}>${label}</b></span><button type="button" class="db-ghost" data-drive-do="blue-ask"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3.4h10a1 1 0 0 1 1 1v5.8a1 1 0 0 1-1 1H7.1L4.4 13.6V11.2H3a1 1 0 0 1-1-1V4.4a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>Ask Citta</button><button type="button" class="db-ghost" data-drive-do="blue-share"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="3.6" cy="8" r="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="12.2" cy="3.8" r="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="12.2" cy="12.2" r="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.1 7.2 10.6 4.6M5.1 8.8l5.5 2.6" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Share</button><button type="button" class="db-ghost" data-drive-do="blue-copy"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.6" y="2.6" width="7.2" height="7.2" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="6.2" y="6.2" width="7.2" height="7.2" rx="1.2" fill="#fff" stroke="currentColor" stroke-width="1.3"/></svg>Make a copy</button><button type="button" class="db-ghost" data-drive-do="blue-delete"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.4 4.4h9.2M6.2 4.4V3.2h3.6v1.2M4.6 4.4l.5 8.2h5.8l.5-8.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Delete</button>`;
   }
 
   function blueDriveBody() {
@@ -22074,8 +22087,9 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       ['code', CODE_ICON_SVG, 'Code']
     ].map(([id, icon, label]) => `<button type="button" class="db-new" data-drive-do="blue-new-tool" data-blue-tool="${id}">${icon}${label}</button>`).join('') + '<div class="db-new-rule" role="separator"></div><button type="button" class="db-new" data-drive-do="name"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path d="M918.673 883H104.327C82.578 883 65 867.368 65 848.027V276.973C65 257.632 82.578 242 104.327 242h814.346C940.422 242 958 257.632 958 276.973v571.054C958 867.28 940.323 883 918.673 883z" fill="#FFE9B4"/><path d="M512 411H65V210.37C65 188.597 82.598 171 104.371 171h305.92c17.4 0 32.71 11.334 37.681 28.036L512 411z" fill="#FFB02C"/><path d="M918.673 883H104.327C82.578 883 65 865.42 65 843.668V335.332C65 313.58 82.578 296 104.327 296h814.346C940.422 296 958 313.58 958 335.332v508.336C958 865.32 940.323 883 918.673 883z" fill="#FFCA28"/></svg>Folder</button>');
     const uploadPop = pop('upload', '<button type="button" data-drive-do="pick-files">Upload files</button><button type="button" data-drive-do="pick-folder">Upload folder</button>');
+    const searchBtn = `<button type="button" class="db-ghost" data-drive-do="blue-search" aria-expanded="${deskBlueSearchOpen}"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M10.2 10.2 13 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>Search</button>`;
     const picking = deskSelectedIds.length && deskDriveTab !== 'shared' && !(deskDriveTab === 'files' && deskBlueScope === 'trash');
-    if (picking) return `<div class="db-actions">${bluePickActions(deskSelectedIds.length)}</div>`;
+    if (picking) return `<div class="db-actions">${searchBtn}${bluePickActions(deskSelectedIds.length)}</div>`;
     const sharedHere = deskDriveTab === 'shared';
     const used = deskBytes(deskNodes.reduce((sum, node) => sum + (node.size || 0), 0));
     const morePop = pop('more', `<button type="button" disabled>Drive storage<span class="db-meta">${used} used</span></button><button type="button" data-drive-do="blue-trash">Trash</button>`);
@@ -22739,6 +22753,10 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
         deskBlueShareId = '';
         paintDeskDrive();
       }
+      else if (e.key === 'Escape' && document.documentElement.dataset.theme === 'blue' && deskSelectedIds.length && !(e.target instanceof Element && e.target.closest('input, textarea, [contenteditable="true"]'))) {
+        deskSelectedIds = [];
+        paintDeskDrive();
+      }
       if (e.key === 'Enter' && e.target.matches?.('[data-drive-rename]')) {
         const node = deskNode(e.target.dataset.driveRename);
         const name = e.target.value.trim();
@@ -23117,6 +23135,15 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
           deskMenuId = '';
           paintDeskDrive();
         } else if (node.kind !== 'folder') openDriveDoc(node.name);
+        return true;
+      }
+      if (document.documentElement.dataset.theme === 'blue' && deskBlueSearchOpen && deskSelectedIds.length && !node.trashed) {
+        if (!deskSelectedIds.includes(node.id)) deskSelectedIds = deskSelectedIds.concat(node.id);
+        deskBlueSearchOpen = false;
+        deskQuery = '';
+        deskMenuId = '';
+        deskBluePop = '';
+        paintDeskDrive();
         return true;
       }
       if (deskSelectOn) {
