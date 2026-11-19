@@ -6975,23 +6975,22 @@
   html[data-theme="blue"] #deskHost #desk-drive .db-side .db-ghost { width: 100%; margin: 12px 0; }
   html[data-theme="blue"] #deskHost #desk-drive .db-side p { margin: 0 0 10px; font-size: 13px; color: #5b6b75; }
   html[data-theme="blue"] #deskHost #desk-drive .db-side p b { display: block; margin-bottom: 2px; color: #86868b; font-size: 13px; font-weight: 500; }
-  html[data-theme="blue"] #deskHost #desk-drive .db-select {
-    position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); z-index: 20;
-    display: flex; align-items: center; gap: 8px; width: max-content; max-width: calc(100% - 32px);
-    margin: 0; padding: 8px 10px; border: 1px solid #ececf0; border-radius: 16px; background: #fff;
-    box-shadow: 0 8px 28px rgba(20,24,28,.12);
+  html[data-theme="blue"] #deskHost #desk-drive .db-head.is-select {
+    position: sticky; top: 0; z-index: 4; min-height: 44px; background: #f6f7f8;
   }
-  html[data-theme="blue"] #deskHost #desk-drive .db-select .db-check {
-    width: 18px; height: 18px; opacity: 1; flex: none; border-radius: 5px;
+  html[data-theme="blue"] #deskHost #desk-drive .db-head.is-select .db-pick {
+    grid-column: 2 / -1; display: flex; align-items: center; gap: 8px; min-width: 0;
   }
-  html[data-theme="blue"] #deskHost #desk-drive .db-select button:not(.db-check) {
+  html[data-theme="blue"] #deskHost #desk-drive .db-head.is-select .db-pick b {
+    margin-right: 4px; color: #1d1d1f; font-size: 13px; font-weight: 600; white-space: nowrap;
+  }
+  html[data-theme="blue"] #deskHost #desk-drive .db-head.is-select .db-pick button {
     height: 32px; padding: 0 12px; border: 1px solid #e6e6ea; border-radius: 999px; background: #fff;
     color: #1d1d1f; font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px;
     white-space: nowrap; cursor: pointer;
   }
-  html[data-theme="blue"] #deskHost #desk-drive .db-select button:not(.db-check) svg { width: 16px; height: 16px; flex: none; }
-  html[data-theme="blue"] #deskHost #desk-drive .db-select button:not(.db-check):hover { background: #f6f7f8; }
-  html[data-theme="blue"] #deskHost #desk-drive .db-select button:disabled { color: #c7c7cc; cursor: not-allowed; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-head.is-select .db-pick button svg { width: 16px; height: 16px; flex: none; }
+  html[data-theme="blue"] #deskHost #desk-drive .db-head.is-select .db-pick button:hover { background: #eef1f3; }
   html[data-theme="blue"] #deskHost #desk-drive .db-name { margin: 0 0 10px; }
   html[data-theme="blue"] #deskHost #desk-drive .db-modal { position: absolute; inset: 0; z-index: 30; background: transparent; display: flex; justify-content: center; padding: 36px 24px; pointer-events: none; }
   html[data-theme="blue"] #deskHost #desk-drive .db-dialog { width: min(720px, 100%); height: min(640px, 100%); background: #fff; border-radius: 16px; box-shadow: 0 16px 48px rgba(20,24,28,.16); padding: 16px 16px 0; display: flex; flex-direction: column; pointer-events: auto; }
@@ -21945,6 +21944,11 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
   function deskBlueName(node) {
     return node.id === 'citta' ? 'Citta files' : node.name;
   }
+  function bluePickActions(count) {
+    const label = count === 1 ? '1 selected' : count + ' selected';
+    return `<div class="db-pick"><b>${label}</b><button type="button" data-drive-do="blue-ask"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3.4h10a1 1 0 0 1 1 1v5.8a1 1 0 0 1-1 1H7.1L4.4 13.6V11.2H3a1 1 0 0 1-1-1V4.4a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>Ask Citta</button><button type="button" data-drive-do="blue-share"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="3.6" cy="8" r="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="12.2" cy="3.8" r="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="12.2" cy="12.2" r="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.1 7.2 10.6 4.6M5.1 8.8l5.5 2.6" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Share</button><button type="button" data-drive-do="blue-copy"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.6" y="2.6" width="7.2" height="7.2" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="6.2" y="6.2" width="7.2" height="7.2" rx="1.2" fill="#fff" stroke="currentColor" stroke-width="1.3"/></svg>Make a copy</button><button type="button" data-drive-do="blue-delete"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.4 4.4h9.2M6.2 4.4V3.2h3.6v1.2M4.6 4.4l.5 8.2h5.8l.5-8.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Delete</button></div>`;
+  }
+
   function blueDriveBody() {
     const owner = (typeof userName === 'function' ? userName() : 'Lulu') || 'Lulu';
     const personal = (node) => node && !node.trashed && !node.viewer && !deskInSharedDrive(node) && !deskInCourse(node);
@@ -22020,18 +22024,23 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       const buttons = deskBlueScope === 'mine' ? '<div class="db-actions"><button type="button" class="db-primary" data-drive-do="blue-pop" data-blue-pop="add"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3.2v9.6M3.2 8h9.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>New</button><button type="button" class="db-ghost" data-drive-do="blue-pop" data-blue-pop="upload">Upload</button></div>' : '';
       main = `<div class="db-empty">${deskBlueEmptyMark()}<span>${empty}</span>${buttons}</div>`;
     } else if (deskBlueView === 'grid' && !deskBlueSearchOpen && deskBlueScope !== 'trash') {
-      main = `<div class="db-grid">${list.map((node) => `<div class="db-card"><button type="button" class="db-check" data-drive-pick="${node.id}" aria-pressed="${deskSelectedIds.includes(node.id)}" aria-label="Select ${deskEsc(deskBlueName(node))}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.2 6.4 11 12.5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button><button type="button" class="db-title" data-drive-open="${node.id}">${fileGlyph(node)}<span>${deskEsc(deskBlueName(node))}</span></button><span class="db-meta">${deskEsc(node.kind === 'folder' ? deskMeta(node) : (node.meta || 'File'))}</span></div>`).join('')}</div>`;
+      const pickedNow = list.filter((node) => deskSelectedIds.includes(node.id));
+      const allNow = !!list.length && pickedNow.length === list.length;
+      const allCheck = check(allNow).replace('class="db-check"', `class="db-check" data-drive-do="blue-all" aria-label="${allNow ? 'Clear selection' : 'Select all'}"`);
+      const pick = pickedNow.length ? `<div class="db-head is-select">${allCheck}${bluePickActions(pickedNow.length)}</div>` : '';
+      main = `${pick}<div class="db-grid">${list.map((node) => `<div class="db-card"><button type="button" class="db-check" data-drive-pick="${node.id}" aria-pressed="${deskSelectedIds.includes(node.id)}" aria-label="Select ${deskEsc(deskBlueName(node))}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.2 6.4 11 12.5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button><button type="button" class="db-title" data-drive-open="${node.id}">${fileGlyph(node)}<span>${deskEsc(deskBlueName(node))}</span></button><span class="db-meta">${deskEsc(node.kind === 'folder' ? deskMeta(node) : (node.meta || 'File'))}</span></div>`).join('')}</div>`;
     } else if (!deskBlueSearchOpen) {
       const pickedNow = list.filter((node) => deskSelectedIds.includes(node.id));
       const allNow = !!list.length && pickedNow.length === list.length;
       const allCheck = check(allNow).replace('class="db-check"', `class="db-check" data-drive-do="blue-all" aria-label="${allNow ? 'Clear selection' : 'Select all'}"`);
-      const head = deskBlueScope === 'mine'
+      const columns = deskBlueScope === 'mine'
         ? `<div class="db-head">${allCheck}${sortBtn('name', 'Title')}${sortBtn('accessed', 'Modified')}${sortBtn('created', 'Created')}<span></span></div>`
         : deskBlueScope === 'star'
           ? `<div class="db-head">${allCheck}${sortBtn('name', 'Title')}<span>Owner</span>${sortBtn('accessed', 'Starred')}<span></span></div>`
           : deskBlueScope === 'trash'
             ? `<div class="db-head"><span></span><span>Title</span><span>Original location</span><span></span><span></span></div>`
             : `<div class="db-head">${allCheck}${sortBtn('name', 'Title')}<span>Owner</span>${sortBtn('created', 'Created')}${sortBtn('accessed', 'Last opened')}<span></span></div>`;
+      const head = pickedNow.length ? `<div class="db-head is-select">${allCheck}${bluePickActions(pickedNow.length)}</div>` : columns;
       const rows = list.map((node) => {
         const picked = deskSelectedIds.includes(node.id);
         const title = `<button type="button" class="db-title" data-drive-open="${node.id}">${fileGlyph(node)}<span>${deskEsc(deskBlueName(node))}</span>${deskBlueSharedMark(node)}</button>`;
@@ -22049,7 +22058,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     const picked = list.filter((node) => deskSelectedIds.includes(node.id));
     const canDelete = picked.some((node) => !node.protect);
     const allOn = !!list.length && picked.length === list.length;
-    const selectBar = picked.length ? `<div class="db-select">${check(allOn).replace('class="db-check"', 'class="db-check" data-drive-do="blue-all" aria-label="' + (allOn ? 'Clear selection' : 'Select all') + '"')}<button type="button" data-drive-do="blue-ask"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3.4h10a1 1 0 0 1 1 1v5.8a1 1 0 0 1-1 1H7.1L4.4 13.6V11.2H3a1 1 0 0 1-1-1V4.4a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>Ask Citta</button><button type="button" data-drive-do="blue-share"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="3.6" cy="8" r="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="12.2" cy="3.8" r="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="12.2" cy="12.2" r="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.1 7.2 10.6 4.6M5.1 8.8l5.5 2.6" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Share</button><button type="button" data-drive-do="blue-copy"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.6" y="2.6" width="7.2" height="7.2" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="6.2" y="6.2" width="7.2" height="7.2" rx="1.2" fill="#fff" stroke="currentColor" stroke-width="1.3"/></svg>Make a copy</button><button type="button" data-drive-do="blue-delete"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.4 4.4h9.2M6.2 4.4V3.2h3.6v1.2M4.6 4.4l.5 8.2h5.8l.5-8.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Delete</button></div>` : '';
+    const selectBar = '';
     const searchPop = deskBlueSearchOpen ? (() => {
       const scopePop = pop('search-scope', '<button type="button" data-drive-do="blue-search-scope" data-blue-scope="all">Anywhere</button><button type="button" data-drive-do="blue-search-scope" data-blue-scope="mine">Owned by me</button>');
       const kindPop = pop('search-kind', [['', '全部类型'], ['folder', '文件夹'], ['doc', '文档'], ['deck', 'Deck']].map(([id, label]) => `<button type="button" data-drive-do="blue-search-kind" data-blue-kind="${id}">${label}</button>`).join(''));
@@ -22199,7 +22208,9 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     const picked = list.filter((node) => deskSelectedIds.includes(node.id));
     const allOn = !!list.length && picked.length === list.length;
     const allCheck = check(allOn).replace('class="db-check"', `class="db-check" data-drive-do="blue-all" aria-label="${allOn ? 'Clear selection' : 'Select all'}"`);
-    const head = `<div class="db-head">${allCheck}${sortBtn('name', 'Title')}<span>Owner</span>${sortBtn('created', 'Created')}${sortBtn('accessed', 'Last opened')}<span></span></div>`;
+    const head = picked.length
+      ? `<div class="db-head is-select">${allCheck}${bluePickActions(picked.length)}</div>`
+      : `<div class="db-head">${allCheck}${sortBtn('name', 'Title')}<span>Owner</span>${sortBtn('created', 'Created')}${sortBtn('accessed', 'Last opened')}<span></span></div>`;
     const rows = list.map((node) => {
       const picked = deskSelectedIds.includes(node.id);
       const who = node.owner || owner;
@@ -22208,7 +22219,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       return `<div class="db-row">${check(picked).replace('class="db-check"', `class="db-check" data-drive-pick="${node.id}" aria-label="Select ${deskEsc(deskBlueName(node))}"`)}<button type="button" class="db-title" data-drive-open="${node.id}">${glyph}<span>${deskEsc(deskBlueName(node))}</span>${deskBlueSharedMark(node)}</button><span class="db-owner"><i aria-hidden="true">${deskEsc(initial)}</i>${deskEsc(who)}</span><span class="db-meta">${deskEsc(deskBlueLabel(node, 'created'))}</span><span class="db-meta">${deskEsc(deskBlueLabel(node, 'accessed'))}</span>${more}</div>`;
     }).join('');
     const canDelete = picked.some((node) => !node.protect);
-    const selectBar = picked.length ? `<div class="db-select">${check(allOn).replace('class="db-check"', 'class="db-check" data-drive-do="blue-all" aria-label="' + (allOn ? 'Clear selection' : 'Select all') + '"')}<button type="button" data-drive-do="blue-ask"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3.4h10a1 1 0 0 1 1 1v5.8a1 1 0 0 1-1 1H7.1L4.4 13.6V11.2H3a1 1 0 0 1-1-1V4.4a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>Ask Citta</button><button type="button" data-drive-do="blue-share"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="3.6" cy="8" r="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="12.2" cy="3.8" r="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="12.2" cy="12.2" r="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.1 7.2 10.6 4.6M5.1 8.8l5.5 2.6" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Share</button><button type="button" data-drive-do="blue-copy"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.6" y="2.6" width="7.2" height="7.2" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="6.2" y="6.2" width="7.2" height="7.2" rx="1.2" fill="#fff" stroke="currentColor" stroke-width="1.3"/></svg>Make a copy</button><button type="button" data-drive-do="blue-delete"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.4 4.4h9.2M6.2 4.4V3.2h3.6v1.2M4.6 4.4l.5 8.2h5.8l.5-8.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Delete</button></div>` : '';
+    const selectBar = '';
     const empty = list.length ? '' : deskBlueEmpty('No files from Citta yet.');
     return `<div class="db is-recent${picked.length ? ' is-picking' : ''}">${head}${rows}${empty}<div class="db-end">End of the list</div>${selectBar}</div>`;
   }
@@ -22248,9 +22259,10 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     const picked = kids.filter((node) => deskSelectedIds.includes(node.id));
     const allOn = !!kids.length && picked.length === kids.length;
     const allCheck = check(allOn).replace('class="db-check"', `class="db-check" data-drive-do="blue-all" aria-label="${allOn ? 'Clear selection' : 'Select all'}"`);
-    const head = root
+    const columns = root
       ? `<div class="db-head">${allCheck}${sortBtn('name', 'Course')}<span>Taught by</span><span>Term</span>${sortBtn('accessed', 'Updated')}<span></span></div>`
       : `<div class="db-head">${allCheck}${sortBtn('name', 'Title')}<span>Owner</span>${sortBtn('created', 'Created')}${sortBtn('accessed', 'Last opened')}<span></span></div>`;
+    const head = picked.length ? `<div class="db-head is-select">${allCheck}${bluePickActions(picked.length)}</div>` : columns;
     const rows = kids.map((node) => {
       const picked = deskSelectedIds.includes(node.id);
       const who = node.staff || node.owner || '—';
@@ -22261,7 +22273,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       return `<div class="db-row">${check(picked).replace('class="db-check"', `class="db-check" data-drive-pick="${node.id}" aria-label="Select ${deskEsc(deskBlueName(node))}"`)}<button type="button" class="db-title" data-drive-open="${node.id}">${glyph(node)}<span>${deskEsc(deskBlueName(node))}</span>${deskBlueSharedMark(node)}</button><span class="db-owner"><i aria-hidden="true">${deskEsc(initial)}</i>${deskEsc(who)}</span><span class="db-meta">${deskEsc(third)}</span><span class="db-meta">${deskEsc(fourth)}</span>${more}</div>`;
     }).join('');
     const canDelete = picked.some((node) => !node.protect);
-    const selectBar = picked.length ? `<div class="db-select">${check(allOn).replace('class="db-check"', 'class="db-check" data-drive-do="blue-all" aria-label="' + (allOn ? 'Clear selection' : 'Select all') + '"')}<button type="button" data-drive-do="blue-ask"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3.4h10a1 1 0 0 1 1 1v5.8a1 1 0 0 1-1 1H7.1L4.4 13.6V11.2H3a1 1 0 0 1-1-1V4.4a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>Ask Citta</button><button type="button" data-drive-do="blue-share"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="3.6" cy="8" r="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="12.2" cy="3.8" r="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="12.2" cy="12.2" r="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.1 7.2 10.6 4.6M5.1 8.8l5.5 2.6" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Share</button><button type="button" data-drive-do="blue-copy"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.6" y="2.6" width="7.2" height="7.2" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="6.2" y="6.2" width="7.2" height="7.2" rx="1.2" fill="#fff" stroke="currentColor" stroke-width="1.3"/></svg>Make a copy</button><button type="button" data-drive-do="blue-delete"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.4 4.4h9.2M6.2 4.4V3.2h3.6v1.2M4.6 4.4l.5 8.2h5.8l.5-8.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Delete</button></div>` : '';
+    const selectBar = '';
     const empty = kids.length ? '' : deskBlueEmpty('This folder is empty.');
     return `<div class="db is-recent${picked.length ? ' is-picking' : ''}">${crumb}${head}${rows}${empty}<div class="db-end">End of the list</div>${selectBar}</div>`;
   }
