@@ -5301,7 +5301,7 @@
     scrollbar-width: thin;
   }
   html[data-theme="blue"] .citta-panel .citta-scroll-wrap {
-    flex: none;
+    flex: 1 1 auto;
     min-height: 0;
     overflow: hidden;
   }
@@ -18522,6 +18522,7 @@
       const wrap = $('cittaScrollWrap');
       if (wrap) {
         wrap.style.flex = '';
+        wrap.style.minHeight = '';
         wrap.style.height = '';
         wrap.style.overflow = '';
       }
@@ -18540,14 +18541,17 @@
     panel.style.top = `${Math.round(top)}px`;
     panel.style.bottom = 'auto';
     panel.style.height = `${Math.max(280, Math.round(height))}px`;
+    const placed = panel.getBoundingClientRect();
+    const limit = window.innerHeight - 12;
+    if (placed.bottom > limit) {
+      const extra = (placed.bottom - limit) / (scale || 1);
+      panel.style.height = `${Math.max(280, Math.round(height - extra))}px`;
+    }
     const wrap = $('cittaScrollWrap');
-    const head = panel.querySelector('.ph');
-    const foot = panel.querySelector('.foot');
-    if (head) panel.style.setProperty('--citta-head', `${head.offsetHeight}px`);
-    if (wrap && head && foot) {
-      const room = Math.max(120, panel.clientHeight - head.offsetHeight - foot.offsetHeight);
-      wrap.style.flex = 'none';
-      wrap.style.height = `${room}px`;
+    if (wrap) {
+      wrap.style.flex = '1 1 auto';
+      wrap.style.minHeight = '0';
+      wrap.style.height = '';
       wrap.style.overflow = 'hidden';
     }
     syncCittaScrollFade();
