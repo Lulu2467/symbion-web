@@ -28019,20 +28019,16 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
     byId("badone").hidden = true;
     byId("babindAccount").focus();
   }
-  function finishBind(kind) {
-    byId("babind").hidden = true;
-    byId("babindLoading").hidden = true;
-    const skipped = kind === "skip";
-    byId("badoneTitle").textContent = skipped ? "Skipped for now" : "Account linked";
-    byId("badoneLead").textContent = skipped
-      ? "You'll use this account for now. You can still link courses and progress later."
-      : "Courses, progress, and materials from the previous account will sync here.";
-    byId("badone").hidden = false;
+  function finishBind() {
+    closeAuth();
   }
   function closeAuth() {
     root.hidden = true;
     byId("bamask").hidden = true;
     showPane("sign");
+    if (document.documentElement.dataset.theme === "blue") {
+      document.querySelector('.presenter [data-screen="home"]')?.click();
+    }
   }
   byId("bapopOk").addEventListener("click", () => {
     byId("bamask").hidden = true;
@@ -28177,7 +28173,7 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
     loading.hidden = false;
     window.setTimeout(() => {
       loading.hidden = true;
-      remind("Linked. Courses, progress, and materials will sync here.", "ok");
+      finishBind();
     }, 900);
   });
   window.blueAuthOpen = function () {
