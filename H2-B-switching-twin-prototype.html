@@ -27980,6 +27980,11 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
     if (value.length < 6 || !/^[A-Za-z0-9]+$/.test(value)) return "At least 6 characters, letters and digits only.";
     return "";
   }
+  function signPasswordMessage(value) {
+    if (!value) return "Enter a password.";
+    if (value.length < 6 || !/^[A-Za-z0-9]+$/.test(value)) return "Incorrect password.";
+    return "";
+  }
   function emailMessage(value) {
     const raw = (value || "").trim();
     if (!raw || accountKind(raw) !== "email") return "Enter an email.";
@@ -28013,7 +28018,8 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
   }
   function messageFor(id) {
     if (id === "basignId" || id === "baforgotId" || id === "baregId") return formatMessage(byId(id).value);
-    if (id === "basignPw" || id === "baforgotPw" || id === "baregPw") return passwordMessage(byId(id).value);
+    if (id === "basignPw") return signPasswordMessage(byId(id).value);
+    if (id === "baforgotPw" || id === "baregPw") return passwordMessage(byId(id).value);
     if (id === "baforgotPw2") return confirmMessage("baforgotPw", "baforgotPw2");
     if (id === "baregPw2") return confirmMessage("baregPw", "baregPw2");
     if (id === "baforgotCode" || id === "baregCode") return codeMessage(id);
