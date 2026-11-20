@@ -11300,24 +11300,24 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     </div>
 
     <div id="babind" hidden>
-      <h1 id="babindTitle">Link an account</h1>
-      <p class="lead">Enter the phone or email from your previous account. We'll activate it and sync courses, progress, and materials.</p>
+      <h1 id="babindTitle">Add an email</h1>
+      <p class="lead">This sign-in is a phone number. Add an email so courses and materials can be matched.</p>
       <form id="babindForm" novalidate>
         <div class="field">
-          <label for="babindAccount">Phone or email</label>
-          <input id="babindAccount" type="text" autocomplete="username" placeholder="Phone or email" aria-describedby="babindError" required>
+          <label for="babindAccount">Email</label>
+          <input id="babindAccount" type="email" autocomplete="email" placeholder="Email" aria-describedby="babindError" required>
           <p class="error" id="babindError" role="alert"></p>
         </div>
         <div class="actions">
-          <p class="fine-print">We'll match this to your previous learning materials.</p>
+          <p class="fine-print">You can skip this and add an email later.</p>
           <div class="action-row">
             <button type="button" class="quiet" id="babindSkip">Skip for now</button>
-            <button type="submit" class="go">Link and sync</button>
+            <button type="submit" class="go">Continue</button>
           </div>
         </div>
       </form>
       <div class="bind-loading" id="babindLoading" hidden>
-        <p id="babindStatus">Checking the previous account</p>
+        <p id="babindStatus">Adding the email</p>
         <div class="meter" aria-hidden="true"><span></span></div>
       </div>
     </div>
@@ -27975,6 +27975,15 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
     if (!value) return "Enter a password.";
     return "";
   }
+  function emailMessage(value) {
+    const raw = (value || "").trim();
+    if (!raw || accountKind(raw) !== "email") return "Enter an email.";
+    return "";
+  }
+  function afterAccount(value) {
+    if (accountKind(value) === "email") closeAuth();
+    else showBind();
+  }
   let popMode = "close";
   function remind(text, mode) {
     popMode = mode || "close";
@@ -28017,7 +28026,11 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
     byId("baauth").hidden = true;
     byId("babind").hidden = false;
     byId("badone").hidden = true;
-    byId("babindAccount").focus();
+    const input = byId("babindAccount");
+    input.value = "";
+    byId("babindError").textContent = "";
+    input.setAttribute("aria-invalid", "false");
+    input.focus();
   }
   function finishBind() {
     closeAuth();
@@ -28048,7 +28061,7 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
     fieldError("basignPw", password);
     if (account) { byId("basignId").focus(); return; }
     if (password) { byId("basignPw").focus(); return; }
-    showBind();
+    afterAccount(byId("basignId").value);
   });
   byId("baforgotForm").addEventListener("submit", (event) => {
     event.preventDefault();
@@ -28087,7 +28100,7 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
     if (codeMsg) { (codeInput.disabled ? byId("baregSend") : codeInput).focus(); return; }
     if (rule) { byId("baregPw").focus(); return; }
     if (confirm) { byId("baregPw2").focus(); return; }
-    showBind();
+    afterAccount(byId("baregId").value);
   });
   function showPane(name) {
     root.querySelectorAll("[data-pane]").forEach((pane) => {
@@ -28165,7 +28178,7 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
   byId("babindSkip").addEventListener("click", () => finishBind("skip"));
   byId("babindForm").addEventListener("submit", (event) => {
     event.preventDefault();
-    const msg = formatMessage(bindAccount.value);
+    const msg = emailMessage(bindAccount.value);
     bindAccount.setAttribute("aria-invalid", msg ? "true" : "false");
     bindError.textContent = msg;
     if (msg) { bindAccount.focus(); return; }
