@@ -27972,7 +27972,7 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
   function formatMessage(value) {
     const raw = (value || "").trim();
     if (!raw) return "Enter a phone number or email.";
-    if (!accountKind(raw)) return "That phone number or email doesn't look right.";
+    if (!accountKind(raw)) return "Enter a valid phone number or email.";
     return "";
   }
   function passwordMessage(value) {
