@@ -11305,7 +11305,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
 
     <div id="babind" hidden>
       <h1 id="babindTitle">Add an email</h1>
-      <p class="lead">This sign-in is a phone number. Add an email so courses and materials can be matched.</p>
+      <p class="lead">You signed in with a phone number. Add an email so we can match your courses and materials.</p>
       <form id="babindForm" novalidate>
         <div class="field">
           <label for="babindAccount">Email</label>
@@ -27987,7 +27987,8 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
   }
   function emailMessage(value) {
     const raw = (value || "").trim();
-    if (!raw || accountKind(raw) !== "email") return "Enter an email.";
+    if (!raw) return "Enter an email.";
+    if (accountKind(raw) !== "email") return "Enter a valid email.";
     return "";
   }
   function afterAccount(value) {
@@ -28012,7 +28013,7 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
   function codeMessage(id) {
     const input = byId(id);
     const code = input.value.trim();
-    if (input.disabled) return "Enter the correct code first.";
+    if (input.disabled) return "Get a code first.";
     if (!/^\d{6}$/.test(code)) return "Enter the 6-digit code.";
     return "";
   }
@@ -28037,6 +28038,7 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
     };
     input.addEventListener("blur", () => {
       if (input.disabled) return;
+      if (!input.value && input.getAttribute("aria-invalid") !== "true") return;
       showError(messageFor(input.id));
     });
     input.addEventListener("input", () => {
@@ -28052,6 +28054,8 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
     input.value = "";
     byId("babindError").textContent = "";
     input.setAttribute("aria-invalid", "false");
+    byId("babindForm").hidden = false;
+    byId("babindLoading").hidden = true;
     input.focus();
   }
   function finishBind() {
@@ -28110,10 +28114,10 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
     const confirm = messageFor("baregPw2");
     fieldError("baregId", account);
     fieldError("baregCode", codeMsg);
-    fieldError("baregPw", rule);
-    fieldError("baregPw2", confirm);
     if (account) { byId("baregId").focus(); return; }
     if (codeMsg) { (codeInput.disabled ? byId("baregSend") : codeInput).focus(); return; }
+    fieldError("baregPw", rule);
+    fieldError("baregPw2", confirm);
     if (rule) { byId("baregPw").focus(); return; }
     if (confirm) { byId("baregPw2").focus(); return; }
     afterAccount(byId("baregId").value);
@@ -28135,6 +28139,8 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
     });
     byId("baforgotSend").textContent = "Get code";
     byId("baregSend").textContent = "Get code";
+    byId("baforgotCode").closest(".field").querySelector(".hint").textContent = "Get a code, then enter the 6 digits. You can set a new password after it matches.";
+    byId("baregCode").closest(".field").querySelector(".hint").textContent = "Get a code, then enter the 6 digits.";
     clearFields();
   }
   root.querySelectorAll("[data-go]").forEach((btn) => {
@@ -28169,6 +28175,10 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
       input.disabled = false;
       input.focus();
       event.currentTarget.textContent = "Resend code";
+      const hint = input.closest(".field").querySelector(".hint");
+      hint.textContent = inputId === "baforgotCode"
+        ? "Code sent. Enter the 6 digits, then set a new password."
+        : "Code sent. Enter the 6 digits.";
     };
   }
   watchCode("baforgotCode", "baforgotNext");
@@ -28199,6 +28209,7 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
     bindError.textContent = msg;
     if (msg) { bindAccount.focus(); return; }
     const loading = byId("babindLoading");
+    byId("babindForm").hidden = true;
     loading.hidden = false;
     window.setTimeout(() => {
       loading.hidden = true;
