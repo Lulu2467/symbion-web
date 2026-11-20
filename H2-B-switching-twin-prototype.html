@@ -27973,6 +27973,7 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
   }
   function passwordMessage(value) {
     if (!value) return "Enter a password.";
+    if (value.length < 6 || !/^[A-Za-z0-9]+$/.test(value)) return "At least 6 characters, letters and digits only.";
     return "";
   }
   function emailMessage(value) {
