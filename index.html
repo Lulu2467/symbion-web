@@ -150,7 +150,7 @@
     --info-em: #077649;
     --green: #077649;
     --green-dark: #006539;
-    --green-bubble: #077649;
+    --green-bubble: #c9decf;
     --green-mid: #8da598;
     --green-tint: #ecf6f0;
     --green-tint-hover: #e0ede4;
@@ -282,6 +282,31 @@
       radial-gradient(ellipse 70% 50% at 50% -10%, rgba(186, 208, 198, .55), transparent 60%),
       radial-gradient(ellipse 50% 40% at 100% 100%, rgba(227, 236, 230, .9), transparent 55%),
       #f4f7f5;
+  }
+  html[data-theme="blue"][data-palette="green"] .msg.mine .bubble,
+  html[data-theme="blue"][data-palette="green"] #teamHost .msg.mine .bubble,
+  html[data-theme="blue"][data-palette="green"] .citta-panel .user-bubble {
+    color: #1c1f1d;
+  }
+  html[data-theme="blue"][data-palette="green"] .msg.mine .at,
+  html[data-theme="blue"][data-palette="green"] #teamHost .msg.mine .at {
+    color: #1c1f1d;
+  }
+  html[data-theme="blue"][data-palette="green"] .msg.mine .fwd,
+  html[data-theme="blue"][data-palette="green"] .msg.mine .filechip small,
+  html[data-theme="blue"][data-palette="green"] .msg.mine .qref,
+  html[data-theme="blue"][data-palette="green"] #teamHost .msg.mine .qref,
+  html[data-theme="blue"][data-palette="green"] #teamHost .msg.mine .qref .qline {
+    color: #3c434a;
+  }
+  html[data-theme="blue"][data-palette="green"] .msg.mine .qref {
+    border-left-color: #b7c9be;
+    background: rgba(28, 31, 29, .04);
+  }
+  html[data-theme="blue"][data-palette="green"] .msg.mine .filechip i,
+  html[data-theme="blue"][data-palette="green"] #teamHost .msg.mine .filechip i {
+    background: rgba(28, 31, 29, .06);
+    color: #1c1f1d;
   }
   html[data-theme="blue"] .logo-row .logo { display: none; }
   html[data-theme="blue"] .osbar .logo { display: inline-flex; gap: 8px; color: #1f1f1f; flex: none; }
