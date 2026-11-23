@@ -11508,24 +11508,29 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     </div>
 
     <div id="babind" hidden>
-      <h1 id="babindTitle">Add an email</h1>
-      <p class="lead">You signed in with a phone number. Add an email so we can match your courses and materials.</p>
+      <h1 id="babindTitle">Sign in to 研课</h1>
+      <p class="lead">Use the phone or email and password for your 研课 account.</p>
       <form id="babindForm" novalidate>
         <div class="field">
-          <label for="babindAccount">Email</label>
-          <input id="babindAccount" type="email" autocomplete="email" placeholder="Email" aria-describedby="babindError" required>
+          <label for="babindAccount">Phone or email</label>
+          <input id="babindAccount" autocomplete="username" placeholder="Phone or email" aria-describedby="babindError">
           <p class="error" id="babindError" role="alert"></p>
         </div>
-        <div class="actions">
-          <p class="fine-print">You can skip this and add an email later.</p>
-          <div class="action-row">
-            <button type="button" class="quiet" id="babindSkip">Skip for now</button>
-            <button type="submit" class="go">Continue</button>
+        <div class="field">
+          <label for="babindPw">Password</label>
+          <div class="secret">
+            <input id="babindPw" type="password" autocomplete="current-password" placeholder="••••••••">
+            <button type="button" class="eye" data-eye="babindPw" aria-label="Show password">
+              <svg viewBox="0 0 27 19" fill="none" aria-hidden="true"><path d="M1.2 11.4a12.3 10.2 0 0 1 24.6 0" stroke="currentColor" stroke-width="1.55" stroke-linecap="round"/><circle cx="13.5" cy="11.4" r="4.15" stroke="currentColor" stroke-width="1.55"/></svg>
+            </button>
           </div>
+          <p class="error" id="babindPwErr" role="alert"></p>
         </div>
+        <button type="submit" class="go">Sign in</button>
+        <p class="alt"><button type="button" id="babindSkip">Skip</button></p>
       </form>
       <div class="bind-loading" id="babindLoading" hidden>
-        <p id="babindStatus">Adding the email</p>
+        <p id="babindStatus">Signing in</p>
         <div class="meter" aria-hidden="true"><span></span></div>
       </div>
     </div>
@@ -28199,10 +28204,6 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
     if (accountKind(raw) !== "email") return "Enter a valid email.";
     return "";
   }
-  function afterAccount(value) {
-    if (accountKind(value) === "email") closeAuth();
-    else showBind();
-  }
   let popMode = "close";
   function remind(text, mode) {
     popMode = mode || "close";
@@ -28232,7 +28233,8 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
     if (id === "baforgotPw2") return confirmMessage("baforgotPw", "baforgotPw2");
     if (id === "baregPw2") return confirmMessage("baregPw", "baregPw2");
     if (id === "baforgotCode" || id === "baregCode") return codeMessage(id);
-    if (id === "babindAccount") return emailMessage(byId(id).value);
+    if (id === "babindAccount") return formatMessage(byId(id).value);
+    if (id === "babindPw") return signPasswordMessage(byId(id).value);
     return "";
   }
   root.querySelectorAll("input").forEach((input) => {
@@ -28259,12 +28261,23 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
     byId("babind").hidden = false;
     byId("badone").hidden = true;
     const input = byId("babindAccount");
+    const pw = byId("babindPw");
     input.value = "";
+    pw.value = "";
+    pw.type = "password";
     byId("babindError").textContent = "";
     input.setAttribute("aria-invalid", "false");
+    fieldError("babindPw", "");
     byId("babindForm").hidden = false;
+    byId("babindSkip").hidden = false;
     byId("babindLoading").hidden = true;
     input.focus();
+  }
+  function showDone() {
+    byId("baauth").hidden = true;
+    byId("babind").hidden = true;
+    byId("badone").hidden = false;
+    byId("baEnter").focus();
   }
   function finishBind() {
     closeAuth();
@@ -28295,7 +28308,7 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
     fieldError("basignPw", password);
     if (account) { byId("basignId").focus(); return; }
     if (password) { byId("basignPw").focus(); return; }
-    afterAccount(byId("basignId").value);
+    closeAuth();
   });
   byId("baforgotForm").addEventListener("submit", (event) => {
     event.preventDefault();
@@ -28328,7 +28341,7 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
     fieldError("baregPw2", confirm);
     if (rule) { byId("baregPw").focus(); return; }
     if (confirm) { byId("baregPw2").focus(); return; }
-    afterAccount(byId("baregId").value);
+    showBind();
   });
   function showPane(name) {
     root.querySelectorAll("[data-pane]").forEach((pane) => {
@@ -28412,17 +28425,21 @@ document.getElementById('tail-home')?.addEventListener('click', (e) => {
   byId("babindSkip").addEventListener("click", () => finishBind("skip"));
   byId("babindForm").addEventListener("submit", (event) => {
     event.preventDefault();
-    const msg = emailMessage(bindAccount.value);
+    const msg = formatMessage(bindAccount.value);
+    const pwMsg = signPasswordMessage(byId("babindPw").value);
     bindAccount.setAttribute("aria-invalid", msg ? "true" : "false");
     bindError.textContent = msg;
+    fieldError("babindPw", pwMsg);
     if (msg) { bindAccount.focus(); return; }
+    if (pwMsg) { byId("babindPw").focus(); return; }
     const loading = byId("babindLoading");
     byId("babindForm").hidden = true;
+    byId("babindSkip").hidden = true;
     loading.hidden = false;
     window.setTimeout(() => {
       loading.hidden = true;
-      finishBind();
-    }, 900);
+      showDone();
+    }, 700);
   });
   window.blueAuthOpen = function () {
     if (document.documentElement.dataset.theme !== "blue") return;
