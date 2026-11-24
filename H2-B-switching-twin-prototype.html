@@ -11579,6 +11579,40 @@
   html[data-theme="blue"] #teamHost .msg:focus-within .act {
     display: none;
   }
+  html[data-theme="blue"] #teamHost .log:has(.gpost) { gap: 0; padding: 4px 16px 8px; }
+  html[data-theme="blue"] #teamHost .gpost {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 14px 0;
+    border-bottom: 1px solid #e6e8ec;
+  }
+  html[data-theme="blue"] #teamHost .gpost-top { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  html[data-theme="blue"] #teamHost .gpost-top .av { width: 36px; height: 36px; border-radius: 6px; flex: none; }
+  html[data-theme="blue"] #teamHost .gpost-who { display: flex; align-items: center; gap: 6px; min-width: 0; flex: 1; }
+  html[data-theme="blue"] #teamHost .gpost-who b { font-size: 14px; font-weight: 500; line-height: 20px; color: #1a1d21; }
+  html[data-theme="blue"] #teamHost .gpost-time { margin-left: auto; flex: none; font-size: 12px; line-height: 20px; color: #b0b4ba; }
+  html[data-theme="blue"] #teamHost .gpost-body { font-size: 15px; line-height: 1.45; color: #1a1d21; }
+  html[data-theme="blue"] #teamHost .gpost-body .filechip { margin-top: 6px; }
+  html[data-theme="blue"] #teamHost .gpost-from { margin: 0; font-size: 12px; line-height: 18px; color: #8b919a; }
+  html[data-theme="blue"] #teamHost .gpost-replies { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 2px 0 0 46px; }
+  html[data-theme="blue"] #teamHost .greply { display: flex; gap: 8px; align-items: flex-start; }
+  html[data-theme="blue"] #teamHost .greply .av { width: 24px; height: 24px; border-radius: 4px; flex: none; font-size: 10px; }
+  html[data-theme="blue"] #teamHost .greply p { margin: 0; font-size: 14px; line-height: 1.4; color: #1a1d21; }
+  html[data-theme="blue"] #teamHost .greply b { font-weight: 500; margin-right: 6px; }
+  html[data-theme="blue"] #teamHost .gpost-acts { display: flex; gap: 14px; }
+  html[data-theme="blue"] #teamHost .gpost-acts button {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    font-size: 13px;
+    line-height: 18px;
+    color: #5f6368;
+  }
+  html[data-theme="blue"] #teamHost .gpost-acts button:hover { color: #1a1d21; }
+  html[data-theme="blue"] #teamHost .gpost-acts button[disabled],
+  html[data-theme="blue"] #teamHost .gpost-acts button[disabled]:hover { color: #b0b4ba; cursor: default; }
+  html[data-theme="blue"] #teamHost .composer.is-post-locked .box textarea { cursor: default; }
 </style>
 </head>
 <body>
@@ -21472,12 +21506,12 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       note.textContent = 'Wuhan fans';
       const hint = document.createElement('p');
       hint.className = 'chao-line';
-      hint.textContent = 'Big group posts sync here.';
+      hint.textContent = 'Anyone here can post. The owner and admins can sync a post to the big group.';
       page.append(note, hint, chaoPost(topic.posts[0]));
     } else {
       const note = document.createElement('p');
       note.className = 'chao-note';
-      note.textContent = 'Big group is muted for members. Only the owner and admins can post; those posts sync into every subgroup. They can also sync a hot subgroup post up to the big group.';
+      note.textContent = 'Only the owner and admins can post. Everyone can reply under a post.';
       page.append(note);
       topic.posts.forEach((post) => page.appendChild(chaoPost(post)));
       const box = document.createElement('form');
@@ -21485,8 +21519,8 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       box.dataset.chaoForm = '1';
       const input = document.createElement('input');
       input.type = 'text';
-      input.placeholder = 'Post to the big group · syncs to all sub';
-      input.setAttribute('aria-label', 'Post to the big group');
+      input.placeholder = 'New post';
+      input.setAttribute('aria-label', 'New post');
       const send = document.createElement('button');
       send.type = 'submit';
       send.className = 'chao-send';
@@ -25762,12 +25796,12 @@ function addFollowGroup(chat) {
   chats.push(chat);
 }
 [
-  { id: 'fg-1', followAt: 1, tier: 'big', followOrder: 0, number: '12000011', slug: 'follow-1', name: 'Big group', time: '1h', updated: 47, muted: true, owner: 'cosmo1', admins: [], members: ['cosmo1', 'jess'], announce: 'Only the owner and admins can post here. Posts sync into every subgroup.', messages: [{ id: 'f1a', who: 'cosmo1', text: 'Friday 8:00 pm live: how to choose a barrier repair. Reply on the post.' }] },
-  { id: 'fs-1', followAt: 1, tier: 'sub', followOrder: 1, number: '12000012', slug: 'follow-1-wuhan', name: 'Wuhan fans', time: 'Today', updated: 46, muted: false, owner: 'cosmo1', admins: [], members: ['cosmo1', 'jess', 'hannah'], announce: 'Posts from the big group sync here.', messages: [{ id: 'f1b', who: 'hannah', text: 'Can you recap the barrier-repair steps in this subgroup?' }] },
-  { id: 'fg-2', followAt: 2, tier: 'big', followOrder: 0, number: '12000021', slug: 'follow-2', name: 'Big group', time: '5h', updated: 45, muted: true, owner: 'cosmo2', admins: [], members: ['cosmo2', 'jess'], announce: 'Only the owner and admins can post here. Posts sync into every subgroup.', messages: [{ id: 'f2a', who: 'cosmo2', text: "Today's product note: put a complex workflow into a clearer workspace." }] },
-  { id: 'fs-2', followAt: 2, tier: 'sub', followOrder: 1, number: '12000022', slug: 'follow-2-notes', name: 'Product notes', time: 'Yesterday', updated: 44, muted: false, owner: 'cosmo2', admins: [], members: ['cosmo2', 'jess', 'maya'], announce: 'Posts from the big group sync here.', messages: [{ id: 'f2b', who: 'maya', text: 'I left a note on the workflow. Hot posts can go up to the big group.' }] },
-  { id: 'fg-3', followAt: 3, tier: 'big', followOrder: 0, number: '12000031', slug: 'follow-3', name: 'Big group', time: '2d', updated: 43, muted: true, owner: 'cosmo3', admins: [], members: ['cosmo3', 'jess'], announce: 'Only the owner and admins can post here. Posts sync into every subgroup.', messages: [{ id: 'f3a', who: 'cosmo3', text: "Posted a short recap of yesterday's section." }] },
-  { id: 'fs-3', followAt: 3, tier: 'sub', followOrder: 1, number: '12000032', slug: 'follow-3-recap', name: 'Daily recap', time: '2d', updated: 42, muted: false, owner: 'cosmo3', admins: [], members: ['cosmo3', 'jess', 'alex'], announce: 'Posts from the big group sync here.', messages: [{ id: 'f3b', who: 'alex', text: 'The recap from the big group is here.' }] }
+  { id: 'fg-1', followAt: 1, tier: 'big', followOrder: 0, number: '12000011', slug: 'follow-1', name: 'Big group', time: '1h', updated: 47, muted: true, owner: 'cosmo1', admins: [], members: ['cosmo1', 'jess'], announce: 'Only the owner and admins can post. Everyone can reply under a post.', messages: [{ id: 'f1a', who: 'cosmo1', text: 'Friday 8:00 pm live: how to choose a barrier repair. Reply on the post.' }, { id: 'f1r', who: 'jess', text: 'I will be there. Saving my question for the reply.', reply: 'f1a' }] },
+  { id: 'fs-1', followAt: 1, tier: 'sub', followOrder: 1, number: '12000012', slug: 'follow-1-wuhan', name: 'Wuhan fans', time: 'Today', updated: 46, muted: false, owner: 'cosmo1', admins: [], members: ['cosmo1', 'jess', 'hannah'], announce: 'Anyone here can post. The owner and admins can sync a post to the big group.', messages: [{ id: 'f1b', who: 'hannah', text: 'Can you recap the barrier-repair steps in this subgroup?' }] },
+  { id: 'fg-2', followAt: 2, tier: 'big', followOrder: 0, number: '12000021', slug: 'follow-2', name: 'Big group', time: '5h', updated: 45, muted: true, owner: 'cosmo2', admins: [], members: ['cosmo2', 'jess'], announce: 'Only the owner and admins can post. Everyone can reply under a post.', messages: [{ id: 'f2a', who: 'cosmo2', text: "Today's product note: put a complex workflow into a clearer workspace." }] },
+  { id: 'fs-2', followAt: 2, tier: 'sub', followOrder: 1, number: '12000022', slug: 'follow-2-notes', name: 'Product notes', time: 'Yesterday', updated: 44, muted: false, owner: 'cosmo2', admins: [], members: ['cosmo2', 'jess', 'maya'], announce: 'Anyone here can post. The owner and admins can sync a post to the big group.', messages: [{ id: 'f2b', who: 'maya', text: 'I left a note on the workflow. The owner can sync it to the big group.' }] },
+  { id: 'fg-3', followAt: 3, tier: 'big', followOrder: 0, number: '12000031', slug: 'follow-3', name: 'Big group', time: '2d', updated: 43, muted: true, owner: 'cosmo3', admins: [], members: ['cosmo3', 'jess'], announce: 'Only the owner and admins can post. Everyone can reply under a post.', messages: [{ id: 'f3a', who: 'cosmo3', text: "Posted a short recap of yesterday's section." }, { id: 'f3r', who: 'jess', text: 'Read it. The last page matches my notes.', reply: 'f3a' }] },
+  { id: 'fs-3', followAt: 3, tier: 'sub', followOrder: 1, number: '12000032', slug: 'follow-3-recap', name: 'Daily recap', time: '2d', updated: 42, muted: false, owner: 'cosmo3', admins: [], members: ['cosmo3', 'jess', 'alex'], announce: 'Anyone here can post. The owner and admins can sync a post to the big group.', messages: [{ id: 'f3b', who: 'alex', text: 'The recap from yesterday is easier to discuss here.' }] }
 ].forEach((chat) => addFollowGroup({ kind: 'group', description: '', ...chat }));
 
 const state = {
@@ -26728,7 +26762,11 @@ function renderChrome() {
   $('chatSearch').hidden = !state.chatSearch;
   teamRoot.querySelector('.thread').classList.toggle('history-on', state.chatSearch);
   $('panel').hidden = !state.panel || state.chatSearch;
-  $('compose').placeholder = 'Message';
+  const postLocked = bigGroupPostLocked(c) && !state.quote;
+  $('composer').classList.toggle('is-post-locked', postLocked);
+  $('compose').disabled = postLocked;
+  const blueChat = blueGroupPosts() && c.kind === 'group';
+  $('compose').placeholder = postLocked ? 'Only the owner and admins can post' : (blueChat && state.quote ? 'Reply' : blueChat ? 'New post' : 'Message');
   syncTeamSend();
   const q = state.quote && findMessage(c, state.quote);
   $('quoteBar').hidden = !q;
@@ -26893,6 +26931,80 @@ function openNoticeMenu(clientX, clientY) {
   menu.style.width = '148px';
   placeMenu(menu, clientX, clientY);
 }
+function postRoot(chat, m) {
+  let cur = m;
+  const seen = new Set();
+  while (cur && cur.reply && !seen.has(cur.id)) {
+    seen.add(cur.id);
+    const parent = findMessage(chat, cur.reply);
+    if (!parent || parent.sys) break;
+    cur = parent;
+  }
+  return cur;
+}
+function bigGroupOf(chat) {
+  if (!chat || chat.kind !== 'group' || chat.tier !== 'sub' || chat.followAt == null) return null;
+  return chats.find((g) => g.kind === 'group' && g.tier === 'big' && g.followAt === chat.followAt) || null;
+}
+function blueGroupPosts() {
+  const root = document.documentElement;
+  return root.dataset.theme === 'blue' && root.dataset.palette !== 'green';
+}
+function bigGroupPostLocked(chat) {
+  return blueGroupPosts() && chat && chat.kind === 'group' && chat.tier === 'big' && !canManage(chat);
+}
+function threadItems(chat, list) {
+  const items = [];
+  const byId = new Map();
+  list.forEach((m) => {
+    if (m.sys) { items.push({ kind: 'sys', m }); return; }
+    const root = postRoot(chat, m);
+    if (!root || root.id === m.id) {
+      const item = { kind: 'post', m, replies: [] };
+      items.push(item);
+      byId.set(m.id, item);
+      return;
+    }
+    let item = byId.get(root.id);
+    if (!item) {
+      item = { kind: 'post', m: root, replies: [] };
+      items.push(item);
+      byId.set(root.id, item);
+    }
+    item.replies.push(m);
+  });
+  return items;
+}
+function postBodyHTML(m) {
+  const file = m.file ? `<button type="button" class="filechip" data-file="${esc(m.file.name)}"><i>${esc(m.file.name.split('.').pop().toUpperCase())}</i><span><b>${esc(m.file.name)}</b><small>${esc(m.file.size)}</small></span></button>` : '';
+  const text = m.text ? `<div>${linkMentions(m.text)}</div>` : '';
+  return text + file;
+}
+function postCardHTML(chat, item, showTime) {
+  const m = item.m;
+  const p = person(m.who);
+  const role = roleOf(chat, m.who);
+  const tag = role && role !== 'Member' && role !== 'You' ? `<span class="tag ${role.toLowerCase()}">${esc(role)}</span>` : '';
+  const from = m.syncedFrom ? `<p class="gpost-from">Synced from ${esc(m.syncedFrom)}</p>` : '';
+  const replies = item.replies.map((r) => {
+    const who = person(r.who);
+    const body = r.file ? esc(r.file.name) : linkMentions(r.text || '');
+    return `<div class="greply" id="msg-${r.id}" data-id="${r.id}"><button type="button" class="av hue-${who.hue}" data-person="${r.who}" aria-label="${esc(who.name)}">${esc(who.short)}</button><p><b>${esc(r.who === ME ? 'You' : who.name)}</b> ${body}</p></div>`;
+  }).join('');
+  const replyBlock = replies ? `<div class="gpost-replies">${replies}</div>` : '';
+  const big = bigGroupOf(chat);
+  let sync = '';
+  if (big && canManage(chat) && !m.reply) {
+    sync = m.syncedTo
+      ? `<button type="button" disabled>Synced to big group</button>`
+      : `<button type="button" data-sync="${m.id}">Sync to big group</button>`;
+  }
+  return `<article class="gpost" id="msg-${m.id}" data-id="${m.id}">
+    <div class="gpost-top"><button type="button" class="av hue-${p.hue}" data-person="${m.who}" aria-label="${esc(p.name)}">${esc(p.short)}</button><div class="gpost-who"><b>${esc(p.name)}</b>${tag}${showTime ? `<span class="gpost-time">${esc(chat.time)}</span>` : ''}</div></div>
+    <div class="gpost-body">${postBodyHTML(m)}</div>${from}${replyBlock}
+    <div class="gpost-acts"><button type="button" data-reply="${m.id}">Reply</button>${sync}</div>
+  </article>`;
+}
 function renderLog(scroll) {
   if (state.notice) {
     const items = noticeItems();
@@ -26903,6 +27015,15 @@ function renderLog(scroll) {
   const list = shownMessages(c);
   if (!list.length) {
     $('log').innerHTML = `<p class="sys">No messages yet</p>`;
+    return;
+  }
+  if (blueGroupPosts() && c.kind === 'group') {
+    const items = threadItems(c, list);
+    const lastPost = [...items].reverse().find((item) => item.kind === 'post');
+    $('log').innerHTML = items.map((item) => item.kind === 'sys'
+      ? `<p class="sys" id="msg-${item.m.id}">${esc(item.m.sys)}</p>`
+      : postCardHTML(c, item, item === lastPost && !!c.time)).join('');
+    if (scroll) requestAnimationFrame(() => { $('log').scrollTop = $('log').scrollHeight; syncTeamEdgeFade(); });
     return;
   }
   const stampAt = c.time ? [...list].reverse().find((m) => !m.sys) : null;
@@ -27845,12 +27966,38 @@ function confirmModal() {
     toast(c.policy === 'approval' ? 'Request sent. They are not a member yet.' : 'They joined. They are a member now.');
   }
 }
+function syncPostToBig(postId) {
+  const c = current();
+  const post = c && findMessage(c, postId);
+  const big = bigGroupOf(c);
+  if (!c || !post || post.sys || post.reply || !big || !canManage(c)) return;
+  if (post.syncedTo) return;
+  const copy = {
+    id: uid(), seq: ++msgSeq, who: post.who, text: post.text || '', file: post.file || null,
+    syncedFrom: c.name, sourceId: post.id
+  };
+  big.messages.push(copy);
+  big.time = 'now';
+  big.updated = Date.now();
+  big.hidden = false;
+  post.syncedTo = copy.id;
+  render(false);
+  toast('Synced to ' + big.name + '. Replies stay under that post.');
+}
 function sendText(text, file) {
   const c = current();
-  if (c.kind === 'group' && c.locked && !canManage(c)) { toast('Posting is locked.'); return; }
+  const blue = blueGroupPosts();
+  if (bigGroupPostLocked(c) && !state.quote) { toast('Only the owner and admins can post.'); return; }
+  if (c.kind === 'group' && c.locked && !canManage(c) && !(blue && state.quote)) { toast('Posting is locked.'); return; }
   const value = (text || '').trim();
   if (!value && !file) return;
-  c.messages.push({ id: uid(), seq: ++msgSeq, who: ME, text: value, file: file || null, reply: state.quote });
+  let reply = state.quote;
+  if (blue && c.kind === 'group' && reply) {
+    const target = findMessage(c, reply);
+    const root = target ? postRoot(c, target) : null;
+    if (root) reply = root.id;
+  }
+  c.messages.push({ id: uid(), seq: ++msgSeq, who: ME, text: value, file: file || null, reply });
   c.time = 'now';
   c.updated = Date.now();
   c.hidden = false;
@@ -28533,6 +28680,7 @@ function keepLogScroll(paint) {
 document.addEventListener('h2-theme', () => {
   if (!$('log')) return;
   keepLogScroll(() => renderLog(false));
+  renderChrome();
 });
 function paintMsgMenu() {
   const menu = $('msgMenu');
@@ -28707,6 +28855,8 @@ $('log').addEventListener('click', (e) => {
     }
     return;
   }
+  const sync = e.target.closest('[data-sync]');
+  if (sync) { syncPostToBig(sync.dataset.sync); return; }
   const reply = e.target.closest('[data-reply]');
   if (reply) { state.quote = reply.dataset.reply; renderChrome(); $('compose').focus(); return; }
   const jump = e.target.closest('[data-jump]');
