@@ -1288,10 +1288,12 @@
     overflow: hidden;
     z-index: 24; box-shadow: 12px 0 32px rgba(20, 24, 28, .12);
   }
-  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home { --home-pair: 480px; }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home { --home-pair: 540px; width: 100%; }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #composer { width: 100%; }
+  html[data-theme="blue"][data-home="v2"] .content.is-home-pinned:has(#screen-home.on) { overflow-y: auto; }
   html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .two-grid > .two-col:first-child {
     display: grid;
-    grid-template-columns: minmax(0, 1.35fr) minmax(280px, .72fr);
+    grid-template-columns: minmax(0, 1fr) 320px;
     grid-template-rows: 28px var(--home-pair);
     column-gap: 16px;
     row-gap: 8px;
