@@ -8488,6 +8488,48 @@
     color: #000;
   }
   .frame.symbion-on #symbionHost { display: flex; }
+  html[data-theme="blue"] .frame.cosmo-admin-on { display: flex; flex-direction: column; height: 900px; }
+  html[data-theme="blue"] .frame.cosmo-admin-on .body { flex: 1; min-height: 0; }
+  html[data-theme="blue"] .frame.cosmo-admin-on .content.hub,
+  html[data-theme="blue"] .frame.cosmo-admin-on .logo-row,
+  html[data-theme="blue"] .frame.cosmo-admin-on .proto-rule { display: none !important; }
+  html[data-theme="blue"] .frame.cosmo-admin-on .main { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+  html[data-theme="blue"] #cosmoAdminHost {
+    display: none; flex: 1; min-width: 0; min-height: 0; flex-direction: column; background: #f6f7f8; color: #000;
+  }
+  html[data-theme="blue"] .frame.cosmo-admin-on #cosmoAdminHost { display: flex; }
+  html[data-theme="blue"] #cosmoAdminHost[hidden] { display: none !important; }
+  html[data-theme="blue"] #cosmoAdminHost button { font: inherit; cursor: pointer; }
+  html[data-theme="blue"] #cosmoAdminHost .me-btn {
+    height: 32px; padding: 0 12px; border: 1px solid #e6e8ec; border-radius: 8px;
+    background: #fff; color: #1a1d21; font-size: 13px; font-weight: 600;
+  }
+  html[data-theme="blue"] #cosmoAdminHost .me-btn:disabled { color: #b0b4ba; cursor: default; }
+  html[data-theme="blue"] #symbionHost .me-cosmo { margin: 0 0 18px; }
+  html[data-theme="blue"] #symbionHost .me-cosmo-row {
+    display: flex; align-items: center; gap: 12px; width: 100%; margin-top: 8px; padding: 12px 14px;
+    border: 1px solid #e6e8ec; border-radius: 14px; background: #fff; text-align: left; color: #1a1d21;
+  }
+  html[data-theme="blue"] #symbionHost .me-cosmo-row:hover { background: #f6f7f8; }
+  html[data-theme="blue"] #symbionHost .me-cosmo-row .av {
+    width: 36px; height: 36px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center;
+    background: #eef3f6; color: #3c7a94; font-size: 12px; font-weight: 650; flex: none;
+  }
+  html[data-theme="blue"] #symbionHost .me-cosmo-row span { min-width: 0; flex: 1; }
+  html[data-theme="blue"] #symbionHost .me-cosmo-row b {
+    display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 15px; font-weight: 650;
+  }
+  html[data-theme="blue"] #symbionHost .me-cosmo-row small {
+    display: block; margin-top: 2px; color: #8b919a; font-size: 12px; font-weight: 500;
+  }
+  html[data-theme="blue"] #symbionHost .me-cosmo-row em {
+    margin-left: auto; font-style: normal; font-size: 12px; font-weight: 550; color: #8b919a; flex: none;
+  }
+  html[data-theme="blue"] #cosmoAdminHost .me-group {
+    padding: 12px 14px; border: 1px solid #e6e8ec; border-radius: 14px; background: #fff;
+  }
+  html[data-theme="blue"] #cosmoAdminHost .me-group b { display: block; font-size: 14px; font-weight: 650; }
+  html[data-theme="blue"] #cosmoAdminHost .me-group small { display: block; margin-top: 2px; color: #8b919a; font-size: 12px; }
   #symbionHost[hidden],
   #symbionHost [hidden] { display: none !important; }
   #symbionHost button { font: inherit; cursor: pointer; }
@@ -13026,6 +13068,10 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
             </div>
             <div class="me-scroll">
               <div class="me-panel" data-me-panel="know">
+                <section class="me-cosmo" id="meCosmo" hidden>
+                  <div class="me-h"><h2>My Cosmo</h2><span>Cosmos you can manage</span></div>
+                  <div id="meCosmoList"></div>
+                </section>
                 <div class="me-stack">
                   <article class="me-card">
                     <div class="me-badges"><span class="me-badge">Unverified</span><span class="me-badge">Path C · Style</span></div>
@@ -13164,6 +13210,19 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
                 <p class="me-note">Saved Loops unavailable</p>
                 <p class="me-note">Saved Loops are unavailable because the existing workflow contract is not armed or could not be read.</p>
               </div>
+            </div>
+          </section>
+          <section id="cosmoAdminHost" aria-label="Cosmo management" hidden>
+            <div class="me-scroll me-page">
+              <p class="me-page-kicker" id="cosmoAdminRole"></p>
+              <h2 id="cosmoAdminName"></h2>
+              <p class="lead" id="cosmoAdminAbout"></p>
+              <div class="me-actions">
+                <button type="button" class="me-btn" disabled title="Saving the public page waits for the account service.">Edit public page</button>
+              </div>
+              <div class="me-rule"></div>
+              <div class="me-h"><h2>Groups</h2></div>
+              <div class="me-stack" id="cosmoAdminGroups"></div>
             </div>
           </section>
           <section id="dirHost" aria-label="Cosmo">
@@ -17270,6 +17329,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
   }));
 
   let screen = 'home', tutorialStep = 1, tutorialDocPhase = null, cittaExpanded = false, newTipSeen = false, postTutorialTipPending = false, teamOpen = false, dirOpen = false, dirTab = 'cosmo', dirPersonName = '', dirQuery = '', dirGroup = 'All', dirSort = 'all', deskOpen = false, settingsOpen = false, settingsSection = 'profile', symbionOpen = false, meTab = 'know';
+  let cosmoAdminOpen = false, cosmoAdminId = '';
   /** H0 free-browse: coach/spotlight off, stay on tutorial tail so Reminders → Goals remain scrollable. */
   let tutorialExploring = false;
   const frame = $('frame');
@@ -17328,6 +17388,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     if (screen === 'dir') q.set('dir', dirTab);
     if (screen === 'desk') q.set('desk', deskSection);
     if (screen === 'symbion') q.set('me', meTab);
+    if (screen === 'cosmo' && cosmoAdminId) q.set('id', cosmoAdminId);
     if (screen === 'settings') q.set('set', settingsSection);
     if (screen === 'tutorial' && tutorialDocPhase === 'twin-finish') q.set('tutorial', '1d');
     else if (screen === 'tutorial' && tutorialDocPhase === 'doc-done') q.set('tutorial', '1e');
@@ -19208,6 +19269,10 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
           return;
         }
         if (el.dataset.rail === 'drive') {
+          if (document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green') {
+            openSymbion();
+            return;
+          }
           openDesk('drive');
           return;
         }
@@ -19603,6 +19668,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     if (deskOpen && next !== 'desk') closeDesk();
     if (symbionOpen && next !== 'symbion') closeSymbion();
     if (settingsOpen && next !== 'settings') closeSettings();
+    if (cosmoAdminOpen && next !== 'cosmo') closeCosmoAdmin();
     screen = next;
     if (document.documentElement.dataset.theme === 'blue' && next === 'home') markRailCurrent('home');
     if (next !== 'tutorial') tutorialExploring = false;
@@ -20269,7 +20335,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       b.setAttribute('aria-pressed', String(b.dataset.themePick === palette));
     });
     if (next === 'blue' && (screen === 'tutorial' || screen === 'welcome' || screen === 'handoff')) setScreen('home');
-    else if (next === 'blue' && screen === 'home' && !teamOpen && !dirOpen && !deskOpen && !settingsOpen && !symbionOpen) markRailCurrent('home');
+    else if (next === 'blue' && screen === 'home' && !teamOpen && !dirOpen && !deskOpen && !settingsOpen && !symbionOpen && !cosmoAdminOpen) markRailCurrent('home');
     if (next === 'blue' && current === 'lr') setAI('citta', { announce: false });
     paintMenuAvatars();
     setDockAvatar(AIS[current]);
@@ -22410,6 +22476,59 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
   }
 
 
+  function bindOsbarTab(tab) {
+    tab.addEventListener('click', (e) => {
+      const tabs = tab.parentElement;
+      if (!tabs) return;
+      const id = tab.dataset.tab || '';
+      if (e.target.closest('.osbar-tab-x')) {
+        const wasOn = tab.classList.contains('on');
+        tab.remove();
+        if (!wasOn) return;
+        const next = [...tabs.querySelectorAll('.osbar-tab')].reverse().find((item) => (item.dataset.tab || '').startsWith('cosmo:')) || tabs.querySelector('.osbar-tab:last-child');
+        if (next && (next.dataset.tab || '').startsWith('cosmo:')) {
+          tabs.querySelectorAll('.osbar-tab').forEach((item) => item.classList.remove('on'));
+          next.classList.add('on');
+          showCosmoAdmin(next.dataset.tab.slice(6), { fromTab: true });
+        } else {
+          if (next) {
+            tabs.querySelectorAll('.osbar-tab').forEach((item) => item.classList.remove('on'));
+            next.classList.add('on');
+          }
+          if (id.startsWith('cosmo:') || cosmoAdminOpen) {
+            closeCosmoAdmin();
+            openSymbion();
+          }
+        }
+        return;
+      }
+      tabs.querySelectorAll('.osbar-tab').forEach((item) => item.classList.remove('on'));
+      tab.classList.add('on');
+      if (id.startsWith('cosmo:')) showCosmoAdmin(id.slice(6), { fromTab: true });
+      else if (cosmoAdminOpen) {
+        closeCosmoAdmin();
+        setScreen('home');
+      }
+    });
+  }
+  function ensureCosmoTab(row) {
+    const tabs = document.querySelector('.osbar-tabs');
+    if (!tabs) return;
+    const id = 'cosmo:' + row.id;
+    let tab = [...tabs.querySelectorAll('.osbar-tab')].find((item) => item.dataset.tab === id);
+    if (!tab) {
+      tab = document.createElement('button');
+      tab.type = 'button';
+      tab.dataset.tab = id;
+      tab.className = 'osbar-tab is-in';
+      tab.innerHTML = `<span class="osbar-tab-label"></span><span class="osbar-tab-x" role="button" aria-label="Close tab">×</span>`;
+      tab.querySelector('.osbar-tab-label').textContent = row.name;
+      bindOsbarTab(tab);
+      tabs.appendChild(tab);
+    }
+    tabs.querySelectorAll('.osbar-tab').forEach((item) => item.classList.remove('on'));
+    tab.classList.add('on');
+  }
   function openDriveDoc(label) {
     const tabs = document.querySelector('.osbar-tabs');
     const search = document.getElementById('headerSearch');
@@ -22422,19 +22541,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       tab.className = 'osbar-tab' + (active ? ' on' : '') + (animate ? ' is-in' : '');
       tab.innerHTML = `<span class="osbar-tab-label"></span><span class="osbar-tab-x" role="button" aria-label="Close tab">×</span>`;
       tab.querySelector('.osbar-tab-label').textContent = tabLabel;
-      tab.addEventListener('click', (e) => {
-        if (e.target.closest('.osbar-tab-x')) {
-          const wasOn = tab.classList.contains('on');
-          tab.remove();
-          if (wasOn) {
-            const last = tabs.querySelector('.osbar-tab:last-child');
-            if (last) last.classList.add('on');
-          }
-          return;
-        }
-        tabs.querySelectorAll('.osbar-tab').forEach((t) => t.classList.remove('on'));
-        tab.classList.add('on');
-      });
+      bindOsbarTab(tab);
       tabs.appendChild(tab);
       return tab;
     };
@@ -24726,9 +24833,43 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     });
   }
 
+  const MY_COSMOS = [
+    { id: 'lulu', name: 'Lulu', short: 'LU', role: 'Owner', line: 'Personal Cosmo', about: 'Your public page. Posts and groups for people who follow you.', groups: [{ name: 'Notes with Maya', line: 'Big group' }, { name: 'Study circle', line: 'Subgroup' }] },
+    { id: 'section', name: 'Section notes', short: 'SN', role: 'Admin', line: 'Heavy-ion Physics', about: 'You manage this Cosmo with the owner. Members still reply under posts.', groups: [{ name: 'Section notes', line: 'Big group' }, { name: 'Quiz desk', line: 'Subgroup' }] }
+  ];
+  let meCanManageCosmo = true;
+  function cosmosIManage() { return meCanManageCosmo ? MY_COSMOS : []; }
+  function paintMyCosmo() {
+    const block = document.getElementById('meCosmo');
+    const list = document.getElementById('meCosmoList');
+    if (!block || !list) return;
+    const rows = cosmosIManage();
+    block.hidden = rows.length === 0;
+    list.replaceChildren();
+    rows.forEach((row) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'me-cosmo-row';
+      btn.dataset.myCosmo = row.id;
+      const av = document.createElement('span');
+      av.className = 'av';
+      av.textContent = row.short;
+      const copy = document.createElement('span');
+      const name = document.createElement('b');
+      name.textContent = row.name;
+      const line = document.createElement('small');
+      line.textContent = row.line;
+      copy.append(name, line);
+      const role = document.createElement('em');
+      role.textContent = row.role;
+      btn.append(av, copy, role);
+      list.appendChild(btn);
+    });
+  }
   function paintMe() {
     const host = document.getElementById('symbionHost');
     if (!host) return;
+    paintMyCosmo();
     host.querySelectorAll('[data-me-tab]').forEach((btn) => {
       const on = btn.dataset.meTab === meTab;
       btn.classList.toggle('on', on);
@@ -24740,11 +24881,61 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     const scroll = host.querySelector('.me-scroll');
     if (scroll) scroll.scrollTop = 0;
   }
+  function closeCosmoAdmin() {
+    if (!cosmoAdminOpen) return;
+    cosmoAdminOpen = false;
+    cosmoAdminId = '';
+    frame.classList.remove('cosmo-admin-on');
+    const host = document.getElementById('cosmoAdminHost');
+    if (host) host.hidden = true;
+  }
+  function showCosmoAdmin(id, opts) {
+    const row = cosmosIManage().find((item) => item.id === id);
+    if (!row) return;
+    if (teamOpen) closeTeam();
+    if (dirOpen) closeDir();
+    if (deskOpen) closeDesk();
+    if (settingsOpen) closeSettings();
+    if (symbionOpen) closeSymbion();
+    cosmoAdminOpen = true;
+    cosmoAdminId = row.id;
+    screen = 'cosmo';
+    applyTheme();
+    frame.classList.add('cosmo-admin-on');
+    const host = document.getElementById('cosmoAdminHost');
+    if (host) host.hidden = false;
+    const role = document.getElementById('cosmoAdminRole');
+    const name = document.getElementById('cosmoAdminName');
+    const about = document.getElementById('cosmoAdminAbout');
+    const groups = document.getElementById('cosmoAdminGroups');
+    if (role) role.textContent = row.role;
+    if (name) name.textContent = row.name;
+    if (about) about.textContent = row.about;
+    if (groups) {
+      groups.replaceChildren();
+      row.groups.forEach((group) => {
+        const card = document.createElement('article');
+        card.className = 'me-group';
+        const title = document.createElement('b');
+        title.textContent = group.name;
+        const line = document.createElement('small');
+        line.textContent = group.line;
+        card.append(title, line);
+        groups.appendChild(card);
+      });
+    }
+    if (!opts || !opts.fromTab) ensureCosmoTab(row);
+    if (document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green') markRailCurrent('drive');
+    pressScenario('home');
+    syncHash();
+    fit();
+  }
   function openSymbion(tab) {
     if (teamOpen) closeTeam();
     if (dirOpen) closeDir();
     if (deskOpen) closeDesk();
     if (settingsOpen) closeSettings();
+    if (cosmoAdminOpen) closeCosmoAdmin();
     if (tab === 'skill' || tab === 'loop' || tab === 'know') meTab = tab;
     symbionOpen = true;
     screen = 'symbion';
@@ -24753,10 +24944,13 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     const host = document.getElementById('symbionHost');
     if (host) host.hidden = false;
     paintMe();
-    frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
-      r.classList.remove('on');
-      r.removeAttribute('aria-current');
-    });
+    if (document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green') markRailCurrent('drive');
+    else {
+      frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
+        r.classList.remove('on');
+        r.removeAttribute('aria-current');
+      });
+    }
     pressScenario('home');
     syncHash();
     fit();
@@ -24776,6 +24970,8 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       syncHash();
       return;
     }
+    const mine = e.target.closest('[data-my-cosmo]');
+    if (mine) { showCosmoAdmin(mine.dataset.myCosmo); return; }
     const act = e.target.closest('[data-me-act]');
     if (act) showToastMsg('My Symbion · ' + act.dataset.meAct);
   });
@@ -24793,6 +24989,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     else if (s === 'dir') openDir(q.get('dir') || 'cosmo');
     else if (s === 'desk') openDesk(q.get('desk') || 'email');
     else if (s === 'symbion') openSymbion(q.get('me') || 'know');
+    else if (s === 'cosmo') showCosmoAdmin(q.get('id') || '');
     else if (s === 'settings') openSettings(q.get('set') || 'profile');
     else if (s === 'tutorial') {
       const raw = q.get('tutorial') || '1';
