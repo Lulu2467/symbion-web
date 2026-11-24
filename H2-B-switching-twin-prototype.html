@@ -11460,6 +11460,586 @@
 <div class="stage">
   <div class="scaler" id="scaler">
     <div class="frame" id="frame">
+<!-- v2-shell:start -->
+<style id="v2ShellCss">
+  #v2shell[hidden] { display: none !important; }
+  html[data-theme="blue"]:not([data-palette="green"])[data-home="v2"] #frame { height: 900px; }
+  html[data-theme="blue"]:not([data-palette="green"])[data-home="v2"] #v2shell {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    inset: 0;
+    z-index: 60;
+    background: #fff;
+    color: #000;
+    font-family: Inter, "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  #v2shell * { box-sizing: border-box; }
+  #v2shell button, #v2shell textarea { font-family: inherit; }
+  #v2shell .v2-nav {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 52px;
+    padding: 0 16px;
+    border-bottom: 1px solid #e6e8ec;
+    background: #fff;
+  }
+  #v2shell .v2-tabs { display: flex; align-items: center; gap: 6px; min-width: 0; max-width: 46%; }
+  #v2shell .v2-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    max-width: 220px;
+    height: 32px;
+    padding: 0 8px 0 12px;
+    border: 1px solid #e6e8ec;
+    border-radius: 8px;
+    background: #fff;
+    color: #656d76;
+    font-size: 13px;
+    font-weight: 400;
+    cursor: pointer;
+  }
+  #v2shell .v2-tab span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #v2shell .v2-tab[aria-selected="true"] { background: #ebf5fa; color: #3c7a94; border-color: #c5d4de; }
+  #v2shell .v2-tab-x {
+    width: 18px;
+    height: 18px;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+  }
+  #v2shell .v2-tab-x:hover { background: #f6f7f8; }
+  #v2shell .v2-url {
+    flex: 1;
+    min-width: 0;
+    height: 32px;
+    padding: 0 12px;
+    border: 1px solid #e6e8ec;
+    border-radius: 8px;
+    background: #f6f7f8;
+    color: #656d76;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  #v2shell .v2-url.is-on { color: #000; background: #fff; }
+  #v2shell .v2-my { position: relative; flex: none; }
+  #v2shell .v2-my > button, #v2shell .v2-menu button, #v2shell .v2-side button {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    color: #1d1d1f;
+    font-size: 13px;
+    font-weight: 400;
+    text-align: left;
+  }
+  #v2shell .v2-my > button {
+    height: 32px;
+    padding: 0 12px;
+    border-radius: 8px;
+    border: 1px solid #e6e8ec;
+    background: #fff;
+  }
+  #v2shell .v2-my > button[aria-expanded="true"], #v2shell .v2-my > button:hover { background: #f6f7f8; }
+  #v2shell .v2-menu {
+    position: absolute;
+    top: 38px;
+    right: 0;
+    z-index: 5;
+    width: 180px;
+    padding: 6px;
+    border: 1px solid #e6e8ec;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(9, 9, 11, .08);
+  }
+  #v2shell .v2-menu button { display: block; width: 100%; height: 32px; padding: 0 10px; border-radius: 8px; }
+  #v2shell .v2-menu button:hover { background: #f6f7f8; }
+  #v2shell .v2-body { flex: 1; min-height: 0; display: flex; }
+  #v2shell .v2-side {
+    flex: none;
+    width: 200px;
+    padding: 12px;
+    border-right: 1px solid #e6e8ec;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: #fff;
+  }
+  #v2shell .v2-side button { height: 36px; padding: 0 12px; border-radius: 10px; }
+  #v2shell .v2-side button:hover { background: #f6f7f8; color: #1d1d1f; font-weight: 400; }
+  #v2shell .v2-side button[aria-current="page"] {
+    background: #f6f7f8;
+    color: #3c7a94;
+    font-weight: 650;
+  }
+  #v2shell .v2-side button[aria-current="page"]:hover { color: #3c7a94; font-weight: 650; }
+  #v2shell .v2-main { flex: 1; min-width: 0; overflow: auto; padding: 24px 28px 32px; }
+  #v2shell h2 { margin: 0 0 4px; font-size: 15px; font-weight: 650; letter-spacing: 0; }
+  #v2shell .v2-lead { margin: 0 0 16px; color: #656d76; }
+  #v2shell .v2-home { display: flex; flex-direction: column; gap: 16px; }
+  #v2shell .v2-card, #v2shell .v2-page, #v2shell .v2-row, #v2shell .v2-post, #v2shell .v2-float {
+    border: 1px solid #e6e8ec;
+    border-radius: 12px;
+    background: #fff;
+  }
+  #v2shell .v2-card { padding: 16px; }
+  #v2shell .v2-card h3, #v2shell .v2-k { margin: 0 0 10px; font-size: 13px; font-weight: 650; }
+  #v2shell .v2-dialog { display: flex; gap: 8px; align-items: flex-end; }
+  #v2shell textarea {
+    width: 100%;
+    min-height: 64px;
+    resize: vertical;
+    border: 1px solid #e6e8ec;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 13px;
+    color: #000;
+    background: #fff;
+  }
+  #v2shell textarea:focus { outline: 2px solid #c5d4de; border-color: #9eb8c6; }
+  #v2shell .v2-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 8px; }
+  #v2shell .v2-btn {
+    height: 32px;
+    padding: 0 12px;
+    border-radius: 8px;
+    border: 1px solid #c5d4de;
+    background: #fff;
+    color: #3c7a94;
+    font-size: 13px;
+    font-weight: 400;
+    cursor: pointer;
+  }
+  #v2shell .v2-btn:hover { background: #f4f8fa; border-color: #9eb8c6; }
+  #v2shell .v2-btn[disabled] { color: #71777d; border-color: #e6e8ec; background: #f6f7f8; cursor: default; }
+  #v2shell .v2-split { display: grid; grid-template-columns: 1.1fr .9fr; gap: 16px; }
+  #v2shell .v2-lane { margin-top: 8px; }
+  #v2shell .v2-lane b { display: block; margin-bottom: 6px; color: #71777d; font-size: 13px; font-weight: 500; }
+  #v2shell .v2-chip { padding: 8px 10px; border: 1px solid #e6e8ec; border-radius: 8px; margin-bottom: 6px; }
+  #v2shell .v2-news { display: flex; flex-direction: column; gap: 8px; }
+  #v2shell .v2-news article { display: flex; gap: 10px; align-items: flex-start; }
+  #v2shell .v2-av {
+    width: 28px; height: 28px; border-radius: 14px; flex: none;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: #ebf5fa; color: #3c7a94; font-size: 12px; font-weight: 650;
+  }
+  #v2shell .v2-news small, #v2shell .v2-meta { display: block; color: #71777d; }
+  #v2shell .v2-list { display: flex; flex-direction: column; gap: 8px; }
+  #v2shell .v2-row, #v2shell .v2-group {
+    display: flex; align-items: center; gap: 12px; padding: 12px 14px; width: 100%;
+    border: 1px solid #e6e8ec; border-radius: 12px; background: #fff; text-align: left; cursor: pointer;
+    font-size: 13px; color: #000;
+  }
+  #v2shell .v2-row:hover, #v2shell .v2-group:hover { background: #f4f8fa; }
+  #v2shell .v2-row span, #v2shell .v2-group span { display: block; }
+  #v2shell .v2-row small, #v2shell .v2-group small { color: #656d76; }
+  #v2shell .v2-sec { margin: 16px 0 8px; color: #71777d; font-size: 13px; font-weight: 500; }
+  #v2shell .v2-page { padding: 20px; }
+  #v2shell .v2-note { margin: 12px 0 0; color: #656d76; }
+  #v2shell .v2-floats { position: absolute; inset: 0; pointer-events: none; }
+  #v2shell .v2-float {
+    position: absolute;
+    width: 380px;
+    max-height: calc(100% - 80px);
+    display: flex;
+    flex-direction: column;
+    pointer-events: auto;
+    box-shadow: 0 12px 40px rgba(9, 9, 11, .12);
+    overflow: hidden;
+  }
+  #v2shell .v2-float header {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 12px 10px 14px;
+    border-bottom: 1px solid #e6e8ec;
+  }
+  #v2shell .v2-float header strong { font-size: 15px; font-weight: 650; }
+  #v2shell .v2-float header em { font-style: normal; color: #656d76; }
+  #v2shell .v2-float header button {
+    margin-left: auto; width: 28px; height: 28px; border: 0; border-radius: 8px; background: transparent; cursor: pointer; color: #656d76; font-size: 18px;
+  }
+  #v2shell .v2-float header button:hover { background: #f6f7f8; color: #1d1d1f; }
+  #v2shell .v2-float .v2-stream { overflow: auto; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+  #v2shell .v2-post { padding: 10px 12px; }
+  #v2shell .v2-post p, #v2shell .v2-reply p { margin: 4px 0; }
+  #v2shell .v2-reply { margin-top: 8px; padding-top: 8px; border-top: 1px solid #e6e8ec; }
+  #v2shell .v2-compose { flex: none; padding: 10px 12px 12px; border-top: 1px solid #e6e8ec; }
+  #v2shell .v2-compose textarea { min-height: 48px; }
+  #v2shell .v2-lock { margin: 0; color: #656d76; }
+  #v2shell .v2-looks { display: flex; gap: 10px; flex-wrap: wrap; }
+  #v2shell .v2-look {
+    width: 72px; height: 88px; border: 1px solid #e6e8ec; border-radius: 12px; background: #fff; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: #656d76; font-size: 13px;
+  }
+  #v2shell .v2-look[aria-pressed="true"] { border-color: #3c7a94; color: #3c7a94; background: #ebf5fa; }
+  #v2shell .v2-train { padding: 12px 14px; border: 1px solid #e6e8ec; border-radius: 12px; margin-bottom: 10px; }
+  #v2shell .v2-result { margin: 8px 0 0; color: #3c7a94; }
+</style>
+<div id="v2shell" hidden>
+  <header class="v2-nav">
+    <div class="v2-tabs" id="v2Tabs"></div>
+    <div class="v2-url" id="v2Url">No webpage open</div>
+    <div class="v2-my">
+      <button type="button" id="v2MyBtn" aria-haspopup="menu" aria-expanded="false" aria-controls="v2MyMenu">My Symbion</button>
+      <div class="v2-menu" id="v2MyMenu" role="menu" hidden></div>
+    </div>
+  </header>
+  <div class="v2-body">
+    <nav class="v2-side" aria-label="Side panel">
+      <button type="button" data-v2-side="home">Home</button>
+      <button type="button" data-v2-side="cosmo">Cosmo</button>
+      <button type="button" data-v2-side="community">Community</button>
+      <button type="button" data-v2-side="me">Me</button>
+    </nav>
+    <main class="v2-main" id="v2Main"></main>
+  </div>
+  <div class="v2-floats" id="v2Floats"></div>
+</div>
+<script>
+(function () {
+  const shell = document.getElementById('v2shell');
+  if (!shell) return;
+  const HAS_SI = true;
+  const CAN_MANAGE = true;
+  const LOOKS = [
+    { id: 'mist', label: 'Mist', bg: '#ebf5fa', fg: '#3c7a94' },
+    { id: 'ink', label: 'Ink', bg: '#eef1f3', fg: '#1d1d1f' },
+    { id: 'sand', label: 'Sand', bg: '#f6f1e8', fg: '#6b5a3e' },
+    { id: 'leaf', label: 'Leaf', bg: '#e7f2ea', fg: '#2f6b45' }
+  ];
+  const cosmos = [
+    { id: 'roland', name: 'Prof. Gunther Roland', field: 'Heavy-ion physics', kind: 'Courses, teaching, and communication live in this space.', mark: 'GR' },
+    { id: 'luo', name: '骆王宇', field: 'Research', kind: 'Courses, teaching, and communication live in this space.', mark: '骆' },
+    { id: 'li', name: '李佳琦', field: 'Commerce', kind: 'Conversation, selling, and support live in this space.', mark: '李' },
+    { id: 'dou', name: '豆豆', field: 'Community', kind: 'Conversation, selling, and support live in this space.', mark: '豆' },
+    { id: 'lulu', name: 'Lulu', field: 'Study', kind: 'This space is arranged for Lulu’s own field.', mark: 'LU', manage: true }
+  ];
+  const groups = [
+    { id: 'roland-main', cosmo: 'roland', name: 'Heavy-ion Physics', kind: 'main', role: 'member' },
+    { id: 'roland-lab', cosmo: 'roland', name: 'Lab group', kind: 'sub', parent: 'roland-main', role: 'member' },
+    { id: 'luo-main', cosmo: 'luo', name: '骆王宇', kind: 'main', role: 'member' },
+    { id: 'li-main', cosmo: 'li', name: '李佳琦', kind: 'main', role: 'member' },
+    { id: 'dou-main', cosmo: 'dou', name: '豆豆', kind: 'main', role: 'member' },
+    { id: 'lulu-main', cosmo: 'lulu', name: 'Lulu', kind: 'main', role: 'owner' },
+    { id: 'lulu-study', cosmo: 'lulu', name: 'Study group', kind: 'sub', parent: 'lulu-main', role: 'owner' }
+  ];
+  const posts = {
+    'roland-main': [{ id: 'p1', author: 'Prof. Gunther Roland', text: 'Lecture 5 is the jet-quenching figure. Read the caption before you reply.', replies: [{ author: 'Lulu', text: 'I’ll bring the lab plot.' }] }],
+    'roland-lab': [{ id: 'p2', author: 'Lulu', text: 'Lab 3 plot is in the shared folder.', replies: [] }],
+    'luo-main': [{ id: 'p3', author: '骆王宇', text: 'The reading note from yesterday is up.', replies: [] }],
+    'li-main': [{ id: 'p4', author: '李佳琦', text: 'A new reply is under the product post.', replies: [{ author: 'Lulu', text: 'Saw it.' }] }],
+    'dou-main': [{ id: 'p5', author: '豆豆', text: 'Shared a short note for the week.', replies: [] }],
+    'lulu-main': [{ id: 'p6', author: 'Lulu', text: 'Notes from this week’s reading.', replies: [] }],
+    'lulu-study': [{ id: 'p7', author: 'Chris', text: 'Can we move the study hour to Thursday?', replies: [], synced: false }]
+  };
+  const news = [
+    ['roland', 'Lecture 5 notes are in the Cosmo.', 'Today'],
+    ['luo', 'Replied in the main group.', 'Yesterday'],
+    ['li', 'New reply under the product post.', 'Yesterday'],
+    ['dou', 'Shared a short note.', 'Monday']
+  ];
+  const memory = [
+    { id: 'm1', kind: 'citta', title: 'Reading report', detail: 'Citta · yesterday' },
+    { id: 'm2', kind: 'citta', title: 'Lecture 5', detail: 'Citta · Monday' },
+    { id: 'm3', kind: 'group', group: 'roland-main', title: 'Heavy-ion Physics', detail: 'Group · today' }
+  ];
+  let train = [
+    { id: 't1', title: 'Replies about the jet-quenching figure', state: 'done', result: 'Too certain. Keep the caveat about the detector cut.' },
+    { id: 't2', title: 'Office-hour replies about the lab report', state: 'open', result: '' }
+  ];
+  const state = {
+    section: 'home',
+    view: { type: 'side', id: 'home' },
+    tabs: [],
+    menu: false,
+    look: 'mist',
+    draft: '',
+    citta: null,
+    groupFloats: [],
+    seq: 10
+  };
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const cosmoBy = (id) => cosmos.find((c) => c.id === id);
+  const groupBy = (id) => groups.find((g) => g.id === id);
+  const look = () => LOOKS.find((item) => item.id === state.look) || LOOKS[0];
+  const canPost = (group) => group.kind === 'sub' || group.role === 'owner' || group.role === 'admin';
+  const slug = (id) => ({ roland: 'gunther-roland', luo: 'luo-wangyu', li: 'li-jiaqi', dou: 'doudou', lulu: 'lulu' }[id] || id);
+
+  function showSide(id) {
+    state.section = id;
+    state.view = { type: 'side', id };
+    state.menu = false;
+    paint();
+  }
+  function showMy(id) {
+    state.view = { type: 'my', id };
+    state.menu = false;
+    paint();
+  }
+  function openPage(tab) {
+    if (!state.tabs.some((item) => item.id === tab.id)) state.tabs.push(tab);
+    state.view = { type: 'tab', id: tab.id };
+    state.menu = false;
+    paint();
+  }
+  function openCosmo(id) {
+    const item = cosmoBy(id);
+    openPage({ id: 'cosmo-' + id, url: 'symbion.app/cosmo/' + slug(id), title: item.name, page: 'cosmo', cosmo: id });
+  }
+  function openAdmin() {
+    openPage({ id: 'admin-lulu', url: 'symbion.app/cosmo/lulu/manage', title: 'Manage Lulu', page: 'admin', cosmo: 'lulu' });
+  }
+  function closeTab(id) {
+    state.tabs = state.tabs.filter((tab) => tab.id !== id);
+    if (state.view.type === 'tab' && state.view.id === id) state.view = { type: 'side', id: state.section };
+    paint();
+  }
+  function openCitta(text) {
+    if (!state.citta) state.citta = { messages: [] };
+    if (text) {
+      state.citta.messages.push({ author: 'Lulu', text });
+      state.citta.messages.push({ author: 'Citta', text: 'I’ll keep this with your courses and the Cosmos you follow.' });
+    }
+    state.draft = '';
+    paint();
+  }
+  function openGroup(id) {
+    if (!state.groupFloats.includes(id)) state.groupFloats.push(id);
+    paint();
+  }
+
+  function homeHtml() {
+    const lanes = [
+      ['To do', ['Submit reading report', 'Reply to Prof. Roland']],
+      ['Doing', ['Lab 3 analysis']],
+      ['Done', ['Lecture 5 slides']]
+    ].map(([name, items]) => `<div class="v2-lane"><b>${name}</b>${items.map((item) => `<div class="v2-chip">${esc(item)}</div>`).join('')}</div>`).join('');
+    const feed = news.map(([id, text, when]) => {
+      const item = cosmoBy(id);
+      return `<article><span class="v2-av">${esc(item.mark)}</span><div><strong>${esc(item.name)}</strong><span>${esc(text)}</span><small>${esc(when)}</small></div></article>`;
+    }).join('');
+    return `<div class="v2-home">
+      <section class="v2-card"><h3>Citta</h3>
+        <form data-v2-form="citta"><textarea name="text" placeholder="What do you want to work on?" aria-label="Citta">${esc(state.draft)}</textarea>
+        <div class="v2-actions"><button class="v2-btn" type="button" data-v2-open="citta">Open Citta</button><button class="v2-btn" type="submit">Send</button></div></form>
+      </section>
+      <div class="v2-split">
+        <section class="v2-card"><h3>Kanban</h3>${lanes}</section>
+        <section class="v2-card"><h3>Latest from Cosmos you follow</h3><div class="v2-news">${feed}</div></section>
+      </div>
+    </div>`;
+  }
+  function cosmoHtml() {
+    const rows = cosmos.filter((item) => item.id !== 'lulu' || true).map((item) => `<button type="button" class="v2-row" data-v2-open-cosmo="${item.id}"><span class="v2-av">${esc(item.mark)}</span><span><strong>${esc(item.name)}</strong><small>${esc(item.field)}</small></span></button>`).join('');
+    return `<h2>Cosmo</h2><p class="v2-lead">Cosmos you follow.</p><div class="v2-list">${rows}</div>`;
+  }
+  function communityHtml() {
+    const blocks = cosmos.map((item) => {
+      const rows = groups.filter((group) => group.cosmo === item.id).map((group) => `<button type="button" class="v2-group" data-v2-open-group="${group.id}"><span><strong>${esc(group.name)}</strong><small>${group.kind === 'main' ? 'Main group' : 'Subgroup'}</small></span></button>`).join('');
+      return `<div class="v2-sec">${esc(item.name)}</div><div class="v2-list">${rows}</div>`;
+    }).join('');
+    return `<h2>Community</h2><p class="v2-lead">Main groups and subgroups from Cosmos you follow.</p>${blocks}`;
+  }
+  function meHtml() {
+    const face = look();
+    const mine = CAN_MANAGE ? `<div class="v2-sec">My Cosmo</div><button type="button" class="v2-row" data-v2-admin="lulu"><span class="v2-av" style="background:${face.bg};color:${face.fg}">LU</span><span><strong>Lulu</strong><small>Manage this Cosmo</small></span></button>` : '';
+    return `<h2>Me</h2><p class="v2-lead">Lulu · lulu@symbion.test</p>${mine}`;
+  }
+  function pageHtml() {
+    const tab = state.tabs.find((item) => item.id === state.view.id);
+    if (!tab) return homeHtml();
+    const item = cosmoBy(tab.cosmo);
+    if (tab.page === 'admin') {
+      return `<div class="v2-page"><h2>Manage ${esc(item.name)}</h2><p class="v2-lead">Management for this Cosmo.</p><button class="v2-btn" type="button" data-v2-open-group="lulu-main">Open main group</button></div>`;
+    }
+    return `<div class="v2-page"><h2>${esc(item.name)}</h2><p class="v2-lead">${esc(item.field)}</p><p>${esc(item.kind)}</p></div>`;
+  }
+  function memoryHtml() {
+    const rows = memory.map((item) => `<button type="button" class="v2-row" data-v2-memory="${item.id}"><span><strong>${esc(item.title)}</strong><small>${esc(item.detail)}</small></span></button>`).join('');
+    return `<h2>Memory</h2><p class="v2-lead">Every conversation kept for this user, as the model’s memory.</p><div class="v2-list">${rows}</div>`;
+  }
+  function trainingHtml() {
+    if (!HAS_SI) return '';
+    const rows = train.map((item) => {
+      if (item.state === 'done') return `<article class="v2-train"><strong>${esc(item.title)}</strong><p class="v2-result">${esc(item.result)}</p></article>`;
+      return `<article class="v2-train"><strong>${esc(item.title)}</strong><p class="v2-lead">Mark what should change.</p><div class="v2-actions"><button class="v2-btn" type="button" data-v2-label="${item.id}" data-v2-result="Too certain. Leave the open question in the reply.">Too certain</button><button class="v2-btn" type="button" data-v2-label="${item.id}" data-v2-result="Not this tone. Shorter, and closer to how you write.">Not my tone</button><button class="v2-btn" type="button" data-v2-label="${item.id}" data-v2-result="Missing a caveat. Name what the reply does not know.">Missing a caveat</button></div></article>`;
+    }).join('');
+    return `<h2>Training</h2><p class="v2-lead">Rate what your SI said to other people. Similar notes are one item. Labeled items show the result.</p>${rows}`;
+  }
+  function lookHtml() {
+    if (!HAS_SI) return '';
+    const faces = LOOKS.map((item) => `<button type="button" class="v2-look" data-v2-look="${item.id}" aria-pressed="${item.id === state.look}"><span class="v2-av" style="background:${item.bg};color:${item.fg}">SI</span>${esc(item.label)}</button>`).join('');
+    return `<h2>形象</h2><p class="v2-lead">Your SI. Change how it appears.</p><div class="v2-looks">${faces}</div>`;
+  }
+  function mainHtml() {
+    const view = state.view;
+    if (view.type === 'tab') return pageHtml();
+    if (view.type === 'my') {
+      if (view.id === 'memory') return memoryHtml();
+      if (view.id === 'training') return trainingHtml();
+      return lookHtml();
+    }
+    if (view.id === 'cosmo') return cosmoHtml();
+    if (view.id === 'community') return communityHtml();
+    if (view.id === 'me') return meHtml();
+    return homeHtml();
+  }
+  function paintPosts(group) {
+    return (posts[group.id] || []).map((post) => {
+      const replies = post.replies.map((reply) => `<div class="v2-reply"><strong>${esc(reply.author)}</strong><p>${esc(reply.text)}</p></div>`).join('');
+      const sync = group.kind === 'sub' && (group.role === 'owner' || group.role === 'admin')
+        ? (post.synced ? '<p class="v2-meta">Synced to the main group</p>' : `<button class="v2-btn" type="button" data-v2-sync="${group.id}" data-v2-post="${post.id}">Sync to main group</button>`)
+        : '';
+      const from = post.syncedFrom ? `<p class="v2-meta">Synced from ${esc(post.syncedFrom)}</p>` : '';
+      return `<article class="v2-post"><strong>${esc(post.author)}</strong><p>${esc(post.text)}</p>${from}${replies}<form data-v2-form="reply" data-v2-group="${group.id}" data-v2-post="${post.id}"><textarea name="text" aria-label="Reply" placeholder="Reply"></textarea><div class="v2-actions"><button class="v2-btn" type="submit">Reply</button></div></form>${sync}</article>`;
+    }).join('');
+  }
+  function paintFloats() {
+    const host = document.getElementById('v2Floats');
+    const bits = [];
+    if (state.citta) {
+      const face = look();
+      const lines = state.citta.messages.map((msg) => `<article class="v2-post"><strong>${esc(msg.author)}</strong><p>${esc(msg.text)}</p></article>`).join('') || '<p class="v2-lead">The conversation stays in this window. Home stays behind it.</p>';
+      bits.push(`<section class="v2-float" role="dialog" aria-label="Citta" style="top:64px;right:16px"><header><span class="v2-av" style="background:${face.bg};color:${face.fg}">SI</span><strong>Citta</strong><em>SI</em><button type="button" data-v2-close="citta" aria-label="Close Citta">×</button></header><div class="v2-stream">${lines}</div><form class="v2-compose" data-v2-form="citta"><textarea name="text" aria-label="Message Citta" placeholder="Message Citta"></textarea><div class="v2-actions"><button class="v2-btn" type="submit">Send</button></div></form></section>`);
+    }
+    state.groupFloats.forEach((id, index) => {
+      const group = groupBy(id);
+      const compose = canPost(group)
+        ? `<form class="v2-compose" data-v2-form="post" data-v2-group="${group.id}"><textarea name="text" aria-label="New post" placeholder="New post"></textarea><div class="v2-actions"><button class="v2-btn" type="submit">Post</button></div></form>`
+        : '<div class="v2-compose"><p class="v2-lock">Only the owner and admins can start a post. You can reply under a post.</p></div>';
+      bits.push(`<section class="v2-float" role="dialog" aria-label="${esc(group.name)}" style="top:${64 + index * 28}px;left:${216 + index * 28}px"><header><strong>${esc(group.name)}</strong><em>${group.kind === 'main' ? 'Main group' : 'Subgroup'}</em><button type="button" data-v2-close="${group.id}" aria-label="Close group">×</button></header><div class="v2-stream">${paintPosts(group)}</div>${compose}</section>`);
+    });
+    host.innerHTML = bits.join('');
+  }
+  function paint() {
+    const on = document.documentElement.dataset.theme === 'blue' && document.documentElement.dataset.palette !== 'green' && document.documentElement.dataset.home === 'v2';
+    shell.hidden = !on;
+    const frame = document.getElementById('frame');
+    frame?.querySelector('.osbar') && (frame.querySelector('.osbar').inert = on);
+    frame?.querySelector('.body') && (frame.querySelector('.body').inert = on);
+    if (!on) return;
+    shell.querySelectorAll('[data-v2-side]').forEach((btn) => {
+      const current = state.view.type === 'side' && state.view.id === btn.dataset.v2Side;
+      if (current) btn.setAttribute('aria-current', 'page');
+      else btn.removeAttribute('aria-current');
+    });
+    const tabs = document.getElementById('v2Tabs');
+    tabs.innerHTML = state.tabs.map((tab) => `<div class="v2-tab" data-v2-tab="${tab.id}" role="tab" tabindex="0" aria-selected="${state.view.type === 'tab' && state.view.id === tab.id}"><span>${esc(tab.title)}</span><button type="button" class="v2-tab-x" data-v2-close-tab="${tab.id}" aria-label="Close ${esc(tab.title)}">×</button></div>`).join('');
+    const url = document.getElementById('v2Url');
+    const active = state.view.type === 'tab' ? state.tabs.find((tab) => tab.id === state.view.id) : null;
+    url.textContent = active ? active.url : 'No webpage open';
+    url.classList.toggle('is-on', !!active);
+    const menu = document.getElementById('v2MyMenu');
+    const items = [{ id: 'memory', label: 'Memory' }];
+    if (HAS_SI) items.push({ id: 'training', label: 'Training' }, { id: 'look', label: '形象' });
+    menu.innerHTML = items.map((item) => `<button type="button" role="menuitem" data-v2-my="${item.id}">${item.label}</button>`).join('');
+    menu.hidden = !state.menu;
+    document.getElementById('v2MyBtn').setAttribute('aria-expanded', String(state.menu));
+    document.getElementById('v2Main').innerHTML = mainHtml();
+    paintFloats();
+  }
+
+  shell.addEventListener('click', (event) => {
+    const side = event.target.closest('[data-v2-side]');
+    if (side) { showSide(side.dataset.v2Side); return; }
+    if (event.target.closest('#v2MyBtn')) { state.menu = !state.menu; paint(); return; }
+    const my = event.target.closest('[data-v2-my]');
+    if (my) { showMy(my.dataset.v2My); return; }
+    const tab = event.target.closest('[data-v2-tab]');
+    if (tab && !event.target.closest('[data-v2-close-tab]')) { state.view = { type: 'tab', id: tab.dataset.v2Tab }; state.menu = false; paint(); return; }
+    const closeTabBtn = event.target.closest('[data-v2-close-tab]');
+    if (closeTabBtn) { event.stopPropagation(); closeTab(closeTabBtn.dataset.v2CloseTab); return; }
+    const openCos = event.target.closest('[data-v2-open-cosmo]');
+    if (openCos) { openCosmo(openCos.dataset.v2OpenCosmo); return; }
+    if (event.target.closest('[data-v2-admin]')) { openAdmin(); return; }
+    const openG = event.target.closest('[data-v2-open-group]');
+    if (openG) { openGroup(openG.dataset.v2OpenGroup); return; }
+    if (event.target.closest('[data-v2-open="citta"]')) { openCitta(''); return; }
+    const mem = event.target.closest('[data-v2-memory]');
+    if (mem) {
+      const item = memory.find((row) => row.id === mem.dataset.v2Memory);
+      if (item.kind === 'group') openGroup(item.group);
+      else openCitta('');
+      return;
+    }
+    const label = event.target.closest('[data-v2-label]');
+    if (label) {
+      const item = train.find((row) => row.id === label.dataset.v2Label);
+      item.state = 'done';
+      item.result = label.dataset.v2Result;
+      paint();
+      return;
+    }
+    const face = event.target.closest('[data-v2-look]');
+    if (face) { state.look = face.dataset.v2Look; paint(); return; }
+    const closer = event.target.closest('[data-v2-close]');
+    if (closer) {
+      const id = closer.dataset.v2Close;
+      if (id === 'citta') state.citta = null;
+      else state.groupFloats = state.groupFloats.filter((gid) => gid !== id);
+      paint();
+      return;
+    }
+    const sync = event.target.closest('[data-v2-sync]');
+    if (sync) {
+      const group = groupBy(sync.dataset.v2Sync);
+      const post = (posts[group.id] || []).find((item) => item.id === sync.dataset.v2Post);
+      if (post && !post.synced) {
+        post.synced = true;
+        const parent = groupBy(group.parent);
+        posts[parent.id].unshift({ id: 's' + (++state.seq), author: post.author, text: post.text, replies: post.replies.map((reply) => ({ ...reply })), syncedFrom: group.name });
+      }
+      paint();
+    }
+  });
+  shell.addEventListener('input', (event) => {
+    const form = event.target.closest('[data-v2-form="citta"]');
+    if (form && event.target === form.querySelector('textarea') && state.view.type === 'side' && state.view.id === 'home' && !state.citta) state.draft = event.target.value;
+  });
+  shell.addEventListener('submit', (event) => {
+    const form = event.target.closest('form');
+    if (!form || !shell.contains(form)) return;
+    event.preventDefault();
+    const text = (new FormData(form).get('text') || '').toString().trim();
+    const kind = form.dataset.v2Form;
+    if (kind === 'citta') { if (text || !form.closest('.v2-float')) openCitta(text); return; }
+    if (!text) return;
+    if (kind === 'post') {
+      const group = groupBy(form.dataset.v2Group);
+      if (!canPost(group)) return;
+      posts[group.id].unshift({ id: 'n' + (++state.seq), author: 'Lulu', text, replies: [] });
+      paint();
+      return;
+    }
+    if (kind === 'reply') {
+      const list = posts[form.dataset.v2Group] || [];
+      const post = list.find((item) => item.id === form.dataset.v2Post);
+      if (post) post.replies.push({ author: 'Lulu', text });
+      paint();
+    }
+  });
+  document.addEventListener('click', (event) => {
+    if (!state.menu || event.target.closest('.v2-my')) return;
+    state.menu = false;
+    paint();
+  });
+  new MutationObserver(paint).observe(document.documentElement, { attributes: true, attributeFilter: ['data-home', 'data-palette', 'data-theme'] });
+  paint();
+})();
+</script>
+<!-- v2-shell:end -->
 <style id="blueAuthCss">
 .presenter [data-blue-auth] { display: none; }
 html[data-theme="blue"] .presenter [data-blue-auth] { display: inline-flex; align-items: center; }
