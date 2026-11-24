@@ -1137,6 +1137,73 @@
     position: absolute; top: 0; right: 0; bottom: 0; width: 760px; max-width: 100%;
     z-index: 24; box-shadow: -12px 0 32px rgba(20, 24, 28, .12);
   }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home { --home-pair: 480px; }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .two-grid > .two-col:first-child {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, .72fr);
+    grid-template-rows: 28px var(--home-pair);
+    column-gap: 16px;
+    row-gap: 8px;
+    align-items: stretch;
+  }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .two-grid > .two-col:first-child > .two-title-l { grid-column: 1; grid-row: 1; }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .two-grid > .two-col:first-child > .rem-card { grid-column: 1; grid-row: 2; height: 100%; min-height: 0; }
+  .home-follow-col { display: none; }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .home-follow-col {
+    grid-column: 2; grid-row: 1 / span 2;
+    display: flex; flex-direction: column; gap: 8px; min-width: 0; min-height: 0;
+  }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .home-follow-title {
+    height: 28px; min-height: 28px; max-height: 28px; display: flex; align-items: center; margin: 0; padding: 0;
+  }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .home-follow-title h3 {
+    margin: 0; font-size: 16px; font-weight: 600; line-height: 1.2; letter-spacing: 0; color: #1f1f1f;
+  }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .home-follow {
+    flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; gap: 2px; box-sizing: border-box;
+    background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 8px; overflow: auto;
+  }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .home-follow-row {
+    display: flex; align-items: flex-start; gap: 10px; width: 100%; margin: 0; padding: 8px;
+    border: 0; border-radius: 10px; background: transparent; text-align: left; cursor: pointer;
+    font-family: inherit; font-size: 13px; font-weight: 400; line-height: 18px; color: #1f1f1f;
+  }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .home-follow-row:hover { background: var(--ui-wash); }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .home-follow .av {
+    width: 28px; height: 28px; margin-top: 1px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 650; line-height: 1; flex: none;
+  }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .home-follow .av.is-gr { background: #efe6f8; color: #6d4c9a; }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .home-follow .av.is-luo { background: #fde7d6; color: #c56a32; }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .home-follow .av.is-li { background: #ececee; color: #6e7378; }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .home-follow .av.is-dou { background: #e3f3e8; color: #3d8f5c; }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .home-follow-copy { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 2px; }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .home-follow-head { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .home-follow-head b {
+    min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    font-size: 13px; font-weight: 600; line-height: 18px; color: #1f1f1f;
+  }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .home-follow-head small {
+    flex: none; font-size: 12px; font-weight: 500; line-height: 16px; color: #8b919a;
+  }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .home-follow-text {
+    font-size: 13px; font-weight: 400; line-height: 18px; color: #3c4043;
+  }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .home-follow-empty {
+    margin: 0; padding: 12px 8px; font-size: 13px; line-height: 18px; color: #8b919a;
+  }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .kb-pane:has(.kb-month) {
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .kb-month {
+    flex: 1 1 auto; height: 100%; min-height: 0;
+    grid-template-rows: 24px;
+    grid-auto-rows: minmax(0, 1fr);
+  }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .kb-month .kb-cell {
+    min-height: 0; overflow: hidden;
+  }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .kb-legend:not(.kb-detail) { display: none; }
   html[data-theme="blue"] .rail.is-open .rail-follow { align-items: stretch; }
   html[data-theme="blue"] .rail-follow-k {
     position: relative; display: flex; align-items: center; justify-content: flex-start; box-sizing: border-box;
@@ -12349,6 +12416,10 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
                   </div>
                   <div id="homeKanban"></div>
                   </div>
+                  <div class="home-follow-col" id="homeFollowCol">
+                    <div class="home-follow-title"><h3>Following</h3></div>
+                    <aside class="home-follow" id="homeFollow" aria-label="Following"></aside>
+                  </div>
                 </div>
                 <div class="two-col">
                   <div class="two-title-r"><h3><span class="cosmos-title-full">From your Cosmos</span><span class="cosmos-title-short">Cosmos</span></h3><span class="new-badge">5 new</span></div>
@@ -19446,6 +19517,51 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     else delete root.dataset.home;
     const driveBtn = document.querySelector('.rail .r[data-rail="drive"]');
     if (driveBtn) driveBtn.setAttribute('aria-label', copy ? 'Me' : 'Super Drive');
+    paintHomeFollow();
+  }
+  const HOME_FOLLOW_NOTES = [
+    { text: "Lecture 5 slides are up. Three quiz questions at the end.", when: "1h ago" },
+    { text: "Going live at 3:10. A recap will be ready after.", when: "Today" },
+    { text: "Shared notes on the jet quenching pages.", when: "Yesterday" },
+    { text: "Posted a short recap of yesterday's section.", when: "2d ago" }
+  ];
+  function paintHomeFollow() {
+    const host = document.getElementById('homeFollow');
+    if (!host) return;
+    const rows = [...document.querySelectorAll('.rail-follow-row')];
+    const visible = rows.filter((row) => !row.hidden);
+    host.replaceChildren();
+    if (!visible.length) {
+      const empty = document.createElement('p');
+      empty.className = 'home-follow-empty';
+      empty.textContent = 'No Cosmos followed yet.';
+      host.append(empty);
+      return;
+    }
+    visible.forEach((row) => {
+      const note = HOME_FOLLOW_NOTES[rows.indexOf(row)] || { text: 'No new messages.', when: '' };
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'home-follow-row';
+      const av = row.querySelector('.av');
+      if (av) btn.append(av.cloneNode(true));
+      const copy = document.createElement('span');
+      copy.className = 'home-follow-copy';
+      const head = document.createElement('span');
+      head.className = 'home-follow-head';
+      const name = document.createElement('b');
+      name.textContent = (row.querySelector('.nm')?.textContent || row.getAttribute('aria-label') || '').trim();
+      const when = document.createElement('small');
+      when.textContent = note.when;
+      const text = document.createElement('span');
+      text.className = 'home-follow-text';
+      text.textContent = note.text;
+      head.append(name, when);
+      copy.append(head, text);
+      btn.append(copy);
+      btn.addEventListener('click', () => row.click());
+      host.append(btn);
+    });
   }
   function setHomeVariant(next) {
     homeVariant = next === 'v2' ? 'v2' : '';
@@ -24251,6 +24367,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     document.querySelectorAll('.rail-follow-row').forEach((row) => {
       row.hidden = !cosmoOn.has(row.dataset.follow || '');
     });
+    if (typeof paintHomeFollow === 'function') paintHomeFollow();
   }
   function paintCosmoManage() {
     const host = document.getElementById('setCosmos');
