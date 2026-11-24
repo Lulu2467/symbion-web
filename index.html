@@ -12017,6 +12017,34 @@
   html[data-theme="blue"] #teamHost .gpost-acts button[disabled],
   html[data-theme="blue"] #teamHost .gpost-acts button[disabled]:hover { background: transparent; color: #b0b4ba; cursor: default; }
   html[data-theme="blue"] #teamHost .composer.is-post-locked .box textarea { cursor: default; }
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .thread.is-wx,
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .thread.is-wx .log,
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .thread.is-wx .announce,
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .thread.is-wx .composer,
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .thread.is-wx .box { background: #ededed; }
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .thread.is-wx .announce { border-bottom: 0; }
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .thread.is-wx .log { gap: 16px; padding: 14px 12px 10px; }
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .thread.is-wx .bubble { background: #fff; color: #1a1d21; }
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .thread.is-wx .msg.mine .bubble { background: var(--green-bubble); color: #fff; }
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .thread.is-wx .composer { padding: 0; }
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .thread.is-wx .box {
+    border: 0;
+    border-radius: 0;
+    padding: 8px 12px;
+    gap: 4px;
+    box-shadow: none;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .thread.is-wx .box textarea {
+    height: 36px;
+    min-height: 36px;
+    padding: 6px 10px;
+    border: 1px solid #e6e8ec;
+    border-radius: 4px;
+    background: #fff;
+    font-size: 14px;
+    line-height: 22px;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .thread.is-wx .box-bar .send { border-radius: 4px; }
   .x-ico,
   #teamHost .icon-btn .x-ico { display: none; }
   html[data-theme="blue"]:not([data-palette="green"]) #teamHost .icon-btn,
@@ -27353,7 +27381,7 @@ function renderChrome() {
     $('threadMore').setAttribute('aria-pressed', 'false');
     $('searchBtn').setAttribute('aria-pressed', 'false');
     $('chatSearch').hidden = true;
-    teamRoot.querySelector('.thread').classList.remove('history-on');
+    teamRoot.querySelector('.thread').classList.remove('history-on', 'is-wx');
     $('panel').hidden = true;
     const modeOff = $('modeSwitch');
     if (modeOff) modeOff.hidden = true;
@@ -27412,7 +27440,8 @@ function renderChrome() {
   const postLocked = bigGroupPostLocked(c) && !state.quote;
   $('composer').classList.toggle('is-post-locked', postLocked);
   $('compose').disabled = postLocked;
-  const blueChat = blueGroupPosts() && c.kind === 'group';
+  const blueChat = bluePostLayout(c);
+  teamRoot.querySelector('.thread').classList.toggle('is-wx', blueGroupPosts() && c.kind === 'group' && !blueChat);
   $('compose').placeholder = postLocked ? 'Only the owner and admins can post' : (blueChat && state.quote ? 'Reply' : blueChat ? 'New post' : 'Message');
   syncTeamSend();
   const q = state.quote && findMessage(c, state.quote);
@@ -27597,6 +27626,9 @@ function blueGroupPosts() {
   const root = document.documentElement;
   return root.dataset.theme === 'blue' && root.dataset.palette !== 'green';
 }
+function bluePostLayout(chat) {
+  return blueGroupPosts() && chat && chat.kind === 'group' && chat.tier === 'big';
+}
 function bigGroupPostLocked(chat) {
   return blueGroupPosts() && chat && chat.kind === 'group' && chat.tier === 'big' && !canManage(chat);
 }
@@ -27664,7 +27696,7 @@ function renderLog(scroll) {
     $('log').innerHTML = `<p class="sys">No messages yet</p>`;
     return;
   }
-  if (blueGroupPosts() && c.kind === 'group') {
+  if (bluePostLayout(c)) {
     const items = threadItems(c, list);
     const lastPost = [...items].reverse().find((item) => item.kind === 'post');
     $('log').innerHTML = items.map((item) => item.kind === 'sys'
@@ -28639,7 +28671,7 @@ function sendText(text, file) {
   const value = (text || '').trim();
   if (!value && !file) return;
   let reply = state.quote;
-  if (blue && c.kind === 'group' && reply) {
+  if (blue && bluePostLayout(c) && reply) {
     const target = findMessage(c, reply);
     const root = target ? postRoot(c, target) : null;
     if (root) reply = root.id;
@@ -29314,7 +29346,8 @@ function msgIcon(name) {
     pin: '<path d="M8 9.2V13.5M6.2 2.8h3.6l-.6 3.2 2.2 2.2H4.6l2.2-2.2-.6-3.2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/>',
     save: '<path d="M4.5 2.8h7v10.4L8 10.6 4.5 13.2V2.8z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>',
     delete: '<path d="M3.5 4.5h9M6.2 4.4V3.2h3.6v1.2M5 4.5l.4 8h5.2l.4-8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>',
-    back: '<path d="M9.5 3.5 5 8l4.5 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>'
+    back: '<path d="M9.5 3.5 5 8l4.5 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>',
+    sync: '<path d="M8 12.5V3.8M5 6.6 8 3.6l3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>'
   };
   return `<svg viewBox="0 0 16 16" fill="none" aria-hidden="true">${paths[name] || ''}</svg>`;
 }
@@ -29350,10 +29383,14 @@ function paintMsgMenu() {
     ['rule'],
     ['delete', 'Delete']
   ];
+  if (c.tier === 'sub' && bigGroupOf(c) && canManage(c) && !m.reply && !m.sys) {
+    rows.splice(3, 0, ['sync', m.syncedTo ? 'Synced to big group' : 'Sync to big group']);
+  }
   menu.innerHTML = `<p class="kicker">MESSAGE ACTIONS</p>` + rows.map((row) => {
     if (row[0] === 'rule') return '<div class="rule" role="separator"></div>';
     const danger = row[0] === 'delete' ? ' class="danger"' : '';
-    return `<button type="button" role="menuitem" data-msg-act="${row[0]}"${danger}>${msgIcon(row[0])}${row[1]}</button>`;
+    const disabled = row[0] === 'sync' && m.syncedTo ? ' disabled' : '';
+    return `<button type="button" role="menuitem" data-msg-act="${row[0]}"${danger}${disabled}>${msgIcon(row[0])}${row[1]}</button>`;
   }).join('');
 }
 function openMsgMenu(id, clientX, clientY) {
@@ -29378,6 +29415,10 @@ function runMsgAction(act) {
     state.quote = m.id;
     renderChrome();
     $('compose').focus();
+    return;
+  }
+  if (act === 'sync') {
+    if (!m.syncedTo) syncPostToBig(m.id);
     return;
   }
   if (act === 'forward') {
@@ -29439,7 +29480,7 @@ $('msgMenu').addEventListener('click', (e) => {
     return;
   }
   const act = e.target.closest('[data-msg-act]');
-  if (!act) return;
+  if (!act || act.disabled) return;
   const key = act.dataset.msgAct;
   runMsgAction(key);
   if (key !== 'forward' && key !== 'back') closePopovers();
