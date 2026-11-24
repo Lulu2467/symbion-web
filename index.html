@@ -5408,13 +5408,20 @@
 
   html[data-theme="blue"] .citta-panel .citta-chatbar {
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
     position: relative;
     z-index: 6;
     padding: 2px 10px 0;
     background: transparent;
-    align-items: center;
     flex: none;
+  }
+  html[data-theme="blue"] .citta-panel .citta-chatbar-row {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
   }
   html[data-theme="blue"] .citta-panel .citta-lines {
     width: 30px;
@@ -5507,17 +5514,19 @@
     flex: 1 1 auto;
     min-height: 0;
     flex-direction: column;
-    padding: 22px 20px 16px;
+    padding: 8px 20px 16px;
     background: #fff;
   }
   html[data-theme="blue"] .citta-hist:not([hidden]) { display: flex; }
   html[data-theme="blue"] .citta-hist-label {
-    margin: 0 0 8px;
+    display: none;
+    margin: 6px 10px 2px;
     font-size: 13px;
     font-weight: 400;
     line-height: 18px;
     color: #a3a8ae;
   }
+  html[data-theme="blue"] .citta-panel.is-hist .citta-hist-label { display: block; }
   html[data-theme="blue"] .citta-hist-list {
     flex: 1;
     min-height: 0;
@@ -13355,6 +13364,8 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
                     <button type="button" class="panel-close" id="cittaPanelClose" aria-label="Close Citta panel"><svg class="close-x" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.35 2.35 13.65 13.65M13.65 2.35 2.35 13.65" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
         </div>
         <div class="citta-chatbar">
+          <p class="citta-hist-label">Chats</p>
+          <div class="citta-chatbar-row">
           <button type="button" class="citta-hist-back" id="cittaHistBack" aria-label="Back to chat" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
           <button type="button" class="citta-lines" id="cittaLines" aria-label="Chat menu" aria-expanded="false" aria-controls="cittaMore"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M66.488889 211.781818h891.022222c28.198788 0 50.980202-22.238384 50.980202-49.648485 0-27.397172-22.768485-49.648485-50.980202-49.648485H66.488889C38.341818 112.484848 15.508687 134.723232 15.508687 162.133333s22.833131 49.648485 50.980202 49.648485z m891.009293 248.242424H66.488889C38.277172 460.024242 15.508687 482.262626 15.508687 509.672727s22.768485 49.648485 50.980202 49.648485h891.022222c28.198788 0 50.980202-22.238384 50.980202-49.648485-0.012929-27.410101-22.923636-49.648485-50.993131-49.648485z m0 351.63798H66.488889c-28.134141 0-50.980202 22.238384-50.980202 49.648485s22.833131 49.648485 50.980202 49.648485h891.022222c28.198788 0 50.980202-22.238384 50.980202-49.648485-0.012929-27.397172-22.781414-49.648485-50.993131-49.648485z m0 0"/></svg></button>
           <div class="citta-more" id="cittaMore" hidden>
@@ -13362,11 +13373,11 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
             <button type="button" data-citta-act="history" aria-expanded="false"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M512 938.666667c235.648 0 426.666667-191.018667 426.666667-426.666667S747.648 85.333333 512 85.333333 85.333333 276.352 85.333333 512s191.018667 426.666667 426.666667 426.666667z m0 85.333333C229.248 1024 0 794.752 0 512S229.248 0 512 0s512 229.248 512 512-229.248 512-512 512z m42.666667-486.869333V298.538667C554.666667 275.328 535.552 256 512 256c-23.722667 0-42.666667 19.029333-42.666667 42.538667v256.256a41.984 41.984 0 0 0 12.202667 29.866666l121.258667 121.258667a42.368 42.368 0 0 0 60.032-0.298667 42.666667 42.666667 0 0 0 0.298666-60.032L554.666667 537.130667z"/></svg><span>History</span></button>
             <div class="citta-history" id="cittaHistory" hidden></div>
           </div>
+          </div>
         </div>
 <div class="ctx">Working with: <span class="where">Home</span></div>
         <div class="citta-scroll-wrap" id="cittaScrollWrap">
           <div class="citta-hist" id="cittaHist" hidden>
-            <p class="citta-hist-label">Chats</p>
             <div class="citta-hist-list" id="cittaHistList" role="listbox" aria-label="Chats"></div>
           </div>
           <div class="citta-hello" id="cittaHello" hidden>
