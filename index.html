@@ -1014,6 +1014,8 @@
   html[data-theme="blue"] .discover { display: none; }
   html[data-theme="blue"] .presenter [data-screen="tutorial"],
   html[data-theme="blue"] .presenter [data-screen="welcome"] { display: none; }
+  .presenter [data-home="v2"] { display: none; }
+  html[data-theme="blue"]:not([data-palette="green"]) .presenter [data-home="v2"] { display: inline-flex; align-items: center; }
   html[data-theme="blue"] .rail .p { display: none; }
   .rail-rec { display: none; }
   html[data-theme="blue"] .rail-rec {
@@ -11439,6 +11441,7 @@
     <button type="button" data-screen="tutorial" aria-pressed="false">First visit</button>
     <button type="button" data-screen="welcome" aria-pressed="false">A few days later</button>
     <button type="button" data-screen="home" aria-pressed="true">Daily use</button>
+    <button type="button" data-screen="home" data-home="v2" aria-pressed="false">v2</button>
     <button type="button" data-blue-auth="open">Sign in</button>
   </div>
   <span class="theme-label">Theme</span>
@@ -19412,6 +19415,28 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     });
   }
 
+  let homeVariant = '';
+  function syncHomeVariant() {
+    const root = document.documentElement;
+    const copy = homeVariant === 'v2' && root.dataset.palette !== 'green';
+    if (copy) root.dataset.home = 'v2';
+    else delete root.dataset.home;
+  }
+  function setHomeVariant(next) {
+    homeVariant = next === 'v2' ? 'v2' : '';
+    syncHomeVariant();
+  }
+  function pressScenario(next) {
+    syncHomeVariant();
+    const copy = document.documentElement.dataset.home === 'v2';
+    document.querySelectorAll('.presenter [data-screen]').forEach((b) => {
+      const s = b.dataset.screen;
+      let on = s === next || (next === 'handoff' && s === 'tutorial');
+      if (s === 'home') on = on && ((b.dataset.home === 'v2') === copy);
+      b.setAttribute('aria-pressed', String(on));
+    });
+  }
+
   function setScreen(next, { step, afterTutorial = false, showTip = false } = {}) {
     if (teamOpen && next !== 'team') closeTeam();
     if (dirOpen && next !== 'dir') closeDir();
@@ -19428,11 +19453,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     document.querySelectorAll('.hub > .screen[data-screen]').forEach((el) => el.classList.toggle('on', el.dataset.screen === next));
     document.querySelectorAll('.hub > .screen[data-tail]').forEach((el) => el.classList.toggle('on', el.dataset.tail === next));
     // Scenario bar: handoff (post-tutorial) still counts as First visit.
-    document.querySelectorAll('.presenter [data-screen]').forEach((b) => {
-      const s = b.dataset.screen;
-      const on = s === next || (next === 'handoff' && s === 'tutorial');
-      b.setAttribute('aria-pressed', String(on));
-    });
+    pressScenario(next);
     const composerMode = next === 'tutorial' ? 'tutorial' : (next === 'handoff' ? 'handoff' : (next === 'welcome' ? 'welcome' : 'default'));
     setComposerMode(composerMode);
     // Seed Doc only while coaching the starter task — not after “I’ll explore myself”.
@@ -20101,12 +20122,15 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     try { localStorage.setItem('h2-theme', palette); } catch (e) {}
     document.dispatchEvent(new Event('h2-theme'));
     if (typeof seatCittaPanel === 'function') seatCittaPanel();
+    const scenario = (screen === 'tutorial' || screen === 'welcome' || screen === 'handoff' || screen === 'home') ? screen : 'home';
+    pressScenario(scenario);
   }
   applyTheme(document.documentElement.dataset.theme === 'blue' ? 'blue' : 'green');
   document.querySelectorAll('[data-theme-pick]').forEach((b) => b.addEventListener('click', () => applyTheme(b.dataset.themePick)));
 
   document.querySelectorAll('.presenter [data-screen]').forEach((b) => b.addEventListener('click', () => {
     const target = b.dataset.screen;
+    if (target === 'home') setHomeVariant(b.dataset.home === 'v2' ? 'v2' : '');
     if (document.documentElement.dataset.theme === 'blue' && (target === 'tutorial' || target === 'welcome' || target === 'handoff')) {
       setScreen('home');
       return;
@@ -21651,9 +21675,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       if (symbionOpen) closeSymbion();
       applyTheme();
       frame.classList.add('dir-on');
-      document.querySelectorAll('.presenter [data-screen]').forEach((b) => {
-        b.setAttribute('aria-pressed', String(b.dataset.screen === 'home'));
-      });
+      pressScenario('home');
     }
     dirOpen = true;
     dirPersonName = '';
@@ -21896,9 +21918,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     applyTheme();
     frame.classList.add('team-on');
     markTeamRail();
-    document.querySelectorAll('.presenter [data-screen]').forEach((b) => {
-      b.setAttribute('aria-pressed', String(b.dataset.screen === 'home'));
-    });
+    pressScenario('home');
     if (window.renderTeamWorkspace) window.renderTeamWorkspace(true);
     syncHash();
     fit();
@@ -24161,9 +24181,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     if (host) host.hidden = false;
     ensureDesk();
     markDeskRail();
-    document.querySelectorAll('.presenter [data-screen]').forEach((b) => {
-      b.setAttribute('aria-pressed', String(b.dataset.screen === 'home'));
-    });
+    pressScenario('home');
     paintDeskChrome();
     revealDeskSection(deskSection);
     syncHash();
@@ -24521,9 +24539,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     fillSettingsName();
     showSettings(section || settingsSection || 'profile');
     markSettingsRail();
-    document.querySelectorAll('.presenter [data-screen]').forEach((b) => {
-      b.setAttribute('aria-pressed', String(b.dataset.screen === 'home'));
-    });
+    pressScenario('home');
     syncHash();
     fit();
   }
@@ -24570,9 +24586,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       r.classList.remove('on');
       r.removeAttribute('aria-current');
     });
-    document.querySelectorAll('.presenter [data-screen]').forEach((b) => {
-      b.setAttribute('aria-pressed', String(b.dataset.screen === 'home'));
-    });
+    pressScenario('home');
     syncHash();
     fit();
   }
