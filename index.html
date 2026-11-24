@@ -11837,6 +11837,41 @@
   html[data-theme="blue"] #teamHost .gpost-acts button[disabled],
   html[data-theme="blue"] #teamHost .gpost-acts button[disabled]:hover { background: transparent; color: #b0b4ba; cursor: default; }
   html[data-theme="blue"] #teamHost .composer.is-post-locked .box textarea { cursor: default; }
+  .x-ico,
+  #teamHost .icon-btn .x-ico { display: none; }
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .icon-btn,
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .history-x,
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .box-bar .send,
+  html[data-theme="blue"]:not([data-palette="green"]) .osbar-tab-x {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 0;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .icon-btn svg:not(.sheet-x-blue):not(.plus-stroke),
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .box-bar .send svg,
+  html[data-theme="blue"]:not([data-palette="green"]) .osbar-tab-x svg {
+    display: block;
+    flex: none;
+    margin: 0;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost #quoteClear .x-txt,
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .history-x .x-txt,
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .sheet-head .sheet-x-mark,
+  html[data-theme="blue"]:not([data-palette="green"]) .osbar-tab-x .x-txt { display: none; }
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost #quoteClear .x-ico,
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .history-x .x-ico,
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .sheet-head .x-ico {
+    display: block;
+    width: 14px;
+    height: 14px;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) .osbar-tab-x .x-ico {
+    display: block;
+    width: 10px;
+    height: 10px;
+  }
 </style>
 </head>
 <body>
@@ -13606,7 +13641,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
         <div class="history" id="chatSearch" hidden>
           <div class="history-top">
             <h3 id="historyTitle"></h3>
-            <button type="button" class="history-x" id="historyClose" aria-label="Close">×</button>
+            <button type="button" class="history-x" id="historyClose" aria-label="Close"><span class="x-txt">×</span><svg class="x-ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5 11.5 11.5M11.5 4.5 4.5 11.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
           </div>
           <label class="history-search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16.5 20 20.5" stroke-linecap="round"/></svg>
@@ -13707,7 +13742,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
         <form class="composer" id="composer">
           <div class="quote-bar" id="quoteBar" hidden>
             <div><b id="quoteWho"></b><span id="quoteText"></span></div>
-            <button type="button" class="icon-btn" id="quoteClear" aria-label="Cancel reply">×</button>
+            <button type="button" class="icon-btn" id="quoteClear" aria-label="Cancel reply"><span class="x-txt">×</span><svg class="x-ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5 11.5 11.5M11.5 4.5 4.5 11.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
           </div>
           <div class="box">
             <textarea id="compose" rows="1" placeholder="Message" aria-label="Message"></textarea>
@@ -13728,7 +13763,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     <form class="sheet" id="sheet">
       <div class="sheet-head">
         <h2 id="sheetTitle"></h2>
-        <button type="button" class="icon-btn" data-close aria-label="Close"><span class="sheet-x-mark">×</span><svg class="sheet-x-blue" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M512 0C794.769794 0 1024 229.805588 1024 512 1024 794.769794 794.194408 1024 512 1024 229.230208 1024 0 794.194408 0 512 0 229.230208 229.805588 0 512 0ZM512 984.615385C772.648448 984.615385 984.615385 772.81286 984.615385 512 984.615385 251.351552 772.81286 39.384615 512 39.384615 251.351552 39.384615 39.384615 251.18714 39.384615 512 39.384615 772.648448 251.18714 984.615385 512 984.615385ZM512 539.849129 358.829792 693.019336C351.139468 700.70966 338.670988 700.70966 330.980664 693.019336 323.29034 685.329012 323.29034 672.860532 330.980664 665.170208L484.150871 512 330.980664 358.829792C323.29034 351.139468 323.29034 338.670988 330.980664 330.980664 338.670988 323.29034 351.139468 323.29034 358.829792 330.980664L512 484.150871 665.170208 330.980664C672.860532 323.29034 685.329012 323.29034 693.019336 330.980664 700.70966 338.670988 700.70966 351.139468 693.019336 358.829792L539.849129 512 693.019336 665.170208C700.70966 672.860532 700.70966 685.329012 693.019336 693.019336 685.329012 700.70966 672.860532 700.70966 665.170208 693.019336L512 539.849129Z"/></svg></button>
+        <button type="button" class="icon-btn" data-close aria-label="Close"><span class="sheet-x-mark">×</span><svg class="x-ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5 11.5 11.5M11.5 4.5 4.5 11.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><svg class="sheet-x-blue" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M512 0C794.769794 0 1024 229.805588 1024 512 1024 794.769794 794.194408 1024 512 1024 229.230208 1024 0 794.194408 0 512 0 229.230208 229.805588 0 512 0ZM512 984.615385C772.648448 984.615385 984.615385 772.81286 984.615385 512 984.615385 251.351552 772.81286 39.384615 512 39.384615 251.351552 39.384615 39.384615 251.18714 39.384615 512 39.384615 772.648448 251.18714 984.615385 512 984.615385ZM512 539.849129 358.829792 693.019336C351.139468 700.70966 338.670988 700.70966 330.980664 693.019336 323.29034 685.329012 323.29034 672.860532 330.980664 665.170208L484.150871 512 330.980664 358.829792C323.29034 351.139468 323.29034 338.670988 330.980664 330.980664 338.670988 323.29034 351.139468 323.29034 358.829792 330.980664L512 484.150871 665.170208 330.980664C672.860532 323.29034 685.329012 323.29034 693.019336 330.980664 700.70966 338.670988 700.70966 351.139468 693.019336 358.829792L539.849129 512 693.019336 665.170208C700.70966 672.860532 700.70966 685.329012 693.019336 693.019336 685.329012 700.70966 672.860532 700.70966 665.170208 693.019336L512 539.849129Z"/></svg></button>
       </div>
       <p class="lead" id="sheetLead"></p>
       <div id="sheetBody"></div>
@@ -22748,7 +22783,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       tab.type = 'button';
       tab.dataset.tab = id;
       tab.className = 'osbar-tab is-in';
-      tab.innerHTML = `<span class="osbar-tab-label"></span><span class="osbar-tab-x" role="button" aria-label="Close tab">×</span>`;
+      tab.innerHTML = `<span class="osbar-tab-label"></span><span class="osbar-tab-x" role="button" aria-label="Close tab"><span class="x-txt">×</span><svg class="x-ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5 11.5 11.5M11.5 4.5 4.5 11.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>`;
       tab.querySelector('.osbar-tab-label').textContent = row.name;
       bindOsbarTab(tab);
       tabs.appendChild(tab);
@@ -22766,7 +22801,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       const tab = document.createElement('button');
       tab.type = 'button';
       tab.className = 'osbar-tab' + (active ? ' on' : '') + (animate ? ' is-in' : '');
-      tab.innerHTML = `<span class="osbar-tab-label"></span><span class="osbar-tab-x" role="button" aria-label="Close tab">×</span>`;
+      tab.innerHTML = `<span class="osbar-tab-label"></span><span class="osbar-tab-x" role="button" aria-label="Close tab"><span class="x-txt">×</span><svg class="x-ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5 11.5 11.5M11.5 4.5 4.5 11.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>`;
       tab.querySelector('.osbar-tab-label').textContent = tabLabel;
       bindOsbarTab(tab);
       tabs.appendChild(tab);
