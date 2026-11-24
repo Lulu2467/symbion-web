@@ -1122,6 +1122,13 @@
   html[data-theme="blue"] .rail .r[data-rail="drive"] .rail-lab-me { display: none !important; }
   html[data-theme="blue"][data-home="v2"] .rail .r[data-rail="drive"] .rail-lab:not(.rail-lab-me) { display: none !important; }
   html[data-theme="blue"][data-home="v2"] .rail .r[data-rail="drive"] .rail-lab-me { display: block !important; }
+  .osbar-mine { display: none; }
+  html[data-theme="blue"][data-home="v2"] .osbar .osbar-mine {
+    display: inline-flex; align-items: center; height: 30px; margin: 0; padding: 0 10px;
+    border: 0; border-radius: 8px; background: transparent; color: #1f1f1f;
+    font-size: 13px; font-weight: 500; line-height: 1; cursor: pointer; flex: none;
+  }
+  html[data-theme="blue"][data-home="v2"] .osbar .osbar-mine:hover { background: var(--ui-wash); }
   html[data-theme="blue"] .rail.is-open .rail-follow { align-items: stretch; }
   html[data-theme="blue"] .rail-follow-k {
     position: relative; display: flex; align-items: center; justify-content: flex-start; box-sizing: border-box;
@@ -11894,6 +11901,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
           </div>
         </div>
         <span class="sp"></span>
+        <button type="button" class="osbar-mine">My Symbion</button>
         <div class="seg theme-seg" role="group" aria-label="Theme color">
           <button type="button" data-theme-pick="green" aria-pressed="true">Green</button>
           <button type="button" data-theme-pick="blue" aria-pressed="false">Blue</button>
@@ -11992,6 +12000,8 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
                 if (tabs && search && tabs.previousElementSibling !== search) search.after(tabs);
                 if (plus && tabs && plus.previousElementSibling !== tabs) tabs.after(plus);
                 if (sp && plus && sp.previousElementSibling !== plus) plus.after(sp);
+                var mine = bar && bar.querySelector('.osbar-mine');
+                if (mine && sp && mine.previousElementSibling !== sp) sp.after(mine);
               }
             } catch (e) {}
           </script>
@@ -19789,6 +19799,8 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       if (tabs && tabs.previousElementSibling !== search) search.after(tabs);
       if (plus && tabs && plus.previousElementSibling !== tabs) tabs.after(plus);
       if (sp && plus && sp.previousElementSibling !== plus) plus.after(sp);
+      const mine = bar.querySelector('.osbar-mine');
+      if (mine && sp && mine.previousElementSibling !== sp) sp.after(mine);
     } else {
       if (logo && logo.parentElement !== row) row.prepend(logo);
       if (search.parentElement !== row) row.appendChild(search);
