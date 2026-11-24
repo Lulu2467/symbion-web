@@ -6065,6 +6065,77 @@
   html[data-theme="blue"] .citta-panel .ask-row .plus:hover,
   html[data-theme="blue"] .citta-panel .ask-row .plus:hover::before,
   html[data-theme="blue"] .citta-panel .ask-row .plus:hover::after { background: transparent; color: #1a1d21; }
+  html[data-theme="blue"] .citta-panel .citta-tool {
+    display: none;
+    align-items: center;
+    position: relative;
+    gap: 6px;
+    flex: none;
+    height: 32px;
+    margin: 0;
+    padding: 0 12px 0 10px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--green);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 16px;
+    box-sizing: border-box;
+  }
+  html[data-theme="blue"] .citta-panel .citta-tool:not([hidden]) { display: inline-flex; }
+  html[data-theme="blue"] .citta-panel .citta-tool .chip-ico {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    color: var(--green);
+  }
+  html[data-theme="blue"] .citta-panel .citta-tool .chip-ico svg { width: 16px; height: 16px; display: block; }
+  html[data-theme="blue"] .citta-panel .citta-tool .chip-label {
+    color: var(--green);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 16px;
+    white-space: nowrap;
+  }
+  html[data-theme="blue"] .citta-panel .citta-tool .chip-x {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    padding: 0;
+    border: 1.5px solid var(--green);
+    border-radius: 999px;
+    background: transparent;
+    color: transparent;
+    font-size: 0;
+    line-height: 0;
+    cursor: pointer;
+  }
+  html[data-theme="blue"] .citta-panel .citta-tool .chip-x::before,
+  html[data-theme="blue"] .citta-panel .citta-tool .chip-x::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 8px;
+    height: 1.5px;
+    border-radius: 1px;
+    background: var(--green);
+  }
+  html[data-theme="blue"] .citta-panel .citta-tool .chip-x::before { transform: translate(-50%, -50%) rotate(45deg); }
+  html[data-theme="blue"] .citta-panel .citta-tool .chip-x::after { transform: translate(-50%, -50%) rotate(-45deg); }
+  html[data-theme="blue"] .citta-panel .citta-tool:hover { background: var(--green-tint); }
+  html[data-theme="blue"] .citta-panel .citta-tool:hover .chip-ico { visibility: hidden; }
+  html[data-theme="blue"] .citta-panel .citta-tool:hover .chip-x { display: inline-flex; }
   html[data-theme="blue"] #cittaChips .composer-tool-chip .chip-x {
     position: relative; width: 14px; height: 14px; color: transparent; font-size: 0;
   }
@@ -13292,6 +13363,11 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
             </div>
             <div class="ask-bar">
               <button type="button" class="plus" id="cittaPlus" aria-label="Attach"><svg class="plus-glyph" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M668.734694 532.897959H355.265306c-11.493878 0-20.897959-9.404082-20.897959-20.897959s9.404082-20.897959 20.897959-20.897959h313.469388c11.493878 0 20.897959 9.404082 20.897959 20.897959s-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 689.632653c-11.493878 0-20.897959-9.404082-20.897959-20.897959V355.265306c0-11.493878 9.404082-20.897959 20.897959-20.897959s20.897959 9.404082 20.897959 20.897959v313.469388c0 11.493878-9.404082 20.897959-20.897959 20.897959z"/><path fill="currentColor" d="M512 929.959184c-230.4 0-417.959184-187.559184-417.959184-417.959184s187.559184-417.959184 417.959184-417.959184 417.959184 187.559184 417.959184 417.959184-187.559184 417.959184-417.959184 417.959184z m0-794.122449c-207.412245 0-376.163265 168.75102-376.163265 376.163265s168.75102 376.163265 376.163265 376.163265 376.163265-168.75102 376.163265-376.163265-168.75102-376.163265-376.163265-376.163265z"/></svg></button>
+              <span class="citta-tool" id="cittaToolChip" hidden>
+                <span class="chip-ico" aria-hidden="true"></span>
+                <span class="chip-label"></span>
+                <button type="button" class="chip-x" aria-label="Remove tool"></button>
+              </span>
               <span class="sp" aria-hidden="true"></span>
               <button type="button" class="send" aria-label="Send">
                 <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -16594,6 +16670,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       resizeTextarea(input);
     }
     clearAttachments('citta');
+    syncCittaToolChip(null);
     syncCittaSendReady();
 
     const reply = cittaReplyFor(text);
@@ -20269,11 +20346,33 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     const name = (typeof userName === 'function' ? userName() : 'Lulu') || 'Lulu';
     if (nameEl) nameEl.textContent = name;
   }
+  function syncCittaToolChip(tool) {
+    const chip = $('cittaToolChip');
+    if (!chip) return;
+    const meta = tool && typeof COMPOSER_TOOL_META !== 'undefined' ? COMPOSER_TOOL_META[tool] : null;
+    const ico = chip.querySelector('.chip-ico');
+    const label = chip.querySelector('.chip-label');
+    const clear = chip.querySelector('.chip-x');
+    if (!meta) {
+      chip.hidden = true;
+      chip.removeAttribute('data-tool');
+      if (ico) ico.innerHTML = '';
+      if (label) label.textContent = '';
+      if (clear) clear.setAttribute('aria-label', 'Remove tool');
+      return;
+    }
+    chip.hidden = false;
+    chip.dataset.tool = tool;
+    if (ico) ico.innerHTML = meta.iconHtml || '';
+    if (label) label.textContent = meta.label;
+    if (clear) clear.setAttribute('aria-label', 'Remove ' + meta.label);
+  }
   function onCittaStarterClick(event) {
     const draft = event.target.closest('[data-citta-draft]');
     const prompt = event.target.closest('[data-citta-prompt]');
     if (draft) {
       setCittaDraft(draft.dataset.cittaDraft);
+      syncCittaToolChip(draft.dataset.kind);
       $('cittaInput')?.focus();
       return;
     }
@@ -20283,6 +20382,11 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
   }
   $('cittaHello')?.addEventListener('click', onCittaStarterClick);
   $('cittaQuick')?.addEventListener('click', onCittaStarterClick);
+  $('cittaToolChip')?.querySelector('.chip-x')?.addEventListener('click', (event) => {
+    event.stopPropagation();
+    syncCittaToolChip(null);
+    $('cittaInput')?.focus();
+  });
   function cittaThreadTitle(root) {
     const text = (root.querySelector('.user-bubble')?.textContent || '').trim();
     return text.length > 36 ? text.slice(0, 36) + '…' : text;
@@ -20350,6 +20454,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       input.focus();
     }
     clearAttachments('citta');
+    syncCittaToolChip(null);
     syncCittaSendReady();
     syncCittaScrollFade();
     cittaCloseMore();
