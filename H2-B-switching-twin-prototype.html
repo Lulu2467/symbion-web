@@ -1175,6 +1175,8 @@
   }
   html[data-theme="blue"][data-home="v2"] .osbar-mine-menu button:hover,
   html[data-theme="blue"][data-home="v2"] .osbar-mine-menu button[aria-current="page"] { background: #ececee; }
+  html[data-theme="blue"][data-home="v2"] .osbar-mine-menu button[hidden] { display: none; }
+  html[data-theme="blue"] #symbionHost .me-label-card .me-btn { margin-top: 10px; }
   html[data-theme="blue"] #symbionHost .me-look {
     display: flex;
     align-items: center;
@@ -1191,6 +1193,92 @@
   }
   html[data-theme="blue"] #symbionHost .me-look b { display: block; font-size: 16px; font-weight: 650; }
   html[data-theme="blue"] #symbionHost .me-look p { margin: 4px 0 0; color: #656d76; font-size: 13px; }
+  html[data-theme="blue"] #symbionHost.is-portal .me-tabs { display: none; }
+  html[data-theme="blue"] #symbionHost .me-thread,
+  html[data-theme="blue"] #symbionHost .me-label-card {
+    padding: 14px 0;
+    border-bottom: 1px solid #e6e8ec;
+  }
+  html[data-theme="blue"] #symbionHost .me-thread h3,
+  html[data-theme="blue"] #symbionHost .me-label-card h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 650;
+  }
+  html[data-theme="blue"] #symbionHost .me-thread .me-when,
+  html[data-theme="blue"] #symbionHost .me-label-card .me-when {
+    float: right;
+    color: #b0b4ba;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  html[data-theme="blue"] #symbionHost .me-line { margin: 8px 0 0; font-size: 14px; line-height: 1.45; color: #1a1d21; }
+  html[data-theme="blue"] #symbionHost .me-line b { font-weight: 650; margin-right: 6px; }
+  html[data-theme="blue"] #symbionHost .me-answer {
+    margin: 8px 0 0;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #f6f7f8;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  html[data-theme="blue"] #symbionHost .me-result { margin: 8px 0 0; font-size: 14px; line-height: 1.45; color: #1a1d21; }
+  html[data-theme="blue"] #symbionHost .me-result b { font-weight: 650; }
+  html[data-theme="blue"] #symbionHost .me-issues { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  html[data-theme="blue"] #symbionHost .me-issues button {
+    height: 28px;
+    padding: 0 10px;
+    border: 1px solid #e6e8ec;
+    border-radius: 999px;
+    background: #fff;
+    color: #1a1d21;
+    font-size: 12px;
+  }
+  html[data-theme="blue"] #symbionHost .me-issues button[aria-pressed="true"] {
+    border-color: #1a1d21;
+    background: #1a1d21;
+    color: #fff;
+  }
+  html[data-theme="blue"] #symbionHost .me-note {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 8px 10px;
+    border: 1px solid #e6e8ec;
+    border-radius: 10px;
+    font: inherit;
+    font-size: 14px;
+  }
+  html[data-theme="blue"] #symbionHost .me-look-picks { display: flex; gap: 12px; margin-top: 16px; }
+  html[data-theme="blue"] #symbionHost .me-look-picks button {
+    width: 88px;
+    padding: 8px;
+    border: 1px solid #e6e8ec;
+    border-radius: 14px;
+    background: #fff;
+    color: #1a1d21;
+  }
+  html[data-theme="blue"] #symbionHost .me-look-picks button[aria-pressed="true"] { border-color: #1a1d21; }
+  html[data-theme="blue"] #symbionHost .me-look-picks img,
+  html[data-theme="blue"] #symbionHost .me-look-picks .me-mark {
+    width: 72px;
+    height: 72px;
+    border-radius: 12px;
+    object-fit: cover;
+    display: block;
+  }
+  html[data-theme="blue"] #symbionHost .me-look-picks .me-mark,
+  html[data-theme="blue"] #symbionHost .me-look > .me-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e7eef2;
+    color: #3c7a94;
+    font-size: 18px;
+    font-weight: 650;
+  }
+  html[data-theme="blue"] #symbionHost .me-look > .me-mark { width: 96px; height: 96px; border-radius: 16px; font-size: 28px; }
+  html[data-theme="blue"] #symbionHost .me-look-picks small { display: block; margin-top: 6px; font-size: 12px; color: #656d76; }
   html[data-theme="blue"][data-home="v2"] .frame.citta-open .body .main { margin-right: 0; }
   html[data-theme="blue"][data-home="v2"] .frame.citta-open #dirHost .dir-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   html[data-theme="blue"][data-home="v2"] .frame.citta-open .citta-panel { z-index: 24; box-shadow: -12px 0 32px rgba(20, 24, 28, .12); }
@@ -13170,7 +13258,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
               <button type="button" class="me-tab" data-me-tab="look" role="tab" aria-selected="false">形象</button>
             </div>
             <div class="me-scroll">
-              <div class="me-panel" data-me-panel="memory">
+              <div class="me-panel" data-me-panel="portal">
                 <section class="me-cosmo" id="meCosmo" hidden>
                   <div class="me-h"><h2>My Cosmo</h2><span>Cosmos you can manage</span></div>
                   <div id="meCosmoList"></div>
@@ -13257,62 +13345,23 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
                   </div>
                 </div>
               </div>
-              <div class="me-panel me-page" data-me-panel="training" hidden>
+              <div class="me-panel me-page" data-me-panel="memory" hidden>
                 <p class="me-page-kicker">My Symbion</p>
+                <h2>Memory</h2>
+                <p class="lead">Your conversations. The model keeps them as your memory.</p>
+                <div id="meMemory"></div>
+              </div>
+              <div class="me-panel me-page" data-me-panel="training" hidden>
+                <p class="me-page-kicker">Labeling</p>
                 <h2>Training</h2>
-                <p class="lead">Built-in and owner-scoped skills from the existing Symbion School contract.</p>
-                <div class="me-rule"></div>
-                <div class="me-actions">
-                  <button type="button" class="me-btn" data-me-act="Set up new skill">Set up new skill</button>
-                  <button type="button" class="me-btn" data-me-act="Refresh">Refresh</button>
-                </div>
-                <p class="me-note">Built-in Skills comes from the authenticated Symbion catalog. My Skills contains only skills owned by your signed-in account.</p>
-                <div class="me-split">
-                  <article class="me-card">
-                    <div class="me-panel-hd">
-                      <div><h3>Built-in Skills</h3><p>Skills included in the current Symbion catalog.</p></div>
-                      <button type="button" class="me-btn" data-me-act="Refresh">Refresh</button>
-                    </div>
-                    <div class="me-row"><span><b>Research Literature Watch</b><small>draft</small></span><em>research</em></div>
-                    <div class="me-row"><span><b>Message Triage and Draft</b><small>draft</small></span><em>messaging</em></div>
-                    <div class="me-row"><span><b>Coding Expert</b><small>draft</small></span><em>expert</em></div>
-                    <div class="me-row"><span><b>Data and Statistics Expert</b><small>draft</small></span><em>expert</em></div>
-                    <div class="me-row"><span><b>Design Expert</b><small>draft</small></span><em>expert</em></div>
-                    <div class="me-row"><span><b>Document Expert</b><small>draft</small></span><em>expert</em></div>
-                    <div class="me-row"><span><b>Accounting Expert</b><small>draft</small></span><em>expert</em></div>
-                    <div class="me-row"><span><b>Literature Expert</b><small>draft</small></span><em>expert</em></div>
-                    <div class="me-row"><span><b>Reviewing Expert</b><small>draft</small></span><em>expert</em></div>
-                    <div class="me-row"><span><b>Tutoring Expert</b><small>draft</small></span><em>expert</em></div>
-                    <div class="me-row"><span><b>LaTeX Typesetter Expert</b><small>draft</small></span><em>expert</em></div>
-                    <div class="me-row"><span><b>Writing Expert</b><small>draft</small></span><em>expert</em></div>
-                    <div class="me-row"><span><b>Citta — Super Agent</b><small>draft</small></span><em>super_agent</em></div>
-                    <div class="me-row"><span><b>Grant Manager</b><small>folded</small></span><em>manager</em></div>
-                    <div class="me-row"><span><b>Research Manager</b><small>draft</small></span><em>manager</em></div>
-                    <div class="me-row"><span><b>Study Manager</b><small>draft</small></span><em>manager</em></div>
-                    <div class="me-row"><span><b>Teaching Manager</b><small>draft</small></span><em>manager</em></div>
-                    <div class="me-row"><span><b>Study Group Recap</b><small>draft</small></span><em>manager</em></div>
-                  </article>
-                  <article class="me-card">
-                    <div class="me-panel-hd">
-                      <div><h3>My Skills</h3><p>Skills owned by your signed-in account.</p></div>
-                      <button type="button" class="me-btn" data-me-act="Refresh">Refresh</button>
-                    </div>
-                    <p class="me-empty">No current skills yet.</p>
-                  </article>
-                </div>
+                <p class="lead">Your SI’s replies to other people, grouped by what they were about. A label you already made shows on the row.</p>
+                <div id="meTraining"></div>
               </div>
               <div class="me-panel me-page" data-me-panel="look" hidden>
                 <p class="me-page-kicker">My Symbion</p>
                 <h2>形象</h2>
-                <p class="lead">The face people see when your Symbion shows up.</p>
-                <div class="me-rule"></div>
-                <div class="me-look">
-                  <img src="assets/citta-avatar.png?v=2" width="96" height="96" alt="">
-                  <div><b>Citta</b><p>Current look</p></div>
-                </div>
-                <div class="me-actions">
-                  <button type="button" class="me-btn" disabled title="Changing the look waits for the account service.">Change look</button>
-                </div>
+                <p class="lead">Your SI. This is the face people see when it speaks for you.</p>
+                <div id="meLook"></div>
               </div>
             </div>
           </section>
@@ -17432,7 +17481,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     syncPresenter(s);
   }));
 
-  let screen = 'home', tutorialStep = 1, tutorialDocPhase = null, cittaExpanded = false, newTipSeen = false, postTutorialTipPending = false, teamOpen = false, dirOpen = false, dirTab = 'cosmo', dirPersonName = '', dirQuery = '', dirGroup = 'All', dirSort = 'all', deskOpen = false, settingsOpen = false, settingsSection = 'profile', symbionOpen = false, meTab = 'memory';
+  let screen = 'home', tutorialStep = 1, tutorialDocPhase = null, cittaExpanded = false, newTipSeen = false, postTutorialTipPending = false, teamOpen = false, dirOpen = false, dirTab = 'cosmo', dirPersonName = '', dirQuery = '', dirGroup = 'All', dirSort = 'all', deskOpen = false, settingsOpen = false, settingsSection = 'profile', symbionOpen = false, meTab = 'portal';
   let cosmoAdminOpen = false, cosmoAdminId = '';
   /** H0 free-browse: coach/spotlight off, stay on tutorial tail so Reminders → Goals remain scrollable. */
   let tutorialExploring = false;
@@ -19374,7 +19423,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
         }
         if (el.dataset.rail === 'drive') {
           if (document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green') {
-            openSymbion();
+            openSymbion('portal');
             return;
           }
           openDesk('drive');
@@ -22601,7 +22650,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
           }
           if (id.startsWith('cosmo:') || cosmoAdminOpen) {
             closeCosmoAdmin();
-            openSymbion();
+            openSymbion('portal');
           }
         }
         return;
@@ -24970,25 +25019,199 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       list.appendChild(btn);
     });
   }
+  let meHasSI = true;
+  const MY_MEMORY = [
+    { where: 'Heavy-ion Physics', when: '2:14', lines: [
+      ['Chris Dalton', 'Lecture 5 is at 2:30 in 6-120. Slides are in Files. Three quiz questions at the end.'],
+      ['Maya Chen', 'The reading report is 820 / 1,500 words, due tomorrow.'],
+      ['You', "I'll bring a 10-slide deck. Citta drafted it from the lecture."]
+    ]},
+    { where: 'Section notes', when: '1:40', lines: [
+      ['Chris Dalton', 'Put the lecture 5 outline here. Keep the phase diagram on its own page.'],
+      ['You', "I'll add the quiz answers after class."]
+    ]},
+    { where: 'Maya Chen', when: 'Yesterday', lines: [
+      ['Maya Chen', 'Slides, not the notes. The notes skip the phase diagram.'],
+      ['You', "I'll start from the slides, then check the word cap."]
+    ]}
+  ];
+  const LABEL_ISSUES = ['Too generic', 'Wrong detail', 'Not my tone', 'Left out a caveat'];
+  const SI_LABELS = [
+    { id: 'lecture', title: 'Lecture time and room', count: 3, answer: 'Lecture 5 is at 2:30 in 6-120. Slides are in Files.', label: { issues: ['Left out a caveat'], note: 'Name the three quiz questions. Keep the room.' } },
+    { id: 'length', title: 'Reading report length', count: 2, answer: 'The reading report is 820 / 1,500 words. The phase diagram can stay in the count.', label: { issues: ['Wrong detail'], note: 'Do not guess the phase diagram. Ask her to confirm.' } },
+    { id: 'slides', title: 'Turning slides into notes', count: 2, answer: 'I can turn those slides into study notes and leave them beside the deck.', label: null },
+    { id: 'outline', title: 'Where the phase diagram goes', count: 2, answer: 'Keep the phase diagram on its own page in the section notes.', label: null }
+  ];
+  let labelOpen = '';
+  const SI_LOOKS = [
+    { id: 'portrait', name: 'Portrait', src: 'assets/citta-avatar.png?v=2' },
+    { id: 'studio', name: 'Studio', src: 'assets/citta-avatar.jpg' },
+    { id: 'mark', name: 'Mark', src: '' }
+  ];
+  let siLook = 'portrait';
+  function symbionCan(id) { return id === 'memory' || (meHasSI && (id === 'training' || id === 'look')); }
+  function paintMemory() {
+    const box = document.getElementById('meMemory');
+    if (!box) return;
+    box.replaceChildren();
+    MY_MEMORY.forEach((thread) => {
+      const card = document.createElement('article');
+      card.className = 'me-thread';
+      const title = document.createElement('h3');
+      title.textContent = thread.where;
+      const when = document.createElement('span');
+      when.className = 'me-when';
+      when.textContent = thread.when;
+      title.appendChild(when);
+      card.appendChild(title);
+      thread.lines.forEach(([who, text]) => {
+        const line = document.createElement('p');
+        line.className = 'me-line';
+        const name = document.createElement('b');
+        name.textContent = who;
+        line.append(name, document.createTextNode(' ' + text));
+        card.appendChild(line);
+      });
+      box.appendChild(card);
+    });
+  }
+  function paintTraining() {
+    const box = document.getElementById('meTraining');
+    if (!box) return;
+    box.replaceChildren();
+    SI_LABELS.forEach((row) => {
+      const card = document.createElement('article');
+      card.className = 'me-label-card';
+      const title = document.createElement('h3');
+      title.textContent = row.title;
+      const when = document.createElement('span');
+      when.className = 'me-when';
+      when.textContent = row.count + ' similar replies';
+      title.appendChild(when);
+      const answer = document.createElement('p');
+      answer.className = 'me-answer';
+      answer.textContent = row.answer;
+      card.append(title, answer);
+      if (row.label) {
+        const result = document.createElement('p');
+        result.className = 'me-result';
+        const mark = document.createElement('b');
+        mark.textContent = 'Label';
+        const bits = row.label.issues.slice();
+        if (row.label.note) bits.push(row.label.note);
+        result.append(mark, document.createTextNode(' ' + bits.join(' · ')));
+        card.appendChild(result);
+      } else if (labelOpen === row.id) {
+        const issues = document.createElement('div');
+        issues.className = 'me-issues';
+        LABEL_ISSUES.forEach((issue) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.dataset.issue = issue;
+          btn.dataset.labelFor = row.id;
+          btn.setAttribute('aria-pressed', 'false');
+          btn.textContent = issue;
+          issues.appendChild(btn);
+        });
+        const note = document.createElement('textarea');
+        note.className = 'me-note';
+        note.dataset.labelNote = row.id;
+        note.rows = 2;
+        note.placeholder = 'What should the SI have said?';
+        note.setAttribute('aria-label', 'What should the SI have said?');
+        const save = document.createElement('button');
+        save.type = 'button';
+        save.className = 'me-btn';
+        save.dataset.saveLabel = row.id;
+        save.textContent = 'Save label';
+        card.append(issues, note, save);
+      } else {
+        const open = document.createElement('button');
+        open.type = 'button';
+        open.className = 'me-btn';
+        open.dataset.openLabel = row.id;
+        open.textContent = 'Label';
+        card.appendChild(open);
+      }
+      box.appendChild(card);
+    });
+  }
+  function paintLook() {
+    const box = document.getElementById('meLook');
+    if (!box || !meHasSI) return;
+    const current = SI_LOOKS.find((look) => look.id === siLook) || SI_LOOKS[0];
+    box.replaceChildren();
+    const face = document.createElement('div');
+    face.className = 'me-look';
+    if (current.src) {
+      const img = document.createElement('img');
+      img.src = current.src;
+      img.alt = '';
+      img.width = 96;
+      img.height = 96;
+      face.appendChild(img);
+    } else {
+      const mark = document.createElement('span');
+      mark.className = 'me-mark';
+      mark.textContent = 'LU';
+      face.appendChild(mark);
+    }
+    const copy = document.createElement('div');
+    const name = document.createElement('b');
+    name.textContent = "Lulu's SI";
+    const line = document.createElement('p');
+    line.textContent = current.name;
+    copy.append(name, line);
+    face.appendChild(copy);
+    const picks = document.createElement('div');
+    picks.className = 'me-look-picks';
+    SI_LOOKS.forEach((look) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.dataset.siLook = look.id;
+      btn.setAttribute('aria-pressed', String(look.id === siLook));
+      btn.setAttribute('aria-label', look.name);
+      if (look.src) {
+        const img = document.createElement('img');
+        img.src = look.src;
+        img.alt = '';
+        btn.appendChild(img);
+      } else {
+        const mark = document.createElement('span');
+        mark.className = 'me-mark';
+        mark.textContent = 'LU';
+        btn.appendChild(mark);
+      }
+      const small = document.createElement('small');
+      small.textContent = look.name;
+      btn.appendChild(small);
+      picks.appendChild(btn);
+    });
+    box.append(face, picks);
+  }
   function paintMe() {
     const host = document.getElementById('symbionHost');
     if (!host) return;
+    if (!symbionCan(meTab) && meTab !== 'portal') meTab = 'memory';
     paintMyCosmo();
-    host.querySelectorAll('[data-me-tab]').forEach((btn) => {
-      const on = btn.dataset.meTab === meTab;
-      btn.classList.toggle('on', on);
-      btn.setAttribute('aria-selected', String(on));
+    paintMemory();
+    if (meHasSI) { paintTraining(); paintLook(); }
+    host.classList.toggle('is-portal', meTab === 'portal');
+    host.querySelectorAll('[data-me-tab], [data-symbion]').forEach((btn) => {
+      const id = btn.dataset.meTab || btn.dataset.symbion;
+      const allowed = symbionCan(id);
+      btn.hidden = !allowed;
+      const on = allowed && symbionOpen && id === meTab;
+      if (btn.dataset.meTab) {
+        btn.classList.toggle('on', on);
+        btn.setAttribute('aria-selected', String(on));
+      }
+      if (on) btn.setAttribute('aria-current', 'page');
+      else btn.removeAttribute('aria-current');
     });
     host.querySelectorAll('[data-me-panel]').forEach((panel) => {
       panel.hidden = panel.dataset.mePanel !== meTab;
     });
-    document.querySelectorAll('[data-symbion]').forEach((btn) => {
-      const on = symbionOpen && btn.dataset.symbion === meTab;
-      if (on) btn.setAttribute('aria-current', 'page');
-      else btn.removeAttribute('aria-current');
-    });
-    const scroll = host.querySelector('.me-scroll');
-    if (scroll) scroll.scrollTop = 0;
   }
   function closeCosmoAdmin() {
     if (!cosmoAdminOpen) return;
@@ -25045,8 +25268,9 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     if (deskOpen) closeDesk();
     if (settingsOpen) closeSettings();
     if (cosmoAdminOpen) closeCosmoAdmin();
-    const meTabs = { know: 'memory', memory: 'memory', skill: 'training', training: 'training', loop: 'look', look: 'look' };
+    const meTabs = { know: 'portal', portal: 'portal', memory: 'memory', skill: 'training', training: 'training', loop: 'look', look: 'look' };
     if (meTabs[tab]) meTab = meTabs[tab];
+    if (!symbionCan(meTab) && meTab !== 'portal') meTab = 'memory';
     symbionOpen = true;
     screen = 'symbion';
     applyTheme();
@@ -25054,6 +25278,8 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     const host = document.getElementById('symbionHost');
     if (host) host.hidden = false;
     paintMe();
+    const scroll = host && host.querySelector('.me-scroll');
+    if (scroll) scroll.scrollTop = 0;
     if (document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green') markRailCurrent('drive');
     else {
       frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
@@ -25075,11 +25301,35 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
   document.getElementById('symbionHost')?.addEventListener('click', (e) => {
     const tab = e.target.closest('[data-me-tab]');
     if (tab) {
+      if (!symbionCan(tab.dataset.meTab)) return;
       meTab = tab.dataset.meTab;
       paintMe();
+      const scroll = document.querySelector('#symbionHost .me-scroll');
+      if (scroll) scroll.scrollTop = 0;
       syncHash();
       return;
     }
+    const issue = e.target.closest('[data-issue]');
+    if (issue) {
+      issue.setAttribute('aria-pressed', issue.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+      return;
+    }
+    const openLabel = e.target.closest('[data-open-label]');
+    if (openLabel) { labelOpen = openLabel.dataset.openLabel; paintMe(); return; }
+    const save = e.target.closest('[data-save-label]');
+    if (save) {
+      const id = save.dataset.saveLabel;
+      const row = SI_LABELS.find((item) => item.id === id);
+      const issues = [...document.querySelectorAll('#meTraining [data-issue][aria-pressed="true"]')].map((btn) => btn.dataset.issue);
+      const note = (document.querySelector('#meTraining [data-label-note]')?.value || '').trim();
+      if (!row || (!issues.length && !note)) return;
+      row.label = { issues, note };
+      labelOpen = '';
+      paintMe();
+      return;
+    }
+    const look = e.target.closest('[data-si-look]');
+    if (look && meHasSI) { siLook = look.dataset.siLook; paintLook(); return; }
     const mine = e.target.closest('[data-my-cosmo]');
     if (mine) { showCosmoAdmin(mine.dataset.myCosmo); return; }
     const act = e.target.closest('[data-me-act]');
@@ -25109,6 +25359,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') setSymbionMenu(false);
     });
+    paintMe();
   }
 
   function readHash() {
