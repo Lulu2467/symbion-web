@@ -1117,6 +1117,8 @@
   html[data-theme="blue"] .rail-follow {
     display: flex; flex-direction: column; align-items: stretch; gap: 8px; width: 100%; order: 6;
   }
+  html[data-theme="blue"][data-home="v2"] .rail-follow,
+  html[data-theme="blue"][data-home="v2"] .rail.is-open .rail-follow { display: none; }
   html[data-theme="blue"] .rail.is-open .rail-follow { align-items: stretch; }
   html[data-theme="blue"] .rail-follow-k {
     position: relative; display: flex; align-items: center; justify-content: flex-start; box-sizing: border-box;
