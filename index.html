@@ -1122,13 +1122,75 @@
   html[data-theme="blue"] .rail .r[data-rail="drive"] .rail-lab-me { display: none !important; }
   html[data-theme="blue"][data-home="v2"] .rail .r[data-rail="drive"] .rail-lab:not(.rail-lab-me) { display: none !important; }
   html[data-theme="blue"][data-home="v2"] .rail .r[data-rail="drive"] .rail-lab-me { display: block !important; }
-  .osbar-mine { display: none; }
+  .osbar-mine-wrap { display: none; }
+  html[data-theme="blue"][data-home="v2"] .osbar .osbar-mine-wrap { position: relative; display: inline-flex; flex: none; }
   html[data-theme="blue"][data-home="v2"] .osbar .osbar-mine {
     display: inline-flex; align-items: center; height: 30px; margin: 0; padding: 0 10px;
     border: 0; border-radius: 8px; background: transparent; color: #1f1f1f;
     font-size: 13px; font-weight: 500; line-height: 1; cursor: pointer; flex: none;
   }
-  html[data-theme="blue"][data-home="v2"] .osbar .osbar-mine:hover { background: var(--ui-wash); }
+  html[data-theme="blue"][data-home="v2"] .osbar .osbar-mine:hover,
+  html[data-theme="blue"][data-home="v2"] .osbar-mine-wrap.is-open .osbar-mine { background: var(--ui-wash); }
+  html[data-theme="blue"][data-home="v2"] .osbar-mine-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 160px;
+    padding: 6px;
+    background: #fff;
+    border: 1px solid #e6e6e8;
+    border-radius: 12px;
+    box-shadow: 0 10px 28px rgba(20, 24, 28, .12);
+    z-index: 80;
+  }
+  html[data-theme="blue"][data-home="v2"] .osbar-mine-menu::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -14px;
+    height: 14px;
+  }
+  html[data-theme="blue"][data-home="v2"] .osbar-mine-wrap.is-open .osbar-mine-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  html[data-theme="blue"][data-home="v2"] .osbar-mine-menu button {
+    display: flex;
+    width: 100%;
+    margin: 0;
+    padding: 8px 10px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #1f1f1f;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 18px;
+    text-align: left;
+    cursor: pointer;
+  }
+  html[data-theme="blue"][data-home="v2"] .osbar-mine-menu button:hover,
+  html[data-theme="blue"][data-home="v2"] .osbar-mine-menu button[aria-current="page"] { background: #ececee; }
+  html[data-theme="blue"] #symbionHost .me-look {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 4px 0 16px;
+  }
+  html[data-theme="blue"] #symbionHost .me-look img {
+    width: 96px;
+    height: 96px;
+    border-radius: 16px;
+    object-fit: cover;
+    display: block;
+    background: #f3f4f6;
+  }
+  html[data-theme="blue"] #symbionHost .me-look b { display: block; font-size: 16px; font-weight: 650; }
+  html[data-theme="blue"] #symbionHost .me-look p { margin: 4px 0 0; color: #656d76; font-size: 13px; }
   html[data-theme="blue"][data-home="v2"] .frame.citta-open .body .main { margin-right: 0; }
   html[data-theme="blue"][data-home="v2"] .frame.citta-open #dirHost .dir-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   html[data-theme="blue"][data-home="v2"] .frame.citta-open .citta-panel { z-index: 24; box-shadow: -12px 0 32px rgba(20, 24, 28, .12); }
@@ -12071,7 +12133,14 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
           </div>
         </div>
         <span class="sp"></span>
-        <button type="button" class="osbar-mine">My Symbion</button>
+        <div class="osbar-mine-wrap">
+          <button type="button" class="osbar-mine" aria-haspopup="menu" aria-expanded="false" aria-controls="osbarMineMenu">My Symbion</button>
+          <div class="osbar-mine-menu" id="osbarMineMenu" role="menu" aria-label="My Symbion">
+            <button type="button" role="menuitem" data-symbion="memory">Memory</button>
+            <button type="button" role="menuitem" data-symbion="training">Training</button>
+            <button type="button" role="menuitem" data-symbion="look">形象</button>
+          </div>
+        </div>
         <div class="seg theme-seg" role="group" aria-label="Theme color">
           <button type="button" data-theme-pick="green" aria-pressed="true">Green</button>
           <button type="button" data-theme-pick="blue" aria-pressed="false">Blue</button>
@@ -12170,7 +12239,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
                 if (tabs && search && tabs.previousElementSibling !== search) search.after(tabs);
                 if (plus && tabs && plus.previousElementSibling !== tabs) tabs.after(plus);
                 if (sp && plus && sp.previousElementSibling !== plus) plus.after(sp);
-                var mine = bar && bar.querySelector('.osbar-mine');
+                var mine = bar && bar.querySelector('.osbar-mine-wrap');
                 if (mine && sp && mine.previousElementSibling !== sp) sp.after(mine);
               }
             } catch (e) {}
@@ -13096,12 +13165,12 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
           <section id="deskHost" aria-label="Desk" hidden></section>
           <section id="symbionHost" aria-label="My Symbion" hidden>
             <div class="me-tabs" role="tablist" aria-label="My Symbion">
-              <button type="button" class="me-tab on" data-me-tab="know" role="tab" aria-selected="true">Know me</button>
-              <button type="button" class="me-tab" data-me-tab="skill" role="tab" aria-selected="false">Skill</button>
-              <button type="button" class="me-tab" data-me-tab="loop" role="tab" aria-selected="false">Loop</button>
+              <button type="button" class="me-tab on" data-me-tab="memory" role="tab" aria-selected="true">Memory</button>
+              <button type="button" class="me-tab" data-me-tab="training" role="tab" aria-selected="false">Training</button>
+              <button type="button" class="me-tab" data-me-tab="look" role="tab" aria-selected="false">形象</button>
             </div>
             <div class="me-scroll">
-              <div class="me-panel" data-me-panel="know">
+              <div class="me-panel" data-me-panel="memory">
                 <section class="me-cosmo" id="meCosmo" hidden>
                   <div class="me-h"><h2>My Cosmo</h2><span>Cosmos you can manage</span></div>
                   <div id="meCosmoList"></div>
@@ -13188,9 +13257,9 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
                   </div>
                 </div>
               </div>
-              <div class="me-panel me-page" data-me-panel="skill" hidden>
-                <p class="me-page-kicker">Citta</p>
-                <h2>Skill</h2>
+              <div class="me-panel me-page" data-me-panel="training" hidden>
+                <p class="me-page-kicker">My Symbion</p>
+                <h2>Training</h2>
                 <p class="lead">Built-in and owner-scoped skills from the existing Symbion School contract.</p>
                 <div class="me-rule"></div>
                 <div class="me-actions">
@@ -13232,17 +13301,18 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
                   </article>
                 </div>
               </div>
-              <div class="me-panel me-page" data-me-panel="loop" hidden>
-                <p class="me-page-kicker">Citta</p>
-                <h2>Loop</h2>
-                <p class="lead">Saved daily Loops and their current runtime readiness.</p>
+              <div class="me-panel me-page" data-me-panel="look" hidden>
+                <p class="me-page-kicker">My Symbion</p>
+                <h2>形象</h2>
+                <p class="lead">The face people see when your Symbion shows up.</p>
                 <div class="me-rule"></div>
-                <div class="me-actions">
-                  <button type="button" class="me-btn" data-me-act="Add loop" disabled>Add loop</button>
-                  <button type="button" class="me-btn" data-me-act="Refresh">Refresh</button>
+                <div class="me-look">
+                  <img src="assets/citta-avatar.png?v=2" width="96" height="96" alt="">
+                  <div><b>Citta</b><p>Current look</p></div>
                 </div>
-                <p class="me-note">Saved Loops unavailable</p>
-                <p class="me-note">Saved Loops are unavailable because the existing workflow contract is not armed or could not be read.</p>
+                <div class="me-actions">
+                  <button type="button" class="me-btn" disabled title="Changing the look waits for the account service.">Change look</button>
+                </div>
               </div>
             </div>
           </section>
@@ -17362,7 +17432,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     syncPresenter(s);
   }));
 
-  let screen = 'home', tutorialStep = 1, tutorialDocPhase = null, cittaExpanded = false, newTipSeen = false, postTutorialTipPending = false, teamOpen = false, dirOpen = false, dirTab = 'cosmo', dirPersonName = '', dirQuery = '', dirGroup = 'All', dirSort = 'all', deskOpen = false, settingsOpen = false, settingsSection = 'profile', symbionOpen = false, meTab = 'know';
+  let screen = 'home', tutorialStep = 1, tutorialDocPhase = null, cittaExpanded = false, newTipSeen = false, postTutorialTipPending = false, teamOpen = false, dirOpen = false, dirTab = 'cosmo', dirPersonName = '', dirQuery = '', dirGroup = 'All', dirSort = 'all', deskOpen = false, settingsOpen = false, settingsSection = 'profile', symbionOpen = false, meTab = 'memory';
   let cosmoAdminOpen = false, cosmoAdminId = '';
   /** H0 free-browse: coach/spotlight off, stay on tutorial tail so Reminders → Goals remain scrollable. */
   let tutorialExploring = false;
@@ -20042,7 +20112,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       if (tabs && tabs.previousElementSibling !== search) search.after(tabs);
       if (plus && tabs && plus.previousElementSibling !== tabs) tabs.after(plus);
       if (sp && plus && sp.previousElementSibling !== plus) plus.after(sp);
-      const mine = bar.querySelector('.osbar-mine');
+      const mine = bar.querySelector('.osbar-mine-wrap');
       if (mine && sp && mine.previousElementSibling !== sp) sp.after(mine);
     } else {
       if (logo && logo.parentElement !== row) row.prepend(logo);
@@ -24912,6 +24982,11 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     host.querySelectorAll('[data-me-panel]').forEach((panel) => {
       panel.hidden = panel.dataset.mePanel !== meTab;
     });
+    document.querySelectorAll('[data-symbion]').forEach((btn) => {
+      const on = symbionOpen && btn.dataset.symbion === meTab;
+      if (on) btn.setAttribute('aria-current', 'page');
+      else btn.removeAttribute('aria-current');
+    });
     const scroll = host.querySelector('.me-scroll');
     if (scroll) scroll.scrollTop = 0;
   }
@@ -24970,7 +25045,8 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     if (deskOpen) closeDesk();
     if (settingsOpen) closeSettings();
     if (cosmoAdminOpen) closeCosmoAdmin();
-    if (tab === 'skill' || tab === 'loop' || tab === 'know') meTab = tab;
+    const meTabs = { know: 'memory', memory: 'memory', skill: 'training', training: 'training', loop: 'look', look: 'look' };
+    if (meTabs[tab]) meTab = meTabs[tab];
     symbionOpen = true;
     screen = 'symbion';
     applyTheme();
@@ -25009,6 +25085,31 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     const act = e.target.closest('[data-me-act]');
     if (act) showToastMsg('My Symbion · ' + act.dataset.meAct);
   });
+  const symbionMenu = document.querySelector('.osbar-mine-wrap');
+  const symbionMenuBtn = symbionMenu && symbionMenu.querySelector('.osbar-mine');
+  function setSymbionMenu(open) {
+    if (!symbionMenu || !symbionMenuBtn) return;
+    symbionMenu.classList.toggle('is-open', open);
+    symbionMenuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  if (symbionMenu && symbionMenuBtn) {
+    symbionMenuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setSymbionMenu(!symbionMenu.classList.contains('is-open'));
+    });
+    symbionMenu.querySelectorAll('[data-symbion]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        openSymbion(btn.dataset.symbion);
+        setSymbionMenu(false);
+      });
+    });
+    document.addEventListener('click', (e) => {
+      if (!symbionMenu.contains(e.target)) setSymbionMenu(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setSymbionMenu(false);
+    });
+  }
 
   function readHash() {
     const q = new URLSearchParams((location.hash || '').replace(/^#/, ''));
