@@ -5509,6 +5509,8 @@
     flex: 1 1 auto;
     min-height: 0;
     overflow: hidden;
+    container-type: inline-size;
+    container-name: citta;
   }
   html[data-theme="blue"] .citta-panel .citta-scroll {
     height: 100%;
@@ -5536,8 +5538,8 @@
   html[data-theme="blue"] .citta-hello[hidden] { display: none !important; }
   html[data-theme="blue"] .citta-hello h2 {
     margin: 0;
-    max-width: 16ch;
-    font-size: 20px;
+    max-width: 100%;
+    font-size: clamp(20px, 6.4cqi, 32px);
     font-weight: 600;
     letter-spacing: -0.02em;
     line-height: 1.25;
@@ -5546,10 +5548,11 @@
   }
   html[data-theme="blue"] .citta-hello .lead {
     margin: 8px 0 0;
-    max-width: 28ch;
-    font-size: 13px;
+    max-width: min(34em, 100%);
+    font-size: clamp(13px, 3.5cqi, 16px);
     line-height: 1.45;
     color: var(--muted);
+    text-wrap: balance;
   }
   html[data-theme="blue"] .citta-hello .kinds {
     display: flex;
