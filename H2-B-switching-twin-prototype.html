@@ -5486,6 +5486,61 @@
   html[data-theme="blue"] .citta-history button:active { background: #f2f3f5; color: #1d1d1f; font-weight: 400; }
 
   html[data-theme="blue"] .citta-history-empty { margin: 0; padding: 2px 10px 8px 34px; font-size: 12px; line-height: 18px; color: #8b9198; }
+  html[data-theme="blue"] .citta-hist {
+    display: none;
+    flex: 1 1 auto;
+    min-height: 0;
+    flex-direction: column;
+    padding: 22px 20px 16px;
+    background: #fff;
+  }
+  html[data-theme="blue"] .citta-hist:not([hidden]) { display: flex; }
+  html[data-theme="blue"] .citta-hist-label {
+    margin: 0 0 8px;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 18px;
+    color: #a3a8ae;
+  }
+  html[data-theme="blue"] .citta-hist-list {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  html[data-theme="blue"] .citta-hist-list button {
+    flex: none;
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 13px 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #7d8288;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+  }
+  html[data-theme="blue"] .citta-hist-list button:hover,
+  html[data-theme="blue"] .citta-hist-list button:active { color: #1d1d1f; }
+  html[data-theme="blue"] .citta-hist-empty {
+    margin: 8px 0 0;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #a3a8ae;
+  }
+  html[data-theme="blue"] .citta-panel.is-hist .citta-scroll,
+  html[data-theme="blue"] .citta-panel.is-hist .citta-hello,
+  html[data-theme="blue"] .citta-panel.is-hist > .foot { display: none !important; }
   .citta-panel .ctx { padding: 10px 16px 4px; font-size: 12px; color: var(--muted); border-bottom: 0; flex: none; }
   .citta-panel .ctx .where { display: inline-block; font-weight: 600; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 2px 8px; margin-left: 4px; }
   .citta-panel .citta-scroll-wrap {
@@ -13293,6 +13348,10 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
         </div>
 <div class="ctx">Working with: <span class="where">Home</span></div>
         <div class="citta-scroll-wrap" id="cittaScrollWrap">
+          <div class="citta-hist" id="cittaHist" hidden>
+            <p class="citta-hist-label">Chats</p>
+            <div class="citta-hist-list" id="cittaHistList" role="listbox" aria-label="Chats"></div>
+          </div>
           <div class="citta-hello" id="cittaHello" hidden>
             <h2>How can I help you, <span data-citta-hello-name>Lulu</span>?</h2>
             <p class="lead">Ask about a file, a course, a person, or what to do next.</p>
@@ -20388,8 +20447,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     $('cittaInput')?.focus();
   });
   function cittaThreadTitle(root) {
-    const text = (root.querySelector('.user-bubble')?.textContent || '').trim();
-    return text.length > 36 ? text.slice(0, 36) + '…' : text;
+    return (root.querySelector('.user-bubble')?.textContent || '').replace(/\s+/g, ' ').trim();
   }
   function cittaSaveCurrent() {
     const scroll = cittaScrollEl();
@@ -20409,36 +20467,55 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     const list = $('cittaHistory');
     if (list) list.hidden = true;
   }
-  function cittaRenderHistory() {
+  function cittaHideHistory() {
+    $('cittaPanel')?.classList.remove('is-hist');
+    const view = $('cittaHist');
+    if (view) view.hidden = true;
+    syncCittaHello();
+  }
+  function cittaShowHistory() {
+    if (document.documentElement.dataset.theme !== 'blue') return;
+    cittaCloseMore();
     cittaSaveCurrent();
-    const list = $('cittaHistory');
-    if (!list) return;
+    const panel = $('cittaPanel');
+    const view = $('cittaHist');
+    const list = $('cittaHistList');
+    if (!panel || !view || !list) return;
     list.replaceChildren();
     if (!cittaThreads.length) {
       const empty = document.createElement('p');
-      empty.className = 'citta-history-empty';
+      empty.className = 'citta-hist-empty';
       empty.textContent = 'No past chats';
       list.appendChild(empty);
+    } else {
+      cittaThreads.forEach((thread) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.setAttribute('role', 'option');
+        btn.textContent = thread.title || 'New chat';
+        btn.addEventListener('click', () => {
+          const scroll = cittaScrollEl();
+          if (!scroll) return;
+          cittaSaveCurrent();
+          cittaCurrentId = thread.id;
+          scroll.innerHTML = thread.html;
+          scroll.scrollTop = 0;
+          cittaHideHistory();
+          syncCittaScrollFade();
+        });
+        list.appendChild(btn);
+      });
+    }
+    view.hidden = false;
+    panel.classList.add('is-hist');
+  }
+  function cittaToggleHistory() {
+    if ($('cittaPanel')?.classList.contains('is-hist')) {
+      cittaCloseMore();
+      cittaHideHistory();
       return;
     }
-    cittaThreads.forEach((thread) => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.textContent = thread.title;
-      if (thread.id === cittaCurrentId) btn.className = 'is-on';
-      btn.addEventListener('click', () => {
-        const scroll = cittaScrollEl();
-        if (!scroll) return;
-        cittaSaveCurrent();
-        cittaCurrentId = thread.id;
-        scroll.innerHTML = thread.html;
-        scroll.scrollTop = 0;
-        syncCittaHello();
-        syncCittaScrollFade();
-        cittaCloseMore();
-      });
-      list.appendChild(btn);
-    });
+    cittaShowHistory();
   }
   function cittaStartNew() {
     if (document.documentElement.dataset.theme !== 'blue') return;
@@ -20458,6 +20535,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     syncCittaSendReady();
     syncCittaScrollFade();
     cittaCloseMore();
+    cittaHideHistory();
   }
   $('cittaNew')?.addEventListener('click', cittaStartNew);
   $('cittaLines')?.addEventListener('click', (e) => {
@@ -20476,11 +20554,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     if (!btn) return;
     e.stopPropagation();
     if (btn.dataset.cittaAct === 'new') { cittaStartNew(); return; }
-    const list = $('cittaHistory');
-    const show = list.hidden;
-    list.hidden = !show;
-    btn.setAttribute('aria-expanded', show ? 'true' : 'false');
-    if (show) cittaRenderHistory();
+    if (btn.dataset.cittaAct === 'history') { cittaToggleHistory(); return; }
   });
   document.addEventListener('click', (e) => {
     if (e.target.closest('#cittaMore') || e.target.closest('#cittaLines')) return;
