@@ -22094,6 +22094,14 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       r.removeAttribute('aria-current');
     });
   }
+  document.querySelector('.main')?.addEventListener('click', (e) => {
+    const root = document.documentElement;
+    if (root.dataset.theme !== 'blue' || root.dataset.home !== 'v2' || root.dataset.palette === 'green') return;
+    const path = e.composedPath();
+    if (path.some((node) => node.id === 'teamHost' || node.id === 'cittaPanel')) return;
+    if (teamOpen) setScreen('home');
+    if (cittaExpanded) setCittaExpanded(false);
+  });
 
   const DESK_LANES = [
     { id: 'personal', name: 'Personal' },
