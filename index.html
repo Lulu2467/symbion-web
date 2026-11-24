@@ -5527,6 +5527,37 @@
     color: #a3a8ae;
   }
   html[data-theme="blue"] .citta-panel.is-hist .citta-hist-label { display: block; }
+  html[data-theme="blue"] .citta-hist-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    margin: 4px 0 10px;
+    padding: 0 12px;
+    border-radius: 10px;
+    background: #f2f3f5;
+    box-sizing: border-box;
+    flex: none;
+  }
+  html[data-theme="blue"] .citta-hist-search svg {
+    width: 16px;
+    height: 16px;
+    flex: none;
+    color: #8b9198;
+  }
+  html[data-theme="blue"] .citta-hist-search input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    font: inherit;
+    font-size: 13px;
+    line-height: 18px;
+    color: #1a1d21;
+  }
+  html[data-theme="blue"] .citta-hist-search input::placeholder { color: #8b9198; }
+  html[data-theme="blue"] .citta-hist-search input::-webkit-search-cancel-button { display: none; }
   html[data-theme="blue"] .citta-hist-list {
     flex: 1;
     min-height: 0;
@@ -13378,6 +13409,10 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
 <div class="ctx">Working with: <span class="where">Home</span></div>
         <div class="citta-scroll-wrap" id="cittaScrollWrap">
           <div class="citta-hist" id="cittaHist" hidden>
+            <label class="citta-hist-search">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.25" stroke="currentColor" stroke-width="1.7"/><path d="M16.2 16.2 20 20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+              <input type="search" id="cittaHistSearch" placeholder="Search history" autocomplete="off" enterkeyhint="search" aria-label="Search history">
+            </label>
             <div class="citta-hist-list" id="cittaHistList" role="listbox" aria-label="Chats"></div>
           </div>
           <div class="citta-hello" id="cittaHello" hidden>
@@ -20501,7 +20536,40 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     if (view) view.hidden = true;
     const back = $('cittaHistBack');
     if (back) back.hidden = true;
+    const search = $('cittaHistSearch');
+    if (search) search.value = '';
     syncCittaHello();
+  }
+  function cittaRenderHistList() {
+    const list = $('cittaHistList');
+    if (!list) return;
+    const q = ($('cittaHistSearch')?.value || '').trim().toLowerCase();
+    const rows = cittaThreads.filter((t) => !q || String(t.title || '').toLowerCase().includes(q));
+    list.replaceChildren();
+    if (!rows.length) {
+      const empty = document.createElement('p');
+      empty.className = 'citta-hist-empty';
+      empty.textContent = q ? 'No matching chats' : 'No past chats';
+      list.appendChild(empty);
+      return;
+    }
+    rows.forEach((thread) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.setAttribute('role', 'option');
+      btn.textContent = thread.title || 'New chat';
+      btn.addEventListener('click', () => {
+        const scroll = cittaScrollEl();
+        if (!scroll) return;
+        cittaSaveCurrent();
+        cittaCurrentId = thread.id;
+        scroll.innerHTML = thread.html;
+        scroll.scrollTop = 0;
+        cittaHideHistory();
+        syncCittaScrollFade();
+      });
+      list.appendChild(btn);
+    });
   }
   function cittaShowHistory() {
     if (document.documentElement.dataset.theme !== 'blue') return;
@@ -20511,31 +20579,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     const view = $('cittaHist');
     const list = $('cittaHistList');
     if (!panel || !view || !list) return;
-    list.replaceChildren();
-    if (!cittaThreads.length) {
-      const empty = document.createElement('p');
-      empty.className = 'citta-hist-empty';
-      empty.textContent = 'No past chats';
-      list.appendChild(empty);
-    } else {
-      cittaThreads.forEach((thread) => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.setAttribute('role', 'option');
-        btn.textContent = thread.title || 'New chat';
-        btn.addEventListener('click', () => {
-          const scroll = cittaScrollEl();
-          if (!scroll) return;
-          cittaSaveCurrent();
-          cittaCurrentId = thread.id;
-          scroll.innerHTML = thread.html;
-          scroll.scrollTop = 0;
-          cittaHideHistory();
-          syncCittaScrollFade();
-        });
-        list.appendChild(btn);
-      });
-    }
+    cittaRenderHistList();
     view.hidden = false;
     const back = $('cittaHistBack');
     if (back) back.hidden = false;
@@ -20573,6 +20617,9 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
   $('cittaHistBack')?.addEventListener('click', (e) => {
     e.stopPropagation();
     cittaHideHistory();
+  });
+  $('cittaHistSearch')?.addEventListener('input', () => {
+    cittaRenderHistList();
   });
   $('cittaLines')?.addEventListener('click', (e) => {
     e.stopPropagation();
