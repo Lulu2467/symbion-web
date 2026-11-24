@@ -8890,6 +8890,170 @@
   html[data-theme="blue"] #symbionHost .me-foot { margin-top: 12px; }
   html[data-theme="blue"] #symbionHost .me-grid3 { gap: 12px; }
 
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-panel[data-me-panel="portal"] { max-width: 720px; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-cosmo { margin: 0; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-cosmo .me-h { margin-top: 0; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-h { margin: 36px 0 12px; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-h h2 { font-size: 16px; font-weight: 650; letter-spacing: -0.01em; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-h span { color: #656d76; font-size: 13px; font-weight: 400; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost #meCosmoList {
+    border: 1px solid #e6e8ec;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-cosmo-row {
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    border-top: 1px solid #e6e8ec;
+    padding: 12px 16px;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-cosmo-row:first-child { border-top: 0; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-cosmo-row small,
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-cosmo-row em { color: #656d76; font-size: 13px; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-cosmo-row:focus-visible {
+    outline: 2px solid #3c7a94;
+    outline-offset: -2px;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-panel[data-me-panel="portal"] .me-stack,
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-panel[data-me-panel="portal"] .me-grid3 {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid #e6e8ec;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-panel[data-me-panel="portal"] .me-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    border: 0;
+    border-radius: 0;
+    border-top: 1px solid #e6e8ec;
+    padding: 14px 16px 16px;
+    background: #fff;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-panel[data-me-panel="portal"] .me-stack > .me-card:first-child,
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-panel[data-me-panel="portal"] .me-grid3 > .me-card:first-child { border-top: 0; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-panel[data-me-panel="portal"] > .me-card {
+    border: 1px solid #e6e8ec;
+    border-radius: 12px;
+    margin-top: 16px;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-panel[data-me-panel="portal"] .me-card > * { align-self: stretch; text-align: left; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-panel[data-me-panel="portal"] .me-card > h3 { order: 1; margin: 0; font-size: 15px; font-weight: 650; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-panel[data-me-panel="portal"] .me-card > .me-kicker { order: 2; margin: 0; font-size: 13px; color: #656d76; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-panel[data-me-panel="portal"] .me-card > p:not(.me-meta):not(.me-kicker) {
+    order: 3;
+    margin: 2px 0 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #1a1d21;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-panel[data-me-panel="portal"] .me-card > .me-badges {
+    order: 4;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+    margin: 6px 0 0;
+    justify-content: flex-start;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-panel[data-me-panel="portal"] .me-badge {
+    height: auto;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #656d76;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-panel[data-me-panel="portal"] .me-badge + .me-badge::before {
+    content: "·";
+    margin: 0 6px;
+    color: #b0b4ba;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-panel[data-me-panel="portal"] .me-card > .me-meta {
+    order: 5;
+    margin: 0;
+    color: #656d76;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-panel[data-me-panel="portal"] .me-card:has(> .me-kicker) {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 0;
+    row-gap: 4px;
+    align-items: start;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-panel[data-me-panel="portal"] .me-card:has(> .me-kicker) > h3 { grid-column: 1 / -1; grid-row: 1; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-panel[data-me-panel="portal"] .me-card:has(> .me-kicker) > p:not(.me-meta):not(.me-kicker) { grid-column: 1 / -1; grid-row: 2; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-panel[data-me-panel="portal"] .me-card:has(> .me-kicker) > .me-kicker { grid-column: 1; grid-row: 3; margin: 6px 0 0; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-panel[data-me-panel="portal"] .me-card:has(> .me-kicker) > .me-kicker::after { content: "·"; margin-left: 6px; color: #b0b4ba; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-panel[data-me-panel="portal"] .me-card:has(> .me-kicker) > .me-badges { grid-column: 2; grid-row: 3; margin: 6px 0 0; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-panel[data-me-panel="portal"] .me-card:has(> .me-kicker) > .me-meta { grid-column: 1 / -1; grid-row: 4; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-intro,
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-foot {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 0 0 16px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-foot {
+    margin: 28px 0 0;
+    padding-top: 16px;
+    border-top: 1px solid #e6e8ec;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-intro p,
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-foot p {
+    margin: 0;
+    max-width: 62ch;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #1a1d21;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-chips {
+    justify-content: flex-start;
+    max-width: none;
+    gap: 8px;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-chip {
+    height: 32px;
+    padding: 0 16px;
+    border: 1px solid #e6e8ec;
+    border-radius: 999px;
+    background: #fff;
+    color: #656d76;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-chip:hover { background: #f6f7f8; color: #1a1d21; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-chip.brand {
+    border-color: #c5d4de;
+    background: #fff;
+    color: #3c7a94;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-chip.brand:hover {
+    background: #f4f8fa;
+    border-color: #9eb8c6;
+    color: #316479;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-chip:focus-visible {
+    outline: 2px solid #3c7a94;
+    outline-offset: 2px;
+  }
+
   .frame.dir-on { display: flex; flex-direction: column; height: 900px; }
   .frame.dir-on .body { flex: 1; min-height: 0; }
   .frame.dir-on .content.hub,
@@ -13374,6 +13538,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
                   <div class="me-h"><h2>My Cosmo</h2><span>Cosmos you can manage</span></div>
                   <div id="meCosmoList"></div>
                 </section>
+                <div class="me-h"><h2>Style</h2></div>
                 <div class="me-stack">
                   <article class="me-card">
                     <div class="me-badges"><span class="me-badge">Unverified</span><span class="me-badge">Path C · Style</span></div>
@@ -13397,7 +13562,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
                     <button type="button" class="me-chip brand" data-me-act="Internal files">Internal files</button>
                   </div>
                 </div>
-                <div class="me-stack" style="margin-top:12px">
+                <div class="me-stack">
                   <article class="me-card">
                     <div class="me-badges"><span class="me-badge">Unverified</span><span class="me-badge">Path A · Preference</span></div>
                     <h3>Your week, normally</h3>
@@ -13441,7 +13606,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
                     <p class="me-meta">No authenticated matching evidence.</p>
                   </article>
                 </div>
-                <article class="me-card" style="margin-top:12px">
+                <article class="me-card">
                   <div class="me-badges"><span class="me-badge">Unverified</span><span class="me-badge">Not used yet</span></div>
                   <h3>Recurring file topics</h3>
                   <p>Internal files reference "researcher", "linear research chain", "output structure design doc" · 2026/8/12</p>
