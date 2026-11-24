@@ -1204,6 +1204,15 @@
     min-height: 0; overflow: hidden;
   }
   html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .kb-legend:not(.kb-detail) { display: none; }
+  html[data-theme="blue"][data-home="v2"] #teamHost .cosmo-k {
+    margin: 14px 16px 2px; font-size: 12px; font-weight: 650; letter-spacing: .04em; line-height: 16px; color: #8b919a;
+  }
+  html[data-theme="blue"][data-home="v2"] #teamHost .cosmo-k:first-child { margin-top: 6px; }
+  html[data-theme="blue"][data-home="v2"] #teamHost .row.is-sub .row-hit { padding-left: 36px; }
+  html[data-theme="blue"][data-home="v2"] #teamHost .row.is-sub::after { left: 92px; }
+  html[data-theme="blue"][data-home="v2"] #teamHost .row-top .tier {
+    flex: none; margin-left: 8px; font-size: 11px; font-weight: 550; line-height: 16px; color: #8b919a;
+  }
   html[data-theme="blue"] .rail.is-open .rail-follow { align-items: stretch; }
   html[data-theme="blue"] .rail-follow-k {
     position: relative; display: flex; align-items: center; justify-content: flex-start; box-sizing: border-box;
@@ -25511,6 +25520,40 @@ chats.forEach((c) => {
   c.invites = c.invites || [];
   (c.messages || []).forEach((m) => { if (!m.seq) m.seq = ++msgSeq; });
 });
+[['hip', 'big', 0], ['notes', 'sub', 1], ['qgp', 'sub', 2]].forEach(([id, tier, order]) => {
+  const chat = chats.find((c) => c.id === id);
+  if (!chat) return;
+  chat.followAt = 0;
+  chat.tier = tier;
+  chat.followOrder = order;
+});
+function addFollowGroup(chat) {
+  chat.followExtra = true;
+  chat.policy = 'approval';
+  chat.listed = true;
+  chat.locked = false;
+  chat.cutoff = 0;
+  chat.links = [];
+  chat.requests = chat.requests || [];
+  chat.invites = chat.invites || [];
+  chat.membersOpen = true;
+  chat.myName = 'Lulu';
+  chat.hidden = false;
+  chat.pinned = false;
+  chat.unread = 0;
+  chat.titles = {};
+  (chat.messages || []).forEach((m) => { if (!m.seq) m.seq = ++msgSeq; });
+  taken.add(chat.number);
+  chats.push(chat);
+}
+[
+  { id: 'fg-1', followAt: 1, tier: 'big', followOrder: 0, number: '12000011', slug: 'follow-1', name: 'Big group', time: '1h', updated: 47, muted: true, owner: 'cosmo1', admins: [], members: ['cosmo1', 'jess'], announce: 'Only the owner and admins can post here. Posts sync into every subgroup.', messages: [{ id: 'f1a', who: 'cosmo1', text: 'Friday 8:00 pm live: how to choose a barrier repair. Reply on the post.' }] },
+  { id: 'fs-1', followAt: 1, tier: 'sub', followOrder: 1, number: '12000012', slug: 'follow-1-wuhan', name: 'Wuhan fans', time: 'Today', updated: 46, muted: false, owner: 'cosmo1', admins: [], members: ['cosmo1', 'jess', 'hannah'], announce: 'Posts from the big group sync here.', messages: [{ id: 'f1b', who: 'hannah', text: 'Can you recap the barrier-repair steps in this subgroup?' }] },
+  { id: 'fg-2', followAt: 2, tier: 'big', followOrder: 0, number: '12000021', slug: 'follow-2', name: 'Big group', time: '5h', updated: 45, muted: true, owner: 'cosmo2', admins: [], members: ['cosmo2', 'jess'], announce: 'Only the owner and admins can post here. Posts sync into every subgroup.', messages: [{ id: 'f2a', who: 'cosmo2', text: "Today's product note: put a complex workflow into a clearer workspace." }] },
+  { id: 'fs-2', followAt: 2, tier: 'sub', followOrder: 1, number: '12000022', slug: 'follow-2-notes', name: 'Product notes', time: 'Yesterday', updated: 44, muted: false, owner: 'cosmo2', admins: [], members: ['cosmo2', 'jess', 'maya'], announce: 'Posts from the big group sync here.', messages: [{ id: 'f2b', who: 'maya', text: 'I left a note on the workflow. Hot posts can go up to the big group.' }] },
+  { id: 'fg-3', followAt: 3, tier: 'big', followOrder: 0, number: '12000031', slug: 'follow-3', name: 'Big group', time: '2d', updated: 43, muted: true, owner: 'cosmo3', admins: [], members: ['cosmo3', 'jess'], announce: 'Only the owner and admins can post here. Posts sync into every subgroup.', messages: [{ id: 'f3a', who: 'cosmo3', text: "Posted a short recap of yesterday's section." }] },
+  { id: 'fs-3', followAt: 3, tier: 'sub', followOrder: 1, number: '12000032', slug: 'follow-3-recap', name: 'Daily recap', time: '2d', updated: 42, muted: false, owner: 'cosmo3', admins: [], members: ['cosmo3', 'jess', 'alex'], announce: 'Posts from the big group sync here.', messages: [{ id: 'f3b', who: 'alex', text: 'The recap from the big group is here.' }] }
+].forEach((chat) => addFollowGroup({ kind: 'group', description: '', ...chat }));
 
 const state = {
   id: 'hip', filter: 'all', query: '',
@@ -25540,7 +25583,7 @@ function normSlug(s) {
   const known = slugOptions().find((v) => slugKey(v) === slugKey(raw));
   return known || raw;
 }
-function joinedGroups() { return chats.filter((c) => c.kind === 'group'); }
+function joinedGroups() { return chats.filter((c) => c.kind === 'group' && !c.followExtra); }
 function notJoinedVisible() {
   return [...directory, ...parked].filter((g) => g.listed && !joinedGroups().some((c) => c.number === g.number));
 }
@@ -25601,6 +25644,7 @@ function matchGroup(c, q) {
 function visible() {
   const q = state.query.trim().toLowerCase();
   return ordered().filter((c) => {
+    if (c.followExtra && document.documentElement.dataset.home !== 'v2') return false;
     if (q) return c.kind === 'group' && matchGroup(c, q) && !c.hidden;
     if (state.filter === 'hidden') return c.hidden;
     if (c.hidden && !(c.kind === 'group' && canReview(c) && pending(c) > 0)) return false;
@@ -25610,6 +25654,7 @@ function visible() {
   });
 }
 function face(chat) {
+  if (chat.mark) return `<span class="av hue-${esc(chat.mark.hue)}">${esc(chat.mark.short)}</span>`;
   if (chat.kind === 'dm') {
     const p = person(chat.person);
     return `<span class="av hue-${p.hue}">${esc(p.short)}</span>`;
@@ -25761,7 +25806,72 @@ function openNotice() {
   closePopovers();
   render(false);
 }
+function syncFollowGroups() {
+  const rails = [...document.querySelectorAll('.rail-follow-row')];
+  const hues = ['amber', 'slate', 'green'];
+  [1, 2, 3].forEach((at) => {
+    const rail = rails[at];
+    const who = rail ? (rail.querySelector('.nm')?.textContent || rail.getAttribute('aria-label') || '').trim() : '';
+    const short = rail ? (rail.querySelector('.av')?.textContent || '').trim().slice(0, 2) : '';
+    if (!people['cosmo' + at]) people['cosmo' + at] = { name: who || 'Cosmo', short: short || 'C', hue: hues[at - 1], email: '' };
+    const speaker = people['cosmo' + at];
+    if (who) speaker.name = who;
+    if (short) speaker.short = short;
+    speaker.hue = hues[at - 1];
+    chats.forEach((c) => {
+      if (c.followAt !== at) return;
+      c.cosmoName = who;
+      if (c.tier === 'big' && who) c.name = who;
+      if (short) c.mark = { short, hue: hues[at - 1] };
+    });
+  });
+  const roland = rails[0];
+  const rname = roland ? (roland.querySelector('.nm')?.textContent || roland.getAttribute('aria-label') || '').trim() : '';
+  chats.forEach((c) => { if (c.followAt === 0) c.cosmoName = rname; });
+}
+function renderFollowList() {
+  syncFollowGroups();
+  const rails = [...document.querySelectorAll('.rail-follow-row')];
+  const q = state.query.trim().toLowerCase();
+  const sections = [];
+  rails.forEach((rail, at) => {
+    if (rail.hidden) return;
+    let groups = chats.filter((c) => c.kind === 'group' && c.followAt === at);
+    groups.sort((a, b) => (a.tier === 'big' ? 0 : 1) - (b.tier === 'big' ? 0 : 1) || (a.followOrder || 0) - (b.followOrder || 0));
+    if (q) groups = groups.filter((c) => matchGroup(c, q) || (c.cosmoName || '').toLowerCase().includes(q));
+    if (!groups.length) return;
+    const title = (rail.querySelector('.nm')?.textContent || rail.getAttribute('aria-label') || '').trim();
+    sections.push({ title, groups });
+  });
+  const shown = sections.flatMap((section) => section.groups);
+  if (!q && !state.notice && shown.length && !shown.some((c) => c.id === state.id)) state.id = shown[0].id;
+  const total = rails.reduce((n, rail, at) => n + (rail.hidden ? 0 : chats.filter((c) => c.kind === 'group' && c.followAt === at).length), 0);
+  $('gcount').textContent = total + (total === 1 ? ' group' : ' groups');
+  const rowHTML = (c) => {
+    const label = dotLabel(c);
+    const dot = needsDot(c) ? `<i class="dot" title="${esc(label)}" aria-label="${esc(label)}"></i>` : '';
+    const mute = c.muted ? '<svg class="mute" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 22a2.1 2.1 0 0 0 2.05-1.6h-4.1A2.1 2.1 0 0 0 12 22Zm6.4-4.6c.5.4.2 1.1-.4 1.1H6c-.6 0-.9-.7-.4-1.1L7 15.8V11a5 5 0 0 1 3.2-4.7V5.2a1.8 1.8 0 1 1 3.6 0v1.1A5 5 0 0 1 17 11v4.8l1.4 1.6Z"/><path fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" d="M5 6.2 18.2 19"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M5 6.2 18.2 19"/></svg>' : '';
+    const on = !state.notice && c.id === state.id;
+    const tier = c.tier === 'big' ? 'Big group' : 'Subgroup';
+    return `<div class="row${c.tier === 'sub' ? ' is-sub' : ''}${on ? ' on' : ''}">
+      <button type="button" class="row-hit" data-open="${c.id}"${on ? ' aria-current="true"' : ''}>
+        <span class="face">${face(c)}${dot}</span>
+        <span class="row-body">
+          <span class="row-top"><strong>${esc(c.name)}</strong><span class="tier">${tier}</span><time>${esc(c.time)}</time></span>
+          <span class="row-bot"><em>${esc(preview(c))}</em>${mute}</span>
+        </span>
+      </button>
+    </div>`;
+  };
+  const body = sections.map((section) => `<div class="cosmo-k">${esc(section.title)}</div>${section.groups.map(rowHTML).join('')}`).join('');
+  $('rows').innerHTML = body || `<p class="empty">${q ? 'No joined group matches that name, number, or slug.' : 'No Cosmos followed yet.'}</p>`;
+  syncTeamEdgeFade();
+}
 function renderList() {
+  if (document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green') {
+    renderFollowList();
+    return;
+  }
   const rows = visible();
   const n = joinedGroups().length;
   $('gcount').textContent = n + (n === 1 ? ' group' : ' groups');
@@ -26357,8 +26467,14 @@ function renderChrome() {
     faceEl.hidden = true;
     faceEl.innerHTML = '';
     faceEl.removeAttribute('aria-label');
-    $('sub').hidden = true;
-    $('sub').innerHTML = '';
+    if (document.documentElement.dataset.home === 'v2' && c.tier) {
+      const kind = c.tier === 'big' ? 'Big group' : 'Subgroup';
+      $('sub').hidden = false;
+      $('sub').textContent = c.cosmoName ? kind + ' · ' + c.cosmoName : kind;
+    } else {
+      $('sub').hidden = true;
+      $('sub').innerHTML = '';
+    }
     $('back').hidden = true;
     $('announce').hidden = !c.announce;
     $('announce').classList.toggle('clip', !state.announceOpen);
