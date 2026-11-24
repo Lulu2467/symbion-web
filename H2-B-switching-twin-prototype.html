@@ -5593,24 +5593,33 @@
   html[data-theme="blue"] .citta-hello [data-kind="code"] i { background: var(--slate-tint); color: var(--slate); }
   html[data-theme="blue"] .citta-panel .citta-quick {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: nowrap;
     gap: 8px;
     width: 100%;
-    margin: 0 0 10px;
+    margin: 0 0 8px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
   }
+  html[data-theme="blue"] .citta-panel .citta-quick::-webkit-scrollbar { display: none; }
   html[data-theme="blue"] .citta-panel .citta-quick[hidden] { display: none !important; }
   html[data-theme="blue"] .citta-panel .citta-quick button {
-    width: 100%;
-    padding: 10px 12px;
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    width: auto;
+    height: 32px;
+    padding: 1px 12px 0;
     border: 1px solid var(--line);
-    border-radius: 12px;
+    border-radius: 999px;
     background: #fff;
     color: var(--ink);
     font: inherit;
     font-size: 13px;
     font-weight: 500;
-    line-height: 1.35;
-    text-align: left;
+    line-height: 1;
+    white-space: nowrap;
     cursor: pointer;
   }
   html[data-theme="blue"] .citta-panel .citta-quick button:hover { background: #f6f7f8; }
