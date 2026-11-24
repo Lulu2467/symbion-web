@@ -5520,6 +5520,103 @@
   html[data-theme="blue"] .citta-panel .citta-scroll > * {
     flex: none;
   }
+  html[data-theme="blue"] .citta-hello {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 16px 16px;
+    background: #fff;
+    text-align: center;
+    overflow: auto;
+  }
+  html[data-theme="blue"] .citta-hello[hidden] { display: none !important; }
+  html[data-theme="blue"] .citta-hello h2 {
+    margin: 0;
+    max-width: 16ch;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  html[data-theme="blue"] .citta-hello .lead {
+    margin: 8px 0 0;
+    max-width: 28ch;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--muted);
+  }
+  html[data-theme="blue"] .citta-hello .kinds {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+  }
+  html[data-theme="blue"] .citta-hello .kinds button,
+  html[data-theme="blue"] .citta-hello .prompts button {
+    font: inherit;
+    cursor: pointer;
+  }
+  html[data-theme="blue"] .citta-hello .kinds button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 32px;
+    padding: 0 10px 0 4px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  html[data-theme="blue"] .citta-hello .kinds button:hover { background: #f6f7f8; }
+  html[data-theme="blue"] .citta-hello .kinds i {
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+  }
+  html[data-theme="blue"] .citta-hello .kinds svg { width: 14px; height: 14px; display: block; }
+  html[data-theme="blue"] .citta-hello [data-kind="doc"] i { background: var(--blue-tint); color: var(--blue); }
+  html[data-theme="blue"] .citta-hello [data-kind="deck"] i { background: var(--amber-tint); color: var(--amber); }
+  html[data-theme="blue"] .citta-hello [data-kind="numbers"] i { background: var(--green-tint); color: var(--green); }
+  html[data-theme="blue"] .citta-hello [data-kind="files"] i { background: var(--slate-tint); color: var(--slate); }
+  html[data-theme="blue"] .citta-hello [data-kind="people"] i { background: var(--purple-tint); color: var(--purple); }
+  html[data-theme="blue"] .citta-hello .prompts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    margin-top: 24px;
+  }
+  html[data-theme="blue"] .citta-hello .prompts button {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #fff;
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.35;
+    text-align: left;
+  }
+  html[data-theme="blue"] .citta-hello .prompts button:hover { background: #f6f7f8; }
+  html[data-theme="blue"] .citta-hello button:focus-visible {
+    outline: 2px solid var(--ui-ring, #74c1e6);
+    outline-offset: 2px;
+  }
+  html[data-theme="blue"] .citta-panel:has(#cittaHello:not([hidden])) .foot .suggest { display: none; }
   html[data-theme="blue"] .citta-panel .foot {
     position: relative;
     z-index: 3;
@@ -13107,6 +13204,22 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
         </div>
 <div class="ctx">Working with: <span class="where">Home</span></div>
         <div class="citta-scroll-wrap" id="cittaScrollWrap">
+          <div class="citta-hello" id="cittaHello" hidden>
+            <h2>How can I help you, <span data-citta-hello-name>Lulu</span>?</h2>
+            <p class="lead">Ask about a file, a course, a person, or what to do next.</p>
+            <div class="kinds">
+              <button type="button" data-kind="doc" data-citta-draft="Help me write a doc about "><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 3.9h8.35L19.85 9.55V18.75a1.35 1.35 0 0 1-1.35 1.35H5.5a1.35 1.35 0 0 1-1.35-1.35V5.25A1.35 1.35 0 0 1 5.5 3.9z"/><path d="M13.65 3.95V9.4h6.05"/><path d="M7.35 12.9h7.5M7.35 16.15h4.9"/></svg></i>Doc</button>
+              <button type="button" data-kind="deck" data-citta-draft="Help me make a deck about "><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4.15" y="3.9" width="15.7" height="11.4" rx="1.45"/><path d="M12 15.3v4.8M8.15 20.1h7.7"/></svg></i>Deck</button>
+              <button type="button" data-kind="numbers" data-citta-draft="Help me look at the numbers for "><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4.15" y="3.9" width="15.7" height="16.2" rx="1.45"/><path d="M4.15 9.35h15.7M4.15 14.55h15.7M9.55 3.9v16.2M14.6 3.9v16.2"/></svg></i>Numbers</button>
+              <button type="button" data-kind="files" data-citta-draft="Help me find a file about "><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.8 8.2V6.6A1.4 1.4 0 0 1 5.2 5.2h4.1l1.7 1.8h7.2A1.4 1.4 0 0 1 19.6 8.4v8.8a1.4 1.4 0 0 1-1.4 1.4H5.2a1.4 1.4 0 0 1-1.4-1.4V8.2z"/></svg></i>Files</button>
+              <button type="button" data-kind="people" data-citta-draft="Help me with a message to "><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.2" r="3"/><path d="M5.6 18.8c1.1-2.7 3.4-4 6.4-4s5.3 1.3 6.4 4"/></svg></i>People</button>
+            </div>
+            <div class="prompts">
+              <button type="button" data-citta-prompt="Summarize Lecture 1 in one page">Summarize Lecture 1 in one page</button>
+              <button type="button" data-citta-prompt="Turn the reading report into a short deck">Turn the reading report into a short deck</button>
+              <button type="button" data-citta-prompt="Plan what is due this week">Plan what is due this week</button>
+            </div>
+          </div>
           <div class="citta-scroll" id="cittaScroll">
             <div class="user-bubble">Prep me for lecture 5</div>
             <div class="asst-card">
@@ -16456,6 +16569,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     user.className = 'user-bubble';
     user.textContent = text;
     scroll.appendChild(user);
+    syncCittaHello();
 
     if (input) {
       input.value = '';
@@ -20125,6 +20239,27 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
   const cittaThreads = [];
   let cittaCurrentId = 'seed';
   function cittaScrollEl() { return $('cittaScroll'); }
+  function syncCittaHello() {
+    const hello = $('cittaHello');
+    const scroll = cittaScrollEl();
+    if (!hello || !scroll) return;
+    hello.hidden = !!scroll.querySelector('.user-bubble, .asst-card');
+    const nameEl = hello.querySelector('[data-citta-hello-name]');
+    const name = (typeof userName === 'function' ? userName() : 'Lulu') || 'Lulu';
+    if (nameEl) nameEl.textContent = name;
+  }
+  $('cittaHello')?.addEventListener('click', (event) => {
+    const draft = event.target.closest('[data-citta-draft]');
+    const prompt = event.target.closest('[data-citta-prompt]');
+    if (draft) {
+      setCittaDraft(draft.dataset.cittaDraft);
+      $('cittaInput')?.focus();
+      return;
+    }
+    if (!prompt) return;
+    setCittaDraft(prompt.dataset.cittaPrompt);
+    sendFromCittaPanel(prompt);
+  });
   function cittaThreadTitle(root) {
     const text = (root.querySelector('.user-bubble')?.textContent || '').trim();
     return text.length > 36 ? text.slice(0, 36) + '…' : text;
@@ -20171,6 +20306,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
         cittaCurrentId = thread.id;
         scroll.innerHTML = thread.html;
         scroll.scrollTop = 0;
+        syncCittaHello();
         syncCittaScrollFade();
         cittaCloseMore();
       });
@@ -20183,6 +20319,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     cittaCurrentId = 't' + Date.now();
     const scroll = cittaScrollEl();
     if (scroll) scroll.replaceChildren();
+    syncCittaHello();
     const input = $('cittaInput');
     if (input) {
       input.value = '';
@@ -24771,6 +24908,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     });
   });
   syncCittaSendReady();
+  syncCittaHello();
   setAI('citta', { announce: false });
   homeKanbanReady = true;
   applyTheme();
