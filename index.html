@@ -12225,8 +12225,8 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
           <button type="button" class="osbar-mine" aria-haspopup="menu" aria-expanded="false" aria-controls="osbarMineMenu">My Symbion</button>
           <div class="osbar-mine-menu" id="osbarMineMenu" role="menu" aria-label="My Symbion">
             <button type="button" role="menuitem" data-symbion="memory">Memory</button>
-            <button type="button" role="menuitem" data-symbion="training">Training</button>
-            <button type="button" role="menuitem" data-symbion="look">形象</button>
+            <button type="button" role="menuitem" data-symbion="training" hidden>Training</button>
+            <button type="button" role="menuitem" data-symbion="look" hidden>形象</button>
           </div>
         </div>
         <div class="seg theme-seg" role="group" aria-label="Theme color">
@@ -13254,8 +13254,8 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
           <section id="symbionHost" aria-label="My Symbion" hidden>
             <div class="me-tabs" role="tablist" aria-label="My Symbion">
               <button type="button" class="me-tab on" data-me-tab="memory" role="tab" aria-selected="true">Memory</button>
-              <button type="button" class="me-tab" data-me-tab="training" role="tab" aria-selected="false">Training</button>
-              <button type="button" class="me-tab" data-me-tab="look" role="tab" aria-selected="false">形象</button>
+              <button type="button" class="me-tab" data-me-tab="training" role="tab" aria-selected="false" hidden>Training</button>
+              <button type="button" class="me-tab" data-me-tab="look" role="tab" aria-selected="false" hidden>形象</button>
             </div>
             <div class="me-scroll">
               <div class="me-panel" data-me-panel="portal">
@@ -13325,7 +13325,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
                   <article class="me-card">
                     <div class="me-badges"><span class="me-badge">Unverified</span></div>
                     <p class="me-kicker">Product</p>
-                    <h3>Digital people &amp; agents</h3>
+                    <h3>SI</h3>
                     <p>Ongoing work around Citta, Desk, Cosmo, skills, and memory</p>
                     <p class="me-meta">No authenticated matching evidence.</p>
                   </article>
@@ -25196,8 +25196,12 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     paintMyCosmo();
     paintMemory();
     if (meHasSI) { paintTraining(); paintLook(); }
+    else {
+      document.getElementById('meTraining')?.replaceChildren();
+      document.getElementById('meLook')?.replaceChildren();
+    }
     host.classList.toggle('is-portal', meTab === 'portal');
-    host.querySelectorAll('[data-me-tab], [data-symbion]').forEach((btn) => {
+    document.querySelectorAll('#symbionHost [data-me-tab], .osbar-mine-menu [data-symbion]').forEach((btn) => {
       const id = btn.dataset.meTab || btn.dataset.symbion;
       const allowed = symbionCan(id);
       btn.hidden = !allowed;
@@ -25331,7 +25335,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     const look = e.target.closest('[data-si-look]');
     if (look && meHasSI) { siLook = look.dataset.siLook; paintLook(); return; }
     const mine = e.target.closest('[data-my-cosmo]');
-    if (mine) { showCosmoAdmin(mine.dataset.myCosmo); return; }
+    if (mine && meCanManageCosmo) { showCosmoAdmin(mine.dataset.myCosmo); return; }
     const act = e.target.closest('[data-me-act]');
     if (act) showToastMsg('My Symbion · ' + act.dataset.meAct);
   });
@@ -25349,6 +25353,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     });
     symbionMenu.querySelectorAll('[data-symbion]').forEach((btn) => {
       btn.addEventListener('click', () => {
+        if (!symbionCan(btn.dataset.symbion)) return;
         openSymbion(btn.dataset.symbion);
         setSymbionMenu(false);
       });
