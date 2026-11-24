@@ -1204,14 +1204,24 @@
     min-height: 0; overflow: hidden;
   }
   html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .kb-legend:not(.kb-detail) { display: none; }
-  html[data-theme="blue"][data-home="v2"] #teamHost .cosmo-k {
-    margin: 14px 16px 2px; font-size: 12px; font-weight: 650; letter-spacing: .04em; line-height: 16px; color: #8b919a;
+  html[data-theme="blue"][data-home="v2"] #teamHost .list-sec {
+    display: flex; align-items: center; gap: 2px; box-sizing: border-box;
+    width: calc(100% - 16px); margin: 8px 8px 0; padding: 4px 6px; border: 0; border-radius: 6px;
+    background: transparent; font: 700 13px/20px inherit; letter-spacing: 0; color: #1d1c1d;
+    text-align: left; cursor: pointer;
   }
-  html[data-theme="blue"][data-home="v2"] #teamHost .cosmo-k:first-child { margin-top: 6px; }
-  html[data-theme="blue"][data-home="v2"] #teamHost .row.is-sub .row-hit { padding-left: 36px; }
-  html[data-theme="blue"][data-home="v2"] #teamHost .row.is-sub::after { left: 92px; }
+  html[data-theme="blue"][data-home="v2"] #teamHost .list-sec:first-child { margin-top: 2px; }
+  html[data-theme="blue"][data-home="v2"] #teamHost .list-sec:hover { background: #f4f4f5; }
+  html[data-theme="blue"][data-home="v2"] #teamHost .list-sec .sec-caret {
+    width: 16px; height: 16px; flex: none; color: #1d1c1d;
+  }
+  html[data-theme="blue"][data-home="v2"] #teamHost .list-sec.is-shut .sec-caret { transform: rotate(-90deg); }
+  html[data-theme="blue"][data-home="v2"] #teamHost .row-top strong {
+    flex: 0 0 auto; max-width: 68%;
+  }
   html[data-theme="blue"][data-home="v2"] #teamHost .row-top .tier {
-    flex: none; margin-left: 8px; font-size: 11px; font-weight: 550; line-height: 16px; color: #8b919a;
+    flex: 1 1 auto; min-width: 0; margin-left: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    font-size: 11px; font-weight: 550; line-height: 16px; color: #8b919a;
   }
   html[data-theme="blue"] .rail.is-open .rail-follow { align-items: stretch; }
   html[data-theme="blue"] .rail-follow-k {
@@ -25829,41 +25839,45 @@ function syncFollowGroups() {
   const rname = roland ? (roland.querySelector('.nm')?.textContent || roland.getAttribute('aria-label') || '').trim() : '';
   chats.forEach((c) => { if (c.followAt === 0) c.cosmoName = rname; });
 }
+const followSectionsOpen = { cosmos: true, sub: true };
 function renderFollowList() {
   syncFollowGroups();
   const rails = [...document.querySelectorAll('.rail-follow-row')];
   const q = state.query.trim().toLowerCase();
-  const sections = [];
-  rails.forEach((rail, at) => {
-    if (rail.hidden) return;
-    let groups = chats.filter((c) => c.kind === 'group' && c.followAt === at);
-    groups.sort((a, b) => (a.tier === 'big' ? 0 : 1) - (b.tier === 'big' ? 0 : 1) || (a.followOrder || 0) - (b.followOrder || 0));
-    if (q) groups = groups.filter((c) => matchGroup(c, q) || (c.cosmoName || '').toLowerCase().includes(q));
-    if (!groups.length) return;
-    const title = (rail.querySelector('.nm')?.textContent || rail.getAttribute('aria-label') || '').trim();
-    sections.push({ title, groups });
-  });
+  const visibleAt = new Set();
+  rails.forEach((rail, at) => { if (!rail.hidden) visibleAt.add(at); });
+  let groups = chats.filter((c) => c.kind === 'group' && visibleAt.has(c.followAt));
+  groups.sort((a, b) => a.followAt - b.followAt || (a.followOrder || 0) - (b.followOrder || 0));
+  const total = groups.length;
+  if (q) groups = groups.filter((c) => matchGroup(c, q) || (c.cosmoName || '').toLowerCase().includes(q));
+  const sections = [
+    { key: 'cosmos', title: 'Cosmos', groups: groups.filter((c) => c.tier === 'big') },
+    { key: 'sub', title: 'Subgroups', groups: groups.filter((c) => c.tier !== 'big') }
+  ].filter((section) => section.groups.length);
   const shown = sections.flatMap((section) => section.groups);
   if (!q && !state.notice && shown.length && !shown.some((c) => c.id === state.id)) state.id = shown[0].id;
-  const total = rails.reduce((n, rail, at) => n + (rail.hidden ? 0 : chats.filter((c) => c.kind === 'group' && c.followAt === at).length), 0);
   $('gcount').textContent = total + (total === 1 ? ' group' : ' groups');
   const rowHTML = (c) => {
     const label = dotLabel(c);
     const dot = needsDot(c) ? `<i class="dot" title="${esc(label)}" aria-label="${esc(label)}"></i>` : '';
     const mute = c.muted ? '<svg class="mute" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 22a2.1 2.1 0 0 0 2.05-1.6h-4.1A2.1 2.1 0 0 0 12 22Zm6.4-4.6c.5.4.2 1.1-.4 1.1H6c-.6 0-.9-.7-.4-1.1L7 15.8V11a5 5 0 0 1 3.2-4.7V5.2a1.8 1.8 0 1 1 3.6 0v1.1A5 5 0 0 1 17 11v4.8l1.4 1.6Z"/><path fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" d="M5 6.2 18.2 19"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M5 6.2 18.2 19"/></svg>' : '';
     const on = !state.notice && c.id === state.id;
-    const tier = c.tier === 'big' ? 'Big group' : 'Subgroup';
-    return `<div class="row${c.tier === 'sub' ? ' is-sub' : ''}${on ? ' on' : ''}">
+    const meta = c.cosmoName && c.cosmoName !== c.name ? `<span class="tier">${esc(c.cosmoName)}</span>` : '';
+    return `<div class="row${on ? ' on' : ''}">
       <button type="button" class="row-hit" data-open="${c.id}"${on ? ' aria-current="true"' : ''}>
         <span class="face">${face(c)}${dot}</span>
         <span class="row-body">
-          <span class="row-top"><strong>${esc(c.name)}</strong><span class="tier">${tier}</span><time>${esc(c.time)}</time></span>
+          <span class="row-top"><strong>${esc(c.name)}</strong>${meta}<time>${esc(c.time)}</time></span>
           <span class="row-bot"><em>${esc(preview(c))}</em>${mute}</span>
         </span>
       </button>
     </div>`;
   };
-  const body = sections.map((section) => `<div class="cosmo-k">${esc(section.title)}</div>${section.groups.map(rowHTML).join('')}`).join('');
+  const caret = '<svg class="sec-caret" viewBox="0 0 20 20" aria-hidden="true"><path fill="currentColor" d="M5.7 7.3a1 1 0 0 1 1.4 0L10 10.2l2.9-2.9a1 1 0 1 1 1.4 1.4l-3.6 3.6a1 1 0 0 1-1.4 0L5.7 8.7a1 1 0 0 1 0-1.4Z"/></svg>';
+  const body = sections.map((section) => {
+    const open = !!q || followSectionsOpen[section.key] !== false;
+    return `<button type="button" class="list-sec${open ? '' : ' is-shut'}" data-list-sec="${section.key}" aria-expanded="${open ? 'true' : 'false'}">${caret}<span>${esc(section.title)}</span></button>${open ? section.groups.map(rowHTML).join('') : ''}`;
+  }).join('');
   $('rows').innerHTML = body || `<p class="empty">${q ? 'No joined group matches that name, number, or slug.' : 'No Cosmos followed yet.'}</p>`;
   syncTeamEdgeFade();
 }
@@ -27759,6 +27773,12 @@ $('rows').addEventListener('click', (e) => {
   const slug = e.target.closest('[data-slug-filter]');
   if (slug) { openModal('finder', { reset: true, slug: slug.dataset.slugFilter }); return; }
   if (e.target.closest('[data-open-notice]')) { openNotice(); return; }
+  const sec = e.target.closest('[data-list-sec]');
+  if (sec) {
+    followSectionsOpen[sec.dataset.listSec] = followSectionsOpen[sec.dataset.listSec] === false;
+    renderList();
+    return;
+  }
   const row = e.target.closest('[data-open]');
   if (row) openChat(row.dataset.open);
 });
