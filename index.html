@@ -11746,39 +11746,96 @@
   html[data-theme="blue"] #teamHost .msg:focus-within .act {
     display: none;
   }
-  html[data-theme="blue"] #teamHost .log:has(.gpost) { gap: 0; padding: 4px 16px 8px; }
+  html[data-theme="blue"] #teamHost .log:has(.gpost) { gap: 0; padding: 0 16px 12px; }
   html[data-theme="blue"] #teamHost .gpost {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 14px 0;
+    display: grid;
+    grid-template-columns: 36px minmax(0, 1fr);
+    column-gap: 10px;
+    row-gap: 0;
+    align-items: start;
+    padding: 14px 0 12px;
     border-bottom: 1px solid #e6e8ec;
   }
-  html[data-theme="blue"] #teamHost .gpost-top { display: flex; align-items: center; gap: 10px; min-width: 0; }
-  html[data-theme="blue"] #teamHost .gpost-top .av { width: 36px; height: 36px; border-radius: 6px; flex: none; }
-  html[data-theme="blue"] #teamHost .gpost-who { display: flex; align-items: center; gap: 6px; min-width: 0; flex: 1; }
+  html[data-theme="blue"] #teamHost .gpost-top { display: contents; }
+  html[data-theme="blue"] #teamHost .gpost-top .av { grid-column: 1; grid-row: 1; width: 36px; height: 36px; border-radius: 6px; }
+  html[data-theme="blue"] #teamHost .gpost-who {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    padding-top: 1px;
+  }
   html[data-theme="blue"] #teamHost .gpost-who b { font-size: 14px; font-weight: 500; line-height: 20px; color: #1a1d21; }
-  html[data-theme="blue"] #teamHost .gpost-time { margin-left: auto; flex: none; font-size: 12px; line-height: 20px; color: #b0b4ba; }
-  html[data-theme="blue"] #teamHost .gpost-body { font-size: 15px; line-height: 1.45; color: #1a1d21; }
-  html[data-theme="blue"] #teamHost .gpost-body .filechip { margin-top: 6px; }
-  html[data-theme="blue"] #teamHost .gpost-from { margin: 0; font-size: 12px; line-height: 18px; color: #8b919a; }
-  html[data-theme="blue"] #teamHost .gpost-replies { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 2px 0 0 46px; }
-  html[data-theme="blue"] #teamHost .greply { display: flex; gap: 8px; align-items: flex-start; }
+  html[data-theme="blue"] #teamHost .gpost-time { margin-left: auto; flex: none; font-size: 12px; line-height: 20px; color: #656d76; font-variant-numeric: tabular-nums; }
+  html[data-theme="blue"] #teamHost .gpost-body,
+  html[data-theme="blue"] #teamHost .gpost-from,
+  html[data-theme="blue"] #teamHost .gpost-replies,
+  html[data-theme="blue"] #teamHost .gpost-acts { grid-column: 2; min-width: 0; }
+  html[data-theme="blue"] #teamHost .gpost-body {
+    margin-top: 2px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #1a1d21;
+    text-wrap: pretty;
+  }
+  html[data-theme="blue"] #teamHost .gpost-body .filechip {
+    margin-top: 8px;
+    max-width: 280px;
+    padding: 8px;
+    border: 1px solid #e6e8ec;
+    border-radius: 12px;
+    background: #fff;
+  }
+  html[data-theme="blue"] #teamHost .gpost-from { margin: 6px 0 0; font-size: 12px; line-height: 18px; color: #656d76; }
+  html[data-theme="blue"] #teamHost .gpost-replies {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 10px 0 0;
+    padding: 8px 10px;
+    border-radius: 12px;
+    background: #f6f7f8;
+  }
+  html[data-theme="blue"] #teamHost .greply { display: flex; gap: 8px; align-items: flex-start; min-width: 0; }
   html[data-theme="blue"] #teamHost .greply .av { width: 24px; height: 24px; border-radius: 4px; flex: none; font-size: 10px; }
-  html[data-theme="blue"] #teamHost .greply p { margin: 0; font-size: 14px; line-height: 1.4; color: #1a1d21; }
-  html[data-theme="blue"] #teamHost .greply b { font-weight: 500; margin-right: 6px; }
-  html[data-theme="blue"] #teamHost .gpost-acts { display: flex; gap: 14px; }
+  html[data-theme="blue"] #teamHost .greply-col { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+  html[data-theme="blue"] #teamHost .greply-col b { font-size: 13px; font-weight: 500; line-height: 18px; color: #1a1d21; }
+  html[data-theme="blue"] #teamHost .greply-col p { margin: 0; font-size: 14px; line-height: 1.45; color: #1a1d21; text-wrap: pretty; }
+  html[data-theme="blue"] #teamHost .gpost-acts { display: flex; gap: 4px; margin-top: 4px; }
   html[data-theme="blue"] #teamHost .gpost-acts button {
     border: 0;
     background: transparent;
-    padding: 0;
+    min-height: 32px;
+    padding: 0 8px;
+    border-radius: 8px;
     font-size: 13px;
     line-height: 18px;
-    color: #5f6368;
+    color: #656d76;
   }
-  html[data-theme="blue"] #teamHost .gpost-acts button:hover { color: #1a1d21; }
+  html[data-theme="blue"] #teamHost .gpost-acts button:hover { background: #f6f7f8; color: #1a1d21; }
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .announce { gap: 4px; padding: 12px 16px; }
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .announce b {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: #656d76;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .announce span {
+    font-size: 13px;
+    line-height: 1.45;
+    color: #1a1d21;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #teamHost .announce.clip span {
+    display: -webkit-box;
+    white-space: normal;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
   html[data-theme="blue"] #teamHost .gpost-acts button[disabled],
-  html[data-theme="blue"] #teamHost .gpost-acts button[disabled]:hover { color: #b0b4ba; cursor: default; }
+  html[data-theme="blue"] #teamHost .gpost-acts button[disabled]:hover { background: transparent; color: #b0b4ba; cursor: default; }
   html[data-theme="blue"] #teamHost .composer.is-post-locked .box textarea { cursor: default; }
 </style>
 </head>
@@ -27363,7 +27420,7 @@ function postCardHTML(chat, item, showTime) {
   const replies = item.replies.map((r) => {
     const who = person(r.who);
     const body = r.file ? esc(r.file.name) : linkMentions(r.text || '');
-    return `<div class="greply" id="msg-${r.id}" data-id="${r.id}"><button type="button" class="av hue-${who.hue}" data-person="${r.who}" aria-label="${esc(who.name)}">${esc(who.short)}</button><p><b>${esc(r.who === ME ? 'You' : who.name)}</b> ${body}</p></div>`;
+    return `<div class="greply" id="msg-${r.id}" data-id="${r.id}"><button type="button" class="av hue-${who.hue}" data-person="${r.who}" aria-label="${esc(who.name)}">${esc(who.short)}</button><div class="greply-col"><b>${esc(r.who === ME ? 'You' : who.name)}</b><p>${body}</p></div></div>`;
   }).join('');
   const replyBlock = replies ? `<div class="gpost-replies">${replies}</div>` : '';
   const big = bigGroupOf(chat);
