@@ -4466,13 +4466,13 @@
     box-shadow: 0 16px 40px rgba(20, 24, 28, .16);
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .frame.chat-float #teamHost {
-    top: 50%;
-    left: 50%;
+    top: auto;
+    left: auto;
     right: auto;
     bottom: auto;
-    width: min(420px, calc(100% - 48px));
-    height: min(640px, calc(100% - 96px));
-    transform: translate(-50%, -50%);
+    width: auto;
+    height: auto;
+    transform: none;
   }
   .frame.chat-float #teamHost .list { display: none !important; }
   .frame.chat-float #teamHost > .team,
@@ -23654,6 +23654,13 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     fit();
   }
   window.openTeam = openTeam;
+  window.leaveTeamPage = function () {
+    if (teamOpen) closeTeam();
+    if (screen === 'team') {
+      screen = 'home';
+      syncHash();
+    }
+  };
   function closeTeam() {
     if (!teamOpen) return;
     teamOpen = false;
@@ -29465,7 +29472,17 @@ window.paintRailGroups = paintRailGroups;
 document.getElementById('railRows')?.addEventListener('click', (e) => {
   const btn = e.target.closest('[data-rail-group]');
   if (!btn) return;
-  openChat(btn.dataset.railGroup, { page: true });
+  const root = document.documentElement;
+  const v2 = root.dataset.home === 'v2' && root.dataset.palette !== 'green';
+  if (v2 && window.leaveTeamPage) window.leaveTeamPage();
+  openChat(btn.dataset.railGroup, v2 ? null : { page: true });
+  if (!v2) return;
+  document.querySelectorAll('#primaryRail .r[data-rail], #tabbar .r[data-rail]').forEach((r) => {
+    const on = r.dataset.rail === 'community';
+    r.classList.toggle('on', on);
+    if (on) r.setAttribute('aria-current', 'page');
+    else r.removeAttribute('aria-current');
+  });
 });
 function openChat(id, opts) {
   const c = chats.find((x) => x.id === id);
@@ -29497,6 +29514,16 @@ function openChat(id, opts) {
   const frameEl = document.getElementById('frame');
   if (opts && opts.page) {
     frameEl?.classList.remove('chat-float');
+    const host = document.getElementById('teamHost');
+    if (host) {
+      host.style.left = '';
+      host.style.top = '';
+      host.style.right = '';
+      host.style.bottom = '';
+      host.style.width = '';
+      host.style.height = '';
+      host.style.transform = '';
+    }
     if (window.openTeam) window.openTeam();
     paintRailGroups();
     return;
