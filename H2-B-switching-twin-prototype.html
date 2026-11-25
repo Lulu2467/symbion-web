@@ -2638,22 +2638,6 @@
     grid-column: 1;
     grid-row: 3;
   }
-  html[data-theme="blue"]:not([data-palette="green"]):not([data-home="v2"]) .hub:has(#screen-home.on) #tail-home .rem-card:has(#homeTaskBoard .ws-home-cal),
-  html[data-theme="blue"]:not([data-palette="green"]):not([data-home="v2"]) .hub:has(#screen-home.on) #tail-home .rem-card:has(#homeTaskBoard .desk-cal),
-  html[data-theme="blue"]:not([data-palette="green"]):not([data-home="v2"]) .hub:has(#screen-home.on) #tail-home .rem-card:has(#homeTaskBoard .g-list),
-  html[data-theme="blue"]:not([data-palette="green"]):not([data-home="v2"]) .hub:has(#screen-home.on) #tail-home .rem-card:has(#homeTaskBoard .desk-board) {
-    height: auto;
-    max-height: none;
-    min-height: 0;
-    overflow: visible;
-  }
-  html[data-theme="blue"]:not([data-palette="green"]):not([data-home="v2"]) .hub:has(#screen-home.on) #homeTaskBoard:has(.ws-home-cal),
-  html[data-theme="blue"]:not([data-palette="green"]):not([data-home="v2"]) .hub:has(#screen-home.on) #homeTaskBoard:has(.desk-cal),
-  html[data-theme="blue"]:not([data-palette="green"]):not([data-home="v2"]) .hub:has(#screen-home.on) #homeTaskBoard:has(.g-list),
-  html[data-theme="blue"]:not([data-palette="green"]):not([data-home="v2"]) .hub:has(#screen-home.on) #homeTaskBoard:has(.desk-board) {
-    height: auto;
-    flex: none;
-  }
   html[data-theme="blue"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .ws-kanban {
     flex: 1 1 auto;
     min-height: 0;
@@ -2814,19 +2798,10 @@
     flex-direction: column;
     overflow: auto;
   }
-  html[data-theme="blue"]:not([data-palette="green"]):not([data-home="v2"]) .hub:has(#screen-home.on) #homeTaskBoard .home-kanban-body:has(.ws-home-cal),
-  html[data-theme="blue"]:not([data-palette="green"]):not([data-home="v2"]) .hub:has(#screen-home.on) #homeTaskBoard .home-kanban-body:has(.desk-cal),
-  html[data-theme="blue"]:not([data-palette="green"]):not([data-home="v2"]) .hub:has(#screen-home.on) #homeTaskBoard .home-kanban-body:has(.g-list),
-  html[data-theme="blue"]:not([data-palette="green"]):not([data-home="v2"]) .hub:has(#screen-home.on) #homeTaskBoard .home-kanban-body:has(.desk-board) {
-    flex: none;
-    height: auto;
-    min-height: auto;
-    overflow: visible;
-  }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .ws-home-cal .kb-legend {
     display: none;
   }
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .home-kanban-body:not(:has(.tk-board)) {
+  html[data-theme="blue"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .home-kanban-body:not(:has(.tk-board)) {
     overflow: auto;
   }
   html[data-theme="blue"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .home-kanban-body:has(.tk-board) { overflow: hidden; }
