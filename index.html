@@ -4708,10 +4708,22 @@
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav button[data-set="desk"],
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav .set-kicker[data-kicker="friends"],
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav .set-kicker[data-kicker="desk"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav .set-kicker[data-kicker="account"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav .set-kicker[data-kicker="connections"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav .set-kicker[data-kicker="preferences"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav button[data-set="settings"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav button[data-set="apps"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav button[data-set="runtime"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav button[data-set="translate"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav button[data-set="chat"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav button[data-set="neo"],
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost button.set-quiet[data-set="friends"],
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost button.set-quiet[data-set="desk"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost button.set-quiet[data-set="apps"],
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #meAccount [data-rail-account="friends"],
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #meAccount [data-rail-account="desk"] { display: none; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #meAccount [data-rail-account="desk"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #meAccount [data-rail-account="settings"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #meAccount [data-rail-account="apps"] { display: none; }
   .rail .r .rail-ico-spark { width: 15px; height: 15px; }
   .rail .r .rail-ico-spark-line { display: none; }
   html[data-theme="blue"] .rail .r[data-rail="cosmo"] .rail-ico-spark-solid { display: none; }
@@ -14146,11 +14158,11 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
                 <button type="button" data-set="cosmos">Cosmos</button>
                 <p class="set-kicker" data-kicker="desk">DESK</p>
                 <button type="button" data-set="desk">Desk</button>
-                <p class="set-kicker">ACCOUNT</p>
+                <p class="set-kicker" data-kicker="account">ACCOUNT</p>
                 <button type="button" data-set="settings">Account &amp; settings</button>
-                <p class="set-kicker">CONNECTIONS</p>
+                <p class="set-kicker" data-kicker="connections">CONNECTIONS</p>
                 <button type="button" data-set="apps">Connected apps</button>
-                <p class="set-kicker">PREFERENCES</p>
+                <p class="set-kicker" data-kicker="preferences">PREFERENCES</p>
                 <button type="button" data-set="runtime">Runtime</button>
                 <button type="button" data-set="translate">Local translation</button>
                 <button type="button" data-set="chat">Chat display</button>
