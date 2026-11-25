@@ -21037,6 +21037,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     if (window.syncV2Rail) window.syncV2Rail();
     if (window.syncAccountMenu) window.syncAccountMenu();
     if (window.paintHomeTaskBoard) window.paintHomeTaskBoard();
+    if (typeof syncProfileSection === 'function') syncProfileSection();
     if (document.getElementById('frame')?.classList.contains('team-on') && typeof render === 'function') render(false);
   }
   const HOME_FOLLOW_NOTES = [
@@ -21723,12 +21724,12 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
   function syncProfileSection() {
     const nav = document.querySelector('#setHost nav.set-nav');
     if (!nav) return;
-    const blue = document.documentElement.dataset.theme === 'blue' && document.documentElement.dataset.palette !== 'green';
+    const v2 = document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green';
     const profileKicker = nav.querySelector('.set-kicker');
     const friends = nav.querySelector('button[data-set="friends"]');
     if (!profileKicker || !friends) return;
     let friendsKicker = nav.querySelector('.set-kicker[data-kicker="friends"]');
-    if (blue) {
+    if (v2) {
       profileKicker.textContent = 'PROFILE';
       if (!friendsKicker) {
         friendsKicker = document.createElement('p');
