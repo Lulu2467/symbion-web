@@ -20706,6 +20706,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     paintHomeFollow();
     if (window.syncV2Rail) window.syncV2Rail();
     if (window.syncAccountMenu) window.syncAccountMenu();
+    if (window.paintHomeTaskBoard) window.paintHomeTaskBoard();
   }
   const HOME_FOLLOW_NOTES = [
     { text: "Lecture 5 slides are up. Three quiz questions at the end.", when: "1h ago" },
@@ -28214,12 +28215,17 @@ function paintHomeTaskBoard() {
   const c = chats.find((row) => row.id === 'hip');
   const titleRow = document.querySelector('#tail-home .two-title-l');
   if (!slot || !c) return;
-  const blue = document.documentElement.dataset.theme === 'blue';
+  const root = document.documentElement;
+  const v2 = root.dataset.theme === 'blue' && root.dataset.home === 'v2' && root.dataset.palette !== 'green';
   titleRow?.querySelector('.home-canvas')?.remove();
   titleRow?.querySelector('.home-add')?.remove();
   const boardTitle = document.getElementById('homeBoardTitle');
-  if (boardTitle && blue) boardTitle.textContent = gCanvasTitle(homeCanvas);
-  if (!blue) return;
+  if (boardTitle) boardTitle.textContent = 'Reminders';
+  if (!v2) {
+    slot.innerHTML = '';
+    return;
+  }
+  if (boardTitle) boardTitle.textContent = gCanvasTitle(homeCanvas);
   const rangeSwitch = `<div class="desk-views" role="group" aria-label="Range">
             <button type="button" data-home-span="day" aria-pressed="${gSpan === 'day'}">Day</button>
             <button type="button" data-home-span="week" aria-pressed="${gSpan === 'week'}">Week</button>
