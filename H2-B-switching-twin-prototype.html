@@ -4414,6 +4414,21 @@
   #railBody .rail-link.on:hover { background: #f6f7f8; color: #3c7a94; font-weight: 650; }
   #railBody .rail-link.is-out { color: #d93025; }
   #railBody .rail-link.is-out:hover { background: #fdeceb; color: #d93025; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-notes { display: flex; flex-direction: column; gap: 2px; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-note {
+    display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+    width: 100%; margin: 0; padding: 8px 10px; border: 0; border-radius: 8px;
+    background: transparent; color: #1d1d1f; font: inherit; text-align: left; cursor: pointer;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-note:hover { background: #f6f7f8; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-note .src { font-size: 11px; font-weight: 650; line-height: 1.2; color: #3c7a94; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-note b { font-size: 13px; font-weight: 600; line-height: 1.3; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-note small {
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    font-size: 12px; font-weight: 400; line-height: 1.35; color: #71777d;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-note time { font-size: 11px; line-height: 1.2; color: #8b919a; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-note-empty { margin: 4px 12px 0; font-size: 12px; color: #8b919a; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-follow { display: flex !important; width: 100%; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-follow-row .nm {
     display: block !important;
@@ -13466,7 +13481,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
             if (!rail || document.getElementById('tabbar')) return;
             var body = document.createElement('div');
             body.id = 'railBody';
-            body.innerHTML = '<div class="rail-pane" data-rail-pane="home"><button type="button" class="rail-link" data-rail-go="drive">Super Drive</button><button type="button" class="rail-link" data-rail-go="symbion">My Symbion</button></div><div class="rail-pane" data-rail-pane="cosmo" hidden></div><div class="rail-pane" data-rail-pane="community" hidden><div id="railRows"></div></div><div class="rail-pane" data-rail-pane="me" hidden><button type="button" class="rail-link" data-rail-go="profile">Profile</button><button type="button" class="rail-link" data-rail-go="cosmos">My Cosmos</button><button type="button" class="rail-link" data-rail-go="security">Security &amp; privacy</button><button type="button" class="rail-link" data-rail-go="settings">Account &amp; settings</button><button type="button" class="rail-link is-out" data-rail-go="signout">Sign out</button></div>';
+            body.innerHTML = '<div class="rail-pane" data-rail-pane="home"><button type="button" class="rail-link" data-rail-go="drive">Super Drive</button><button type="button" class="rail-link" data-rail-go="symbion">My Symbion</button><p class="rail-k">Notifications</p><div id="railNotes" class="rail-notes"></div></div><div class="rail-pane" data-rail-pane="cosmo" hidden></div><div class="rail-pane" data-rail-pane="community" hidden><div id="railRows"></div></div><div class="rail-pane" data-rail-pane="me" hidden><button type="button" class="rail-link" data-rail-go="profile">Profile</button><button type="button" class="rail-link" data-rail-go="cosmos">My Cosmos</button><button type="button" class="rail-link" data-rail-go="security">Security &amp; privacy</button><button type="button" class="rail-link" data-rail-go="settings">Account &amp; settings</button><button type="button" class="rail-link is-out" data-rail-go="signout">Sign out</button></div>';
             var follow = rail.querySelector('.rail-follow');
             var rec = rail.querySelector('.rail-rec');
             var cosmoPane = body.querySelector('[data-rail-pane="cosmo"]');
@@ -20832,6 +20847,25 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
         else openSettings('signout');
       }
     });
+    document.getElementById('railNotes')?.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-note-go]');
+      if (!btn) return;
+      if (btn.dataset.noteGo === 'community' && typeof window.openChat === 'function') {
+        window.openChat(btn.dataset.noteId, { page: true });
+        document.querySelectorAll('#primaryRail .r[data-rail], #tabbar .r[data-rail]').forEach((r) => {
+          const on = r.dataset.rail === 'community';
+          r.classList.toggle('on', on);
+          if (on) r.setAttribute('aria-current', 'page');
+          else r.removeAttribute('aria-current');
+        });
+        return;
+      }
+      openDir('cosmo', { float: true });
+      const search = document.getElementById('dirSearch');
+      if (!search) return;
+      search.value = btn.dataset.noteId || '';
+      search.dispatchEvent(new Event('input', { bubbles: true }));
+    });
     document.getElementById('meAccount')?.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-rail-account]');
       if (!btn) return;
@@ -21109,6 +21143,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     if (window.syncV2Rail) window.syncV2Rail();
     if (window.syncAccountMenu) window.syncAccountMenu();
     if (window.paintHomeTaskBoard) window.paintHomeTaskBoard();
+    if (window.paintHomeNotes) window.paintHomeNotes();
     if (typeof syncProfileSection === 'function') syncProfileSection();
     const frameNow = document.getElementById('frame');
     if (teamOpen && frameNow) {
@@ -21124,6 +21159,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     { text: "Shared notes on the jet quenching pages.", when: "Yesterday" },
     { text: "Posted a short recap of yesterday's section.", when: "2d ago" }
   ];
+  window.HOME_FOLLOW_NOTES = HOME_FOLLOW_NOTES;
   function paintHomeFollow() {
     const host = document.getElementById('homeFollow');
     if (!host) return;
@@ -29705,6 +29741,61 @@ function render(scroll) {
   }
   renderList();
   if (typeof paintRailGroups === 'function') paintRailGroups();
+  window.paintHomeNotes = function () {
+    const host = document.getElementById('railNotes');
+    if (!host || !window.__notesReady) return;
+    const v2 = document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green';
+    host.replaceChildren();
+    if (!v2) return;
+    const notes = window.HOME_FOLLOW_NOTES || [];
+    const community = chats.filter((c) => c.followExtra && c.kind === 'group' && c.messages && c.messages.length).map((c) => {
+      const msg = [...c.messages].reverse().find((m) => !m.reply) || c.messages[c.messages.length - 1];
+      const who = person(msg.who);
+      return { source: 'Community', title: c.name, text: ((who && who.name) || 'Someone') + ': ' + msg.text, time: c.time || '', go: 'community', id: c.id };
+    });
+    const cosmo = [...document.querySelectorAll('#primaryRail .rail-follow-row')].flatMap((row, i) => {
+      if (row.hidden) return [];
+      const note = notes[i] || { text: 'No new messages.', when: '' };
+      const title = (row.querySelector('.nm')?.textContent || row.getAttribute('aria-label') || '').trim();
+      return [{ source: 'Cosmo', title, text: note.text, time: note.when, go: 'cosmo', id: row.dataset.follow || title }];
+    });
+    const rank = (time) => {
+      const t = String(time || '').toLowerCase();
+      if (/(^|\s)1h/.test(t) || t === 'today') return 40;
+      if (t.includes('5h')) return 30;
+      if (t.includes('yesterday')) return 20;
+      if (t.includes('2d')) return 10;
+      return 0;
+    };
+    const items = [...community, ...cosmo].sort((a, b) => rank(b.time) - rank(a.time) || a.source.localeCompare(b.source));
+    if (!items.length) {
+      const empty = document.createElement('p');
+      empty.className = 'rail-note-empty';
+      empty.textContent = 'No notifications.';
+      host.append(empty);
+      return;
+    }
+    items.forEach((item) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'rail-note';
+      btn.dataset.noteGo = item.go;
+      btn.dataset.noteId = item.id;
+      const src = document.createElement('span');
+      src.className = 'src';
+      src.textContent = item.source;
+      const title = document.createElement('b');
+      title.textContent = item.title;
+      const text = document.createElement('small');
+      text.textContent = item.text;
+      const time = document.createElement('time');
+      time.textContent = item.time;
+      btn.append(src, title, text, time);
+      host.append(btn);
+    });
+  };
+  window.__notesReady = true;
+  if (window.paintHomeNotes) window.paintHomeNotes();
   renderChrome();
   renderLog(scroll);
   renderHistory();
@@ -29739,8 +29830,10 @@ function paintRailGroups() {
     return `<section class="rail-sec"><p class="rail-sec-k">${esc(title)}</p>${big.map((c) => channel(c, false)).join('')}${sub.map((c) => channel(c, true)).join('')}</section>`;
   }).join('');
   host.innerHTML = html || '<p class="rail-empty">No groups yet.</p>';
+  if (window.paintHomeNotes) window.paintHomeNotes();
 }
 window.paintRailGroups = paintRailGroups;
+window.openChat = openChat;
 document.getElementById('railRows')?.addEventListener('click', (e) => {
   const btn = e.target.closest('[data-rail-group]');
   if (!btn) return;
