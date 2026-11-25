@@ -6245,6 +6245,35 @@
   }
   html[data-theme="blue"] .citta-panel .citta-lines svg { width: 16px; height: 16px; display: block; }
   html[data-theme="blue"] .citta-panel .citta-lines:hover { color: #000; background: transparent; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel:not(.is-hist) .citta-chatbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 7;
+    width: 44px;
+    height: 54px;
+    padding: 0;
+    justify-content: center;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel:not(.is-hist) .citta-chatbar-row {
+    justify-content: center;
+    height: 100%;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel:not(.is-hist) .citta-more:not([hidden]) {
+    left: 8px;
+    right: auto;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel .ph .sw-sm { display: none; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel .ph b {
+    order: 1;
+    margin-left: auto;
+    cursor: pointer;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel .ph .citta-av {
+    order: 2;
+    cursor: pointer;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel .ph .panel-close { order: 3; }
   html[data-theme="blue"] .citta-panel .citta-hist-back {
     display: none;
     width: 30px;
@@ -20680,6 +20709,31 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       }
       openCittaSwitcher({ anchor: btn });
     });
+    const cittaHoverName = $('cittaPanelName');
+    const cittaHoverAv = $('cittaPanelAv');
+    let cittaHoverTimer = 0;
+    const cittaCanHoverSwitch = () => document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green';
+    const cittaHoverOpen = () => {
+      if (!cittaCanHoverSwitch() || !cittaHoverName) return;
+      clearTimeout(cittaHoverTimer);
+      if (menu.classList.contains('open') && menu.classList.contains('in-panel')) return;
+      openCittaSwitcher({ anchor: cittaHoverName });
+    };
+    const cittaHoverClose = (e) => {
+      if (!cittaCanHoverSwitch()) return;
+      const next = e.relatedTarget;
+      if (next && next.closest && (next.closest('#cittaPanelName') || next.closest('#cittaPanelAv') || next.closest('.menu'))) return;
+      clearTimeout(cittaHoverTimer);
+      cittaHoverTimer = setTimeout(() => {
+        if (menu.classList.contains('in-panel')) setMenu(false);
+      }, 180);
+    };
+    cittaHoverName?.addEventListener('mouseenter', cittaHoverOpen);
+    cittaHoverAv?.addEventListener('mouseenter', cittaHoverOpen);
+    cittaHoverName?.addEventListener('mouseleave', cittaHoverClose);
+    cittaHoverAv?.addEventListener('mouseleave', cittaHoverClose);
+    menu?.addEventListener('mouseenter', () => clearTimeout(cittaHoverTimer));
+    menu?.addEventListener('mouseleave', cittaHoverClose);
 
     initDiscoverScroll();
   }
