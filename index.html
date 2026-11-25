@@ -4433,21 +4433,23 @@
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor i svg { width: 16px; height: 16px; display: block; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor i svg.line-ico { display: block; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor i svg.line-ico ~ svg { display: none; }
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-notes { display: flex; flex-direction: column; gap: 2px; }
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-note {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #noteHost .note-body { flex: 1; min-height: 0; overflow: auto; padding: 4px 16px 24px; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #noteHost h2 { margin: 12px 8px 8px; font-size: 16px; font-weight: 650; letter-spacing: -0.01em; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #noteHost .rail-notes { display: flex; flex-direction: column; gap: 2px; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #noteHost .rail-note {
     display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
     width: 100%; margin: 0; padding: 8px 10px; border: 0; border-radius: 8px;
     background: transparent; color: #1d1d1f; font: inherit; text-align: left; cursor: pointer;
   }
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-note:hover { background: #f6f7f8; }
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-note .src { font-size: 11px; font-weight: 650; line-height: 1.2; color: #3c7a94; }
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-note b { font-size: 13px; font-weight: 600; line-height: 1.3; }
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-note small {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #noteHost .rail-note:hover { background: #f6f7f8; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #noteHost .rail-note .src { font-size: 11px; font-weight: 650; line-height: 1.2; color: #3c7a94; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #noteHost .rail-note b { font-size: 13px; font-weight: 600; line-height: 1.3; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #noteHost .rail-note small {
     display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
     font-size: 12px; font-weight: 400; line-height: 1.35; color: #71777d;
   }
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-note time { font-size: 11px; line-height: 1.2; color: #8b919a; }
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-note-empty { margin: 4px 12px 0; font-size: 12px; color: #8b919a; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #noteHost .rail-note time { font-size: 11px; line-height: 1.2; color: #8b919a; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #noteHost .rail-note-empty { margin: 4px 12px 0; font-size: 12px; color: #8b919a; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-follow { display: flex !important; width: 100%; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-follow-row .nm {
     display: block !important;
@@ -4561,7 +4563,8 @@
   .frame.pane-float #setHost:not([hidden]),
   .frame.pane-float #dirHost:not([hidden]),
   .frame.pane-float #cosmoAdminHost:not([hidden]),
-  .frame.pane-float #deskHost:not([hidden]) {
+  .frame.pane-float #deskHost:not([hidden]),
+  .frame.pane-float #noteHost:not([hidden]) {
     display: flex !important;
     position: absolute;
     top: 68px;
@@ -13500,7 +13503,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
             if (!rail || document.getElementById('tabbar')) return;
             var body = document.createElement('div');
             body.id = 'railBody';
-            body.innerHTML = '<div class="rail-pane" data-rail-pane="home"><button type="button" class="rail-link" data-rail-go="drive">Super Drive</button><div class="rail-editors" id="railEditors"></div><button type="button" class="rail-link" data-rail-go="symbion">My Symbion</button><p class="rail-k">Notifications</p><div id="railNotes" class="rail-notes"></div></div><div class="rail-pane" data-rail-pane="cosmo" hidden></div><div class="rail-pane" data-rail-pane="community" hidden><div id="railRows"></div></div><div class="rail-pane" data-rail-pane="me" hidden><button type="button" class="rail-link" data-rail-go="profile">Profile</button><button type="button" class="rail-link" data-rail-go="cosmos">My Cosmos</button><button type="button" class="rail-link" data-rail-go="security">Security &amp; privacy</button><button type="button" class="rail-link" data-rail-go="settings">Account &amp; settings</button><button type="button" class="rail-link is-out" data-rail-go="signout">Sign out</button></div>';
+            body.innerHTML = '<div class="rail-pane" data-rail-pane="home"><button type="button" class="rail-link" data-rail-go="drive">Super Drive</button><div class="rail-editors" id="railEditors"></div><button type="button" class="rail-link" data-rail-go="symbion">My Symbion</button><button type="button" class="rail-link" data-rail-go="notes">Notifications</button></div><div class="rail-pane" data-rail-pane="cosmo" hidden></div><div class="rail-pane" data-rail-pane="community" hidden><div id="railRows"></div></div><div class="rail-pane" data-rail-pane="me" hidden><button type="button" class="rail-link" data-rail-go="profile">Profile</button><button type="button" class="rail-link" data-rail-go="cosmos">My Cosmos</button><button type="button" class="rail-link" data-rail-go="security">Security &amp; privacy</button><button type="button" class="rail-link" data-rail-go="settings">Account &amp; settings</button><button type="button" class="rail-link is-out" data-rail-go="signout">Sign out</button></div>';
             var follow = rail.querySelector('.rail-follow');
             var rec = rail.querySelector('.rail-rec');
             var cosmoPane = body.querySelector('[data-rail-pane="cosmo"]');
@@ -14514,6 +14517,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
             </div>
           </section>
           <section id="deskHost" aria-label="Desk" hidden></section>
+          <section id="noteHost" aria-label="Notifications" hidden><div class="note-body"><h2>Notifications</h2><div id="railNotes" class="rail-notes"></div></div></section>
           <section id="symbionHost" aria-label="My Symbion" hidden>
             <div class="me-tabs" role="tablist" aria-label="My Symbion">
               <button type="button" class="me-tab on" data-me-tab="memory" role="tab" aria-selected="true">Memory</button>
@@ -20884,6 +20888,12 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       else if (act === 'cosmos') openSettings('cosmos');
       else if (act === 'security') openSettings('security');
       else if (act === 'settings') openSettings('settings');
+      else if (act === 'notes') {
+        if (document.documentElement.dataset.home !== 'v2' || document.documentElement.dataset.palette === 'green') return;
+        if (window.paintHomeNotes) window.paintHomeNotes();
+        if (window.leaveTeamPage) window.leaveTeamPage();
+        usePaneFloat(document.getElementById('noteHost'));
+      }
       else if (act === 'signout') {
         if (document.documentElement.dataset.theme === 'blue' && typeof window.blueAuthOpen === 'function') window.blueAuthOpen();
         else openSettings('signout');
@@ -23685,7 +23695,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
   };
   function usePaneFloat(host) {
     frame.classList.remove('chat-float', 'symbion-on', 'set-on', 'dir-on', 'cosmo-admin-on', 'team-on', 'desk-on');
-    ['symbionHost', 'setHost', 'dirHost', 'cosmoAdminHost', 'deskHost'].forEach((id) => {
+    ['symbionHost', 'setHost', 'dirHost', 'cosmoAdminHost', 'deskHost', 'noteHost'].forEach((id) => {
       const el = document.getElementById(id);
       if (el && el !== host) el.hidden = true;
     });
@@ -23702,7 +23712,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
   window.closePaneFloat = function () {
     frame.classList.remove('pane-float');
     if (deskOpen) closeDesk();
-    ['symbionHost', 'setHost', 'dirHost', 'cosmoAdminHost', 'deskHost'].forEach((id) => {
+    ['symbionHost', 'setHost', 'dirHost', 'cosmoAdminHost', 'deskHost', 'noteHost'].forEach((id) => {
       const el = document.getElementById(id);
       if (el) el.hidden = true;
     });
