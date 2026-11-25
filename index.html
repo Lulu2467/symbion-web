@@ -4493,7 +4493,8 @@
   #railBody, #tabbar { display: none !important; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody { display: block !important; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #tabbar { display: flex !important; }
-  #meAccount { margin: 0 0 22px; }
+  #meAccount { display: none; margin: 0 0 22px; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #meAccount { display: block; }
   #meAccount .me-h span { display: block; margin-top: 4px; color: #656d76; font-size: 13px; font-weight: 500; }
   #meAccount button {
     width: 100%;
@@ -5510,7 +5511,7 @@
   .tpl .use { margin-top: auto; align-self: stretch; text-align: center; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 12px; font-weight: 500; background: #fff; }
 
   /* Dock + toast — Citta bubble can be dragged; click still toggles panel. */
-  .dock { position: absolute; right: var(--page-gutter); top: auto; bottom: 76px; width: 44px; height: 44px; border-radius: 22px; background: #fff; border: 1.5px solid var(--green); color: var(--green); font-size: 0; font-weight: 600; display: flex; align-items: center; justify-content: center; left: auto; padding: 0; box-sizing: border-box; overflow: visible; transition: box-shadow .12s, left .2s ease, right .2s ease; z-index: 45; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-user-drag: none; user-drag: none; }
+  .dock { position: absolute; right: var(--page-gutter); top: 843px; width: 44px; height: 44px; border-radius: 22px; background: #fff; border: 1.5px solid var(--green); color: var(--green); font-size: 0; font-weight: 600; display: flex; align-items: center; justify-content: center; left: auto; padding: 0; box-sizing: border-box; overflow: visible; transition: box-shadow .12s, left .2s ease, right .2s ease; z-index: 45; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-user-drag: none; user-drag: none; }
   .dock.is-dragging { cursor: grabbing; transition: none; box-shadow: 0 10px 28px rgba(var(--ink-rgb),.18); z-index: 80; }
   .dock.is-placed { right: auto !important; bottom: auto !important; }
   html[data-theme="blue"] .dock:not(.is-placed) { top: auto; bottom: 24px; }
@@ -12344,7 +12345,7 @@
   html[data-theme="blue"] #teamHost .gpost-body,
   html[data-theme="blue"] #teamHost .gpost-from,
   html[data-theme="blue"] #teamHost .gpost-replies,
-  html[data-theme="blue"] #teamHost .gpost-acts { display: flex; gap: 4px; margin-top: 4px; grid-column: 2; min-width: 0; }
+  html[data-theme="blue"] #teamHost .gpost-acts { grid-column: 2; min-width: 0; }
   html[data-theme="blue"] #teamHost .gpost-body {
     margin-top: 2px;
     font-size: 15px;
@@ -12375,7 +12376,8 @@
   html[data-theme="blue"] #teamHost .greply-col { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
   html[data-theme="blue"] #teamHost .greply-col b { font-size: 13px; font-weight: 500; line-height: 18px; color: #1a1d21; }
   html[data-theme="blue"] #teamHost .greply-col p { margin: 0; font-size: 14px; line-height: 1.45; color: #1a1d21; text-wrap: pretty; }
-  html[data-theme="blue"] #teamHost .gpost.is-entry { cursor: pointer; }
+  html[data-theme="blue"] #teamHost .gpost-acts { display: flex; gap: 4px; margin-top: 4px; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #teamHost .gpost.is-entry { cursor: pointer; }
   html[data-theme="blue"] #teamHost .post-back {
     margin: 8px 0;
     padding: 0;
@@ -20328,7 +20330,8 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     });
     frame.querySelectorAll('.rail-follow-row').forEach((el) => {
       el.addEventListener('click', () => {
-        openDir('cosmo', { float: true });
+        const v2follow = document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green';
+        openDir('cosmo', v2follow ? { float: true } : undefined);
         const search = document.getElementById('dirSearch');
         if (!search) return;
         search.value = el.dataset.follow || '';
@@ -20350,12 +20353,16 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       });
     });
 
-    (function placeAccountInMe() {
+    function syncAccountMenu() {
       const host = document.getElementById('meAccount');
       const menu = document.getElementById('railMeMenu');
-      if (!host || !menu || host.querySelector('[data-rail-account]')) return;
-      menu.querySelectorAll('[data-rail-account]').forEach((btn) => host.appendChild(btn));
-    })();
+      if (!host || !menu) return;
+      const v2 = document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green';
+      const from = v2 ? menu : host;
+      const to = v2 ? host : menu;
+      from.querySelectorAll('[data-rail-account]').forEach((btn) => to.appendChild(btn));
+    }
+    window.syncAccountMenu = syncAccountMenu;
     function placeRailMeMenu() {
       const menu = document.getElementById('railMeMenu');
       const av = document.getElementById('railMeAv');
@@ -20654,6 +20661,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     if (driveBtn) driveBtn.setAttribute('aria-label', 'Me');
     paintHomeFollow();
     if (window.syncV2Rail) window.syncV2Rail();
+    if (window.syncAccountMenu) window.syncAccountMenu();
   }
   const HOME_FOLLOW_NOTES = [
     { text: "Lecture 5 slides are up. Three quiz questions at the end.", when: "1h ago" },
@@ -28616,6 +28624,28 @@ function postCardHTML(chat, item, showTime, mode) {
   const p = person(m.who);
   const role = roleOf(chat, m.who);
   const tag = role && role !== 'Member' && role !== 'You' ? `<span class="tag ${role.toLowerCase()}">${esc(role)}</span>` : '';
+  const v2posts = document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green';
+  if (!v2posts) {
+    const from = m.syncedFrom ? `<p class="gpost-from">Synced from ${esc(m.syncedFrom)}</p>` : '';
+    const replies = (item.replies || []).map((r) => {
+      const who = person(r.who);
+      const body = r.file ? esc(r.file.name) : linkMentions(r.text || '');
+      return `<div class="greply" id="msg-${r.id}" data-id="${r.id}"><button type="button" class="av hue-${who.hue}" data-person="${r.who}" aria-label="${esc(who.name)}">${esc(who.short)}</button><div class="greply-col"><b>${esc(r.who === ME ? 'You' : who.name)}</b><p>${body}</p></div></div>`;
+    }).join('');
+    const replyBlock = replies ? `<div class="gpost-replies">${replies}</div>` : '';
+    const big = bigGroupOf(chat);
+    let sync = '';
+    if (big && canManage(chat) && !m.reply) {
+      sync = m.syncedTo
+        ? `<button type="button" disabled>Synced to big group</button>`
+        : `<button type="button" data-sync="${m.id}">Sync to big group</button>`;
+    }
+    return `<article class="gpost" id="msg-${m.id}" data-id="${m.id}">
+    <div class="gpost-top"><button type="button" class="av hue-${p.hue}" data-person="${m.who}" aria-label="${esc(p.name)}">${esc(p.short)}</button><div class="gpost-who"><b>${esc(p.name)}</b>${tag}${showTime ? `<span class="gpost-time">${esc(chat.time)}</span>` : ''}</div></div>
+    <div class="gpost-body">${postBodyHTML(m)}</div>${from}${replyBlock}
+    <div class="gpost-acts"><button type="button" data-reply="${m.id}">Reply</button>${sync}</div>
+  </article>`;
+  }
   const quoted = m.quoteOf ? findMessage(chat, m.quoteOf) : null;
   const quoteLine = quoted ? `<p class="gpost-from">Quote · ${esc(quoted.who === ME ? 'You' : person(quoted.who).name)}: ${esc(quoted.text || (quoted.file && quoted.file.name) || '')}</p>` : '';
   const from = m.syncedFrom ? `<p class="gpost-from">Synced from ${esc(m.syncedFrom)}</p>` : '';
@@ -28643,6 +28673,15 @@ function renderLog(scroll) {
   const list = shownMessages(c);
   if (!list.length) {
     $('log').innerHTML = `<p class="sys">No messages yet</p>`;
+    return;
+  }
+  if (bluePostLayout(c) && !(document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green')) {
+    const items = threadItems(c, list);
+    const lastPost = [...items].reverse().find((item) => item.kind === 'post');
+    $('log').innerHTML = items.map((item) => item.kind === 'sys'
+      ? `<p class="sys" id="msg-${item.m.id}">${esc(item.m.sys)}</p>`
+      : postCardHTML(c, item, item === lastPost && !!c.time)).join('');
+    if (scroll) requestAnimationFrame(() => { $('log').scrollTop = $('log').scrollHeight; syncTeamEdgeFade(); });
     return;
   }
   if (bluePostLayout(c)) {
