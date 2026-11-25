@@ -4333,6 +4333,10 @@
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #primaryRail > .osbar-bell,
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #primaryRail > .r { display: none !important; }
   #railBody { flex: 1; min-height: 0; overflow: auto; padding: 12px 10px 8px; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
   #railBody .rail-pane[hidden] { display: none !important; }
   #railBody .rail-link {
     width: 100%;
