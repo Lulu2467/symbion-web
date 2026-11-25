@@ -28850,7 +28850,7 @@ function renderChrome() {
   const blueChat = bluePostLayout(c);
   if (blueChat && state.postOpen && !state.quoteToGroup) state.quote = state.quote || state.postOpen;
   teamRoot.querySelector('.thread').classList.toggle('is-wx', blueGroupPosts() && c.kind === 'group' && !blueChat);
-  $('compose').placeholder = postLocked ? 'Only the owner and admins can post' : (state.quoteToGroup ? 'Quote in group' : state.postOpen ? 'Reply' : blueChat ? 'New post' : 'Message');
+  $('compose').placeholder = postLocked ? 'Only the owner and admins can post' : (state.quoteToGroup ? 'Reply in the group' : state.postOpen ? 'Comment' : blueChat ? 'New post' : 'Message');
   syncTeamSend();
   const q = state.quote && findMessage(c, state.quote);
   $('quoteBar').hidden = !q || (!!state.postOpen && q.id === state.postOpen && !state.quoteToGroup);
@@ -29086,7 +29086,7 @@ function statsHTML(chat, id) {
   const like = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.2c-.2 0-7.5-4.6-7.5-9.4A4.3 4.3 0 0 1 8.8 6.5c1.4 0 2.5.7 3.2 1.8.7-1.1 1.8-1.8 3.2-1.8a4.3 4.3 0 0 1 4.3 4.3c0 4.8-7.3 9.4-7.5 9.4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>';
   const reply = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5.2a6.8 6.8 0 0 0-5.9 10.2L4.8 19.2l3.4-1.1A6.8 6.8 0 1 0 12 5.2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></svg>';
   const quote = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5 3 8l4 4.5M3.5 8H13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  return `<div class="gpost-stats"><button type="button" data-like="${id}" aria-label="Like" aria-pressed="${n.liked}">${like}<span>${n.likes}</span></button><button type="button" data-thread-reply="${id}" aria-label="Reply">${reply}<span>${n.replies}</span></button><button type="button" data-quote="${id}" aria-label="Quote">${quote}<span>${n.quotes}</span></button></div>`;
+  return `<div class="gpost-stats"><button type="button" data-like="${id}" aria-label="Like" title="Like" aria-pressed="${n.liked}">${like}<span>${n.likes}</span></button><button type="button" data-thread-reply="${id}" aria-label="Comment" title="Only on this post">${reply}<span>${n.replies}</span></button><button type="button" data-quote="${id}" aria-label="Reply" title="Reply in the group">${quote}<span>${n.quotes}</span></button></div>`;
 }
 function replyCardHTML(chat, r) {
   const who = person(r.who);
@@ -29121,7 +29121,7 @@ function postCardHTML(chat, item, showTime, mode) {
   </article>`;
   }
   const quoted = m.quoteOf ? findMessage(chat, m.quoteOf) : null;
-  const quoteLine = quoted ? `<p class="gpost-from">Quote · ${esc(quoted.who === ME ? 'You' : person(quoted.who).name)}: ${esc(quoted.text || (quoted.file && quoted.file.name) || '')}</p>` : '';
+  const quoteLine = quoted ? `<p class="gpost-from">Reply · ${esc(quoted.who === ME ? 'You' : person(quoted.who).name)}: ${esc(quoted.text || (quoted.file && quoted.file.name) || '')}</p>` : '';
   const from = m.syncedFrom ? `<p class="gpost-from">Synced from ${esc(m.syncedFrom)}</p>` : '';
   const inside = mode === 'inside';
   const big = bigGroupOf(chat);
@@ -29155,8 +29155,8 @@ function renderLog(scroll) {
     if (state.postOpen && !open) state.postOpen = null;
     if (open) {
       const ordered = open.replies.slice().sort((a, b) => (a.seq || 0) - (b.seq || 0));
-      const replies = ordered.length ? ordered.map((r) => replyCardHTML(c, r)).join('') : '<p class="sys">No replies yet</p>';
-      $('log').innerHTML = `<button type="button" class="post-back" data-post-back>← ${esc(c.name)}</button>` + postCardHTML(c, open, false, 'inside') + `<h4 class="replies-h">Replies</h4>` + replies;
+      const replies = ordered.length ? ordered.map((r) => replyCardHTML(c, r)).join('') : '<p class="sys">No comments yet</p>';
+      $('log').innerHTML = `<button type="button" class="post-back" data-post-back>← ${esc(c.name)}</button>` + postCardHTML(c, open, false, 'inside') + `<h4 class="replies-h">Comments</h4>` + replies;
     } else {
       const posts = items.filter((item) => item.kind === 'post');
       const lastPost = posts[posts.length - 1];
