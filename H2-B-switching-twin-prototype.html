@@ -4402,26 +4402,45 @@
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-rec-card b { color: #1a1d21; font-size: 13px; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-rec-card small { display: block !important; color: #8b919a; font-size: 11px; }
-  #railRows { display: flex; flex-direction: column; gap: 4px; }
-  #railRows .rail-group {
-    width: 100%;
+  #railRows { display: flex; flex-direction: column; gap: 0; }
+  #railRows .rail-sec { display: flex; flex-direction: column; margin: 0 0 6px; }
+  #railRows .rail-sec-k {
+    margin: 12px 8px 4px;
+    color: #1d1d1f;
+    font-size: 13px;
+    font-weight: 650;
+    line-height: 1.2;
+  }
+  #railRows .rail-sec:first-child .rail-sec-k { margin-top: 2px; }
+  #railRows .rail-ch {
     display: flex;
-    flex-direction: column;
-    gap: 2px;
-    padding: 8px 8px;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    min-height: 28px;
+    margin: 0;
+    padding: 0 8px;
     border: 0;
-    border-radius: 10px;
+    border-radius: 6px;
     background: transparent;
+    color: #3c434a;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.2;
     text-align: left;
     cursor: pointer;
-    color: #1a1d21;
   }
-  #railRows .rail-group.is-sub { margin-left: 22px; width: calc(100% - 22px); }
-  #railRows .rail-group.is-sub .rail-group-top b { font-weight: 550; }
-  #railRows .rail-group.on { background: #eef1f4; }
-  #railRows .rail-group-top { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; }
-  #railRows .rail-group-top time { color: #8b919a; font-size: 11px; font-weight: 500; }
-  #railRows .rail-group-bot { color: #656d76; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #railRows .rail-ch .hash { flex: none; width: 14px; color: #8b919a; font-weight: 500; text-align: center; }
+  #railRows .rail-ch b { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: inherit; }
+  #railRows .rail-ch.is-sub { padding-left: 28px; }
+  #railRows .rail-ch:hover { background: #f6f7f8; color: #1d1d1f; }
+  #railRows .rail-ch.on,
+  #railRows .rail-ch.on:hover { background: #f6f7f8; color: #3c7a94; }
+  #railRows .rail-ch.on { font-weight: 650; }
+  #railRows .rail-ch.on .hash,
+  #railRows .rail-ch:hover .hash { color: currentColor; }
+  #railRows .rail-ch.is-unread { color: #1d1d1f; font-weight: 650; }
   #railRows .rail-empty { margin: 8px; color: #656d76; font-size: 13px; }
   .frame.chat-float #teamHost {
     display: flex;
@@ -29325,15 +29344,18 @@ function paintRailGroups() {
     byAt.get(key).push(c);
   });
   const floated = document.getElementById('frame')?.classList.contains('chat-float');
-  const row = (c, sub) => {
+  const channel = (c, sub) => {
     const on = floated && c.id === state.id;
-    return `<button type="button" class="rail-group${sub ? ' is-sub' : ''}${on ? ' on' : ''}" data-rail-group="${c.id}"><span class="rail-group-top"><b>${esc(c.name)}</b><time>${esc(c.time || '')}</time></span><span class="rail-group-bot">${esc(preview(c))}</span></button>`;
+    const unread = c.unread > 0;
+    const label = c.tier === 'big' && c.cosmoName && c.name === c.cosmoName ? 'Big group' : c.name;
+    return `<button type="button" class="rail-ch${sub ? ' is-sub' : ''}${on ? ' on' : ''}${unread ? ' is-unread' : ''}" data-rail-group="${c.id}"><span class="hash" aria-hidden="true">#</span><b>${esc(label)}</b></button>`;
   };
   const html = [...byAt.keys()].sort((a, b) => Number(a) - Number(b)).map((key) => {
     const list = byAt.get(key);
     const big = list.filter((c) => c.tier === 'big').sort((a, b) => (a.followOrder || 0) - (b.followOrder || 0));
     const sub = list.filter((c) => c.tier !== 'big').sort((a, b) => (a.followOrder || 0) - (b.followOrder || 0));
-    return big.map((c) => row(c, false)).join('') + sub.map((c) => row(c, true)).join('');
+    const title = (big[0] && big[0].cosmoName) || (sub[0] && sub[0].cosmoName) || 'Groups';
+    return `<section class="rail-sec"><p class="rail-sec-k">${esc(title)}</p>${big.map((c) => channel(c, false)).join('')}${sub.map((c) => channel(c, true)).join('')}</section>`;
   }).join('');
   host.innerHTML = html || '<p class="rail-empty">No groups yet.</p>';
 }
