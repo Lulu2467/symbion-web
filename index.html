@@ -1442,8 +1442,11 @@
   html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home { width: 100%; }
   html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #composer { width: 100%; }
   html[data-theme="blue"][data-home="v2"] .content.is-home-pinned:has(#screen-home.on) {
-    justify-content: flex-start;
+    justify-content: safe center;
     overflow-y: auto;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) {
+    justify-content: safe center;
   }
   html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home .two-grid > .two-col:first-child {
     display: grid;
