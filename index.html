@@ -4411,7 +4411,8 @@
   .frame.pane-float #symbionHost:not([hidden]),
   .frame.pane-float #setHost:not([hidden]),
   .frame.pane-float #dirHost:not([hidden]),
-  .frame.pane-float #cosmoAdminHost:not([hidden]) {
+  .frame.pane-float #cosmoAdminHost:not([hidden]),
+  .frame.pane-float #deskHost:not([hidden]) {
     display: flex !important;
     position: absolute;
     top: 68px;
@@ -20446,7 +20447,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       const go = e.target.closest('[data-rail-go]');
       if (!go) return;
       const act = go.dataset.railGo;
-      if (act === 'drive') openDesk('drive');
+      if (act === 'drive') openDesk('drive', { float: true });
       else if (act === 'symbion') openSymbion('memory');
       else if (act === 'profile') openSettings('profile');
       else if (act === 'cosmos') openSettings('cosmos');
@@ -23111,11 +23112,15 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
   window.armFloat = armFloat;
   window.closeChatFloat = function () { frame.classList.remove('chat-float'); };
   function usePaneFloat(host) {
-    frame.classList.remove('chat-float', 'symbion-on', 'set-on', 'dir-on', 'cosmo-admin-on', 'team-on');
-    ['symbionHost', 'setHost', 'dirHost', 'cosmoAdminHost'].forEach((id) => {
+    frame.classList.remove('chat-float', 'symbion-on', 'set-on', 'dir-on', 'cosmo-admin-on', 'team-on', 'desk-on');
+    ['symbionHost', 'setHost', 'dirHost', 'cosmoAdminHost', 'deskHost'].forEach((id) => {
       const el = document.getElementById(id);
       if (el && el !== host) el.hidden = true;
     });
+    if (!host || host.id !== 'deskHost') {
+      if (deskOpen && typeof markDriveFloatLink === 'function') markDriveFloatLink(false);
+      deskOpen = false;
+    }
     frame.classList.add('pane-float');
     if (host) host.hidden = false;
     armFloat(host, window.closePaneFloat);
@@ -23124,7 +23129,8 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
   }
   window.closePaneFloat = function () {
     frame.classList.remove('pane-float');
-    ['symbionHost', 'setHost', 'dirHost', 'cosmoAdminHost'].forEach((id) => {
+    if (deskOpen) closeDesk();
+    ['symbionHost', 'setHost', 'dirHost', 'cosmoAdminHost', 'deskHost'].forEach((id) => {
       const el = document.getElementById(id);
       if (el) el.hidden = true;
     });
@@ -23132,7 +23138,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     settingsOpen = false;
     dirOpen = false;
     cosmoAdminOpen = false;
-    frame.classList.remove('symbion-on', 'set-on', 'dir-on', 'cosmo-admin-on');
+    frame.classList.remove('symbion-on', 'set-on', 'dir-on', 'cosmo-admin-on', 'desk-on');
   };
   function openDir(tab, opts) {
     const next = tab === 'post' || tab === 'community' ? tab : 'cosmo';
@@ -25692,20 +25698,34 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       else r.removeAttribute('aria-current');
     });
   }
-  function openDesk(section) {
+  function markDriveFloatLink(on) {
+    document.querySelectorAll('#railBody [data-rail-go="drive"]').forEach((btn) => btn.classList.toggle('on', !!on));
+  }
+  function openDesk(section, opts) {
+    const v2 = document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green';
+    const float = !!(opts && opts.float && v2);
     if (teamOpen) closeTeam();
     if (dirOpen) closeDir();
     if (settingsOpen) closeSettings();
     if (symbionOpen) closeSymbion();
     deskOpen = true;
     if (section) deskSection = section;
-    screen = 'desk';
     applyTheme();
-    frame.classList.add('desk-on');
     const host = document.getElementById('deskHost');
-    if (host) host.hidden = false;
+    if (float) {
+      screen = 'home';
+      frame.classList.remove('desk-on');
+      usePaneFloat(host);
+      markDriveFloatLink(true);
+    } else {
+      screen = 'desk';
+      frame.classList.remove('pane-float');
+      frame.classList.add('desk-on');
+      if (host) host.hidden = false;
+      markDriveFloatLink(false);
+      markDeskRail();
+    }
     ensureDesk();
-    markDeskRail();
     pressScenario('home');
     paintDeskChrome();
     revealDeskSection(deskSection);
@@ -25718,10 +25738,12 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     frame.classList.remove('desk-on');
     const host = document.getElementById('deskHost');
     if (host) host.hidden = true;
+    markDriveFloatLink(false);
     frame.querySelectorAll('#primaryRail .r[data-rail], #tabbar .r[data-rail]').forEach((r) => {
       r.classList.remove('on');
       r.removeAttribute('aria-current');
     });
+    if (!symbionOpen && !settingsOpen && !dirOpen && !cosmoAdminOpen) frame.classList.remove('pane-float');
     mountHomeKanban();
   }
 
