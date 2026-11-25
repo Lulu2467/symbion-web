@@ -21720,6 +21720,28 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     });
   }
 
+  function syncProfileSection() {
+    const nav = document.querySelector('#setHost nav.set-nav');
+    if (!nav) return;
+    const blue = document.documentElement.dataset.theme === 'blue' && document.documentElement.dataset.palette !== 'green';
+    const profileKicker = nav.querySelector('.set-kicker');
+    const friends = nav.querySelector('button[data-set="friends"]');
+    if (!profileKicker || !friends) return;
+    let friendsKicker = nav.querySelector('.set-kicker[data-kicker="friends"]');
+    if (blue) {
+      profileKicker.textContent = 'PROFILE';
+      if (!friendsKicker) {
+        friendsKicker = document.createElement('p');
+        friendsKicker.className = 'set-kicker';
+        friendsKicker.dataset.kicker = 'friends';
+        friends.before(friendsKicker);
+      }
+      friendsKicker.textContent = 'GENERAL';
+    } else {
+      profileKicker.textContent = 'GENERAL';
+      if (friendsKicker) friendsKicker.remove();
+    }
+  }
   function applyTheme(theme) {
     setBookmarkFolder(false);
     const palette = theme === 'green' || theme === 'blue'
@@ -21756,6 +21778,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       const threadTitle = document.getElementById('title');
       if (threadTitle && (threadTitle.textContent === 'Team' || threadTitle.textContent === 'Community')) threadTitle.textContent = communityName;
     }
+    syncProfileSection();
     placeHeaderSearch();
     const teamSearch = document.getElementById('q');
     if (teamSearch) teamSearch.placeholder = 'Search';
