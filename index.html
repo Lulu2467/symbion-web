@@ -20758,9 +20758,16 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
         const v2rail = document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green';
         if (v2rail && (el.dataset.rail === 'home' || el.dataset.rail === 'cosmo' || el.dataset.rail === 'community' || el.dataset.rail === 'drive')) {
           document.querySelector('.main')?.classList.remove('is-new-tab');
+          if (el.dataset.rail !== 'community' && window.closeChatFloat) window.closeChatFloat();
           if (el.dataset.rail === 'home' && teamOpen) setScreen('home');
           showRailPane(el.dataset.rail);
-          if (el.dataset.rail === 'community') openTeam();
+          if (el.dataset.rail === 'community') {
+            const picked = document.querySelector('#railRows .rail-ch.on') || document.querySelector('#railRows .rail-ch');
+            if (picked && window.openChat) {
+              if (window.leaveTeamPage) window.leaveTeamPage();
+              window.openChat(picked.dataset.railGroup);
+            }
+          }
           return;
         }
         if (el.dataset.rail === 'home') {
@@ -20886,7 +20893,11 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       const btn = e.target.closest('[data-note-go]');
       if (!btn) return;
       if (btn.dataset.noteGo === 'community' && typeof window.openChat === 'function') {
-        window.openChat(btn.dataset.noteId, { page: true });
+        if (window.leaveTeamPage) window.leaveTeamPage();
+        document.querySelectorAll('#railBody .rail-pane').forEach((pane) => {
+          pane.hidden = pane.dataset.railPane !== 'community';
+        });
+        window.openChat(btn.dataset.noteId);
         document.querySelectorAll('#primaryRail .r[data-rail], #tabbar .r[data-rail]').forEach((r) => {
           const on = r.dataset.rail === 'community';
           r.classList.toggle('on', on);
@@ -23663,7 +23674,15 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     bar.querySelector('[data-float="close"]').onclick = (e) => { e.stopPropagation(); onClose && onClose(); };
   }
   window.armFloat = armFloat;
-  window.closeChatFloat = function () { frame.classList.remove('chat-float'); };
+  function clearTeamHostBox() {
+    const host = document.getElementById('teamHost');
+    if (!host) return;
+    ['left', 'top', 'right', 'bottom', 'width', 'height', 'transform'].forEach((key) => { host.style[key] = ''; });
+  }
+  window.closeChatFloat = function () {
+    frame.classList.remove('chat-float');
+    clearTeamHostBox();
+  };
   function usePaneFloat(host) {
     frame.classList.remove('chat-float', 'symbion-on', 'set-on', 'dir-on', 'cosmo-admin-on', 'team-on', 'desk-on');
     ['symbionHost', 'setHost', 'dirHost', 'cosmoAdminHost', 'deskHost'].forEach((id) => {
@@ -23952,6 +23971,8 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     screen = 'team';
     applyTheme();
     const v2Float = document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green';
+    frame.classList.remove('chat-float');
+    if (!v2Float) clearTeamHostBox();
     frame.classList.add('team-on');
     frame.classList.toggle('team-float', v2Float);
     markTeamRail();
@@ -29874,7 +29895,8 @@ document.getElementById('railRows')?.addEventListener('click', (e) => {
   if (!btn) return;
   const root = document.documentElement;
   const v2 = root.dataset.home === 'v2' && root.dataset.palette !== 'green';
-  openChat(btn.dataset.railGroup, { page: true });
+  if (v2 && window.leaveTeamPage) window.leaveTeamPage();
+  openChat(btn.dataset.railGroup, v2 ? undefined : { page: true });
   if (!v2) return;
   document.querySelectorAll('#primaryRail .r[data-rail], #tabbar .r[data-rail]').forEach((r) => {
     const on = r.dataset.rail === 'community';
