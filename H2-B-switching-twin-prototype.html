@@ -1202,6 +1202,37 @@
     padding: 14px 0;
     border-bottom: 1px solid #e6e8ec;
   }
+  html[data-theme="blue"] #symbionHost .me-memory-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+  html[data-theme="blue"] #symbionHost .me-memory-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    min-height: 132px;
+    padding: 18px;
+    border: 1px solid #e6e8ec;
+    border-radius: 12px;
+    background: #fff;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+    color: #1a1d21;
+  }
+  html[data-theme="blue"] #symbionHost .me-memory-card:hover { background: #f4f8fa; }
+  html[data-theme="blue"] #symbionHost .me-memory-card b { font-size: 16px; }
+  html[data-theme="blue"] #symbionHost .me-memory-card span { color: #656d76; font-size: 13px; line-height: 1.45; }
+  html[data-theme="blue"] #symbionHost .me-memory-card em { margin-top: auto; font-style: normal; color: #8b919a; font-size: 12px; font-weight: 600; }
+  html[data-theme="blue"] #symbionHost .me-memory-back {
+    margin: 0 0 12px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #656d76;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
   html[data-theme="blue"] #symbionHost .me-thread h3,
   html[data-theme="blue"] #symbionHost .me-label-card h3 {
     margin: 0;
@@ -1226,7 +1257,116 @@
     line-height: 1.45;
   }
   html[data-theme="blue"] #symbionHost .me-result { margin: 8px 0 0; font-size: 14px; line-height: 1.45; color: #1a1d21; }
-  html[data-theme="blue"] #symbionHost .me-result b { font-weight: 650; }
+  html[data-theme="blue"] #symbionHost .me-report-head,
+  html[data-theme="blue"] #symbionHost .me-report-sub,
+  html[data-theme="blue"] #symbionHost .me-chart-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  html[data-theme="blue"] #symbionHost .me-report-head { margin-bottom: 18px; }
+  html[data-theme="blue"] #symbionHost .me-report-head h2 { margin: 0; }
+  html[data-theme="blue"] #symbionHost #meTrainPeriod {
+    height: 34px;
+    padding: 0 12px;
+    border: 1px solid #e6e8ec;
+    border-radius: 999px;
+    background: #fff;
+    color: #1a1d21;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  html[data-theme="blue"] #symbionHost .me-report-sub { margin: 0 0 10px; }
+  html[data-theme="blue"] #symbionHost .me-report-sub h3 { margin: 0; font-size: 16px; }
+  html[data-theme="blue"] #symbionHost .me-report-sub span,
+  html[data-theme="blue"] #symbionHost .me-chart span,
+  html[data-theme="blue"] #symbionHost .me-chart-top em {
+    color: #8b919a;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+  }
+  html[data-theme="blue"] #symbionHost .me-metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+  html[data-theme="blue"] #symbionHost .me-metric {
+    padding: 12px 14px;
+    border: 1px solid #e6e8ec;
+    border-radius: 12px;
+    background: #fff;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+    color: #656d76;
+  }
+  html[data-theme="blue"] #symbionHost .me-metric.on { background: #f4f8fa; border-color: #d5e4ec; }
+  html[data-theme="blue"] #symbionHost .me-metric span,
+  html[data-theme="blue"] #symbionHost .me-metric b { display: block; }
+  html[data-theme="blue"] #symbionHost .me-metric b { margin-top: 8px; color: #1a1d21; font-size: 26px; letter-spacing: -0.03em; }
+  html[data-theme="blue"] #symbionHost .me-metric small { font-size: 13px; font-weight: 600; color: #656d76; }
+  html[data-theme="blue"] #symbionHost .me-charts { display: grid; grid-template-columns: 1.4fr .8fr; gap: 10px; margin: 10px 0 22px; }
+  html[data-theme="blue"] #symbionHost .me-chart { padding: 14px; border: 1px solid #e6e8ec; border-radius: 12px; background: #fff; }
+  html[data-theme="blue"] #symbionHost .me-chart b { display: block; font-size: 14px; }
+  html[data-theme="blue"] #symbionHost #meTrainChart { width: 100%; height: 180px; margin-top: 8px; }
+  html[data-theme="blue"] #symbionHost .me-topic { display: grid; grid-template-columns: 132px 1fr 36px; gap: 8px; align-items: center; margin-top: 12px; font-size: 13px; }
+  html[data-theme="blue"] #symbionHost .me-topic i { display: block; height: 8px; border-radius: 999px; background: #eef1f4; overflow: hidden; }
+  html[data-theme="blue"] #symbionHost .me-topic i span { display: block; height: 100%; border-radius: inherit; background: #8eb6c6; }
+  html[data-theme="blue"] #symbionHost .me-topic em { font-style: normal; text-align: right; color: #656d76; }
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+  html[data-theme="blue"] #symbionHost .me-train-title { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  html[data-theme="blue"] #symbionHost .me-train-title h2 { margin: 0; }
+  html[data-theme="blue"] #symbionHost .me-train-count,
+  html[data-theme="blue"] #symbionHost .me-src {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    padding: 0 8px;
+    border-radius: 999px;
+    background: #eef1f4;
+    color: #656d76;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  html[data-theme="blue"] #symbionHost .me-train-progress { color: #8b919a; font-size: 13px; white-space: nowrap; }
+  html[data-theme="blue"] #symbionHost .me-rec {
+    margin: 0 0 12px;
+    padding: 16px 16px 14px;
+    border: 1px solid #e6e8ec;
+    border-radius: 12px;
+    background: #fff;
+  }
+  html[data-theme="blue"] #symbionHost .me-rec h3 { margin: 0; font-size: 16px; font-weight: 650; }
+  html[data-theme="blue"] #symbionHost .me-rec .me-rec-desc { margin: 8px 0 0; color: #1a1d21; font-size: 14px; line-height: 1.5; }
+  html[data-theme="blue"] #symbionHost .me-src-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 12px; }
+  html[data-theme="blue"] #symbionHost .me-src-label { color: #8b919a; font-size: 12px; }
+  html[data-theme="blue"] #symbionHost .me-prof {
+    margin-top: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #f6f7f8;
+  }
+  html[data-theme="blue"] #symbionHost .me-prof b { display: block; margin-bottom: 4px; font-size: 13px; }
+  html[data-theme="blue"] #symbionHost .me-prof p { margin: 0; font-size: 14px; line-height: 1.45; }
+  html[data-theme="blue"] #symbionHost .me-rec-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+  html[data-theme="blue"] #symbionHost .me-vote {
+    height: 32px;
+    padding: 0 12px;
+    border: 1px solid #e6e8ec;
+    border-radius: 8px;
+    background: #fff;
+    color: #1a1d21;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  html[data-theme="blue"] #symbionHost .me-vote[aria-pressed="true"] { background: var(--green-tint); border-color: transparent; color: var(--green-dark); }
+  html[data-theme="blue"] #symbionHost .me-rec-note { width: 100%; margin-top: 10px; box-sizing: border-box; }
   html[data-theme="blue"] #symbionHost .me-issues { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
   html[data-theme="blue"] #symbionHost .me-issues button {
     height: 28px;
@@ -1299,7 +1439,7 @@
     z-index: 8;
     box-shadow: -8px 0 24px rgba(20, 24, 28, .1);
   }
-  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home { --home-pair: 388px; width: 100%; }
+  html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #tail-home { --home-pair: 480px; width: 100%; }
   html[data-theme="blue"][data-home="v2"] .hub:has(#screen-home.on) #composer { width: 100%; }
   html[data-theme="blue"][data-home="v2"] .content.is-home-pinned:has(#screen-home.on) {
     justify-content: flex-start;
@@ -2461,34 +2601,34 @@
     overflow: hidden;
   }
   #homeTaskBoard { display: none; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .rem-board,
-  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .tl-pop,
-  html[data-theme="blue"] .hub:has(#screen-home.on) #tail-home .tl-fab { display: none; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #tail-home .rem-board,
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #tail-home .tl-pop,
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #tail-home .tl-fab { display: none; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard {
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
     min-height: 0;
     height: 100%;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .ws-kanban {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .ws-kanban {
     flex: 1 1 auto;
     min-height: 0;
     width: 100%;
     display: flex;
     flex-direction: column;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-tools {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .desk-tools {
     flex: none;
     flex-wrap: nowrap;
     justify-content: flex-end;
     width: 100%;
     margin-bottom: 12px;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-tools > .desk-range { margin-right: auto; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-when { gap: 4px; margin-left: auto; flex: none; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-when > .desk-views { margin-left: 0; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-when > button {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .desk-tools > .desk-range { margin-right: auto; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .desk-when { gap: 4px; margin-left: auto; flex: none; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .desk-when > .desk-views { margin-left: 0; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .desk-when > button {
     height: 32px;
     padding: 0 12px;
     border-radius: 999px;
@@ -2496,48 +2636,48 @@
     font-size: 13px;
     font-weight: 500;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-when > button:hover { background: #f4f5f7; color: #1d1d1f; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-range { color: #1d1d1f; font-size: 16px; font-weight: 700; letter-spacing: -.02em; width: auto; min-width: 0; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-board { gap: 0; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-col {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .desk-when > button:hover { background: #f4f5f7; color: #1d1d1f; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .desk-range { color: #1d1d1f; font-size: 15px; font-weight: 650; letter-spacing: -.02em; width: auto; min-width: 0; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-board { gap: 0; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-col {
     padding: 2px 16px 0;
     border-radius: 0;
     background: transparent;
     box-shadow: none;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-col + .tk-col {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-col + .tk-col {
     border-left: 1px solid #eceef2;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-col h4 {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-col h4 {
     margin-bottom: 12px;
     font-size: 13px;
     font-weight: 600;
     color: #1d1d1f;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-col h4 span {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-col h4 span {
     background: #f2f3f5;
     color: #8b9198;
     font-weight: 600;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-card {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-card {
     gap: 6px;
-    border: 1px solid #eef0f2;
-    border-radius: 20px;
+    border: 1px solid #e6e8ec;
+    border-radius: 16px;
     padding: 16px 14px 14px;
     background: #fff;
     box-shadow:
       0 16px 22px -14px rgba(20, 24, 28, .12),
       0 4px 8px -6px rgba(20, 24, 28, .06);
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-card b { font-weight: 600; letter-spacing: -0.01em; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-card:hover {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-card b { font-weight: 600; letter-spacing: -0.01em; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-card:hover {
     box-shadow:
       0 18px 24px -12px rgba(20, 24, 28, .14),
       0 6px 10px -6px rgba(20, 24, 28, .07);
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-type { font-size: 12px; font-weight: 550; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-list { gap: 14px; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-file-card {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-type { font-size: 13px; font-weight: 500; color: #71777d; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-list { gap: 14px; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-file-card {
     height: 28px;
     padding: 0 10px 0 8px;
     border: 0;
@@ -2547,7 +2687,7 @@
     font-weight: 500;
     box-shadow: 0 4px 12px rgba(20, 24, 28, .05), 0 0 0 1px rgba(20, 24, 28, .04);
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-meet-go {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-meet-go {
     height: 28px;
     padding: 0 12px;
     border: 0;
@@ -2556,32 +2696,32 @@
     font-size: 12px;
     font-weight: 550;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-who { flex: none; overflow: visible; text-overflow: clip; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-meta {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-who { flex: none; overflow: visible; text-overflow: clip; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-meta {
     margin-top: 8px;
     padding-top: 10px;
     border-top-color: rgba(20, 24, 28, .05);
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-meta time { font-size: 12px; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-list:has(.tk-empty) {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-meta time { font-size: 12px; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-list:has(.tk-empty) {
     align-items: flex-start;
     justify-content: flex-start;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-empty {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-empty {
     margin: 4px 2px 0;
     color: #b0b4ba;
     font-size: 13px;
     font-weight: 500;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .g-row {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .g-row {
     border: 1px solid #e6e8ec;
     border-radius: 14px;
     box-shadow: none;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .home-kanban-body:has(.desk-board) {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .home-kanban-body:has(.desk-board) {
     overflow: hidden;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-board {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .desk-board {
     flex: 1 1 auto;
     min-height: 0;
     display: flex;
@@ -2590,35 +2730,35 @@
     border-radius: 14px;
     box-shadow: 0 0 0 1px rgba(20, 24, 28, .06);
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-week.head { flex: none; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-week.lane {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .desk-week.head { flex: none; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .desk-week.lane {
     flex: 1 1 0;
     min-height: 72px;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-lane-name,
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .desk-track {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .desk-lane-name,
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .desk-track {
     min-height: 100%;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .nc-chip {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .nc-chip {
     white-space: normal;
     height: auto;
     align-items: flex-start;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .nc-ev b {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .nc-ev b {
     white-space: normal;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .home-kanban-body {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .home-kanban-body {
     flex: 1 1 auto;
     min-height: 0;
     display: flex;
     flex-direction: column;
     overflow: auto;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .home-kanban-body:has(.tk-board) { overflow: hidden; }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .ws-home-cal {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .home-kanban-body:has(.tk-board) { overflow: hidden; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .ws-home-cal {
     width: auto;
     max-width: none;
     margin: 0;
@@ -2634,10 +2774,10 @@
     overflow: hidden;
     box-shadow: none;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .ws-home-cal .tl-body,
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .ws-home-cal .tl-body > .kb,
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .ws-home-cal .kb-sched,
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .ws-home-cal .kb-pane:has(.nc) {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .ws-home-cal .tl-body,
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .ws-home-cal .tl-body > .kb,
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .ws-home-cal .kb-sched,
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .ws-home-cal .kb-pane:has(.nc) {
     flex: 1 1 auto;
     min-height: 0;
     display: flex;
@@ -2645,24 +2785,24 @@
     overflow: hidden;
     width: 100%;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-board {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-board {
     display: grid;
     flex: 1;
     min-height: 0;
     width: 100%;
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-file-ico svg {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-file-ico svg {
     width: 12px;
     height: 14px;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-col {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-col {
     min-height: 0;
     display: flex;
     flex-direction: column;
     overflow: hidden;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-list {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-list {
     flex: 1;
     min-height: 0;
     overflow: auto;
@@ -2670,22 +2810,22 @@
     scrollbar-width: thin;
     scrollbar-color: rgba(0, 0, 0, .14) transparent;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-list::-webkit-scrollbar {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-list::-webkit-scrollbar {
     width: 4px;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-list::-webkit-scrollbar-button {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-list::-webkit-scrollbar-button {
     display: none;
     height: 0;
     width: 0;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-list::-webkit-scrollbar-track {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-list::-webkit-scrollbar-track {
     background: transparent;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-list::-webkit-scrollbar-thumb {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-list::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, .14);
     border-radius: 999px;
   }
-  html[data-theme="blue"] .hub:has(#screen-home.on) #homeTaskBoard .tk-list::-webkit-scrollbar-thumb:hover {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-list::-webkit-scrollbar-thumb:hover {
     background: rgba(0, 0, 0, .22);
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) :is(#tail-home,.ws-home-cal) #homeTimeline,
@@ -4124,6 +4264,280 @@
   html[data-theme="blue"] #primaryRail > .rail-rec { order: 8; }
   html[data-theme="blue"] #primaryRail > .p { order: 9; }
   html[data-theme="blue"] #primaryRail > .rail-me { order: 11; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railMe,
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railMeMenu { display: none !important; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #primaryRail {
+    width: 260px !important;
+    padding: 0 !important;
+    align-items: stretch;
+    align-self: stretch;
+    overflow: hidden;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #primaryRail > .rail-top,
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #primaryRail > .rail-rec,
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #primaryRail > .p,
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #primaryRail > .div,
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #primaryRail > .osbar-bell,
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #primaryRail > .r { display: none !important; }
+  #railBody { flex: 1; min-height: 0; overflow: auto; padding: 12px 10px 8px; }
+  #railBody .rail-pane[hidden] { display: none !important; }
+  #railBody .rail-link {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    min-height: 36px;
+    margin: 0 0 2px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #1d1d1f;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 400;
+    text-align: left;
+    cursor: pointer;
+  }
+  #railBody .rail-link:hover { background: #f6f7f8; color: #1d1d1f; }
+  #railBody .rail-link.on,
+  #railBody .rail-link.on:hover { background: #f6f7f8; color: #3c7a94; font-weight: 650; }
+  #railBody .rail-link.is-out { color: #d93025; }
+  #railBody .rail-link.is-out:hover { background: #fdeceb; color: #d93025; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-follow { display: flex !important; width: 100%; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-follow-row .nm {
+    display: block !important;
+    max-width: 168px !important;
+    margin-left: 8px;
+    opacity: 1 !important;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-follow-k,
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-k {
+    display: block !important;
+    height: auto;
+    margin: 16px 12px 6px;
+    padding: 0;
+    color: #71777d !important;
+    font-size: 12px;
+    font-weight: 650;
+    letter-spacing: .04em;
+    line-height: 1.2;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-follow-k { margin-top: 4px; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-follow-k .rail-follow-line { display: none; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-rec {
+    display: flex !important;
+    flex-direction: column;
+    gap: 2px;
+    width: 100%;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-rec-card {
+    height: auto;
+    min-height: 44px;
+    padding: 6px 8px;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-rec-card .copy {
+    display: flex !important;
+    flex-direction: column;
+    max-width: 168px !important;
+    opacity: 1 !important;
+    transform: none !important;
+    min-width: 0;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-rec-card b { color: #1a1d21; font-size: 13px; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-rec-card small { display: block !important; color: #8b919a; font-size: 11px; }
+  #railRows { display: flex; flex-direction: column; gap: 4px; }
+  #railRows .rail-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 8px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    color: #1a1d21;
+  }
+  #railRows .rail-group.is-sub { margin-left: 22px; width: calc(100% - 22px); }
+  #railRows .rail-group.is-sub .rail-group-top b { font-weight: 550; }
+  #railRows .rail-group.on { background: #eef1f4; }
+  #railRows .rail-group-top { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; }
+  #railRows .rail-group-top time { color: #8b919a; font-size: 11px; font-weight: 500; }
+  #railRows .rail-group-bot { color: #656d76; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #railRows .rail-empty { margin: 8px; color: #656d76; font-size: 13px; }
+  .frame.chat-float #teamHost {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 68px;
+    right: 16px;
+    bottom: 16px;
+    width: 420px;
+    z-index: 36;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 16px 40px rgba(20, 24, 28, .16);
+  }
+  .frame.chat-float #teamHost .list { display: none !important; }
+  .frame.chat-float #teamHost > .team,
+  .frame.chat-float #teamHost .thread { display: flex; flex: 1; min-width: 0; min-height: 0; flex-direction: column; }
+  .frame.pane-float #symbionHost:not([hidden]),
+  .frame.pane-float #setHost:not([hidden]),
+  .frame.pane-float #dirHost:not([hidden]),
+  .frame.pane-float #cosmoAdminHost:not([hidden]) {
+    display: flex !important;
+    position: absolute;
+    top: 68px;
+    right: 16px;
+    bottom: 16px;
+    width: min(760px, calc(100% - 292px));
+    z-index: 36;
+    flex-direction: column;
+    overflow: auto;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: 0 16px 40px rgba(20, 24, 28, .16);
+  }
+  .float-chrome {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2px;
+    height: 36px;
+    flex: none;
+    padding: 0 8px;
+    border-bottom: 1px solid var(--line);
+    background: #fff;
+    cursor: grab;
+    user-select: none;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+  }
+  .float-chrome:active { cursor: grabbing; }
+  .float-chrome .float-grip { margin-right: auto; width: 28px; height: 4px; border-radius: 999px; background: #d5d8dc; }
+  .float-chrome button {
+    width: 28px;
+    height: 28px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #1a1d21;
+    font: inherit;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .float-chrome button:hover { background: #f3f4f6; }
+  #tabbar {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    z-index: 2;
+    flex: none;
+    width: 100%;
+    height: 64px;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-around;
+    gap: 2px;
+    padding: 4px 4px 6px;
+    box-sizing: border-box;
+    background: #fff;
+    border-top: 1px solid var(--line);
+  }
+  #tabbar > .r {
+    flex: 1;
+    width: auto;
+    height: auto;
+    min-width: 0;
+    border-radius: 12px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    padding: 4px 6px;
+    color: #5f6368;
+  }
+  #tabbar > .r .rail-ico { width: 20px; height: 20px; margin: 0; }
+  #tabbar > .r .rail-lab {
+    display: block !important;
+    max-width: none !important;
+    opacity: 1 !important;
+    overflow: hidden;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.1;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #tabbar .r[data-rail="drive"] .rail-lab:not(.rail-lab-me),
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #tabbar .r[data-rail="drive"] .rail-ico-drive { display: none !important; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #tabbar .r[data-rail="drive"] .rail-lab-me,
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #tabbar .r[data-rail="drive"] .rail-ico-me { display: block !important; }
+  #tabbar > .r.on { background: #f6f7f8; color: #3c7a94; }
+  #tabbar > .r:hover { background: #f6f7f8; color: #1d1d1f; }
+  #tabbar > .r.on:hover { color: #3c7a94; }
+  #tabbar > .r.on .rail-lab { font-weight: 650; }
+  #railFold { display: none; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railFold { display: inline-flex; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #primaryRail.is-slim { width: 64px !important; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #primaryRail.is-slim #railBody { display: none !important; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #primaryRail.is-slim #tabbar {
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: auto;
+    gap: 8px;
+    padding: 14px 8px;
+    border-top: 0;
+    background: transparent;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #primaryRail.is-slim #tabbar > .r {
+    flex: none;
+    width: 44px;
+    height: 44px;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #primaryRail.is-slim #tabbar > .r .rail-lab { display: none !important; }
+  #tabbar .r[data-rail="drive"] .rail-lab:not(.rail-lab-me),
+  #tabbar .r[data-rail="drive"] .rail-ico-drive,
+  #tabbar .r[data-rail="community"] .rail-ico-people,
+  #tabbar .r[data-rail="cosmo"] .rail-ico-spark-solid { display: none; }
+  #tabbar .r[data-rail="drive"] .rail-lab-me,
+  #tabbar .r[data-rail="drive"] .rail-ico-me,
+  #tabbar .r[data-rail="community"] .rail-ico-chat,
+  #tabbar .r[data-rail="cosmo"] .rail-ico-spark-line { display: block; }
+  #railBody, #tabbar { display: none !important; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody { display: block !important; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #tabbar { display: flex !important; }
+  #meAccount { margin: 0 0 22px; }
+  #meAccount .me-h span { display: block; margin-top: 4px; color: #656d76; font-size: 13px; font-weight: 500; }
+  #meAccount button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 8px 4px;
+    border: 0;
+    border-top: 1px solid #e6e8ec;
+    background: transparent;
+    color: #1a1d21;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+  }
+  #meAccount button svg { width: 18px; height: 18px; flex: none; }
+  #meAccount button:hover { color: var(--green-dark); }
+  #meAccount button.is-out { color: #d93025; }
+  html[data-theme="blue"] #meAccount [data-rail-account="desk"] { display: none; }
   .rail .r .rail-ico-spark { width: 15px; height: 15px; }
   .rail .r .rail-ico-spark-line { display: none; }
   html[data-theme="blue"] .rail .r[data-rail="cosmo"] .rail-ico-spark-solid { display: none; }
@@ -5118,7 +5532,7 @@
   .tpl .use { margin-top: auto; align-self: stretch; text-align: center; border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-size: 12px; font-weight: 500; background: #fff; }
 
   /* Dock + toast — Citta bubble can be dragged; click still toggles panel. */
-  .dock { position: absolute; right: var(--page-gutter); top: 843px; width: 44px; height: 44px; border-radius: 22px; background: #fff; border: 1.5px solid var(--green); color: var(--green); font-size: 0; font-weight: 600; display: flex; align-items: center; justify-content: center; left: auto; padding: 0; box-sizing: border-box; overflow: visible; transition: box-shadow .12s, left .2s ease, right .2s ease; z-index: 45; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-user-drag: none; user-drag: none; }
+  .dock { position: absolute; right: var(--page-gutter); top: auto; bottom: 76px; width: 44px; height: 44px; border-radius: 22px; background: #fff; border: 1.5px solid var(--green); color: var(--green); font-size: 0; font-weight: 600; display: flex; align-items: center; justify-content: center; left: auto; padding: 0; box-sizing: border-box; overflow: visible; transition: box-shadow .12s, left .2s ease, right .2s ease; z-index: 45; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-user-drag: none; user-drag: none; }
   .dock.is-dragging { cursor: grabbing; transition: none; box-shadow: 0 10px 28px rgba(var(--ink-rgb),.18); z-index: 80; }
   .dock.is-placed { right: auto !important; bottom: auto !important; }
   html[data-theme="blue"] .dock:not(.is-placed) { top: auto; bottom: 24px; }
@@ -11952,7 +12366,7 @@
   html[data-theme="blue"] #teamHost .gpost-body,
   html[data-theme="blue"] #teamHost .gpost-from,
   html[data-theme="blue"] #teamHost .gpost-replies,
-  html[data-theme="blue"] #teamHost .gpost-acts { grid-column: 2; min-width: 0; }
+  html[data-theme="blue"] #teamHost .gpost-acts { display: flex; gap: 4px; margin-top: 4px; grid-column: 2; min-width: 0; }
   html[data-theme="blue"] #teamHost .gpost-body {
     margin-top: 2px;
     font-size: 15px;
@@ -11983,7 +12397,39 @@
   html[data-theme="blue"] #teamHost .greply-col { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
   html[data-theme="blue"] #teamHost .greply-col b { font-size: 13px; font-weight: 500; line-height: 18px; color: #1a1d21; }
   html[data-theme="blue"] #teamHost .greply-col p { margin: 0; font-size: 14px; line-height: 1.45; color: #1a1d21; text-wrap: pretty; }
-  html[data-theme="blue"] #teamHost .gpost-acts { display: flex; gap: 4px; margin-top: 4px; }
+  html[data-theme="blue"] #teamHost .gpost.is-entry { cursor: pointer; }
+  html[data-theme="blue"] #teamHost .post-back {
+    margin: 8px 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #656d76;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  html[data-theme="blue"] #teamHost .replies-h { margin: 16px 0 8px; font-size: 13px; font-weight: 650; color: #1a1d21; }
+  html[data-theme="blue"] #teamHost .gpost-stats,
+  html[data-theme="blue"] #teamHost .greply-col .gpost-stats { display: flex; gap: 6px; margin-top: 8px; }
+  html[data-theme="blue"] #teamHost .gpost-stats button {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 26px;
+    padding: 0 8px;
+    border: 0;
+    border-radius: 999px;
+    background: #f3f4f6;
+    color: #656d76;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  html[data-theme="blue"] #teamHost .gpost-stats svg { width: 14px; height: 14px; display: block; }
+  html[data-theme="blue"] #teamHost .gpost-stats button[aria-pressed="true"] svg { fill: currentColor; }
+  html[data-theme="blue"] #teamHost .gpost-stats button[aria-pressed="true"] { background: var(--green-tint); color: var(--green-dark); }
   html[data-theme="blue"] #teamHost .gpost-acts button {
     border: 0;
     background: transparent;
@@ -12516,6 +12962,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
 
 
       <div class="osbar" aria-label="Bookmarks and applications">
+        <button type="button" class="osbar-nav-btn" id="railFold" aria-label="Collapse sidebar" aria-pressed="false"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M9.5 4.5v15"/></svg></button>
         <div class="osbar-nav" aria-label="Browser">
           <button type="button" class="osbar-nav-btn" aria-label="Home" data-osbar="home"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7.4 12 4l8 3.4V20h-5.15v-6.3H9.15V20H4Z"/></svg></button>
           <button type="button" class="osbar-nav-btn" aria-label="Reload" data-osbar="reload"><svg class="osbar-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.2-5.8"/><path d="M21 3v6h-6"/></svg></button>
@@ -12543,7 +12990,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
           <div class="osbar-mine-menu" id="osbarMineMenu" role="menu" aria-label="My Symbion">
             <button type="button" role="menuitem" data-symbion="memory">Memory</button>
             <button type="button" role="menuitem" data-symbion="training" hidden>Training</button>
-            <button type="button" role="menuitem" data-symbion="look" hidden>形象</button>
+            <button type="button" role="menuitem" data-symbion="look" hidden>Appearance</button>
           </div>
         </div>
         <div class="seg theme-seg" role="group" aria-label="Theme color">
@@ -12614,6 +13061,72 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
             <button type="button" role="menuitem" class="is-out" data-rail-account="signout">Sign out</button>
           </div>
         </nav>
+        <script>
+          (function () {
+            var rail = document.getElementById('primaryRail');
+            if (!rail || document.getElementById('tabbar')) return;
+            var body = document.createElement('div');
+            body.id = 'railBody';
+            body.innerHTML = '<div class="rail-pane" data-rail-pane="home"><button type="button" class="rail-link" data-rail-go="kanban">Kanban</button><button type="button" class="rail-link" data-rail-go="symbion">My Symbion</button></div><div class="rail-pane" data-rail-pane="cosmo" hidden></div><div class="rail-pane" data-rail-pane="community" hidden><div id="railRows"></div></div><div class="rail-pane" data-rail-pane="me" hidden><button type="button" class="rail-link" data-rail-go="profile">Profile</button><button type="button" class="rail-link" data-rail-go="cosmos">My Cosmos</button><button type="button" class="rail-link" data-rail-go="security">Security &amp; privacy</button><button type="button" class="rail-link" data-rail-go="settings">Account &amp; settings</button><button type="button" class="rail-link is-out" data-rail-go="signout">Sign out</button></div>';
+            var follow = rail.querySelector('.rail-follow');
+            var rec = rail.querySelector('.rail-rec');
+            var cosmoPane = body.querySelector('[data-rail-pane="cosmo"]');
+            if (follow && !document.getElementById('railFollowAnchor')) {
+              var followAnchor = document.createElement('span');
+              followAnchor.id = 'railFollowAnchor';
+              followAnchor.hidden = true;
+              follow.before(followAnchor);
+            }
+            if (rec && !document.getElementById('railRecAnchor')) {
+              var recAnchor = document.createElement('span');
+              recAnchor.id = 'railRecAnchor';
+              recAnchor.hidden = true;
+              rec.before(recAnchor);
+            }
+            var bar = document.createElement('nav');
+            bar.className = 'tabbar';
+            bar.id = 'tabbar';
+            bar.setAttribute('aria-label', 'Home, Cosmo, Community, Me');
+            ['home', 'cosmo', 'community', 'drive'].forEach(function (key) {
+              var btn = rail.querySelector(':scope > .r[data-rail="' + key + '"]');
+              if (!btn) return;
+              var clone = btn.cloneNode(true);
+              clone.removeAttribute('id');
+              if (key === 'drive') clone.setAttribute('aria-label', 'Me');
+              bar.appendChild(clone);
+            });
+            window.syncV2Rail = function () {
+              var v2 = document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green';
+              var followEl = rail.querySelector('.rail-follow');
+              var recEl = rail.querySelector('.rail-rec');
+              var pane = rail.querySelector('[data-rail-pane="cosmo"]');
+              var followAnchor = document.getElementById('railFollowAnchor');
+              var recAnchor = document.getElementById('railRecAnchor');
+              if (!followEl || !pane || !followAnchor) return;
+              var kicker = followEl.querySelector('.rail-follow-k');
+              var label = kicker && Array.from(kicker.childNodes).find(function (node) { return node.nodeType === 3; });
+              if (v2) {
+                if (label) label.textContent = 'Followed';
+                if (followEl.parentElement !== pane) pane.appendChild(followEl);
+                if (recEl && recEl.parentElement !== pane) {
+                  if (!pane.querySelector('.rail-k')) {
+                    var recommended = document.createElement('div');
+                    recommended.className = 'rail-k';
+                    recommended.textContent = 'Recommended';
+                    pane.appendChild(recommended);
+                  }
+                  pane.appendChild(recEl);
+                }
+              } else {
+                if (label) label.textContent = 'FOLLOWING';
+                if (followEl.parentElement !== rail) followAnchor.after(followEl);
+                if (recEl && recAnchor && recEl.parentElement !== rail) recAnchor.after(recEl);
+              }
+            };
+            rail.appendChild(body);
+            rail.appendChild(bar);
+          })();
+        </script>
 
         <div class="main">
           <div class="logo-row">
@@ -13572,10 +14085,13 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
             <div class="me-tabs" role="tablist" aria-label="My Symbion">
               <button type="button" class="me-tab on" data-me-tab="memory" role="tab" aria-selected="true">Memory</button>
               <button type="button" class="me-tab" data-me-tab="training" role="tab" aria-selected="false" hidden>Training</button>
-              <button type="button" class="me-tab" data-me-tab="look" role="tab" aria-selected="false" hidden>形象</button>
+              <button type="button" class="me-tab" data-me-tab="look" role="tab" aria-selected="false" hidden>Appearance</button>
             </div>
             <div class="me-scroll">
               <div class="me-panel" data-me-panel="portal">
+                <section class="me-account" id="meAccount">
+                  <div class="me-h"><h2>Account</h2><span>lulu · 2849182439@qq.com</span></div>
+                </section>
                 <section class="me-cosmo" id="meCosmo" hidden>
                   <div class="me-h"><h2>My Cosmo</h2><span>Cosmos you can manage</span></div>
                   <div id="meCosmoList"></div>
@@ -13666,18 +14182,60 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
               <div class="me-panel me-page" data-me-panel="memory" hidden>
                 <p class="me-page-kicker">My Symbion</p>
                 <h2>Memory</h2>
-                <p class="lead">Your conversations. The model keeps them as your memory.</p>
+                <p class="lead">Conversation memory and the knowledge kept from it. Open a block to read it.</p>
                 <div id="meMemory"></div>
               </div>
               <div class="me-panel me-page" data-me-panel="training" hidden>
-                <p class="me-page-kicker">Labeling</p>
-                <h2>Training</h2>
-                <p class="lead">Your SI’s replies to other people, grouped by what they were about. A label you already made shows on the row.</p>
+                <div class="me-report-head">
+                  <div>
+                    <h2>Suggested Model Improvements</h2>
+                    <p class="lead">Review insights drawn from student interaction patterns. Your decisions guide the improvement roadmap.</p>
+                  </div>
+                  <select id="meTrainPeriod" aria-label="Reporting period">
+                    <option value="today">Today</option>
+                    <option value="7">Last 7 days</option>
+                    <option value="30" selected>Last 30 days</option>
+                    <option value="90">Last 90 days</option>
+                  </select>
+                </div>
+                <div class="me-report-sub">
+                  <h3>Engagement overview</h3>
+                  <span>Illustrative data</span>
+                </div>
+                <div class="me-metrics" id="meTrainMetrics">
+                  <button type="button" class="me-metric on" data-train-metric="tokens" aria-pressed="true"><span>Total tokens</span><b id="meTrainTokens">1.26M</b></button>
+                  <button type="button" class="me-metric" data-train-metric="time" aria-pressed="false"><span>Total interaction time</span><b id="meTrainTime">128.6 <small>hrs</small></b></button>
+                  <button type="button" class="me-metric" data-train-metric="messages" aria-pressed="false"><span>Student messages</span><b id="meTrainMessages">2,846</b></button>
+                  <button type="button" class="me-metric" data-train-metric="students" aria-pressed="false"><span>Active students</span><b id="meTrainStudents">186</b></button>
+                </div>
+                <div class="me-charts">
+                  <article class="me-chart">
+                    <div class="me-chart-top">
+                      <div>
+                        <b id="meTrainChartTitle">Token usage</b>
+                        <span id="meTrainChartSub">Total tokens over time</span>
+                      </div>
+                      <em id="meTrainLegend">Tokens</em>
+                    </div>
+                    <svg id="meTrainChart" viewBox="0 0 650 197" role="img" aria-label="Token usage" preserveAspectRatio="none">
+                      <g id="meTrainGrid"></g>
+                      <path id="meTrainArea" fill="rgba(60,122,148,.16)"></path>
+                      <path id="meTrainLine" fill="none" stroke="#3c7a94" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"></path>
+                      <g id="meTrainMark"></g>
+                      <g id="meTrainLabels"></g>
+                    </svg>
+                  </article>
+                  <article class="me-chart">
+                    <b>Most discussed topics</b>
+                    <span>Share of student conversations</span>
+                    <div id="meTrainTopics"></div>
+                  </article>
+                </div>
                 <div id="meTraining"></div>
               </div>
               <div class="me-panel me-page" data-me-panel="look" hidden>
                 <p class="me-page-kicker">My Symbion</p>
-                <h2>形象</h2>
+                <h2>Appearance</h2>
                 <p class="lead">Your SI. This is the face people see when it speaks for you.</p>
                 <div id="meLook"></div>
               </div>
@@ -19712,6 +20270,16 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       showToastMsg(`Rail · ${label}`);
     }
 
+    const railFold = document.getElementById('railFold');
+    railFold?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!primaryRail) return;
+      const slim = !primaryRail.classList.contains('is-slim');
+      primaryRail.classList.toggle('is-slim', slim);
+      railFold.setAttribute('aria-pressed', slim ? 'true' : 'false');
+      railFold.setAttribute('aria-label', slim ? 'Expand sidebar' : 'Collapse sidebar');
+    });
+
     railExpand?.addEventListener('click', (e) => {
       e.stopPropagation();
       if (document.documentElement.dataset.theme !== 'blue') flashEl(railExpand);
@@ -19727,9 +20295,23 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       }
     });
 
-    frame.querySelectorAll('.rail .r[data-rail]').forEach((el) => {
+    function showRailPane(key) {
+      const paneKey = key === 'drive' ? 'me' : key;
+      document.querySelectorAll('#railBody .rail-pane').forEach((pane) => {
+        pane.hidden = pane.dataset.railPane !== paneKey;
+      });
+      markRailCurrent(key);
+      if (paneKey === 'community' && typeof window.paintRailGroups === 'function') window.paintRailGroups();
+    }
+    frame.querySelectorAll('#primaryRail .r[data-rail]').forEach((el) => {
       el.addEventListener('click', () => {
         if (document.documentElement.dataset.theme !== 'blue') flashEl(el);
+        const v2rail = document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green';
+        if (v2rail && (el.dataset.rail === 'home' || el.dataset.rail === 'cosmo' || el.dataset.rail === 'community' || el.dataset.rail === 'drive')) {
+          document.querySelector('.main')?.classList.remove('is-new-tab');
+          showRailPane(el.dataset.rail);
+          return;
+        }
         if (el.dataset.rail === 'home') {
           setScreen('home');
           document.querySelector('.main')?.classList.remove('is-new-tab');
@@ -19740,10 +20322,6 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
           return;
         }
         if (el.dataset.rail === 'drive') {
-          if (document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green') {
-            openSymbion('portal');
-            return;
-          }
           openDesk('drive');
           return;
         }
@@ -19772,7 +20350,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     });
     frame.querySelectorAll('.rail-follow-row').forEach((el) => {
       el.addEventListener('click', () => {
-        openDir('cosmo');
+        openDir('cosmo', { float: true });
         const search = document.getElementById('dirSearch');
         if (!search) return;
         search.value = el.dataset.follow || '';
@@ -19794,6 +20372,12 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       });
     });
 
+    (function placeAccountInMe() {
+      const host = document.getElementById('meAccount');
+      const menu = document.getElementById('railMeMenu');
+      if (!host || !menu || host.querySelector('[data-rail-account]')) return;
+      menu.querySelectorAll('[data-rail-account]').forEach((btn) => host.appendChild(btn));
+    })();
     function placeRailMeMenu() {
       const menu = document.getElementById('railMeMenu');
       const av = document.getElementById('railMeAv');
@@ -19827,7 +20411,23 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       const menu = document.getElementById('railMeMenu');
       setRailMeMenu(!!(menu && menu.hidden));
     });
-    document.getElementById('railMeMenu')?.addEventListener('click', (e) => {
+    document.getElementById('railBody')?.addEventListener('click', (e) => {
+      const go = e.target.closest('[data-rail-go]');
+      if (!go) return;
+      const act = go.dataset.railGo;
+      if (act === 'kanban') {
+        document.getElementById('homeTaskBoard')?.scrollIntoView({ block: 'nearest' });
+      } else if (act === 'symbion') openSymbion('memory');
+      else if (act === 'profile') openSettings('profile');
+      else if (act === 'cosmos') openSettings('cosmos');
+      else if (act === 'security') openSettings('security');
+      else if (act === 'settings') openSettings('settings');
+      else if (act === 'signout') {
+        if (document.documentElement.dataset.theme === 'blue' && typeof window.blueAuthOpen === 'function') window.blueAuthOpen();
+        else openSettings('signout');
+      }
+    });
+    document.getElementById('meAccount')?.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-rail-account]');
       if (!btn) return;
       const act = btn.dataset.railAccount;
@@ -20056,7 +20656,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
   }
 
   function markRailCurrent(key) {
-    frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
+    frame.querySelectorAll('#primaryRail .r[data-rail], #tabbar .r[data-rail]').forEach((r) => {
       const on = r.dataset.rail === key;
       r.classList.toggle('on', on);
       if (on) r.setAttribute('aria-current', 'page');
@@ -20070,9 +20670,10 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     const copy = homeVariant === 'v2' && root.dataset.palette !== 'green';
     if (copy) root.dataset.home = 'v2';
     else delete root.dataset.home;
-    const driveBtn = document.querySelector('.rail .r[data-rail="drive"]');
-    if (driveBtn) driveBtn.setAttribute('aria-label', copy ? 'Me' : 'Super Drive');
+    const driveBtn = document.querySelector('#tabbar .r[data-rail="drive"]');
+    if (driveBtn) driveBtn.setAttribute('aria-label', 'Me');
     paintHomeFollow();
+    if (window.syncV2Rail) window.syncV2Rail();
   }
   const HOME_FOLLOW_NOTES = [
     { text: "Lecture 5 slides are up. Three quiz questions at the end.", when: "1h ago" },
@@ -22357,14 +22958,152 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
 
   function markDirRail() {
     const key = dirTab === 'post' ? 'post' : dirTab === 'cosmo' ? 'cosmo' : '';
-    frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
+    frame.querySelectorAll('#primaryRail .r[data-rail], #tabbar .r[data-rail]').forEach((r) => {
       const on = !!(key && r.dataset.rail === key);
       r.classList.toggle('on', on);
       if (on) r.setAttribute('aria-current', 'page');
       else r.removeAttribute('aria-current');
     });
   }
-  function openDir(tab) {
+  function armFloat(host, onClose) {
+    if (!host) return;
+    let bar = host.querySelector(':scope > .float-chrome');
+    if (!bar) {
+      bar = document.createElement('div');
+      bar.className = 'float-chrome';
+      bar.innerHTML = '<span class="float-grip"></span><button type="button" data-float="close" aria-label="Close">×</button>';
+      host.prepend(bar);
+      const scale = () => {
+        const box = frame.getBoundingClientRect();
+        return box.width / frame.offsetWidth || 1;
+      };
+      const clampBox = () => {
+        const w = host.offsetWidth;
+        const h = host.offsetHeight;
+        const maxL = Math.max(0, frame.clientWidth - w);
+        const maxT = Math.max(0, frame.clientHeight - h);
+        host.style.left = Math.min(maxL, Math.max(0, parseFloat(host.style.left) || 0)) + 'px';
+        host.style.top = Math.min(maxT, Math.max(0, parseFloat(host.style.top) || 0)) + 'px';
+      };
+      const cursors = { n: 'ns-resize', s: 'ns-resize', e: 'ew-resize', w: 'ew-resize', ne: 'nesw-resize', nw: 'nwse-resize', se: 'nwse-resize', sw: 'nesw-resize' };
+      const edgeAt = (ev) => {
+        const r = host.getBoundingClientRect();
+        const m = 10;
+        let d = '';
+        if (ev.clientY - r.top <= m) d += 'n';
+        if (r.bottom - ev.clientY <= m) d += 's';
+        if (ev.clientX - r.left <= m) d += 'w';
+        if (r.right - ev.clientX <= m) d += 'e';
+        return d;
+      };
+      host.addEventListener('pointermove', (ev) => {
+        if (ev.target.closest('button')) {
+          host.style.cursor = '';
+          bar.style.cursor = '';
+          return;
+        }
+        const c = cursors[edgeAt(ev)] || '';
+        host.style.cursor = c;
+        bar.style.cursor = c;
+      });
+      host.addEventListener('pointerdown', (e) => {
+        if (e.target.closest('button')) return;
+        const dir = edgeAt(e);
+        if (!dir) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const s = scale();
+        const x = e.clientX;
+        const y = e.clientY;
+        const w = host.offsetWidth;
+        const h = host.offsetHeight;
+        const l = host.offsetLeft;
+        const t = host.offsetTop;
+        const move = (ev) => {
+          const dx = (ev.clientX - x) / s;
+          const dy = (ev.clientY - y) / s;
+          let nw = w;
+          let nh = h;
+          if (dir.includes('e')) nw = w + dx;
+          if (dir.includes('w')) nw = w - dx;
+          if (dir.includes('s')) nh = h + dy;
+          if (dir.includes('n')) nh = h - dy;
+          nw = Math.max(320, Math.min(frame.clientWidth - 8, nw));
+          nh = Math.max(240, Math.min(frame.clientHeight - 8, nh));
+          host.style.width = nw + 'px';
+          host.style.height = nh + 'px';
+          if (dir.includes('w')) host.style.left = (l + w - nw) + 'px';
+          if (dir.includes('n')) host.style.top = (t + h - nh) + 'px';
+          clampBox();
+        };
+        const up = () => {
+          window.removeEventListener('pointermove', move);
+          window.removeEventListener('pointerup', up);
+        };
+        window.addEventListener('pointermove', move);
+        window.addEventListener('pointerup', up);
+      }, true);
+      bar.addEventListener('pointerdown', (e) => {
+        if (e.target.closest('button')) return;
+        if (edgeAt(e)) return;
+        e.preventDefault();
+        const s = scale();
+        const x = e.clientX;
+        const y = e.clientY;
+        const l = host.offsetLeft;
+        const t = host.offsetTop;
+        const move = (ev) => {
+          host.style.left = l + (ev.clientX - x) / s + 'px';
+          host.style.top = t + (ev.clientY - y) / s + 'px';
+          clampBox();
+        };
+        const up = () => {
+          window.removeEventListener('pointermove', move);
+          window.removeEventListener('pointerup', up);
+        };
+        window.addEventListener('pointermove', move);
+        window.addEventListener('pointerup', up);
+      });
+    }
+    if (!host.style.left) {
+      const w = Math.min(720, Math.max(360, frame.clientWidth - 300));
+      const h = Math.min(640, Math.max(320, frame.clientHeight - 120));
+      host.style.width = w + 'px';
+      host.style.height = h + 'px';
+      host.style.left = Math.max(16, frame.clientWidth - w - 24) + 'px';
+      host.style.top = '72px';
+      host.style.right = 'auto';
+      host.style.bottom = 'auto';
+    }
+    bar.querySelector('[data-float="close"]').onclick = (e) => { e.stopPropagation(); onClose && onClose(); };
+  }
+  window.armFloat = armFloat;
+  window.closeChatFloat = function () { frame.classList.remove('chat-float'); };
+  function usePaneFloat(host) {
+    frame.classList.remove('chat-float', 'symbion-on', 'set-on', 'dir-on', 'cosmo-admin-on', 'team-on');
+    ['symbionHost', 'setHost', 'dirHost', 'cosmoAdminHost'].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el && el !== host) el.hidden = true;
+    });
+    frame.classList.add('pane-float');
+    if (host) host.hidden = false;
+    armFloat(host, window.closePaneFloat);
+    screen = 'home';
+    document.querySelectorAll('.screen').forEach((el) => el.classList.toggle('on', el.id === 'screen-home'));
+  }
+  window.closePaneFloat = function () {
+    frame.classList.remove('pane-float');
+    ['symbionHost', 'setHost', 'dirHost', 'cosmoAdminHost'].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.hidden = true;
+    });
+    symbionOpen = false;
+    settingsOpen = false;
+    dirOpen = false;
+    cosmoAdminOpen = false;
+    frame.classList.remove('symbion-on', 'set-on', 'dir-on', 'cosmo-admin-on');
+  };
+  function openDir(tab, opts) {
     const next = tab === 'post' || tab === 'community' ? tab : 'cosmo';
     const staying = dirOpen && screen === 'dir';
     if (!staying) {
@@ -22372,15 +23111,19 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       if (deskOpen) closeDesk();
       if (settingsOpen) closeSettings();
       if (symbionOpen) closeSymbion();
+      if (cosmoAdminOpen) closeCosmoAdmin();
       applyTheme();
-      frame.classList.add('dir-on');
+      if (opts && opts.float) usePaneFloat(document.getElementById('dirHost'));
+      else frame.classList.add('dir-on');
       pressScenario('home');
     }
     dirOpen = true;
     dirPersonName = '';
     if (next !== 'community') dirChao = '';
     dirTab = next;
-    screen = 'dir';
+    if (!(opts && opts.float)) screen = 'dir';
+    const dirHost = document.getElementById('dirHost');
+    if (dirHost) dirHost.hidden = false;
     markDirRail();
     renderDir();
     syncHash();
@@ -22390,7 +23133,10 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     if (!dirOpen) return;
     dirOpen = false;
     frame.classList.remove('dir-on');
-    frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
+    const dirHost = document.getElementById('dirHost');
+    if (dirHost) dirHost.hidden = true;
+    if (!symbionOpen && !settingsOpen && !cosmoAdminOpen) frame.classList.remove('pane-float');
+    frame.querySelectorAll('#primaryRail .r[data-rail], #tabbar .r[data-rail]').forEach((r) => {
       r.classList.remove('on');
       r.removeAttribute('aria-current');
     });
@@ -22600,7 +23346,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
   });
 
   function markTeamRail() {
-    frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
+    frame.querySelectorAll('#primaryRail .r[data-rail], #tabbar .r[data-rail]').forEach((r) => {
       const on = r.dataset.rail === 'community';
       r.classList.toggle('on', on);
       if (on) r.setAttribute('aria-current', 'page');
@@ -22626,7 +23372,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     if (!teamOpen) return;
     teamOpen = false;
     frame.classList.remove('team-on');
-    frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
+    frame.querySelectorAll('#primaryRail .r[data-rail], #tabbar .r[data-rail]').forEach((r) => {
       r.classList.remove('on');
       r.removeAttribute('aria-current');
     });
@@ -22697,9 +23443,9 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
   let deskBlueAs = '';
   const deskBlueDirectory = [
     { id: 'roland', name: 'Prof. Roland', email: 'roland@symbion.test' },
-    { id: 'luo', name: '骆王宇', email: 'luowangyu@symbion.test' },
-    { id: 'li', name: '李佳琦', email: 'lijiaqi@symbion.test' },
-    { id: 'dou', name: '豆豆', email: 'doudou@symbion.test' }
+    { id: 'luo', name: 'Wangyu Luo', email: 'luowangyu@symbion.test' },
+    { id: 'li', name: 'Jiaqi Li', email: 'lijiaqi@symbion.test' },
+    { id: 'dou', name: 'Doudou', email: 'doudou@symbion.test' }
   ];
   const deskBlueGroups = [
     { id: 'hip', name: 'Heavy-ion Physics', members: ['roland', 'luo', 'li'] },
@@ -22709,8 +23455,8 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
   let deskItems = [{ id: 'ns', lane: 'personal', title: 'New schedule', type: 'Task', date: '2026-11-02' }];
   let deskNodes = [
     { id: 'citta', parent: '', kind: 'folder', name: 'From Citta', fromCitta: true, protect: true },
-    { id: 'citta-deck', parent: 'citta', kind: 'file', name: 'Lecture 5 deck', meta: 'Deck · Citta', fromCitta: true, protect: true, created: '11月17日 14:30', accessed: '11月17日 14:30', createdAt: Date.parse('2026-11-17T14:30:00'), accessedAt: Date.parse('2026-11-17T14:30:00') },
-    { id: 'citta-quiz', parent: 'citta', kind: 'file', name: 'Lecture 5 quiz keys', meta: 'Deck · Citta', fromCitta: true, protect: true, created: '11月17日 14:32', accessed: '11月17日 14:32', createdAt: Date.parse('2026-11-17T14:32:00'), accessedAt: Date.parse('2026-11-17T14:32:00') },
+    { id: 'citta-deck', parent: 'citta', kind: 'file', name: 'Lecture 5 deck', meta: 'Deck · Citta', fromCitta: true, protect: true, created: 'Nov 17 14:30', accessed: 'Nov 17 14:30', createdAt: Date.parse('2026-11-17T14:30:00'), accessedAt: Date.parse('2026-11-17T14:30:00') },
+    { id: 'citta-quiz', parent: 'citta', kind: 'file', name: 'Lecture 5 quiz keys', meta: 'Deck · Citta', fromCitta: true, protect: true, created: 'Nov 17 14:32', accessed: 'Nov 17 14:32', createdAt: Date.parse('2026-11-17T14:32:00'), accessedAt: Date.parse('2026-11-17T14:32:00') },
     { id: 'editors', parent: '', kind: 'folder', name: 'Symbion Editors' },
     { id: 'code', parent: 'editors', kind: 'folder', name: 'Code' },
     { id: 'decks', parent: 'editors', kind: 'folder', name: 'Decks' },
@@ -22719,28 +23465,28 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     { id: 'symtex', parent: 'editors', kind: 'folder', name: 'SymTex' },
     { id: 'lec1', parent: 'docs', kind: 'file', name: 'Lecture 1 summary', meta: 'Document' },
     { id: 'shared', parent: '', kind: 'folder', name: 'Shared', protect: true },
-    { id: 'sd-hip', parent: 'sd', kind: 'folder', name: 'Heavy-ion Physics', drive: true, role: 'Contributor', activity: 'Lecture 5 slides · Nov 19', protect: true, members: [{ name: 'Prof. Roland', role: 'Manager' }, { name: 'Lulu', role: 'Contributor' }, { name: '骆王宇', role: 'Contributor' }, { name: '李佳琦', role: 'Viewer' }] },
+    { id: 'sd-hip', parent: 'sd', kind: 'folder', name: 'Heavy-ion Physics', drive: true, role: 'Contributor', activity: 'Lecture 5 slides · Nov 19', protect: true, members: [{ name: 'Prof. Roland', role: 'Manager' }, { name: 'Lulu', role: 'Contributor' }, { name: 'Wangyu Luo', role: 'Contributor' }, { name: 'Jiaqi Li', role: 'Viewer' }] },
     { id: 'sd-hip-lec', parent: 'sd-hip', kind: 'folder', name: 'Lectures', protect: true },
     { id: 'sd-hip-l5', parent: 'sd-hip-lec', kind: 'file', name: 'Lecture 5 slides', meta: 'Deck · Prof. Roland', protect: true },
     { id: 'sd-hip-l1', parent: 'sd-hip-lec', kind: 'file', name: 'Lecture 1 slides', meta: 'Deck · Prof. Roland', protect: true },
     { id: 'sd-hip-lab', parent: 'sd-hip', kind: 'folder', name: 'Labs', protect: true },
     { id: 'sd-hip-brief', parent: 'sd-hip-lab', kind: 'file', name: 'Lab 3 brief', meta: 'Doc · Prof. Roland', protect: true },
-    { id: 'sd-hip-read', parent: 'sd-hip', kind: 'file', name: 'Reading list', meta: 'Doc · 骆王宇', protect: true },
-    { id: 'sd-lab', parent: 'sd', kind: 'folder', name: 'Lab 3 group', drive: true, role: 'Manager', activity: 'Analysis notes · Nov 18', protect: true, members: [{ name: 'Lulu', role: 'Manager' }, { name: '豆豆', role: 'Contributor' }] },
-    { id: 'sd-lab-notes', parent: 'sd-lab', kind: 'file', name: 'Shared analysis notes', meta: 'Doc · 豆豆', protect: true },
+    { id: 'sd-hip-read', parent: 'sd-hip', kind: 'file', name: 'Reading list', meta: 'Doc · Wangyu Luo', protect: true },
+    { id: 'sd-lab', parent: 'sd', kind: 'folder', name: 'Lab 3 group', drive: true, role: 'Manager', activity: 'Analysis notes · Nov 18', protect: true, members: [{ name: 'Lulu', role: 'Manager' }, { name: 'Doudou', role: 'Contributor' }] },
+    { id: 'sd-lab-notes', parent: 'sd-lab', kind: 'file', name: 'Shared analysis notes', meta: 'Doc · Doudou', protect: true },
     { id: 'sd-lab-plot', parent: 'sd-lab', kind: 'file', name: 'Plot data', meta: 'Sheet · Lulu', protect: true },
     { id: 'sd-edit', parent: 'sd', kind: 'folder', name: 'Symbion Editors', drive: true, role: 'Viewer', activity: 'Style notes · Nov 12', protect: true, members: [{ name: 'Prof. Roland', role: 'Manager' }, { name: 'Lulu', role: 'Viewer' }] },
     { id: 'sd-edit-notes', parent: 'sd-edit', kind: 'file', name: 'Blue home notes', meta: 'Doc · Lulu', protect: true },
-    { id: 'co-hip', parent: 'co', kind: 'folder', name: 'Heavy-ion Physics', course: true, staff: 'Prof. Roland', term: 'Fall 2026', protect: true, created: '9月2日 09:00', accessed: '11月17日 14:10' },
-    { id: 'co-hip-lec', parent: 'co-hip', kind: 'folder', name: 'Lectures', protect: true, owner: 'Prof. Roland', created: '9月2日 09:10', accessed: '11月17日 14:10' },
-    { id: 'co-hip-l1', parent: 'co-hip-lec', kind: 'file', name: 'Lecture 1 slides', meta: 'Deck', owner: 'Prof. Roland', protect: true, created: '9月2日 09:20', accessed: '11月17日 10:20' },
-    { id: 'co-hip-l5', parent: 'co-hip-lec', kind: 'file', name: 'Lecture 5 slides', meta: 'Deck', owner: 'Prof. Roland', protect: true, created: '11月17日 08:40', accessed: '11月17日 14:10' },
-    { id: 'co-hip-lab', parent: 'co-hip', kind: 'folder', name: 'Labs', protect: true, owner: 'Prof. Roland', created: '10月6日 11:00', accessed: '11月16日 16:20' },
-    { id: 'co-hip-brief', parent: 'co-hip-lab', kind: 'file', name: 'Lab 3 brief', meta: 'Doc', owner: 'Prof. Roland', protect: true, created: '11月10日 11:00', accessed: '11月16日 16:20' },
-    { id: 'co-hip-read', parent: 'co-hip', kind: 'file', name: 'Reading list', meta: 'Doc', owner: 'Prof. Roland', protect: true, created: '9月2日 09:30', accessed: '11月12日 19:05' },
-    { id: 'co-da', parent: 'co', kind: 'folder', name: 'Data Analysis', course: true, staff: 'Prof. Xu', term: 'Fall 2026', protect: true, created: '9月8日 10:00', accessed: '11月14日 21:12' },
-    { id: 'co-da-w1', parent: 'co-da', kind: 'file', name: 'Week 1 notes', meta: 'Doc', owner: 'Prof. Xu', protect: true, created: '9月8日 10:20', accessed: '11月3日 15:40' },
-    { id: 'co-da-set', parent: 'co-da', kind: 'file', name: 'Problem set 2', meta: 'Doc', owner: 'Prof. Xu', protect: true, created: '11月4日 18:00', accessed: '11月14日 21:12' },
+    { id: 'co-hip', parent: 'co', kind: 'folder', name: 'Heavy-ion Physics', course: true, staff: 'Prof. Roland', term: 'Fall 2026', protect: true, created: 'Sep 2 09:00', accessed: 'Nov 17 14:10' },
+    { id: 'co-hip-lec', parent: 'co-hip', kind: 'folder', name: 'Lectures', protect: true, owner: 'Prof. Roland', created: 'Sep 2 09:10', accessed: 'Nov 17 14:10' },
+    { id: 'co-hip-l1', parent: 'co-hip-lec', kind: 'file', name: 'Lecture 1 slides', meta: 'Deck', owner: 'Prof. Roland', protect: true, created: 'Sep 2 09:20', accessed: 'Nov 17 10:20' },
+    { id: 'co-hip-l5', parent: 'co-hip-lec', kind: 'file', name: 'Lecture 5 slides', meta: 'Deck', owner: 'Prof. Roland', protect: true, created: 'Nov 17 08:40', accessed: 'Nov 17 14:10' },
+    { id: 'co-hip-lab', parent: 'co-hip', kind: 'folder', name: 'Labs', protect: true, owner: 'Prof. Roland', created: 'Oct 6 11:00', accessed: 'Nov 16 16:20' },
+    { id: 'co-hip-brief', parent: 'co-hip-lab', kind: 'file', name: 'Lab 3 brief', meta: 'Doc', owner: 'Prof. Roland', protect: true, created: 'Nov 10 11:00', accessed: 'Nov 16 16:20' },
+    { id: 'co-hip-read', parent: 'co-hip', kind: 'file', name: 'Reading list', meta: 'Doc', owner: 'Prof. Roland', protect: true, created: 'Sep 2 09:30', accessed: 'Nov 12 19:05' },
+    { id: 'co-da', parent: 'co', kind: 'folder', name: 'Data Analysis', course: true, staff: 'Prof. Xu', term: 'Fall 2026', protect: true, created: 'Sep 8 10:00', accessed: 'Nov 14 21:12' },
+    { id: 'co-da-w1', parent: 'co-da', kind: 'file', name: 'Week 1 notes', meta: 'Doc', owner: 'Prof. Xu', protect: true, created: 'Sep 8 10:20', accessed: 'Nov 3 15:40' },
+    { id: 'co-da-set', parent: 'co-da', kind: 'file', name: 'Problem set 2', meta: 'Doc', owner: 'Prof. Xu', protect: true, created: 'Nov 4 18:00', accessed: 'Nov 14 21:12' },
   ];
   const deskFileBlobs = new Map();
 
@@ -23052,7 +23798,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       return `${months[d.getMonth()]} ${d.getDate()}, ${hh}:${mm}`;
     }
-    return `${d.getMonth() + 1}月${d.getDate()}日 ${hh}:${mm}`;
+    return `${months[d.getMonth()]} ${d.getDate()}, ${hh}:${mm}`;
   }
   function deskCittaKindOf(node) {
     const meta = String(node.meta || '');
@@ -23086,7 +23832,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       return ((a[pick] || a.createdAt || 0) - (b[pick] || b.createdAt || 0)) * dir;
     });
     const chevron = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 8l3-3.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-    const star = '<svg class="drive-ai-star" viewBox="0 0 16 16" aria-hidden="true"><title>已收藏</title><path d="M8 2.2 9.7 6l4.1.4-3.1 2.7.9 4L8 11.2 4.4 13.1l.9-4L2.2 6.4 6.3 6 8 2.2Z" fill="currentColor"/></svg>';
+    const star = '<svg class="drive-ai-star" viewBox="0 0 16 16" aria-hidden="true"><title>Starred</title><path d="M8 2.2 9.7 6l4.1.4-3.1 2.7.9 4L8 11.2 4.4 13.1l.9-4L2.2 6.4 6.3 6 8 2.2Z" fill="currentColor"/></svg>';
     const aiBadge = '<span class="drive-ai-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="7" y="5" width="10" height="14" rx="1.5" fill="#fff"/><path d="M13 5v3.5h3.5" fill="var(--ui-wash-3)"/><path d="M10 12h4.5M10 14.5h3.2" stroke="var(--green)" stroke-width="1.4" stroke-linecap="round"/><path d="M15.8 16.2h2.4M17 15v2.4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg></span>';
     const head = (key, label, width) => {
       const on = deskCittaSort === key;
@@ -23094,41 +23840,41 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       return `<th style="width:${width}" aria-sort="${sort}"><button type="button" class="drive-ai-head" data-citta-sort="${key}" aria-pressed="${on}">${label}${on ? chevron : ''}</button></th>`;
     };
     const radio = (act, keyName, id, label, current) => `<button type="button" role="menuitemradio" data-drive-do="${act}" data-${keyName}="${id}" aria-checked="${current === id}">${label}</button>`;
-    const kindItems = [['', '全部类型'], ['deck', 'Deck'], ['doc', '文档'], ['file', '其他文件']].map(([id, label]) => radio('citta-kind', 'citta-kind', id, label, deskCittaKind)).join('');
-    const sortItems = [['accessed', '最近访问'], ['created', '创建时间'], ['name', '标题'], ['owner', '所有者']].map(([id, label]) => radio('citta-sort', 'citta-sort', id, label, deskCittaSort)).join('');
-    const addPop = deskCittaPop === 'add' ? '<div class="drive-pop" role="menu"><button type="button" data-drive-do="citta-upload">上传文件</button><button type="button" data-drive-do="citta-new">用 Citta 新建</button></div>' : '';
+    const kindItems = [['', 'All types'], ['deck', 'Deck'], ['doc', 'Documents'], ['file', 'Other files']].map(([id, label]) => radio('citta-kind', 'citta-kind', id, label, deskCittaKind)).join('');
+    const sortItems = [['accessed', 'Last opened'], ['created', 'Created'], ['name', 'Title'], ['owner', 'Owner']].map(([id, label]) => radio('citta-sort', 'citta-sort', id, label, deskCittaSort)).join('');
+    const addPop = deskCittaPop === 'add' ? '<div class="drive-pop" role="menu"><button type="button" data-drive-do="citta-upload">Upload file</button><button type="button" data-drive-do="citta-new">New with Citta</button></div>' : '';
     const filterPop = deskCittaPop === 'filter' ? `<div class="drive-pop" role="menu">${kindItems}</div>` : '';
     const sortPop = deskCittaPop === 'sort' ? `<div class="drive-pop" role="menu">${sortItems}</div>` : '';
-    const bar = `<div class="drive-ai-bar"><div class="drive-ai-tabs" role="tablist" aria-label="Citta files"><button type="button" data-citta-scope="recent" aria-pressed="${deskCittaScope === 'recent'}">最近</button><button type="button" data-citta-scope="mine" aria-pressed="${deskCittaScope === 'mine'}">我的</button><button type="button" data-citta-scope="star" aria-pressed="${deskCittaScope === 'star'}">收藏</button></div><div class="drive-ai-add-wrap"><button type="button" class="drive-ai-add" data-citta-pop="add" aria-expanded="${deskCittaPop === 'add'}" aria-label="新建"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>${addPop}</div><div class="drive-ai-tools"><div class="drive-ai-tool"><button type="button" data-citta-pop="filter" aria-pressed="${deskCittaKind ? 'true' : 'false'}" aria-expanded="${deskCittaPop === 'filter'}" aria-label="筛选"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 3.5h11l-4 4.5v3.5l-3-1.5v-2L2.5 3.5Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></button>${filterPop}</div><div class="drive-ai-tool"><button type="button" data-citta-pop="sort" aria-expanded="${deskCittaPop === 'sort'}" aria-label="排序"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 4.5h10M5 8h6M7 11.5h2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>${sortPop}</div><button type="button" data-desk-drive-view="list" aria-pressed="${deskDriveView !== 'grid'}" aria-label="列表"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 4h10M3 8h10M3 12h10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><button type="button" data-desk-drive-view="grid" aria-pressed="${deskDriveView === 'grid'}" aria-label="网格"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.5" y="2.5" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="2.5" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="2.5" y="9" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="9" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button></div></div>`;
+    const bar = `<div class="drive-ai-bar"><div class="drive-ai-tabs" role="tablist" aria-label="Citta files"><button type="button" data-citta-scope="recent" aria-pressed="${deskCittaScope === 'recent'}">Recent</button><button type="button" data-citta-scope="mine" aria-pressed="${deskCittaScope === 'mine'}">Mine</button><button type="button" data-citta-scope="star" aria-pressed="${deskCittaScope === 'star'}">Star</button></div><div class="drive-ai-add-wrap"><button type="button" class="drive-ai-add" data-citta-pop="add" aria-expanded="${deskCittaPop === 'add'}" aria-label="New"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>${addPop}</div><div class="drive-ai-tools"><div class="drive-ai-tool"><button type="button" data-citta-pop="filter" aria-pressed="${deskCittaKind ? 'true' : 'false'}" aria-expanded="${deskCittaPop === 'filter'}" aria-label="Filter"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 3.5h11l-4 4.5v3.5l-3-1.5v-2L2.5 3.5Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></button>${filterPop}</div><div class="drive-ai-tool"><button type="button" data-citta-pop="sort" aria-expanded="${deskCittaPop === 'sort'}" aria-label="Sort"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 4.5h10M5 8h6M7 11.5h2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>${sortPop}</div><button type="button" data-desk-drive-view="list" aria-pressed="${deskDriveView !== 'grid'}" aria-label="List"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 4h10M3 8h10M3 12h10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><button type="button" data-desk-drive-view="grid" aria-pressed="${deskDriveView === 'grid'}" aria-label="Grid"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.5" y="2.5" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="2.5" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="2.5" y="9" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="9" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button></div></div>`;
     const fileMenu = (node) => {
       if (deskMenuId !== node.id) return '';
       const canBlob = deskFileBlobs.has(node.id);
-      return `<div class="drive-pop drive-menu" role="menu"><button type="button" data-drive-do="open" data-drive-id="${node.id}">打开</button><button type="button" data-drive-do="star" data-drive-id="${node.id}">${node.starred ? '取消收藏' : '收藏'}</button><button type="button" data-drive-do="rename" data-drive-id="${node.id}">重命名</button><button type="button" data-drive-do="copy" data-drive-id="${node.id}">复制</button><button type="button" data-drive-do="download" data-drive-id="${node.id}"${canBlob ? '' : ' disabled'} title="${canBlob ? '' : '文件还在账号里，这台设备没有副本。'}">下载</button><button type="button" disabled title="分享要等账号服务。">分享</button>${node.protect ? '<button type="button" disabled title="示例文件留在这里。">删除</button>' : `<button type="button" data-drive-do="delete" data-drive-id="${node.id}">删除</button>`}</div>`;
+      return `<div class="drive-pop drive-menu" role="menu"><button type="button" data-drive-do="open" data-drive-id="${node.id}">Open</button><button type="button" data-drive-do="star" data-drive-id="${node.id}">${node.starred ? 'Unstar' : 'Star'}</button><button type="button" data-drive-do="rename" data-drive-id="${node.id}">Rename</button><button type="button" data-drive-do="copy" data-drive-id="${node.id}">Copy</button><button type="button" data-drive-do="download" data-drive-id="${node.id}"${canBlob ? '' : ' disabled'} title="${canBlob ? '' : 'This file is still in the account. This device has no copy.'}">Download</button><button type="button" disabled title="Sharing waits for the account service.">Share</button>${node.protect ? '<button type="button" disabled title="Sample files stay here.">Delete</button>' : `<button type="button" data-drive-do="delete" data-drive-id="${node.id}">Delete</button>`}</div>`;
     };
     let body;
     if (!list.length) {
-      const empty = q ? '没有匹配的文件。' : (deskCittaKind ? '没有这类文件。' : (deskCittaScope === 'star' ? '还没有收藏。在一行右侧的 ··· 里选「收藏」。' : '还没有和 Citta 对话产生的文件。'));
+      const empty = q ? 'No files match.' : (deskCittaKind ? 'No files of this type.' : (deskCittaScope === 'star' ? 'Nothing starred yet. Use ··· on a row and choose Star.' : 'No files from Citta yet.'));
       body = `<p class="desk-empty">${empty}</p>`;
     } else if (deskDriveView !== 'grid') {
       const rows = list.map((node) => {
         const who = node.owner || ownerName;
         const mark = node.starred ? star : '';
         const title = deskRenameId === node.id
-          ? `<input class="drive-rename" data-drive-rename="${node.id}" value="${deskEsc(node.name)}" aria-label="重命名 ${deskEsc(node.name)}">`
+          ? `<input class="drive-rename" data-drive-rename="${node.id}" value="${deskEsc(node.name)}" aria-label="Rename ${deskEsc(node.name)}">`
           : `<button type="button" class="drive-ai-title" data-drive-open="${node.id}">${aiBadge}${mark}<span title="${deskEsc(node.name)}">${deskEsc(node.name)}</span></button>`;
         const visits = node.visits && node.visits.length ? node.visits : [node.accessed || node.created || '—'];
-        const log = deskCittaPop === `visits:${node.id}` ? `<div class="drive-pop" role="dialog" aria-label="访问记录"><div class="drive-ai-log"><p>访问记录</p><ul>${visits.map((item) => `<li>${deskEsc(item)}</li>`).join('')}</ul></div></div>` : '';
-        return `<tr class="drive-ai-row" data-drive-open="${node.id}"><td>${title}</td><td><button type="button" class="drive-ai-owner-btn" data-drive-do="owner" title="只看我的文件"><span class="drive-ai-owner"><i>${deskEsc(ownerInitials)}</i>${deskEsc(who)}</span></button></td><td class="drive-ai-time">${deskEsc(node.created || '—')}</td><td class="drive-ai-time"><span class="drive-ai-visit-wrap"><button type="button" class="drive-ai-visit" data-drive-do="visits" data-drive-id="${node.id}" aria-expanded="${deskCittaPop === `visits:${node.id}`}" aria-label="访问记录">${deskEsc(node.accessed || node.created || '—')}${chevron}</button>${log}</span></td><td><button type="button" class="drive-more" data-drive-menu="${node.id}" aria-label="Actions for ${deskEsc(node.name)}" aria-expanded="${deskMenuId === node.id}">···</button>${fileMenu(node)}</td></tr>`;
+        const log = deskCittaPop === `visits:${node.id}` ? `<div class="drive-pop" role="dialog" aria-label="Visit history"><div class="drive-ai-log"><p>Visit history</p><ul>${visits.map((item) => `<li>${deskEsc(item)}</li>`).join('')}</ul></div></div>` : '';
+        return `<tr class="drive-ai-row" data-drive-open="${node.id}"><td>${title}</td><td><button type="button" class="drive-ai-owner-btn" data-drive-do="owner" title="Only my files"><span class="drive-ai-owner"><i>${deskEsc(ownerInitials)}</i>${deskEsc(who)}</span></button></td><td class="drive-ai-time">${deskEsc(node.created || '—')}</td><td class="drive-ai-time"><span class="drive-ai-visit-wrap"><button type="button" class="drive-ai-visit" data-drive-do="visits" data-drive-id="${node.id}" aria-expanded="${deskCittaPop === `visits:${node.id}`}" aria-label="Visit history">${deskEsc(node.accessed || node.created || '—')}${chevron}</button>${log}</span></td><td><button type="button" class="drive-more" data-drive-menu="${node.id}" aria-label="Actions for ${deskEsc(node.name)}" aria-expanded="${deskMenuId === node.id}">···</button>${fileMenu(node)}</td></tr>`;
       }).join('');
-      body = `<table class="drive-ai-list"><thead><tr>${head('name', '标题', '42%')}${head('owner', '所有者', '18%')}${head('created', '创建时间', '18%')}${head('accessed', '最近访问', '18%')}<th></th></tr></thead><tbody>${rows}</tbody></table><div class="drive-ai-end">已经到底了</div>`;
+      body = `<table class="drive-ai-list"><thead><tr>${head('name', 'Title', '42%')}${head('owner', 'Owner', '18%')}${head('created', 'Created', '18%')}${head('accessed', 'Last opened', '18%')}<th></th></tr></thead><tbody>${rows}</tbody></table><div class="drive-ai-end">End of the list</div>`;
     } else {
       const grid = list.map((node) => {
         const open = deskRenameId === node.id
-          ? `<input class="drive-rename" data-drive-rename="${node.id}" value="${deskEsc(node.name)}" aria-label="重命名 ${deskEsc(node.name)}">`
+          ? `<input class="drive-rename" data-drive-rename="${node.id}" value="${deskEsc(node.name)}" aria-label="Rename ${deskEsc(node.name)}">`
           : `<button type="button" class="drive-main" data-drive-open="${node.id}">${aiBadge}<b>${node.starred ? star : ''}${deskEsc(node.name)}</b><small>${deskEsc(node.meta || 'Citta')}</small></button>`;
         return `<div class="desk-folder drive-item">${open}<button type="button" class="drive-more" data-drive-menu="${node.id}" aria-label="Actions for ${deskEsc(node.name)}" aria-expanded="${deskMenuId === node.id}">···</button>${fileMenu(node)}</div>`;
       }).join('');
-      body = `<div class="desk-folders">${grid}</div><div class="drive-ai-end">已经到底了</div>`;
+      body = `<div class="desk-folders">${grid}</div><div class="drive-ai-end">End of the list</div>`;
     }
     return bar + body;
   }
@@ -23323,22 +24069,22 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
 
   function deskBlueLabel(node, key) {
     const raw = node[key] || {
-      citta: '11月17日 14:30', editors: '11月12日 09:00', shared: '11月16日 14:46',
-      docs: '11月1日 10:00', lec1: '11月1日 10:20'
+      citta: 'Nov 17 14:30', editors: 'Nov 12 09:00', shared: 'Nov 16 14:46',
+      docs: 'Nov 1 10:00', lec1: 'Nov 1 10:20'
     }[node.id];
     if (!raw) return '—';
-    const match = String(raw).match(/(\d+)月(\d+)日\s*(\d+):(\d+)/);
-    if (!match) return raw;
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    return `${months[Number(match[1]) - 1] || match[1]} ${Number(match[2])}, ${match[3]}:${match[4]}`;
+    return String(raw).replace(/^((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d+) (\d+:\d+)$/, '$1, $2');
   }
   function deskBlueStamp(node, key) {
     const at = node[key + 'At'];
     if (at) return at;
     const label = deskBlueLabel(node, key);
-    const match = String(label).match(/(\d+)月(\d+)日\s*(\d+):(\d+)/);
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const match = String(label).match(/^([A-Z][a-z]{2}) (\d+), (\d+):(\d+)$/);
     if (!match) return 0;
-    return Date.parse(`2026-${match[1].padStart(2, '0')}-${match[2].padStart(2, '0')}T${match[3].padStart(2, '0')}:${match[4]}:00`) || 0;
+    const month = months.indexOf(match[1]) + 1;
+    if (!month) return 0;
+    return Date.parse(`2026-${String(month).padStart(2, '0')}-${match[2].padStart(2, '0')}T${match[3].padStart(2, '0')}:${match[4]}:00`) || 0;
   }
   function deskBlueName(node) {
     return node.id === 'citta' ? 'Citta files' : node.name;
@@ -23455,9 +24201,9 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     const selectBar = '';
     const searchPop = deskBlueSearchOpen ? (() => {
       const scopePop = pop('search-scope', '<button type="button" data-drive-do="blue-search-scope" data-blue-scope="all">Anywhere</button><button type="button" data-drive-do="blue-search-scope" data-blue-scope="mine">Owned by me</button>');
-      const kindPop = pop('search-kind', [['', '全部类型'], ['folder', '文件夹'], ['doc', '文档'], ['deck', 'Deck']].map(([id, label]) => `<button type="button" data-drive-do="blue-search-kind" data-blue-kind="${id}">${label}</button>`).join(''));
+      const kindPop = pop('search-kind', [['', 'All types'], ['folder', 'Folders'], ['doc', 'Documents'], ['deck', 'Deck']].map(([id, label]) => `<button type="button" data-drive-do="blue-search-kind" data-blue-kind="${id}">${label}</button>`).join(''));
       const hits = (q ? list : list.slice(0, 8)).map((node) => `<button type="button" class="db-hit" data-drive-open="${node.id}">${fileGlyph(node)}<span>${deskEsc(deskBlueName(node))}</span></button>`).join('');
-      return `<div class="db-modal"><div class="db-dialog" role="dialog" aria-label="Search"><label class="drive-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M16 16l4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input id="deskBlueSearch" type="search" placeholder="Search" value="${deskEsc(deskQuery)}" aria-label="Search files"></label><div class="db-chips"><span class="db-chip">Drive</span><span class="db-pop"><button type="button" data-drive-do="blue-pop" data-blue-pop="search-scope">${deskBlueSearchScope === 'mine' ? 'Owned by me' : 'Search in'}</button>${scopePop}</span><span class="db-pop"><button type="button" data-drive-do="blue-pop" data-blue-pop="search-kind">${deskBlueKind ? 'Filtered' : 'File type'}</button>${kindPop}</span><button type="button" class="db-icon" data-drive-do="blue-search-close" aria-label="Close search" style="margin-left:auto">×</button></div><div>${hits || '<p class="desk-empty">没有匹配的文件。</p>'}</div></div></div>`;
+      return `<div class="db-modal"><div class="db-dialog" role="dialog" aria-label="Search"><label class="drive-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M16 16l4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input id="deskBlueSearch" type="search" placeholder="Search" value="${deskEsc(deskQuery)}" aria-label="Search files"></label><div class="db-chips"><span class="db-chip">Drive</span><span class="db-pop"><button type="button" data-drive-do="blue-pop" data-blue-pop="search-scope">${deskBlueSearchScope === 'mine' ? 'Owned by me' : 'Search in'}</button>${scopePop}</span><span class="db-pop"><button type="button" data-drive-do="blue-pop" data-blue-pop="search-kind">${deskBlueKind ? 'Filtered' : 'File type'}</button>${kindPop}</span><button type="button" class="db-icon" data-drive-do="blue-search-close" aria-label="Close search" style="margin-left:auto">×</button></div><div>${hits || '<p class="desk-empty">No files match.</p>'}</div></div></div>`;
     })() : '';
     return `<div class="db is-${deskBlueScope}${picked.length ? ' is-picking' : ''}"><div class="db-bar-row"><div class="db-scopes">${scopeBtn('recent', 'Recent')}${scopeBtn('mine', 'Mine')}${scopeBtn('star', 'Starred')}<button type="button" class="db-icon" data-drive-do="blue-pop" data-blue-pop="add" aria-label="New">+</button></div>${views}</div>${naming}${crumb}<div class="db-layout"><div class="db-main">${main}</div>${side}</div>${selectBar}</div>`;
   }
@@ -23508,17 +24254,17 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     const caret = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     const enter = '<svg class="db-enter" viewBox="0 0 16 16" aria-hidden="true"><path d="M12.5 3.5v4.2a2 2 0 0 1-2 2H4.2M6.4 7.2 3.8 9.7l2.6 2.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     const en = true;
-    const scopePop = pop('search-scope', `<button type="button" data-drive-do="blue-search-scope" data-blue-scope="all">${en ? 'Anywhere' : '不限'}</button><button type="button" data-drive-do="blue-search-scope" data-blue-scope="mine">${en ? 'Owned by me' : '归我所有'}</button>`);
-    const kindPop = pop('search-kind', (en ? [['', 'All types'], ['folder', 'Folders'], ['doc', 'Documents'], ['deck', 'Deck']] : [['', '全部类型'], ['folder', '文件夹'], ['doc', '文档'], ['deck', 'Deck']]).map(([id, label]) => `<button type="button" data-drive-do="blue-search-kind" data-blue-kind="${id}">${label}</button>`).join(''));
+    const scopePop = pop('search-scope', `<button type="button" data-drive-do="blue-search-scope" data-blue-scope="all">${en ? 'Anywhere' : 'Anywhere'}</button><button type="button" data-drive-do="blue-search-scope" data-blue-scope="mine">${en ? 'Owned by me' : 'Owned by me'}</button>`);
+    const kindPop = pop('search-kind', (en ? [['', 'All types'], ['folder', 'Folders'], ['doc', 'Documents'], ['deck', 'Deck']] : [['', 'All types'], ['folder', 'Folders'], ['doc', 'Documents'], ['deck', 'Deck']]).map(([id, label]) => `<button type="button" data-drive-do="blue-search-kind" data-blue-kind="${id}">${label}</button>`).join(''));
     const shown = q ? list : list.slice(0, 8);
     if (deskBlueSearchAt < 0 || deskBlueSearchAt >= shown.length) deskBlueSearchAt = 0;
     const hits = shown.map((node, index) => `<button type="button" class="db-hit${index === deskBlueSearchAt ? ' is-on' : ''}" data-drive-open="${node.id}">${glyph}<span>${deskEsc(deskBlueName(node))}</span>${index === deskBlueSearchAt ? enter : ''}</button>`).join('');
-    const place = deskBlueSearchPlace ? `<button type="button" class="db-chip is-place" data-drive-do="blue-search-place">${en ? 'Drive' : '云盘'}<i aria-hidden="true">×</i></button>` : '';
-    const kindLabel = (en ? { folder: 'Folders', doc: 'Documents', deck: 'Deck' } : { folder: '文件夹', doc: '文档', deck: 'Deck' })[deskBlueKind] || (en ? 'File type' : '文件类型');
+    const place = deskBlueSearchPlace ? `<button type="button" class="db-chip is-place" data-drive-do="blue-search-place">${en ? 'Drive' : 'Drive'}<i aria-hidden="true">×</i></button>` : '';
+    const kindLabel = (en ? { folder: 'Folders', doc: 'Documents', deck: 'Deck' } : { folder: 'Folders', doc: 'Documents', deck: 'Deck' })[deskBlueKind] || (en ? 'File type' : 'File type');
     const foot = en
       ? '<div class="db-search-foot"><span>Close <kbd>esc</kbd></span><span>Move <kbd>↑</kbd><kbd>↓</kbd></span><span>Open <kbd>↩</kbd></span></div>'
-      : '<div class="db-search-foot"><span>退出搜索 <kbd>esc</kbd></span><span>移动光标 <kbd>↑</kbd><kbd>↓</kbd></span><span>选择条目 <kbd>↩</kbd></span></div>';
-    return `<div class="db-modal"><div class="db-dialog" role="dialog" aria-label="${en ? 'Search' : '搜索'}"><label class="drive-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M16 16l4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input id="deskBlueSearch" type="search" placeholder="${en ? 'Search' : '搜索'}" value="${deskEsc(deskQuery)}" aria-label="${en ? 'Search files' : '搜索文件'}"><button type="button" class="db-search-x" data-drive-do="blue-search-close" aria-label="${en ? 'Close search' : '关闭搜索'}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></label><div class="db-chips">${place}<span class="db-pop"><button type="button" data-drive-do="blue-pop" data-blue-pop="search-scope">${deskBlueSearchScope === 'mine' ? (en ? 'Owned by me' : '归我所有') : (en ? 'Search in' : '搜索范围')}${caret}</button>${scopePop}</span><span class="db-pop"><button type="button" data-drive-do="blue-pop" data-blue-pop="search-kind">${kindLabel}${caret}</button>${kindPop}</span></div><div class="db-hits">${hits || (en ? deskBlueEmpty('No matching files.') : '<p class="desk-empty">没有匹配的文件。</p>')}</div>${foot}</div></div>`;
+      : '<div class="db-search-foot"><span>Leave search <kbd>esc</kbd></span><span>Move <kbd>↑</kbd><kbd>↓</kbd></span><span>Open <kbd>↩</kbd></span></div>';
+    return `<div class="db-modal"><div class="db-dialog" role="dialog" aria-label="${en ? 'Search' : 'Search'}"><label class="drive-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M16 16l4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input id="deskBlueSearch" type="search" placeholder="${en ? 'Search' : 'Search'}" value="${deskEsc(deskQuery)}" aria-label="${en ? 'Search files' : 'Search files'}"><button type="button" class="db-search-x" data-drive-do="blue-search-close" aria-label="${en ? 'Close search' : 'Close search'}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></label><div class="db-chips">${place}<span class="db-pop"><button type="button" data-drive-do="blue-pop" data-blue-pop="search-scope">${deskBlueSearchScope === 'mine' ? (en ? 'Owned by me' : 'Owned by me') : (en ? 'Search in' : 'Search in')}${caret}</button>${scopePop}</span><span class="db-pop"><button type="button" data-drive-do="blue-pop" data-blue-pop="search-kind">${kindLabel}${caret}</button>${kindPop}</span></div><div class="db-hits">${hits || (en ? deskBlueEmpty('No matching files.') : '<p class="desk-empty">No files match.</p>')}</div>${foot}</div></div>`;
   }
 
   function paintBlueDriveChrome() {
@@ -23843,7 +24589,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       const pick = deskSelectOn && !node.protect
         ? `<button type="button" class="drive-pick" data-drive-pick="${node.id}" aria-pressed="${picked}" aria-label="Select ${deskEsc(node.name)}"></button>`
         : '';
-      /* Citta folder: iconfont「云盘」same glyph as the rail drive icon — no plus. */
+      /* Citta folder: iconfont drivesame glyph as the rail drive icon — no plus. */
       const icon = node.id === 'citta'
         ? `<svg class="drive-ico" viewBox="0 0 1024 1024" width="28" height="28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M256 768h469.333333a170.666667 170.666667 0 1 0-11.562666-340.949333l-32.341334 2.133333-10.752-30.549333A213.418667 213.418667 0 0 0 256 469.333333l0.042667 4.48 0.682666 33.792-32.725333 8.405334A128.085333 128.085333 0 0 0 256 768z m725.333333-170.666667a256 256 0 0 1-256 256H256a213.333333 213.333333 0 0 1-84.266667-409.386666A298.666667 298.666667 0 0 1 739.413333 341.76 256 256 0 0 1 981.333333 597.333333z"/></svg>`
         : `<svg class="drive-ico" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">${node.kind === 'folder' ? '<path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H10l2 2h6.5A2.5 2.5 0 0 1 21 9.5v7A2.5 2.5 0 0 1 18.5 19h-13A2.5 2.5 0 0 1 3 16.5v-9Z" fill="none" stroke="currentColor" stroke-width="1.6"/>' : '<path d="M7 3.5h7l5 5V20.5H7V3.5Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M14 3.5V9h5.5" fill="none" stroke="currentColor" stroke-width="1.6"/>'}</svg>`;
@@ -24908,7 +25654,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
   }
   function markDeskRail() {
     const key = deskSection === 'drive' ? 'drive' : 'desk';
-    frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
+    frame.querySelectorAll('#primaryRail .r[data-rail], #tabbar .r[data-rail]').forEach((r) => {
       const on = r.dataset.rail === key;
       r.classList.toggle('on', on);
       if (on) r.setAttribute('aria-current', 'page');
@@ -24941,7 +25687,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     frame.classList.remove('desk-on');
     const host = document.getElementById('deskHost');
     if (host) host.hidden = true;
-    frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
+    frame.querySelectorAll('#primaryRail .r[data-rail], #tabbar .r[data-rail]').forEach((r) => {
       r.classList.remove('on');
       r.removeAttribute('aria-current');
     });
@@ -24951,7 +25697,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
   let settingsBound = false;
   let settingsZoneSaved = 'device';
   function markSettingsRail() {
-    frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
+    frame.querySelectorAll('#primaryRail .r[data-rail], #tabbar .r[data-rail]').forEach((r) => {
       const on = r.dataset.rail === 'settings';
       r.classList.toggle('on', on);
       if (on) r.setAttribute('aria-current', 'page');
@@ -25279,11 +26025,10 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     if (deskOpen) closeDesk();
     if (symbionOpen) closeSymbion();
     settingsOpen = true;
-    screen = 'settings';
+    screen = 'home';
     applyTheme();
-    frame.classList.add('set-on');
-    const host = document.getElementById('setHost');
-    if (host) host.hidden = false;
+    frame.classList.remove('set-on');
+    usePaneFloat(document.getElementById('setHost'));
     bindSettings();
     fillSettingsName();
     showSettings(section || settingsSection || 'profile');
@@ -25298,7 +26043,8 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     frame.classList.remove('set-on');
     const host = document.getElementById('setHost');
     if (host) host.hidden = true;
-    frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
+    if (!symbionOpen && !dirOpen && !cosmoAdminOpen) frame.classList.remove('pane-float');
+    frame.querySelectorAll('#primaryRail .r[data-rail], #tabbar .r[data-rail]').forEach((r) => {
       r.classList.remove('on');
       r.removeAttribute('aria-current');
     });
@@ -25368,88 +26114,278 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
   ];
   let siLook = 'portrait';
   function symbionCan(id) { return id === 'memory' || (meHasSI && (id === 'training' || id === 'look')); }
+  const MY_KNOWLEDGE = [
+    { title: 'Lecture 5', body: '2:30 in 6-120. Slides are in Files. Three quiz questions at the end.' },
+    { title: 'Reading report', body: '820 of 1,500 words. Due tomorrow. The phase diagram is not part of the word count until she confirms it.' },
+    { title: 'Phase diagram', body: 'Keep it on its own page in the section notes.' },
+    { title: 'Notes and slides', body: 'Start from the slides. The notes skip the phase diagram.' }
+  ];
+  let memoryOpen = '';
   function paintMemory() {
     const box = document.getElementById('meMemory');
     if (!box) return;
     box.replaceChildren();
-    MY_MEMORY.forEach((thread) => {
+    if (!memoryOpen) {
+      const grid = document.createElement('div');
+      grid.className = 'me-memory-grid';
+      [['chat', 'Conversation memory', 'Conversations the model keeps.', MY_MEMORY.length + ' conversations'], ['knowledge', 'Knowledge', 'Facts kept from those conversations.', MY_KNOWLEDGE.length + ' items']].forEach(([id, title, desc, count]) => {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'me-memory-card';
+        card.dataset.memoryOpen = id;
+        const name = document.createElement('b');
+        name.textContent = title;
+        const line = document.createElement('span');
+        line.textContent = desc;
+        const meta = document.createElement('em');
+        meta.textContent = count;
+        card.append(name, line, meta);
+        grid.appendChild(card);
+      });
+      box.appendChild(grid);
+      return;
+    }
+    const back = document.createElement('button');
+    back.type = 'button';
+    back.className = 'me-memory-back';
+    back.dataset.memoryOpen = '';
+    back.textContent = '← Memory';
+    box.appendChild(back);
+    if (memoryOpen === 'chat') {
+      MY_MEMORY.forEach((thread) => {
+        const card = document.createElement('article');
+        card.className = 'me-thread';
+        const title = document.createElement('h3');
+        title.textContent = thread.where;
+        const when = document.createElement('span');
+        when.className = 'me-when';
+        when.textContent = thread.when;
+        title.appendChild(when);
+        card.appendChild(title);
+        thread.lines.forEach(([who, text]) => {
+          const line = document.createElement('p');
+          line.className = 'me-line';
+          const name = document.createElement('b');
+          name.textContent = who;
+          line.append(name, document.createTextNode(' ' + text));
+          card.appendChild(line);
+        });
+        box.appendChild(card);
+      });
+      return;
+    }
+    MY_KNOWLEDGE.forEach((item) => {
       const card = document.createElement('article');
       card.className = 'me-thread';
       const title = document.createElement('h3');
-      title.textContent = thread.where;
-      const when = document.createElement('span');
-      when.className = 'me-when';
-      when.textContent = thread.when;
-      title.appendChild(when);
-      card.appendChild(title);
-      thread.lines.forEach(([who, text]) => {
-        const line = document.createElement('p');
-        line.className = 'me-line';
-        const name = document.createElement('b');
-        name.textContent = who;
-        line.append(name, document.createTextNode(' ' + text));
-        card.appendChild(line);
-      });
+      title.textContent = item.title;
+      const body = document.createElement('p');
+      body.className = 'me-line';
+      body.textContent = item.body;
+      card.append(title, body);
       box.appendChild(card);
     });
   }
+  let trainPeriod = '30';
+  let trainMetric = 'tokens';
+  const TRAIN_SETS = {
+    today: { tokens: 42900, time: 4.8, messages: 98, students: 31, labels: ['8 AM', '10 AM', '12 PM', '2 PM', '4 PM', '6 PM', '8 PM'], topics: [['Supervised learning', 35], ['Neural networks', 29], ['PCA & clustering', 20], ['Assignments', 16]], series: { tokens: [3200, 4900, 8100, 5700, 7600, 6700, 6700], time: [.3, .5, .9, .6, .9, .8, .8], messages: [8, 11, 19, 14, 18, 15, 13], students: [3, 6, 9, 12, 18, 25, 31] } },
+    7: { tokens: 297000, time: 31.4, messages: 702, students: 98, labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], topics: [['Supervised learning', 37], ['Neural networks', 26], ['PCA & clustering', 21], ['Assignments', 16]], series: { tokens: [31000, 42000, 36000, 51000, 42000, 47000, 48000], time: [3.7, 4.5, 3.8, 5.2, 4.3, 4.9, 5], messages: [61, 83, 70, 112, 92, 141, 143], students: [18, 30, 42, 57, 69, 86, 98] } },
+    30: { tokens: 1260000, time: 128.6, messages: 2846, students: 186, labels: ['Oct 21', 'Oct 27', 'Nov 2', 'Nov 8', 'Nov 14', 'Nov 19'], topics: [['Supervised learning', 34], ['Neural networks', 28], ['PCA & clustering', 23], ['Assignments', 15]], series: { tokens: [145000, 190000, 182000, 232000, 247000, 264000], time: [17.6, 19.8, 18.7, 23.5, 24.1, 24.9], messages: [371, 420, 402, 486, 552, 615], students: [52, 83, 119, 146, 169, 186] } },
+    90: { tokens: 3880000, time: 364.2, messages: 8154, students: 294, labels: ['Aug', 'Late Aug', 'Sep', 'Late Sep', 'Oct', 'Nov'], topics: [['Supervised learning', 32], ['Neural networks', 30], ['PCA & clustering', 22], ['Assignments', 16]], series: { tokens: [420000, 510000, 590000, 670000, 790000, 900000], time: [41, 52, 56, 63, 74, 78.2], messages: [890, 1110, 1230, 1450, 1592, 1882], students: [76, 108, 151, 194, 247, 294] } }
+  };
+  const TRAIN_METRICS = {
+    tokens: { title: 'Token usage', sub: 'Total tokens over time', legend: 'Tokens' },
+    time: { title: 'Interaction time', sub: 'Student–Cosmo interaction hours over time', legend: 'Hours' },
+    messages: { title: 'Conversation activity', sub: 'Student messages over time', legend: 'Messages' },
+    students: { title: 'Active students', sub: 'Unique active students over time', legend: 'Students' }
+  };
+  function trainNum(n) { return Number(n).toLocaleString('en-US'); }
+  function trainTokens(n) { return n >= 1e6 ? (n / 1e6).toFixed(2).replace(/0$/, '') + 'M' : n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, '') + 'K' : trainNum(n); }
+  function paintTrainOverview() {
+    const data = TRAIN_SETS[trainPeriod] || TRAIN_SETS[30];
+    const info = TRAIN_METRICS[trainMetric];
+    const tokens = document.getElementById('meTrainTokens');
+    const time = document.getElementById('meTrainTime');
+    const messages = document.getElementById('meTrainMessages');
+    const students = document.getElementById('meTrainStudents');
+    if (tokens) tokens.textContent = trainTokens(data.tokens);
+    if (time) time.innerHTML = data.time + ' <small>hrs</small>';
+    if (messages) messages.textContent = trainNum(data.messages);
+    if (students) students.textContent = trainNum(data.students);
+    const title = document.getElementById('meTrainChartTitle');
+    const sub = document.getElementById('meTrainChartSub');
+    const legend = document.getElementById('meTrainLegend');
+    const chart = document.getElementById('meTrainChart');
+    if (title) title.textContent = info.title;
+    if (sub) sub.textContent = info.sub;
+    if (legend) legend.textContent = info.legend;
+    if (chart) chart.setAttribute('aria-label', info.title);
+    document.querySelectorAll('#meTrainMetrics [data-train-metric]').forEach((btn) => {
+      const on = btn.dataset.trainMetric === trainMetric;
+      btn.classList.toggle('on', on);
+      btn.setAttribute('aria-pressed', String(on));
+    });
+    const vals = data.series[trainMetric];
+    const max = Math.max(...vals) * 1.18 || 1;
+    const x = (i) => 42 + i * 585 / (vals.length - 1);
+    const y = (v) => 156 - v / max * 130;
+    const grid = document.getElementById('meTrainGrid');
+    const labels = document.getElementById('meTrainLabels');
+    if (grid) {
+      grid.replaceChildren();
+      [0, .25, .5, .75, 1].forEach((f) => {
+        const yy = 156 - f * 130;
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', '42');
+        line.setAttribute('x2', '628');
+        line.setAttribute('y1', String(yy));
+        line.setAttribute('y2', String(yy));
+        line.setAttribute('stroke', '#e6e8ec');
+        grid.appendChild(line);
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', '36');
+        text.setAttribute('y', String(yy + 4));
+        text.setAttribute('text-anchor', 'end');
+        text.setAttribute('fill', '#8b919a');
+        text.setAttribute('font-size', '11');
+        const value = max * f;
+        text.textContent = trainMetric === 'tokens' ? trainTokens(Math.round(value)) : trainMetric === 'time' ? value.toFixed(1) : trainNum(Math.round(value));
+        grid.appendChild(text);
+      });
+    }
+    if (labels) {
+      labels.replaceChildren();
+      data.labels.forEach((name, i) => {
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', String(x(i)));
+        text.setAttribute('y', '186');
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('fill', '#8b919a');
+        text.setAttribute('font-size', '11');
+        text.textContent = name;
+        labels.appendChild(text);
+      });
+    }
+    const pts = vals.map((v, i) => x(i) + ',' + y(v)).join(' L');
+    const area = document.getElementById('meTrainArea');
+    const line = document.getElementById('meTrainLine');
+    if (area) area.setAttribute('d', 'M' + pts + ' L' + x(vals.length - 1) + ',156 L42,156 Z');
+    if (line) line.setAttribute('d', 'M' + pts);
+    const mark = document.getElementById('meTrainMark');
+    if (mark) {
+      mark.replaceChildren();
+      const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      dot.setAttribute('cx', String(x(vals.length - 1)));
+      dot.setAttribute('cy', String(y(vals[vals.length - 1])));
+      dot.setAttribute('r', '4.5');
+      dot.setAttribute('fill', '#3c7a94');
+      dot.setAttribute('stroke', '#fff');
+      dot.setAttribute('stroke-width', '2');
+      mark.appendChild(dot);
+    }
+    const topics = document.getElementById('meTrainTopics');
+    if (topics) {
+      topics.replaceChildren();
+      data.topics.forEach(([name, share]) => {
+        const row = document.createElement('div');
+        row.className = 'me-topic';
+        const label = document.createElement('span');
+        label.textContent = name;
+        const bar = document.createElement('i');
+        const fill = document.createElement('span');
+        fill.style.width = (share / 40 * 100) + '%';
+        bar.appendChild(fill);
+        const num = document.createElement('em');
+        num.textContent = share + '%';
+        row.append(label, bar, num);
+        topics.appendChild(row);
+      });
+    }
+  }
+  const TRAIN_ITEMS = [
+    { title: 'Make explanations more structured and step-by-step', desc: 'Students often ask follow-up questions after complex explanations. Start with the central concept, then break down the reasoning into smaller steps and add a concise example.', sources: ['Citta/Cosmo Chat'] },
+    { title: 'Align answers more closely with the professor’s teaching approach', desc: 'Use the course’s preferred terminology, examples and problem-solving sequence more consistently. Flag uncertain course-specific claims instead of presenting them as confirmed.', sources: ['Discussion', 'Citta/Cosmo Chat'] },
+    { title: 'Offer guided hints before revealing full solutions', desc: 'For exercise-related questions, begin with a useful hint or diagnostic question and progressively reveal more detail when requested, supporting independent learning.', sources: ['Citta/Cosmo Chat', 'Group Chat'] },
+    { title: 'Provide a short direct answer before deeper details', desc: 'For straightforward questions, lead with a brief answer and make optional in-depth explanation available. This can reduce unnecessary reading while retaining teaching depth.', sources: ['Citta/Cosmo Chat'] },
+    { title: 'Clarify when course materials do not support a claim', desc: 'Clearly distinguish the professor’s course content from general background knowledge, and say when a specific statement cannot be verified from the available materials.', sources: ['Discussion'] },
+    { title: 'Identify recurring student misconceptions', desc: 'Surface commonly confused concepts and add a brief contrast or counterexample to prevent repeated misunderstandings.', sources: ['Group Chat', 'Discussion'] },
+    { title: 'Improve explanations of mathematical notation', desc: 'Define symbols and assumptions before presenting calculations, and connect each equation to its intuition.', sources: ['Citta/Cosmo Chat'] },
+    { title: 'Encourage meaningful peer discussion', desc: 'When students raise open-ended questions, suggest a focused discussion prompt rather than immediately closing the conversation.', sources: ['Group Chat'] },
+    { title: 'Connect conceptual answers to course examples', desc: 'Where relevant, reference a course example or assignment pattern to make an abstract concept easier to apply.', sources: ['Discussion', 'Citta/Cosmo Chat'] },
+    { title: 'Improve handling of ambiguous student questions', desc: 'Ask one concise clarifying question when a student’s request could refer to several concepts, rather than assuming a specific interpretation.', sources: ['Group Chat', 'Citta/Cosmo Chat'] }
+  ];
+  const trainVotes = {};
+  const trainComments = {};
+  let trainCommentFor = -1;
   function paintTraining() {
     const box = document.getElementById('meTraining');
     if (!box) return;
+    paintTrainOverview();
     box.replaceChildren();
-    SI_LABELS.forEach((row) => {
+    const reviewed = Object.values(trainVotes).filter((vote) => vote === 'agree' || vote === 'disagree').length;
+    const count = document.getElementById('meTrainCount');
+    const progress = document.getElementById('meTrainProgress');
+    if (count) count.textContent = TRAIN_ITEMS.length + ' recommendations';
+    if (progress) progress.textContent = reviewed + ' of ' + TRAIN_ITEMS.length + ' reviewed';
+    TRAIN_ITEMS.forEach((row, index) => {
       const card = document.createElement('article');
-      card.className = 'me-label-card';
+      card.className = 'me-rec';
       const title = document.createElement('h3');
       title.textContent = row.title;
-      const when = document.createElement('span');
-      when.className = 'me-when';
-      when.textContent = row.count + ' similar replies';
-      title.appendChild(when);
-      const answer = document.createElement('p');
-      answer.className = 'me-answer';
-      answer.textContent = row.answer;
-      card.append(title, answer);
-      if (row.label) {
-        const result = document.createElement('p');
-        result.className = 'me-result';
-        const mark = document.createElement('b');
-        mark.textContent = 'Label';
-        const bits = row.label.issues.slice();
-        if (row.label.note) bits.push(row.label.note);
-        result.append(mark, document.createTextNode(' ' + bits.join(' · ')));
-        card.appendChild(result);
-      } else if (labelOpen === row.id) {
-        const issues = document.createElement('div');
-        issues.className = 'me-issues';
-        LABEL_ISSUES.forEach((issue) => {
-          const btn = document.createElement('button');
-          btn.type = 'button';
-          btn.dataset.issue = issue;
-          btn.dataset.labelFor = row.id;
-          btn.setAttribute('aria-pressed', 'false');
-          btn.textContent = issue;
-          issues.appendChild(btn);
-        });
+      const desc = document.createElement('p');
+      desc.className = 'me-rec-desc';
+      desc.textContent = row.desc;
+      const sources = document.createElement('div');
+      sources.className = 'me-src-row';
+      const label = document.createElement('span');
+      label.className = 'me-src-label';
+      label.textContent = 'Data source';
+      sources.appendChild(label);
+      row.sources.forEach((source) => {
+        const tag = document.createElement('span');
+        tag.className = 'me-src';
+        tag.textContent = source;
+        sources.appendChild(tag);
+      });
+      card.append(title, desc, sources);
+      const saved = trainComments[index] || '';
+      if (saved.trim()) {
+        const prof = document.createElement('div');
+        prof.className = 'me-prof';
+        const who = document.createElement('b');
+        who.textContent = 'Professor’s Comments';
+        const text = document.createElement('p');
+        text.textContent = saved;
+        prof.append(who, text);
+        card.appendChild(prof);
+      }
+      const actions = document.createElement('div');
+      actions.className = 'me-rec-actions';
+      [['agree', 'Agree'], ['disagree', 'Disagree'], ['comments', 'Comments']].forEach(([vote, name]) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'me-vote';
+        btn.dataset.trainVote = vote;
+        btn.dataset.trainIndex = String(index);
+        btn.setAttribute('aria-pressed', String(vote !== 'comments' && trainVotes[index] === vote));
+        btn.textContent = name;
+        actions.appendChild(btn);
+      });
+      card.appendChild(actions);
+      if (trainCommentFor === index) {
         const note = document.createElement('textarea');
-        note.className = 'me-note';
-        note.dataset.labelNote = row.id;
-        note.rows = 2;
-        note.placeholder = 'What should the SI have said?';
-        note.setAttribute('aria-label', 'What should the SI have said?');
+        note.className = 'me-note me-rec-note';
+        note.dataset.trainNote = String(index);
+        note.rows = 3;
+        note.placeholder = 'Share your suggestions, corrections, or preferred teaching approach...';
+        note.value = saved;
         const save = document.createElement('button');
         save.type = 'button';
         save.className = 'me-btn';
-        save.dataset.saveLabel = row.id;
-        save.textContent = 'Save label';
-        card.append(issues, note, save);
-      } else {
-        const open = document.createElement('button');
-        open.type = 'button';
-        open.className = 'me-btn';
-        open.dataset.openLabel = row.id;
-        open.textContent = 'Label';
-        card.appendChild(open);
+        save.dataset.trainDone = String(index);
+        save.textContent = 'Done';
+        card.append(note, save);
       }
       box.appendChild(card);
     });
@@ -25542,6 +26478,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     frame.classList.remove('cosmo-admin-on');
     const host = document.getElementById('cosmoAdminHost');
     if (host) host.hidden = true;
+    if (!symbionOpen && !settingsOpen && !dirOpen) frame.classList.remove('pane-float');
   }
   function showCosmoAdmin(id, opts) {
     const row = cosmosIManage().find((item) => item.id === id);
@@ -25553,11 +26490,11 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     if (symbionOpen) closeSymbion();
     cosmoAdminOpen = true;
     cosmoAdminId = row.id;
-    screen = 'cosmo';
+    screen = 'home';
     applyTheme();
-    frame.classList.add('cosmo-admin-on');
+    frame.classList.remove('cosmo-admin-on');
     const host = document.getElementById('cosmoAdminHost');
-    if (host) host.hidden = false;
+    usePaneFloat(host);
     const role = document.getElementById('cosmoAdminRole');
     const name = document.getElementById('cosmoAdminName');
     const about = document.getElementById('cosmoAdminAbout');
@@ -25594,21 +26531,15 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     if (meTabs[tab]) meTab = meTabs[tab];
     if (!symbionCan(meTab) && meTab !== 'portal') meTab = 'memory';
     symbionOpen = true;
-    screen = 'symbion';
+    screen = 'home';
     applyTheme();
-    frame.classList.add('symbion-on');
+    frame.classList.remove('symbion-on');
     const host = document.getElementById('symbionHost');
-    if (host) host.hidden = false;
+    usePaneFloat(host);
     paintMe();
     const scroll = host && host.querySelector('.me-scroll');
     if (scroll) scroll.scrollTop = 0;
-    if (document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green') markRailCurrent('drive');
-    else {
-      frame.querySelectorAll('.rail .r[data-rail]').forEach((r) => {
-        r.classList.remove('on');
-        r.removeAttribute('aria-current');
-      });
-    }
+    markRailCurrent('drive');
     pressScenario('home');
     syncHash();
     fit();
@@ -25619,8 +26550,13 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     frame.classList.remove('symbion-on');
     const host = document.getElementById('symbionHost');
     if (host) host.hidden = true;
+    if (!settingsOpen && !dirOpen && !cosmoAdminOpen) frame.classList.remove('pane-float');
   }
-  document.getElementById('symbionHost')?.addEventListener('click', (e) => {
+    document.getElementById('meTrainPeriod')?.addEventListener('change', (e) => {
+      trainPeriod = e.target.value;
+      paintTrainOverview();
+    });
+    document.getElementById('symbionHost')?.addEventListener('click', (e) => {
     const tab = e.target.closest('[data-me-tab]');
     if (tab) {
       if (!symbionCan(tab.dataset.meTab)) return;
@@ -25631,23 +26567,36 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       syncHash();
       return;
     }
-    const issue = e.target.closest('[data-issue]');
-    if (issue) {
-      issue.setAttribute('aria-pressed', issue.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+    const memory = e.target.closest('[data-memory-open]');
+    if (memory) {
+      memoryOpen = memory.dataset.memoryOpen;
+      paintMemory();
       return;
     }
-    const openLabel = e.target.closest('[data-open-label]');
-    if (openLabel) { labelOpen = openLabel.dataset.openLabel; paintMe(); return; }
-    const save = e.target.closest('[data-save-label]');
-    if (save) {
-      const id = save.dataset.saveLabel;
-      const row = SI_LABELS.find((item) => item.id === id);
-      const issues = [...document.querySelectorAll('#meTraining [data-issue][aria-pressed="true"]')].map((btn) => btn.dataset.issue);
-      const note = (document.querySelector('#meTraining [data-label-note]')?.value || '').trim();
-      if (!row || (!issues.length && !note)) return;
-      row.label = { issues, note };
-      labelOpen = '';
-      paintMe();
+    const metric = e.target.closest('[data-train-metric]');
+    if (metric) {
+      trainMetric = metric.dataset.trainMetric;
+      paintTrainOverview();
+      return;
+    }
+    const vote = e.target.closest('[data-train-vote]');
+    if (vote) {
+      const index = Number(vote.dataset.trainIndex);
+      if (vote.dataset.trainVote === 'comments') {
+        trainCommentFor = trainCommentFor === index ? -1 : index;
+      } else {
+        trainVotes[index] = trainVotes[index] === vote.dataset.trainVote ? '' : vote.dataset.trainVote;
+      }
+      paintTraining();
+      return;
+    }
+    const done = e.target.closest('[data-train-done]');
+    if (done) {
+      const index = Number(done.dataset.trainDone);
+      const note = document.querySelector('#meTraining [data-train-note="' + index + '"]');
+      trainComments[index] = note ? note.value.trim() : '';
+      trainCommentFor = -1;
+      paintTraining();
       return;
     }
     const look = e.target.closest('[data-si-look]');
@@ -26483,7 +27432,7 @@ const state = {
   id: 'hip', filter: 'all', query: '',
   finder: { query: '', slug: '' }, friendQuery: '',
   panel: false, panelMode: 'info', chatSearch: false, chatQuery: '', historyKind: '', historyWho: '',
-  quote: null, modal: null, modalBack: null, pane: 'chat', wsCard: '', wsQuery: '', wsPreview: '', wsMemberPage: 1, wsAnnPage: 1, wsDocPage: 1, wsEditing: false, wsAnnounceOpen: {}, wsAnnounceCompose: false,
+  quote: null, postOpen: null, quoteToGroup: false, modal: null, modalBack: null, pane: 'chat', wsCard: '', wsQuery: '', wsPreview: '', wsMemberPage: 1, wsAnnPage: 1, wsDocPage: 1, wsEditing: false, wsAnnounceOpen: {}, wsAnnounceCompose: false,
   mention: null, mentionIndex: 0, mentionStart: null,
   memberQ: '', announceOpen: false, notice: false, ctx: null, msgId: '', msgMode: '', msgX: 0, msgY: 0, pendingRecord: null, pendingJoinId: null,
   emailRows: [''], emailErrors: [''], emailWhere: ''
@@ -27437,15 +28386,16 @@ function renderChrome() {
   $('chatSearch').hidden = !state.chatSearch;
   teamRoot.querySelector('.thread').classList.toggle('history-on', state.chatSearch);
   $('panel').hidden = !state.panel || state.chatSearch;
-  const postLocked = bigGroupPostLocked(c) && !state.quote;
+  const postLocked = bigGroupPostLocked(c) && !state.postOpen && !state.quoteToGroup;
   $('composer').classList.toggle('is-post-locked', postLocked);
   $('compose').disabled = postLocked;
   const blueChat = bluePostLayout(c);
+  if (blueChat && state.postOpen && !state.quoteToGroup) state.quote = state.quote || state.postOpen;
   teamRoot.querySelector('.thread').classList.toggle('is-wx', blueGroupPosts() && c.kind === 'group' && !blueChat);
-  $('compose').placeholder = postLocked ? 'Only the owner and admins can post' : (blueChat && state.quote ? 'Reply' : blueChat ? 'New post' : 'Message');
+  $('compose').placeholder = postLocked ? 'Only the owner and admins can post' : (state.quoteToGroup ? 'Quote in group' : state.postOpen ? 'Reply' : blueChat ? 'New post' : 'Message');
   syncTeamSend();
   const q = state.quote && findMessage(c, state.quote);
-  $('quoteBar').hidden = !q;
+  $('quoteBar').hidden = !q || (!!state.postOpen && q.id === state.postOpen && !state.quoteToGroup);
   if (q) {
     $('quoteWho').textContent = q.who ? (q.who === ME ? 'You' : person(q.who).name) : '';
     $('quoteText').textContent = q.file ? q.file.name : (q.text || '');
@@ -27627,7 +28577,7 @@ function blueGroupPosts() {
   return root.dataset.theme === 'blue' && root.dataset.palette !== 'green';
 }
 function bluePostLayout(chat) {
-  return blueGroupPosts() && chat && chat.kind === 'group' && chat.tier === 'big';
+  return blueGroupPosts() && chat && chat.kind === 'group';
 }
 function bigGroupPostLocked(chat) {
   return blueGroupPosts() && chat && chat.kind === 'group' && chat.tier === 'big' && !canManage(chat);
@@ -27659,29 +28609,48 @@ function postBodyHTML(m) {
   const text = m.text ? `<div>${linkMentions(m.text)}</div>` : '';
   return text + file;
 }
-function postCardHTML(chat, item, showTime) {
+function messageCounts(chat, id) {
+  const messages = chat.messages || [];
+  const msg = findMessage(chat, id);
+  return {
+    likes: (msg && msg.likes) || 0,
+    liked: !!(msg && msg.liked),
+    replies: messages.filter((m) => !m.sys && m.reply === id).length,
+    quotes: messages.filter((m) => m.quoteOf === id).length
+  };
+}
+function statsHTML(chat, id) {
+  const n = messageCounts(chat, id);
+  const like = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.2c-.2 0-7.5-4.6-7.5-9.4A4.3 4.3 0 0 1 8.8 6.5c1.4 0 2.5.7 3.2 1.8.7-1.1 1.8-1.8 3.2-1.8a4.3 4.3 0 0 1 4.3 4.3c0 4.8-7.3 9.4-7.5 9.4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+  const reply = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5.2a6.8 6.8 0 0 0-5.9 10.2L4.8 19.2l3.4-1.1A6.8 6.8 0 1 0 12 5.2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></svg>';
+  const quote = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5 3 8l4 4.5M3.5 8H13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  return `<div class="gpost-stats"><button type="button" data-like="${id}" aria-label="Like" aria-pressed="${n.liked}">${like}<span>${n.likes}</span></button><button type="button" data-thread-reply="${id}" aria-label="Reply">${reply}<span>${n.replies}</span></button><button type="button" data-quote="${id}" aria-label="Quote">${quote}<span>${n.quotes}</span></button></div>`;
+}
+function replyCardHTML(chat, r) {
+  const who = person(r.who);
+  const body = r.file ? esc(r.file.name) : linkMentions(r.text || '');
+  return `<article class="greply" id="msg-${r.id}" data-id="${r.id}"><button type="button" class="av hue-${who.hue}" data-person="${r.who}" aria-label="${esc(who.name)}">${esc(who.short)}</button><div class="greply-col"><b>${esc(r.who === ME ? 'You' : who.name)}</b><p>${body}</p>${statsHTML(chat, r.id)}</div></article>`;
+}
+function postCardHTML(chat, item, showTime, mode) {
   const m = item.m;
   const p = person(m.who);
   const role = roleOf(chat, m.who);
   const tag = role && role !== 'Member' && role !== 'You' ? `<span class="tag ${role.toLowerCase()}">${esc(role)}</span>` : '';
+  const quoted = m.quoteOf ? findMessage(chat, m.quoteOf) : null;
+  const quoteLine = quoted ? `<p class="gpost-from">Quote · ${esc(quoted.who === ME ? 'You' : person(quoted.who).name)}: ${esc(quoted.text || (quoted.file && quoted.file.name) || '')}</p>` : '';
   const from = m.syncedFrom ? `<p class="gpost-from">Synced from ${esc(m.syncedFrom)}</p>` : '';
-  const replies = item.replies.map((r) => {
-    const who = person(r.who);
-    const body = r.file ? esc(r.file.name) : linkMentions(r.text || '');
-    return `<div class="greply" id="msg-${r.id}" data-id="${r.id}"><button type="button" class="av hue-${who.hue}" data-person="${r.who}" aria-label="${esc(who.name)}">${esc(who.short)}</button><div class="greply-col"><b>${esc(r.who === ME ? 'You' : who.name)}</b><p>${body}</p></div></div>`;
-  }).join('');
-  const replyBlock = replies ? `<div class="gpost-replies">${replies}</div>` : '';
+  const inside = mode === 'inside';
   const big = bigGroupOf(chat);
   let sync = '';
-  if (big && canManage(chat) && !m.reply) {
+  if (inside && big && canManage(chat) && !m.reply) {
     sync = m.syncedTo
       ? `<button type="button" disabled>Synced to big group</button>`
       : `<button type="button" data-sync="${m.id}">Sync to big group</button>`;
   }
-  return `<article class="gpost" id="msg-${m.id}" data-id="${m.id}">
+  const acts = sync ? `<div class="gpost-acts">${sync}</div>` : '';
+  return `<article class="gpost${inside ? '' : ' is-entry'}" id="msg-${m.id}" data-id="${m.id}" ${inside ? '' : `data-open-post="${m.id}"`}>
     <div class="gpost-top"><button type="button" class="av hue-${p.hue}" data-person="${m.who}" aria-label="${esc(p.name)}">${esc(p.short)}</button><div class="gpost-who"><b>${esc(p.name)}</b>${tag}${showTime ? `<span class="gpost-time">${esc(chat.time)}</span>` : ''}</div></div>
-    <div class="gpost-body">${postBodyHTML(m)}</div>${from}${replyBlock}
-    <div class="gpost-acts"><button type="button" data-reply="${m.id}">Reply</button>${sync}</div>
+    <div class="gpost-body">${quoteLine}${postBodyHTML(m)}</div>${from}${statsHTML(chat, m.id)}${acts}
   </article>`;
 }
 function renderLog(scroll) {
@@ -27698,10 +28667,19 @@ function renderLog(scroll) {
   }
   if (bluePostLayout(c)) {
     const items = threadItems(c, list);
-    const lastPost = [...items].reverse().find((item) => item.kind === 'post');
-    $('log').innerHTML = items.map((item) => item.kind === 'sys'
-      ? `<p class="sys" id="msg-${item.m.id}">${esc(item.m.sys)}</p>`
-      : postCardHTML(c, item, item === lastPost && !!c.time)).join('');
+    const open = state.postOpen ? items.find((item) => item.kind === 'post' && item.m.id === state.postOpen) : null;
+    if (state.postOpen && !open) state.postOpen = null;
+    if (open) {
+      const ordered = open.replies.slice().sort((a, b) => (a.seq || 0) - (b.seq || 0));
+      const replies = ordered.length ? ordered.map((r) => replyCardHTML(c, r)).join('') : '<p class="sys">No replies yet</p>';
+      $('log').innerHTML = `<button type="button" class="post-back" data-post-back>← ${esc(c.name)}</button>` + postCardHTML(c, open, false, 'inside') + `<h4 class="replies-h">Replies</h4>` + replies;
+    } else {
+      const posts = items.filter((item) => item.kind === 'post');
+      const lastPost = posts[posts.length - 1];
+      $('log').innerHTML = items.map((item) => item.kind === 'sys'
+        ? `<p class="sys" id="msg-${item.m.id}">${esc(item.m.sys)}</p>`
+        : postCardHTML(c, item, item === lastPost && !!c.time, 'list')).join('');
+    }
     if (scroll) requestAnimationFrame(() => { $('log').scrollTop = $('log').scrollHeight; syncTeamEdgeFade(); });
     return;
   }
@@ -28102,6 +29080,7 @@ function render(scroll) {
     return;
   }
   renderList();
+  if (typeof paintRailGroups === 'function') paintRailGroups();
   renderChrome();
   renderLog(scroll);
   renderHistory();
@@ -28109,6 +29088,36 @@ function render(scroll) {
   syncWorkspace();
 }
 
+function paintRailGroups() {
+  const host = document.getElementById('railRows');
+  if (!host) return;
+  if (typeof syncFollowGroups === 'function') syncFollowGroups();
+  const groups = chats.filter((c) => c.kind === 'group' && (c.tier === 'big' || c.tier === 'sub'));
+  const byAt = new Map();
+  groups.forEach((c) => {
+    const key = c.followAt == null ? 'other' : c.followAt;
+    if (!byAt.has(key)) byAt.set(key, []);
+    byAt.get(key).push(c);
+  });
+  const floated = document.getElementById('frame')?.classList.contains('chat-float');
+  const row = (c, sub) => {
+    const on = floated && c.id === state.id;
+    return `<button type="button" class="rail-group${sub ? ' is-sub' : ''}${on ? ' on' : ''}" data-rail-group="${c.id}"><span class="rail-group-top"><b>${esc(c.name)}</b><time>${esc(c.time || '')}</time></span><span class="rail-group-bot">${esc(preview(c))}</span></button>`;
+  };
+  const html = [...byAt.keys()].sort((a, b) => Number(a) - Number(b)).map((key) => {
+    const list = byAt.get(key);
+    const big = list.filter((c) => c.tier === 'big').sort((a, b) => (a.followOrder || 0) - (b.followOrder || 0));
+    const sub = list.filter((c) => c.tier !== 'big').sort((a, b) => (a.followOrder || 0) - (b.followOrder || 0));
+    return big.map((c) => row(c, false)).join('') + sub.map((c) => row(c, true)).join('');
+  }).join('');
+  host.innerHTML = html || '<p class="rail-empty">No groups yet.</p>';
+}
+window.paintRailGroups = paintRailGroups;
+document.getElementById('railRows')?.addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-rail-group]');
+  if (!btn) return;
+  openChat(btn.dataset.railGroup);
+});
 function openChat(id) {
   const c = chats.find((x) => x.id === id);
   if (!c) return;
@@ -28128,12 +29137,21 @@ function openChat(id) {
   }
   c.hidden = false;
   state.id = id;
+  state.postOpen = null;
   state.quote = null;
+  state.quoteToGroup = false;
   state.announceOpen = false;
   state.memberQ = '';
   if (c.kind !== 'group' || !canReview(c)) state.panelMode = 'info';
   closePopovers();
   render(true);
+  const frameEl = document.getElementById('frame');
+  if (frameEl && !frameEl.classList.contains('team-on')) {
+    if (window.closePaneFloat) window.closePaneFloat();
+    frameEl.classList.add('chat-float');
+    if (window.armFloat) window.armFloat(document.getElementById('teamHost'), window.closeChatFloat);
+  }
+  paintRailGroups();
 }
 function openDirect(pid) {
   if (!pid || pid === ME || !people[pid]) return;
@@ -28666,21 +29684,25 @@ function syncPostToBig(postId) {
 function sendText(text, file) {
   const c = current();
   const blue = blueGroupPosts();
-  if (bigGroupPostLocked(c) && !state.quote) { toast('Only the owner and admins can post.'); return; }
-  if (c.kind === 'group' && c.locked && !canManage(c) && !(blue && state.quote)) { toast('Posting is locked.'); return; }
+  if (bigGroupPostLocked(c) && !state.quote && !state.postOpen && !state.quoteToGroup) { toast('Only the owner and admins can post.'); return; }
+  if (c.kind === 'group' && c.locked && !canManage(c) && !(blue && (state.quote || state.postOpen))) { toast('Posting is locked.'); return; }
   const value = (text || '').trim();
   if (!value && !file) return;
-  let reply = state.quote;
-  if (blue && bluePostLayout(c) && reply) {
-    const target = findMessage(c, reply);
-    const root = target ? postRoot(c, target) : null;
-    if (root) reply = root.id;
-  }
-  c.messages.push({ id: uid(), seq: ++msgSeq, who: ME, text: value, file: file || null, reply });
+  let reply = null;
+  let quoteOf = null;
+  if (state.quoteToGroup && state.quote) quoteOf = state.quote;
+  else if (state.postOpen) reply = state.quote || state.postOpen;
+  else reply = state.quote;
+  c.messages.push({ id: uid(), seq: ++msgSeq, who: ME, text: value, file: file || null, reply, quoteOf });
   c.time = 'now';
   c.updated = Date.now();
   c.hidden = false;
-  state.quote = null;
+  if (state.quoteToGroup) {
+    state.quoteToGroup = false;
+    state.quote = null;
+    state.postOpen = null;
+  } else if (state.postOpen) state.quote = state.postOpen;
+  else state.quote = null;
   $('compose').value = '';
   closePopovers();
   render(true);
@@ -29545,6 +30567,53 @@ $('log').addEventListener('click', (e) => {
   }
   const sync = e.target.closest('[data-sync]');
   if (sync) { syncPostToBig(sync.dataset.sync); return; }
+  const openPost = e.target.closest('[data-open-post]');
+  if (openPost && !e.target.closest('[data-person], [data-sync], [data-file], [data-like], [data-thread-reply], [data-quote]')) {
+    state.postOpen = openPost.dataset.openPost;
+    state.quote = state.postOpen;
+    state.quoteToGroup = false;
+    render(true);
+    return;
+  }
+  const postBack = e.target.closest('[data-post-back]');
+  if (postBack) {
+    state.postOpen = null;
+    state.quote = null;
+    state.quoteToGroup = false;
+    render(true);
+    return;
+  }
+  const like = e.target.closest('[data-like]');
+  if (like) {
+    const m = findMessage(current(), like.dataset.like);
+    if (m) {
+      m.liked = !m.liked;
+      m.likes = Math.max(0, (m.likes || 0) + (m.liked ? 1 : -1));
+      render(false);
+    }
+    return;
+  }
+  const threadReply = e.target.closest('[data-thread-reply]');
+  if (threadReply) {
+    const c = current();
+    const m = findMessage(c, threadReply.dataset.threadReply);
+    const root = m ? postRoot(c, m) : null;
+    state.postOpen = root ? root.id : threadReply.dataset.threadReply;
+    state.quote = threadReply.dataset.threadReply;
+    state.quoteToGroup = false;
+    render(true);
+    $('compose').focus();
+    return;
+  }
+  const quote = e.target.closest('[data-quote]');
+  if (quote) {
+    state.postOpen = null;
+    state.quote = quote.dataset.quote;
+    state.quoteToGroup = true;
+    render(true);
+    $('compose').focus();
+    return;
+  }
   const reply = e.target.closest('[data-reply]');
   if (reply) { state.quote = reply.dataset.reply; renderChrome(); $('compose').focus(); return; }
   const jump = e.target.closest('[data-jump]');
