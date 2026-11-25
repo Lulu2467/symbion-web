@@ -8876,7 +8876,7 @@
     box-sizing: border-box;
     height: 52px;
     margin: 0 -12px 0;
-    padding: 8px 12px 0 8px;
+    padding: 8px 12px 0 22px;
     align-items: center;
     border-bottom: 1px solid #e6e8ec;
   }
@@ -8901,6 +8901,8 @@
     color: #5f6368;
   }
   html[data-theme="blue"] #setHost .set-back:hover { color: #1a1d21; }
+  html[data-theme="blue"]:not([data-palette="green"]) #setHost .set-back { display: none; }
+  html[data-theme="blue"]:not([data-palette="green"]) #setHost .set-nav-head { padding-left: 22px; }
   .set-card {
     background: #fff;
     border: 1px solid var(--line);
