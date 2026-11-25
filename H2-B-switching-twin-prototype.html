@@ -4414,6 +4414,25 @@
   #railBody .rail-link.on:hover { background: #f6f7f8; color: #3c7a94; font-weight: 650; }
   #railBody .rail-link.is-out { color: #d93025; }
   #railBody .rail-link.is-out:hover { background: #fdeceb; color: #d93025; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors {
+    display: flex; flex-wrap: wrap; gap: 6px; padding: 2px 8px 8px;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor {
+    display: inline-flex; align-items: center; gap: 6px; height: 32px; margin: 0; padding: 0 12px 0 10px;
+    border: 1px solid #e6e8ec; border-radius: 999px; background: #fff; color: #5f6670;
+    font: inherit; font-size: 13px; font-weight: 500; cursor: pointer;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor:hover,
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor.sel {
+    background: #f6f7f8; color: #1d1d1f;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor i {
+    width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; color: #8b919a;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor i svg { width: 16px; height: 16px; display: block; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor i svg.line-ico { display: block; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor i svg.line-ico ~ svg { display: none; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-notes { display: flex; flex-direction: column; gap: 2px; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-note {
     display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
@@ -13481,7 +13500,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
             if (!rail || document.getElementById('tabbar')) return;
             var body = document.createElement('div');
             body.id = 'railBody';
-            body.innerHTML = '<div class="rail-pane" data-rail-pane="home"><button type="button" class="rail-link" data-rail-go="drive">Super Drive</button><button type="button" class="rail-link" data-rail-go="symbion">My Symbion</button><p class="rail-k">Notifications</p><div id="railNotes" class="rail-notes"></div></div><div class="rail-pane" data-rail-pane="cosmo" hidden></div><div class="rail-pane" data-rail-pane="community" hidden><div id="railRows"></div></div><div class="rail-pane" data-rail-pane="me" hidden><button type="button" class="rail-link" data-rail-go="profile">Profile</button><button type="button" class="rail-link" data-rail-go="cosmos">My Cosmos</button><button type="button" class="rail-link" data-rail-go="security">Security &amp; privacy</button><button type="button" class="rail-link" data-rail-go="settings">Account &amp; settings</button><button type="button" class="rail-link is-out" data-rail-go="signout">Sign out</button></div>';
+            body.innerHTML = '<div class="rail-pane" data-rail-pane="home"><button type="button" class="rail-link" data-rail-go="drive">Super Drive</button><div class="rail-editors" id="railEditors"></div><button type="button" class="rail-link" data-rail-go="symbion">My Symbion</button><p class="rail-k">Notifications</p><div id="railNotes" class="rail-notes"></div></div><div class="rail-pane" data-rail-pane="cosmo" hidden></div><div class="rail-pane" data-rail-pane="community" hidden><div id="railRows"></div></div><div class="rail-pane" data-rail-pane="me" hidden><button type="button" class="rail-link" data-rail-go="profile">Profile</button><button type="button" class="rail-link" data-rail-go="cosmos">My Cosmos</button><button type="button" class="rail-link" data-rail-go="security">Security &amp; privacy</button><button type="button" class="rail-link" data-rail-go="settings">Account &amp; settings</button><button type="button" class="rail-link is-out" data-rail-go="signout">Sign out</button></div>';
             var follow = rail.querySelector('.rail-follow');
             var rec = rail.querySelector('.rail-rec');
             var cosmoPane = body.querySelector('[data-rail-pane="cosmo"]');
@@ -19108,7 +19127,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
 
   function setComposerToolSelection(selected) {
     selectedComposerTool = selected || null;
-    document.querySelectorAll('#composerTools .tool').forEach((tool) => {
+    document.querySelectorAll('#composerTools .tool, #railEditors .rail-editor').forEach((tool) => {
       const on = !!selected && tool.dataset.tool === selected;
       tool.classList.toggle('sel', on);
       tool.setAttribute('aria-pressed', String(on));
@@ -19358,6 +19377,22 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       setComposerToolSelection(null);
       $('composerInput')?.focus();
     });
+    const railEditors = document.getElementById('railEditors');
+    if (railEditors && !railEditors.childElementCount) {
+      document.querySelectorAll('#composerTools .tool').forEach((tool) => {
+        const copy = tool.cloneNode(true);
+        copy.className = 'rail-editor';
+        copy.removeAttribute('style');
+        copy.querySelector('i')?.removeAttribute('style');
+        copy.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (document.documentElement.dataset.home !== 'v2' || document.documentElement.dataset.palette === 'green') return;
+          setComposerToolSelection(copy.dataset.tool);
+          document.getElementById('composerInput')?.focus();
+        });
+        railEditors.append(copy);
+      });
+    }
   }
 
   function setComposerMode(mode) {
