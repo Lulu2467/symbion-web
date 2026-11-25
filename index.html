@@ -1908,13 +1908,10 @@
   }
   html[data-theme="blue"]:not([data-palette="green"]) .hub:has(#screen-home.on) .ask-bar .picker,
   html[data-theme="blue"]:not([data-palette="green"]) .hub:has(#screen-home.on) .is-twin .ask-bar .picker {
-    margin-left: 0;
+    margin-left: auto;
   }
   html[data-theme="blue"]:not([data-palette="green"]) .hub:has(#screen-home.on) .ask-bar .picker .pname {
     font-weight: 400;
-  }
-  html[data-theme="blue"]:not([data-palette="green"]) .hub:has(#screen-home.on) .ask-bar .send {
-    margin-left: auto;
   }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker .switch-ico { display: none; }
   html[data-theme="blue"] .hub:has(#screen-home.on) .ask-bar .picker .picker-chev {
@@ -18533,9 +18530,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     const inBar = (anchor || picker).closest('.ask-bar');
     if (inBar) {
       const menuW = Math.min(300, composer.clientWidth - 16);
-      const root = document.documentElement;
-      const pickerOnLeft = root.dataset.theme === 'blue' && root.dataset.palette !== 'green';
-      let left = pickerOnLeft ? (pRect.left - cRect.left) : (pRect.right - cRect.left) - menuW;
+      let left = (pRect.right - cRect.left) - menuW;
       left = Math.max(8, Math.min(left, composer.clientWidth - menuW - 8));
       menu.style.left = `${left}px`;
       menu.style.top = `${pRect.bottom - cRect.top + 8}px`;
