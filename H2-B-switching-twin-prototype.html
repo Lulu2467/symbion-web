@@ -2834,6 +2834,26 @@
     overflow: visible;
     box-shadow: none;
   }
+  html[data-theme="blue"]:not([data-palette="green"]):not([data-home="v2"]) .hub:has(#screen-home.on) #homeTaskBoard .ws-home-cal .kb-split {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    width: 100%;
+    min-width: 0;
+    overflow: visible;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]):not([data-home="v2"]) .hub:has(#screen-home.on) #homeTaskBoard .ws-home-cal .kb-split > .kb-pane:has(.nc) {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]):not([data-home="v2"]) .hub:has(#screen-home.on) #homeTaskBoard .ws-home-cal .kb-legend {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    flex: none;
+    background: #fff;
+  }
   html[data-theme="blue"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .ws-home-cal .tl-body,
   html[data-theme="blue"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .ws-home-cal .tl-body > .kb,
   html[data-theme="blue"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .ws-home-cal .kb-sched,
