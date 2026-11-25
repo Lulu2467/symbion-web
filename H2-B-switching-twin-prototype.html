@@ -4496,6 +4496,30 @@
     cursor: pointer;
   }
   .float-chrome button:hover { background: #f3f4f6; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .float-chrome {
+    justify-content: center;
+    height: 44px;
+    padding: 0;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .float-chrome .float-grip {
+    margin: 0;
+    width: 32px;
+    height: 4px;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .float-chrome button {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    width: 28px;
+    height: 28px;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    font-size: 18px;
+    line-height: 1;
+  }
   #tabbar {
     position: relative;
     left: auto;
