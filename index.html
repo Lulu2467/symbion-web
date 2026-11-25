@@ -28410,10 +28410,16 @@ function paintHomeTaskBoard() {
           <button type="button" data-home-act="next" aria-label="Next">›</button>
         </div></div>`
     : '';
+  const canvasHtml = homeCanvas === 'calendar'
+    ? '<div class="ws-home-cal"><div class="tl-body"></div></div>'
+    : gCanvasBody(c, homeCanvas);
   slot.innerHTML = `<div class="ws-kanban">
       ${tools}
-      <div class="home-kanban-body">${gCanvasBody(c, homeCanvas)}</div>
+      <div class="home-kanban-body">${canvasHtml}</div>
     </div>`;
+  if (homeCanvas === 'calendar' && window.paintSymbionCalendar) {
+    window.paintSymbionCalendar(slot.querySelector('.ws-home-cal .tl-body'));
+  }
   if (titleRow) {
     const html = `<div class="desk-views home-canvas" role="group" aria-label="Canvas">
             <button type="button" data-home-canvas="board" aria-pressed="${homeCanvas === 'board'}">Kanban</button>
