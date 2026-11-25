@@ -11151,26 +11151,26 @@
     background: #fff;
   }
   .frame.team-on #teamHost { display: flex; }
-  html[data-theme="blue"]:not([data-palette="green"]):not([data-home="v2"]) .frame.team-float #teamHost {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .frame.team-float #teamHost {
     display: flex;
     position: absolute;
     top: 16px;
     bottom: 16px;
-    left: 360px;
-    width: min(860px, calc(100% - 430px));
+    left: 40px;
+    width: min(980px, calc(100% - 64px));
     z-index: 36;
     overflow: visible;
     background: transparent;
     border: 0;
     box-shadow: none;
   }
-  html[data-theme="blue"]:not([data-palette="green"]):not([data-home="v2"]) .frame.team-float #teamHost > .team {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .frame.team-float #teamHost > .team {
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 16px 40px rgba(20, 24, 28, .16);
     background: #fff;
   }
-  html[data-theme="blue"]:not([data-palette="green"]):not([data-home="v2"]) .frame.team-float #teamListClose {
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .frame.team-float #teamListClose {
     display: grid;
     place-items: center;
     position: absolute;
@@ -11185,6 +11185,7 @@
     z-index: 2;
     cursor: pointer;
   }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .frame.team-float #teamHost .list { display: flex !important; }
   #teamListClose { display: none; }
   #teamListClose svg { width: 16px; height: 16px; display: block; }
   #teamHost > .team { flex: 1; min-width: 0; min-height: 0; width: 100%; }
@@ -20676,6 +20677,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
           document.querySelector('.main')?.classList.remove('is-new-tab');
           if (el.dataset.rail === 'home' && teamOpen) setScreen('home');
           showRailPane(el.dataset.rail);
+          if (el.dataset.rail === 'community') openTeam();
           return;
         }
         if (el.dataset.rail === 'home') {
@@ -21077,9 +21079,9 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     if (typeof syncProfileSection === 'function') syncProfileSection();
     const frameNow = document.getElementById('frame');
     if (teamOpen && frameNow) {
-      const dailyFloat = root.dataset.theme === 'blue' && root.dataset.palette !== 'green' && root.dataset.home !== 'v2';
+      const v2Float = root.dataset.home === 'v2' && root.dataset.palette !== 'green';
       frameNow.classList.add('team-on');
-      frameNow.classList.toggle('team-float', dailyFloat);
+      frameNow.classList.toggle('team-float', v2Float);
     }
     if (frameNow && (frameNow.classList.contains('team-on') || frameNow.classList.contains('team-float')) && typeof render === 'function') render(false);
   }
@@ -23814,9 +23816,9 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     teamOpen = true;
     screen = 'team';
     applyTheme();
-    const dailyFloat = document.documentElement.dataset.theme === 'blue' && document.documentElement.dataset.palette !== 'green' && document.documentElement.dataset.home !== 'v2';
+    const v2Float = document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green';
     frame.classList.add('team-on');
-    frame.classList.toggle('team-float', dailyFloat);
+    frame.classList.toggle('team-float', v2Float);
     markTeamRail();
     pressScenario('home');
     if (window.renderTeamWorkspace) window.renderTeamWorkspace(true);
@@ -29676,8 +29678,7 @@ document.getElementById('railRows')?.addEventListener('click', (e) => {
   if (!btn) return;
   const root = document.documentElement;
   const v2 = root.dataset.home === 'v2' && root.dataset.palette !== 'green';
-  if (v2 && window.leaveTeamPage) window.leaveTeamPage();
-  openChat(btn.dataset.railGroup, v2 ? null : { page: true });
+  openChat(btn.dataset.railGroup, { page: true });
   if (!v2) return;
   document.querySelectorAll('#primaryRail .r[data-rail], #tabbar .r[data-rail]').forEach((r) => {
     const on = r.dataset.rail === 'community';
