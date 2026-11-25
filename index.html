@@ -11151,6 +11151,42 @@
     background: #fff;
   }
   .frame.team-on #teamHost { display: flex; }
+  html[data-theme="blue"]:not([data-palette="green"]):not([data-home="v2"]) .frame.team-float #teamHost {
+    display: flex;
+    position: absolute;
+    top: 16px;
+    bottom: 16px;
+    left: 360px;
+    width: min(860px, calc(100% - 430px));
+    z-index: 36;
+    overflow: visible;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]):not([data-home="v2"]) .frame.team-float #teamHost > .team {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 16px 40px rgba(20, 24, 28, .16);
+    background: #fff;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]):not([data-home="v2"]) .frame.team-float #teamListClose {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    top: 18px;
+    left: -32px;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #1a1d21;
+    z-index: 2;
+    cursor: pointer;
+  }
+  #teamListClose { display: none; }
+  #teamListClose svg { width: 16px; height: 16px; display: block; }
   #teamHost > .team { flex: 1; min-width: 0; min-height: 0; width: 100%; }
   #teamHost button, #teamHost input, #teamHost textarea, #teamHost select { font: inherit; color: inherit; }
   #teamHost button { cursor: pointer; }
@@ -14700,6 +14736,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
         </div>
         </div>
         <div class="list-top">
+          <button type="button" class="list-x" id="teamListClose" aria-label="Close"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5 11.5 11.5M11.5 4.5 4.5 11.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
           <label class="search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16.5 20 20.5"/></svg>
             <input id="q" type="search" placeholder="Search" autocomplete="off" aria-label="Search joined groups">
@@ -21038,7 +21075,13 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     if (window.syncAccountMenu) window.syncAccountMenu();
     if (window.paintHomeTaskBoard) window.paintHomeTaskBoard();
     if (typeof syncProfileSection === 'function') syncProfileSection();
-    if (document.getElementById('frame')?.classList.contains('team-on') && typeof render === 'function') render(false);
+    const frameNow = document.getElementById('frame');
+    if (teamOpen && frameNow) {
+      const dailyFloat = root.dataset.theme === 'blue' && root.dataset.palette !== 'green' && root.dataset.home !== 'v2';
+      frameNow.classList.add('team-on');
+      frameNow.classList.toggle('team-float', dailyFloat);
+    }
+    if (frameNow && (frameNow.classList.contains('team-on') || frameNow.classList.contains('team-float')) && typeof render === 'function') render(false);
   }
   const HOME_FOLLOW_NOTES = [
     { text: "Lecture 5 slides are up. Three quiz questions at the end.", when: "1h ago" },
@@ -23771,7 +23814,9 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     teamOpen = true;
     screen = 'team';
     applyTheme();
+    const dailyFloat = document.documentElement.dataset.theme === 'blue' && document.documentElement.dataset.palette !== 'green' && document.documentElement.dataset.home !== 'v2';
     frame.classList.add('team-on');
+    frame.classList.toggle('team-float', dailyFloat);
     markTeamRail();
     pressScenario('home');
     if (window.renderTeamWorkspace) window.renderTeamWorkspace(true);
@@ -23789,12 +23834,13 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
   function closeTeam() {
     if (!teamOpen) return;
     teamOpen = false;
-    frame.classList.remove('team-on');
+    frame.classList.remove('team-on', 'team-float');
     frame.querySelectorAll('#primaryRail .r[data-rail], #tabbar .r[data-rail]').forEach((r) => {
       r.classList.remove('on');
       r.removeAttribute('aria-current');
     });
   }
+  document.getElementById('teamListClose')?.addEventListener('click', () => setScreen('home'));
   document.querySelector('.main')?.addEventListener('click', (e) => {
     const root = document.documentElement;
     if (root.dataset.theme !== 'blue' || root.dataset.home !== 'v2' || root.dataset.palette === 'green') return;
@@ -29681,6 +29727,10 @@ function openChat(id, opts) {
       host.style.transform = '';
     }
     if (window.openTeam) window.openTeam();
+    paintRailGroups();
+    return;
+  }
+  if (frameEl && frameEl.classList.contains('team-float')) {
     paintRailGroups();
     return;
   }
