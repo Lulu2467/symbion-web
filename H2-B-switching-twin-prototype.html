@@ -14142,7 +14142,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
                 <button type="button" data-set="profile" aria-current="page">Edit profile</button>
                 <button type="button" data-set="picture">Profile picture</button>
                 <button type="button" data-set="friends">Friends</button>
-                <p class="set-kicker">COSMOS</p>
+                <p class="set-kicker" data-kicker="cosmos">COSMOS</p>
                 <button type="button" data-set="cosmos">Cosmos</button>
                 <p class="set-kicker" data-kicker="desk">DESK</p>
                 <button type="button" data-set="desk">Desk</button>
@@ -21794,6 +21794,15 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       profileKicker.textContent = 'GENERAL';
       if (friendsKicker) friendsKicker.remove();
     }
+    const cosmosKicker = nav.querySelector('.set-kicker[data-kicker="cosmos"]');
+    if (cosmosKicker) cosmosKicker.textContent = v2 ? 'MY COSMO' : 'COSMOS';
+    const cosmosName = v2 ? 'My Cosmo' : 'Cosmos';
+    document.querySelectorAll('button[data-set="cosmos"], [data-rail-account="cosmos"]').forEach((el) => {
+      const text = [...el.childNodes].find((node) => node.nodeType === 3 && node.textContent.trim());
+      if (text) text.textContent = cosmosName;
+    });
+    const cosmosHead = document.querySelector('#setHost [data-set-panel="cosmos"] h3');
+    if (cosmosHead) cosmosHead.textContent = cosmosName;
   }
   function applyTheme(theme) {
     setBookmarkFolder(false);
