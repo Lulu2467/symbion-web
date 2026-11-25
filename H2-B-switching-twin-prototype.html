@@ -1422,6 +1422,22 @@
   }
   html[data-theme="blue"] #symbionHost .me-look > .me-mark { width: 96px; height: 96px; border-radius: 16px; font-size: 28px; }
   html[data-theme="blue"] #symbionHost .me-look-picks small { display: block; margin-top: 6px; font-size: 12px; color: #656d76; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-voice { margin-top: 22px; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-voice b { display: block; font-size: 13px; font-weight: 650; color: #1a1d21; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-voice p { margin: 4px 0 0; color: #656d76; font-size: 13px; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-voice-picks { display: flex; gap: 8px; margin-top: 12px; }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-voice-picks button {
+    height: 32px;
+    padding: 0 14px;
+    border: 1px solid #e6e8ec;
+    border-radius: 999px;
+    background: #fff;
+    color: #1a1d21;
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) #symbionHost .me-voice-picks button[aria-pressed="true"] { border-color: #1a1d21; background: #f4f8fa; }
   html[data-theme="blue"][data-home="v2"] .frame.citta-open .body .main { margin-right: 0; }
   html[data-theme="blue"][data-home="v2"] .frame.citta-open #dirHost .dir-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   html[data-theme="blue"][data-home="v2"] .frame.citta-open .citta-panel { z-index: 24; box-shadow: -12px 0 32px rgba(20, 24, 28, .12); }
@@ -26512,6 +26528,12 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     { id: 'mark', name: 'Mark', src: '' }
   ];
   let siLook = 'portrait';
+  const SI_VOICES = [
+    { id: 'warm', name: 'Warm' },
+    { id: 'clear', name: 'Clear' },
+    { id: 'bright', name: 'Bright' }
+  ];
+  let siVoice = 'warm';
   function symbionCan(id) { return id === 'memory' || (meHasSI && (id === 'training' || id === 'look')); }
   const MY_KNOWLEDGE = [
     { title: 'Lecture 5', body: '2:30 in 6-120. Slides are in Files. Three quiz questions at the end.' },
@@ -26841,6 +26863,29 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       picks.appendChild(btn);
     });
     box.append(face, picks);
+    const root = document.documentElement;
+    if (root.dataset.theme === 'blue' && root.dataset.palette !== 'green') {
+      const voice = document.createElement('div');
+      voice.className = 'me-voice';
+      const title = document.createElement('b');
+      title.textContent = 'Voice';
+      const hint = document.createElement('p');
+      hint.textContent = 'What people hear when it speaks for you.';
+      const voicePicks = document.createElement('div');
+      voicePicks.className = 'me-voice-picks';
+      voicePicks.setAttribute('role', 'group');
+      voicePicks.setAttribute('aria-label', 'Voice');
+      SI_VOICES.forEach((item) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.dataset.siVoice = item.id;
+        btn.textContent = item.name;
+        btn.setAttribute('aria-pressed', String(item.id === siVoice));
+        voicePicks.appendChild(btn);
+      });
+      voice.append(title, hint, voicePicks);
+      box.appendChild(voice);
+    }
   }
   function paintMe() {
     const host = document.getElementById('symbionHost');
@@ -27000,6 +27045,8 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     }
     const look = e.target.closest('[data-si-look]');
     if (look && meHasSI) { siLook = look.dataset.siLook; paintLook(); return; }
+    const voice = e.target.closest('[data-si-voice]');
+    if (voice && meHasSI) { siVoice = voice.dataset.siVoice; paintLook(); return; }
     const mine = e.target.closest('[data-my-cosmo]');
     if (mine && meCanManageCosmo) { showCosmoAdmin(mine.dataset.myCosmo); return; }
     const act = e.target.closest('[data-me-act]');
