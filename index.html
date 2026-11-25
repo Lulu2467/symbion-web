@@ -12906,6 +12906,10 @@
     cursor: pointer;
   }
   html[data-theme="blue"] #teamHost .gpost-stats svg { width: 14px; height: 14px; display: block; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #teamHost .gpost-stats svg { width: 16px; height: 16px; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #teamHost .gpost-stats .like-fill { display: none; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #teamHost .gpost-stats button[aria-pressed="true"] .like-line { display: none; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #teamHost .gpost-stats button[aria-pressed="true"] .like-fill { display: block; }
   html[data-theme="blue"] #teamHost .gpost-stats button[aria-pressed="true"] svg { fill: currentColor; }
   html[data-theme="blue"] #teamHost .gpost-stats button[aria-pressed="true"] { background: var(--green-tint); color: var(--green-dark); }
   html[data-theme="blue"] #teamHost .gpost-acts button {
@@ -29405,9 +29409,16 @@ function messageCounts(chat, id) {
 }
 function statsHTML(chat, id) {
   const n = messageCounts(chat, id);
-  const like = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.2c-.2 0-7.5-4.6-7.5-9.4A4.3 4.3 0 0 1 8.8 6.5c1.4 0 2.5.7 3.2 1.8.7-1.1 1.8-1.8 3.2-1.8a4.3 4.3 0 0 1 4.3 4.3c0 4.8-7.3 9.4-7.5 9.4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>';
-  const reply = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5.2a6.8 6.8 0 0 0-5.9 10.2L4.8 19.2l3.4-1.1A6.8 6.8 0 1 0 12 5.2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></svg>';
-  const quote = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5 3 8l4 4.5M3.5 8H13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const v2icons = document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green';
+  const like = v2icons
+    ? '<svg viewBox="0 0 1024 1024" aria-hidden="true"><path class="like-line" fill="currentColor" fill-rule="evenodd" d="M171.712 571.648l0.352 0.32 287.904 252.8a64 64 0 0 0 82.912 1.344l296.832-244.544a215.584 215.584 0 1 0-301.824-300.576L512 316.672l-25.888-35.616a215.584 215.584 0 1 0-314.4 290.624zM32 407.584a279.584 279.584 0 0 1 480-194.944 279.584 279.584 0 0 1 480 194.944 278.144 278.144 0 0 1-113.024 224.512l-295.36 243.392a128 128 0 0 1-165.888-2.592L129.984 620.16A278.976 278.976 0 0 1 32 407.584z"/><path class="like-fill" fill="currentColor" d="M32 407.584a279.584 279.584 0 0 1 480-194.944 279.584 279.584 0 0 1 480 194.944 278.144 278.144 0 0 1-113.024 224.512l-295.36 243.392a128 128 0 0 1-165.888-2.592L129.984 620.16A278.976 278.976 0 0 1 32 407.584z"/></svg>'
+    : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.2c-.2 0-7.5-4.6-7.5-9.4A4.3 4.3 0 0 1 8.8 6.5c1.4 0 2.5.7 3.2 1.8.7-1.1 1.8-1.8 3.2-1.8a4.3 4.3 0 0 1 4.3 4.3c0 4.8-7.3 9.4-7.5 9.4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+  const reply = v2icons
+    ? '<svg viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M853.333 128c35.413 0 64 20.651 64 55.979v541.44c-0.036 35.307-28.667 63.915-63.979 63.915-0.008 0-0.015-0-0.023-0l-682.665 0c-35.413 0-64-28.587-64-63.915v-541.44c0-35.264 28.672-55.979 64-55.979h201.173l110.016-117.44c7.745-7.787 18.467-12.606 30.315-12.606 11.826 0 22.531 4.802 30.271 12.563l109.462 117.484h201.429zM634.304 170.667h-6.251l-115.797-129.963c-0.107-0.107-116.011 129.963-116.011 129.963h-225.579c-11.776 0-21.333 1.621-21.333 13.312v541.44c-0 0.013-0 0.028-0 0.043 0 11.711 9.494 21.205 21.205 21.205 0.045 0 0.090-0 0.135-0l682.66 0c11.776 0 21.333-9.536 21.333-21.248v-541.44c0-11.755-9.472-13.312-21.333-13.312h-219.029zM341.333 405.333c0 0 0 0 0 0 23.564 0 42.667 19.103 42.667 42.667 0 23.564-19.103 42.667-42.667 42.667-0 0-0 0-0 0-23.564-0-42.667-19.103-42.667-42.667 0-23.564 19.103-42.667 42.667-42.667zM512 405.333c0 0 0 0 0 0 23.564 0 42.667 19.103 42.667 42.667 0 23.564-19.103 42.667-42.667 42.667-0 0-0 0-0 0-23.564-0-42.667-19.103-42.667-42.667 0-23.564 19.103-42.667 42.667-42.667zM682.667 405.333c0 0 0 0 0 0 23.564 0 42.667 19.103 42.667 42.667 0 23.564-19.103 42.667-42.667 42.667-0 0-0 0-0 0-23.564-0-42.667-19.103-42.667-42.667 0-23.564 19.103-42.667 42.667-42.667z"/></svg>'
+    : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5.2a6.8 6.8 0 0 0-5.9 10.2L4.8 19.2l3.4-1.1A6.8 6.8 0 1 0 12 5.2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></svg>';
+  const quote = v2icons
+    ? '<svg viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M960 896a21.333333 21.333333 0 0 1-21.333333-21.333333c0-294.08-239.253333-533.333333-533.333334-533.333334H115.5l134.253333 134.246667a21.333333 21.333333 0 0 1-30.173333 30.173333l-170.666667-170.666666a21.333333 21.333333 0 0 1 0-30.173334l170.666667-170.666666a21.333333 21.333333 0 0 1 30.173333 30.173333L115.5 298.666667H405.333333a575.533333 575.533333 0 0 1 576 576 21.333333 21.333333 0 0 1-21.333333 21.333333z"/></svg>'
+    : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5 3 8l4 4.5M3.5 8H13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   return `<div class="gpost-stats"><button type="button" data-like="${id}" aria-label="Like" title="Like" aria-pressed="${n.liked}">${like}<span>${n.likes}</span></button><button type="button" data-thread-reply="${id}" aria-label="Comment" title="Only on this post">${reply}<span>${n.replies}</span></button><button type="button" data-quote="${id}" aria-label="Reply" title="Reply in the group">${quote}<span>${n.quotes}</span></button></div>`;
 }
 function replyCardHTML(chat, r) {
