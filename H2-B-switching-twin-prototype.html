@@ -1427,9 +1427,19 @@
   html[data-theme="blue"][data-home="v2"] .frame.citta-open .citta-panel { z-index: 24; box-shadow: -12px 0 32px rgba(20, 24, 28, .12); }
   html[data-theme="blue"][data-home="v2"] .frame.team-on .content.hub { display: flex !important; }
   html[data-theme="blue"][data-home="v2"] .frame.team-on #teamHost {
-    position: absolute; top: 0; left: 0; bottom: 0; width: 760px; max-width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    width: min(760px, calc(100% - 48px));
+    height: min(720px, calc(100% - 96px));
+    max-width: calc(100% - 48px);
+    transform: translate(-50%, -50%);
+    border-radius: 16px;
     overflow: hidden;
-    z-index: 24; box-shadow: 12px 0 32px rgba(20, 24, 28, .12);
+    z-index: 24;
+    box-shadow: 0 16px 40px rgba(20, 24, 28, .16);
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #teamHost:has(#panel:not([hidden])) .panel {
     position: absolute;
@@ -4423,6 +4433,15 @@
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 16px 40px rgba(20, 24, 28, .16);
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .frame.chat-float #teamHost {
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    width: min(420px, calc(100% - 48px));
+    height: min(640px, calc(100% - 96px));
+    transform: translate(-50%, -50%);
   }
   .frame.chat-float #teamHost .list { display: none !important; }
   .frame.chat-float #teamHost > .team,
@@ -23118,13 +23137,14 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
         window.addEventListener('pointerup', up);
       });
     }
-    if (!host.style.left) {
+    const v2 = document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green';
+    if (!host.style.left || v2) {
       const w = Math.min(720, Math.max(360, frame.clientWidth - 300));
       const h = Math.min(640, Math.max(320, frame.clientHeight - 120));
       host.style.width = w + 'px';
       host.style.height = h + 'px';
-      host.style.left = Math.max(16, frame.clientWidth - w - 24) + 'px';
-      host.style.top = '72px';
+      host.style.left = (v2 ? Math.max(16, Math.round((frame.clientWidth - w) / 2)) : Math.max(16, frame.clientWidth - w - 24)) + 'px';
+      host.style.top = (v2 ? Math.max(16, Math.round((frame.clientHeight - h) / 2)) : 72) + 'px';
       host.style.right = 'auto';
       host.style.bottom = 'auto';
     }
