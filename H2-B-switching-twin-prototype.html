@@ -2664,6 +2664,27 @@
     font-weight: 500;
   }
   html[data-theme="blue"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .desk-when > button:hover { background: #f4f5f7; color: #1d1d1f; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .kb-seg button,
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .desk-views[aria-label="Range"] button {
+    flex: none;
+    box-sizing: border-box;
+    width: 68px;
+    min-width: 68px;
+    height: 26px;
+    padding: 0;
+    font-size: 13px;
+    font-weight: 550;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .kb-seg button[aria-pressed="true"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .desk-views[aria-label="Range"] button[aria-pressed="true"] {
+    font-weight: 650;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .kb-calbar > button {
+    height: 32px;
+    padding: 0 12px;
+    font-size: 13px;
+    font-weight: 500;
+  }
   html[data-theme="blue"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .desk-range { color: #1d1d1f; font-size: 15px; font-weight: 650; letter-spacing: -.02em; width: auto; min-width: 0; }
   html[data-theme="blue"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-board { gap: 0; }
   html[data-theme="blue"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .tk-col {
