@@ -2602,17 +2602,20 @@
     height: 100%;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #tail-home .two-col:first-child:has(#homeTaskBoard .ws-home-cal),
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #tail-home .two-col:first-child:has(#homeTaskBoard .desk-cal),
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #tail-home .two-col:first-child:has(#homeTaskBoard .g-list),
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #tail-home .two-col:first-child:has(#homeTaskBoard .desk-board) {
     grid-template-columns: minmax(0, 1fr);
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #tail-home .two-col:first-child:has(#homeTaskBoard .ws-home-cal) > .home-follow-col,
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #tail-home .two-col:first-child:has(#homeTaskBoard .desk-cal) > .home-follow-col,
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #tail-home .two-col:first-child:has(#homeTaskBoard .g-list) > .home-follow-col,
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #tail-home .two-col:first-child:has(#homeTaskBoard .desk-board) > .home-follow-col {
     grid-column: 1;
     grid-row: 3;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #tail-home .rem-card:has(#homeTaskBoard .ws-home-cal),
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #tail-home .rem-card:has(#homeTaskBoard .desk-cal),
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #tail-home .rem-card:has(#homeTaskBoard .g-list),
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #tail-home .rem-card:has(#homeTaskBoard .desk-board) {
     height: auto;
@@ -2621,6 +2624,7 @@
     overflow: visible;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard:has(.ws-home-cal),
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard:has(.desk-cal),
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard:has(.g-list),
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard:has(.desk-board) {
     height: auto;
@@ -2787,6 +2791,7 @@
     overflow: auto;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .home-kanban-body:has(.ws-home-cal),
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .home-kanban-body:has(.desk-cal),
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .home-kanban-body:has(.g-list),
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .hub:has(#screen-home.on) #homeTaskBoard .home-kanban-body:has(.desk-board) {
     flex: none;
@@ -28190,7 +28195,18 @@ function gCanvasBody(c, canvas) {
       return '<section class="g-day"><h4>' + esc(gPrettyDay(iso)) + '</h4>' + cards + '</section>';
     }).join('') || '<p class="desk-empty">Nothing in this range.</p>') + '</div>';
   }
-  if (canvas === 'calendar') return '<div class="ws-home-cal"><div class="tl-body"></div></div>';
+  if (canvas === 'calendar') {
+    const first = new Date(gFocus.getFullYear(), gFocus.getMonth(), 1);
+    const count = new Date(gFocus.getFullYear(), gFocus.getMonth() + 1, 0).getDate();
+    const lead = (first.getDay() + 6) % 7;
+    const cells = Array.from({ length: lead }, () => '<i></i>');
+    for (let n = 1; n <= count; n += 1) {
+      const iso = gIso(new Date(first.getFullYear(), first.getMonth(), n));
+      const hits = gVisibleItems(c).filter((item) => gCovers(item, iso));
+      cells.push('<div class="desk-cal-day' + (hits.length ? ' has' : '') + '"><button type="button">' + n + '</button>' + hits.map((item) => '<button type="button" class="desk-task type-' + esc(item.type || 'task').toLowerCase() + '" data-g-item="' + esc(item.id) + '">' + esc(item.title) + '</button>').join('') + '</div>');
+    }
+    return '<div class="desk-cal">' + ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((d) => '<i>' + d + '</i>').join('') + cells.join('') + '</div>';
+  }
   const head = days.map((d) => `<span>${d.toLocaleDateString('en-US', { weekday: 'short' })} ${d.getDate()}</span>`).join('');
   const peopleIds = c.members.filter((id) => people[id] && !people[id].agent && !people[id].twin);
   peopleIds.sort((a, b) => (a === ME ? -1 : b === ME ? 1 : 0));
@@ -28277,10 +28293,6 @@ function paintHomeTaskBoard() {
     const prevRange = homeSpanFrom ? range.querySelector('[data-home-span="' + homeSpanFrom + '"]') : null;
     gPlaceSlidingSeg(range, prevRange);
     homeSpanFrom = '';
-  }
-  if (homeCanvas === 'calendar' && window.paintSymbionCalendar) {
-    if (window.pushHomeFocus) window.pushHomeFocus(gFocus, gSpan);
-    window.paintSymbionCalendar(slot.querySelector('.ws-home-cal .tl-body'));
   }
 }
 function paintGroupBoard() {
@@ -28383,7 +28395,6 @@ function paintGroupBoard() {
   });
   gPlaceCanvasSeg();
   gPlaceRangeSeg();
-  if (gCanvas === 'calendar' && window.paintSymbionCalendar) window.paintSymbionCalendar(host.querySelector('.ws-home-cal .tl-body'));
   paintHomeTaskBoard();
 }
 
