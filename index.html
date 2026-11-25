@@ -13093,7 +13093,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
             if (!rail || document.getElementById('tabbar')) return;
             var body = document.createElement('div');
             body.id = 'railBody';
-            body.innerHTML = '<div class="rail-pane" data-rail-pane="home"><button type="button" class="rail-link" data-rail-go="kanban">Kanban</button><button type="button" class="rail-link" data-rail-go="drive">Super Drive</button><button type="button" class="rail-link" data-rail-go="symbion">My Symbion</button></div><div class="rail-pane" data-rail-pane="cosmo" hidden></div><div class="rail-pane" data-rail-pane="community" hidden><div id="railRows"></div></div><div class="rail-pane" data-rail-pane="me" hidden><button type="button" class="rail-link" data-rail-go="profile">Profile</button><button type="button" class="rail-link" data-rail-go="cosmos">My Cosmos</button><button type="button" class="rail-link" data-rail-go="security">Security &amp; privacy</button><button type="button" class="rail-link" data-rail-go="settings">Account &amp; settings</button><button type="button" class="rail-link is-out" data-rail-go="signout">Sign out</button></div>';
+            body.innerHTML = '<div class="rail-pane" data-rail-pane="home"><button type="button" class="rail-link" data-rail-go="drive">Super Drive</button><button type="button" class="rail-link" data-rail-go="symbion">My Symbion</button></div><div class="rail-pane" data-rail-pane="cosmo" hidden></div><div class="rail-pane" data-rail-pane="community" hidden><div id="railRows"></div></div><div class="rail-pane" data-rail-pane="me" hidden><button type="button" class="rail-link" data-rail-go="profile">Profile</button><button type="button" class="rail-link" data-rail-go="cosmos">My Cosmos</button><button type="button" class="rail-link" data-rail-go="security">Security &amp; privacy</button><button type="button" class="rail-link" data-rail-go="settings">Account &amp; settings</button><button type="button" class="rail-link is-out" data-rail-go="signout">Sign out</button></div>';
             var follow = rail.querySelector('.rail-follow');
             var rec = rail.querySelector('.rail-rec');
             var cosmoPane = body.querySelector('[data-rail-pane="cosmo"]');
@@ -20446,10 +20446,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       const go = e.target.closest('[data-rail-go]');
       if (!go) return;
       const act = go.dataset.railGo;
-      if (act === 'kanban') {
-        setScreen('home');
-        document.querySelector('#tail-home .rem-card')?.scrollIntoView({ block: 'nearest' });
-      } else if (act === 'drive') openDesk('drive');
+      if (act === 'drive') openDesk('drive');
       else if (act === 'symbion') openSymbion('memory');
       else if (act === 'profile') openSettings('profile');
       else if (act === 'cosmos') openSettings('cosmos');
