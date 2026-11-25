@@ -20707,6 +20707,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     if (window.syncV2Rail) window.syncV2Rail();
     if (window.syncAccountMenu) window.syncAccountMenu();
     if (window.paintHomeTaskBoard) window.paintHomeTaskBoard();
+    if (document.getElementById('frame')?.classList.contains('team-on') && typeof render === 'function') render(false);
   }
   const HOME_FOLLOW_NOTES = [
     { text: "Lecture 5 slides are up. Three quiz questions at the end.", when: "1h ago" },
@@ -28636,10 +28637,14 @@ function blueGroupPosts() {
   return root.dataset.theme === 'blue' && root.dataset.palette !== 'green';
 }
 function bluePostLayout(chat) {
-  return blueGroupPosts() && chat && chat.kind === 'group';
+  const root = document.documentElement;
+  const v2 = root.dataset.home === 'v2' && root.dataset.palette !== 'green';
+  return v2 && blueGroupPosts() && chat && chat.kind === 'group';
 }
 function bigGroupPostLocked(chat) {
-  return blueGroupPosts() && chat && chat.kind === 'group' && chat.tier === 'big' && !canManage(chat);
+  const root = document.documentElement;
+  const v2 = root.dataset.home === 'v2' && root.dataset.palette !== 'green';
+  return v2 && blueGroupPosts() && chat && chat.kind === 'group' && chat.tier === 'big' && !canManage(chat);
 }
 function threadItems(chat, list) {
   const items = [];
@@ -28744,15 +28749,6 @@ function renderLog(scroll) {
   const list = shownMessages(c);
   if (!list.length) {
     $('log').innerHTML = `<p class="sys">No messages yet</p>`;
-    return;
-  }
-  if (bluePostLayout(c) && !(document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green')) {
-    const items = threadItems(c, list);
-    const lastPost = [...items].reverse().find((item) => item.kind === 'post');
-    $('log').innerHTML = items.map((item) => item.kind === 'sys'
-      ? `<p class="sys" id="msg-${item.m.id}">${esc(item.m.sys)}</p>`
-      : postCardHTML(c, item, item === lastPost && !!c.time)).join('');
-    if (scroll) requestAnimationFrame(() => { $('log').scrollTop = $('log').scrollHeight; syncTeamEdgeFade(); });
     return;
   }
   if (bluePostLayout(c)) {
