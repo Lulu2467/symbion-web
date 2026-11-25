@@ -6100,6 +6100,7 @@
   html[data-theme="blue"] .frame.citta-resizing,
   html[data-theme="blue"] .frame.citta-resizing * { cursor: col-resize; user-select: none; }
   .citta-panel .ph { padding: 14px 16px 12px; display: flex; gap: 6px; align-items: center; flex: none; min-width: 0; overflow: hidden; border-bottom: 1px solid var(--line); }
+  .citta-panel .ph .citta-id { display: contents; }
   .citta-panel .ph .citta-av { width: 28px; height: 28px; border-radius: 10px; background: transparent; color: var(--green-dark); font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex: none; overflow: hidden; padding: 0; }
   .citta-panel .ph .citta-av img { border-radius: 10px; }
   .citta-panel .ph .citta-av.twin-init { border-radius: 14px; background: var(--surface-2); color: var(--muted); font-size: 10px; }
@@ -6300,9 +6301,21 @@
     right: auto;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel .ph .sw-sm { display: none; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel:not(.is-hist) .ph .citta-id {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 32px;
+    padding: 4px 8px 4px 6px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel:not(.is-hist) .ph .citta-id:hover {
+    background: #ebf5fa;
+  }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel .ph b {
     order: 1;
-    margin-left: auto;
+    margin-left: 0;
     cursor: pointer;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel .ph .citta-av {
@@ -14898,8 +14911,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       <aside class="citta-panel" id="cittaPanel" aria-label="Citta panel" hidden>
         <div class="citta-resize" role="separator" aria-orientation="vertical" aria-label="Resize Citta" aria-valuemin="280" aria-valuemax="640" aria-valuenow="320" tabindex="0"></div>
         <div class="ph">
-          <span class="citta-av citta-portrait" id="cittaPanelAv" aria-hidden="true"><img src="assets/citta-avatar.png?v=2" width="28" height="28" alt=""></span>
-          <b id="cittaPanelName">Citta</b>
+          <span class="citta-id" id="cittaPanelId"><span class="citta-av citta-portrait" id="cittaPanelAv" aria-hidden="true"><img src="assets/citta-avatar.png?v=2" width="28" height="28" alt=""></span><b id="cittaPanelName">Citta</b></span>
           <button type="button" class="sw-sm" id="cittaPanelSwitch" aria-label="Switch who you’re working with"><svg class="switch-ico" width="12" height="12" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M96 416h832c0.32 0 0.576-0.192 0.896-0.192a30.656 30.656 0 0 0 30.976-30.976c-0.064-0.256 0.128-0.512 0.128-0.832a31.424 31.424 0 0 0-14.912-26.368l-188.48-188.48a30.72 30.72 0 1 0-43.456 43.456L852.544 352H96a32 32 0 0 0 0 64z m832 192H96c-0.32 0-0.576 0.192-0.896 0.192a30.528 30.528 0 0 0-30.976 30.976c0.064 0.256-0.128 0.512-0.128 0.832 0 11.264 6.144 20.672 14.912 26.368l188.48 188.48a30.72 30.72 0 1 0 43.456-43.456L171.456 672H928a32 32 0 0 0 0-64z" fill="currentColor"/></svg></button>
           <span class="task-pill">3 tasks</span>
           <span class="sp"></span>
@@ -20770,25 +20782,28 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     });
     const cittaHoverName = $('cittaPanelName');
     const cittaHoverAv = $('cittaPanelAv');
+    const cittaHoverId = $('cittaPanelId');
     let cittaHoverTimer = 0;
     const cittaCanHoverSwitch = () => document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green';
     const cittaHoverOpen = () => {
       if (!cittaCanHoverSwitch() || !cittaHoverName) return;
       clearTimeout(cittaHoverTimer);
       if (menu.classList.contains('open') && menu.classList.contains('in-panel')) return;
-      openCittaSwitcher({ anchor: cittaHoverName });
+      openCittaSwitcher({ anchor: cittaHoverId || cittaHoverName });
     };
     const cittaHoverClose = (e) => {
       if (!cittaCanHoverSwitch()) return;
       const next = e.relatedTarget;
-      if (next && next.closest && (next.closest('#cittaPanelName') || next.closest('#cittaPanelAv') || next.closest('.menu'))) return;
+      if (next && next.closest && (next.closest('#cittaPanelId') || next.closest('#cittaPanelName') || next.closest('#cittaPanelAv') || next.closest('.menu'))) return;
       clearTimeout(cittaHoverTimer);
       cittaHoverTimer = setTimeout(() => {
         if (menu.classList.contains('in-panel')) setMenu(false);
       }, 180);
     };
+    cittaHoverId?.addEventListener('mouseenter', cittaHoverOpen);
     cittaHoverName?.addEventListener('mouseenter', cittaHoverOpen);
     cittaHoverAv?.addEventListener('mouseenter', cittaHoverOpen);
+    cittaHoverId?.addEventListener('mouseleave', cittaHoverClose);
     cittaHoverName?.addEventListener('mouseleave', cittaHoverClose);
     cittaHoverAv?.addEventListener('mouseleave', cittaHoverClose);
     menu?.addEventListener('mouseenter', () => clearTimeout(cittaHoverTimer));
