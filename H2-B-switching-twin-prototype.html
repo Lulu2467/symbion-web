@@ -4577,7 +4577,14 @@
     place-items: center;
     border-radius: 8px;
     font-size: 18px;
-    line-height: 1;
+    line-height: 0;
+  }
+  html[data-theme="blue"]:not([data-palette="green"]) .float-chrome button .x-txt { display: none; }
+  html[data-theme="blue"]:not([data-palette="green"]) .float-chrome button .x-ico {
+    display: block;
+    width: 16px;
+    height: 16px;
+    margin: 0;
   }
   #tabbar {
     position: relative;
@@ -23333,7 +23340,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     if (!bar) {
       bar = document.createElement('div');
       bar.className = 'float-chrome';
-      bar.innerHTML = '<span class="float-grip"></span><button type="button" data-float="close" aria-label="Close">×</button>';
+      bar.innerHTML = '<span class="float-grip"></span><button type="button" data-float="close" aria-label="Close"><span class="x-txt">×</span><svg class="x-ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5 11.5 11.5M11.5 4.5 4.5 11.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>';
       host.prepend(bar);
       const scale = () => {
         const box = frame.getBoundingClientRect();
