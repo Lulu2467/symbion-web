@@ -4415,24 +4415,49 @@
   #railBody .rail-link.is-out { color: #d93025; }
   #railBody .rail-link.is-out:hover { background: #fdeceb; color: #d93025; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors {
-    display: flex; flex-wrap: wrap; gap: 6px; padding: 2px 8px 8px;
+    display: flex; flex-wrap: nowrap; align-items: flex-start; gap: 0; padding: 0 0 8px;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor {
-    display: inline-flex; align-items: center; gap: 6px; height: 32px; margin: 0; padding: 0 12px 0 10px;
-    border: 1px solid #e6e8ec; border-radius: 999px; background: #fff; color: #5f6670;
-    font: inherit; font-size: 13px; font-weight: 500; cursor: pointer;
+    flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 4px;
+    height: auto; margin: 0; padding: 6px 0 4px; border: 0; border-radius: 8px; background: transparent;
+    color: #5f6670; font: inherit; font-size: 10px; font-weight: 500; letter-spacing: -0.04em; line-height: 1.15; text-align: center;
+    white-space: nowrap; cursor: pointer;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor:hover,
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor.sel {
-    background: #f6f7f8; color: #1d1d1f;
+    background: transparent; color: #1d1d1f;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor i {
-    width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center;
-    background: transparent; color: #8b919a;
+    width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center;
+    background: transparent;
   }
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor i svg { width: 16px; height: 16px; display: block; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor[data-tool="doc"] i { color: var(--blue); }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor[data-tool="deck"] i { color: var(--amber); }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor[data-tool="numbers"] i { color: #008b68; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor[data-tool="symtex"] i { color: var(--purple); }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor[data-tool="code"] i { color: var(--slate); }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor i svg { width: 20px; height: 20px; display: block; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor i svg.line-ico { display: block; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor i svg.line-ico ~ svg { display: none; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #editHost .edit-body { flex: 1; min-height: 0; overflow: auto; padding: 4px 20px 28px; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #editHost h2 { margin: 12px 0 14px; font-size: 16px; font-weight: 650; letter-spacing: -0.01em; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #editHost .edit-new {
+    display: flex; align-items: center; gap: 10px; width: 100%; margin: 0 0 18px; padding: 12px 14px;
+    border: 1px solid #e6e8ec; border-radius: 10px; background: #fff; color: #1d1d1f;
+    font: inherit; font-size: 14px; font-weight: 600; text-align: left; cursor: pointer;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #editHost .edit-new:hover { background: #f6f7f8; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #editHost .edit-new i { font-style: normal; font-size: 18px; line-height: 1; color: #3c7a94; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #editHost .edit-k { margin: 0 0 6px; font-size: 11px; font-weight: 650; letter-spacing: .04em; color: #8b919a; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #editHost .edit-file {
+    display: flex; align-items: center; width: 100%; margin: 0; padding: 10px 8px; border: 0; border-radius: 8px;
+    background: transparent; color: #1d1d1f; font: inherit; font-size: 14px; text-align: left; cursor: pointer;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #editHost .edit-file:hover,
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #editHost .edit-file.is-on { background: #f6f7f8; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #editHost .edit-sheet { margin-top: 18px; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #editHost .edit-sheet h3 { margin: 0 0 10px; font-size: 15px; font-weight: 650; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #editHost .edit-page { min-height: 280px; border: 1px solid #e6e8ec; border-radius: 10px; background: #fff; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #noteHost .note-body { flex: 1; min-height: 0; overflow: auto; padding: 4px 16px 24px; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #noteHost h2 { margin: 12px 8px 8px; font-size: 16px; font-weight: 650; letter-spacing: -0.01em; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #noteHost .rail-notes { display: flex; flex-direction: column; gap: 2px; }
@@ -4564,7 +4589,8 @@
   .frame.pane-float #dirHost:not([hidden]),
   .frame.pane-float #cosmoAdminHost:not([hidden]),
   .frame.pane-float #deskHost:not([hidden]),
-  .frame.pane-float #noteHost:not([hidden]) {
+  .frame.pane-float #noteHost:not([hidden]),
+  .frame.pane-float #editHost:not([hidden]) {
     display: flex !important;
     position: absolute;
     top: 68px;
@@ -14518,6 +14544,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
           </section>
           <section id="deskHost" aria-label="Desk" hidden></section>
           <section id="noteHost" aria-label="Notifications" hidden><div class="note-body"><h2>Notifications</h2><div id="railNotes" class="rail-notes"></div></div></section>
+          <section id="editHost" aria-label="Editor" hidden><div class="edit-body"><h2 id="editTitle">Doc</h2><button type="button" class="edit-new" id="editNew"><i aria-hidden="true">+</i><span id="editNewLabel">New Doc</span></button><p class="edit-k">Recent</p><div id="editRecent"></div><div class="edit-sheet" id="editSheet" hidden><h3 id="editSheetName"></h3><div class="edit-page"></div></div></div></section>
           <section id="symbionHost" aria-label="My Symbion" hidden>
             <div class="me-tabs" role="tablist" aria-label="My Symbion">
               <button type="button" class="me-tab on" data-me-tab="memory" role="tab" aria-selected="true">Memory</button>
@@ -19342,6 +19369,61 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     input.click();
   }
 
+  const EDITOR_LABELS = { doc: 'Doc', deck: 'Deck', numbers: 'Numbers', symtex: 'SymTex', code: 'Code' };
+  let editorKind = '';
+  function paintEditorRecent(current) {
+    const recent = document.getElementById('editRecent');
+    const names = RECENT_EDITOR_FILES[editorKind] || [];
+    if (!recent) return;
+    recent.replaceChildren(...names.map((name) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'edit-file' + (name === current ? ' is-on' : '');
+      btn.textContent = name;
+      btn.addEventListener('click', () => openEditorFile(name));
+      return btn;
+    }));
+  }
+  function openEditorFile(name) {
+    const sheet = document.getElementById('editSheet');
+    const sheetName = document.getElementById('editSheetName');
+    if (sheetName) sheetName.textContent = name;
+    if (sheet) sheet.hidden = false;
+    paintEditorRecent(name);
+  }
+  function openEditorWindow(kind) {
+    if (document.documentElement.dataset.home !== 'v2' || document.documentElement.dataset.palette === 'green') return;
+    if (!RECENT_EDITOR_FILES[kind]) return;
+    editorKind = kind;
+    const label = EDITOR_LABELS[kind] || kind;
+    const title = document.getElementById('editTitle');
+    const newLabel = document.getElementById('editNewLabel');
+    if (title) title.textContent = label;
+    if (newLabel) newLabel.textContent = 'New ' + label;
+    const sheet = document.getElementById('editSheet');
+    if (sheet) sheet.hidden = true;
+    paintEditorRecent('');
+    document.querySelectorAll('#railEditors .rail-editor').forEach((el) => {
+      el.classList.toggle('sel', el.dataset.tool === kind);
+    });
+    if (window.leaveTeamPage) window.leaveTeamPage();
+    usePaneFloat(document.getElementById('editHost'));
+  }
+  document.getElementById('editNew')?.addEventListener('click', () => {
+    const names = RECENT_EDITOR_FILES[editorKind];
+    if (!names) return;
+    const label = EDITOR_LABELS[editorKind] || 'file';
+    const base = 'Untitled ' + label;
+    let name = base;
+    let n = 2;
+    while (names.includes(name)) {
+      name = base + ' ' + n;
+      n += 1;
+    }
+    names.unshift(name);
+    openEditorFile(name);
+  });
+
   function initComposerTools() {
     document.querySelectorAll('#composerTools .tool').forEach((tool) => {
       const arm = () => showToolRecent(tool);
@@ -19390,9 +19472,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
         copy.querySelector('i')?.removeAttribute('style');
         copy.addEventListener('click', (e) => {
           e.stopPropagation();
-          if (document.documentElement.dataset.home !== 'v2' || document.documentElement.dataset.palette === 'green') return;
-          setComposerToolSelection(copy.dataset.tool);
-          document.getElementById('composerInput')?.focus();
+          openEditorWindow(copy.dataset.tool);
         });
         railEditors.append(copy);
       });
@@ -23695,7 +23775,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
   };
   function usePaneFloat(host) {
     frame.classList.remove('chat-float', 'symbion-on', 'set-on', 'dir-on', 'cosmo-admin-on', 'team-on', 'desk-on');
-    ['symbionHost', 'setHost', 'dirHost', 'cosmoAdminHost', 'deskHost', 'noteHost'].forEach((id) => {
+    ['symbionHost', 'setHost', 'dirHost', 'cosmoAdminHost', 'deskHost', 'noteHost', 'editHost'].forEach((id) => {
       const el = document.getElementById(id);
       if (el && el !== host) el.hidden = true;
     });
@@ -23712,7 +23792,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
   window.closePaneFloat = function () {
     frame.classList.remove('pane-float');
     if (deskOpen) closeDesk();
-    ['symbionHost', 'setHost', 'dirHost', 'cosmoAdminHost', 'deskHost', 'noteHost'].forEach((id) => {
+    ['symbionHost', 'setHost', 'dirHost', 'cosmoAdminHost', 'deskHost', 'noteHost', 'editHost'].forEach((id) => {
       const el = document.getElementById(id);
       if (el) el.hidden = true;
     });
