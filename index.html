@@ -4704,7 +4704,14 @@
   #meAccount button svg { width: 18px; height: 18px; flex: none; }
   #meAccount button:hover { color: var(--green-dark); }
   #meAccount button.is-out { color: #d93025; }
-  html[data-theme="blue"] #meAccount [data-rail-account="desk"] { display: none; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav button[data-set="friends"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav button[data-set="desk"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav .set-kicker[data-kicker="friends"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav .set-kicker[data-kicker="desk"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost button.set-quiet[data-set="friends"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost button.set-quiet[data-set="desk"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #meAccount [data-rail-account="friends"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #meAccount [data-rail-account="desk"] { display: none; }
   .rail .r .rail-ico-spark { width: 15px; height: 15px; }
   .rail .r .rail-ico-spark-line { display: none; }
   html[data-theme="blue"] .rail .r[data-rail="cosmo"] .rail-ico-spark-solid { display: none; }
@@ -14137,7 +14144,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
                 <button type="button" data-set="friends">Friends</button>
                 <p class="set-kicker">COSMOS</p>
                 <button type="button" data-set="cosmos">Cosmos</button>
-                <p class="set-kicker">DESK</p>
+                <p class="set-kicker" data-kicker="desk">DESK</p>
                 <button type="button" data-set="desk">Desk</button>
                 <p class="set-kicker">ACCOUNT</p>
                 <button type="button" data-set="settings">Account &amp; settings</button>
