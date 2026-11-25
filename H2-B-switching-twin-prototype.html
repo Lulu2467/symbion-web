@@ -4708,10 +4708,10 @@
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav button[data-set="desk"],
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav .set-kicker[data-kicker="friends"],
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav .set-kicker[data-kicker="desk"],
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav .set-kicker[data-kicker="account"],
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav .set-kicker[data-kicker="connections"],
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav .set-kicker[data-kicker="preferences"],
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav button[data-set="settings"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav .set-kicker[data-kicker="advanced"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav button[data-set="bugs"],
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav button[data-set="apps"],
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav button[data-set="runtime"],
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav button[data-set="translate"],
@@ -4722,7 +4722,6 @@
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost button.set-quiet[data-set="apps"],
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #meAccount [data-rail-account="friends"],
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #meAccount [data-rail-account="desk"],
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #meAccount [data-rail-account="settings"],
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #meAccount [data-rail-account="apps"] { display: none; }
   .rail .r .rail-ico-spark { width: 15px; height: 15px; }
   .rail .r .rail-ico-spark-line { display: none; }
@@ -14169,7 +14168,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
                 <button type="button" data-set="neo">Citta in NeoSchool</button>
                 <p class="set-kicker">SECURITY</p>
                 <button type="button" data-set="security">Security &amp; privacy</button>
-                <p class="set-kicker">ADVANCED</p>
+                <p class="set-kicker" data-kicker="advanced">ADVANCED</p>
                 <button type="button" data-set="bugs"><span>Bug Report mode</span><em>Product test</em></button>
                 <p class="set-kicker">RELATED</p>
                 <button type="button" data-set="about">About Symbion</button>
@@ -21815,6 +21814,28 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     });
     const cosmosHead = document.querySelector('#setHost [data-set-panel="cosmos"] h3');
     if (cosmosHead) cosmosHead.textContent = cosmosName;
+    placeAccountExtras();
+  }
+  function placeAccountExtras() {
+    const v2 = document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green';
+    const settings = document.querySelector('#setHost [data-set-panel="settings"]');
+    if (!settings) return;
+    let after = settings;
+    ['bugs', 'translate'].forEach((name) => {
+      const panel = document.querySelector('#setHost [data-set-panel="' + name + '"]');
+      if (!panel) return;
+      let anchor = document.querySelector('#setHost [data-panel-anchor="' + name + '"]');
+      if (!anchor) {
+        anchor = document.createElement('span');
+        anchor.hidden = true;
+        anchor.dataset.panelAnchor = name;
+        panel.before(anchor);
+      }
+      if (v2) {
+        after.after(panel);
+        after = panel;
+      } else anchor.after(panel);
+    });
   }
   function applyTheme(theme) {
     setBookmarkFolder(false);
@@ -26302,8 +26323,10 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
         currentNav = btn;
       } else btn.removeAttribute('aria-current');
     });
+    if (typeof placeAccountExtras === 'function') placeAccountExtras();
+    const accountExtras = document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green' && settingsSection === 'settings';
     host.querySelectorAll('[data-set-panel]').forEach((panel) => {
-      panel.hidden = panel.dataset.setPanel !== settingsSection;
+      panel.hidden = panel.dataset.setPanel !== settingsSection && !(accountExtras && (panel.dataset.setPanel === 'bugs' || panel.dataset.setPanel === 'translate'));
     });
     host.querySelector('.set-main')?.scrollTo({ top: 0 });
     if (currentNav) {
