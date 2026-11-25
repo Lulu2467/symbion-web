@@ -4717,12 +4717,21 @@
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav button[data-set="translate"],
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav button[data-set="chat"],
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav button[data-set="neo"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav .set-kicker[data-kicker="related"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav button[data-set="about"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav button[data-set="history"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav button[data-set="tokens"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost .set-nav button[data-set="agents"],
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost button.set-quiet[data-set="friends"],
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost button.set-quiet[data-set="desk"],
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost button.set-quiet[data-set="apps"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost button.set-quiet[data-set="about"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #setHost button.set-quiet[data-set="history"],
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #meAccount [data-rail-account="friends"],
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #meAccount [data-rail-account="desk"],
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #meAccount [data-rail-account="apps"] { display: none; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #meAccount [data-rail-account="apps"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #meAccount [data-rail-account="about"],
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #meAccount [data-rail-account="history"] { display: none; }
   .rail .r .rail-ico-spark { width: 15px; height: 15px; }
   .rail .r .rail-ico-spark-line { display: none; }
   html[data-theme="blue"] .rail .r[data-rail="cosmo"] .rail-ico-spark-solid { display: none; }
@@ -14170,7 +14179,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
                 <button type="button" data-set="security">Security &amp; privacy</button>
                 <p class="set-kicker" data-kicker="advanced">ADVANCED</p>
                 <button type="button" data-set="bugs"><span>Bug Report mode</span><em>Product test</em></button>
-                <p class="set-kicker">RELATED</p>
+                <p class="set-kicker" data-kicker="related">RELATED</p>
                 <button type="button" data-set="about">About Symbion</button>
                 <button type="button" data-set="history">Recent history</button>
                 <button type="button" data-set="tokens">Tokens &amp; plan</button>
