@@ -9993,6 +9993,11 @@
     cursor: pointer;
   }
   html[data-theme="blue"] #dirHost .dir-enter:hover { background: #ebf5fa; border-color: #9eb8c6; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .frame.pane-float #dirHost {
+    padding: 0;
+    background: #fff;
+    overflow: hidden;
+  }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .frame.pane-float #dirHost .dir-body {
     padding: 28px 13px 20px;
     scrollbar-gutter: stable both-edges;
@@ -23252,12 +23257,10 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     const root = document.documentElement;
     if (!host || host.hidden || !frame.classList.contains('pane-float')) return;
     if (root.dataset.home !== 'v2' || root.dataset.palette === 'green') return;
-    const maxH = Math.min(640, Math.max(280, frame.clientHeight - 48));
-    const w = Math.min(520, Math.max(360, frame.clientWidth - 80));
+    const w = Math.min(720, Math.max(360, frame.clientWidth - 300));
+    const h = Math.min(640, Math.max(320, frame.clientHeight - 120));
     host.style.width = w + 'px';
-    host.style.maxHeight = maxH + 'px';
-    host.style.height = 'auto';
-    const h = Math.min(maxH, Math.max(280, host.scrollHeight));
+    host.style.maxHeight = '';
     host.style.height = h + 'px';
     host.style.left = Math.max(16, Math.round((frame.clientWidth - w) / 2)) + 'px';
     host.style.top = Math.max(16, Math.round((frame.clientHeight - h) / 2)) + 'px';
