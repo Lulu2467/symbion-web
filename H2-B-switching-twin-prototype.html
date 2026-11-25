@@ -1425,22 +1425,19 @@
   html[data-theme="blue"][data-home="v2"] .frame.citta-open .body .main { margin-right: 0; }
   html[data-theme="blue"][data-home="v2"] .frame.citta-open #dirHost .dir-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   html[data-theme="blue"][data-home="v2"] .frame.citta-open .citta-panel { z-index: 24; box-shadow: -12px 0 32px rgba(20, 24, 28, .12); }
-  html[data-theme="blue"][data-home="v2"] .frame.team-on .content.hub { display: flex !important; }
-  html[data-theme="blue"][data-home="v2"] .frame.team-on #teamHost {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    right: auto;
-    bottom: auto;
-    width: min(760px, calc(100% - 48px));
-    height: min(720px, calc(100% - 96px));
-    max-width: calc(100% - 48px);
-    transform: translate(-50%, -50%);
-    border-radius: 16px;
-    overflow: hidden;
-    z-index: 24;
-    box-shadow: 0 16px 40px rgba(20, 24, 28, .16);
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .frame.team-on #teamHost {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    height: auto;
+    max-width: none;
+    transform: none;
+    border-radius: 0;
+    box-shadow: none;
+    flex: 1;
   }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .frame.team-on #teamHost .list { display: none !important; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #teamHost:has(#panel:not([hidden])) .panel {
     position: absolute;
     top: 60px;
@@ -12577,6 +12574,7 @@
     cursor: pointer;
   }
   html[data-theme="blue"] #teamHost .replies-h { margin: 16px 0 8px; font-size: 13px; font-weight: 650; color: #1a1d21; }
+  html[data-theme="blue"] #teamHost .gpost > .gpost-stats { grid-column: 2; }
   html[data-theme="blue"] #teamHost .gpost-stats,
   html[data-theme="blue"] #teamHost .greply-col .gpost-stats { display: flex; gap: 6px; margin-top: 8px; }
   html[data-theme="blue"] #teamHost .gpost-stats button {
@@ -20479,6 +20477,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
         const v2rail = document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green';
         if (v2rail && (el.dataset.rail === 'home' || el.dataset.rail === 'cosmo' || el.dataset.rail === 'community' || el.dataset.rail === 'drive')) {
           document.querySelector('.main')?.classList.remove('is-new-tab');
+          if (el.dataset.rail === 'home' && teamOpen) setScreen('home');
           showRailPane(el.dataset.rail);
           return;
         }
@@ -23569,6 +23568,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     syncHash();
     fit();
   }
+  window.openTeam = openTeam;
   function closeTeam() {
     if (!teamOpen) return;
     teamOpen = false;
@@ -29359,9 +29359,10 @@ function paintRailGroups() {
     if (!byAt.has(key)) byAt.set(key, []);
     byAt.get(key).push(c);
   });
-  const floated = document.getElementById('frame')?.classList.contains('chat-float');
+  const frameNow = document.getElementById('frame');
+  const channelOpen = frameNow?.classList.contains('chat-float') || frameNow?.classList.contains('team-on');
   const channel = (c, sub) => {
-    const on = floated && c.id === state.id;
+    const on = channelOpen && c.id === state.id;
     const unread = c.unread > 0;
     const label = c.tier === 'big' && c.cosmoName && c.name === c.cosmoName ? 'Big group' : c.name;
     return `<button type="button" class="rail-ch${sub ? ' is-sub' : ''}${on ? ' on' : ''}${unread ? ' is-unread' : ''}" data-rail-group="${c.id}"><span class="hash" aria-hidden="true">#</span><b>${esc(label)}</b></button>`;
@@ -29379,9 +29380,9 @@ window.paintRailGroups = paintRailGroups;
 document.getElementById('railRows')?.addEventListener('click', (e) => {
   const btn = e.target.closest('[data-rail-group]');
   if (!btn) return;
-  openChat(btn.dataset.railGroup);
+  openChat(btn.dataset.railGroup, { page: true });
 });
-function openChat(id) {
+function openChat(id, opts) {
   const c = chats.find((x) => x.id === id);
   if (!c) return;
   state.notice = false;
@@ -29409,6 +29410,12 @@ function openChat(id) {
   closePopovers();
   render(true);
   const frameEl = document.getElementById('frame');
+  if (opts && opts.page) {
+    frameEl?.classList.remove('chat-float');
+    if (window.openTeam) window.openTeam();
+    paintRailGroups();
+    return;
+  }
   if (frameEl && !frameEl.classList.contains('team-on')) {
     if (window.closePaneFloat) window.closePaneFloat();
     frameEl.classList.add('chat-float');
