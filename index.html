@@ -6443,7 +6443,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 12px;
+    gap: 6px;
     height: auto;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-label { display: none; }
@@ -6456,8 +6456,8 @@
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel .citta-hist-back .hist-back-line { display: none; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel .citta-hist-back .hist-back-fill { display: block; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-back svg {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-chatbar-row .citta-hist-search {
     flex: 1 1 auto;
@@ -6472,8 +6472,8 @@
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-hist-search .hist-search-line { display: none; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-hist-search .hist-search-fill { display: block; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-chatbar-row .citta-hist-search svg {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-search input {
     font-size: 14px;
@@ -6481,8 +6481,8 @@
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-search input::placeholder { color: transparent; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist {
-    /* Left = search box left edge (7 + back 28 + gap 12). */
-    padding: 16px 16px 20px 47px;
+    /* Left = search box left edge (7 + back 28 + gap 6). */
+    padding: 16px 16px 20px 41px;
     margin-top: 0;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-list {
@@ -15180,7 +15180,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
         </div>
         <div class="citta-chatbar">
           <div class="citta-chatbar-row">
-          <button type="button" class="citta-hist-back" id="cittaHistBack" aria-label="Back to chat" hidden><svg class="hist-back-line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg><svg class="hist-back-fill" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M701.921882 58.247529l-6.083764 5.12L258.168471 501.037176a44.574118 44.574118 0 0 0-4.457412 5.180236l4.457412-5.180236a44.393412 44.393412 0 0 0-5.12 56.380236l0.843294 1.204706 4.21647 4.939294 437.729883 437.669647a44.212706 44.212706 0 0 0 67.644235-56.380235l-5.12-6.144-406.347294-406.40753L758.362353 125.891765A44.212706 44.212706 0 0 0 701.921882 58.247529z"/></svg></button>
+          <button type="button" class="citta-hist-back" id="cittaHistBack" aria-label="Back to chat" hidden><svg class="hist-back-line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg><svg class="hist-back-fill" viewBox="200 40 620 940" aria-hidden="true"><path fill="currentColor" d="M701.921882 58.247529l-6.083764 5.12L258.168471 501.037176a44.574118 44.574118 0 0 0-4.457412 5.180236l4.457412-5.180236a44.393412 44.393412 0 0 0-5.12 56.380236l0.843294 1.204706 4.21647 4.939294 437.729883 437.669647a44.212706 44.212706 0 0 0 67.644235-56.380235l-5.12-6.144-406.347294-406.40753L758.362353 125.891765A44.212706 44.212706 0 0 0 701.921882 58.247529z"/></svg></button>
           <p class="citta-hist-label">Chats</p>
           <button type="button" class="citta-lines" id="cittaLines" aria-label="Chat menu" aria-expanded="false" aria-controls="cittaMore"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M66.488889 211.781818h891.022222c28.198788 0 50.980202-22.238384 50.980202-49.648485 0-27.397172-22.768485-49.648485-50.980202-49.648485H66.488889C38.341818 112.484848 15.508687 134.723232 15.508687 162.133333s22.833131 49.648485 50.980202 49.648485z m891.009293 248.242424H66.488889C38.277172 460.024242 15.508687 482.262626 15.508687 509.672727s22.768485 49.648485 50.980202 49.648485h891.022222c28.198788 0 50.980202-22.238384 50.980202-49.648485-0.012929-27.410101-22.923636-49.648485-50.993131-49.648485z m0 351.63798H66.488889c-28.134141 0-50.980202 22.238384-50.980202 49.648485s22.833131 49.648485 50.980202 49.648485h891.022222c28.198788 0 50.980202-22.238384 50.980202-49.648485-0.012929-27.397172-22.781414-49.648485-50.993131-49.648485z m0 0"/></svg></button>
           <div class="citta-more" id="cittaMore" hidden>
@@ -15195,7 +15195,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
           <div class="citta-hist" id="cittaHist" hidden>
             <label class="citta-hist-search">
               <svg class="hist-search-line" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.25" stroke="currentColor" stroke-width="1.7"/><path d="M16.2 16.2 20 20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-              <svg class="hist-search-fill" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M446.112323 177.545051c137.567677 0.219798 252.612525 104.59798 266.162424 241.493333 13.562828 136.895354-78.778182 261.818182-213.617777 289.008485-134.852525 27.203232-268.386263-52.156768-308.945455-183.608889s25.018182-272.252121 151.738182-325.779394A267.235556 267.235556 0 0 1 446.112323 177.545051m0-62.060607c-182.794343 0-330.989899 148.195556-330.989899 330.989899s148.195556 330.989899 330.989899 330.989899 330.989899-148.195556 330.989899-330.989899-148.195556-330.989899-330.989899-330.989899z m431.321212 793.341415a30.849293 30.849293 0 0 1-21.94101-9.102223l-157.220202-157.220202c-11.752727-12.179394-11.584646-31.534545 0.37495-43.50707 11.972525-11.972525 31.327677-12.140606 43.494141-0.37495l157.220202 157.220202a31.036768 31.036768 0 0 1 6.723232 33.810101 31.004444 31.004444 0 0 1-28.651313 19.174142z m0 0"/></svg>
+              <svg class="hist-search-fill" viewBox="90 90 850 850" aria-hidden="true"><path fill="currentColor" d="M446.112323 177.545051c137.567677 0.219798 252.612525 104.59798 266.162424 241.493333 13.562828 136.895354-78.778182 261.818182-213.617777 289.008485-134.852525 27.203232-268.386263-52.156768-308.945455-183.608889s25.018182-272.252121 151.738182-325.779394A267.235556 267.235556 0 0 1 446.112323 177.545051m0-62.060607c-182.794343 0-330.989899 148.195556-330.989899 330.989899s148.195556 330.989899 330.989899 330.989899 330.989899-148.195556 330.989899-330.989899-148.195556-330.989899-330.989899-330.989899z m431.321212 793.341415a30.849293 30.849293 0 0 1-21.94101-9.102223l-157.220202-157.220202c-11.752727-12.179394-11.584646-31.534545 0.37495-43.50707 11.972525-11.972525 31.327677-12.140606 43.494141-0.37495l157.220202 157.220202a31.036768 31.036768 0 0 1 6.723232 33.810101 31.004444 31.004444 0 0 1-28.651313 19.174142z m0 0"/></svg>
               <input type="search" id="cittaHistSearch" placeholder="Search history" autocomplete="off" enterkeyhint="search" aria-label="Search history">
             </label>
             <div class="citta-hist-list" id="cittaHistList" role="listbox" aria-label="Chats"></div>
