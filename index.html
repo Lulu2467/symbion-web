@@ -6481,7 +6481,7 @@
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-search input::placeholder { color: transparent; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist {
-    /* Left = search box left (7 + back 28 + gap 12). */
+    /* Left = search box left edge (7 + back 28 + gap 12). */
     padding: 16px 16px 20px 47px;
     margin-top: 0;
   }
@@ -6489,8 +6489,7 @@
     gap: 18px;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-list button {
-    /* Same as search inner pad → text lines up with the search icon. */
-    padding: 0 0 0 14px;
+    padding: 0;
     font-size: 15px;
     line-height: 22px;
     color: #6b6b6b;
