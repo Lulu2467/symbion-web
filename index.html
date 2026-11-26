@@ -6391,7 +6391,8 @@
   }
   html[data-theme="blue"] .citta-panel .citta-lines svg { width: 16px; height: 16px; display: block; }
   html[data-theme="blue"] .citta-panel .citta-lines:hover { color: #000; background: transparent; }
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel:not(.is-hist) .citta-chatbar {
+  /* Chat chrome (hamburger left, Citta+avatar, no switch) — Daily + v2. Float stays v2-only. */
+  html[data-theme="blue"]:not([data-palette="green"]) .citta-panel:not(.is-hist) .citta-chatbar {
     position: absolute;
     top: 0;
     left: 0;
@@ -6401,16 +6402,17 @@
     padding: 0;
     justify-content: center;
   }
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel:not(.is-hist) .citta-chatbar-row {
+  html[data-theme="blue"]:not([data-palette="green"]) .citta-panel:not(.is-hist) .citta-chatbar-row {
     justify-content: center;
     height: 100%;
   }
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel:not(.is-hist) .citta-more:not([hidden]) {
+  html[data-theme="blue"]:not([data-palette="green"]) .citta-panel:not(.is-hist) .citta-more:not([hidden]) {
     left: 8px;
     right: auto;
   }
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel .ph .sw-sm { display: none; }
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel:not(.is-hist) .ph .citta-id {
+  html[data-theme="blue"]:not([data-palette="green"]) .citta-panel:not(.is-hist) .ph .sw-sm { display: none; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .ph .sw-sm { display: none; }
+  html[data-theme="blue"]:not([data-palette="green"]) .citta-panel:not(.is-hist) .ph .citta-id {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -6419,7 +6421,7 @@
     border-radius: 10px;
     cursor: pointer;
   }
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel:not(.is-hist) .ph .citta-id:hover,
+  html[data-theme="blue"]:not([data-palette="green"]) .citta-panel:not(.is-hist) .ph .citta-id:hover,
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .ph .citta-id:hover {
     background: #ebf5fa;
   }
@@ -6507,16 +6509,26 @@
     left: 8px;
     right: auto;
   }
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel .ph b {
+  html[data-theme="blue"]:not([data-palette="green"]) .citta-panel:not(.is-hist) .ph b {
     order: 1;
     margin-left: 0;
     cursor: pointer;
   }
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel .ph .citta-av {
+  html[data-theme="blue"]:not([data-palette="green"]) .citta-panel:not(.is-hist) .ph .citta-av {
     order: 2;
     cursor: pointer;
   }
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel .ph .panel-close { order: 3; }
+  html[data-theme="blue"]:not([data-palette="green"]) .citta-panel:not(.is-hist) .ph .panel-close { order: 3; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .ph b {
+    order: 1;
+    margin-left: 0;
+    cursor: pointer;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .ph .citta-av {
+    order: 2;
+    cursor: pointer;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .ph .panel-close { order: 3; }
   html[data-theme="blue"] .citta-panel .citta-hist-back {
     display: none;
     width: 30px;
