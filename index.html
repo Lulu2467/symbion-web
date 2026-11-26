@@ -6432,23 +6432,23 @@
     border-radius: 10px;
     cursor: pointer;
   }
-  /* Figma 1089:54 — hist row: 13 above search, 18 search, 15 to list. */
+  /* History search row — sizes from the design crop (2x → CSS). */
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-chatbar {
     position: static;
     width: auto;
     height: auto;
-    padding: 14px 16px 0 7px;
+    padding: 16px 16px 0 7px;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-chatbar-row {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     height: auto;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-label { display: none; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-back {
-    width: 30px;
+    width: 28px;
     height: 36px;
     margin: 0;
   }
@@ -6456,8 +6456,8 @@
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel .citta-hist-back .hist-back-line { display: none; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel .citta-hist-back .hist-back-fill { display: block; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-back svg {
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-chatbar-row .citta-hist-search {
     flex: 1 1 auto;
@@ -6472,25 +6472,25 @@
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-hist-search .hist-search-line { display: none; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-hist-search .hist-search-fill { display: block; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-chatbar-row .citta-hist-search svg {
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-search input {
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 14px;
+    line-height: 20px;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-search input::placeholder { color: transparent; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist {
-    padding: 14px 16px 20px;
+    padding: 24px 16px 20px;
     margin-top: 0;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-list {
-    gap: 10px;
+    gap: 18px;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-list button {
-    padding: 0 0 0 31px;
-    font-size: 14px;
-    line-height: 18px;
+    padding: 0 0 0 46px;
+    font-size: 15px;
+    line-height: 22px;
     color: #6b6b6b;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-lines {
@@ -22738,7 +22738,17 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     const list = $('cittaHistList');
     if (!list) return;
     const q = ($('cittaHistSearch')?.value || '').trim().toLowerCase();
-    const rows = cittaThreads.filter((t) => !q || String(t.title || '').toLowerCase().includes(q));
+    let rows = cittaThreads.filter((t) => !q || String(t.title || '').toLowerCase().includes(q));
+    const root = document.documentElement;
+    const v2 = root.dataset.home === 'v2' && root.dataset.palette !== 'green';
+    if (!rows.length && !q && v2) {
+      rows = [
+        { id: 'demo-l5', title: 'Prep me for lecture 5', html: '' },
+        { id: 'demo-l3', title: 'Prep me for lecture 3', html: '' },
+        { id: 'demo-l1', title: 'Prep me for lecture 1', html: '' },
+        { id: 'demo-l2', title: 'Prep me for lecture 2', html: '' }
+      ];
+    }
     list.replaceChildren();
     if (!rows.length) {
       const empty = document.createElement('p');
