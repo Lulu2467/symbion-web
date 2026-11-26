@@ -6432,23 +6432,24 @@
     border-radius: 10px;
     cursor: pointer;
   }
+  /* Figma 1089:54 — hist row: 13 above search, 18 search, 15 to list. */
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-chatbar {
     position: static;
     width: auto;
     height: auto;
-    padding: 18px 16px 0 7px;
+    padding: 14px 16px 0 7px;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-chatbar-row {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     height: auto;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-label { display: none; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-back {
     width: 30px;
-    height: 32px;
+    height: 28px;
     margin: 0;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-back svg {
@@ -6459,7 +6460,7 @@
     flex: 1 1 auto;
     width: auto;
     min-width: 0;
-    height: 32px;
+    height: 28px;
     margin: 0;
     padding: 0 12px;
     gap: 8px;
@@ -6474,15 +6475,17 @@
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-search input::placeholder { color: transparent; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist {
-    padding: 4px 16px 20px;
+    padding: 14px 16px 20px;
     margin-top: 0;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-list {
-    gap: 4px;
+    gap: 10px;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-list button {
-    padding: 6px 0 6px 29px;
-    line-height: 22px;
+    padding: 0 0 0 31px;
+    font-size: 14px;
+    line-height: 18px;
+    color: #6b6b6b;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-lines {
     position: absolute;
