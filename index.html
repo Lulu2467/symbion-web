@@ -19582,7 +19582,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
     paintEditorRecent('');
     if (window.leaveTeamPage) window.leaveTeamPage();
     usePaneFloat(document.getElementById('editHost'));
-    syncV2Rail(kind);
+    markV2RailGo(kind);
   }
   document.getElementById('editNew')?.addEventListener('click', () => {
     const names = RECENT_EDITOR_FILES[editorKind];
@@ -21157,7 +21157,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
         if (document.documentElement.dataset.theme === 'blue' && typeof window.blueAuthOpen === 'function') window.blueAuthOpen();
         else openSettings('signout');
       }
-      syncV2Rail(act);
+      markV2RailGo(act);
     });
     document.getElementById('railNotes')?.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-note-go]');
@@ -21446,7 +21446,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
       else r.removeAttribute('aria-current');
     });
   }
-  function syncV2Rail(go) {
+  function markV2RailGo(go) {
     const v2 = document.documentElement.dataset.home === 'v2' && document.documentElement.dataset.palette !== 'green';
     if (!v2 || !go) return;
     const homeGo = go === 'drive' || go === 'symbion' || go === 'notes' || go === 'doc' || go === 'deck' || go === 'numbers' || go === 'symtex' || go === 'code';
