@@ -6481,14 +6481,16 @@
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-search input::placeholder { color: transparent; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist {
-    padding: 16px 16px 20px;
+    /* Left = search box left (7 + back 28 + gap 12). */
+    padding: 16px 16px 20px 47px;
     margin-top: 0;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-list {
     gap: 18px;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-list button {
-    padding: 0 0 0 46px;
+    /* Same as search inner pad → text lines up with the search icon. */
+    padding: 0 0 0 14px;
     font-size: 15px;
     line-height: 22px;
     color: #6b6b6b;
