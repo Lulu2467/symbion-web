@@ -4379,6 +4379,7 @@
     align-items: stretch;
     align-self: stretch;
     overflow: hidden;
+    background: #f4f7f8;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #primaryRail > .rail-top,
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #primaryRail > .rail-rec,
@@ -4437,9 +4438,12 @@
     color: #1d1d1f; font: inherit; font-size: 13px; font-weight: 400; letter-spacing: 0; line-height: 1.2; text-align: left;
     white-space: nowrap; cursor: pointer;
   }
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor:hover,
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor.sel {
-    background: #f6f7f8; color: #1d1d1f;
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor:hover {
+    background: rgba(0, 0, 0, .06); color: #1d1d1f;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor.sel,
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor.sel:hover {
+    background: #ebf5fa; color: #316479;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railEditors .rail-editor i {
     width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center;
@@ -4759,8 +4763,34 @@
   #tabbar .r[data-rail="community"] .rail-ico-chat,
   #tabbar .r[data-rail="cosmo"] .rail-ico-spark-line { display: block; }
   #railBody, #tabbar { display: none !important; }
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody { display: block !important; }
-  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #tabbar { display: flex !important; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody { display: block !important; padding: 8px 10px; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #tabbar { display: flex !important; background: transparent; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-pane::before {
+    display: block;
+    margin: 4px 8px 10px;
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) [data-rail-pane="home"]::before { content: "Home"; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) [data-rail-pane="cosmo"]::before { content: "Cosmo"; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) [data-rail-pane="community"]::before { content: "Community"; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) [data-rail-pane="me"]::before { content: "Me"; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-link:hover { background: rgba(0, 0, 0, .06); }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-link.is-out:hover { background: #fdeceb; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-link.on,
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #railBody .rail-link.on:hover {
+    background: #ebf5fa;
+    color: #316479;
+    font-weight: 500;
+  }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #tabbar > .r { color: #656d76; border-radius: 10px; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #tabbar > .r:hover { background: rgba(0, 0, 0, .06); color: #1d1d1f; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #tabbar > .r.on,
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #tabbar > .r.on:hover { background: #ebf5fa; color: #316479; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #tabbar > .r .rail-lab,
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #tabbar > .r.on .rail-lab { font-weight: 500; }
   #meAccount { display: none; margin: 0 0 22px; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) #meAccount { display: block; }
   #meAccount .me-h span { display: block; margin-top: 4px; color: #656d76; font-size: 13px; font-weight: 500; }
