@@ -6452,10 +6452,12 @@
     height: 36px;
     margin: 0;
   }
+  html[data-theme="blue"] .citta-panel .citta-hist-back .hist-back-fill { display: none; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel .citta-hist-back .hist-back-line { display: none; }
+  html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel .citta-hist-back .hist-back-fill { display: block; }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-hist-back svg {
     width: 12px;
     height: 12px;
-    stroke-width: 2;
   }
   html[data-theme="blue"][data-home="v2"]:not([data-palette="green"]) .citta-panel.is-hist .citta-chatbar-row .citta-hist-search {
     flex: 1 1 auto;
@@ -15174,7 +15176,7 @@ html[data-theme="blue"] #blueAuth #badone .go { margin-top: 8px; }
         </div>
         <div class="citta-chatbar">
           <div class="citta-chatbar-row">
-          <button type="button" class="citta-hist-back" id="cittaHistBack" aria-label="Back to chat" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
+          <button type="button" class="citta-hist-back" id="cittaHistBack" aria-label="Back to chat" hidden><svg class="hist-back-line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg><svg class="hist-back-fill" viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M701.921882 58.247529l-6.083764 5.12L258.168471 501.037176a44.574118 44.574118 0 0 0-4.457412 5.180236l4.457412-5.180236a44.393412 44.393412 0 0 0-5.12 56.380236l0.843294 1.204706 4.21647 4.939294 437.729883 437.669647a44.212706 44.212706 0 0 0 67.644235-56.380235l-5.12-6.144-406.347294-406.40753L758.362353 125.891765A44.212706 44.212706 0 0 0 701.921882 58.247529z"/></svg></button>
           <p class="citta-hist-label">Chats</p>
           <button type="button" class="citta-lines" id="cittaLines" aria-label="Chat menu" aria-expanded="false" aria-controls="cittaMore"><svg viewBox="0 0 1024 1024" aria-hidden="true"><path fill="currentColor" d="M66.488889 211.781818h891.022222c28.198788 0 50.980202-22.238384 50.980202-49.648485 0-27.397172-22.768485-49.648485-50.980202-49.648485H66.488889C38.341818 112.484848 15.508687 134.723232 15.508687 162.133333s22.833131 49.648485 50.980202 49.648485z m891.009293 248.242424H66.488889C38.277172 460.024242 15.508687 482.262626 15.508687 509.672727s22.768485 49.648485 50.980202 49.648485h891.022222c28.198788 0 50.980202-22.238384 50.980202-49.648485-0.012929-27.410101-22.923636-49.648485-50.993131-49.648485z m0 351.63798H66.488889c-28.134141 0-50.980202 22.238384-50.980202 49.648485s22.833131 49.648485 50.980202 49.648485h891.022222c28.198788 0 50.980202-22.238384 50.980202-49.648485-0.012929-27.397172-22.781414-49.648485-50.993131-49.648485z m0 0"/></svg></button>
           <div class="citta-more" id="cittaMore" hidden>
